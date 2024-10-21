@@ -24,7 +24,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
-         repository: benpollarduk/BP.AdventureFramework
+         repository: benpollarduk/NetAF
          token: ${{ secrets.PAT }}
 
     - name: Setup environment
@@ -44,12 +44,12 @@ jobs:
         echo "Release notes: ${{ inputs.release-notes }}"
         
         # update the .csproj file with the input version
-        sed -i "s/<Version>.*<\/Version>/<Version>${{ inputs.ver }}<\/Version>/" BP.AdventureFramework/BP.AdventureFramework.csproj
-        sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>${{ inputs.ver }}.0<\/AssemblyVersion>/" BP.AdventureFramework/BP.AdventureFramework.csproj
-        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${{ inputs.ver }}<\/FileVersion>/" BP.AdventureFramework/BP.AdventureFramework.csproj
+        sed -i "s/<Version>.*<\/Version>/<Version>${{ inputs.ver }}<\/Version>/" NetAF/NetAF.csproj
+        sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>${{ inputs.ver }}.0<\/AssemblyVersion>/" NetAF/NetAF.csproj
+        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${{ inputs.ver }}<\/FileVersion>/" NetAF/NetAF.csproj
 
         # update the .csproj file with the release notes
-        sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" BP.AdventureFramework/BP.AdventureFramework.csproj
+        sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" NetAF/NetAF.csproj
 
     - name: Build
       run: dotnet build -c Release
@@ -71,17 +71,17 @@ jobs:
 
     - name: Pack and publish NuGet package
       run: |
-        dotnet nuget push ./BP.AdventureFramework/bin/Release/*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
+        dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
 
     - name: Build documentation
       run: docfx docs/docfx/docfx.json
 
     - name: Copy website files, commit and tag, then push changes to BP.AdventureFramework-docs
       run: |
-        mkdir BP.AdventureFramework-docs
-        cd BP.AdventureFramework-docs
+        mkdir NetAF-docs
+        cd NetAF-docs
         git init
-        git remote add origin https://${{ secrets.PAT }}@github.com/benpollarduk/BP.AdventureFramework-docs.git
+        git remote add origin https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git fetch
@@ -91,7 +91,7 @@ jobs:
         git add .
         git commit -m "Update documentation"
         git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
-        git push --follow-tags https://${{ secrets.PAT }}@github.com/benpollarduk/BP.AdventureFramework-docs.git HEAD:main
+        git push --follow-tags https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git HEAD:main
 
     - name: Create GitHub release
       uses: actions/create-release@v1

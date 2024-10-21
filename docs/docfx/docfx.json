@@ -3,7 +3,7 @@
     {
       "src": [
         {
-          "src": "../../BP.AdventureFramework",
+          "src": "../../NetAF",
           "files": [
             "**/*.csproj"
           ]
@@ -36,8 +36,8 @@
       "templates/singulinkfx"
     ],
     "globalMetadata": {
-      "_appName": "BP.AdventureFramework",
-      "_appTitle": "BP.AdventureFramework",
+      "_appName": "NetAF",
+      "_appTitle": "NetAF",
       "_enableSearch": true,
       "pdf": true
     }

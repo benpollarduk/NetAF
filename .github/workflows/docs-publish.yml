@@ -34,12 +34,12 @@ jobs:
     - name: Build documentation
       run: docfx docs/docfx/docfx.json
 
-    - name: Copy website files, commit and push changes to BP.AdventureFramework-docs
+    - name: Copy website files, commit and push changes to NetAF-docs
       run: |
-        mkdir BP.AdventureFramework-docs
-        cd BP.AdventureFramework-docs
+        mkdir NetAF-docs
+        cd NetAF-docs
         git init
-        git remote add origin https://${{ secrets.PAT }}@github.com/benpollarduk/BP.AdventureFramework-docs.git
+        git remote add origin https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git fetch
@@ -48,5 +48,5 @@ jobs:
         cp -r ../docs/docfx/_site/* .
         git add .
         git commit -m "Update documentation"
-        git push https://${{ secrets.PAT }}@github.com/benpollarduk/BP.AdventureFramework-docs.git HEAD:main
+        git push https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git HEAD:main
         
