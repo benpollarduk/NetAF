@@ -125,11 +125,11 @@ Maps display visited rooms, exits, player position, if an item is in a room, low
 ## Getting Started
 
 ### Clone the repo/pull NuGet
-Clone the repo.
+Clone the repo:
 ```bash
 git clone https://github.com/benpollarduk/netaf.git
 ```
-Or pull the NuGet:
+Or add the NuGet package:
 ```bash
 dotnet add package NetAF
 ```
