@@ -1,10 +1,10 @@
 <div align="center">
 
-# BP.AdventureFramework
+# NetAF
 A C# library that provides a framework for building text adventures and interactive stories in .NET.
 
 [![main-ci](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml/badge.svg)](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml)
-[![codecov](https://codecov.io/gh/benpollarduk/BP.AdventureFramework/graph/badge.svg?token=X94GLVVA0T)](https://codecov.io/gh/benpollarduk/BP.AdventureFramework)
+[![codecov](https://codecov.io/gh/benpollarduk/NetAF/graph/badge.svg?token=X94GLVVA0T)](https://codecov.io/gh/benpollarduk/NetAF)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
@@ -12,16 +12,16 @@ A C# library that provides a framework for building text adventures and interact
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=bugs)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![GitHub release](https://img.shields.io/github/release/benpollarduk/adventure-framework.svg)](https://github.com/benpollarduk/adventure-framework/releases)
 [![License](https://img.shields.io/github/license/benpollarduk/adventure-framework.svg)](https://opensource.org/licenses/MIT)
-[![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://benpollarduk.github.io/BP.AdventureFramework-docs/)
+[![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://benpollarduk.github.io/NetAF-docs/)
 
 </div>
 
 ## Overview
-BP.AdventureFramework is a .NET Standard 2.0 implementation of a framework for building text based adventures.
+NetAF is a .NET Standard 2.0 implementation of a framework for building text based adventures.
 
-![BP AdventureFrameworkDemo_example](https://github.com/benpollarduk/adventure-framework/assets/129943363/20656e76-4e80-475e-aa73-93976d98c5c9)
+![NetAF_example](https://github.com/benpollarduk/adventure-framework/assets/129943363/20656e76-4e80-475e-aa73-93976d98c5c9)
 
-At its core BP.AdventureFramework provides simple classes for developing game elements:
+At its core NetAF provides simple classes for developing game elements:
 
 ### Environments
 Environments are broken down in to three elements - Overworld, Region and Room. An Overworld contains one or more Regions. A Region contains one or more Rooms. 
@@ -58,7 +58,7 @@ var sword = new Item("Sword", "The heroes sword.");
 ```
 
 ### Playable Character
-Each BP.AdventureFramework game has a single playable character. The game is played through the view point of the playable character.
+Each NetAF game has a single playable character. The game is played through the view point of the playable character.
 
 ```csharp
 var player = new PlayableChracter("Dave", "The hero of the story.");
@@ -73,7 +73,7 @@ var npc = new NonPlayableChracter("Gary", "The antagonist of the story.");
 ```
   
 ### Commands
-BP.AdventureFramework provides commands for interacting with game elements:
+NetAF provides commands for interacting with game elements:
   * **Drop X** - drop an item.
   * **Examine X** - allows items, characters and environments to be examined.
   * **Take X** - take an item.
@@ -81,7 +81,7 @@ BP.AdventureFramework provides commands for interacting with game elements:
   * **Use X on Y** - use an item. Items can be used on a variety of targets. Where X is the item and Y is the target.
   * **N, S, E, W, U, D** - traverse through the rooms in a region.
 
-BP.AdventureFramework also provides global commands to help with game flow and option management:
+NetAF also provides global commands to help with game flow and option management:
   * **About** - display version information.
   * **CommandsOn / CommandsOff** - toggle commands on/off.
   * **Exit** - exit the game.
@@ -93,7 +93,7 @@ BP.AdventureFramework also provides global commands to help with game flow and o
 Custom commands can be added to games without the need to extend the existing interpretation.
 
 ### Interpretation
-BP.AdventureFramework provides classes for handling interpretation of input. Interpretation is extensible with the ability for custom interpreters to be added outside of the core BP.AdventureFramework library.
+NetAF provides classes for handling interpretation of input. Interpretation is extensible with the ability for custom interpreters to be added outside of the core NetAF library.
 
 ### Conversations
 Conversations can be held between the player and a NPC. Conversations support multiple lines of dialogue and responses.
@@ -104,7 +104,7 @@ Conversations can be held between the player and a NPC. Conversations support mu
 All game assets support customisable attributes. This provides the possibility to build systems within a game, for example adding currency and trading, adding HP to enemies, MP to your character, durability to Items etc.
 
 ### Rendering
-BP.AdventureFramework provides frames for rendering the various game screens. These are fully extensible and customisable. These include:
+NetAF provides frames for rendering the various game screens. These are fully extensible and customisable. These include:
    * Scene frame.
    * Help frame.
    * Map frame.
@@ -170,18 +170,18 @@ Game.Execute(gameCreator);
 ```
 
 ### Tutorial
-The quickest way to start getting to grips with BP.AdventureFramework is to take a look at the [Getting Started](https://benpollarduk.github.io/BP.AdventureFramework-docs/docs/getting-started.html) page.
+The quickest way to start getting to grips with NetAF is to take a look at the [Getting Started](https://benpollarduk.github.io/NetAF-docs/docs/getting-started.html) page.
 
 ### Example game
-An example game is provided in the [BP.AdventureFramework.Examples](https://github.com/benpollarduk/adventure-framework/tree/main/BP.AdventureFramework.Examples) directory 
+An example game is provided in the [NetAF.Examples](https://github.com/benpollarduk/adventure-framework/tree/main/NetAF.Examples) directory 
 and have been designed with the aim of showcasing the various features.
 
 ### Running the examples
-The example applications can be used to execute the example BP.AdventureFramework game and demonstrate the core principals of the framework. 
+The example applications can be used to execute the example NetAF game and demonstrate the core principals of the framework. 
 Set the **BP.AdventureFramweork.Examples** project as the start up project and build and run to start the application.
 
 ## Documentation
-Please visit [https://benpollarduk.github.io/BP.AdventureFramework-docs/](https://benpollarduk.github.io/BP.AdventureFramework-docs/) to view the BP.AdventureFramework documentation.
+Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
 
 ## For Open Questions
-Visit https://github.com/benpollarduk/BP.AdventureFramework/issues
+Visit https://github.com/benpollarduk/NetAF/issues

@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **What did you do?**
-A clear and concise description of what you did, including reproduction steos if possible.
+A clear and concise description of what you did, including reproduction steps if possible.
 
 **What happened?**
 A clear and concise description of what happened.

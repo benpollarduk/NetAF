@@ -1,7 +1,7 @@
 # Getting Started
 
 ## Adding the NuGet package to your project
-You need to pull BP.AdventureFramework into your project. The easiest way to do this is to add the NuGet package. The latest package and installation instructions are available [here](https://github.com/benpollarduk/BP.AdventureFramework/pkgs/nuget/BP.AdventureFramework).
+You need to pull NetAF into your project. The easiest way to do this is to add the NuGet package. The latest package and installation instructions are available [here](https://github.com/benpollarduk/netaf/pkgs/nuget/NetAF).
 
 ## First Game
 Once the package has been installed it's time to jump in and start building your first game.
@@ -10,7 +10,7 @@ Once the package has been installed it's time to jump in and start building your
 To start with create a new Console application. Regardless of target framework, it should look something like this:
 
 ```csharp
-namespace BP.AdventureFramework.GettingStarted
+namespace NetAF.GettingStarted
 {
     internal class Program
     {
@@ -163,13 +163,13 @@ Game.Execute(gameCreator);
 The full example code should look like this:
 
 ```csharp
-using BP.AdventureFramework.Assets;
-using BP.AdventureFramework.Assets.Characters;
-using BP.AdventureFramework.Assets.Locations;
-using BP.AdventureFramework.Logic;
-using BP.AdventureFramework.Utilities;
+using NetAF.Assets;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
+using NetAF.Logic;
+using NetAF.Utilities;
 
-namespace BP.AdventureFramework.GettingStarted
+namespace NetAF.GettingStarted
 {
     internal class Program
     {
@@ -227,4 +227,4 @@ namespace BP.AdventureFramework.GettingStarted
 }
 ```
 
-Simply build and run the application and congratulations, you have a working BP.AdventureFramework game!
+Simply build and run the application and congratulations, you have a working NetAF game!
