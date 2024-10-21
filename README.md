@@ -121,16 +121,12 @@ Maps are automatically generated for regions and rooms, and can be viewed with t
 
 Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more.
 
-## Prerequisites
- * Windows
-   * Download free IDE Visual Studio 2022 Community ( >> https://visualstudio.microsoft.com/de/vs/community/ ), or use commercial Visual Studio 2022 Version.
-
 ## Getting Started
 
 ### Clone the repo
 Clone the repo to the local machine.
 ```bash
-git clone https://github.com/benpollarduk/adventure-framework.git
+git clone https://github.com/benpollarduk/netaf.git
 ```
 
 ### Hello World
@@ -178,7 +174,7 @@ and have been designed with the aim of showcasing the various features.
 
 ### Running the examples
 The example applications can be used to execute the example NetAF game and demonstrate the core principals of the framework. 
-Set the **BP.AdventureFramweork.Examples** project as the start up project and build and run to start the application.
+Set the **NetAF.Examples** project as the start up project and build and run to start the application.
 
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
