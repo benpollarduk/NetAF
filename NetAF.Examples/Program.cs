@@ -75,7 +75,7 @@ namespace NetAF.Examples
                         new Zelda().Instantiate()
                     };
                     
-                    var overworld = new Overworld("Demo", "A demo of the NetAF.");
+                    var overworld = new Overworld("Demo", "A demo of NetAF.");
 
                     var hub = new Hub().Instantiate();
                     PopulateHub(hub, overworld, regions.ToArray());
@@ -112,7 +112,7 @@ namespace NetAF.Examples
                     return overworld;
                 };
 
-                var about = "This is a short demo of the NetAF made up from test chunks of games that were build to test different features during development.";
+                var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
 
                 var creator = Game.Create("NetAF Demo",
                     about,
