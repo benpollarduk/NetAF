@@ -69,9 +69,13 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-    - name: Pack and publish NuGet package
+    - name: Push NuGet package (GitHub)
       run: |
         dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
+    
+    - name: Push NuGet package (NuGet.org)
+      run: |
+        dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
 
     - name: Build documentation
       run: docfx docs/docfx/docfx.json

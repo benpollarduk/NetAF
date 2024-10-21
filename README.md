@@ -4,13 +4,14 @@
 A C# library that provides a framework for building text adventures and interactive stories in .NET.
 
 [![main-ci](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml/badge.svg)](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/netaf.svg)](https://www.nuget.org/packages/netaf/)
+[![GitHub release](https://img.shields.io/github/release/benpollarduk/adventure-framework.svg)](https://github.com/benpollarduk/adventure-framework/releases)
 [![codecov](https://codecov.io/gh/benpollarduk/NetAF/graph/badge.svg?token=X94GLVVA0T)](https://codecov.io/gh/benpollarduk/NetAF)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=bugs)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
-[![GitHub release](https://img.shields.io/github/release/benpollarduk/adventure-framework.svg)](https://github.com/benpollarduk/adventure-framework/releases)
 [![License](https://img.shields.io/github/license/benpollarduk/adventure-framework.svg)](https://opensource.org/licenses/MIT)
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://benpollarduk.github.io/NetAF-docs/)
 
@@ -121,16 +122,12 @@ Maps are automatically generated for regions and rooms, and can be viewed with t
 
 Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more.
 
-## Prerequisites
- * Windows
-   * Download free IDE Visual Studio 2022 Community ( >> https://visualstudio.microsoft.com/de/vs/community/ ), or use commercial Visual Studio 2022 Version.
-
 ## Getting Started
 
 ### Clone the repo
 Clone the repo to the local machine.
 ```bash
-git clone https://github.com/benpollarduk/adventure-framework.git
+git clone https://github.com/benpollarduk/netaf.git
 ```
 
 ### Hello World
@@ -178,7 +175,7 @@ and have been designed with the aim of showcasing the various features.
 
 ### Running the examples
 The example applications can be used to execute the example NetAF game and demonstrate the core principals of the framework. 
-Set the **BP.AdventureFramweork.Examples** project as the start up project and build and run to start the application.
+Set the **NetAF.Examples** project as the start up project and build and run to start the application.
 
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
