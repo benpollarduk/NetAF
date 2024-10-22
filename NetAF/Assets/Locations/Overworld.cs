@@ -110,7 +110,7 @@ namespace NetAF.Assets.Locations
             CurrentRegion = region;
             return true;
         }
-    
+
         #endregion
 
         #region Overrides of ExaminableObject
@@ -118,8 +118,9 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Examine this object.
         /// </summary>
+        /// <param name="scene">The scene this object is being examined from.</param>
         /// <returns>A ExaminationResult detailing the examination of this object.</returns>
-        public override ExaminationResult Examine()
+        public override ExaminationResult Examine(ExaminationScene scene)
         {
             return new ExaminationResult(Description.GetDescription());
         }

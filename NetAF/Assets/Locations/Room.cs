@@ -217,8 +217,9 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Handle examination this Room.
         /// </summary>
+        /// <param name="scene">The scene this object is being examined from.</param>
         /// <returns>The result of this examination.</returns>
-        public override ExaminationResult Examine()
+        public override ExaminationResult Examine(ExaminationScene scene)
         {
             if (!Items.Any(i => i.IsPlayerVisible))
                 return new ExaminationResult("There is nothing to examine.");

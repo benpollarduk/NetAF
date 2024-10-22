@@ -17,21 +17,21 @@ namespace NetAF.Assets
         /// <summary>
         /// Get or set the callback handling all examination of this object.
         /// </summary>
-        public ExaminationCallback Examination { get; set; } = obj =>
+        public ExaminationCallback Examination { get; set; } = request =>
         {
             var description = string.Empty;
 
-            if (obj.Description != null)
-                description = obj.Description.GetDescription();
+            if (request.Examinable.Description != null)
+                description = request.Examinable.Description.GetDescription();
 
-            if (obj.Commands?.Any() ?? false)
+            if (request.Examinable.Commands?.Any() ?? false)
             {
                 if (!string.IsNullOrEmpty(description))
                     description += " ";
 
-                description += $"{Environment.NewLine}{Environment.NewLine}{obj.Identifier.Name} provides the following commands: ";
+                description += $"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ";
 
-                foreach (var customCommand in obj.Commands)
+                foreach (var customCommand in request.Examinable.Commands)
                     description += $"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ";
 
                 if (description.EndsWith(", "))
@@ -42,13 +42,13 @@ namespace NetAF.Assets
             }
 
             if (string.IsNullOrEmpty(description))
-                description = obj.Identifier.Name;
+                description = request.Examinable.Identifier.Name;
 
             if (string.IsNullOrEmpty(description))
-                description = obj.GetType().Name;
+                description = request.Examinable.GetType().Name;
 
-            if (obj.Attributes.Count > 0)
-                description += $"\n\n{StringUtilities.ConstructAttributesAsString(obj.Attributes.GetAsDictionary())}";
+            if (request.Examinable.Attributes.Count > 0)
+                description += $"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}";
 
             return new ExaminationResult(description);
         };
@@ -93,10 +93,11 @@ namespace NetAF.Assets
         /// <summary>
         /// Examine this object.
         /// </summary>
+        /// <param name="scene">The scene this object is being examined from.</param>
         /// <returns>A ExaminationResult detailing the examination of this object.</returns>
-        public virtual ExaminationResult Examine()
+        public virtual ExaminationResult Examine(ExaminationScene scene)
         {
-            return Examination(this);
+            return Examination(new ExaminationRequest(this, scene));
         }
 
         #endregion

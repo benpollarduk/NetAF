@@ -14,7 +14,7 @@ namespace NetAF.Tests.Assets
         {
             var i = new Item("Test", "Test Description.");
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains(i.Description.GetDescription()));
         }
@@ -30,7 +30,7 @@ namespace NetAF.Tests.Assets
                 ]
             };
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains(i.Commands[0].Help.Command));
         }
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Assets
                 ]
             };
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains(i.Commands[0].Help.Command));
             Assert.IsTrue(result.Description.Contains(i.Commands[1].Help.Command));
@@ -58,7 +58,7 @@ namespace NetAF.Tests.Assets
         {
             var i = new Item("Test", string.Empty);
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains("Test"));
         }
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Assets
         {
             var i = new Item(string.Empty, string.Empty);
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains("Item"));
         }
@@ -79,7 +79,7 @@ namespace NetAF.Tests.Assets
             var i = new Item("Test", string.Empty);
             i.Attributes.Add("Attribute", 1);
 
-            var result = i.Examine();
+            var result = i.Examine(ExaminationScene.NoScene);
 
             Assert.IsTrue(result.Description.Contains("Attribute"));
         }
