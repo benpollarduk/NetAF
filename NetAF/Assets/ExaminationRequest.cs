@@ -3,7 +3,7 @@
 namespace NetAF.Assets
 {
     /// <summary>
-    /// Represents a request to examin an IExaminable.
+    /// Represents a request to examine an IExaminable.
     /// </summary>
     public class ExaminationRequest
     {
