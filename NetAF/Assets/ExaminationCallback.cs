@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the callback for examinations.
     /// </summary>
-    /// <param name="obj">The object to examine.</param>
+    /// <param name="request">The examination request.</param>
     /// <returns>A string representing the result of the examination.</returns>
-    public delegate ExaminationResult ExaminationCallback(IExaminable obj);
+    public delegate ExaminationResult ExaminationCallback(ExaminationRequest request);
 }

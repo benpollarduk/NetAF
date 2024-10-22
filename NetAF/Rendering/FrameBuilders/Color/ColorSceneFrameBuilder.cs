@@ -145,7 +145,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                 var extendedDescription = string.Empty;
 
                 if (room.Items.Any())
-                    extendedDescription = extendedDescription.AddSentence(room.Examine().Description.EnsureFinishedSentence());
+                    extendedDescription = extendedDescription.AddSentence(room.Examine(new ExaminationScene(player, room)).Description.EnsureFinishedSentence());
                 else
                     extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
 
