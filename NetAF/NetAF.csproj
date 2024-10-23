@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>NetAF</AssemblyName>
-    <Authors>Ben Pollard</Authors>
+    <Authors>BenPollard</Authors>
     <Copyright />
     <PackageReleaseNotes></PackageReleaseNotes>
     <RepositoryUrl>https://github.com/benpollarduk/netaf.git</RepositoryUrl>
