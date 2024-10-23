@@ -217,7 +217,7 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Change to a different player.
+        /// Change to a specified player.
         /// </summary>
         /// <param name="player">The player to change to.</param>
         public void ChangePlayer(PlayableCharacter player)
