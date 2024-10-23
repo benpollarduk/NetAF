@@ -4,8 +4,9 @@
 A C# library that provides a framework for building text adventures and interactive stories in .NET.
 
 [![main-ci](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml/badge.svg)](https://github.com/benpollarduk/adventure-framework/actions/workflows/main-ci.yml)
-[![NuGet](https://img.shields.io/nuget/v/netaf.svg)](https://www.nuget.org/packages/netaf/)
 [![GitHub release](https://img.shields.io/github/release/benpollarduk/adventure-framework.svg)](https://github.com/benpollarduk/adventure-framework/releases)
+[![NuGet](https://img.shields.io/nuget/v/netaf.svg)](https://www.nuget.org/packages/netaf/)
+![NuGet Downloads](https://img.shields.io/nuget/dt/netaf)
 [![codecov](https://codecov.io/gh/benpollarduk/NetAF/graph/badge.svg?token=X94GLVVA0T)](https://codecov.io/gh/benpollarduk/NetAF)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=benpollarduk_adventure-framework&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=benpollarduk_adventure-framework)
