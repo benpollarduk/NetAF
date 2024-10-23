@@ -347,5 +347,20 @@ namespace NetAF.Tests.Logic
                 game.Execute();
             });
         }
+
+        [TestMethod]
+        public void GivenSimpleGame_WhenChangePlayer_ThenPlayerIsNewPlayer()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(string.Empty, string.Empty, string.Empty, overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var player2 = new PlayableCharacter(string.Empty, string.Empty);
+
+            game.ChangePlayer(player2);
+
+            Assert.AreEqual(player2, game.Player);
+        }
     }
 }

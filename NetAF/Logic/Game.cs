@@ -80,7 +80,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the player.
         /// </summary>
-        public PlayableCharacter Player { get; }
+        public PlayableCharacter Player { get; private set; }
 
         /// <summary>
         /// Get the overworld.
@@ -214,6 +214,15 @@ namespace NetAF.Logic
             FinishedFrameDraw -= Game_FinishedFrameDraw;
             StartingFrameDraw += Game_StartingFrameDraw;
             FinishedFrameDraw += Game_FinishedFrameDraw;
+        }
+
+        /// <summary>
+        /// Change to a different player.
+        /// </summary>
+        /// <param name="player">The player to change to.</param>
+        public void ChangePlayer(PlayableCharacter player)
+        {
+            Player = player;
         }
 
         /// <summary>
