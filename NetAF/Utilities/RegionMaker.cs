@@ -198,9 +198,9 @@ namespace NetAF.Utilities
             var maxY = roomPositions.Max(x => x.Y);
             var maxZ = roomPositions.Max(x => x.Z);
 
-            var lengthX = (maxX - minX) + 1;
-            var lengthY = (maxY - minY) + 1;
-            var lengthZ = (maxZ - minZ) + 1;
+            var lengthX = maxX - minX + 1;
+            var lengthY = maxY - minY + 1;
+            var lengthZ = maxZ - minZ + 1;
 
             var xNormalisationOffset = 0 - minX;
             var yNormalisationOffset = 0 - minY;

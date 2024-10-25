@@ -447,9 +447,9 @@ namespace NetAF.Interpretation
                 var onIndex = noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase);
                 var targetName = noun.Substring(onIndex + onPadded.Length);
 
-                if ((targetName.InsensitiveEquals(Me)) || (targetName.EqualsExaminable(game.Player)))
+                if (targetName.InsensitiveEquals(Me) || targetName.EqualsExaminable(game.Player))
                     target = game.Player;
-                else if ((targetName.InsensitiveEquals(Room)) || (targetName.EqualsExaminable(game.Overworld.CurrentRegion.CurrentRoom)))
+                else if (targetName.InsensitiveEquals(Room) || targetName.EqualsExaminable(game.Overworld.CurrentRegion.CurrentRoom))
                     target = game.Overworld.CurrentRegion.CurrentRoom;
                 else
                     target = game.FindInteractionTarget(targetName);
@@ -609,7 +609,7 @@ namespace NetAF.Interpretation
                 commands.Add(new CommandHelp($"{Take}/{TakeShort} {All}", "Take all items in the current room"));
             }
 
-            if ((game.Player.CanConverse) && (game.Overworld.CurrentRegion.CurrentRoom.Characters.Any()))
+            if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
                 commands.Add(new CommandHelp($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
