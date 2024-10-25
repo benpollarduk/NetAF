@@ -42,6 +42,12 @@ namespace NetAF.Commands.Game
             if (game == null)
                 return new Reaction(ReactionResult.Error, "No game specified.");
 
+            if (game.Player == null)
+                return new Reaction(ReactionResult.Error, "No player specified.");
+
+            if (!game.Player.CanConverse)
+                return new Reaction(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot converse.");
+
             if (Converser == null)
                 return new Reaction(ReactionResult.Error, "No-one is around to talk to.");
 

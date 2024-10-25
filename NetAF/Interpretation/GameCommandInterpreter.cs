@@ -609,7 +609,7 @@ namespace NetAF.Interpretation
                 commands.Add(new CommandHelp($"{Take}/{TakeShort} {All}", "Take all items in the current room"));
             }
 
-            if (game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
+            if ((game.Player.CanConverse) && (game.Overworld.CurrentRegion.CurrentRoom.Characters.Any()))
                 commands.Add(new CommandHelp($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
