@@ -5,8 +5,8 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Provides a container from frame builder collections.
     /// </summary>
-    public static class FrameBuilderCollections {
-        
+    public static class FrameBuilderCollections 
+    {   
         /// <summary>
         /// Get the default frame builder collection.
         /// </summary>
