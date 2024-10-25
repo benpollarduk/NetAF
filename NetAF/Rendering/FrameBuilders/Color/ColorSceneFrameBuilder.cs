@@ -58,7 +58,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <summary>
         /// Get or set if movement messages should be suppressed.
         /// </summary>
-        public bool SupressMovementMessages { get; set; } = true;
+        public bool SuppressMovementMessages { get; set; } = true;
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             const int leftMargin = 2;
             const int linePadding = 2;
             var isMovementMessage = IsMovementConfirmation(message);
-            var displayMessage = !string.IsNullOrEmpty(message) && (!isMovementMessage || !SupressMovementMessages);
+            var displayMessage = !string.IsNullOrEmpty(message) && (!isMovementMessage || !SuppressMovementMessages);
             var acceptInput = !(DisplayMessagesInIsolation && displayMessage);
 
             gridStringBuilder.Resize(new Size(width, height));
