@@ -39,8 +39,10 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new ConversationCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
-            var npc = new NonPlayableCharacter(string.Empty, string.Empty);
-            npc.Conversation = new Conversation(new Paragraph("Test"));
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty)
+            {
+                Conversation = new Conversation(new Paragraph("Test"))
+            };
 
             game.StartConversation(npc);
 
@@ -54,8 +56,9 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new ConversationCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
-            var npc = new NonPlayableCharacter(string.Empty, string.Empty);
-            npc.Conversation = new Conversation(
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty)
+            {
+                Conversation = new Conversation(
                 new Paragraph("Test")
                 {
                     Responses =
@@ -63,7 +66,8 @@ namespace NetAF.Tests.Interpretation
                         new Response("First")
                     ]
                 }
-            );
+            )
+            };
 
             game.StartConversation(npc);
 
@@ -88,8 +92,10 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new ConversationCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
-            var npc = new NonPlayableCharacter(string.Empty, string.Empty);
-            npc.Conversation = new Conversation(new Paragraph("Test"));
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty)
+            {
+                Conversation = new Conversation(new Paragraph("Test"))
+            };
 
             game.StartConversation(npc);
 
@@ -103,8 +109,10 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new ConversationCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
-            var npc = new NonPlayableCharacter(string.Empty, string.Empty);
-            npc.Conversation = new Conversation(new Paragraph("Test"));
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty)
+            {
+                Conversation = new Conversation(new Paragraph("Test"))
+            };
 
             game.StartConversation(npc);
 

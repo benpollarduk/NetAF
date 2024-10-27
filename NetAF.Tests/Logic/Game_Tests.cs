@@ -340,7 +340,7 @@ namespace NetAF.Tests.Logic
                 regionMaker[0, 0, 0] = room;
                 var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
                 var startTime = Environment.TickCount;
-                EndCheck callback = _ => new EndCheckResult(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
                 var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
                 game.Adapter = new TestConsoleAdapter();
 

@@ -16,7 +16,7 @@ using NetAF.Logic;
 
 namespace NetAF.Examples
 {
-    internal class Program
+    internal static class Program
     {
         private static EndCheckResult DetermineIfGameHasCompleted(Game game)
         {
@@ -66,7 +66,7 @@ namespace NetAF.Examples
         {
             try
             {
-                OverworldCreationCallback overworldCreator = () =>
+                static Overworld overworldCreator()
                 {
                     var regions = new List<Region>
                     {
@@ -74,11 +74,11 @@ namespace NetAF.Examples
                         new Flat().Instantiate(),
                         new Zelda().Instantiate()
                     };
-                    
+
                     var overworld = new Overworld("Demo", "A demo of NetAF.");
 
                     var hub = new Hub().Instantiate();
-                    PopulateHub(hub, overworld, regions.ToArray());
+                    PopulateHub(hub, overworld, [.. regions]);
                     overworld.AddRegion(hub);
 
                     foreach (var region in regions)
@@ -95,9 +95,9 @@ namespace NetAF.Examples
 
                             if (a?.Length >= 3)
                             {
-                                int.TryParse(a[0], out x);
-                                int.TryParse(a[1], out y);
-                                int.TryParse(a[2], out z);
+                                _ = int.TryParse(a[0], out x);
+                                _ = int.TryParse(a[1], out y);
+                                _ = int.TryParse(a[2], out z);
                             }
 
                             var result = g.Overworld.CurrentRegion.JumpToRoom(x, y, z);
@@ -110,7 +110,7 @@ namespace NetAF.Examples
                     ];
 
                     return overworld;
-                };
+                }
 
                 var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
                 var creator = Game.Create(new GameInfo("NetAF Demo", about), about, new GameAssetGenerators(overworldCreator, () => new Player().Instantiate()), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), GameConfiguration.Default);
