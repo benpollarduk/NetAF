@@ -6,7 +6,7 @@ namespace NetAF.Tests.Assets.Locations
 {
     [TestClass]
     public class Region_Tests
-    {
+{
         [TestMethod]
         public void Given0Rooms_WhenGetCurrentRoom_ThenNull()
         {
@@ -310,7 +310,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRoomaAtX0Y0Z0_WhenNextPosition_ThenNotNull()
+        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenNotNull()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room(Identifier.Empty, Description.Empty);
@@ -322,7 +322,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRoomaAtX0Y0Z0_WhenNextPosition_ThenResultRoomQualsInputRoom()
+        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenResultRoomQualsInputRoom()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room(Identifier.Empty, Description.Empty);
@@ -334,7 +334,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRoomaAtX0Y0Z0_WhenNextPosition_ThenX0Y0Z0()
+        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenX0Y0Z0()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room(Identifier.Empty, Description.Empty);
@@ -345,6 +345,54 @@ namespace NetAF.Tests.Assets.Locations
             Assert.AreEqual(0, result.X);
             Assert.AreEqual(0, result.Y);
             Assert.AreEqual(0, result.Z);
+        }
+
+        [TestMethod]
+        public void GivenRoomInRegion_WhenTryFindRoom_ThenTrue()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room("a", string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryFindRoom("a", out _);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenRoomInRegion_WhenTryFindRoom_ThenReturnCorrectRoom()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room("a", string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            region.TryFindRoom("a", out var result);
+
+            Assert.AreEqual(room, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomNotInRegion_WhenTryFindRoom_ThenFalse()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room("a", string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryFindRoom("b", out _);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenRoomNotInRegion_WhenTryFindRoom_ThenReturnNull()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room("a", string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            region.TryFindRoom("b", out var result);
+
+            Assert.IsNull(result);
         }
     }
 }

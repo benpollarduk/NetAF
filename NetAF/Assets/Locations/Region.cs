@@ -117,6 +117,18 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
+        /// Try and find a room within this region.
+        /// </summary>
+        /// <param name="name">The rooms name.</param>
+        /// <param name="room">The room, if found, else null.</param>
+        /// <returns>True if the room could be found, else false.</returns>
+        public bool TryFindRoom(string name, out Room room)
+        {
+            room = roomPositions.Find(x => x.Room.Identifier.Equals(name))?.Room;
+            return room != null;
+        }
+
+        /// <summary>
         /// Add a Room to this region.
         /// </summary>
         /// <param name="room">The room to add.</param>
@@ -200,7 +212,7 @@ namespace NetAF.Assets.Locations
         public void SetStartRoom(int x, int y, int z)
         {
             var room = roomPositions.Find(r => r.IsAtPosition(x, y, z))?.Room;
-            SetStartRoom(room ?? roomPositions.ElementAt(0).Room);
+            SetStartRoom(room ?? roomPositions[0].Room);
         }
 
         /// <summary>
