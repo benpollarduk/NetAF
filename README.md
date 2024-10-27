@@ -176,7 +176,7 @@ and have been designed with the aim of showcasing the various features.
 
 ### Running the examples
 The example applications can be used to execute the example NetAF game and demonstrate the core principals of the framework. 
-Set the **NetAF.Examples** project as the start up project and build and run to start the application.
+Set the **NetAF.Examples** project as the start up project and then build and run to start the application.
 
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
