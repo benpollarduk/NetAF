@@ -151,21 +151,17 @@ var regionMaker = new RegionMaker("Mountain", "An imposing volcano just East of 
 var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
 
 // create the callback for generating new instances of the game
-// - the title of the game
-// - an introduction to the game, displayed at the start
-// - about the game, displayed on the about screen
-// - a callback that provides a new instance of the games overworld
-// - a callback that provides a new instance of the player
-// - a callback that determines if the game is complete, checked every cycle of the game
-// - a callback that determines if it's game over, checked every cycle of the game
+// - information about the game
+// - an introduction to the game, displayed at the star
+// - asset generation for the overworld and the player
+// - the conditions that end the game
+// - the configuration for the game
 var gameCreator = Game.Create(
-    "The Life Of Dave",
+    new GameInfo("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
     "Dave awakes to find himself in a cavern...",
-    "A very low budget adventure.",
-    overworldMaker.Make,
-    () => player,
-    _ => EndCheckResult.NotEnded,
-    _ => EndCheckResult.NotEnded);
+    AssetGenerator.Retained(overworldMaker.Make(), player),
+    GameEndConditions.NoEnd,
+    GameConfiguration.Default);
 
 // begin the execution of the game
 Game.Execute(gameCreator);
