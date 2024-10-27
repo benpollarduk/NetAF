@@ -29,7 +29,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturnEmptyArray()
         {
             var interpreter = new CustomCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -41,7 +41,7 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new CustomCommandInterpreter();
             overworld.Commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Interpretation
 
                 })
             ];
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
             interpreter.Interpret("Test", game);
         }
