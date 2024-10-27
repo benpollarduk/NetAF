@@ -4,6 +4,7 @@ using NetAF.Assets.Locations;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -26,7 +27,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenEmptyString_WhenInterpret_ThenReturnFalse()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(string.Empty, game);
 
@@ -37,7 +38,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNew_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(GlobalCommandInterpreter.New, game);
 
@@ -48,7 +49,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenAbout_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(GlobalCommandInterpreter.About, game);
 
@@ -59,7 +60,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExit_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(GlobalCommandInterpreter.Exit, game);
 
@@ -70,7 +71,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenHelp_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(GlobalCommandInterpreter.Help, game);
 
@@ -81,7 +82,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenMap_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
-            var game = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => new PlayableCharacter(Identifier.Empty, Description.Empty), _ => EndCheckResult.NotEnded, _ => EndCheckResult.NotEnded).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(GlobalCommandInterpreter.Map, game);
 

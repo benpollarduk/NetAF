@@ -3,6 +3,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Assets
 {
@@ -18,7 +19,7 @@ namespace NetAF.Tests.Assets
             var overworld = new Overworld(string.Empty, string.Empty);
             region.AddRoom(room, 0, 0, 0);
             overworld.AddRegion(region);
-            var gameCreator = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => player, g => EndCheckResult.NotEnded, g => EndCheckResult.NotEnded);
+            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => player), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default);
 
             var result = new ExaminationRequest(player, gameCreator());
 
@@ -34,7 +35,7 @@ namespace NetAF.Tests.Assets
             var overworld = new Overworld(string.Empty, string.Empty);
             region.AddRoom(room, 0, 0, 0);
             overworld.AddRegion(region);
-            var gameCreator = Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => player, g => EndCheckResult.NotEnded, g => EndCheckResult.NotEnded);
+            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => player), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default);
 
             var result = new ExaminationRequest(player, gameCreator());
 

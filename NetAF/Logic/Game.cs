@@ -17,38 +17,10 @@ using NetAF.Utilities;
 namespace NetAF.Logic
 {
     /// <summary>
-    /// Represents the structure of the game
+    /// Represents a game.
     /// </summary>
     public sealed class Game
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the default error prefix.
-        /// </summary>
-        public const string DefaultErrorPrefix = "Oops";
-
-        #endregion
-
-        #region StaticProperties
-
-        /// <summary>
-        /// Get the default interpreter.
-        /// </summary>
-        public static IInterpreter DefaultInterpreter => new InputInterpreter(
-            new FrameCommandInterpreter(),
-            new GlobalCommandInterpreter(),
-            new GameCommandInterpreter(), 
-            new CustomCommandInterpreter(),
-            new ConversationCommandInterpreter());
-
-        /// <summary>
-        /// Get the default size.
-        /// </summary>
-        public static Size DefaultSize { get; } = new Size(80, 50);
-
-        #endregion
-
         #region Fields
 
         private FrameBuilderCollection frameBuilders;
@@ -560,64 +532,27 @@ namespace NetAF.Logic
         #region StaticMethods
 
         /// <summary>
-        /// Create a new callback for generating instances of a game.
-        /// </summary>
-        /// <param name="name">The name of the game.</param>
-        /// <param name="introduction">An introduction to the game.</param>
-        /// <param name="description">A description of the game.</param>
-        /// <param name="overworldGenerator">A function to generate the overworld with.</param>
-        /// <param name="playerGenerator">The function to generate the player with.</param>
-        /// <param name="completionCondition">The callback used to check game completion.</param>
-        /// <param name="gameOverCondition">The callback used to check game over.</param>
-        /// <param name="setup">A setup function to run on the created game after it has been created.</param>
-        /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition, GameSetupCallback setup = null)
-        {
-            return Create(
-                name,
-                introduction,
-                description,
-                overworldGenerator,
-                playerGenerator,
-                completionCondition,
-                gameOverCondition,
-                DefaultSize,
-                FrameBuilderCollections.Default,
-                ExitMode.ReturnToTitleScreen,
-                DefaultErrorPrefix,
-                DefaultInterpreter,
-                setup);
-        }
-
-        /// <summary>
         ///  Create a new callback for generating instances of a game.
         /// </summary>
-        /// <param name="name">The name of the game.</param>
+        /// <param name="info">Information about the game.</param>
         /// <param name="introduction">An introduction to the game.</param>
-        /// <param name="description">A description of the game.</param>
-        /// <param name="overworldGenerator">A function to generate the overworld with.</param>
-        /// <param name="playerGenerator">The function to generate the player with.</param>
-        /// <param name="displaySize">The display size.</param>
-        /// <param name="completionCondition">The callback used to check game completion.</param>
-        /// <param name="gameOverCondition">The callback used to check game over.</param>
-        /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
-        /// <param name="exitMode">The exit mode.</param>
-        /// <param name="errorPrefix">A prefix to use when displaying errors.</param>
-        /// <param name="interpreter">The interpreter.</param>
+        /// <param name="assetGenerators">The generators to use to create game assets.</param>
+        /// <param name="conditions">The game conditions.</param>
+        /// <param name="configuration">The configuration for the game.</param>
         /// <param name="setup">A setup function to run on the created game after it has been created.</param>
         /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition, Size displaySize, FrameBuilderCollection frameBuilders, ExitMode exitMode, string errorPrefix, IInterpreter interpreter, GameSetupCallback setup = null)
+        public static GameCreationCallback Create(GameInfo info, string introduction, GameAssetGenerators assetGenerators, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
         {
             return () =>
             {
-                var game = new Game(name, introduction, description, playerGenerator?.Invoke(), overworldGenerator?.Invoke(), displaySize)
+                var game = new Game(info.Name, introduction, info.Description, assetGenerators.PlayerGenerator?.Invoke(), assetGenerators.OverworldGenerator?.Invoke(), configuration.DisplaySize)
                 {
-                    FrameBuilders = frameBuilders,
-                    CompletionCondition = completionCondition,
-                    GameOverCondition = gameOverCondition,
-                    ExitMode = exitMode,
-                    ErrorPrefix = errorPrefix,
-                    Interpreter = interpreter
+                    FrameBuilders = configuration.FrameBuilders,
+                    CompletionCondition = conditions.CompletionCondition,
+                    GameOverCondition = conditions.GameOverCondition,
+                    ExitMode = configuration.ExitMode,
+                    ErrorPrefix = configuration.ErrorPrefix,
+                    Interpreter = configuration.Interpreter
                 };
 
                 setup?.Invoke(game);
