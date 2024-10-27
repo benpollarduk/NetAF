@@ -19,7 +19,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new Reaction(ReactionResult.Error, "No game specified.");
 
-            game.DisplayCommandListInSceneFrames = false;
+            game.Configuration.DisplayCommandListInSceneFrames = false;
             return new Reaction(ReactionResult.OK, "Commands have been turned off.");
         }
 

@@ -394,5 +394,33 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.IsNull(result);
         }
+
+        [TestMethod]
+        public void GivenInvalidCoordinates_WhenJumpToRoom_ThenReturnFalse()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room("a", string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            region.AddRoom(room, 1, 0, 0);
+
+            var result = region.JumpToRoom(0, 100, 0);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenValidCoordinates_WhenJumpToRoom_ThenReturnTrue()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room1 = new Room(string.Empty, string.Empty);
+            var room2 = new Room(string.Empty, string.Empty);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+            region.SetStartRoom(room1);
+
+            var result = region.JumpToRoom(1,0,0);
+
+            Assert.IsTrue(result);
+        }
     }
 }

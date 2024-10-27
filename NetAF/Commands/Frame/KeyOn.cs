@@ -20,7 +20,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new Reaction(ReactionResult.Error, "No game specified.");
 
-            game.SceneMapKeyType = KeyType.Dynamic;
+            game.Configuration.SceneMapKeyType = KeyType.Dynamic;
             return new Reaction(ReactionResult.OK, "Key has been turned on.");
         }
 

@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Interpretation;
+using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic
@@ -14,7 +15,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default { get; } = new GameConfiguration(new Size(80, 50), FrameBuilderCollections.Default, ExitMode.ReturnToTitleScreen, "Oops", CreateDefaultInterpreter());
+        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, CreateDefaultInterpreter());
 
         #endregion
 
@@ -26,24 +27,34 @@ namespace NetAF.Logic
         public Size DisplaySize { get; private set; }
 
         /// <summary>
-        /// Get the collection of frame builders to use to render the game.
-        /// </summary>
-        public FrameBuilderCollection FrameBuilders { get; private set; }
-
-        /// <summary>
         /// Get the exit mode.
         /// </summary>
         public ExitMode ExitMode { get; private set; }
 
         /// <summary>
-        /// Get the prefix to use when displaying errors.
-        /// </summary>
-        public string ErrorPrefix { get; private set; }
-
-        /// <summary>
         /// Get the interpreter used for interpreting input.
         /// </summary>
         public IInterpreter Interpreter { get; private set; }
+
+        /// <summary>
+        /// Get or set the collection of frame builders to use to render the game.
+        /// </summary>
+        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
+
+        /// <summary>
+        /// Get or set the prefix to use when displaying errors.
+        /// </summary>
+        public string ErrorPrefix { get; set; } = "Oops";
+
+        /// <summary>
+        /// Get or set if the command list is displayed in scene frames.
+        /// </summary>
+        public bool DisplayCommandListInSceneFrames { get; set; } = true;
+
+        /// <summary>
+        /// Get or set the type of key to use on the scene map.
+        /// </summary>
+        public KeyType SceneMapKeyType { get; set; } = KeyType.Dynamic;
 
         #endregion
 
@@ -53,16 +64,12 @@ namespace NetAF.Logic
         /// Initializes a new instance of the GameConfiguration class.
         /// </summary>
         /// <param name="displaySize">The display size.</param>
-        /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
         /// <param name="exitMode">The exit mode.</param>
-        /// <param name="errorPrefix">The prefix to use when displaying errors.</param>
         /// <param name="interpreter">The interpreter used for interpreting input</param>
-        public GameConfiguration(Size displaySize, FrameBuilderCollection frameBuilders, ExitMode exitMode, string errorPrefix, IInterpreter interpreter)
+        public GameConfiguration(Size displaySize, ExitMode exitMode, IInterpreter interpreter)
         {
             DisplaySize = displaySize;
-            FrameBuilders = frameBuilders;
             ExitMode = exitMode;
-            ErrorPrefix = errorPrefix;
             Interpreter = interpreter;
         }
 

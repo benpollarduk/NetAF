@@ -376,19 +376,5 @@ namespace NetAF.Tests.Logic
 
             Assert.IsTrue(result);
         }
-
-        [TestMethod]
-        public void GivenSimpleGame_WhenChangeFrameBuilderCollection_ThenCollectionUpdated()
-        {
-            var regionMaker = new RegionMaker(string.Empty, string.Empty);
-            var room = new Room("Room", string.Empty);
-            regionMaker[0, 0, 0] = room;
-            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-
-            game.ChangeFrameBuilders(null);
-
-            Assert.IsNull(game.Configuration.FrameBuilders);
-        }
     }
 }

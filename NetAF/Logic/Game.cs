@@ -9,8 +9,6 @@ using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using NetAF.Extensions;
 using NetAF.Interpretation;
-using NetAF.Rendering;
-using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.Frames;
 using NetAF.Utilities;
 
@@ -32,16 +30,6 @@ namespace NetAF.Logic
         /// Get the active converser.
         /// </summary>
         public IConverser ActiveConverser { get; private set; }
-
-        /// <summary>
-        /// Get or set if the command list is displayed in scene frames.
-        /// </summary>
-        public bool DisplayCommandListInSceneFrames { get; set; } = true;
-
-        /// <summary>
-        /// Get or set the type of key to use on the scene map.
-        /// </summary>
-        public KeyType SceneMapKeyType { get; set; } = KeyType.Dynamic;
 
         /// <summary>
         /// Get the player.
@@ -355,25 +343,12 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Set the collection of frame builders used to render this game.
-        /// </summary>
-        /// <param name="frameBuilderCollection">The collection of frame builders.</param>
-        /// <param name="refresh">Set if the display should be refreshed with the new collection.</param>
-        public void ChangeFrameBuilders(FrameBuilderCollection frameBuilderCollection, bool refresh = true)
-        {
-            Configuration = new GameConfiguration(Configuration.DisplaySize, frameBuilderCollection, Configuration.ExitMode, Configuration.ErrorPrefix, Configuration.Interpreter);
-
-            if (refresh && State == GameState.Active)
-                Refresh(CurrentFrame);
-        }
-
-        /// <summary>
         /// Enter the game.
         /// </summary>
         private void Enter()
         {
             State = GameState.Active;
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -438,7 +413,7 @@ namespace NetAF.Logic
         /// <param name="message">Any message to display.</param>
         private void Refresh(string message)
         {
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
