@@ -5,6 +5,7 @@ using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using NetAF.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Commands.Game
 {
@@ -14,7 +15,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenNoItem_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var command = new UseOn(null, null);
 
             var result = command.Invoke(game);
@@ -25,7 +26,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenNoTarget_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var item = new Item(Identifier.Empty, Description.Empty, true);
             var command = new UseOn(item, null);
 
@@ -37,7 +38,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenNoPlayer_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var item = new Item(Identifier.Empty, Description.Empty, true);
             var command = new UseOn(item, null);
 
@@ -58,7 +59,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => player, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var command = new UseOn(item, npc);
 
             var result = command.Invoke(game);
@@ -76,7 +77,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => pc, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => pc), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var command = new UseOn(item, pc);
 
             var result = command.Invoke(game);
@@ -94,7 +95,7 @@ namespace NetAF.Tests.Commands.Game
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => player, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => player), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var command = new UseOn(item, room);
 
             var result = command.Invoke(game);

@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets.Interaction;
 using NetAF.Commands.Global;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Commands.Global
 {
@@ -20,7 +21,7 @@ namespace NetAF.Tests.Commands.Global
         [TestMethod]
         public void GivenValidGame_WhenInvoke_ThenOK()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), null, GameConfiguration.Default).Invoke();
             var command = new New();
 
             var result = command.Invoke(game);

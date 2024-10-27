@@ -29,7 +29,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturnEmptyArray()
         {
             var interpreter = new CustomCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
 

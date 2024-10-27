@@ -14,17 +14,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default { get; } = new GameConfiguration(new Size(80, 50), FrameBuilderCollections.Default, ExitMode.ReturnToTitleScreen, "Oops", DefaultInterpreter);
-
-        /// <summary>
-        /// Get the default interpreter.
-        /// </summary>
-        public static IInterpreter DefaultInterpreter { get; } = new InputInterpreter(
-            new FrameCommandInterpreter(),
-            new GlobalCommandInterpreter(),
-            new GameCommandInterpreter(),
-            new CustomCommandInterpreter(),
-            new ConversationCommandInterpreter());
+        public static GameConfiguration Default { get; } = new GameConfiguration(new Size(80, 50), FrameBuilderCollections.Default, ExitMode.ReturnToTitleScreen, "Oops", CreateDefaultInterpreter());
 
         #endregion
 
@@ -74,6 +64,24 @@ namespace NetAF.Logic
             ExitMode = exitMode;
             ErrorPrefix = errorPrefix;
             Interpreter = interpreter;
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Create the default interpreter.
+        /// </summary>
+        /// <returns></returns>
+        private static IInterpreter CreateDefaultInterpreter()
+        {
+            return new InputInterpreter(
+                new FrameCommandInterpreter(),
+                new GlobalCommandInterpreter(),
+                new GameCommandInterpreter(),
+                new CustomCommandInterpreter(),
+                new ConversationCommandInterpreter());
         }
 
         #endregion

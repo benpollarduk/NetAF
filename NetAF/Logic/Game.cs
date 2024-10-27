@@ -548,8 +548,8 @@ namespace NetAF.Logic
                 var game = new Game(info.Name, introduction, info.Description, assetGenerators.PlayerGenerator?.Invoke(), assetGenerators.OverworldGenerator?.Invoke(), configuration.DisplaySize)
                 {
                     FrameBuilders = configuration.FrameBuilders,
-                    CompletionCondition = conditions.CompletionCondition,
-                    GameOverCondition = conditions.GameOverCondition,
+                    CompletionCondition = conditions?.CompletionCondition,
+                    GameOverCondition = conditions?.GameOverCondition,
                     ExitMode = configuration.ExitMode,
                     ErrorPrefix = configuration.ErrorPrefix,
                     Interpreter = configuration.Interpreter

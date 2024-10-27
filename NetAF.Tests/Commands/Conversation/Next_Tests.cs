@@ -3,6 +3,7 @@ using NetAF.Assets.Interaction;
 using NetAF.Commands.Conversation;
 using NetAF.Conversations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Commands.Conversation
 {
@@ -22,7 +23,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenNoConverser_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var command = new Next();
 
             var result = command.Invoke(game);
@@ -33,7 +34,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenValidGameAndConverser_WhenInvoke_ThenInternal()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
             var converser = new NonPlayableCharacter(string.Empty, string.Empty) { Conversation = new NetAF.Conversations.Conversation(new Paragraph(string.Empty)) };
             game.StartConversation(converser);
             var command = new Next();

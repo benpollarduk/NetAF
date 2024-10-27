@@ -233,7 +233,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.FindInteractionTarget("Item");
 
-            Assert.AreEqual(game.Player.Items.First(), result);
+            Assert.AreEqual(game.Player.Items[0], result);
         }
 
         [TestMethod]
@@ -248,7 +248,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.FindInteractionTarget("Item");
 
-            Assert.AreEqual(game.Overworld.CurrentRegion.CurrentRoom.Items.First(), result);
+            Assert.AreEqual(game.Overworld.CurrentRegion.CurrentRoom.Items[0], result);
         }
 
         [TestMethod]
