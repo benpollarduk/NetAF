@@ -4,6 +4,7 @@ using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Commands.Game
 {
@@ -13,7 +14,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenNoCharacter_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Drop(null);
 
             var result = command.Invoke(game);
@@ -25,7 +26,7 @@ namespace NetAF.Tests.Commands.Game
         public void GivenNoItem_WhenInvoke_ThenError()
         {
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, () => character, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Drop(null);
 
             var result = command.Invoke(game);
@@ -43,7 +44,7 @@ namespace NetAF.Tests.Commands.Game
             overworld.AddRegion(region);
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var item = new Item(new Identifier("A"), Description.Empty, true);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => character, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Drop(item);
 
             var result = command.Invoke(game);
@@ -62,7 +63,7 @@ namespace NetAF.Tests.Commands.Game
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var item = new Item(new Identifier("A"), Description.Empty, true);
             character.AcquireItem(item);
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, () => overworld, () => character, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Drop(item);
 
             var result = command.Invoke(game);

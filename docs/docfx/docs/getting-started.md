@@ -134,23 +134,19 @@ A **GameCreationCallback** is required to instantiate an instance of a **Game**.
 
 ```csharp
 var gameCreator = Game.Create(
-    "The Life Of Dave",
-    "Dave awakes to find himself in a cavern...",
-    "A very low budget adventure.",
-    overworldMaker.Make,
-    CreatePlayer,
-    IsGameComplete,
-    IsGameOver);
+                new GameInfo("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
+                "Dave awakes to find himself in a cavern...",
+                AssetGenerator.Custom(overworldMaker.Make, CreatePlayer),
+                new GameEndConditions(IsGameComplete, IsGameOver),
+                GameConfiguration.Default);
 ```
 
 This requires some breaking down. The **Game** class has a **Create** method that can be used to create instances of **Game**. This takes the following arguments:
-* **Name** - the name of the game.
+* **GameInfo** - information about the game.
 * **Introduction** - an introduction to the game.
-* **Description** - a description of the game.
-* **OverworldGenerator** - a callback for generating instances of the overworld.
-* **PlayerGenerator** - a callback for generating instances of the player.
-* **CompletionCondition** - a callback for determining if the game is complete.
-* **GameOverCondition** - a callback for determining if the game is over.
+* **AssetGenerator** - a generator for game assets.
+* **GameEndConditions** - conditions for determining if the game has been completed or otherwise ended.
+* **GameConfiguration** - a configuration for the game, including display size, error prefix and other elements.
 
 ### Executing the game
 The game is executed simply by calling the static **Execute** method on **Game** and passing in the game creation callback.
@@ -213,13 +209,11 @@ namespace NetAF.GettingStarted
             var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
 
             var gameCreator = Game.Create(
-                "The Life Of Dave",
+                new GameInfo("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
                 "Dave awakes to find himself in a cavern...",
-                "A very low budget adventure.",
-                overworldMaker.Make,
-                CreatePlayer,
-                IsGameComplete,
-                IsGameOver);
+                AssetGenerator.Custom(overworldMaker.Make, CreatePlayer),
+                new GameEndConditions(IsGameComplete, IsGameOver),
+                GameConfiguration.Default);
 
             Game.Execute(gameCreator);
         }

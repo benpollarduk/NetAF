@@ -3,6 +3,7 @@ using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Commands.Game
 {
@@ -22,7 +23,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenSomethingToExamine_WhenInvoke_ThenOK()
         {
-            var game = NetAF.Logic.Game.Create(string.Empty, string.Empty, string.Empty, null, null, null, null).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var region = new Region(Identifier.Empty, Description.Empty);
             var command = new Examine(region);
 
