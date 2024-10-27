@@ -15,7 +15,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, Interpreters.Default);
+        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen);
 
         #endregion
 
@@ -32,9 +32,14 @@ namespace NetAF.Logic
         public ExitMode ExitMode { get; private set; }
 
         /// <summary>
-        /// Get the interpreter used for interpreting input.
+        /// Get or set the interpreter used for interpreting input.
         /// </summary>
-        public IInterpreter Interpreter { get; private set; }
+        public IInterpreter Interpreter { get; set; } = new InputInterpreter(
+                                                            new FrameCommandInterpreter(),
+                                                            new GlobalCommandInterpreter(),
+                                                            new GameCommandInterpreter(),
+                                                            new CustomCommandInterpreter(),
+                                                            new ConversationCommandInterpreter());
 
         /// <summary>
         /// Get or set the collection of frame builders to use to render the game.
@@ -65,12 +70,10 @@ namespace NetAF.Logic
         /// </summary>
         /// <param name="displaySize">The display size.</param>
         /// <param name="exitMode">The exit mode.</param>
-        /// <param name="interpreter">The interpreter used for interpreting input</param>
-        public GameConfiguration(Size displaySize, ExitMode exitMode, IInterpreter interpreter)
+        public GameConfiguration(Size displaySize, ExitMode exitMode)
         {
             DisplaySize = displaySize;
             ExitMode = exitMode;
-            Interpreter = interpreter;
         }
 
         #endregion
