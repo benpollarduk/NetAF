@@ -15,7 +15,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, CreateDefaultInterpreter());
+        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, Interpreters.Default);
 
         #endregion
 
@@ -71,24 +71,6 @@ namespace NetAF.Logic
             DisplaySize = displaySize;
             ExitMode = exitMode;
             Interpreter = interpreter;
-        }
-
-        #endregion
-
-        #region StaticMethods
-
-        /// <summary>
-        /// Create the default interpreter.
-        /// </summary>
-        /// <returns></returns>
-        private static IInterpreter CreateDefaultInterpreter()
-        {
-            return new InputInterpreter(
-                new FrameCommandInterpreter(),
-                new GlobalCommandInterpreter(),
-                new GameCommandInterpreter(),
-                new CustomCommandInterpreter(),
-                new ConversationCommandInterpreter());
         }
 
         #endregion
