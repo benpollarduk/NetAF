@@ -85,12 +85,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
-            gridStringBuilder.DrawWrapped(game.Name, leftMargin, lastY + 3, availableWidth, NameColor, out _, out lastY);
+            gridStringBuilder.DrawWrapped(game.Info.Name, leftMargin, lastY + 3, availableWidth, NameColor, out _, out lastY);
 
-            gridStringBuilder.DrawWrapped(game.Description.EnsureFinishedSentence(), leftMargin, lastY + 2, availableWidth, DescriptionColor, out _, out lastY);
+            gridStringBuilder.DrawWrapped(game.Info.Description.EnsureFinishedSentence(), leftMargin, lastY + 2, availableWidth, DescriptionColor, out _, out lastY);
 
-            if (!string.IsNullOrEmpty(game.Author))
-                gridStringBuilder.DrawWrapped($"Created by: {game.Author}.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
+            if (!string.IsNullOrEmpty(game.Info.Author))
+                gridStringBuilder.DrawWrapped($"Created by: {game.Info.Author}.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
             else
                 gridStringBuilder.DrawWrapped("NetAF by Ben Pollard 2011 - 2023.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
 

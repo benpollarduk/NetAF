@@ -3,14 +3,19 @@
     /// <summary>
     /// Provides a container for game end conditions.
     /// </summary>
-    public class GameEndConditions
+    public sealed class GameEndConditions
     {
         #region StaticProperties
 
         /// <summary>
-        /// Get a default EndCheck that returns EndCheckResult.NotEnded.
+        /// Get an end check that returns EndCheckResult.NotEnded.
         /// </summary>
         public static EndCheck NotEnded => (g) => EndCheckResult.NotEnded;
+
+        /// <summary>
+        /// Get a value for no end.
+        /// </summary>
+        public static GameEndConditions NoEnd { get; } = new GameEndConditions(NotEnded, NotEnded);
 
         #endregion
 

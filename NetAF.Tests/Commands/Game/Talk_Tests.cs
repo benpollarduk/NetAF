@@ -24,7 +24,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenNoPlayer_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Talk(null);
 
             var result = command.Invoke(game);
@@ -35,7 +35,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenPlayerThatCannotConverse_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(null, () => new PlayableCharacter(string.Empty, string.Empty, false)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(null, () => new PlayableCharacter(string.Empty, string.Empty, false)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Talk(null);
 
             var result = command.Invoke(game);
@@ -46,7 +46,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenTargetIsDead_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, null, false, null);
             var command = new Talk(npc);
 
@@ -58,7 +58,7 @@ namespace NetAF.Tests.Commands.Game
         [TestMethod]
         public void GivenTarget_WhenInvoke_ThenInternal()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(null, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(null, () => new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty);
             var command = new Talk(npc);
 

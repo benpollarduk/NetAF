@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides information about a game.
     /// </summary>
-    public class GameInfo
+    public sealed class GameInfo
     {
         #region Properties
 
@@ -17,6 +17,11 @@
         /// </summary>
         public string Description { get; private set; }
 
+        /// <summary>
+        /// Get the author.
+        /// </summary>
+        public string Author { get; set; }
+
         #endregion
 
         #region Constructors
@@ -26,10 +31,12 @@
         /// </summary>
         /// <param name="name">The name of the game.</param>
         /// <param name="description">A description of the game.</param>
-        public GameInfo(string name, string description)
+        /// <param name="author">A author of the game.</param>
+        public GameInfo(string name, string description, string author)
         {
             Name = name;
             Description = description;
+            Author = author;
         }
 
         #endregion

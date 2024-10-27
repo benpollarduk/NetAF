@@ -20,7 +20,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);
@@ -58,7 +58,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => overworld, () => character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);

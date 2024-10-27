@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a collection of asset generators required to create a game.
     /// </summary>
-    public class GameAssetGenerators
+    public sealed class GameAssetGenerators
     {
         #region Properties
 

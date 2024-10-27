@@ -113,7 +113,7 @@ namespace NetAF.Examples
                 }
 
                 var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
-                var creator = Game.Create(new GameInfo("NetAF Demo", about), about, new GameAssetGenerators(overworldCreator, () => new Player().Instantiate()), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), GameConfiguration.Default);
+                var creator = Game.Create(new GameInfo("NetAF Demo", about, "NetAF"), about, new GameAssetGenerators(overworldCreator, () => new Player().Instantiate()), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), GameConfiguration.Default);
 
                 Game.Execute(creator);
             }

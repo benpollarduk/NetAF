@@ -18,7 +18,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ColorAboutFrameBuilder(gridStringBuilder);
 
-                builder.Build(string.Empty, Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke(), 80, 50);
+                builder.Build(string.Empty, Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke(), 80, 50);
             });
         }
     }

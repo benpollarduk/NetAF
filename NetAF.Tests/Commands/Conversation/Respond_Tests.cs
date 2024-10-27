@@ -23,7 +23,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenNullResponse_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Respond(null);
 
             var result = command.Invoke(game);
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenNoConverser_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var response = new Response("");
             var command = new Respond(response);
 
@@ -46,7 +46,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenValidGame_WhenInvoke_ThenInternal()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, new GameAssetGenerators(() => null, () => null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var response = new Response("");
             var paragraph = new Paragraph(string.Empty) { Responses = [response] };
             var conversation = new NetAF.Conversations.Conversation(paragraph);

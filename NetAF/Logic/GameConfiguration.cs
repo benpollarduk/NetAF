@@ -7,7 +7,7 @@ namespace NetAF.Logic
     /// <summary>
     /// Represents a configuration for a game.
     /// </summary>
-    public class GameConfiguration
+    public sealed class GameConfiguration
     {
         #region StaticProperties
 

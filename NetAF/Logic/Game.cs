@@ -21,12 +21,6 @@ namespace NetAF.Logic
     /// </summary>
     public sealed class Game
     {
-        #region Fields
-
-        private FrameBuilderCollection frameBuilders;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -60,9 +54,9 @@ namespace NetAF.Logic
         public Overworld Overworld { get; }
 
         /// <summary>
-        /// Get the name.
+        /// Get the info.
         /// </summary>
-        public string Name { get; }
+        public GameInfo Info { get; }
 
         /// <summary>
         /// Get the introduction.
@@ -70,19 +64,14 @@ namespace NetAF.Logic
         public string Introduction { get; }
 
         /// <summary>
-        /// Get the description.
+        /// Get the configuration.
         /// </summary>
-        public string Description { get; }
+        public GameConfiguration Configuration { get; private set; }
 
         /// <summary>
-        /// Get or set the name of the author.
+        /// Get the end conditions.
         /// </summary>
-        public string Author { get; set; }
-
-        /// <summary>
-        /// Get or set the error prefix.
-        /// </summary>
-        public string ErrorPrefix { get; set; }
+        public GameEndConditions EndConditions { get; private set; }
 
         /// <summary>
         /// Get if this is executing.
@@ -90,49 +79,9 @@ namespace NetAF.Logic
         public bool IsExecuting { get; private set; }
 
         /// <summary>
-        /// Get or set the interpreter.
-        /// </summary>
-        private IInterpreter Interpreter { get; set; }
-
-        /// <summary>
-        /// Get the size of the display area.
-        /// </summary>
-        public Size DisplaySize { get; }
-
-        /// <summary>
-        /// Get or set the exit mode for this game.
-        /// </summary>
-        internal ExitMode ExitMode { get; set; } = ExitMode.ReturnToTitleScreen;
-
-        /// <summary>
-        /// Get or set the collection of frame builders used to render this game.
-        /// </summary>
-        public FrameBuilderCollection FrameBuilders
-        {
-            get { return frameBuilders; }
-            set
-            {
-                frameBuilders = value;
-
-                if (State == GameState.Active)
-                    Refresh(CurrentFrame);
-            }
-        }
-
-        /// <summary>
         /// Get or set the current Frame.
         /// </summary>
         private IFrame CurrentFrame { get; set; }
-
-        /// <summary>
-        /// Get or set the completion condition.
-        /// </summary>
-        internal EndCheck CompletionCondition { get; set; }
-
-        /// <summary>
-        /// Get or set the game over condition.
-        /// </summary>
-        internal EndCheck GameOverCondition { get; set; }
 
         /// <summary>
         /// Get or set the adapter for the console.
@@ -156,20 +105,20 @@ namespace NetAF.Logic
         /// <summary>
         /// Initializes a new instance of the Game class.
         /// </summary>
-        /// <param name="name">The name of this game.</param>
-        /// <param name="introduction">An to the game.</param>
-        /// <param name="description">A description of this game.</param>
-        /// <param name="player">The Player to use for this game.</param>
-        /// <param name="overworld">An Overworld to use for this game.</param>
-        /// <param name="displaySize">The display size.</param>
-        private Game(string name, string introduction, string description, PlayableCharacter player, Overworld overworld, Size displaySize)
+        /// <param name="info">The information about this game..</param>
+        /// <param name="introduction">An introduction to the game.</param>
+        /// <param name="player">The playable character for this game.</param>
+        /// <param name="overworld">The games overworld.</param>
+        /// <param name="endConditions">The games end conditions.</param>
+        /// <param name="configuration">The configuration to use for this game.</param>
+        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, GameConfiguration configuration)
         {
-            Name = name;
+            Info = info;
             Introduction = introduction;
-            Description = description;
             Player = player;
             Overworld = overworld;
-            DisplaySize = displaySize;
+            Configuration = configuration;
+            EndConditions = endConditions;
         }
 
         #endregion
@@ -209,12 +158,12 @@ namespace NetAF.Logic
 
             SetupAdapter();
             
-            Refresh(FrameBuilders.TitleFrameBuilder.Build(Name, Introduction, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.TitleFrameBuilder.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
             do
             {
                 if (ActiveConverser != null)
-                    Refresh(FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Interpreter?.GetContextualCommandHelp(this), DisplaySize.Width, DisplaySize.Height));
+                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter?.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
                 var input = GetInput();
                 var reaction = ExecuteLogicOnce(input, out var displayReactionToInput);
@@ -282,13 +231,13 @@ namespace NetAF.Logic
         /// <returns>True if the condition was met.</returns>
         private bool TestAndHandleGameOver()
         {
-            var gameOverCheckResult = GameOverCondition(this) ?? EndCheckResult.NotEnded;
+            var gameOverCheckResult = EndConditions.GameOverCondition(this) ?? EndCheckResult.NotEnded;
 
             if (!gameOverCheckResult.HasEnded)
                 return false;
 
             GetInput();
-            Refresh(FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
             
@@ -301,13 +250,13 @@ namespace NetAF.Logic
         /// <returns>True if the condition was met.</returns>
         private bool TestAndHandleGameCompletion()
         {
-            var endCheckResult = CompletionCondition(this) ?? EndCheckResult.NotEnded;
+            var endCheckResult = EndConditions.CompletionCondition(this) ?? EndCheckResult.NotEnded;
 
             if (!endCheckResult.HasEnded) 
                 return false;
 
             GetInput();
-            Refresh(FrameBuilders.CompletionFrameBuilder.Build(endCheckResult.Title, endCheckResult.Description, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.CompletionFrameBuilder.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
 
@@ -331,7 +280,7 @@ namespace NetAF.Logic
 
             displayReaction = true;
             input = StringUtilities.PreenInput(input);
-            var interpretation = Interpreter?.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
+            var interpretation = Configuration.Interpreter?.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
 
             if (interpretation.WasInterpretedSuccessfully)
                 return interpretation.Command.Invoke(this);
@@ -351,7 +300,7 @@ namespace NetAF.Logic
             switch (reaction.Result)
             {
                 case ReactionResult.Error:
-                    var message = ErrorPrefix + ": " + reaction.Description;
+                    var message = Configuration.ErrorPrefix + ": " + reaction.Description;
                     Refresh(message);
                     break;
                 case ReactionResult.OK:
@@ -406,12 +355,25 @@ namespace NetAF.Logic
         }
 
         /// <summary>
+        /// Set the collection of frame builders used to render this game.
+        /// </summary>
+        /// <param name="frameBuilderCollection">The collection of frame builders.</param>
+        /// <param name="refresh">Set if the display should be refreshed with the new collection.</param>
+        public void ChangeFrameBuilders(FrameBuilderCollection frameBuilderCollection, bool refresh = true)
+        {
+            Configuration = new GameConfiguration(Configuration.DisplaySize, frameBuilderCollection, Configuration.ExitMode, Configuration.ErrorPrefix, Configuration.Interpreter);
+
+            if (refresh && State == GameState.Active)
+                Refresh(CurrentFrame);
+        }
+
+        /// <summary>
         /// Enter the game.
         /// </summary>
         private void Enter()
         {
             State = GameState.Active;
-            Refresh(FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, DisplayCommandListInSceneFrames ? Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -476,7 +438,7 @@ namespace NetAF.Logic
         /// <param name="message">Any message to display.</param>
         private void Refresh(string message)
         {
-            Refresh(FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, DisplayCommandListInSceneFrames ? Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -495,10 +457,10 @@ namespace NetAF.Logic
         public void DisplayHelp()
         {
             var commands = new List<CommandHelp>();
-            commands.AddRange(Interpreter.SupportedCommands);
-            commands.AddRange(Interpreter.GetContextualCommandHelp(this));
+            commands.AddRange(Configuration.Interpreter.SupportedCommands);
+            commands.AddRange(Configuration.Interpreter.GetContextualCommandHelp(this));
 
-            Refresh(FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -506,7 +468,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayMap()
         {
-            Refresh(FrameBuilders.RegionMapFrameBuilder.Build(Overworld.CurrentRegion, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.RegionMapFrameBuilder.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -514,7 +476,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayAbout()
         {
-            Refresh(FrameBuilders.AboutFrameBuilder.Build("About", this, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.AboutFrameBuilder.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -524,7 +486,7 @@ namespace NetAF.Logic
         /// <param name="message">The message.</param>
         public void DisplayTransition(string title, string message)
         {
-            Refresh(FrameBuilders.TransitionFrameBuilder.Build(title, message, DisplaySize.Width, DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.TransitionFrameBuilder.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         #endregion
@@ -545,15 +507,7 @@ namespace NetAF.Logic
         {
             return () =>
             {
-                var game = new Game(info.Name, introduction, info.Description, assetGenerators.PlayerGenerator?.Invoke(), assetGenerators.OverworldGenerator?.Invoke(), configuration.DisplaySize)
-                {
-                    FrameBuilders = configuration.FrameBuilders,
-                    CompletionCondition = conditions?.CompletionCondition,
-                    GameOverCondition = conditions?.GameOverCondition,
-                    ExitMode = configuration.ExitMode,
-                    ErrorPrefix = configuration.ErrorPrefix,
-                    Interpreter = configuration.Interpreter
-                };
+                var game = new Game(info, introduction, assetGenerators.PlayerGenerator?.Invoke(), assetGenerators.OverworldGenerator?.Invoke(), conditions, configuration);
 
                 setup?.Invoke(game);
 
@@ -574,7 +528,7 @@ namespace NetAF.Logic
                 var game = creator.Invoke();
                 game.Execute();
 
-                switch (game.ExitMode)
+                switch (game.Configuration.ExitMode)
                 {
                     case ExitMode.ExitApplication:
                         run = false;
