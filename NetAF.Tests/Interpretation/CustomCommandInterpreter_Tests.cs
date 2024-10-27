@@ -6,7 +6,6 @@ using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Utilities;
 
 namespace NetAF.Tests.Interpretation
 {

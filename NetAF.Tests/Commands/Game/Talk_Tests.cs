@@ -4,7 +4,6 @@ using NetAF.Assets.Interaction;
 using NetAF.Commands.Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
-using NetAF.Assets.Locations;
 
 namespace NetAF.Tests.Commands.Game
 {

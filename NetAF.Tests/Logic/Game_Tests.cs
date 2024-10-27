@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
@@ -376,6 +375,20 @@ namespace NetAF.Tests.Logic
             Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default, setup).Invoke();
 
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGame_WhenChangeFrameBuilderCollection_ThenCollectionUpdated()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            game.ChangeFrameBuilders(null);
+
+            Assert.IsNull(game.Configuration.FrameBuilders);
         }
     }
 }

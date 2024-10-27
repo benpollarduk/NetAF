@@ -3,7 +3,6 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
-using NetAF.Utilities;
 
 namespace NetAF.Tests.Assets
 {

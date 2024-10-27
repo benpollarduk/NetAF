@@ -2,8 +2,6 @@
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Assets.Characters;
-using NetAF.Utilities;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Color
 {
