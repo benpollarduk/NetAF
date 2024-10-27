@@ -201,7 +201,7 @@ namespace NetAF.Tests.Logic
             var room = new Room(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter("Player", string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = game.FindInteractionTarget("Player");
 
@@ -229,7 +229,7 @@ namespace NetAF.Tests.Logic
             var room = new Room("Room", string.Empty);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty), string.Empty, new GameAssetGenerators(overworldMaker.Make, () => new PlayableCharacter(string.Empty, string.Empty, new Item("Item", string.Empty))), new GameEndConditions(GameEndConditions.NotEnded, GameEndConditions.NotEnded), GameConfiguration.Default).Invoke();
 
             var result = game.FindInteractionTarget("Item");
 
