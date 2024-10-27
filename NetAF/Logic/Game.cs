@@ -569,8 +569,9 @@ namespace NetAF.Logic
         /// <param name="playerGenerator">The function to generate the player with.</param>
         /// <param name="completionCondition">The callback used to check game completion.</param>
         /// <param name="gameOverCondition">The callback used to check game over.</param>
+        /// <param name="setup">A setup function to run on the created game after it has been created.</param>
         /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition)
+        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition, GameSetupCallback setup = null)
         {
             return Create(
                 name,
@@ -584,7 +585,8 @@ namespace NetAF.Logic
                 FrameBuilderCollections.Default,
                 ExitMode.ReturnToTitleScreen,
                 DefaultErrorPrefix,
-                DefaultInterpreter);
+                DefaultInterpreter,
+                setup);
         }
 
         /// <summary>
@@ -602,8 +604,9 @@ namespace NetAF.Logic
         /// <param name="exitMode">The exit mode.</param>
         /// <param name="errorPrefix">A prefix to use when displaying errors.</param>
         /// <param name="interpreter">The interpreter.</param>
+        /// <param name="setup">A setup function to run on the created game after it has been created.</param>
         /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition, Size displaySize, FrameBuilderCollection frameBuilders, ExitMode exitMode, string errorPrefix, IInterpreter interpreter)
+        public static GameCreationCallback Create(string name, string introduction, string description, OverworldCreationCallback overworldGenerator, PlayerCreationCallback playerGenerator, EndCheck completionCondition, EndCheck gameOverCondition, Size displaySize, FrameBuilderCollection frameBuilders, ExitMode exitMode, string errorPrefix, IInterpreter interpreter, GameSetupCallback setup = null)
         {
             return () =>
             {
@@ -616,6 +619,8 @@ namespace NetAF.Logic
                     ErrorPrefix = errorPrefix,
                     Interpreter = interpreter
                 };
+
+                setup?.Invoke(game);
 
                 return game;
             };
