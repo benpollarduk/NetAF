@@ -45,10 +45,10 @@ Rooms contain exits. Exits can be locked to block progress through the game.
 
 ```csharp
 // create a test room
-var room = new Room("Test Room", "A test room.");
+Room room = new("Test Room", "A test room.");
         
 // add an exit to the north
-room.AddExit(new Exit(Direction.North));
+room.AddExit(new(Direction.North));
 ```
 
 ### Items
@@ -56,14 +56,14 @@ Items add richness to a game. Items support interaction with the player, rooms, 
 For example, using item A on item B may cause item B to morph into item C.
 
 ```csharp
-var sword = new Item("Sword", "The heroes sword.");
+Item sword = new("Sword", "The heroes sword.");
 ```
 
 ### Playable Character
 Each NetAF game has a single playable character. The game is played through the view point of the playable character.
 
 ```csharp
-var player = new PlayableChracter("Dave", "The hero of the story.");
+PlayableCharacter player = new("Dave", "The hero of the story.");
 ```
 
 ### Non-playable Characters
@@ -71,7 +71,7 @@ Non-playable characters (NPC's) can be added to rooms and can help drive the nar
 and interact with items.
 
 ```csharp
-var npc = new NonPlayableChracter("Gary", "The antagonist of the story.");
+NonPlayableCharacter npc = new("Gary", "The antagonist of the story.");
 ```
   
 ### Commands
@@ -138,17 +138,17 @@ dotnet add package NetAF
 ### Hello World
 ```csharp
 // create the player. this is the character the user plays as
-var player = new PlayableCharacter("Dave", "A young boy on a quest to find the meaning of life.");
+PlayableCharacter player = new("Dave", "A young boy on a quest to find the meaning of life.");
 
-/// create region maker. the region maker simplifies creating in game regions. a region contains a series of rooms
-var regionMaker = new RegionMaker("Mountain", "An imposing volcano just East of town.")
+// create region maker. the region maker simplifies creating in game regions. a region contains a series of rooms
+RegionMaker regionMaker = new("Mountain", "An imposing volcano just East of town.")
 {
     // add a room to the region at position x 0, y 0, z 0
-    [0, 0, 0] = new Room("Cavern", "A dark cavern set in to the base of the mountain.")
+    [0, 0, 0] = new("Cavern", "A dark cavern set in to the base of the mountain.")
 };
 
 // create overworld maker. the overworld maker simplifies creating in game overworlds. an overworld contains a series or regions
-var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
+OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
 
 // create the callback for generating new instances of the game
 // - information about the game
@@ -157,7 +157,7 @@ var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", re
 // - the conditions that end the game
 // - the configuration for the game
 var gameCreator = Game.Create(
-    new GameInfo("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
+    new("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
     "Dave awakes to find himself in a cavern...",
     AssetGenerator.Retained(overworldMaker.Make(), player),
     GameEndConditions.NoEnd,
