@@ -13,7 +13,7 @@ namespace NetAF.Assets.Locations
         #region Fields
 
         private Room currentRoom;
-        private readonly List<RoomPosition> roomPositions = new();
+        private readonly List<RoomPosition> roomPositions = [];
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace NetAF.Assets.Locations
                     for (var x = 0; x < matrix.Width; x++)
                     {
                         if (room == matrix[x, y, z])
-                            return new RoomPosition(room, x, y, z);
+                            return new(room, x, y, z);
                     }
                 }
             }
@@ -139,7 +139,7 @@ namespace NetAF.Assets.Locations
             var addable = !roomPositions.Exists(r => r.Room == room ||  r.IsAtPosition(x, y, z));
 
             if (addable)
-                roomPositions.Add(new RoomPosition(room, x, y, z));
+                roomPositions.Add(new(room, x, y, z));
 
             return addable;
         }
@@ -338,7 +338,7 @@ namespace NetAF.Assets.Locations
         /// <returns>A ExaminationResult detailing the examination of this object.</returns>
         public override ExaminationResult Examine(ExaminationScene scene)
         {
-            return new ExaminationResult(Identifier + ": " + Description.GetDescription());
+            return new(Identifier + ": " + Description.GetDescription());
         }
 
         #endregion

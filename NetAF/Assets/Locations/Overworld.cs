@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NetAF.Extensions;
 
 namespace NetAF.Assets.Locations
@@ -20,7 +19,7 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get the regions in this overworld.
         /// </summary>
-        public Region[] Regions { get; private set; } = Array.Empty<Region>();
+        public Region[] Regions { get; private set; } = [];
 
         /// <summary>
         /// Get the current region.
@@ -122,7 +121,7 @@ namespace NetAF.Assets.Locations
         /// <returns>A ExaminationResult detailing the examination of this object.</returns>
         public override ExaminationResult Examine(ExaminationScene scene)
         {
-            return new ExaminationResult(Description.GetDescription());
+            return new(Description.GetDescription());
         }
 
         #endregion

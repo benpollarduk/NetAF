@@ -171,7 +171,7 @@ namespace NetAF.Interpretation
         /// Get an array of all supported commands.
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
-        {
+        [
             new CommandHelp($"{North}/{NorthShort}", "Move north"),
             new CommandHelp($"{East}/{EastShort}", "Move east"),
             new CommandHelp($"{South}/{SouthShort}", "Move south"),
@@ -185,7 +185,7 @@ namespace NetAF.Interpretation
             new CommandHelp($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"),
             new CommandHelp($"{Use} {Variable}", "Use an item on the current room"),
             new CommandHelp($"{Use} {Variable} {On.ToLower()} {Variable}", "Use an item on another item or character")
-        };
+        ];
 
         #endregion
 
@@ -259,7 +259,7 @@ namespace NetAF.Interpretation
             // it no item specified then find the first takeable one
             if (string.IsNullOrEmpty(noun))
             {
-                item = game.Overworld.CurrentRegion.CurrentRoom.Items.FirstOrDefault(x => x.IsPlayerVisible && x.IsTakeable);
+                item = Array.Find(game.Overworld.CurrentRegion.CurrentRoom.Items, x => x.IsPlayerVisible && x.IsTakeable);
 
                 if (item == null)
                 {
@@ -543,29 +543,29 @@ namespace NetAF.Interpretation
         {
             // try and parse as movement
             if (TryParseToDirection(input, out var direction))
-                return new InterpretationResult(true, new Move(direction));
+                return new(true, new Move(direction));
 
             // handle as drop command
             if (TryParseDropCommand(input, game, out var drop))
-                return new InterpretationResult(true, drop);
+                return new(true, drop);
 
             // handle as examine command
             if (TryParseExamineCommand(input, game, out var examine))
-                return new InterpretationResult(true, examine);
+                return new(true, examine);
 
             // handle as take command
             if (TryParseTakeCommand(input, game, out var take))
-                return new InterpretationResult(true, take);
+                return new(true, take);
 
             // handle as talk command
             if (TryParseTalkCommand(input, game, out var talk))
-                return new InterpretationResult(true, talk);
+                return new(true, talk);
 
             // handle as use on command
             if (TryParseUseOnCommand(input, game, out var useOn))
-                return new InterpretationResult(true, useOn);
+                return new(true, useOn);
 
-            return new InterpretationResult(false, new Unactionable("Invalid input."));
+            return new(false, new Unactionable("Invalid input."));
         }
 
         /// <summary>
@@ -576,49 +576,49 @@ namespace NetAF.Interpretation
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
             if (game.ActiveConverser?.Conversation != null)
-                return Array.Empty<CommandHelp>();
+                return [];
 
-            var commands = new List<CommandHelp>();
+            List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(new CommandHelp($"{North}/{NorthShort}", "Move north"));
+                commands.Add(new($"{North}/{NorthShort}", "Move north"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(new CommandHelp($"{East}/{EastShort}", "Move east"));
+                commands.Add(new($"{East}/{EastShort}", "Move east"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(new CommandHelp($"{South}/{SouthShort}", "Move south"));
+                commands.Add(new($"{South}/{SouthShort}", "Move south"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(new CommandHelp($"{West}/{WestShort}", "Move west"));
+                commands.Add(new($"{West}/{WestShort}", "Move west"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(new CommandHelp($"{Up}/{UpShort}", "Move up"));
+                commands.Add(new($"{Up}/{UpShort}", "Move up"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(new CommandHelp($"{Down}/{DownShort}", "Move down"));
+                commands.Add(new($"{Down}/{DownShort}", "Move down"));
 
-            commands.Add(new CommandHelp($"{Examine}/{ExamineShort} {Variable}", "Examine anything in the game"));
+            commands.Add(new($"{Examine}/{ExamineShort} {Variable}", "Examine anything in the game"));
 
             if (game.Player.Items.Any())
-                commands.Add(new CommandHelp($"{Drop}/{DropShort} {Variable}", "Drop an item"));
+                commands.Add(new($"{Drop}/{DropShort} {Variable}", "Drop an item"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
             {
-                commands.Add(new CommandHelp($"{Take}/{TakeShort} {Variable}", "Take an item"));
-                commands.Add(new CommandHelp($"{Take}/{TakeShort} {All}", "Take all items in the current room"));
+                commands.Add(new($"{Take}/{TakeShort} {Variable}", "Take an item"));
+                commands.Add(new($"{Take}/{TakeShort} {All}", "Take all items in the current room"));
             }
 
             if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
-                commands.Add(new CommandHelp($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"));
+                commands.Add(new($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
             {
-                commands.Add(new CommandHelp($"{Use} {Variable}", "Use an item on the current room"));
-                commands.Add(new CommandHelp($"{Use} {Variable} {On.ToLower()} {Variable}", "Use an item on another item or character"));
+                commands.Add(new($"{Use} {Variable}", "Use an item on the current room"));
+                commands.Add(new($"{Use} {Variable} {On.ToLower()} {Variable}", "Use an item on another item or character"));
             }
 
-            return commands.ToArray();
+            return [.. commands];
         }
 
         #endregion

@@ -23,7 +23,7 @@ namespace NetAF.Tests.Extensions
         {
             var value = new[] { new Item(string.Empty, string.Empty) };
 
-            var result = value.Remove(new Item(string.Empty, string.Empty));
+            var result = value.Remove(new(string.Empty, string.Empty));
 
             Assert.AreEqual(1, result.Length);
         }
@@ -33,7 +33,7 @@ namespace NetAF.Tests.Extensions
         {
             var value = Array.Empty<Item>();
 
-            var result = value.Remove(new Item(string.Empty, string.Empty));
+            var result = value.Remove(new(string.Empty, string.Empty));
 
             Assert.IsNotNull(result);
         }
@@ -43,7 +43,7 @@ namespace NetAF.Tests.Extensions
         {
             var value = Array.Empty<Item>();
 
-            var result = value.Remove(new Item(string.Empty, string.Empty));
+            var result = value.Remove(new(string.Empty, string.Empty));
 
             Assert.AreEqual(0, result.Length);
         }

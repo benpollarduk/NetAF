@@ -20,7 +20,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            return new Room(Name, Description, new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West));
+            return new(Name, Description, new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West));
         }
 
         #endregion

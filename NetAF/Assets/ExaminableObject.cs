@@ -54,7 +54,7 @@ namespace NetAF.Assets
             if (request.Examinable.Attributes.Count > 0)
                 description.Append($"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
 
-            return new ExaminationResult(description.ToString());
+            return new(description.ToString());
         };
 
         #endregion
@@ -101,7 +101,7 @@ namespace NetAF.Assets
         /// <returns>A ExaminationResult detailing the examination of this object.</returns>
         public virtual ExaminationResult Examine(ExaminationScene scene)
         {
-            return Examination(new ExaminationRequest(this, scene));
+            return Examination(new(this, scene));
         }
 
         #endregion

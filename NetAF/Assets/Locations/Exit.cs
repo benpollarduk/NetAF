@@ -37,7 +37,7 @@ namespace NetAF.Assets.Locations
         /// <param name="description">A description of the exit.</param>
         public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null)
         {
-            Identifier = identifier ?? new Identifier(direction.ToString());
+            Identifier = identifier ?? new(direction.ToString());
             Direction = direction;
             Description = description ?? GenerateDescription();
             IsLocked = isLocked;

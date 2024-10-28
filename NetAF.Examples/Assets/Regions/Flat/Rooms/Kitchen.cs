@@ -31,9 +31,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             room.Interaction = (item) =>
             {
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
-                    return new InteractionResult(InteractionEffect.NoEffect, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
+                    return new(InteractionEffect.NoEffect, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
 
-                return new InteractionResult(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NoEffect, item);
             };
 
             return room;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using NetAF.Adapters;
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
@@ -16,17 +15,17 @@ namespace NetAF.Tests.Logic
         /// <summary>
         /// Get or set the input bytes.
         /// </summary>
-        public byte[] InBytes { get; set; } = Array.Empty<byte>();
+        public byte[] InBytes { get; set; } = [];
 
         /// <summary>
         /// Get or set the output bytes.
         /// </summary>
-        public byte[] OutBytes { get; set; } = Array.Empty<byte>();
+        public byte[] OutBytes { get; set; } = [];
 
         /// <summary>
         /// Get or set the output error bytes.
         /// </summary>
-        public byte[] ErrorBytes { get; set; } = Array.Empty<byte>();
+        public byte[] ErrorBytes { get; set; } = [];
 
         /// <summary>
         /// Get the input stream.

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace NetAF.Extensions
 {
@@ -17,9 +16,9 @@ namespace NetAF.Extensions
         /// <returns>The original array with the element appended.</returns>
         internal static T[] Add<T>(this T[] value, T element)
         {
-            var list = value?.ToList() ?? new List<T>();
+            var list = value?.ToList() ?? [];
             list.Add(element);
-            return list.ToArray();
+            return [.. list];
         }
 
         /// <summary>
@@ -31,9 +30,9 @@ namespace NetAF.Extensions
         /// <returns>The original array with the element removed.</returns>
         internal static T[] Remove<T>(this T[] value, T element)
         {
-            var list = value?.ToList() ?? new List<T>();
+            var list = value?.ToList() ?? [];
             list.Remove(element);
-            return list.ToArray();
+            return [.. list];
         }
     }
 }

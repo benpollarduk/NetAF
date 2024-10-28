@@ -45,7 +45,7 @@ namespace NetAF.Commands.Game
         /// <returns>The reaction.</returns>
         public Reaction Invoke(Logic.Game game)
         {
-            return new Reaction(ReactionResult.Error, Description);
+            return new(ReactionResult.Error, Description);
         }
 
         #endregion

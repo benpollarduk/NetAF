@@ -28,21 +28,21 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
             var room = new Room(Name, Description);
 
             var conversation = new Conversation(
-                new Paragraph("Squarrrkkk!"),
-                new Paragraph("Would you like to change modes?", "ModeQuestion")
+                new("Squarrrkkk!"),
+                new("Would you like to change modes?", "ModeQuestion")
                 {
                     Responses =
                     [
-                        new Response("Yes please, change to default."),
-                        new Response("Yes please, change to simple.", new Jump(2)),
-                        new Response("Yes please, change to legacy.", new Jump(3)),
-                        new Response("No thanks, keep things as they are.", new Jump(4))
+                        new("Yes please, change to default."),
+                        new("Yes please, change to simple.", new Jump(2)),
+                        new("Yes please, change to legacy.", new Jump(3)),
+                        new("No thanks, keep things as they are.", new Jump(4))
                     ]
                 },
-                new Paragraph("Arrk! Color it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Default, new ToName("ModeQuestion")),
-                new Paragraph("Eeek, simple be fine too! Shame it's been deleted. Maybe it will be implemented again one day! Eeek!", new ToName("ModeQuestion")),
-                new Paragraph("Squarrk! Legacy, looks old. Shame it's been deleted. Maybe it will be implemented again one day! Arrk!", new ToName("ModeQuestion")),
-                new Paragraph("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
+                new("Arrk! Color it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Default, new ToName("ModeQuestion")),
+                new("Eeek, simple be fine too! Shame it's been deleted. Maybe it will be implemented again one day! Eeek!", new ToName("ModeQuestion")),
+                new("Squarrk! Legacy, looks old. Shame it's been deleted. Maybe it will be implemented again one day! Arrk!", new ToName("ModeQuestion")),
+                new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
             );
 
             room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."))

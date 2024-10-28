@@ -8,7 +8,10 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Provides a class for building strings as part of a grid.
     /// </summary>
-    public class GridStringBuilder
+    /// <param name="leftBoundaryCharacter">The character to use for left boundaries.</param>
+    /// <param name="rightBoundaryCharacter">The character to use for right boundaries.</param>
+    /// <param name="horizontalDividerCharacter">The character to use for horizontal dividers.</param>
+    public class GridStringBuilder(char leftBoundaryCharacter = (char)124, char rightBoundaryCharacter = (char)124, char horizontalDividerCharacter = (char)45)
     {
         #region Fields
 
@@ -22,17 +25,17 @@ namespace NetAF.Rendering.FrameBuilders
         /// <summary>
         /// Get or set the character used for left boundary.
         /// </summary>
-        public char LeftBoundaryCharacter { get; set; }
+        public char LeftBoundaryCharacter { get; set; } = leftBoundaryCharacter;
 
         /// <summary>
         /// Get or set the character used for right boundary.
         /// </summary>
-        public char RightBoundaryCharacter { get; set; }
+        public char RightBoundaryCharacter { get; set; } = rightBoundaryCharacter;
 
         /// <summary>
         /// Get or set the character used for horizontal dividers.
         /// </summary>
-        public char HorizontalDividerCharacter { get; set; }
+        public char HorizontalDividerCharacter { get; set; } = horizontalDividerCharacter;
 
         /// <summary>
         /// Get or set the line terminator.
@@ -43,23 +46,6 @@ namespace NetAF.Rendering.FrameBuilders
         /// Get the display size.
         /// </summary>
         public Size DisplaySize { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the GridStringBuilder class.
-        /// </summary>
-        /// <param name="leftBoundaryCharacter">The character to use for left boundaries.</param>
-        /// <param name="rightBoundaryCharacter">The character to use for right boundaries.</param>
-        /// <param name="horizontalDividerCharacter">The character to use for horizontal dividers.</param>
-        public GridStringBuilder(char leftBoundaryCharacter = (char)124, char rightBoundaryCharacter = (char)124, char horizontalDividerCharacter = (char)45)
-        {
-            LeftBoundaryCharacter = leftBoundaryCharacter;
-            RightBoundaryCharacter = rightBoundaryCharacter;
-            HorizontalDividerCharacter = horizontalDividerCharacter;
-        }
 
         #endregion
 
@@ -178,30 +164,6 @@ namespace NetAF.Rendering.FrameBuilders
         }
 
         /// <summary>
-        /// Get the number of lines a string will take up.
-        /// </summary>
-        /// <param name="value">The string.</param>
-        /// <param name="startX">The start x position.</param>
-        /// <param name="startY">The start y position.</param>
-        /// <param name="maxWidth">The max width of the string.</param>
-        /// <returns>The number of lines the string will take up.</returns>
-        public int GetNumberOfLines(string value, int startX, int startY, int maxWidth)
-        {
-            var endY = startY;
-            var copy = value.Clone().ToString();
-
-            while (copy.Length > 0)
-            {
-                StringUtilities.CutLineFromParagraph(ref copy, maxWidth);
-
-                if (copy.Trim().Length > 0)
-                    endY++;
-            }
-
-            return endY - startY + 1;
-        }
-
-        /// <summary>
         /// Draw a wrapped string.
         /// </summary>
         /// <param name="value">The string.</param>
@@ -244,6 +206,33 @@ namespace NetAF.Rendering.FrameBuilders
 
             for (var i = 0; i < length; i++)
                 SetCell(x + i, y, underline, color);
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Get the number of lines a string will take up.
+        /// </summary>
+        /// <param name="value">The string.</param>
+        /// <param name="startY">The start y position.</param>
+        /// <param name="maxWidth">The max width of the string.</param>
+        /// <returns>The number of lines the string will take up.</returns>
+        public static int GetNumberOfLines(string value, int startY, int maxWidth)
+        {
+            var endY = startY;
+            var copy = value.Clone().ToString();
+
+            while (copy.Length > 0)
+            {
+                StringUtilities.CutLineFromParagraph(ref copy, maxWidth);
+
+                if (copy.Trim().Length > 0)
+                    endY++;
+            }
+
+            return endY - startY + 1;
         }
 
         #endregion

@@ -1,5 +1,4 @@
-﻿using System;
-using NetAF.Commands.Frame;
+﻿using NetAF.Commands.Frame;
 using NetAF.Extensions;
 using NetAF.Logic;
 
@@ -40,10 +39,10 @@ namespace NetAF.Interpretation
         /// Get an array of all supported commands.
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
-        {
+        [
             new CommandHelp($"{CommandsOn} / {CommandsOff}", "Turn commands on/off"),
             new CommandHelp($"{KeyOn} / {KeyOff} ", "Turn the key on/off")
-        };
+        ];
 
         #endregion
 
@@ -63,16 +62,16 @@ namespace NetAF.Interpretation
         public InterpretationResult Interpret(string input, Game game)
         {
             if (input.InsensitiveEquals(CommandsOff))
-                return new InterpretationResult(true, new CommandsOff());
+                return new(true, new CommandsOff());
 
             if (input.InsensitiveEquals(CommandsOn))
-                return new InterpretationResult(true, new CommandsOn());
+                return new(true, new CommandsOn());
 
             if (input.InsensitiveEquals(KeyOff))
-                return new InterpretationResult(true, new KeyOff());
+                return new(true, new KeyOff());
 
             if (input.InsensitiveEquals(KeyOn))
-                return new InterpretationResult(true, new KeyOn());
+                return new(true, new KeyOn());
 
             return InterpretationResult.Fail;
         }
@@ -84,7 +83,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return Array.Empty<CommandHelp>();
+            return [];
         }
 
         #endregion

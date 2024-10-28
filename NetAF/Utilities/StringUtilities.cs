@@ -53,7 +53,7 @@ namespace NetAF.Utilities
             const char space = (char)32;
 
             var specialCharacters = new[] { space, LF };
-            var word = string.Empty;
+            StringBuilder word = new();
 
             // prepare the start of the string
             input = input.TrimStart(space);
@@ -63,13 +63,13 @@ namespace NetAF.Utilities
                 // check for non-special characters
                 if (!specialCharacters.Contains(t))
                 {
-                    word += t;
+                    word.Append(t);
                 }
                 else
                 {
                     // check for newlines - these need to be added to the word
                     if (t == LF)
-                        word += t;
+                        word.Append(t);
 
                     break;
                 }
@@ -79,7 +79,7 @@ namespace NetAF.Utilities
             input = input.Remove(0, word.Length);
 
             // trim spaces and carriage returns from the word
-            return word.Trim(space, CR);
+            return word.ToString().Trim(space, CR);
         }
         
         /// <summary>
@@ -90,7 +90,7 @@ namespace NetAF.Utilities
         /// <returns>The line cut from the paragraph.</returns>
         internal static string CutLineFromParagraph(ref string paragraph, int maxWidth)
         {
-            var chunk = string.Empty;
+            StringBuilder chunk = new();
 
             while (chunk.Length < maxWidth)
             {
@@ -108,13 +108,13 @@ namespace NetAF.Utilities
                 if (!string.IsNullOrEmpty(word) && !word.EndsWith(Newline))
                     word += " ";
 
-                chunk += word;
+                chunk.Append(word);
 
-                if (chunk.EndsWith(Newline))
+                if (word.EndsWith(Newline))
                     break;
             }
 
-            return chunk.TrimEnd();
+            return chunk.ToString().TrimEnd();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace NetAF.Utilities
             if (!examinables.Any())
                 return string.Empty;
 
-            var builder = new StringBuilder();
+            StringBuilder builder = new();
             var examinableNames = (from i in examinables where i.IsPlayerVisible select i.Identifier).Select(x => x.Name).ToList();
 
             if (examinableNames.Count == 1)
@@ -162,7 +162,7 @@ namespace NetAF.Utilities
             if (attributes?.Any() != true)
                 return string.Empty;
 
-            var builder = new StringBuilder();
+            StringBuilder builder = new();
 
             for (var i = 0; i < attributes.Count; i++)
                 builder.Append($"{attributes.Keys.ElementAt(i).Name}: {attributes.Values.ElementAt(i)}{(i < attributes.Count - 1 ? "\t" : string.Empty)}");

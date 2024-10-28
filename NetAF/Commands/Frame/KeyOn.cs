@@ -18,10 +18,10 @@ namespace NetAF.Commands.Frame
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             game.Configuration.SceneMapKeyType = KeyType.Dynamic;
-            return new Reaction(ReactionResult.OK, "Key has been turned on.");
+            return new(ReactionResult.OK, "Key has been turned on.");
         }
 
         #endregion

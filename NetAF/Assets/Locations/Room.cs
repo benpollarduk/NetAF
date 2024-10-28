@@ -28,12 +28,12 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get all unlocked exits.
         /// </summary>
-        public Exit[] UnlockedExits => Exits.Where(x => !x.IsLocked).ToArray();
+        public Exit[] UnlockedExits => GetUnlockedExits();
 
         /// <summary>
         /// Get the characters in this Room.
         /// </summary>
-        public NonPlayableCharacter[] Characters { get; private set; } = Array.Empty<NonPlayableCharacter>();
+        public NonPlayableCharacter[] Characters { get; private set; } = [];
 
         /// <summary>
         /// Get the items in this Room.
@@ -43,14 +43,14 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get or set the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new InteractionResult(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
 
         /// <summary>
         /// Get an exit.
         /// </summary>
         /// <param name="direction">The direction of an exit.</param>
         /// <returns>The exit.</returns>
-        public Exit this[Direction direction] => Exits.FirstOrDefault(e => e.Direction == direction);
+        public Exit this[Direction direction] => Array.Find(Exits, e => e.Direction == direction);
 
         /// <summary>
         /// Get which direction this Room was entered from.
@@ -103,13 +103,22 @@ namespace NetAF.Assets.Locations
         {
             Identifier = identifier;
             Description = description;
-            Exits = exits ?? Array.Empty<Exit>();
-            Items = items ?? Array.Empty<Item>();
+            Exits = exits ?? [];
+            Items = items ?? [];
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Get unlocked exits.
+        /// </summary>
+        /// <returns>All unlocked exits.</returns>
+        private Exit[] GetUnlockedExits()
+        {
+            return Exits.Where(x => !x.IsLocked).ToArray();
+        }
 
         /// <summary>
         /// Add a character to this room.
@@ -201,7 +210,7 @@ namespace NetAF.Assets.Locations
         /// <returns>If a move in the specified direction is possible.</returns>
         public bool CanMove(Direction direction)
         {
-            return UnlockedExits.Any(x => x.Direction == direction);
+            return Array.Exists(UnlockedExits, x => x.Direction == direction);
         }
 
         /// <summary>
@@ -221,19 +230,19 @@ namespace NetAF.Assets.Locations
         /// <returns>The result of this examination.</returns>
         public override ExaminationResult Examine(ExaminationScene scene)
         {
-            if (!Items.Any(i => i.IsPlayerVisible))
-                return new ExaminationResult("There is nothing to examine.");
+            if (!Array.Exists(Items, i => i.IsPlayerVisible))
+                return new("There is nothing to examine.");
 
             if (Items.Count(i => i.IsPlayerVisible) == 1)
             {
                 var singularItem = Items.Where(i => i.IsPlayerVisible).ToArray()[0];
-                return new ExaminationResult($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
+                return new($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
             }
 
-            var items = Items?.Cast<IExaminable>().ToArray();
+            var items = Items.Cast<IExaminable>().ToArray();
             var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
             var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
-            return new ExaminationResult($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
+            return new($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
         }
 
         /// <summary>
@@ -244,7 +253,7 @@ namespace NetAF.Assets.Locations
         /// <returns>If there is a locked exit in the specified direction.</returns>
         public bool HasLockedExitInDirection(Direction direction, bool includeInvisibleExits = false)
         {
-            return Exits.Any(x => x.Direction == direction && x.IsLocked && (includeInvisibleExits || x.IsPlayerVisible));
+            return Array.Exists(Exits, x => x.Direction == direction && x.IsLocked && (includeInvisibleExits || x.IsPlayerVisible));
         }
 
         /// <summary>
@@ -255,7 +264,7 @@ namespace NetAF.Assets.Locations
         /// <returns>If there is a unlocked exit in the specified direction.</returns>
         public bool HasUnlockedExitInDirection(Direction direction, bool includeInvisibleExits = false)
         {
-            return Exits.Any(x => x.Direction == direction && !x.IsLocked && (includeInvisibleExits || x.IsPlayerVisible));
+            return Array.Exists(Exits, x => x.Direction == direction && !x.IsLocked && (includeInvisibleExits || x.IsPlayerVisible));
         }
 
         /// <summary>
@@ -265,7 +274,7 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the exit exists, else false.</returns>
         public bool ContainsExit(bool includeInvisibleExits = false)
         {
-            return Exits.Any(exit => includeInvisibleExits || exit.IsPlayerVisible);
+            return Array.Exists(Exits, exit => includeInvisibleExits || exit.IsPlayerVisible);
         }
 
         /// <summary>
@@ -276,7 +285,7 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the exit exists, else false.</returns>
         public bool ContainsExit(Direction direction, bool includeInvisibleExits = false)
         {
-            return Exits.Any(exit => exit.Direction == direction && (includeInvisibleExits || exit.IsPlayerVisible));
+            return Array.Exists(Exits, exit => exit.Direction == direction && (includeInvisibleExits || exit.IsPlayerVisible));
         }
 
         /// <summary>
@@ -318,7 +327,7 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the item is in this room, else false.</returns>
         public bool ContainsItem(string itemName, bool includeInvisibleItems = false)
         {
-            return Items.Any(item => itemName.EqualsExaminable(item) && (includeInvisibleItems || item.IsPlayerVisible));
+            return Array.Exists(Items, item => itemName.EqualsExaminable(item) && (includeInvisibleItems || item.IsPlayerVisible));
         }
 
         /// <summary>
@@ -328,7 +337,7 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the target is in this room, else false.</returns>
         public bool ContainsInteractionTarget(string targetName)
         {
-            return Items.Any(i => targetName.EqualsExaminable(i) || Characters.Any(targetName.EqualsExaminable));
+            return Array.Exists(Items, i => targetName.EqualsExaminable(i) || Array.Exists(Characters, targetName.EqualsExaminable));
         }
 
         /// <summary>
@@ -374,7 +383,7 @@ namespace NetAF.Assets.Locations
             var items = Items.Where(targetName.EqualsExaminable).ToArray();
             var nPCS = Characters.Where(targetName.EqualsExaminable).ToArray();
             var exits = Exits.Where(targetName.EqualsExaminable).ToArray();
-            var interactions = new List<IInteractWithItem>();
+            List<IInteractWithItem> interactions = [];
 
             if (items.Length > 0)
                 interactions.AddRange(items);
@@ -414,7 +423,7 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the item is in this room, else false.</returns>
         public bool ContainsCharacter(string characterName, bool includeInvisibleCharacters = false)
         {
-            return Characters.Any(character => characterName.EqualsExaminable(character) && (includeInvisibleCharacters || character.IsPlayerVisible));
+            return Array.Exists(Characters, character => characterName.EqualsExaminable(character) && (includeInvisibleCharacters || character.IsPlayerVisible));
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using NetAF.Assets;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
 using NetAF.Rendering.Frames;
@@ -67,30 +66,28 @@ namespace NetAF.Tests.Rendering.Frames
         public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
         {
             var gridStringBuilder = new GridStringBuilder();
-            gridStringBuilder.Resize(new Size(10, 10));
+            gridStringBuilder.Resize(new(10, 10));
             gridStringBuilder.DrawBoundary(AnsiColor.Black);
             var frame = new GridTextFrame(gridStringBuilder, 0, 0, AnsiColor.Black);
             byte[] data;
 
             using (var stream = new MemoryStream())
             {
-                using (var writer = new StreamWriter(stream))
-                {
-                    var presenter = new TextWriterPresenter(writer);
-                    frame.Render(presenter);
-                    writer.Flush();
-                    data = stream.ToArray();
-                }
+                using var writer = new StreamWriter(stream);
+                var presenter = new TextWriterPresenter(writer);
+                frame.Render(presenter);
+                writer.Flush();
+                data = stream.ToArray();
             }
 
-            Assert.IsTrue(data.Any(x => x != 0));
+            Assert.IsTrue(Array.Exists(data, x => x != 0));
         }
 
         [TestMethod]
         public void Given10x10GridWithBorder_WhenToString_ThenStringWithDataReturned()
         {
             var gridStringBuilder = new GridStringBuilder();
-            gridStringBuilder.Resize(new Size(10, 10));
+            gridStringBuilder.Resize(new(10, 10));
             gridStringBuilder.DrawBoundary(AnsiColor.Black);
             var frame = new GridTextFrame(gridStringBuilder, 0, 0, AnsiColor.Black);
 

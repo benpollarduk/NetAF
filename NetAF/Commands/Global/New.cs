@@ -17,10 +17,10 @@ namespace NetAF.Commands.Global
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             game.End();
-            return new Reaction(ReactionResult.OK, "New game.");
+            return new(ReactionResult.OK, "New game.");
         }
 
         #endregion

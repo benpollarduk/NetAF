@@ -3,14 +3,17 @@
     /// <summary>
     /// Represents the result of an end check.
     /// </summary>
-    public class EndCheckResult
+    /// <param name="hasEnded">If the game has ended.</param>
+    /// <param name="title">A title to describe the end.</param>
+    /// <param name="description">A description of the end.</param>
+    public class EndCheckResult(bool hasEnded, string title, string description)
     {
         #region StaticProperties
 
         /// <summary>
         /// Get a default result for not ended.
         /// </summary>
-        public static EndCheckResult NotEnded { get; } = new EndCheckResult(false, string.Empty, string.Empty);
+        public static EndCheckResult NotEnded { get; } = new(false, string.Empty, string.Empty);
 
         #endregion
 
@@ -19,34 +22,17 @@
         /// <summary>
         /// Get if the game has come to an end.
         /// </summary>
-        public bool HasEnded { get; }
+        public bool HasEnded { get; } = hasEnded;
 
         /// <summary>
         /// Get a title to describe the end.
         /// </summary>
-        public string Title { get; }
+        public string Title { get; } = title;
 
         /// <summary>
         /// Get a description of the end.
         /// </summary>
-        public string Description { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the EndCheckResult class.
-        /// </summary>
-        /// <param name="hasEnded">If the game has ended.</param>
-        /// <param name="title">A title to describe the end.</param>
-        /// <param name="description">A description of the end.</param>
-        public EndCheckResult(bool hasEnded, string title, string description)
-        {
-            HasEnded = hasEnded;
-            Title = title;
-            Description = description;
-        }
+        public string Description { get; } = description;
 
         #endregion
     }

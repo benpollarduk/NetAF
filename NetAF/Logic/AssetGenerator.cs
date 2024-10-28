@@ -70,7 +70,7 @@ namespace NetAF.Logic
         /// <returns>Asset generation that will always return the same instance overworld and the same instance of the player.</returns>
         public static AssetGenerator Retained(Overworld overworld, PlayableCharacter player)
         {
-            return new AssetGenerator(() => overworld, () => player);
+            return new(() => overworld, () => player);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace NetAF.Logic
         /// <returns>Asset generation that will always return a new overworld and a new player.</returns>
         public static AssetGenerator New(IAssetTemplate<Overworld> overworldTemplate, IAssetTemplate<PlayableCharacter> playerTemplate)
         {
-            return new AssetGenerator(() => overworldTemplate.Instantiate(), () => playerTemplate.Instantiate());
+            return new(overworldTemplate.Instantiate, playerTemplate.Instantiate);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace NetAF.Logic
         /// <returns>Asset generation that will always return a new overworld and a new player.</returns>
         public static AssetGenerator New(OverworldMaker overworldMaker, IAssetTemplate<PlayableCharacter> playerTemplate)
         {
-            return new AssetGenerator(() => overworldMaker.Make(), () => playerTemplate.Instantiate());
+            return new(overworldMaker.Make, playerTemplate.Instantiate);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NetAF.Logic
         /// <returns>Asset generation that will always return an overworld and a player as defined by the callbacks.</returns>
         public static AssetGenerator Custom(OverworldCreationCallback overworldCreationCallback, PlayerCreationCallback playerCreationCallback)
         {
-            return new AssetGenerator(overworldCreationCallback, playerCreationCallback);
+            return new(overworldCreationCallback, playerCreationCallback);
         }
 
         #endregion

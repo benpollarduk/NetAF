@@ -20,7 +20,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            return new Item(Name, Description, true) { IsPlayerVisible = false };
+            return new(Name, Description, true) { IsPlayerVisible = false };
         }
 
         #endregion

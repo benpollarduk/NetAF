@@ -39,8 +39,8 @@ namespace NetAF.Examples.Assets.Regions.Flat
             {
                 if (Lead.Name.EqualsIdentifier(item.Identifier))
                 {
-                    spareBedroom.AddItem(new Item(item.Identifier, item.Description, true));
-                    return new InteractionResult(InteractionEffect.ItemUsedUp, item, "The lead fits snugly into the input socket on the amp.");
+                    spareBedroom.AddItem(new(item.Identifier, item.Description, true));
+                    return new(InteractionEffect.ItemUsedUp, item, "The lead fits snugly into the input socket on the amp.");
                 }
 
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
@@ -52,16 +52,16 @@ namespace NetAF.Examples.Assets.Regions.Flat
                         if (lounge.FindCharacter(Beth.Name, out var b))
                         {
                             lounge.RemoveCharacter(b);
-                            return new InteractionResult(InteractionEffect.NoEffect, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings. Beth's had enough! She bolts for the front door leaving it wide open! You are free to leave the flat! You unplug the guitar.");
+                            return new(InteractionEffect.NoEffect, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings. Beth's had enough! She bolts for the front door leaving it wide open! You are free to leave the flat! You unplug the guitar.");
                         }
 
-                        return new InteractionResult(InteractionEffect.NoEffect, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings.");
+                        return new(InteractionEffect.NoEffect, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings.");
                     }
 
-                    return new InteractionResult(InteractionEffect.NoEffect, item, "You have no lead so you can't use the guitar with the amp...");
+                    return new(InteractionEffect.NoEffect, item, "You have no lead so you can't use the guitar with the amp...");
                 }
 
-                return new InteractionResult(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NoEffect, item);
             };
 
             var regionMaker = new RegionMaker(Name, Description)

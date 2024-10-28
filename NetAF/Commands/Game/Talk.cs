@@ -6,27 +6,15 @@ namespace NetAF.Commands.Game
     /// <summary>
     /// Represents the Talk command.
     /// </summary>
-    internal class Talk : ICommand
+    /// <param name="converser">The converser.</param>
+    internal class Talk(IConverser converser) : ICommand
     {
         #region Properties
 
         /// <summary>
         /// Get the converser.
         /// </summary>
-        public IConverser Converser { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Talk command.
-        /// </summary>
-        /// <param name="converser">The converser.</param>
-        public Talk(IConverser converser)
-        {
-            Converser = converser;
-        }
+        public IConverser Converser { get; } = converser;
 
         #endregion
 
@@ -40,22 +28,22 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (game.Player == null)
-                return new Reaction(ReactionResult.Error, "No player specified.");
+                return new(ReactionResult.Error, "No player specified.");
 
             if (!game.Player.CanConverse)
-                return new Reaction(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot converse.");
+                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot converse.");
 
             if (Converser == null)
-                return new Reaction(ReactionResult.Error, "No-one is around to talk to.");
+                return new(ReactionResult.Error, "No-one is around to talk to.");
 
             if (Converser is Character character && !character.IsAlive)
-                return new Reaction(ReactionResult.Error, $"{character.Identifier.Name} is dead.");
+                return new(ReactionResult.Error, $"{character.Identifier.Name} is dead.");
 
             game.StartConversation(Converser);
-            return new Reaction(ReactionResult.Internal, "Engaged in conversation.");
+            return new(ReactionResult.Internal, "Engaged in conversation.");
         }
 
         #endregion

@@ -14,12 +14,14 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder for color scene frames.
     /// </summary>
-    public sealed class ColorSceneFrameBuilder : ISceneFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    /// <param name="roomMapBuilder">A builder to use for room maps.</param>
+    public sealed class ColorSceneFrameBuilder(GridStringBuilder gridStringBuilder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
-        private readonly IRoomMapBuilder roomMapBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
+        private readonly IRoomMapBuilder roomMapBuilder = roomMapBuilder;
 
         #endregion
 
@@ -59,21 +61,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// Get or set if movement messages should be suppressed.
         /// </summary>
         public bool SuppressMovementMessages { get; set; } = true;
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorSceneFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        /// <param name="roomMapBuilder">A builder to use for room maps.</param>
-        public ColorSceneFrameBuilder(GridStringBuilder gridStringBuilder, IRoomMapBuilder roomMapBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-            this.roomMapBuilder = roomMapBuilder;
-        }
 
         #endregion
 
@@ -123,7 +110,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             var displayMessage = !string.IsNullOrEmpty(message) && (!isMovementMessage || !SuppressMovementMessages);
             var acceptInput = !(DisplayMessagesInIsolation && displayMessage);
 
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
@@ -145,7 +132,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                 var extendedDescription = string.Empty;
 
                 if (room.Items.Any())
-                    extendedDescription = extendedDescription.AddSentence(room.Examine(new ExaminationScene(player, room)).Description.EnsureFinishedSentence());
+                    extendedDescription = extendedDescription.AddSentence(room.Examine(new(player, room)).Description.EnsureFinishedSentence());
                 else
                     extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
 

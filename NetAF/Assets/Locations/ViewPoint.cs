@@ -13,7 +13,7 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get a view point representing no view.
         /// </summary>
-        public static ViewPoint NoView { get; } = new ViewPoint();
+        public static ViewPoint NoView { get; } = new();
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get the surrounding rooms.
         /// </summary>
-        private Dictionary<Direction, Room> SurroundingRooms { get; } = new Dictionary<Direction, Room>();
+        private Dictionary<Direction, Room> SurroundingRooms { get; } = [];
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The view point.</returns>
         public static ViewPoint Create(Region region)
         {
-            var viewPoint = new ViewPoint();
+            ViewPoint viewPoint = new();
 
             foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West, Direction.Up, Direction.Down })
             {

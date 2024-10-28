@@ -6,19 +6,23 @@ namespace NetAF.Conversations
     /// <summary>
     /// Represents a paragraph in a Conversation.
     /// </summary>
-    public sealed class Paragraph
+    /// <param name="line">Specify the line.</param>
+    /// <param name="action">Specify any action to be carried out with this line.</param>
+    /// <param name="instruction">Specify the end of paragraph instruction. This can be applied to a conversation to direct the conversation after this paragraph.</param>
+    /// <param name="name">Specify the name of the paragraph.</param>
+    public sealed class Paragraph(string line, ConversationActionCallback action, IEndOfPargraphInstruction instruction, string name = "")
     {
         #region Properties
 
         /// <summary>
         /// Get the name.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; private set; } = name;
 
         /// <summary>
         /// Get or set the line.
         /// </summary>
-        public string Line { get; set; }
+        public string Line { get; set; } = line;
 
         /// <summary>
         /// Get or set the responses, applicable to the last line.
@@ -33,12 +37,12 @@ namespace NetAF.Conversations
         /// <summary>
         /// Get or set any action to carry out on this line.
         /// </summary>
-        public ConversationActionCallback Action { get; set; }
+        public ConversationActionCallback Action { get; set; } = action;
 
         /// <summary>
         /// Get the end of paragraph instruction. This can be applied to a conversation to direct the conversation after this paragraph.
         /// </summary>
-        public IEndOfPargraphInstruction Instruction { get; }
+        public IEndOfPargraphInstruction Instruction { get; } = instruction;
 
         #endregion
 
@@ -71,21 +75,6 @@ namespace NetAF.Conversations
         /// <param name="name">Specify the name of the paragraph.</param>
         public Paragraph(string line, ConversationActionCallback action, string name = "") : this(line, action, new Next(), name)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Paragraph class.
-        /// </summary>
-        /// <param name="line">Specify the line.</param>
-        /// <param name="action">Specify any action to be carried out with this line.</param>
-        /// <param name="instruction">Specify the end of paragraph instruction. This can be applied to a conversation to direct the conversation after this paragraph.</param>
-        /// <param name="name">Specify the name of the paragraph.</param>
-        public Paragraph(string line, ConversationActionCallback action, IEndOfPargraphInstruction instruction, string name = "")
-        {
-            Line = line;
-            Action = action;
-            Instruction = instruction;
-            Name = name;
         }
 
         #endregion

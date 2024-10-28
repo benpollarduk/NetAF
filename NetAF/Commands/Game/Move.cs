@@ -6,7 +6,8 @@ namespace NetAF.Commands.Game
     /// <summary>
     /// Represents the Move command.
     /// </summary>
-    internal class Move : ICommand
+    /// <param name="direction">The direction to move.</param>
+    internal class Move(Direction direction) : ICommand
     {
         #region Constants
 
@@ -22,20 +23,7 @@ namespace NetAF.Commands.Game
         /// <summary>
         /// Get the direction.
         /// </summary>
-        public Direction Direction { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Move command.
-        /// </summary>
-        /// <param name="direction">The direction to move.</param>
-        public Move(Direction direction)
-        {
-            Direction = direction;
-        }
+        public Direction Direction { get; } = direction;
 
         #endregion
 
@@ -49,12 +37,12 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (game.Overworld.CurrentRegion.Move(Direction))
-                return new Reaction(ReactionResult.OK, $"{SuccessfulMovePrefix} {Direction}.");
+                return new(ReactionResult.OK, $"{SuccessfulMovePrefix} {Direction}.");
 
-            return new Reaction(ReactionResult.Error, $"Could not move {Direction}.");
+            return new(ReactionResult.Error, $"Could not move {Direction}.");
         }
 
         #endregion

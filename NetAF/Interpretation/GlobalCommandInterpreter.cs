@@ -1,5 +1,4 @@
-﻿using System;
-using NetAF.Commands.Global;
+﻿using NetAF.Commands.Global;
 using NetAF.Extensions;
 using NetAF.Logic;
 
@@ -45,12 +44,12 @@ namespace NetAF.Interpretation
         /// Get an array of all supported commands.
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
-        {
-            new CommandHelp(About, "View information about the games creator"),
-            new CommandHelp(Map, "View a map of the current region"),
-            new CommandHelp(Exit, "Exit the game"),
-            new CommandHelp(New, "Start a new game")
-        };
+        [
+            new(About, "View information about the games creator"),
+            new(Map, "View a map of the current region"),
+            new(Exit, "Exit the game"),
+            new(New, "Start a new game")
+        ];
 
         #endregion
 
@@ -70,19 +69,19 @@ namespace NetAF.Interpretation
         public InterpretationResult Interpret(string input, Game game)
         {
             if (input.InsensitiveEquals(About))
-                return new InterpretationResult(true, new About());
+                return new(true, new About());
 
             if (input.InsensitiveEquals(Exit))
-                return new InterpretationResult(true, new Exit());
+                return new(true, new Exit());
 
             if (input.InsensitiveEquals(Help))
-                return new InterpretationResult(true, new Help());
+                return new(true, new Help());
 
             if (input.InsensitiveEquals(Map))
-                return new InterpretationResult(true, new Map());
+                return new(true, new Map());
 
             if (input.InsensitiveEquals(New))
-                return new InterpretationResult(true, new New());
+                return new(true, new New());
 
             return InterpretationResult.Fail;
         }
@@ -94,7 +93,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return Array.Empty<CommandHelp>();
+            return [];
         }
 
         #endregion

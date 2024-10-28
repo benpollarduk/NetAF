@@ -20,7 +20,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenRegionNotPresent_WhenFindName_ThenFalse()
         {
             var overworld = new Overworld(string.Empty, string.Empty);
-            overworld.AddRegion(new Region(string.Empty, string.Empty));
+            overworld.AddRegion(new(string.Empty, string.Empty));
 
             var result = overworld.FindRegion("abc", out _);
 
@@ -31,7 +31,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenRegionPresent_WhenFindName_ThenTrue()
         {
             var overworld = new Overworld(string.Empty, string.Empty);
-            overworld.AddRegion(new Region("abc", string.Empty));
+            overworld.AddRegion(new("abc", string.Empty));
 
             var result = overworld.FindRegion("abc", out _);
 

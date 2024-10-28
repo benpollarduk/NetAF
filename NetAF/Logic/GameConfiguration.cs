@@ -9,7 +9,10 @@ namespace NetAF.Logic
     /// <summary>
     /// Represents a configuration for a game.
     /// </summary>
-    public sealed class GameConfiguration
+    /// <param name="displaySize">The display size.</param>
+    /// <param name="exitMode">The exit mode.</param>
+    /// <param name="adapter">The I/O adapter.</param>
+    public sealed class GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
     {
         #region StaticProperties
 
@@ -25,12 +28,12 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the display size.
         /// </summary>
-        public Size DisplaySize { get; private set; }
+        public Size DisplaySize { get; private set; } = displaySize;
 
         /// <summary>
         /// Get the exit mode.
         /// </summary>
-        public ExitMode ExitMode { get; private set; }
+        public ExitMode ExitMode { get; private set; } = exitMode;
 
         /// <summary>
         /// Get or set the interpreter used for interpreting input.
@@ -65,24 +68,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the I/O adapter.
         /// </summary>
-        public IIOAdapter Adapter { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the GameConfiguration class.
-        /// </summary>
-        /// <param name="displaySize">The display size.</param>
-        /// <param name="exitMode">The exit mode.</param>
-        /// <param name="adapter">The I/O adapter.</param>
-        public GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
-        {
-            DisplaySize = displaySize;
-            ExitMode = exitMode;
-            Adapter = adapter;
-        }
+        public IIOAdapter Adapter { get; private set; } = adapter;
 
         #endregion
     }

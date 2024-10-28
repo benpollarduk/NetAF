@@ -7,34 +7,21 @@ namespace NetAF.Commands.Game
     /// <summary>
     /// Represents the UseOn command.
     /// </summary>
-    internal class UseOn : ICommand
+    /// <param name="item">The item to use.</param>
+    /// <param name="target">The target of the command.</param>
+    internal class UseOn(Item item, IInteractWithItem target) : ICommand
     {
         #region Properties
 
         /// <summary>
         /// Get the item.
         /// </summary>
-        public Item Item { get; }
+        public Item Item { get; } = item;
 
         /// <summary>
         /// Get the target.
         /// </summary>
-        public IInteractWithItem Target { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the UseOn command.
-        /// </summary>
-        /// <param name="item">The item to use.</param>
-        /// <param name="target">The target of the command.</param>
-        public UseOn(Item item, IInteractWithItem target)
-        {
-            Item = item;
-            Target = target;
-        }
+        public IInteractWithItem Target { get; } = target;
 
         #endregion
 
@@ -48,16 +35,16 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (Item == null)
-                return new Reaction(ReactionResult.Error, "You must specify an item.");
+                return new(ReactionResult.Error, "You must specify an item.");
 
             if (Target == null)
-                return new Reaction(ReactionResult.Error, "You must specify a target.");
+                return new(ReactionResult.Error, "You must specify a target.");
 
             if (game.Player == null)
-                return new Reaction(ReactionResult.Error, "You must specify the character that is using this item.");
+                return new(ReactionResult.Error, "You must specify the character that is using this item.");
 
             var result = Target.Interact(Item);
 
@@ -66,7 +53,7 @@ namespace NetAF.Commands.Game
                 case InteractionEffect.FatalEffect:
 
                     game.Player.Kill();
-                    return new Reaction(ReactionResult.Fatal, result.Description);
+                    return new(ReactionResult.Fatal, result.Description);
 
                 case InteractionEffect.ItemUsedUp:
 
@@ -78,10 +65,8 @@ namespace NetAF.Commands.Game
                     break;
 
                 case InteractionEffect.TargetUsedUp:
-
-                    var examinable = Target as IExaminable;
-
-                    if (examinable != null && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
+                    
+                    if (Target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
                         game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(Target);
 
                     break;
@@ -94,7 +79,7 @@ namespace NetAF.Commands.Game
                     throw new NotImplementedException();
             }
 
-            return new Reaction(ReactionResult.OK, result.Description);
+            return new(ReactionResult.OK, result.Description);
         }
 
         #endregion

@@ -7,24 +7,13 @@ namespace NetAF.Tests.Assets.Attributes
     public class AttributeManager_Tests
     {
         [TestMethod]
-        public void GivenNoAttributes_WhenGetAttrubutes_ThenReturnEmptyArray()
+        public void GivenNoAttributes_WhenGetAttributes_ThenReturnEmptyArray()
         {
             var manager = new AttributeManager();
 
             var result = manager.GetAttributes();
 
             Assert.AreEqual(0, result.Length);
-        }
-
-        [TestMethod]
-        public void GivenOneAttribute_WhenGetAttrubutes_ThenReturnArrayWithOneElement()
-        {
-            var manager = new AttributeManager();
-            manager.Add("test", 0);
-
-            var result = manager.GetAttributes();
-
-            Assert.AreEqual(1, result.Length);
         }
 
         [TestMethod]

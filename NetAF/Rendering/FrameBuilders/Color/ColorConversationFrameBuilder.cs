@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Conversations;
 using NetAF.Interpretation;
@@ -12,11 +11,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder of color conversation frames.
     /// </summary>
-    public sealed class ColorConversationFrameBuilder : IConversationFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    public sealed class ColorConversationFrameBuilder(GridStringBuilder gridStringBuilder) : IConversationFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
 
         #endregion
 
@@ -59,20 +59,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorConversationFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        public ColorConversationFrameBuilder(GridStringBuilder gridStringBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-        }
-
-        #endregion
-
-        #region Methods
+        #region StaticMethods
 
         /// <summary>
         /// Truncate a log.
@@ -82,16 +69,16 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="availableHeight">The available height.</param>
         /// <param name="log">The log.</param>
         /// <returns>The truncated log.</returns>
-        internal LogItem[] TruncateLog(int startX, int availableWidth, int availableHeight, LogItem[] log)
+        internal static LogItem[] TruncateLog(int startX, int availableWidth, int availableHeight, LogItem[] log)
         {
             if (log == null)
-                return Array.Empty<LogItem>();
+                return [];
 
-            var truncated = new List<LogItem>();
+            List<LogItem> truncated = [];
 
             for (var i = log.Length - 1; i >= 0; i--)
             {
-                var lines = gridStringBuilder.GetNumberOfLines(log[i].Line, startX, 0, availableWidth);
+                var lines = GridStringBuilder.GetNumberOfLines(log[i].Line, 0, availableWidth);
 
                 availableHeight -= lines;
 
@@ -103,7 +90,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
             truncated.Reverse();
 
-            return truncated.ToArray();
+            return [.. truncated];
         }
 
         #endregion
@@ -120,7 +107,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="height">The height of the frame.</param>
         public IFrame Build(string title, IConverser converser, CommandHelp[] contextualCommands, int width, int height)
         {
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

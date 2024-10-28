@@ -10,7 +10,11 @@ namespace NetAF.Rendering.Frames
     /// <summary>
     /// Provides a grid based frame for displaying a command based interface.
     /// </summary>
-    public sealed class GridTextFrame : IFrame
+    /// <param name="builder">The builder that creates the frame.</param>
+    /// <param name="cursorLeft">The cursor left position.</param>
+    /// <param name="cursorTop">The cursor top position.</param>
+    /// <param name="backgroundColor">The background color.</param>
+    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IFrame
     {
         #region Constants
 
@@ -33,7 +37,7 @@ namespace NetAF.Rendering.Frames
 
         #region Fields
 
-        private readonly GridStringBuilder builder;
+        private readonly GridStringBuilder builder = builder;
 
         #endregion
 
@@ -42,26 +46,7 @@ namespace NetAF.Rendering.Frames
         /// <summary>
         /// Get the background color.
         /// </summary>
-        public AnsiColor BackgroundColor { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the GridTextFrame class.
-        /// </summary>
-        /// <param name="builder">The builder that creates the frame.</param>
-        /// <param name="cursorLeft">The cursor left position.</param>
-        /// <param name="cursorTop">The cursor top position.</param>
-        /// <param name="backgroundColor">The background color.</param>
-        public GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor)
-        {
-            this.builder = builder;
-            CursorLeft = cursorLeft;
-            CursorTop = cursorTop;
-            BackgroundColor = backgroundColor;
-        }
+        public AnsiColor BackgroundColor { get; } = backgroundColor;
 
         #endregion
 
@@ -116,7 +101,7 @@ namespace NetAF.Rendering.Frames
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -138,12 +123,12 @@ namespace NetAF.Rendering.Frames
         /// <summary>
         /// Get the cursor left position.
         /// </summary>
-        public int CursorLeft { get; }
+        public int CursorLeft { get; } = cursorLeft;
 
         /// <summary>
         /// Get the cursor top position.
         /// </summary>
-        public int CursorTop { get; }
+        public int CursorTop { get; } = cursorTop;
 
         /// <summary>
         /// Get or set if the cursor should be shown.

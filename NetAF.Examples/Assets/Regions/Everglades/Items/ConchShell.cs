@@ -29,9 +29,9 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Items
                     switch (item.Identifier.IdentifiableName)
                     {
                         case Knife.Name:
-                            return new InteractionResult(InteractionEffect.FatalEffect, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
+                            return new(InteractionEffect.FatalEffect, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
                         default:
-                            return new InteractionResult(InteractionEffect.NoEffect, item);
+                            return new(InteractionEffect.NoEffect, item);
                     }
                 }
             };

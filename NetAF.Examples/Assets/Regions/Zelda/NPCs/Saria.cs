@@ -47,10 +47,10 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
 
             saria.Conversation = new Conversation
             (
-                new Paragraph("Hi Link, how's it going?"),
-                new Paragraph("I lost my red rupee, if you find it will you please bring it to me?"),
-                new Paragraph("Oh Link you are so adorable."),
-                new Paragraph("OK Link your annoying me now, I'm just going to ignore you.", new First())
+                new("Hi Link, how's it going?"),
+                new("I lost my red rupee, if you find it will you please bring it to me?"),
+                new("Oh Link you are so adorable."),
+                new("OK Link your annoying me now, I'm just going to ignore you.", new First())
             );
 
             saria.Interaction = item =>
@@ -60,12 +60,12 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                 if (Rupee.Name.EqualsIdentifier(item.Identifier))
                 {
                     item.Morph(key);
-                    return new InteractionResult(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria gave you the Tail Key, awesome!");
+                    return new(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria gave you the Tail Key, awesome!");
                 }
 
                 if (Shield.Name.EqualsIdentifier(item.Identifier))
                 {
-                    return new InteractionResult(InteractionEffect.NoEffect, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
+                    return new(InteractionEffect.NoEffect, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
                 }
 
                 if (Sword.Name.EqualsIdentifier(item.Identifier))
@@ -73,15 +73,15 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                     saria.Kill();
 
                     if (!saria.HasItem(key))
-                        return new InteractionResult(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
+                        return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
 
                     saria.DequireItem(key);
                     room.AddItem(key);
 
-                    return new InteractionResult(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
+                    return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
                 }
 
-                return new InteractionResult(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NoEffect, item);
             };
 
             return saria;

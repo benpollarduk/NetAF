@@ -17,7 +17,7 @@ namespace NetAF.Assets
         /// <summary>
         /// Get or set the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new InteractionResult(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
 
         #endregion
 

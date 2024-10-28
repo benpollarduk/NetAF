@@ -254,9 +254,9 @@ namespace NetAF.Logic
                 return interpretation.Command.Invoke(this);
 
             if (!string.IsNullOrEmpty(input))
-                return new Reaction(ReactionResult.Error, $"{input} was not valid input.");
+                return new(ReactionResult.Error, $"{input} was not valid input.");
 
-            return new Reaction(ReactionResult.OK, string.Empty);
+            return new(ReactionResult.OK, string.Empty);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace NetAF.Logic
             if (name.EqualsExaminable(Player))
                 return Player;
 
-            if (Player.Items.Any(name.EqualsExaminable))
+            if (Array.Exists(Player.Items, name.EqualsExaminable))
             {
                 Player.FindItem(name, out var i);
                 return i;
@@ -374,7 +374,7 @@ namespace NetAF.Logic
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsPlayerVisible));
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Characters.Where(x => x.IsPlayerVisible));
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Exits.Where(x => x.IsPlayerVisible));
-            return examinables.ToArray();
+            return [.. examinables];
         }
 
         /// <summary>
@@ -401,9 +401,11 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayHelp()
         {
-            var commands = new List<CommandHelp>();
-            commands.AddRange(Configuration.Interpreter.SupportedCommands);
-            commands.AddRange(Configuration.Interpreter.GetContextualCommandHelp(this));
+            List<CommandHelp> commands =
+            [
+                .. Configuration.Interpreter.SupportedCommands,
+                .. Configuration.Interpreter.GetContextualCommandHelp(this),
+            ];
 
             Refresh(Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }

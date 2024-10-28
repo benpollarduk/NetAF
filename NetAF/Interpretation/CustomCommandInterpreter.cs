@@ -62,14 +62,14 @@ namespace NetAF.Interpretation
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
             if (game.ActiveConverser?.Conversation != null)
-                return Array.Empty<CommandHelp>();
+                return [];
 
-            var help = new List<CommandHelp>();
+            List<CommandHelp> help = [];
 
             foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null)) 
                 help.AddRange(examinable.Commands.Where(x => x.IsPlayerVisible).Select(command => command.Help));
 
-            return help.ToArray();
+            return [.. help];
         }
 
         #endregion

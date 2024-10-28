@@ -142,7 +142,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenNoAttributes_WhenConstructAttributesAsString_ThenEmptyString()
         {
-            var attributes = new Dictionary<Attribute, int>();
+            Dictionary<Attribute, int> attributes = [];
 
             var result = StringUtilities.ConstructAttributesAsString(attributes);
 
@@ -152,7 +152,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenOneAttribute_WhenConstructAttributesAsString_ThenTestColon1()
         {
-            var attributes = new Dictionary<Attribute, int>
+            Dictionary<Attribute, int> attributes = new()
             {
                 { new Attribute("Test", string.Empty, 0, 100), 1 }
             };
@@ -165,7 +165,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenTwoAttributes_WhenConstructAttributesAsString_ThenTestColon1TabTest2ColonSpace1()
         {
-            var attributes = new Dictionary<Attribute, int>
+            Dictionary<Attribute, int> attributes = new()
             {
                 { new Attribute("Test", string.Empty, 0, 100), 1 },
                 { new Attribute("Test2", string.Empty, 0, 100), 1 }
