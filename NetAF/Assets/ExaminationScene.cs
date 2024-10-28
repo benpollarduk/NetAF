@@ -18,7 +18,7 @@ namespace NetAF.Assets
 
         #endregion
 
-        #region Propeties
+        #region Properties
 
         /// <summary>
         /// Get the examiner.
