@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using NetAF.Rendering.Presenter;
 
 namespace NetAF.Rendering.Frames
 {
@@ -24,9 +24,9 @@ namespace NetAF.Rendering.Frames
         /// </summary>
         bool AcceptsInput { get; set; }
         /// <summary>
-        /// Render this frame on a writer.
+        /// Render this frame on a presenter.
         /// </summary>
-        /// <param name="writer">The writer.</param>
-        void Render(TextWriter writer);
+        /// <param name="presenter">The presenter.</param>
+        void Render(IFramePresenter presenter);
     }
 }

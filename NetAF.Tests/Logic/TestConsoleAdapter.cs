@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using NetAF.Adapters;
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
 
@@ -8,7 +9,7 @@ namespace NetAF.Tests.Logic
     /// <summary>
     /// Provides a console adapter for tests.
     /// </summary>
-    internal class TestConsoleAdapter : IConsoleAdapter
+    internal class TestConsoleAdapter : IIOAdapter
     {
         #region Properties
 
@@ -26,10 +27,6 @@ namespace NetAF.Tests.Logic
         /// Get or set the output error bytes.
         /// </summary>
         public byte[] ErrorBytes { get; set; } = Array.Empty<byte>();
-
-        #endregion
-
-        #region Implementation of IConsoleAdapter
 
         /// <summary>
         /// Get the input stream.
@@ -67,31 +64,9 @@ namespace NetAF.Tests.Logic
             }
         }
 
-        /// <summary>
-        /// Wait for a key press.
-        /// </summary>
-        /// <param name="key">The ASCII code of the key to wait for.</param>
-        /// <returns>True if the key pressed returned the same ASCII character as the key property, else false.</returns>
-        public bool WaitForKeyPress(char key)
-        {
-            return true;
-        }
+        #endregion
 
-        /// <summary>
-        /// Handle a game started a frame draw.
-        /// </summary>
-        /// <param name="frame">The frame the game started to draw.</param>
-        public void OnGameStartedFrameDraw(IFrame frame)
-        {
-        }
-
-        /// <summary>
-        /// Handle a game finished a frame draw.
-        /// </summary>
-        /// <param name="frame">The frame the game finished drawing.</param>
-        public void OnGameFinishedFrameDraw(IFrame frame)
-        {
-        }
+        #region Implementation of IIOAdapter
 
         /// <summary>
         /// Setup for a game.
@@ -99,6 +74,33 @@ namespace NetAF.Tests.Logic
         /// <param name="game">The game to set up for.</param>
         public void Setup(Game game)
         {
+        }
+
+        /// <summary>
+        /// Render a frame.
+        /// </summary>
+        /// <param name="frame">The frame to render.</param>
+        public void RenderFrame(IFrame frame)
+        {
+            Out.WriteLine(frame.ToString());
+        }
+
+        /// <summary>
+        /// Wait for acknowledgment.
+        /// </summary>
+        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
+        public bool WaitForAcknowledge()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Wait for input.
+        /// </summary>
+        /// <returns>The input.</returns>
+        public string WaitForInput()
+        {
+            return In.ReadLine();
         }
 
         #endregion

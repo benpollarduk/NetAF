@@ -1,4 +1,5 @@
-﻿using NetAF.Assets;
+﻿using NetAF.Adapters;
+using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -15,7 +16,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen);
+        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, new SystemConsoleAdapter());
 
         #endregion
 
@@ -61,6 +62,11 @@ namespace NetAF.Logic
         /// </summary>
         public KeyType SceneMapKeyType { get; set; } = KeyType.Dynamic;
 
+        /// <summary>
+        /// Get the I/O adapter.
+        /// </summary>
+        public IIOAdapter Adapter { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -70,10 +76,12 @@ namespace NetAF.Logic
         /// </summary>
         /// <param name="displaySize">The display size.</param>
         /// <param name="exitMode">The exit mode.</param>
-        public GameConfiguration(Size displaySize, ExitMode exitMode)
+        /// <param name="adapter">The I/O adapter.</param>
+        public GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
         {
             DisplaySize = displaySize;
             ExitMode = exitMode;
+            Adapter = adapter;
         }
 
         #endregion
