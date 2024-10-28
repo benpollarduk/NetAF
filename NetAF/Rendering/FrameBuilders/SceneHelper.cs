@@ -48,7 +48,7 @@ namespace NetAF.Rendering.FrameBuilders
                             view.Append($"Below is {roomDescription}, ");
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            throw new NotImplementedException($"No implementation for {direction}.");
                     }
                 }
                 else
@@ -68,7 +68,7 @@ namespace NetAF.Rendering.FrameBuilders
                             view.Append($"below is {roomDescription}, ");
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException();
+                            throw new NotImplementedException($"No implementation for {direction}.");
                     }
                 }
             }
@@ -93,17 +93,24 @@ namespace NetAF.Rendering.FrameBuilders
             if (characters.Length == 1)
                 return characters[0].Identifier + " is in this area.";
 
-            var charactersAsString = string.Empty;
+            StringBuilder builder = new();
 
             foreach (var character in characters)
-                charactersAsString += character.Identifier + ", ";
+                builder.Append(character.Identifier + ", ");
 
-            charactersAsString = charactersAsString.Remove(charactersAsString.Length - 2);
-            
-            if (string.IsNullOrEmpty(charactersAsString))
-                return charactersAsString;
+            builder.Remove(builder.Length - 2, 2);
 
-            return charactersAsString.Substring(0, charactersAsString.LastIndexOf(",", StringComparison.Ordinal)) + " and " + charactersAsString.Substring(charactersAsString.LastIndexOf(",", StringComparison.Ordinal) + 2) + " are in the " + room.Identifier + ".";
+            var sentenceSoFar = builder.ToString();
+            builder.Clear();
+
+            builder.Append(sentenceSoFar.Substring(0, sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal)));
+            builder.Append(" and ");
+            builder.Append(sentenceSoFar.Substring(sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal) + 2));
+            builder.Append(" are in the ");
+            builder.Append(room.Identifier);
+            builder.Append(".");
+
+            return builder.ToString();
         }
     }
 }
