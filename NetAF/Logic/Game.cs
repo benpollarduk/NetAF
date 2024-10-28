@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using NetAF.Adapters;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
@@ -72,11 +73,6 @@ namespace NetAF.Logic
         private IFrame CurrentFrame { get; set; }
 
         /// <summary>
-        /// Get or set the adapter for the console.
-        /// </summary>
-        internal IConsoleAdapter Adapter { get; set; } = new SystemConsoleAdapter();
-
-        /// <summary>
         /// Occurs when the game begins drawing a frame.
         /// </summary>
         internal event EventHandler<IFrame> StartingFrameDraw;
@@ -114,27 +110,6 @@ namespace NetAF.Logic
         #region Methods
 
         /// <summary>
-        /// Setup the adapter.
-        /// </summary>
-        private void SetupAdapter()
-        {
-            Adapter.Setup(this);
-            StartingFrameDraw -= Game_StartingFrameDraw;
-            FinishedFrameDraw -= Game_FinishedFrameDraw;
-            StartingFrameDraw += Game_StartingFrameDraw;
-            FinishedFrameDraw += Game_FinishedFrameDraw;
-        }
-
-        /// <summary>
-        /// Change to a specified player.
-        /// </summary>
-        /// <param name="player">The player to change to.</param>
-        public void ChangePlayer(PlayableCharacter player)
-        {
-            Player = player;
-        }
-
-        /// <summary>
         /// Execute the game.
         /// </summary>
         internal void Execute()
@@ -144,8 +119,8 @@ namespace NetAF.Logic
 
             IsExecuting = true;
 
-            SetupAdapter();
-            
+            Configuration.Adapter.Setup(this);
+
             Refresh(Configuration.FrameBuilders.TitleFrameBuilder.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
             do
@@ -197,17 +172,26 @@ namespace NetAF.Logic
         }
 
         /// <summary>
+        /// Change to a specified player.
+        /// </summary>
+        /// <param name="player">The player to change to.</param>
+        public void ChangePlayer(PlayableCharacter player)
+        {
+            Player = player;
+        }
+
+        /// <summary>
         /// Get input from the user.
         /// </summary>
         /// <returns>The user input.</returns>
         private string GetInput()
         {
-            if (CurrentFrame.AcceptsInput) 
-                return Adapter.In.ReadLine();
+            if (CurrentFrame.AcceptsInput)
+                return Configuration.Adapter.WaitForInput();
             
             var frame = CurrentFrame;
 
-            while (!Adapter.WaitForKeyPress(StringUtilities.CR) && CurrentFrame == frame)
+            while (!Configuration.Adapter.WaitForAcknowledge() && CurrentFrame == frame)
                 DrawFrame(CurrentFrame);
 
             return string.Empty;
@@ -216,20 +200,17 @@ namespace NetAF.Logic
         /// <summary>
         /// Test and handle the game over condition.
         /// </summary>
-        /// <returns>True if the condition was met.</returns>
-        private bool TestAndHandleGameOver()
+        private void TestAndHandleGameOver()
         {
             var gameOverCheckResult = EndConditions.GameOverCondition(this) ?? EndCheckResult.NotEnded;
 
             if (!gameOverCheckResult.HasEnded)
-                return false;
+                return;
 
             GetInput();
             Refresh(Configuration.FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
-            
-            return true;
         }
 
         /// <summary>
@@ -332,7 +313,7 @@ namespace NetAF.Logic
             {
                 StartingFrameDraw?.Invoke(this, frame);
 
-                frame.Render(Adapter.Out);
+                Configuration.Adapter.RenderFrame(frame);
 
                 FinishedFrameDraw?.Invoke(this, frame);
             }
@@ -514,20 +495,6 @@ namespace NetAF.Logic
                         throw new NotImplementedException();
                 }
             }
-        }
-
-        #endregion
-
-        #region EventHandlers
-
-        private void Game_FinishedFrameDraw(object sender, IFrame e)
-        {
-            Adapter.OnGameFinishedFrameDraw(e);
-        }
-
-        private void Game_StartingFrameDraw(object sender, IFrame e)
-        {
-            Adapter.OnGameStartedFrameDraw(e);
         }
 
         #endregion

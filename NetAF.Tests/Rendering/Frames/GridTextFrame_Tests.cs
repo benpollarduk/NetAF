@@ -6,6 +6,7 @@ using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
 using NetAF.Rendering.Frames;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.Presenter;
 
 namespace NetAF.Tests.Rendering.Frames
 {
@@ -75,7 +76,8 @@ namespace NetAF.Tests.Rendering.Frames
             {
                 using (var writer = new StreamWriter(stream))
                 {
-                    frame.Render(writer);
+                    var presenter = new TextWriterPresenter(writer);
+                    frame.Render(presenter);
                     writer.Flush();
                     data = stream.ToArray();
                 }

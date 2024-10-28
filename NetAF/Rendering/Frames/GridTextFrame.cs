@@ -1,8 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Text;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
+using NetAF.Rendering.Presenter;
 using NetAF.Utilities;
 
 namespace NetAF.Rendering.Frames
@@ -91,7 +91,7 @@ namespace NetAF.Rendering.Frames
         /// </summary>
         /// <param name="color">The foreground color.</param>
         /// <returns>The ANSI escape sequence.</returns>
-        private string GetAnsiForegroundEscapeSequence(AnsiColor color)
+        private static string GetAnsiForegroundEscapeSequence(AnsiColor color)
         {
             return $"\u001B[{(int)color}m";
         }
@@ -101,7 +101,7 @@ namespace NetAF.Rendering.Frames
         /// </summary>
         /// <param name="color">The background color.</param>
         /// <returns>The ANSI escape sequence.</returns>
-        private string GetAnsiBackgroundEscapeSequence(AnsiColor color)
+        private static string GetAnsiBackgroundEscapeSequence(AnsiColor color)
         {
             return $"\u001B[{(int)color + 10}m";
         }
@@ -156,17 +156,17 @@ namespace NetAF.Rendering.Frames
         public bool AcceptsInput { get; set; } = true;
 
         /// <summary>
-        /// Render this frame on a writer.
+        /// Render this frame on a presenter.
         /// </summary>
-        /// <param name="writer">The writer.</param>
-        public void Render(TextWriter writer)
+        /// <param name="presenter">The presenter.</param>
+        public void Render(IFramePresenter presenter)
         {
             var suppressColor = IsColorSuppressed();
 
             if (!suppressColor)
-                writer.Write(GetAnsiBackgroundEscapeSequence(BackgroundColor));
+                presenter.Write(GetAnsiBackgroundEscapeSequence(BackgroundColor));
 
-            writer.Write(ANSI_HIDE_CURSOR);
+            presenter.Write(ANSI_HIDE_CURSOR);
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -178,22 +178,22 @@ namespace NetAF.Rendering.Frames
                     {
                         if (!suppressColor)
                         {
-                            writer.Write(GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
+                            presenter.Write(GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
                         }
 
-                        writer.Write(c);
+                        presenter.Write(c);
                     }
                     else
                     {
-                        writer.Write(" ");
+                        presenter.Write(" ");
                     }
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    writer.Write(builder.LineTerminator);
+                    presenter.Write(builder.LineTerminator);
             }
 
-            writer.Write(ANSI_SHOW_CURSOR);
+            presenter.Write(ANSI_SHOW_CURSOR);
         }
 
         #endregion
