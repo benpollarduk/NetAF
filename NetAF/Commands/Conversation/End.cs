@@ -17,10 +17,10 @@ namespace NetAF.Commands.Conversation
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             game.EndConversation();
-            return new Reaction(ReactionResult.OK, "Ended the conversation.");
+            return new(ReactionResult.OK, "Ended the conversation.");
         }
 
         #endregion

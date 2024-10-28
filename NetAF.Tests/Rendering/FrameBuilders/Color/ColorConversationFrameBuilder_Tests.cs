@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using NetAF.Assets.Characters;
+﻿using NetAF.Assets.Characters;
 using NetAF.Conversations;
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
@@ -31,11 +29,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
             var builder = new ColorConversationFrameBuilder(gridStringBuilder);
             var converser = new NonPlayableCharacter("Test", "Test")
             {
-                Conversation = new Conversation(
-                [
-                    new Paragraph("Line 1"),
-                    new Paragraph("Line 2")
-                ])
+                Conversation = new Conversation(new("Line 1"), new("Line 2"))
             };
 
             converser.Conversation.Next(null);
@@ -66,32 +60,23 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
         [TestMethod]
         public void GivenNull_WhenTruncateLog_ThenReturnEmptyArray()
         {
-            var gridStringBuilder = new GridStringBuilder();
-            var builder = new ColorConversationFrameBuilder(gridStringBuilder);
+            var log = ColorConversationFrameBuilder.TruncateLog(0, 50, 10, null);
 
-            var log = builder.TruncateLog(0, 50, 10, null);
-
-            Assert.IsFalse(log.Any());
+            Assert.AreEqual(0, log.Length);
         }
 
         [TestMethod]
         public void GivenEmptyLog_WhenTruncateLog_ThenReturnEmptyArray()
         {
-            var gridStringBuilder = new GridStringBuilder();
-            var builder = new ColorConversationFrameBuilder(gridStringBuilder);
+            var log = ColorConversationFrameBuilder.TruncateLog(0, 50, 10, []);
 
-            var log = builder.TruncateLog(0, 50, 10, Array.Empty<LogItem>());
-
-            Assert.IsFalse(log.Any());
+            Assert.AreEqual(0, log.Length);
         }
 
         [TestMethod]
         public void GivenLogWith1EntryAnd2Spaces_WhenTruncateLog_ThenReturnArrayWith1Item()
         {
-            var gridStringBuilder = new GridStringBuilder();
-            var builder = new ColorConversationFrameBuilder(gridStringBuilder);
-
-            var log = builder.TruncateLog(0, 50, 2, [ new LogItem(Participant.Other, "") ]);
+            var log = ColorConversationFrameBuilder.TruncateLog(0, 50, 2, [ new LogItem(Participant.Other, "") ]);
 
             Assert.AreEqual(1, log.Length);
         }
@@ -99,10 +84,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
         [TestMethod]
         public void GivenLogWith2EntryAnd1Space_WhenTruncateLog_ThenReturnArrayWith1Item()
         {
-            var gridStringBuilder = new GridStringBuilder();
-            var builder = new ColorConversationFrameBuilder(gridStringBuilder);
-
-            var log = builder.TruncateLog(0, 50, 1, [ new LogItem(Participant.Other, ""), new LogItem(Participant.Player, "")]);
+            var log = ColorConversationFrameBuilder.TruncateLog(0, 50, 1, [ new LogItem(Participant.Other, ""), new LogItem(Participant.Player, "")]);
 
             Assert.AreEqual(1, log.Length);
         }

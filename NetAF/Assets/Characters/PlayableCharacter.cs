@@ -1,5 +1,4 @@
-﻿using System;
-using NetAF.Assets.Interaction;
+﻿using NetAF.Assets.Interaction;
 
 namespace NetAF.Assets.Characters
 {
@@ -62,7 +61,7 @@ namespace NetAF.Assets.Characters
             Identifier = identifier;
             Description = description;
             CanConverse = canConverse;
-            Items = items ?? Array.Empty<Item>();
+            Items = items ?? [];
         }
 
         #endregion

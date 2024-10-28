@@ -8,7 +8,8 @@ namespace NetAF.Conversations
     /// <summary>
     /// Represents a conversation.
     /// </summary>
-    public sealed class Conversation
+    /// <param name="paragraphs">The paragraphs.</param>
+    public sealed class Conversation(params Paragraph[] paragraphs)
     {
         #region Fields
 
@@ -26,25 +27,12 @@ namespace NetAF.Conversations
         /// <summary>
         /// Get the current paragraph in the conversation.
         /// </summary>
-        public Paragraph[] Paragraphs { get; }
+        public Paragraph[] Paragraphs { get; } = paragraphs;
 
         /// <summary>
         /// Get the log.
         /// </summary>
         public LogItem[] Log { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Conversation class.
-        /// </summary>
-        /// <param name="paragraphs">The paragraphs.</param>
-        public Conversation(params Paragraph[] paragraphs)
-        {
-            Paragraphs = paragraphs;
-        }
 
         #endregion
 
@@ -68,7 +56,7 @@ namespace NetAF.Conversations
         public Reaction Next(Game game)
         {
             if (Paragraphs == null || !Paragraphs.Any())
-                return new Reaction(ReactionResult.Internal, "No paragraphs.");
+                return new(ReactionResult.Internal, "No paragraphs.");
 
             var entryParagraph = CurrentParagraph;
 
@@ -81,7 +69,7 @@ namespace NetAF.Conversations
                 }
                 else
                 {
-                    return new Reaction(ReactionResult.Internal, "Awaiting response.");
+                    return new(ReactionResult.Internal, "Awaiting response.");
                 }
             }
             else if (CurrentParagraph == null)
@@ -94,14 +82,14 @@ namespace NetAF.Conversations
             }
 
             if ((CurrentParagraph == null) || (CurrentParagraph == entryParagraph))
-                return new Reaction(ReactionResult.Internal, "End of conversation.");
+                return new(ReactionResult.Internal, "End of conversation.");
 
             CurrentParagraph.Action?.Invoke(game);
 
             var line = CurrentParagraph.Line.ToSpeech();
-            Log = Log.Add(new LogItem(Participant.Other, line));
+            Log = Log.Add(new(Participant.Other, line));
 
-            return new Reaction(ReactionResult.Internal, line);
+            return new(ReactionResult.Internal, line);
         }
 
         /// <summary>
@@ -113,15 +101,15 @@ namespace NetAF.Conversations
         public Reaction Respond(Response response, Game game)
         {
             if (response == null)
-                return new Reaction(ReactionResult.Error, "No response.");
+                return new(ReactionResult.Error, "No response.");
 
             if (CurrentParagraph == null)
-                return new Reaction(ReactionResult.Error, "No paragraph.");
+                return new(ReactionResult.Error, "No paragraph.");
 
             if (!CurrentParagraph.Responses?.Contains(response) ?? true)
-                return new Reaction(ReactionResult.Error, "Invalid response.");
+                return new(ReactionResult.Error, "Invalid response.");
 
-            Log = Log.Add(new LogItem(Participant.Player, response.Line.EnsureFinishedSentence().ToSpeech()));
+            Log = Log.Add(new(Participant.Player, response.Line.EnsureFinishedSentence().ToSpeech()));
 
             selectedResponse = response;
 

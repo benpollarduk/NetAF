@@ -16,7 +16,7 @@ namespace NetAF.Rendering.FrameBuilders
             {
                 var gridLayoutBuilder = new GridStringBuilder();
 
-                return new FrameBuilderCollection(
+                return new(
                     new ColorTitleFrameBuilder(gridLayoutBuilder),
                     new ColorSceneFrameBuilder(gridLayoutBuilder, new ColorRoomMapBuilder()), 
                     new ColorRegionMapFrameBuilder(gridLayoutBuilder, new ColorRegionMapBuilder()),

@@ -28,16 +28,16 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Items
             {
                 if (Shield.Name.EqualsExaminable(item))
                 {
-                    return new InteractionResult(InteractionEffect.NoEffect, item, "You hit the stump, and it makes a solid knocking noise.");
+                    return new(InteractionEffect.NoEffect, item, "You hit the stump, and it makes a solid knocking noise.");
                 }
 
                 if (Sword.Name.EqualsExaminable(item))
                 {
                     stump.Morph(new SplintersOfWood().Instantiate());
-                    return new InteractionResult(InteractionEffect.ItemMorphed, item, "You chop the stump into tiny pieces in a mad rage. All that is left is some splinters of wood.");
+                    return new(InteractionEffect.ItemMorphed, item, "You chop the stump into tiny pieces in a mad rage. All that is left is some splinters of wood.");
                 }
 
-                return new InteractionResult(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NoEffect, item);
             };
 
             return stump;

@@ -28,7 +28,7 @@ namespace NetAF.Adapters
 
         #region Fields
 
-        private readonly TextWriterPresenter presenter = new TextWriterPresenter(Console.Out);
+        private readonly TextWriterPresenter presenter = new(Console.Out);
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace NetAF.Adapters
         public void Setup(Game game)
         {
             Console.Title = game.Info.Name;
-            var actualDisplaySize = new Size(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
+            Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
             Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
             Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
         }

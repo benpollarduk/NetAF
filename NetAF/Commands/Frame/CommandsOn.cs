@@ -17,10 +17,10 @@ namespace NetAF.Commands.Frame
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             game.Configuration.DisplayCommandListInSceneFrames = true;
-            return new Reaction(ReactionResult.OK, "Commands have been turned on.");
+            return new(ReactionResult.OK, "Commands have been turned on.");
         }
 
         #endregion

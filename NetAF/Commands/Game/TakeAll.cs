@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using NetAF.Assets.Interaction;
 
 namespace NetAF.Commands.Game
@@ -18,33 +19,32 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (game.Player == null)
-                return new Reaction(ReactionResult.Error, "You must specify a character.");
+                return new(ReactionResult.Error, "You must specify a character.");
 
             if (game.Overworld.CurrentRegion.CurrentRoom == null)
-                return new Reaction(ReactionResult.Error, "Not in a room.");
+                return new(ReactionResult.Error, "Not in a room.");
 
-            var itemsAsString = string.Empty;
+            StringBuilder builder = new();
 
             foreach (var item in game.Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsTakeable && x.IsPlayerVisible))
             {
                 game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
                 game.Player.AcquireItem(item);
 
-                itemsAsString += $"{item.Identifier.Name}, ";
+                builder.Append($"{item.Identifier.Name}, ");
             }
 
-            if (!string.IsNullOrEmpty(itemsAsString))
+            if (builder.Length > 0)
             {
-                itemsAsString = itemsAsString.Remove(itemsAsString.Length - 2);
-                itemsAsString = $"Took {itemsAsString}.";
-                return new Reaction(ReactionResult.OK, itemsAsString);
+                builder.Remove(builder.Length - 2, 2);
+                return new(ReactionResult.OK, $"Took {builder}.");
             }
             else
             {
-                return new Reaction(ReactionResult.Error, "Nothing to take.");
+                return new(ReactionResult.Error, "Nothing to take.");
             }
         }
 

@@ -29,18 +29,18 @@ namespace NetAF.Examples.Assets.Player
                 Interaction = i =>
                 {
                     if (i == null)
-                        return new InteractionResult(InteractionEffect.NoEffect, null);
+                        return new(InteractionEffect.NoEffect, null);
 
                     if (Knife.Name.EqualsExaminable(i))
-                        return new InteractionResult(InteractionEffect.FatalEffect, i, "You slash wildly at your own throat. You are dead.");
+                        return new(InteractionEffect.FatalEffect, i, "You slash wildly at your own throat. You are dead.");
 
                     if (EmptyCoffeeMug.Name.EqualsIdentifier(i.Identifier))
-                        return new InteractionResult(InteractionEffect.NoEffect, i, "If there was some coffee in the mug you could drink it.");
+                        return new(InteractionEffect.NoEffect, i, "If there was some coffee in the mug you could drink it.");
 
                     if (Guitar.Name.EqualsIdentifier(i.Identifier))
-                        return new InteractionResult(InteractionEffect.NoEffect, i, "You bust out some Bad Religion. Cracking, shame the guitar isn't plugged in to an amplified though...");
+                        return new(InteractionEffect.NoEffect, i, "You bust out some Bad Religion. Cracking, shame the guitar isn't plugged in to an amplified though...");
 
-                    return new InteractionResult(InteractionEffect.NoEffect, i);
+                    return new(InteractionEffect.NoEffect, i);
                 }
             };
 

@@ -17,13 +17,13 @@ namespace NetAF.Commands.Conversation
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (game.ActiveConverser == null)
-                return new Reaction(ReactionResult.Error, "No converser.");
+                return new(ReactionResult.Error, "No converser.");
 
             if (game.ActiveConverser.Conversation == null)
-                return new Reaction(ReactionResult.Error, "No conversation.");
+                return new(ReactionResult.Error, "No conversation.");
 
             return game.ActiveConverser.Conversation.Next(game);
         }

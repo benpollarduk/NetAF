@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Extensions;
+﻿using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Color
@@ -7,11 +6,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder of color title frames.
     /// </summary>
-    public sealed class ColorTitleFrameBuilder : ITitleFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    public sealed class ColorTitleFrameBuilder(GridStringBuilder gridStringBuilder) : ITitleFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
 
         #endregion
 
@@ -39,19 +39,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorTitleFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        public ColorTitleFrameBuilder(GridStringBuilder gridStringBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-        }
-
-        #endregion
-
         #region Implementation of ITitleFrameBuilder
 
         /// <summary>
@@ -63,7 +50,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="height">The height of the frame.</param>
         public IFrame Build(string title, string description, int width, int height)
         {
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

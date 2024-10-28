@@ -37,10 +37,10 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                 {
                     bush.Morph(new Stump().Instantiate());
                     rupee.IsPlayerVisible = true;
-                    return new InteractionResult(InteractionEffect.ItemMorphed, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
+                    return new(InteractionEffect.ItemMorphed, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
                 }
 
-                return new InteractionResult(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NoEffect, item);
             };
 
             room.AddItem(bush);

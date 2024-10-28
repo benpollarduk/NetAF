@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 
@@ -20,12 +19,12 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Get or set the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new InteractionResult(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
 
         /// <summary>
         /// Get the items this Character holds.
         /// </summary>
-        public Item[] Items { get; protected set; } = Array.Empty<Item>();
+        public Item[] Items { get; protected set; } = [];
 
         #endregion
 

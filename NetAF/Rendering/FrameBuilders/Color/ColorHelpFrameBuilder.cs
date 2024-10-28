@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 
@@ -8,11 +7,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder of color help frames.
     /// </summary>
-    public sealed class ColorHelpFrameBuilder : IHelpFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    public sealed class ColorHelpFrameBuilder(GridStringBuilder gridStringBuilder) : IHelpFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
 
         #endregion
 
@@ -50,19 +50,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorHelpFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        public ColorHelpFrameBuilder(GridStringBuilder gridStringBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-        }
-
-        #endregion
-
         #region Implementation of IHelpFrameBuilder
 
         /// <summary>
@@ -75,7 +62,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="height">The height of the frame.</param>
         public IFrame Build(string title, string description, CommandHelp[] commandHelp, int width, int height)
         {
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

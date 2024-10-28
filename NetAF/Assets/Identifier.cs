@@ -5,14 +5,15 @@ namespace NetAF.Assets
     /// <summary>
     /// Provides a class that can be used as an identifier.
     /// </summary>
-    public sealed class Identifier : IEquatable<string>, IEquatable<Identifier>
+    /// <param name="name">The name.</param>
+    public sealed class Identifier(string name) : IEquatable<string>, IEquatable<Identifier>
     {
         #region StaticProperties
 
         /// <summary>
         /// Get an empty identifier.
         /// </summary>
-        public static Identifier Empty { get; } = new Identifier(string.Empty);
+        public static Identifier Empty { get; } = new(string.Empty);
 
         #endregion
 
@@ -21,25 +22,12 @@ namespace NetAF.Assets
         /// <summary>
         /// Get the name.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; } = name;
 
         /// <summary>
         /// Get the name as a case insensitive identifier.
         /// </summary>
         public string IdentifiableName => ToIdentifiableString(Name);
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Creates a new instance of the Identifier class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        public Identifier(string name)
-        {
-            Name = name;
-        }
 
         #endregion
 
@@ -50,7 +38,7 @@ namespace NetAF.Assets
         /// </summary>
         /// <param name="value">The value to convert.</param>
         /// <returns>The identifiable string.</returns>
-        private string ToIdentifiableString(string value)
+        private static string ToIdentifiableString(string value)
         {
             return value.ToUpper().Replace(" ", string.Empty);
         }

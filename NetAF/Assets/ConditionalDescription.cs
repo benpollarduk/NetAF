@@ -5,35 +5,22 @@ namespace NetAF.Assets
     /// <summary>
     /// Represents a conditional description of an object.
     /// </summary>
-    public sealed class ConditionalDescription : Description
+    /// <param name="trueDescription">The true description.</param>
+    /// <param name="falseDescription">The false description.</param>
+    /// <param name="condition">The condition.</param>
+    public sealed class ConditionalDescription(string trueDescription, string falseDescription, Condition condition) : Description(trueDescription)
     {
         #region Properties
 
         /// <summary>
         /// Get or set the description for when this condition is false
         /// </summary>
-        private readonly string falseDescription;
+        private readonly string falseDescription = falseDescription;
 
         /// <summary>
         /// Get or set the condition
         /// </summary>
-        public Condition Condition { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes anew instance of the ConditionalDescription class.
-        /// </summary>
-        /// <param name="trueDescription">The true description.</param>
-        /// <param name="falseDescription">The false description.</param>
-        /// <param name="condition">The condition.</param>
-        public ConditionalDescription(string trueDescription, string falseDescription, Condition condition) : base(trueDescription)
-        {
-            this.falseDescription = falseDescription;
-            Condition = condition;
-        }
+        public Condition Condition { get; set; } = condition;
 
         #endregion
 

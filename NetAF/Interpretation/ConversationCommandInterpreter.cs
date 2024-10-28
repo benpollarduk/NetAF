@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NetAF.Commands.Conversation;
 using NetAF.Extensions;
 using NetAF.Logic;
@@ -26,9 +25,9 @@ namespace NetAF.Interpretation
         /// Get an array of all supported commands.
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
-        {
-            new CommandHelp(End, "End the conversation")
-        };
+        [
+            new(End, "End the conversation")
+        ];
 
         #endregion
 
@@ -51,16 +50,16 @@ namespace NetAF.Interpretation
                 return InterpretationResult.Fail;
 
             if (input.InsensitiveEquals(End))
-                return new InterpretationResult(true, new End());
+                return new(true, new End());
 
             if (string.IsNullOrEmpty(input.Trim()))
-                return new InterpretationResult(true, new Next());
+                return new(true, new Next());
 
             if (!int.TryParse(input, out var index))
                 return InterpretationResult.Fail;
             
             if (index > 0 && index <= game.ActiveConverser.Conversation?.CurrentParagraph?.Responses?.Length)
-                return new InterpretationResult(true, new Respond(game.ActiveConverser.Conversation.CurrentParagraph.Responses[index - 1]));
+                return new(true, new Respond(game.ActiveConverser.Conversation.CurrentParagraph.Responses[index - 1]));
 
             return InterpretationResult.Fail;
         }
@@ -73,9 +72,9 @@ namespace NetAF.Interpretation
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
             if (game.ActiveConverser?.Conversation == null) 
-                return Array.Empty<CommandHelp>();
+                return [];
 
-            var commands = new List<CommandHelp> { new CommandHelp(End, "End the conversation") };
+            var commands = new List<CommandHelp> { new(End, "End the conversation") };
 
             if (game.ActiveConverser.Conversation.CurrentParagraph?.CanRespond ?? false)
             {
@@ -86,7 +85,7 @@ namespace NetAF.Interpretation
                 }
             }
 
-            return commands.ToArray();
+            return [.. commands];
         }
 
         #endregion

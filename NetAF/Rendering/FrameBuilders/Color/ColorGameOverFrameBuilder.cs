@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Extensions;
+﻿using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Color
@@ -7,11 +6,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder of color game over frames.
     /// </summary>
-    public sealed class ColorGameOverFrameBuilder : IGameOverFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    public sealed class ColorGameOverFrameBuilder(GridStringBuilder gridStringBuilder) : IGameOverFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
 
         #endregion
 
@@ -39,19 +39,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorGameOverFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        public ColorGameOverFrameBuilder(GridStringBuilder gridStringBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-        }
-
-        #endregion
-
         #region Implementation of IGameOverFrameBuilder
 
         /// <summary>
@@ -63,7 +50,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="height">The height of the frame.</param>
         public IFrame Build(string message, string reason, int width, int height)
         {
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

@@ -6,27 +6,15 @@ namespace NetAF.Commands.Conversation
     /// <summary>
     /// Represents the Respond command.
     /// </summary>
-    internal class Respond : ICommand
+    /// <param name="response">The response.</param>
+    internal class Respond(Response response) : ICommand
     {
         #region Properties
 
         /// <summary>
         /// Get the conversation response.
         /// </summary>
-        public Response Response { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Respond command.
-        /// </summary>
-        /// <param name="response">The response.</param>
-        public Respond(Response response)
-        {
-            Response = response;
-        }
+        public Response Response { get; } = response;
 
         #endregion
 
@@ -40,13 +28,13 @@ namespace NetAF.Commands.Conversation
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (Response == null)
-                return new Reaction(ReactionResult.Error, "No response specified.");
+                return new(ReactionResult.Error, "No response specified.");
 
             if (game.ActiveConverser?.Conversation == null)
-                return new Reaction(ReactionResult.Error, "No active conversation.");
+                return new(ReactionResult.Error, "No active conversation.");
 
             return game.ActiveConverser.Conversation.Respond(Response, game);
         }

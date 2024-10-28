@@ -6,27 +6,15 @@ namespace NetAF.Commands.Game
     /// <summary>
     /// Represents the Drop command.
     /// </summary>
-    internal class Drop : ICommand
+    /// <param name="item">The item to take.</param>
+    internal class Drop(Item item) : ICommand
     {
         #region Properties
 
         /// <summary>
         /// Get the item.
         /// </summary>
-        public Item Item { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Drop command.
-        /// </summary>
-        /// <param name="item">The item to take.</param>
-        public Drop(Item item)
-        {
-            Item = item;
-        }
+        public Item Item { get; } = item;
 
         #endregion
 
@@ -40,21 +28,21 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
-                return new Reaction(ReactionResult.Error, "No game specified.");
+                return new(ReactionResult.Error, "No game specified.");
 
             if (game.Player == null)
-                return new Reaction(ReactionResult.Error, "You must specify a character.");
+                return new(ReactionResult.Error, "You must specify a character.");
 
             if (Item == null)
-                return new Reaction(ReactionResult.Error, "You must specify what to drop.");
+                return new(ReactionResult.Error, "You must specify what to drop.");
 
             if (!game.Player.HasItem(Item))
-                return new Reaction(ReactionResult.Error, "You don't have that item.");
+                return new(ReactionResult.Error, "You don't have that item.");
 
             game.Overworld.CurrentRegion.CurrentRoom.AddItem(Item);
             game.Player.DequireItem(Item);
 
-            return new Reaction(ReactionResult.OK, $"Dropped {Item.Identifier.Name}.");
+            return new(ReactionResult.OK, $"Dropped {Item.Identifier.Name}.");
         }
 
         #endregion

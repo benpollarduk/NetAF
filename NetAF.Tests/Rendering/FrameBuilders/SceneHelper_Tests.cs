@@ -51,13 +51,13 @@ namespace NetAF.Tests.Rendering.FrameBuilders
                 new Exit(Direction.Up),
                 new Exit(Direction.Down)
             };
-            regionMaker[1, 1, 1] = new Room(string.Empty, string.Empty, centralExits);
-            regionMaker[0, 1, 1] = new Room("Test", "Test", new Exit(Direction.East));
-            regionMaker[1, 0, 1] = new Room("Test", "Test", new Exit(Direction.North));
-            regionMaker[2, 1, 1] = new Room("Test", "Test", new Exit(Direction.West));
-            regionMaker[1, 2, 1] = new Room("Test", "Test", new Exit(Direction.South));
-            regionMaker[1, 1, 2] = new Room("Test", "Test", new Exit(Direction.Down));
-            regionMaker[1, 1, 0] = new Room("Test", "Test", new Exit(Direction.Up));
+            regionMaker[1, 1, 1] = new(string.Empty, string.Empty, centralExits);
+            regionMaker[0, 1, 1] = new("Test", "Test", new Exit(Direction.East));
+            regionMaker[1, 0, 1] = new("Test", "Test", new Exit(Direction.North));
+            regionMaker[2, 1, 1] = new("Test", "Test", new Exit(Direction.West));
+            regionMaker[1, 2, 1] = new("Test", "Test", new Exit(Direction.South));
+            regionMaker[1, 1, 2] = new("Test", "Test", new Exit(Direction.Down));
+            regionMaker[1, 1, 0] = new("Test", "Test", new Exit(Direction.Up));
             var region = regionMaker.Make();
             var viewPoint = ViewPoint.Create(region);
 

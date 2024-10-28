@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets.Characters;
-using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
 using NetAF.Utilities;
 
@@ -22,9 +21,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.NPCs
         /// <returns>The asset.</returns>
         public NonPlayableCharacter Instantiate()
         {
-            return new NonPlayableCharacter(Name, Description)
+            return new(Name, Description)
             {
-                Conversation = new Conversation(new Paragraph("Hello Ben."), new Paragraph("How are you?", null, new First()))
+                Conversation = new(new("Hello Ben."), new("How are you?", null, new First()))
             };
         }
 

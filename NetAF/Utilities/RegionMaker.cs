@@ -9,11 +9,13 @@ namespace NetAF.Utilities
     /// <summary>
     /// Provides a class for helping to make Regions.
     /// </summary>
-    public sealed class RegionMaker
+    /// <param name="identifier">An identifier for the region.</param>
+    /// <param name="description">A description for the region.</param>
+    public sealed class RegionMaker(Identifier identifier, Description description)
     {
         #region Fields
 
-        private readonly List<RoomPosition> rooms = new List<RoomPosition>();
+        private readonly List<RoomPosition> rooms = [];
 
         #endregion
 
@@ -22,12 +24,12 @@ namespace NetAF.Utilities
         /// <summary>
         /// Get the identifier.
         /// </summary>
-        private Identifier Identifier { get; }
+        private Identifier Identifier { get; } = identifier;
 
         /// <summary>
         /// Get the description.
         /// </summary>
-        private Description Description { get; }
+        private Description Description { get; } = description;
 
         /// <summary>
         /// Get or set the room at a location.
@@ -61,17 +63,6 @@ namespace NetAF.Utilities
         /// <param name="description">A description for the region.</param>
         public RegionMaker(string identifier, string description) : this(new Identifier(identifier), new Description(description))
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the RegionMaker class.
-        /// </summary>
-        /// <param name="identifier">An identifier for the region.</param>
-        /// <param name="description">A description for the region.</param>
-        public RegionMaker(Identifier identifier, Description description)
-        {
-            Identifier = identifier;
-            Description = description;
         }
 
         #endregion
@@ -141,7 +132,7 @@ namespace NetAF.Utilities
         /// <returns>True if the room can be placed, else false.</returns>
         public bool CanPlaceRoom(int x, int y, int z)
         {
-            return rooms.All(r => !r.IsAtPosition(x, y, z));
+            return rooms.TrueForAll(r => !r.IsAtPosition(x, y, z));
         }
 
         /// <summary>
@@ -150,7 +141,7 @@ namespace NetAF.Utilities
         /// <returns>The room positions.</returns>
         public RoomPosition[] GetRoomPositions()
         {
-            return rooms.ToArray();
+            return [.. rooms];
         }
 
         #endregion
@@ -177,7 +168,7 @@ namespace NetAF.Utilities
                     var inverse = direction.Inverse();
 
                     if (adjoining != null && !adjoining.FindExit(inverse, true, out _))
-                        adjoining.AddExit(new Exit(inverse, exit.IsLocked));
+                        adjoining.AddExit(new(inverse, exit.IsLocked));
                 }
             }
         }
@@ -211,7 +202,7 @@ namespace NetAF.Utilities
             foreach (var roomPosition in roomPositions)
                 matrix[roomPosition.X + xNormalisationOffset, roomPosition.Y + yNormalisationOffset, roomPosition.Z + zNormalisationOffset] = roomPosition.Room;
 
-            return new Matrix(matrix);
+            return new(matrix);
         }
 
         #endregion

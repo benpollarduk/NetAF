@@ -20,7 +20,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            return new Item(Name, Description, true);
+            return new(Name, Description, true);
         }
 
         #endregion

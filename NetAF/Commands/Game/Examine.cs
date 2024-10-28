@@ -6,27 +6,15 @@ namespace NetAF.Commands.Game
     /// <summary>
     /// Represents the Examine command.
     /// </summary>
-    internal class Examine : ICommand
+    /// <param name="examinable">The examinable.</param>
+    internal class Examine(IExaminable examinable) : ICommand
     {
         #region Properties
 
         /// <summary>
         /// Get the examinable.
         /// </summary>
-        public IExaminable Examinable { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Examine command.
-        /// </summary>
-        /// <param name="examinable">The examinable.</param>
-        public Examine(IExaminable examinable)
-        {
-            Examinable = examinable;
-        }
+        public IExaminable Examinable { get; } = examinable;
 
         #endregion
 
@@ -40,9 +28,9 @@ namespace NetAF.Commands.Game
         public Reaction Invoke(Logic.Game game)
         {
             if (Examinable == null)
-                return new Reaction(ReactionResult.Error, "Nothing to examine.");
+                return new(ReactionResult.Error, "Nothing to examine.");
 
-            return new Reaction(ReactionResult.OK, Examinable.Examine(new ExaminationScene(game)).Description);
+            return new(ReactionResult.OK, Examinable.Examine(new ExaminationScene(game)).Description);
         }
 
         #endregion

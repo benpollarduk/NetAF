@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Assets.Locations;
+﻿using NetAF.Assets.Locations;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Color
@@ -7,11 +6,13 @@ namespace NetAF.Rendering.FrameBuilders.Color
     /// <summary>
     /// Provides a builder of color region map frames.
     /// </summary>
-    public sealed class ColorRegionMapFrameBuilder : IRegionMapFrameBuilder
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    /// <param name="regionMapBuilder">A builder for region maps.</param>
+    public sealed class ColorRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder) : IRegionMapFrameBuilder
     {
         #region Fields
 
-        private readonly GridStringBuilder gridStringBuilder;
+        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
 
         #endregion
 
@@ -20,7 +21,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <summary>
         /// Get the region map builder.
         /// </summary>
-        private IRegionMapBuilder RegionMapBuilder { get; }
+        private IRegionMapBuilder RegionMapBuilder { get; } = regionMapBuilder;
 
         /// <summary>
         /// Get or set the background color.
@@ -39,21 +40,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ColorRegionMapFrameBuilder class.
-        /// </summary>
-        /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-        /// <param name="regionMapBuilder">A builder for region maps.</param>
-        public ColorRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder)
-        {
-            this.gridStringBuilder = gridStringBuilder;
-            RegionMapBuilder = regionMapBuilder;
-        }
-
-        #endregion
-
         #region Implementation of IRegionMapFrameBuilder
 
         /// <summary>
@@ -64,7 +50,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="height">The height of the frame.</param>
         public IFrame Build(Region region, int width, int height)
         {
-            gridStringBuilder.Resize(new Size(width, height));
+            gridStringBuilder.Resize(new(width, height));
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

@@ -300,7 +300,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="startY">The start position, x.</param>
         private void DrawItemOrCharacter(Room room, GridStringBuilder gridStringBuilder, int startX, int startY)
         {
-            if (room.Items.Any(x => x.IsPlayerVisible) || room.Characters.Any(x => x.IsPlayerVisible))
+            if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
                 gridStringBuilder.SetCell(startX + 4, startY + 3, ItemOrCharacterInRoom, ItemOrCharacterColor);
         }
 
@@ -317,7 +317,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="endY">The end position, x.</param>
         private void DrawKey(Room room, ViewPoint viewPoint, KeyType key, GridStringBuilder gridStringBuilder, int startX, int startY, out int endX, out int endY)
         {
-            var keyLines = new Dictionary<string, AnsiColor>();
+            Dictionary<string, AnsiColor> keyLines = [];
             var lockedExitString = $"{LockedExit} = Locked Exit";
             var notVisitedExitString = "N/E/S/W/U/D = Unvisited";
             var visitedExitString = "n/e/s/w/u/d = Visited";
@@ -339,7 +339,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                     if (room.EnteredFrom.HasValue)
                         keyLines.Add($"{room.EnteredFrom.Value.ToString().ToLower().Substring(0, 1)} = Entrance", VisitedExitColor);
 
-                    if (room.Items.Any(x => x.IsPlayerVisible) || room.Characters.Any(x => x.IsPlayerVisible))
+                    if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
                         keyLines.Add(itemsString, ItemOrCharacterColor);
 
                     break;

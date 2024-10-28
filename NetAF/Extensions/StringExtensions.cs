@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using NetAF.Assets;
 using NetAF.Utilities;
 
@@ -19,7 +18,7 @@ namespace NetAF.Extensions
         /// <returns>This string as a description.</returns>
         public static Description ToDescription(this string value)
         {
-            return new Description(value);
+            return new(value);
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace NetAF.Extensions
         /// <returns>This string as an identifier.</returns>
         public static Identifier ToIdentifier(this string value)
         {
-            return new Identifier(value);
+            return new(value);
         }
 
         /// <summary>
@@ -65,7 +64,8 @@ namespace NetAF.Extensions
                 return false;
 
             var space = Convert.ToChar(" ");
-            var lastWord = word.TrimEnd(space).Split(space).Last();
+            var words = word.TrimEnd(space).Split(space);
+            var lastWord = words[words.Length - 1];
             return lastWord.EndsWith("S", StringComparison.CurrentCultureIgnoreCase);
         }
 
@@ -80,8 +80,9 @@ namespace NetAF.Extensions
                 return string.Empty;
 
             var space = Convert.ToChar(" ");
-            var firstWord = word.TrimStart(space).Split(space)[0];
-            var lastWord = word.TrimEnd(space).Split(space).Last();
+            var words = word.TrimEnd(space).Split(space);
+            var firstWord = words[0];
+            var lastWord = words[words.Length - 1];
 
             if (IsPlural(lastWord))
                 return "some";
@@ -102,7 +103,7 @@ namespace NetAF.Extensions
                 return false;
 
             var vowels = new[] { "A", "E", "I", "O", "U" };
-            return vowels.Any(x => x.InsensitiveEquals(value));
+            return Array.Exists(vowels, x => x.InsensitiveEquals(value));
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace NetAF.Extensions
                 value = "\"" + value;
 
             if (!value.EndsWith("\""))
-                value = value + "\"";
+                value += "\"";
 
             return value;
         }

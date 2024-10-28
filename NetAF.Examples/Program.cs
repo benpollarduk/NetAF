@@ -87,7 +87,7 @@ namespace NetAF.Examples
                     overworld.Commands =
                     [
                         // add a hidden custom command to the overworld that allows jumping around a region for debugging purposes
-                        new CustomCommand(new CommandHelp("Jump", "Jump to a location in a region."), false, (g, a) =>
+                        new(new("Jump", "Jump to a location in a region."), false, (g, a) =>
                         {
                             var x = 0;
                             var y = 0;
@@ -103,9 +103,9 @@ namespace NetAF.Examples
                             var result = g.Overworld.CurrentRegion.JumpToRoom(x, y, z);
 
                             if (!result)
-                                return new Reaction(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
+                                return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
 
-                            return new Reaction(ReactionResult.OK, $"Jumped to {x} {y} {z}.");
+                            return new(ReactionResult.OK, $"Jumped to {x} {y} {z}.");
                         })
                     ];
 
@@ -113,7 +113,7 @@ namespace NetAF.Examples
                 }
 
                 var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
-                var creator = Game.Create(new GameInfo("NetAF Demo", about, "NetAF"), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), GameConfiguration.Default);
+                var creator = Game.Create(new("NetAF Demo", about, "NetAF"), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), GameConfiguration.Default);
 
                 Game.Execute(creator);
             }

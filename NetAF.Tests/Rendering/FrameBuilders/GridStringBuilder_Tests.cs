@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Rendering.FrameBuilders;
+﻿using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +11,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenBlank_WhenDrawHorizontalDivider_ThenDividerIsDrawn()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawHorizontalDivider(0, AnsiColor.Black);
             var left = builder.GetCharacter(1, 0);
@@ -26,7 +25,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenBlank_WhenDrawUnderline_ThenUnderlineIsDrawn()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawUnderline(0, 0, 1, AnsiColor.Black);
             var result = builder.GetCharacter(0, 0);
@@ -38,7 +37,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenBlank_WhenDrawBoundary_ThenBoundaryIsDrawn()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawBoundary(AnsiColor.Black);
             var topLeft = builder.GetCharacter(0, 0);
@@ -56,7 +55,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenA_WhenDrawWrapped_ThenDrawnCharacterIsA()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawWrapped("A", 0, 0, 10, AnsiColor.Black, out _, out _);
             var result = builder.GetCharacter(0, 0);
@@ -68,7 +67,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenAA_WhenDrawWrapped_ThenOutXIs1()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawWrapped("AA", 0, 0, 10, AnsiColor.Black, out var x, out _);
 
@@ -79,7 +78,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenAA_WhenDrawCentralisedWrapped_ThenDrawnCharacterIsA()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawCentralisedWrapped("AA", 0, 10, AnsiColor.Black, out _, out _);
             var result = builder.GetCharacter(5, 0);
@@ -91,7 +90,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenA_WhenDrawCentralisedWrapped_ThenOutXIs5()
         {
             var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
+            builder.Resize(new(10, 10));
 
             builder.DrawCentralisedWrapped("A", 0, 10, AnsiColor.Black, out var x, out _);
 
@@ -101,10 +100,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         [TestMethod]
         public void GivenWidth10And10Characters_WhenGetNumberOfLines_Then1()
         {
-            var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
-
-            var result = builder.GetNumberOfLines("AND THE DO", 0, 0, 10);
+            var result = GridStringBuilder.GetNumberOfLines("AND THE DO", 0, 10);
 
             Assert.AreEqual(1, result);
         }
@@ -112,10 +108,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         [TestMethod]
         public void GivenWidth10And11Characters_WhenGetNumberOfLines_Then2()
         {
-            var builder = new GridStringBuilder();
-            builder.Resize(new Size(10, 10));
-
-            var result = builder.GetNumberOfLines("AND THE DOG", 0, 0, 10);
+            var result = GridStringBuilder.GetNumberOfLines("AND THE DOG", 0, 10);
 
             Assert.AreEqual(2, result);
         }

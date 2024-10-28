@@ -5,11 +5,12 @@ namespace NetAF.Assets.Locations
     /// <summary>
     /// Provides a 3D matrix of rooms.
     /// </summary>
-    public sealed class Matrix
+    /// <param name="rooms">The rooms to be represented.</param>
+    public sealed class Matrix(Room[,,] rooms)
     {
         #region Fields
 
-        private readonly Room[,,] rooms;
+        private readonly Room[,,] rooms = rooms;
 
         #endregion
 
@@ -41,19 +42,6 @@ namespace NetAF.Assets.Locations
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the Matrix class.
-        /// </summary>
-        /// <param name="rooms">The rooms to be represented.</param>
-        public Matrix(Room[,,] rooms)
-        {
-            this.rooms = rooms;
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -62,7 +50,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The rooms, as a one dimensional array.</returns>
         public Room[] ToRooms()
         {
-            var roomList = new List<Room>();
+            List<Room> roomList = [];
 
             for (var z = 0; z < Depth; z++)
             {
@@ -76,7 +64,7 @@ namespace NetAF.Assets.Locations
                 }
             }
 
-            return roomList.ToArray();
+            return [.. roomList];
         }
 
         #endregion

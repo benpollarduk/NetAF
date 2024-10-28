@@ -14,7 +14,7 @@ namespace NetAF.Assets.Attributes
         /// <summary>
         /// Get or set the underlying attributes.
         /// </summary>
-        private readonly Dictionary<Attribute, int> attributes = new Dictionary<Attribute, int>();
+        private readonly Dictionary<Attribute, int> attributes = [];
 
         #endregion
 
@@ -40,7 +40,7 @@ namespace NetAF.Assets.Attributes
             if (attribute != null)
                 return;
 
-            attribute = new Attribute(name, string.Empty, int.MinValue, int.MaxValue);
+            attribute = new(name, string.Empty, int.MinValue, int.MaxValue);
             attributes.Add(attribute, 0);
         }
 
@@ -70,35 +70,18 @@ namespace NetAF.Assets.Attributes
         }
 
         /// <summary>
-        /// Cap a value between a minimum and maximum limit.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="min">The minimum value.</param>
-        /// <param name="max">The maximum value.</param>
-        /// <returns>The capped value.</returns>
-        private int CapValue(int value, int min, int max)
-        {
-            if (value < min)
-                value = min;
-            else if (value > max)
-                value = max;
-
-            return value;
-        }
-
-        /// <summary>
         /// Get all attributes.
         /// </summary>
-        /// <returns>An array of attribtes.</returns>
+        /// <returns>An array of attributes.</returns>
         public Attribute[] GetAttributes()
         {
-            return attributes.Keys.ToArray();
+            return [.. attributes.Keys];
         }
 
         /// <summary>
         /// Get all attributes as a dictionary.
         /// </summary>
-        /// <returns>An array of attribtes.</returns>
+        /// <returns>An array of attributes.</returns>
         public Dictionary<Attribute, int> GetAsDictionary()
         {
             return attributes.ToDictionary(x => x.Key, x => x.Value);
@@ -200,6 +183,27 @@ namespace NetAF.Assets.Attributes
         public void RemoveAll()
         {
             attributes.Clear();
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Cap a value between a minimum and maximum limit.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <returns>The capped value.</returns>
+        private static int CapValue(int value, int min, int max)
+        {
+            if (value < min)
+                value = min;
+            else if (value > max)
+                value = max;
+
+            return value;
         }
 
         #endregion

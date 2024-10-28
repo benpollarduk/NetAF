@@ -8,27 +8,15 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting game input.
     /// </summary>
-    internal class InputInterpreter : IInterpreter
+    /// <param name="interpreters">The interpreters.</param>
+    internal class InputInterpreter(params IInterpreter[] interpreters) : IInterpreter
     {
         #region Properties
 
         /// <summary>
         /// Get the interpreters.
         /// </summary>
-        protected IInterpreter[] Interpreters { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the InputInterpreter class.
-        /// </summary>
-        /// <param name="interpreters">The interpreters.</param>
-        public InputInterpreter(params IInterpreter[] interpreters)
-        {
-            Interpreters = interpreters;
-        }
+        protected IInterpreter[] Interpreters { get; } = interpreters;
 
         #endregion
 
@@ -49,7 +37,7 @@ namespace NetAF.Interpretation
                         l.AddRange(commands);
                 }
 
-                return l.ToArray();
+                return [.. l];
             }
         }
 
@@ -69,7 +57,7 @@ namespace NetAF.Interpretation
                     return result;
             }
 
-            return new InterpretationResult(false, new Unactionable($"Could not interpret {input}"));
+            return new(false, new Unactionable($"Could not interpret {input}"));
         }
 
         /// <summary>
@@ -79,7 +67,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            var l = new List<CommandHelp>();
+            List<CommandHelp> l = [];
 
             foreach (var interpreter in Interpreters)
             {
@@ -89,7 +77,7 @@ namespace NetAF.Interpretation
                     l.AddRange(interpreter.GetContextualCommandHelp(game));
             }
 
-            return l.ToArray();
+            return [.. l];
         }
 
         #endregion

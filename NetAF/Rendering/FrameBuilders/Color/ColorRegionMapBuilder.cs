@@ -205,6 +205,10 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
         }
 
+        #endregion
+
+        #region StaticMethods
+
         /// <summary>
         /// Try and convert a position in a matrix to a grid layout position.
         /// </summary>
@@ -220,7 +224,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="gridLeft">The left position to begin rendering the room at, in the grid.</param>
         /// <param name="gridTop">The top position to begin rendering the room at, in the grid.</param>
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
-        private bool TryConvertMatrixPositionToGridLayoutPosition(int gridStartX, int gridStartY, int gridAvailableWidth, int gridAvailableHeight, Matrix matrix, int roomX, int roomY, int playerX, int playerY, out int gridLeft, out int gridTop)
+        private static bool TryConvertMatrixPositionToGridLayoutPosition(int gridStartX, int gridStartY, int gridAvailableWidth, int gridAvailableHeight, Matrix matrix, int roomX, int roomY, int playerX, int playerY, out int gridLeft, out int gridTop)
         {
             const int roomWidth = 5;
             const int roomHeight = 3;
@@ -298,8 +302,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             // firstly draw lower levels
             if (ShowLowerFloors)
             {
-                var lowerLevelRooms = new List<RoomPosition>();
-                lowerLevelRooms.AddRange(visitedRoomPositions.Where(r => r.Z < currentFloor));
+                List<RoomPosition> lowerLevelRooms = [.. visitedRoomPositions.Where(r => r.Z < currentFloor)];
 
                 if (region.VisibleWithoutDiscovery)
                     lowerLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Z < currentFloor));
@@ -312,9 +315,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             }
 
             // now current level
-
-            var currentLevelRooms = new List<RoomPosition>();
-            currentLevelRooms.AddRange(visitedRoomPositions.Where(r => r.Z == currentFloor));
+            List<RoomPosition> currentLevelRooms = [.. visitedRoomPositions.Where(r => r.Z == currentFloor)];
 
             if (region.VisibleWithoutDiscovery)
                 currentLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Z == currentFloor));
