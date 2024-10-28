@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NetAF.Adapters;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
@@ -242,7 +241,7 @@ namespace NetAF.Logic
         {
             if (!CurrentFrame.AcceptsInput)
             {
-                Refresh();
+                Refresh(string.Empty);
                 displayReaction = false;
                 return new Reaction(ReactionResult.OK, string.Empty);
             }
@@ -312,9 +311,7 @@ namespace NetAF.Logic
             try
             {
                 StartingFrameDraw?.Invoke(this, frame);
-
                 Configuration.Adapter.RenderFrame(frame);
-
                 FinishedFrameDraw?.Invoke(this, frame);
             }
             catch (Exception e)
@@ -378,14 +375,6 @@ namespace NetAF.Logic
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Characters.Where(x => x.IsPlayerVisible));
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Exits.Where(x => x.IsPlayerVisible));
             return examinables.ToArray();
-        }
-
-        /// <summary>
-        /// Refresh the current frame.
-        /// </summary>
-        private void Refresh()
-        {
-            Refresh(string.Empty);
         }
 
         /// <summary>
@@ -464,9 +453,7 @@ namespace NetAF.Logic
             return () =>
             {
                 var game = new Game(info, introduction, assetGenerator?.GetPlayer(), assetGenerator?.GetOverworld(), conditions, configuration);
-
                 setup?.Invoke(game);
-
                 return game;
             };
         }
