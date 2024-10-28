@@ -5,24 +5,12 @@ namespace NetAF.Rendering.Presenter
     /// <summary>
     /// Represents a presenter for TextWriter.
     /// </summary>
-    public sealed class TextWriterPresenter : IFramePresenter
+    /// <param name="writer">The writer.</param>
+    public sealed class TextWriterPresenter(TextWriter writer) : IFramePresenter
     {
         #region Fields
 
-        private readonly TextWriter writer;
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the TextWriterPresenter class.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        public TextWriterPresenter(TextWriter writer)
-        {
-            this.writer = writer;
-        }
+        private readonly TextWriter writer = writer;
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -9,7 +10,7 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenNoRooms_WhenGetWidth_Then0()
         {
-            var matrix = new Matrix(new Room[0,0,0]);
+            var matrix = new Matrix([]);
 
             var result = matrix.Width;
 
@@ -19,7 +20,7 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenNoRooms_WhenGetHeight_Then0()
         {
-            var matrix = new Matrix(new Room[0, 0, 0]);
+            var matrix = new Matrix([]);
 
             var result = matrix.Height;
 
@@ -29,7 +30,7 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenNoRooms_WhenGetDepth_Then0()
         {
-            var matrix = new Matrix(new Room[0, 0, 0]);
+            var matrix = new Matrix([]);
 
             var result = matrix.Depth;
 
@@ -39,12 +40,14 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given1RoomWide_WhenGetWidth_Then1()
         {
-            var rooms = new Room[1, 2, 3];
-            rooms[0, 0, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 1] = new(string.Empty, string.Empty);
-            rooms[0, 1, 2] = new(string.Empty, string.Empty);
-            var matrix = new Matrix(rooms);
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), 0, 0, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 1),
+                new(new(string.Empty, string.Empty), 0, 1, 2)
+            ];
+            var matrix = new Matrix([.. roomPositions]);
 
             var result = matrix.Width;
 
@@ -54,12 +57,14 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given2RoomsHigh_WhenGetHeight_Then2()
         {
-            var rooms = new Room[1, 2, 3];
-            rooms[0, 0, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 1] = new(string.Empty, string.Empty);
-            rooms[0, 1, 2] = new(string.Empty, string.Empty);
-            var matrix = new Matrix(rooms);
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), 0, 0, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 1),
+                new(new(string.Empty, string.Empty), 0, 1, 2)
+            ];
+            var matrix = new Matrix([.. roomPositions]);
 
             var result = matrix.Height;
 
@@ -69,12 +74,14 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given3RoomsDeep_WhenGetDepth_Then3()
         {
-            var rooms = new Room[1, 2, 3];
-            rooms[0, 0, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 1] = new(string.Empty, string.Empty);
-            rooms[0, 1, 2] = new(string.Empty, string.Empty);
-            var matrix = new Matrix(rooms);
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), 0, 0, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 1),
+                new(new(string.Empty, string.Empty), 0, 1, 2)
+            ];
+            var matrix = new Matrix([.. roomPositions]);
 
             var result = matrix.Depth;
 
@@ -84,12 +91,14 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given4Rooms_WhenToRooms_Then4Rooms()
         {
-            var rooms = new Room[1, 2, 3];
-            rooms[0, 0, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 0] = new(string.Empty, string.Empty);
-            rooms[0, 1, 1] = new(string.Empty, string.Empty);
-            rooms[0, 1, 2] = new(string.Empty, string.Empty);
-            var matrix = new Matrix(rooms);
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), 0, 0, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 0),
+                new(new(string.Empty, string.Empty), 0, 1, 1),
+                new(new(string.Empty, string.Empty), 0, 1, 2)
+            ];
+            var matrix = new Matrix([.. roomPositions]);
 
             var result = matrix.ToRooms();
 

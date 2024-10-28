@@ -185,24 +185,17 @@ namespace NetAF.Utilities
             var minX = roomPositions.Min(x => x.X);
             var minY = roomPositions.Min(x => x.Y);
             var minZ = roomPositions.Min(x => x.Z);
-            var maxX = roomPositions.Max(x => x.X);
-            var maxY = roomPositions.Max(x => x.Y);
-            var maxZ = roomPositions.Max(x => x.Z);
-
-            var lengthX = maxX - minX + 1;
-            var lengthY = maxY - minY + 1;
-            var lengthZ = maxZ - minZ + 1;
 
             var xNormalisationOffset = 0 - minX;
             var yNormalisationOffset = 0 - minY;
             var zNormalisationOffset = 0 - minZ;
 
-            var matrix = new Room[lengthX, lengthY, lengthZ];
+            List<RoomPosition> normalisedPositions = [];
 
             foreach (var roomPosition in roomPositions)
-                matrix[roomPosition.X + xNormalisationOffset, roomPosition.Y + yNormalisationOffset, roomPosition.Z + zNormalisationOffset] = roomPosition.Room;
+                normalisedPositions.Add(new RoomPosition(roomPosition.Room, roomPosition.X + xNormalisationOffset, roomPosition.Y + yNormalisationOffset, roomPosition.Z + zNormalisationOffset));
 
-            return new(matrix);
+            return new([.. normalisedPositions]);
         }
 
         #endregion

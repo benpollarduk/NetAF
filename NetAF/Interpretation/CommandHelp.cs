@@ -5,34 +5,21 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides help for a command.
     /// </summary>
-    public sealed class CommandHelp : IEquatable<CommandHelp>
+    /// <param name="command">The command.</param>
+    /// <param name="description">The help.</param>
+    public sealed class CommandHelp(string command, string description) : IEquatable<CommandHelp>
     {
         #region Properties
 
         /// <summary>
         /// Get the command.
         /// </summary>
-        public string Command { get; }
+        public string Command { get; } = command;
 
         /// <summary>
         /// Get the description of the command.
         /// </summary>
-        public string Description { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the CommandHelp class.
-        /// </summary>
-        /// <param name="command">The command.</param>
-        /// <param name="description">The help.</param>
-        public CommandHelp(string command, string description)
-        {
-            Command = command;
-            Description = description;
-        }
+        public string Description { get; } = description;
 
         #endregion
 

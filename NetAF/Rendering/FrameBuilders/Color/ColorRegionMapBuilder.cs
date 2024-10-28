@@ -286,7 +286,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                     var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Z == floor).ToArray();
 
                     // only draw levels indicators where a region is visible without discovery or a room on the floor has been visited
-                    if (!region.VisibleWithoutDiscovery && roomsOnThisFloor.All(r => !r.HasBeenVisited))
+                    if (!region.VisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
                         continue;
 
                     if (floor == currentFloor)
