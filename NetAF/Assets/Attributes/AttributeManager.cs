@@ -14,7 +14,7 @@ namespace NetAF.Assets.Attributes
         /// <summary>
         /// Get or set the underlying attributes.
         /// </summary>
-        private readonly Dictionary<Attribute, int> attributes = new Dictionary<Attribute, int>();
+        private readonly Dictionary<Attribute, int> attributes = new();
 
         #endregion
 

@@ -183,7 +183,7 @@ namespace NetAF.Extensions
                 value = "\"" + value;
 
             if (!value.EndsWith("\""))
-                value = value + "\"";
+                value += "\"";
 
             return value;
         }

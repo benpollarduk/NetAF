@@ -16,7 +16,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the default game configuration.
         /// </summary>
-        public static GameConfiguration Default => new GameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, new SystemConsoleAdapter());
+        public static GameConfiguration Default => new(new Size(80, 50), ExitMode.ReturnToTitleScreen, new SystemConsoleAdapter());
 
         #endregion
 

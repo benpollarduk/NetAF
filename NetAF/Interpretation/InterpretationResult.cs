@@ -13,7 +13,7 @@ namespace NetAF.Interpretation
         /// <summary>
         /// Get a default result for failure.
         /// </summary>
-        public static InterpretationResult Fail => new InterpretationResult(false, new Unactionable("Interpretation failed."));
+        public static InterpretationResult Fail => new(false, new Unactionable("Interpretation failed."));
 
         #endregion
 

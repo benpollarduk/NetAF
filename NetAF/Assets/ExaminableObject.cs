@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using NetAF.Assets.Attributes;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -19,38 +20,41 @@ namespace NetAF.Assets
         /// </summary>
         public ExaminationCallback Examination { get; set; } = request =>
         {
-            var description = string.Empty;
+            StringBuilder description = new();
 
             if (request.Examinable.Description != null)
-                description = request.Examinable.Description.GetDescription();
+                description.Append(request.Examinable.Description.GetDescription());
 
             if (request.Examinable.Commands?.Any() ?? false)
             {
-                if (!string.IsNullOrEmpty(description))
-                    description += " ";
+                if (description.Length > 0)
+                    description.Append(" ");
 
-                description += $"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ";
+                description.Append($"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ");
 
-                foreach (var customCommand in request.Examinable.Commands)
-                    description += $"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ";
-
-                if (description.EndsWith(", "))
+                for (int i = 0; i < request.Examinable.Commands.Length; i++)
                 {
-                    description = description.Remove(description.Length - 2);
+                    CustomCommand customCommand = request.Examinable.Commands[i];
+                    description.Append($"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ");
+                }
+
+                if (description.ToString().EndsWith(", "))
+                {
+                    description.Remove(description.Length - 2, 2);
                     description.EnsureFinishedSentence();
                 }
             }
 
-            if (string.IsNullOrEmpty(description))
-                description = request.Examinable.Identifier.Name;
+            if (description.Length == 0)
+                description.Append(request.Examinable.Identifier.Name);
 
-            if (string.IsNullOrEmpty(description))
-                description = request.Examinable.GetType().Name;
+            if (description.Length == 0)
+                description.Append(request.Examinable.GetType().Name);
 
             if (request.Examinable.Attributes.Count > 0)
-                description += $"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}";
+                description.Append($"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
 
-            return new ExaminationResult(description);
+            return new ExaminationResult(description.ToString());
         };
 
         #endregion

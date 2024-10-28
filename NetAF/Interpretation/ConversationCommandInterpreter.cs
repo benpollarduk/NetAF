@@ -75,7 +75,7 @@ namespace NetAF.Interpretation
             if (game.ActiveConverser?.Conversation == null) 
                 return Array.Empty<CommandHelp>();
 
-            var commands = new List<CommandHelp> { new CommandHelp(End, "End the conversation") };
+            var commands = new List<CommandHelp> { new(End, "End the conversation") };
 
             if (game.ActiveConverser.Conversation.CurrentParagraph?.CanRespond ?? false)
             {

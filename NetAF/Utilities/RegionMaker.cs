@@ -13,7 +13,7 @@ namespace NetAF.Utilities
     {
         #region Fields
 
-        private readonly List<RoomPosition> rooms = new List<RoomPosition>();
+        private readonly List<RoomPosition> rooms = new();
 
         #endregion
 
