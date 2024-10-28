@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Extensions;
@@ -19,7 +20,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <returns>The view point, as a string.</returns>
         internal static string CreateViewpointAsString(Room room, ViewPoint viewPoint)
         {
-            var view = string.Empty;
+            StringBuilder view = new();
 
             foreach (var direction in new[] { Direction.West, Direction.North, Direction.East, Direction.South, Direction.Up, Direction.Down })
             {
@@ -30,7 +31,7 @@ namespace NetAF.Rendering.FrameBuilders
 
                 var roomDescription = room[direction].IsLocked ? "a locked exit" : $"the {roomInDirection.Identifier.Name}";
 
-                if (string.IsNullOrEmpty(view))
+                if (view.Length == 0)
                 {
                     switch (direction)
                     {
@@ -38,13 +39,13 @@ namespace NetAF.Rendering.FrameBuilders
                         case Direction.East:
                         case Direction.South:
                         case Direction.West:
-                            view += $"To the {direction.ToString().ToLower()} is {roomDescription}, ";
+                            view.Append($"To the {direction.ToString().ToLower()} is {roomDescription}, ");
                             break;
                         case Direction.Up:
-                            view += $"Above is {roomDescription}, ";
+                            view.Append($"Above is {roomDescription}, ");
                             break;
                         case Direction.Down:
-                            view += $"Below is {roomDescription}, ";
+                            view.Append($"Below is {roomDescription}, ");
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -58,13 +59,13 @@ namespace NetAF.Rendering.FrameBuilders
                         case Direction.East:
                         case Direction.South:
                         case Direction.West:
-                            view += $"{direction.ToString().ToLower()} is {roomDescription}, ";
+                            view.Append($"{direction.ToString().ToLower()} is {roomDescription}, ");
                             break;
                         case Direction.Up:
-                            view += $"above is {roomDescription}, ";
+                            view.Append($"above is {roomDescription}, ");
                             break;
                         case Direction.Down:
-                            view += $"below is {roomDescription}, ";
+                            view.Append($"below is {roomDescription}, ");
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -72,7 +73,9 @@ namespace NetAF.Rendering.FrameBuilders
                 }
             }
 
-            return string.IsNullOrEmpty(view) ? string.Empty : view.Remove(view.Length - 2).EnsureFinishedSentence();
+            var viewAsString = view.ToString();
+
+            return string.IsNullOrEmpty(viewAsString) ? string.Empty : viewAsString.Remove(viewAsString.Length - 2).EnsureFinishedSentence();
         }
 
         /// <summary>
