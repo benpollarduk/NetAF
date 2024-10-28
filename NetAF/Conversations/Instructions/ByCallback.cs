@@ -5,27 +5,15 @@ namespace NetAF.Conversations.Instructions
     /// <summary>
     /// An end of paragraph instruction that shifts paragraphs based on a callback.
     /// </summary>
-    public sealed class ByCallback : IEndOfPargraphInstruction
+    /// <param name="callback">The callback that decides the instruction to use.</param>
+    public sealed class ByCallback(Func<IEndOfPargraphInstruction> callback) : IEndOfPargraphInstruction
     {
         #region Properties
 
         /// <summary>
         /// Get the callback that decides the instruction to use.
         /// </summary>
-        public Func<IEndOfPargraphInstruction> Callback { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Create a new instance of the ByCallback class.
-        /// </summary>
-        /// <param name="callback">The callback that decides the instruction to use.</param>
-        public ByCallback(Func<IEndOfPargraphInstruction> callback)
-        {
-            Callback = callback;
-        }
+        public Func<IEndOfPargraphInstruction> Callback { get; } = callback;
 
         #endregion
 

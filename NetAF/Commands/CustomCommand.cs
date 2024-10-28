@@ -7,14 +7,17 @@ namespace NetAF.Commands
     /// <summary>
     /// Provides a custom command.
     /// </summary>
-    public class CustomCommand : ICommand, IPlayerVisible
+    /// <param name="help">The help for this command.</param>
+    /// <param name="isPlayerVisible">If this is visible to the player.</param>
+    /// <param name="callback">The callback to invoke when this command is invoked.</param>
+    public class CustomCommand(CommandHelp help, bool isPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible
     {
         #region Properties
 
         /// <summary>
         /// Get the callback.
         /// </summary>
-        private CustomCommandCallback Callback { get; }
+        private CustomCommandCallback Callback { get; } = callback;
 
         /// <summary>
         /// Get or set the arguments.
@@ -24,24 +27,7 @@ namespace NetAF.Commands
         /// <summary>
         /// Get the help for this command.
         /// </summary>
-        public CommandHelp Help { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the CustomCommand class.
-        /// </summary>
-        /// <param name="help">The help for this command.</param>
-        /// <param name="isPlayerVisible">If this is visible to the player.</param>
-        /// <param name="callback">The callback to invoke when this command is invoked.</param>
-        public CustomCommand(CommandHelp help, bool isPlayerVisible, CustomCommandCallback callback)
-        {
-            Help = help;
-            Callback = callback;
-            IsPlayerVisible = isPlayerVisible;
-        }
+        public CommandHelp Help { get; } = help;
 
         #endregion
 
@@ -64,7 +50,7 @@ namespace NetAF.Commands
         /// <summary>
         /// Get or set if this is visible to the player.
         /// </summary>
-        public bool IsPlayerVisible { get; set; }
+        public bool IsPlayerVisible { get; set; } = isPlayerVisible;
 
         #endregion
     }

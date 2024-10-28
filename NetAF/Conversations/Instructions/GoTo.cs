@@ -3,27 +3,15 @@
     /// <summary>
     /// An end of paragraph instruction that shifts paragraphs based on an absolute index.
     /// </summary>
-    public sealed class GoTo : IEndOfPargraphInstruction
+    /// <param name="index">The index of the next paragraph.</param>
+    public sealed class GoTo(int index) : IEndOfPargraphInstruction
     {
         #region Properties
 
         /// <summary>
         /// Get the index.
         /// </summary>
-        public int Index { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Create a new instance of the GoTo class.
-        /// </summary>
-        /// <param name="index">The index of the next paragraph.</param>
-        public GoTo(int index)
-        {
-            Index = index;
-        }
+        public int Index { get; } = index;
 
         #endregion
 

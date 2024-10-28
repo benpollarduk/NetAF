@@ -5,27 +5,15 @@ namespace NetAF.Conversations.Instructions
     /// <summary>
     /// An end of paragraph instruction that shifts paragraphs based on a delta.
     /// </summary>
-    public sealed class Jump : IEndOfPargraphInstruction
+    /// <param name="delta">The delta to shift paragraphs by.</param>
+    public sealed class Jump(int delta) : IEndOfPargraphInstruction
     {
         #region Properties
 
         /// <summary>
         /// Get the delta.
         /// </summary>
-        public int Delta { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Create a new instance of the Jump class.
-        /// </summary>
-        /// <param name="delta">The delta to shift paragraphs by.</param>
-        public Jump(int delta)
-        {
-            Delta = delta;
-        }
+        public int Delta { get; } = delta;
 
         #endregion
 

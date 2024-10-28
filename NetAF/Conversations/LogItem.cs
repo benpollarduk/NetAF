@@ -3,34 +3,21 @@
     /// <summary>
     /// Provides a container for log items.
     /// </summary>
-    public sealed class LogItem
+    /// <param name="participant">The participant.</param>
+    /// <param name="line">The line.</param>
+    public sealed class LogItem(Participant participant, string line)
     {
         #region Properties
 
         /// <summary>
         /// Get the participant.
         /// </summary>
-        public Participant Participant { get; }
+        public Participant Participant { get; } = participant;
 
         /// <summary>
         /// Get the line.
         /// </summary>
-        public string Line { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the LogItem class.
-        /// </summary>
-        /// <param name="participant">The participant.</param>
-        /// <param name="line">The line.</param>
-        public LogItem(Participant participant, string line)
-        {
-            Participant = participant;
-            Line = line;
-        }
+        public string Line { get; } = line;
 
         #endregion
     }

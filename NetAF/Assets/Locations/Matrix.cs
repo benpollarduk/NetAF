@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
 
 namespace NetAF.Assets.Locations
 {
     /// <summary>
     /// Provides a 3D matrix of rooms.
     /// </summary>
-    /// <param name="rooms">The rooms to be represented.</param>
-    public sealed class Matrix(Room[,,] rooms)
+    /// <param name="roomPositions">The rooms to be represented.</param>
+    public sealed class Matrix(RoomPosition[] roomPositions)
     {
         #region Fields
 
-        private readonly Room[,,] rooms = rooms;
+        private readonly RoomPosition[] roomPositions = roomPositions;
 
         #endregion
 
@@ -23,22 +24,22 @@ namespace NetAF.Assets.Locations
         /// <param name="y">The y position.</param>
         /// <param name="z">The z position.</param>
         /// <returns>The room.</returns>
-        public Room this[int x, int y, int z] => rooms[x, y, z];
+        public Room this[int x, int y, int z] => Array.Find(roomPositions, r => r.IsAtPosition(x, y, z))?.Room;
 
         /// <summary>
         /// Get the width of the matrix.
         /// </summary>
-        public int Width => rooms.GetLength(0);
+        public int Width => roomPositions.Length > 0 ? roomPositions.Max(r => r.X) - roomPositions.Min(r => r.X) + 1 : 0;
 
         /// <summary>
         /// Get the height of the matrix.
         /// </summary>
-        public int Height => rooms.GetLength(1);
+        public int Height => roomPositions.Length > 0 ? roomPositions.Max(r => r.Y) - roomPositions.Min(r => r.Y) + 1 : 0;
 
         /// <summary>
         /// Get the depth of the matrix.
         /// </summary>
-        public int Depth => rooms.GetLength(2);
+        public int Depth => roomPositions.Length > 0 ? roomPositions.Max(r => r.Z) - roomPositions.Min(r => r.Z) + 1 : 0;
 
         #endregion
 
@@ -50,21 +51,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The rooms, as a one dimensional array.</returns>
         public Room[] ToRooms()
         {
-            List<Room> roomList = [];
-
-            for (var z = 0; z < Depth; z++)
-            {
-                for (var y = 0; y < Height; y++)
-                {
-                    for (var x = 0; x < Width; x++)
-                    {
-                        if (this[x, y, z] != null)
-                            roomList.Add(this[x, y, z]);
-                    }
-                }
-            }
-
-            return [.. roomList];
+            return roomPositions.Select(x => x.Room).ToArray();
         }
 
         #endregion

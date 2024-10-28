@@ -3,48 +3,33 @@
     /// <summary>
     /// Represents a room position.
     /// </summary>
-    public class RoomPosition
+    /// <param name="room">The room/</param>
+    /// <param name="x">The x position of the room.</param>
+    /// <param name="y">The y position of the room.</param>
+    /// <param name="z">The z position of the room.</param>
+    public class RoomPosition(Room room, int x, int y, int z)
     {
         #region Properties
 
         /// <summary>
         /// Get the room.
         /// </summary>
-        public Room Room { get; }
+        public Room Room { get; } = room;
 
         /// <summary>
         /// Get the X position of the room.
         /// </summary>
-        public int X { get; }
+        public int X { get; } = x;
 
         /// <summary>
         /// Get the Y position of the room.
         /// </summary>
-        public int Y { get; }
+        public int Y { get; } = y;
 
         /// <summary>
         /// Get the Z position of the room.
         /// </summary>
-        public int Z { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the RoomPosition class.
-        /// </summary>
-        /// <param name="room">The room/</param>
-        /// <param name="x">The x position of the room.</param>
-        /// <param name="y">The y position of the room.</param>
-        /// <param name="z">The z position of the room.</param>
-        public RoomPosition(Room room, int x, int y, int z)
-        {
-            Room = room;
-            X = x;
-            Y = y;
-            Z = z;
-        }
+        public int Z { get; } = z;
 
         #endregion
 
