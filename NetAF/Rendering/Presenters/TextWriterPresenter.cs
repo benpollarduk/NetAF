@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NetAF.Rendering.Presenter
+namespace NetAF.Rendering.Presenters
 {
     /// <summary>
     /// Represents a presenter for TextWriter.

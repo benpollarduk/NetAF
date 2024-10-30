@@ -2,7 +2,7 @@
 using System.Drawing;
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
-using NetAF.Rendering.Presenter;
+using NetAF.Rendering.Presenters;
 using NetAF.Utilities;
 
 namespace NetAF.Adapters

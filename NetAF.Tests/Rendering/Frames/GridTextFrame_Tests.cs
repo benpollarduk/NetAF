@@ -5,7 +5,6 @@ using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
 using NetAF.Rendering.Frames;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Rendering.Presenter;
 
 namespace NetAF.Tests.Rendering.Frames
 {

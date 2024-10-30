@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Rendering.Presenter;
 using System.IO;
 using System.Linq;
 

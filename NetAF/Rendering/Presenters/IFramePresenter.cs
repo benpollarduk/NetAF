@@ -1,4 +1,4 @@
-﻿namespace NetAF.Rendering.Presenter
+﻿namespace NetAF.Rendering.Presenters
 {
     /// <summary>
     /// Represents an object that can render a frame.
