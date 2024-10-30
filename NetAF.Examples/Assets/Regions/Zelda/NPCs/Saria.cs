@@ -57,10 +57,12 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
             {
                 saria.FindItem(TailKey.Name, out var key);
 
-                if (Rupee.Name.EqualsIdentifier(item.Identifier))
+                if (Rupee.Name.EqualsIdentifier(item.Identifier) && key != null)
                 {
-                    item.Morph(key);
-                    return new(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria gave you the Tail Key, awesome!");
+                    saria.DequireItem(key);
+                    room.AddItem(key);
+                    item.IsPlayerVisible = false;
+                    return new(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
                 }
 
                 if (Shield.Name.EqualsIdentifier(item.Identifier))
@@ -68,7 +70,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                     return new(InteractionEffect.NoEffect, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
                 }
 
-                if (Sword.Name.EqualsIdentifier(item.Identifier))
+                if (Sword.Name.EqualsIdentifier(item.Identifier) && saria.IsAlive)
                 {
                     saria.Kill();
 

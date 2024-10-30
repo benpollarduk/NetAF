@@ -44,7 +44,6 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                 return new(InteractionEffect.NoEffect, item);
             };
 
-            room.AddItem(new Stump().Instantiate());
             room.AddItem(door);
             room.AddCharacter(new Saria(room).Instantiate());
 

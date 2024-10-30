@@ -72,7 +72,6 @@ namespace NetAF.Commands.Game
                     break;
 
                 case InteractionEffect.NoEffect:
-                case InteractionEffect.ItemMorphed:
                 case InteractionEffect.SelfContained:
                     break;
                 default:

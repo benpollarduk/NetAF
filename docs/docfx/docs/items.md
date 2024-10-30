@@ -18,13 +18,6 @@ By default, an Item is not takeable and is tied to a Room. If it is takeable thi
 var sword = new Item("Sword", "A heroes sword.", true);
 ```
 
-An Item can morph in to another Item. This is useful in situations where the Item changes state. Morphing is invoked with the **Morph** method. The Item that Morph is invoked on takes on the properties of the Item being morphed into.
-
-```csharp
-var brokenSword = new Item("Broken Sword", "A broken sword");
-sword.Morph(brokenSword);
-```
-
 Like all Examinable objects, an Item can be assigned custom commands.
 
 ```csharp

@@ -48,22 +48,6 @@ namespace NetAF.Assets
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Handle item morphing.
-        /// </summary>
-        /// <param name="item">The item to morph into.</param>
-        public void Morph(Item item)
-        {
-            Identifier = item.Identifier;
-            Description = item.Description;
-            IsPlayerVisible = item.IsPlayerVisible;
-            IsTakeable = item.IsTakeable;
-        }
-
-        #endregion
-
         #region IInteractWithItem Members
 
         /// <summary>

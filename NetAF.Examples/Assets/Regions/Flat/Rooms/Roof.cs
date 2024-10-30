@@ -24,11 +24,11 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             var room = new Room(Name, string.Empty, new Exit(Direction.South));
 
             room.AddItem(new Skylight().Instantiate());
-            room.AddItem(new EmptyCoffeeMug().Instantiate());
+            room.AddItem(new CoffeeMug().Instantiate());
 
-            room.Description = new ConditionalDescription("The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof, and a empty coffee mug sits to the side, indicating someone has been here recently. The window behind you south leads back into the bathroom.",
+            room.Description = new ConditionalDescription("The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof, and a coffee mug sits to the side, indicating someone has been here recently. The window behind you south leads back into the bathroom.",
                 "The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof. The window behind you south leads back into the bathroom.",
-                () => room.ContainsItem(MugOfCoffee.Name));
+                () => room.ContainsItem(CoffeeMug.Name));
 
             return room;
         }

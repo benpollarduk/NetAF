@@ -30,14 +30,15 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
 
             var bush = new Bush().Instantiate();
             var rupee = new Rupee().Instantiate();
+            rupee.IsPlayerVisible = false;
 
             bush.Interaction = item =>
             {
                 if (Sword.Name.EqualsExaminable(item))
                 {
-                    bush.Morph(new Stump().Instantiate());
                     rupee.IsPlayerVisible = true;
-                    return new(InteractionEffect.ItemMorphed, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
+                    bush.IsPlayerVisible = false;
+                    return new(InteractionEffect.SelfContained, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
                 }
 
                 return new(InteractionEffect.NoEffect, item);

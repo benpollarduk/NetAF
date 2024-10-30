@@ -34,7 +34,7 @@ namespace NetAF.Examples.Assets.Player
                     if (Knife.Name.EqualsExaminable(i))
                         return new(InteractionEffect.FatalEffect, i, "You slash wildly at your own throat. You are dead.");
 
-                    if (EmptyCoffeeMug.Name.EqualsIdentifier(i.Identifier))
+                    if (CoffeeMug.Name.EqualsIdentifier(i.Identifier))
                         return new(InteractionEffect.NoEffect, i, "If there was some coffee in the mug you could drink it.");
 
                     if (Guitar.Name.EqualsIdentifier(i.Identifier))

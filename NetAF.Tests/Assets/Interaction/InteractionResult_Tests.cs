@@ -17,16 +17,6 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenItemMorphed_ThenGeneratedDescriptionIsCorrect()
-        {
-            var instance = new InteractionResult(InteractionEffect.ItemMorphed, null);
-
-            var result = instance.Description;
-
-            Assert.AreEqual("The item morphed.", result);
-        }
-
-        [TestMethod]
         public void GivenConstrucor_WhenFatal_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.FatalEffect, null);
