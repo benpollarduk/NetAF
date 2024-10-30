@@ -4,7 +4,7 @@
     /// Represents a serialization of an Attribute.
     /// </summary>
     /// <param name="attribute">The asset to serialize.</param>
-    public class AttributeSerialization(NetAF.Assets.Attributes.Attribute attribute) : IObjectSerialization<NetAF.Assets.Attributes.Attribute>
+    public sealed class AttributeSerialization(NetAF.Assets.Attributes.Attribute attribute) : IObjectSerialization<NetAF.Assets.Attributes.Attribute>
     {
         #region Properties
 
@@ -38,7 +38,7 @@
         /// <param name="attribute">The attribute to restore.</param>
         public void Restore(NetAF.Assets.Attributes.Attribute attribute)
         {
-            attribute.RestoreFrom(this);
+            //attribute.RestoreFrom(this);
         }
 
         #endregion

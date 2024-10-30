@@ -6,7 +6,7 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of an Item.
     /// </summary>
     /// <param name="item">The item to serialize.</param>
-    public class ItemSerialization(Item item) : ExaminableSerialization(item), IObjectSerialization<Item>
+    public sealed class ItemSerialization(Item item) : ExaminableSerialization(item), IObjectSerialization<Item>
     {
         #region Implementation of IObjectSerialization<Item>
 
@@ -16,7 +16,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="item">The item to restore.</param>
         public void Restore(Item item)
         {
-            item.RestoreFrom(this);
+            //item.RestoreFrom(this);
         }
 
         #endregion

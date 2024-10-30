@@ -31,7 +31,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="character">The character to restore.</param>
         public void Restore(Character character)
         {
-            character.RestoreFrom(this);
+            //character.RestoreFrom(this);
         }
 
         #endregion

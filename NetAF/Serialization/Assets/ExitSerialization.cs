@@ -6,7 +6,7 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of an Exit.
     /// </summary>
     /// <param name="exit">The exit to serialize.</param>
-    public class ExitSerialization(Exit exit) : ExaminableSerialization(exit), IObjectSerialization<Exit>
+    public sealed class ExitSerialization(Exit exit) : ExaminableSerialization(exit), IObjectSerialization<Exit>
     {
         #region Properties
 
@@ -25,7 +25,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="exit">The exit to restore.</param>
         public void Restore(Exit exit)
         {
-            exit.RestoreFrom(this);
+            //exit.RestoreFrom(this);
         }
 
         #endregion

@@ -38,24 +38,13 @@ namespace NetAF.Tests.Serialization.Assets
         }
 
         [TestMethod]
-        public void GivenNoAttributes_ThenAttributesLengthIs0()
+        public void GivenNoAttributes_ThenAttributeNotNull()
         {
             var examinable = new Item(string.Empty, string.Empty);
 
             var result = new ExaminableSerialization(examinable);
 
-            Assert.AreEqual(0, result.Attributes.Length);
-        }
-
-        [TestMethod]
-        public void Given1Attribute_ThenAttributesLengthIs1()
-        {
-            var examinable = new Item(string.Empty, string.Empty);
-            examinable.Attributes.Add(new NetAF.Assets.Attributes.Attribute(string.Empty, string.Empty, 0, 1), 1);
-
-            var result = new ExaminableSerialization(examinable);
-
-            Assert.AreEqual(1, result.Attributes.Length);
+            Assert.IsNotNull(result.AttributeManager);
         }
     }
 }

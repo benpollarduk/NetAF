@@ -7,7 +7,7 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of a Room.
     /// </summary>
     /// <param name="room">The room to serialize.</param>
-    public class RoomSerialization(Room room) : ExaminableSerialization(room), IObjectSerialization<Room>
+    public sealed class RoomSerialization(Room room) : ExaminableSerialization(room), IObjectSerialization<Room>
     {
         #region Properties
 
@@ -29,7 +29,7 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get the character serializations.
         /// </summary>
-        public readonly CharacterSerialization[] Characters = room?.Characters?.Select(x => new CharacterSerialization(x))?.ToArray() ?? [];
+        public readonly NonPlayableCharacterSerialization[] Characters = room?.Characters?.Select(x => new NonPlayableCharacterSerialization(x))?.ToArray() ?? [];
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="room">The room to restore.</param>
         public void Restore(Room room)
         {
-            room.RestoreFrom(this);
+            //room.RestoreFrom(this);
         }
 
         #endregion

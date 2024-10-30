@@ -7,7 +7,7 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of a Region.
     /// </summary>
     /// <param name="region">The region to serialize.</param>
-    public class RegionSerialization(Region region) : ExaminableSerialization(region), IObjectSerialization<Region>
+    public sealed class RegionSerialization(Region region) : ExaminableSerialization(region), IObjectSerialization<Region>
     {
         #region Properties
 
@@ -31,7 +31,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="region">The region to restore.</param>
         public void Restore(Region region)
         {
-            region.RestoreFrom(this);
+            //region.RestoreFrom(this);
         }
 
         #endregion

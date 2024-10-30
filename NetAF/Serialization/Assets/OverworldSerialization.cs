@@ -7,7 +7,7 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of an Overworld.
     /// </summary>
     /// <param name="overworld">The overworld to serialize.</param>
-    public class OverworldSerialization(Overworld overworld) : ExaminableSerialization(overworld), IObjectSerialization<Overworld>
+    public sealed class OverworldSerialization(Overworld overworld) : ExaminableSerialization(overworld), IObjectSerialization<Overworld>
     {
         #region Properties
 
@@ -31,7 +31,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="overworld">The overworld to restore.</param>
         public void Restore(Overworld overworld)
         {
-            overworld.RestoreFrom(this);
+            //overworld.RestoreFrom(this);
         }
 
         #endregion

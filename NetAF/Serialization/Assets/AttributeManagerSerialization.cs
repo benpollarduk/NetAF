@@ -8,15 +8,14 @@ namespace NetAF.Serialization.Assets
     /// Represents a serialization of an AttributeManager.
     /// </summary>
     /// <param name="attributeManager">The attribute manager to serialize.</param>
-    public class AttributeManagerSerialization(AttributeManager attributeManager) : IObjectSerialization<AttributeManager>
+    public sealed class AttributeManagerSerialization(AttributeManager attributeManager) : IObjectSerialization<AttributeManager>
     {
         #region Properties
 
         /// <summary>
         /// Get the values.
         /// </summary>
-        public readonly Dictionary<AttributeSerialization, int> Values = attributeManager?.GetAsDictionary()?.ToDictionary<AttributeSerialization, int>( x => new AttributeSerialization(x.Key), x => x.Value) ?? [];
-
+        public readonly Dictionary<AttributeSerialization, int> Values = attributeManager?.GetAsDictionary()?.ToDictionary(x => new AttributeSerialization(x.Key), x => x.Value) ?? [];
 
         #endregion
 
@@ -28,9 +27,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="attributeManager">The attribute manager to restore.</param>
         public void Restore(AttributeManager attributeManager)
         {
-            var r = attributeManager?.GetAsDictionary();
-            var s = r.ToDictionary<AttributeSerialization, int>(x => new AttributeSerialization(x.Key), x => x.Value) ?? [];
-            attributeManager.RestoreFrom(this);
+            //attributeManager.RestoreFrom(this);
         }
 
         #endregion
