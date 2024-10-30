@@ -38,7 +38,7 @@
         /// <param name="attribute">The attribute to restore.</param>
         public void Restore(NetAF.Assets.Attributes.Attribute attribute)
         {
-            //attribute.RestoreFrom(this);
+            attribute.RestoreFrom(this);
         }
 
         #endregion

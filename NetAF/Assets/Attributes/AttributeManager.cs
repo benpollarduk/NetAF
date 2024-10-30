@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets.Attributes
 {
     /// <summary>
     /// Provides a class for managing attributes.
     /// </summary>
-    public sealed class AttributeManager
+    public sealed class AttributeManager : IRestoreFromObjectSerialization<AttributeManagerSerialization>
     {
         #region Fields
 
@@ -204,6 +206,22 @@ namespace NetAF.Assets.Attributes
                 value = max;
 
             return value;
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<AttributeManagerSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(AttributeManagerSerialization serialization)
+        {
+            RemoveAll();
+
+            foreach (var value in serialization.Values)
+                Add(Attribute.FromSerialization(value.Key), value.Value);
         }
 
         #endregion
