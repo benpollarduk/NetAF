@@ -81,7 +81,7 @@ namespace NetAF.Assets.Attributes
         /// <summary>
         /// Get all attributes as a dictionary.
         /// </summary>
-        /// <returns>An array of attributes.</returns>
+        /// <returns>A dictionary where the key are the attributes and the values are the values.</returns>
         public Dictionary<Attribute, int> GetAsDictionary()
         {
             return attributes.ToDictionary(x => x.Key, x => x.Value);
