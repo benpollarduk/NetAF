@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Conversations;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -12,9 +10,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenIsLocked_ThenIsLockedIsTrue()
         {
-            var exit = new Exit(Direction.North, true);
+            Exit exit = new(Direction.North, true);
 
-            var result = new ExitSerialization(exit);
+            ExitSerialization result = new(exit);
 
             Assert.IsTrue(result.IsLocked);
         }
@@ -22,11 +20,11 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenExitThatIsUnlocked_WhenRestoreFromExitThatIsLocked_ThenIsLockedIsTrue()
         {
-            var exit = new Exit(Direction.North, false);
-            var exit2 = new Exit(Direction.North, true);
-            var serialization = new ExitSerialization(exit2);
+            Exit exit = new(Direction.North, false);
+            Exit exit2 = new(Direction.North, true);
+            ExitSerialization serialization = new(exit2);
 
-            exit.RestoreFrom(serialization);
+            serialization.Restore(exit);
 
             Assert.IsTrue(exit.IsLocked);
         }

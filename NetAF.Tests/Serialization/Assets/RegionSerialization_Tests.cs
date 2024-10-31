@@ -10,10 +10,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenInRoomA_ThenCurrentRoomIsA()
         {
-            var region = new Region(string.Empty, string.Empty);
+            Region region = new(string.Empty, string.Empty);
             region.AddRoom(new("A", string.Empty), 0, 0, 0);
 
-            var result = new RegionSerialization(region);
+            RegionSerialization result = new(region);
 
             Assert.AreEqual("A", result.CurrentRoom);
         }
@@ -21,9 +21,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoRooms_ThenRoomsLengthIs0()
         {
-            var region = new Region(string.Empty, string.Empty);
+            Region region = new(string.Empty, string.Empty);
 
-            var result = new RegionSerialization(region);
+            RegionSerialization result = new(region);
 
             Assert.AreEqual(0, result.Rooms.Length);
         }
@@ -31,12 +31,29 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Room_ThenRoomsLengthIs1()
         {
-            var region = new Region(string.Empty, string.Empty);
+            Region region = new(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
 
-            var result = new RegionSerialization(region);
+            RegionSerialization result = new(region);
 
             Assert.AreEqual(1, result.Rooms.Length);
+        }
+
+        [TestMethod]
+        public void GivenRegionWith2Rooms_WhenRestoreFromRegionWhereSecondRoomIsCurrentRoom_ThenCurrentRoomIsSecondRoom()
+        {
+            Region region = new(string.Empty, string.Empty);
+            region.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.North)), 0, 0, 0);
+            region.AddRoom(new("TARGET", string.Empty, new Exit(Direction.South)), 0, 1, 0);
+            Region region2 = new(string.Empty, string.Empty);
+            region2.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.North)), 0, 0, 0);
+            region2.AddRoom(new("TARGET", string.Empty, new Exit(Direction.South)), 0, 1, 0);
+            region2.Move(Direction.North);
+            RegionSerialization serialization = new(region2);
+
+            serialization.Restore(region);
+
+            Assert.AreEqual("TARGET", region.CurrentRoom.Identifier.Name);
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using NetAF.Assets;
-using System.Xml.Linq;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 using NetAF.Logic;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Conversations;
 using NetAF.Serialization.Assets;
@@ -12,9 +11,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNullConversation_ThenConversationNotNull()
         {
-            var character = new NonPlayableCharacter(string.Empty, string.Empty);
+            NonPlayableCharacter character = new(string.Empty, string.Empty);
 
-            var result = new NonPlayableCharacterSerialization(character);
+            NonPlayableCharacterSerialization result = new(character);
 
             Assert.IsNotNull(result.Conversation);
         }
@@ -22,12 +21,12 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNotNullConversation_ThenConversationNotNull()
         {
-            var character = new NonPlayableCharacter(string.Empty, string.Empty)
+            NonPlayableCharacter character = new(string.Empty, string.Empty)
             {
-                Conversation = new NetAF.Conversations.Conversation()
+                Conversation = new()
             };
 
-            var result = new NonPlayableCharacterSerialization(character);
+            NonPlayableCharacterSerialization result = new(character);
 
             Assert.IsNotNull(result.Conversation);
         }
@@ -35,12 +34,12 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenCharacter_WhenRestoreFromCharacterConversationElement0_ThenCurrentParagraphIsNotNull()
         {
-            var character = new NonPlayableCharacter(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
-            var character2 = new NonPlayableCharacter(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
+            NonPlayableCharacter character = new(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
+            NonPlayableCharacter character2 = new(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
             character2.Conversation.Next(null);
-            var serialization = new NonPlayableCharacterSerialization(character2);
+            NonPlayableCharacterSerialization serialization = new(character2);
 
-            character.RestoreFrom(serialization);
+            serialization.Restore(character);
 
             Assert.IsNotNull(character.Conversation.CurrentParagraph);
         }

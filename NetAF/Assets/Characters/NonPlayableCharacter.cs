@@ -2,7 +2,6 @@
 using NetAF.Conversations;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
-using System;
 
 namespace NetAF.Assets.Characters
 {

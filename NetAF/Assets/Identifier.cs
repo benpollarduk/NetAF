@@ -55,7 +55,7 @@ namespace NetAF.Assets
         /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
         public bool Equals(string other)
         {
-            return Name == other || IdentifiableName == ToIdentifiableString(other);
+            return Name == other || IdentifiableName == other || IdentifiableName == ToIdentifiableString(other);
         }
 
         #endregion

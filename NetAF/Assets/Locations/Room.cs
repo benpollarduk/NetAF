@@ -4,6 +4,8 @@ using System.Linq;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Assets.Locations
@@ -11,7 +13,7 @@ namespace NetAF.Assets.Locations
     /// <summary>
     /// Represents a room
     /// </summary>
-    public sealed class Room : ExaminableObject, IInteractWithItem
+    public sealed class Room : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<RoomSerialization>
     {
         #region Properties
 
@@ -493,5 +495,37 @@ namespace NetAF.Assets.Locations
 
         #endregion
 
+        #region Implementation of IRestoreFromObjectSerialization<RoomSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(RoomSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            HasBeenVisited = serialization.HasBeenVisited;
+
+            foreach (var exit in Exits)
+            {
+                var exitSerialization = Array.Find(serialization.Exits, x => exit.Identifier.Equals(x.Identifier));
+                exitSerialization?.Restore(exit);
+            }
+
+            foreach (var item in Items)
+            {
+                var itemSerialization = Array.Find(serialization.Items, x => item.Identifier.Equals(x.Identifier));
+                itemSerialization?.Restore(item);
+            }
+
+            foreach (var character in Characters)
+            {
+                var characterSerialization = Array.Find(serialization.Characters, x => character.Identifier.Equals(x.Identifier));
+                characterSerialization?.Restore(character);
+            }
+        }
+
+        #endregion
     }
 }

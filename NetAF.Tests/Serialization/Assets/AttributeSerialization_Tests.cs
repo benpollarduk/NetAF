@@ -10,9 +10,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenNameIsA_ThenNameIsA()
         {
-            var attribute = new NetAF.Assets.Attributes.Attribute("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10);
 
-            var result = new AttributeSerialization(attribute);
+            AttributeSerialization result = new AttributeSerialization(attribute);
 
             Assert.AreEqual("A", result.Name);
         }
@@ -20,9 +20,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenDescriptionIsB_ThenDescriptionIsB()
         {
-            var attribute = new NetAF.Assets.Attributes.Attribute("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10);
 
-            var result = new AttributeSerialization(attribute);
+            AttributeSerialization result = new(attribute);
 
             Assert.AreEqual("B", result.Description);
         }
@@ -30,9 +30,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenMinimumIs5_ThenMinimumIs5()
         {
-            var attribute = new NetAF.Assets.Attributes.Attribute("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10);
 
-            var result = new AttributeSerialization(attribute);
+            AttributeSerialization result = new(attribute);
 
             Assert.AreEqual(5, result.Minimum);
         }
@@ -40,9 +40,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenMaximumIs10_ThenMaximumIs10()
         {
-            var attribute = new NetAF.Assets.Attributes.Attribute("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10);
 
-            var result = new AttributeSerialization(attribute);
+            AttributeSerialization result = new(attribute);
 
             Assert.AreEqual(10, result.Maximum);
         }
@@ -50,9 +50,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenEmptyAttribute_WhenRestoreFrom_ThenAttributeRestoredCorrectly()
         {
-            var attribute = new Attribute("a", "b", 1, 10);
-            var attribute2 = new Attribute(string.Empty, string.Empty, 0, 0);
-            var serialization = new AttributeSerialization(attribute);
+            Attribute attribute = new("a", "b", 1, 10);
+            Attribute attribute2 = new(string.Empty, string.Empty, 0, 0);
+            AttributeSerialization serialization = new(attribute);
 
             attribute2.RestoreFrom(serialization);
 

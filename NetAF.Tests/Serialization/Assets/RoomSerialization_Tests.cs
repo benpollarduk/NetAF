@@ -10,7 +10,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenHasBeenVisitedIsFalse_ThenHasBeenVisitedIsFalse()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
 
             var result = new RoomSerialization(room);
 
@@ -20,10 +20,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenHasBeenVisitedIsTrue_ThenHasBeenVisitedIsTrue()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
             room.MovedInto(Direction.North);
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.IsTrue(result.HasBeenVisited);
         }
@@ -31,9 +31,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoItems_ThenItemsLengthIs0()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(0, result.Items.Length);
         }
@@ -41,10 +41,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Item_ThenItemsLengthIs1()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
             room.AddItem(new(string.Empty, string.Empty));
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(1, result.Items.Length);
         }
@@ -52,9 +52,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoCharacters_ThenCharactersLengthIs0()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(0, result.Characters.Length);
         }
@@ -62,10 +62,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Character_ThenCharactersLengthIs1()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
             room.AddCharacter(new(string.Empty, string.Empty));
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(1, result.Characters.Length);
         }
@@ -73,9 +73,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoExits_ThenExitsLengthIs0()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(0, result.Exits.Length);
         }
@@ -83,12 +83,29 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Exit_ThenExitsLengthIs1()
         {
-            var room = new Room(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
             room.AddExit(new(Direction.North));
 
-            var result = new RoomSerialization(room);
+            RoomSerialization result = new(room);
 
             Assert.AreEqual(1, result.Exits.Length);
+        }
+
+        [TestMethod]
+        public void GivenRoomThatHasNotBeenVisited_WhenRestoreFromRoomThatHasBeenVisited_ThenRoomHasBeenVisitedIsTrue()
+        {
+            Room room = new(string.Empty, string.Empty, new Exit(Direction.North));
+            room.AddItem(new(string.Empty, string.Empty));
+            room.AddCharacter(new(string.Empty, string.Empty));
+            Room room2 = new(string.Empty, string.Empty, new Exit(Direction.North));
+            room.AddItem(new(string.Empty, string.Empty));
+            room.AddCharacter(new(string.Empty, string.Empty));
+            room2.MovedInto(Direction.North);
+            RoomSerialization serialization = new(room2);
+
+            serialization.Restore(room);
+
+            Assert.IsTrue(room.HasBeenVisited);
         }
     }
 }

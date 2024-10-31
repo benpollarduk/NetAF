@@ -10,6 +10,8 @@ using NetAF.Commands.Game;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Logic
@@ -17,7 +19,7 @@ namespace NetAF.Logic
     /// <summary>
     /// Represents a game.
     /// </summary>
-    public sealed class Game
+    public sealed class Game : IRestoreFromObjectSerialization<GameSerialization>
     {
         #region Properties
 
@@ -484,6 +486,26 @@ namespace NetAF.Logic
                         throw new NotImplementedException();
                 }
             }
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<GameSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(GameSerialization serialization)
+        {
+            // resolve asset locations
+            GameAssetArranger.Arranger(this, serialization);
+
+            // restore player
+            serialization.Player.Restore(Player);
+
+            // restore overworld
+            serialization.Overworld.Restore(Overworld);
         }
 
         #endregion

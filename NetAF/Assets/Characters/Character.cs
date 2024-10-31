@@ -148,8 +148,8 @@ namespace NetAF.Assets.Characters
 
             foreach (var item in Items)
             {
-                var itemSerialization = Array.Find(serialization.Items, x => x.Identifier.Equals(item.Identifier));
-                item.RestoreFrom(itemSerialization);
+                var itemSerialization = Array.Find(serialization.Items, x => item.Identifier.Equals(x.Identifier));
+                itemSerialization?.Restore(item);
             }
         }
 

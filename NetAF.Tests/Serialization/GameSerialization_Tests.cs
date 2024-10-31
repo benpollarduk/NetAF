@@ -14,14 +14,14 @@ namespace NetAF.Tests.Serialization
         [TestMethod]
         public void GivenAPlayer_ThenPlayerIsNotNull()
         {
-            var regionMaker = new RegionMaker(string.Empty, string.Empty);
-            var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
             regionMaker[0, 0, 0] = room;
-            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
-            var result = new GameSerialization(game);
+            GameSerialization result = new(game);
 
             Assert.IsNotNull(result.Player);
         }
@@ -29,14 +29,14 @@ namespace NetAF.Tests.Serialization
         [TestMethod]
         public void GivenAnOverworld_ThenOverworldIsNotNull()
         {
-            var regionMaker = new RegionMaker(string.Empty, string.Empty);
-            var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
             regionMaker[0, 0, 0] = room;
-            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
-            var result = new GameSerialization(game);
+            GameSerialization result = new(game);
 
             Assert.IsNotNull(result.Overworld);
         }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Commands.Conversation;
 using NetAF.Conversations;
 using NetAF.Serialization.Assets;
 
@@ -11,9 +10,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoCurrentParagraph_ThenCurrentParagraphIsNoCurrentParagraph()
         {
-            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
 
-            var result = new ConversationSerialization(conversation);
+            ConversationSerialization result = new(conversation);
 
             Assert.AreEqual(ConversationSerialization.NoCurrentParagraph, result.CurrentParagraph);
         }
@@ -21,10 +20,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenCurrentParagraphIsElement0_ThenCurrentParagraphIs0()
         {
-            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
 
-            var result = new ConversationSerialization(conversation);
+            ConversationSerialization result = new(conversation);
 
             Assert.AreEqual(0, result.CurrentParagraph);
         }
@@ -32,7 +31,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenCurrentParagraphIsElement1_ThenCurrentParagraphIs1()
         {
-            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
             conversation.Next(null);
 
@@ -44,12 +43,12 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAConversation_WhenRestoreFromWithNoCurrentParagraph_ThenCurrentParagraphIsNull()
         {
-            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
-            var conversation2 = new Conversation();
-            var serialization = new ConversationSerialization(conversation2);
+            Conversation conversation2 = new();
+            ConversationSerialization serialization = new(conversation2);
 
-            conversation.RestoreFrom(serialization);
+            serialization.Restore(conversation);
 
             Assert.IsNull(conversation.CurrentParagraph);
         }
@@ -57,13 +56,13 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAConversation_WhenRestoreFromWithCurrentParagraph1_ThenCurrentParagraphIsSecondParagraph()
         {
-            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty), new Paragraph(string.Empty));
-            var conversation2 = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty), new Paragraph(string.Empty));
+            Conversation conversation2 = new(new Paragraph(string.Empty), new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation2.Next(null);
             conversation2.Next(null);
-            var serialization = new ConversationSerialization(conversation2);
+            ConversationSerialization serialization = new(conversation2);
 
-            conversation.RestoreFrom(serialization);
+            serialization.Restore(conversation);
 
             Assert.AreEqual(conversation.Paragraphs[1], conversation.CurrentParagraph);
         }

@@ -1,7 +1,6 @@
 ﻿using NetAF.Assets.Interaction;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
-using System;
 
 namespace NetAF.Assets.Locations
 {

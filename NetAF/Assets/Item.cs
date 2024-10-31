@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets.Interaction;
-using NetAF.Conversations;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 

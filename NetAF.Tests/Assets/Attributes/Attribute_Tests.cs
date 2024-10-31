@@ -10,8 +10,8 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenFromSerialization_ThenAttributeRestoredCorrectly()
         {
-            var attribute = new Attribute("a", "b", 1, 10);
-            var serialization = new AttributeSerialization(attribute);
+            Attribute attribute = new("a", "b", 1, 10);
+            AttributeSerialization serialization = new(attribute);
 
             var result = Attribute.FromSerialization(serialization);
 

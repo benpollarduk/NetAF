@@ -31,7 +31,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="region">The region to restore.</param>
         public void Restore(Region region)
         {
-            //region.RestoreFrom(this);
+            region.RestoreFrom(this);
         }
 
         #endregion

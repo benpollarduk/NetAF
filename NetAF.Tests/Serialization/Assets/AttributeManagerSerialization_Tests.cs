@@ -11,7 +11,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Attributes_ThenValuesHas1Element()
         {
-            var attributeManager = new AttributeManager();
+            AttributeManager attributeManager = new();
             attributeManager.Add(new Attribute("A", "B", 5, 10), 0);
 
             var result = new AttributeManagerSerialization(attributeManager);
@@ -22,8 +22,8 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given0AttributesButARestorationWith1Attribute_WhenRestore_ThenValuesHas1Element()
         {
-            var attributeManager1 = new AttributeManager();
-            var attributeManager2 = new AttributeManager();
+            AttributeManager attributeManager1 = new();
+            AttributeManager attributeManager2 = new();
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
             var serialization = new AttributeManagerSerialization(attributeManager2);
 
@@ -35,8 +35,8 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given0Attributes_WhenRestoreFromARestorationWith1Attribute_ThenAttributeRestoredCorrectly()
         {
-            var attributeManager1 = new AttributeManager();
-            var attributeManager2 = new AttributeManager();
+            AttributeManager attributeManager1 = new();
+            AttributeManager attributeManager2 = new();
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
             var serialization = new AttributeManagerSerialization(attributeManager2);
 

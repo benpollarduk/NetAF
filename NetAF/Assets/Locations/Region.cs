@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Assets.Locations
@@ -8,7 +11,7 @@ namespace NetAF.Assets.Locations
     /// <summary>
     /// Represents a region.
     /// </summary>
-    public sealed class Region : ExaminableObject
+    public sealed class Region : ExaminableObject, IRestoreFromObjectSerialization<RegionSerialization>
     {
         #region Fields
 
@@ -339,6 +342,28 @@ namespace NetAF.Assets.Locations
         public override ExaminationResult Examine(ExaminationScene scene)
         {
             return new(Identifier + ": " + Description.GetDescription());
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<RegionSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(RegionSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            var rooms = roomPositions.Select(x => x.Room).ToArray();
+            CurrentRoom = Array.Find(rooms, x => x.Identifier.Equals(serialization.CurrentRoom));
+
+            foreach (var room in rooms)
+            {
+                var roomSerialization = Array.Find(serialization.Rooms, x => room.Identifier.Equals(x.Identifier));
+                roomSerialization?.Restore(room);
+            }
         }
 
         #endregion

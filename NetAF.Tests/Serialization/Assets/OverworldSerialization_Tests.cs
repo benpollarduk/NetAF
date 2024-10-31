@@ -10,10 +10,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenInRegionA_ThenCurrentRegionIsA()
         {
-            var overworld = new Overworld(string.Empty, string.Empty);
+            Overworld overworld = new(string.Empty, string.Empty);
             overworld.AddRegion(new("A", string.Empty));
 
-            var result = new OverworldSerialization(overworld);
+            OverworldSerialization result = new(overworld);
 
             Assert.AreEqual("A", result.CurrentRegion);
         }
@@ -21,9 +21,9 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNoRegions_ThenRegionsLengthIs0()
         {
-            var overworld = new Overworld(string.Empty, string.Empty);
+            Overworld overworld = new(string.Empty, string.Empty);
 
-            var result = new OverworldSerialization(overworld);
+            OverworldSerialization result = new(overworld);
 
             Assert.AreEqual(0, result.Regions.Length);
         }
@@ -31,12 +31,29 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Region_ThenRegionsLengthIs1()
         {
-            var overworld = new Overworld(string.Empty, string.Empty);
+            Overworld overworld = new(string.Empty, string.Empty);
             overworld.AddRegion(new("A", string.Empty));
 
-            var result = new OverworldSerialization(overworld);
+            OverworldSerialization result = new(overworld);
 
             Assert.AreEqual(1, result.Regions.Length);
+        }
+
+        [TestMethod]
+        public void GivenOverworldWith2Regions_WhenRestoreFromOverworldWhereSecondRegionIsCurrentRegion_ThenCurrentRegionIsSecondRegion()
+        {
+            Overworld overworld = new(string.Empty, string.Empty);
+            overworld.AddRegion(new(string.Empty, string.Empty));
+            overworld.AddRegion(new("TARGET", string.Empty));
+            Overworld overworld2 = new(string.Empty, string.Empty);
+            overworld2.AddRegion(new(string.Empty, string.Empty));
+            overworld2.AddRegion(new("TARGET", string.Empty));
+            overworld2.Move(overworld2.Regions[1]);
+            OverworldSerialization serialization = new(overworld2);
+
+            serialization.Restore(overworld);
+
+            Assert.AreEqual("TARGET", overworld.CurrentRegion.Identifier.Name);
         }
     }
 }
