@@ -14,12 +14,12 @@ namespace NetAF.Serialization
         /// <summary>
         /// Get or set the player serialization.
         /// </summary>
-        public CharacterSerialization Player = new(game?.Player);
+        public CharacterSerialization Player { get; set; } = new(game?.Player);
 
         /// <summary>
         /// Get or set the overworld serialization.
         /// </summary>
-        public OverworldSerialization Overworld = new(game?.Overworld);
+        public OverworldSerialization Overworld { get; set; } = new(game?.Overworld);
 
         #endregion
 
