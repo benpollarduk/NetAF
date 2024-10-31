@@ -1,6 +1,5 @@
 ﻿using NetAF.Logic;
 using NetAF.Serialization.Assets;
-using System;
 
 namespace NetAF.Serialization
 {

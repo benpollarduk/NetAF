@@ -3,11 +3,11 @@ using NetAF.Assets.Characters;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
-using NetAF.Serialization;
 using NetAF.Utilities;
 using System;
+using NetAF.Serialization.Saves;
 
-namespace NetAF.Tests.Serialization.Assets
+namespace NetAF.Tests.Serialization.Saves
 {
     [TestClass]
     public class Save_Tests

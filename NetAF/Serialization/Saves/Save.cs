@@ -1,7 +1,7 @@
 ﻿using NetAF.Logic;
 using System;
 
-namespace NetAF.Serialization
+namespace NetAF.Serialization.Saves
 {
     /// <summary>
     /// Represents a save for restoring a Game.
@@ -42,7 +42,7 @@ namespace NetAF.Serialization
         /// <param name="name">The name of the save.</param>
         /// <param name="game">The game to save.</param>
         /// <returns>The created Save.</returns>
-        public static Save Create(string name, Game game) 
+        public static Save Create(string name, Game game)
         {
             return new()
             {
