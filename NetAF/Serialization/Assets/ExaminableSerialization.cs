@@ -35,7 +35,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="examinable">The examinable to restore.</param>
         public virtual void Restore(IExaminable examinable)
         {
-            //examinable.RestoreFrom(this);
+            examinable.RestoreFrom(this);
         }
 
         #endregion

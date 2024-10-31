@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets.Characters
 {
     /// <summary>
     /// Represents a generic in game character.
     /// </summary>
-    public abstract class Character : ExaminableObject, IInteractWithItem
+    public abstract class Character : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<CharacterSerialization>
     {
         #region Properties
 
@@ -127,6 +130,27 @@ namespace NetAF.Assets.Characters
         public InteractionResult Interact(Item item)
         {
             return InteractWithItem(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<CharacterSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(CharacterSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            IsAlive = serialization.IsAlive;
+
+            foreach (var item in Items)
+            {
+                var itemSerialization = Array.Find(serialization.Items, x => x.Identifier.Equals(item.Identifier));
+                item.RestoreFrom(itemSerialization);
+            }
         }
 
         #endregion

@@ -1,11 +1,14 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Conversations;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets
 {
     /// <summary>
     /// Represents an item that can be used within the game.
     /// </summary>
-    public sealed class Item : ExaminableObject, IInteractWithItem
+    public sealed class Item : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<ItemSerialization>
     {
         #region Properties
 
@@ -58,6 +61,19 @@ namespace NetAF.Assets
         public InteractionResult Interact(Item item)
         {
             return Interaction.Invoke(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<ItemSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(ItemSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
         }
 
         #endregion

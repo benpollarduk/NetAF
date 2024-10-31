@@ -49,5 +49,18 @@ namespace NetAF.Tests.Serialization.Assets
 
             Assert.AreEqual(1, result.Items.Length);
         }
+
+        [TestMethod]
+        public void GivenCharacterThatIsAlive_WhenRestoreFromCharacterThatIsNotAlive_ThenCharacterIsNotAlive()
+        {
+            var character = new PlayableCharacter(string.Empty, string.Empty, new Item("a", "b"));
+            var character2 = new PlayableCharacter(string.Empty, string.Empty, new Item("a", "b"));
+            character2.Kill();
+            var serialization = new CharacterSerialization(character2);
+
+            character.RestoreFrom(serialization);
+
+            Assert.IsFalse(character.IsAlive);
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace NetAF.Tests.Assets.Interaction
     public class InteractionResult_Tests
     {
         [TestMethod]
-        public void GivenConstrucor_WhenExplicitDescription_ThenDescriptionIsAsSpecified()
+        public void GivenConstructor_WhenExplicitDescription_ThenDescriptionIsAsSpecified()
         {
             var instance = new InteractionResult(InteractionEffect.NoEffect, null, "A");
 
@@ -17,7 +17,7 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenFatal_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenFatal_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.FatalEffect, null);
 
@@ -27,7 +27,7 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenItemUsedUp_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenItemUsedUp_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.ItemUsedUp, null);
 
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenNoEffect_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenNoEffect_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.NoEffect, null);
 
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenSelfContained_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenSelfContained_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.SelfContained, null);
 
@@ -57,7 +57,7 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstrucor_WhenTargetUsedUp_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenTargetUsedUp_ThenGeneratedDescriptionIsCorrect()
         {
             var instance = new InteractionResult(InteractionEffect.TargetUsedUp, null);
 

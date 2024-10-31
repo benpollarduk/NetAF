@@ -35,7 +35,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="conversation">The conversation to restore.</param>
         public void Restore(Conversation conversation)
         {
-            //conversation.RestoreFrom(this);
+            conversation.RestoreFrom(this);
         }
 
         #endregion

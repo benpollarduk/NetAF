@@ -1,12 +1,15 @@
 ﻿using NetAF.Assets.Interaction;
 using NetAF.Conversations;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
+using System;
 
 namespace NetAF.Assets.Characters
 {
     /// <summary>
     /// Represents a non-playable character.
     /// </summary>
-    public sealed class NonPlayableCharacter : Character, IConverser
+    public sealed class NonPlayableCharacter : Character, IConverser, IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>
     {
         #region Constructors
 
@@ -69,6 +72,21 @@ namespace NetAF.Assets.Characters
         /// Get or set the conversation.
         /// </summary>
         public Conversation Conversation { get; set; }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(NonPlayableCharacterSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            Conversation.RestoreFrom(serialization.Conversation);
+        }
 
         #endregion
     }

@@ -1,7 +1,11 @@
 ﻿using System.Linq;
+using NetAF.Assets;
+using System.Xml.Linq;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Serialization.Assets;
+using NetAF.Serialization;
 
 namespace NetAF.Conversations
 {
@@ -9,7 +13,7 @@ namespace NetAF.Conversations
     /// Represents a conversation.
     /// </summary>
     /// <param name="paragraphs">The paragraphs.</param>
-    public sealed class Conversation(params Paragraph[] paragraphs)
+    public sealed class Conversation(params Paragraph[] paragraphs) : IRestoreFromObjectSerialization<ConversationSerialization>
     {
         #region Fields
 
@@ -114,6 +118,22 @@ namespace NetAF.Conversations
             selectedResponse = response;
 
             return Next(game);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<Conversation>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(ConversationSerialization serialization)
+        {
+            if (serialization.CurrentParagraph == ConversationSerialization.NoCurrentParagraph)
+                CurrentParagraph = null;
+            else
+                CurrentParagraph = Paragraphs[serialization.CurrentParagraph];
         }
 
         #endregion
