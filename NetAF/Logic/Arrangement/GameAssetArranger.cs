@@ -195,8 +195,8 @@ namespace NetAF.Logic.Arrangement
                     continue;
 
                 var item = Array.Find(instances, x => x.Identifier.Equals(mapping.Obj));
-                var from = Array.Find(itemContainers, x => x.Equals(mapping.Container));
-                var to = Array.Find(itemContainers, (x) => x.Equals(match.Container));
+                var from = Array.Find(itemContainers, x => x.Identifier.Equals(mapping.Container));
+                var to = Array.Find(itemContainers, x => x.Identifier.Equals(match.Container));
 
                 // item needs to be relocated
                 itemRecords.Add(new ItemFromTo(item, from, to));
@@ -230,8 +230,8 @@ namespace NetAF.Logic.Arrangement
                     continue;
 
                 var character = Array.Find(instances, x => x.Identifier.Equals(mapping.Obj));
-                var from = Array.Find(rooms, x => x.Equals(mapping.Container));
-                var to = Array.Find(rooms, (x) => x.Equals(match.Container));
+                var from = Array.Find(rooms, x => x.Identifier.Equals(mapping.Container));
+                var to = Array.Find(rooms, (x) => x.Identifier.Equals(match.Container));
 
                 // character needs to be relocated
                 characterRecords.Add(new NonPlayableCharacterFromTo(character, from, to));

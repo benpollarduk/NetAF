@@ -32,7 +32,7 @@ namespace NetAF.Serialization
         /// <param name="game">The asset to restore.</param>
         public void Restore(Game game)
         {
-            throw new NotImplementedException();
+            game.RestoreFrom(this);
         }
 
         #endregion

@@ -1,46 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Characters;
-using NetAF.Assets;
 using NetAF.Assets.Locations;
+using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Utilities;
 using NetAF.Serialization;
+using NetAF.Utilities;
+using NetAF.Logic.Arrangement;
 
-namespace NetAF.Tests.Serialization
+namespace NetAF.Tests.Logic.Arrangement
 {
     [TestClass]
-    public class GameSerialization_Tests
+    public class GameAssetArranger_Tests
     {
-        [TestMethod]
-        public void GivenAPlayer_ThenPlayerIsNotNull()
-        {
-            RegionMaker regionMaker = new(string.Empty, string.Empty);
-            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
-            Room room = new(string.Empty, string.Empty, null, item);
-            regionMaker[0, 0, 0] = room;
-            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-
-            GameSerialization result = new(game);
-
-            Assert.IsNotNull(result.Player);
-        }
-
-        [TestMethod]
-        public void GivenAnOverworld_ThenOverworldIsNotNull()
-        {
-            RegionMaker regionMaker = new(string.Empty, string.Empty);
-            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
-            Room room = new(string.Empty, string.Empty, null, item);
-            regionMaker[0, 0, 0] = room;
-            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-
-            GameSerialization result = new(game);
-
-            Assert.IsNotNull(result.Overworld);
-        }
-
         [TestMethod]
         public void GivenAGame_WhenRestoreFromSerializedAndPlayerTookAnItemFromARoom_ThenPlayerHasItemInRestoredGame()
         {
@@ -63,7 +34,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = new(game2);
 
-            serialization.Restore(game);
+            GameAssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(1, game.Player.Items.Length);
             Assert.AreEqual(0, room.Items.Length);
@@ -92,7 +63,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = new(game2);
 
-            serialization.Restore(game);
+            GameAssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, game.Player.Items.Length);
             Assert.AreEqual(1, room.Items.Length);
@@ -128,7 +99,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = new(game2);
 
-            serialization.Restore(game);
+            GameAssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, roomA.Characters.Length);
             Assert.AreEqual(1, roomB.Characters.Length);

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents any object that is a container of items.
     /// </summary>
-    public interface IItemContainer
+    public interface IItemContainer : IExaminable
     {
         /// <summary>
         /// Get the items.
