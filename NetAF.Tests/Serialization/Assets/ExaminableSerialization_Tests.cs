@@ -53,7 +53,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
             Item item2 = new(string.Empty, string.Empty) { IsPlayerVisible = true };
-            ItemSerialization serialization = new(item2);
+            ExaminableSerialization serialization = new(item2);
 
             serialization.Restore(item);
 
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Serialization.Assets
             Item item = new(string.Empty, string.Empty);
             Item item2 = new(string.Empty, string.Empty);
             item2.Attributes.Add(new Attribute(string.Empty, string.Empty, 0, 1), 1);
-            ItemSerialization serialization = new(item2);
+            ExaminableSerialization serialization = new(item2);
 
             serialization.Restore(item);
 
