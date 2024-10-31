@@ -54,7 +54,7 @@ namespace NetAF.Tests.Serialization.Assets
             Attribute attribute2 = new(string.Empty, string.Empty, 0, 0);
             AttributeSerialization serialization = new(attribute);
 
-            attribute2.RestoreFrom(serialization);
+            serialization.Restore(attribute2);
 
             Assert.AreEqual("a", attribute2.Name);
             Assert.AreEqual("b", attribute2.Description);
