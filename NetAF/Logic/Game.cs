@@ -9,9 +9,9 @@ using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using NetAF.Extensions;
 using NetAF.Interpretation;
+using NetAF.Logic.Arrangement;
 using NetAF.Rendering.Frames;
 using NetAF.Serialization;
-using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Logic
@@ -499,7 +499,7 @@ namespace NetAF.Logic
         public void RestoreFrom(GameSerialization serialization)
         {
             // resolve asset locations
-            GameAssetArranger.Arranger(this, serialization);
+            GameAssetArranger.Arrange(this, serialization);
 
             // restore player
             serialization.Player.Restore(Player);

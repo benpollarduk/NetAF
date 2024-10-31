@@ -20,7 +20,6 @@
         /// Remove an item.
         /// </summary>
         /// <param name="item">The item to remove.</param>
-        /// <returns>The item that was removed.</returns>
         void RemoveItem(Item item);
     }
 }

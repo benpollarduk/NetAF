@@ -60,7 +60,7 @@ namespace NetAF.Commands.Game
                     if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(Item))
                         game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(Item);
                     else if (game.Player.HasItem(Item))
-                        game.Player.DequireItem(Item);
+                        game.Player.RemoveItem(Item);
 
                     break;
 

@@ -12,7 +12,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Attribute attribute = new("A", "B", 5, 10);
 
-            AttributeSerialization result = new AttributeSerialization(attribute);
+            AttributeSerialization result = new(attribute);
 
             Assert.AreEqual("A", result.Name);
         }

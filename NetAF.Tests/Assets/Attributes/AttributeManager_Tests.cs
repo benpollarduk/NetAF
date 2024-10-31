@@ -103,7 +103,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenNoAttributes_WhenSubtract_Then1Attribute()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Subtract("test", 0);
 
             var result = manager.GetAttributes();
@@ -114,7 +114,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenOneAttributes_WhenSubtractDuplicateAttribute_ThenOneAttribute()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add("test", 0);
             manager.Subtract("test", 0);
 
@@ -126,7 +126,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenOneAttribute_WhenSubtractAttribute_ThenAttributeValueSubtracted()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add("test", 100);
             manager.Subtract(new Attribute("test", "", 100, 2), 50);
 
@@ -138,7 +138,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenNoAttributes_WhenGetAsDictionary_ThenReturnEmptyDictionary()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
 
             var result = manager.GetAsDictionary();
 
@@ -148,7 +148,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenOneAttribute_WhenGetAsDictionary_ThenReturnDictionaryWithOneElement()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add("test", 1);
 
             var result = manager.GetAsDictionary();
@@ -159,7 +159,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void Given10WhenMax5_WhenAdd_ThenValueIs5()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add(new Attribute("test", string.Empty, 0, 5), 10);
 
             var result = manager.GetValue("test");
@@ -170,7 +170,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenMinus5WhenMin0_WhenAdd_ThenValueIs0()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add(new Attribute("test", string.Empty, 0, 5), -5);
 
             var result = manager.GetValue("test");
@@ -181,7 +181,7 @@ namespace NetAF.Tests.Assets.Attributes
         [TestMethod]
         public void GivenSubtract10From5WhenMin0_WhenSubtract_ThenValueIs0()
         {
-            AttributeManager manager = new()
+            AttributeManager manager = new();
             manager.Add(new Attribute("test", string.Empty, 0, 10), 5);
             manager.Subtract("test", 10);
 

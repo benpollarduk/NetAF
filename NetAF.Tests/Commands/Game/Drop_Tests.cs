@@ -62,7 +62,7 @@ namespace NetAF.Tests.Commands.Game
             overworld.AddRegion(region);
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var item = new Item(new Identifier("A"), Description.Empty, true);
-            character.AcquireItem(item);
+            character.AddItem(item);
             var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var command = new Drop(item);
 

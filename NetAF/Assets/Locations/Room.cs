@@ -13,7 +13,7 @@ namespace NetAF.Assets.Locations
     /// <summary>
     /// Represents a room
     /// </summary>
-    public sealed class Room : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<RoomSerialization>
+    public sealed class Room : ExaminableObject, IInteractWithItem, IItemContainer, IRestoreFromObjectSerialization<RoomSerialization>
     {
         #region Properties
 
@@ -36,11 +36,6 @@ namespace NetAF.Assets.Locations
         /// Get the characters in this Room.
         /// </summary>
         public NonPlayableCharacter[] Characters { get; private set; } = [];
-
-        /// <summary>
-        /// Get the items in this Room.
-        /// </summary>
-        public Item[] Items { get; private set; }
 
         /// <summary>
         /// Get or set the interaction.
@@ -90,7 +85,7 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">This rooms identifier.</param>
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
-        public Room(Identifier identifier, Description description, params Exit[] exits): this(identifier, description, exits, null)
+        public Room(Identifier identifier, Description description, params Exit[] exits) : this(identifier, description, exits, null)
         {
         }
 
@@ -138,25 +133,6 @@ namespace NetAF.Assets.Locations
         public void AddExit(Exit exit)
         {
             Exits = Exits.Add(exit);
-        }
-
-        /// <summary>
-        /// Add an item to this room.
-        /// </summary>
-        /// <param name="item">The item to add.</param>
-        public void AddItem(Item item)
-        {
-            Items = Items.Add(item);
-        }
-
-        /// <summary>
-        /// Remove an item from the room.
-        /// </summary>
-        /// <param name="item">The item to remove.</param>
-        /// <returns>The item removed from this room.</returns>
-        public void RemoveItem(Item item)
-        {
-            Items = Items.Remove(item);
         }
 
         /// <summary>
@@ -491,6 +467,33 @@ namespace NetAF.Assets.Locations
         public InteractionResult Interact(Item item)
         {
             return InteractWithItem(item);
+        }
+
+        #endregion
+
+        #region Implementation of IItemContainer
+
+        /// <summary>
+        /// Get the items.
+        /// </summary>
+        public Item[] Items { get; private set; } = [];
+
+        /// <summary>
+        /// Add an item.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        public void AddItem(Item item)
+        {
+            Items = Items.Add(item);
+        }
+
+        /// <summary>
+        /// Remove an item.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        public void RemoveItem(Item item)
+        {
+            Items = Items.Remove(item);
         }
 
         #endregion

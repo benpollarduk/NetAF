@@ -43,7 +43,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
         {
             var saria = new NonPlayableCharacter(Name, Description);
 
-            saria.AcquireItem(new TailKey().Instantiate());
+            saria.AddItem(new TailKey().Instantiate());
 
             saria.Conversation = new Conversation
             (
@@ -59,7 +59,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
 
                 if (Rupee.Name.EqualsIdentifier(item.Identifier) && key != null)
                 {
-                    saria.DequireItem(key);
+                    saria.RemoveItem(key);
                     room.AddItem(key);
                     item.IsPlayerVisible = false;
                     return new(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
@@ -77,7 +77,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                     if (!saria.HasItem(key))
                         return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
 
-                    saria.DequireItem(key);
+                    saria.RemoveItem(key);
                     room.AddItem(key);
 
                     return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");

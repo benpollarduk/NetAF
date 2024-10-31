@@ -43,7 +43,7 @@ namespace NetAF.Tests.Serialization.Assets
         public void Given1Item_ThenItemsLengthIs1()
         {
             PlayableCharacter character = new(string.Empty, string.Empty);
-            character.AcquireItem(new Item(string.Empty, string.Empty));
+            character.AddItem(new Item(string.Empty, string.Empty));
 
             CharacterSerialization result = new(character);
 

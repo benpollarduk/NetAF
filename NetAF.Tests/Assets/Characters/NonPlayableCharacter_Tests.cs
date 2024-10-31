@@ -26,7 +26,7 @@ namespace NetAF.Tests.Assets.Characters
         }
 
         [TestMethod]
-        public void GivenDoesntHaveItem_WhenHasItem_ThenFalse()
+        public void GivenDoesNotHaveItem_WhenHasItem_ThenFalse()
         {
             var npc = new NonPlayableCharacter(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty);
@@ -41,7 +41,7 @@ namespace NetAF.Tests.Assets.Characters
         {
             var npc = new NonPlayableCharacter(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty);
-            npc.AcquireItem(item);
+            npc.AddItem(item);
 
             var result = npc.HasItem(item);
 
@@ -49,12 +49,12 @@ namespace NetAF.Tests.Assets.Characters
         }
 
         [TestMethod]
-        public void GivenAnItem_WhenDequireItem_ThenHasItemIsFalse()
+        public void GivenAnItem_WhenRemoveItem_ThenHasItemIsFalse()
         {
             var npc = new NonPlayableCharacter(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty);
-            npc.AcquireItem(item);
-            npc.DequireItem(item);
+            npc.AddItem(item);
+            npc.RemoveItem(item);
 
             var result = npc.HasItem(item);
 

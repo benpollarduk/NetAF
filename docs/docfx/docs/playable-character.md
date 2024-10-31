@@ -22,16 +22,16 @@ var player = new PlayableCharacter("Ben", "A 39 year old man.",
 ]);
 ```
 
-A PlayableCharacter can be given items with the **AcquireItem** method.
+A PlayableCharacter can be given items with the **AddItem** method.
 
 ```csharp
-player.AcquireItem(new Item("Mallet", "A large mallet."));
+player.AddItem(new Item("Mallet", "A large mallet."));
 ```
 
-A PlayableCharacter can lose an item with the **DequireItem** method.
+A PlayableCharacter can lose an item with the **RemoveItem** method.
 
 ```csharp
-player.DequireItem(mallet);
+player.RemoveItem(mallet);
 ```
 
 A PlayableCharacter can use an item on another asset:
