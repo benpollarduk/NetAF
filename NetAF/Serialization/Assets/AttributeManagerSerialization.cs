@@ -13,9 +13,9 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the values.
+        /// Get or set the values.
         /// </summary>
-        public readonly Dictionary<AttributeSerialization, int> Values = attributeManager?.GetAsDictionary()?.ToDictionary(x => new AttributeSerialization(x.Key), x => x.Value) ?? [];
+        public Dictionary<AttributeSerialization, int> Values { get; set; } = attributeManager?.GetAsDictionary()?.ToDictionary(x => new AttributeSerialization(x.Key), x => x.Value) ?? [];
 
         #endregion
 

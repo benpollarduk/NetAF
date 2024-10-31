@@ -11,19 +11,19 @@ namespace NetAF.Serialization.Persistence
         #region Properties
 
         /// <summary>
-        /// Get the serialized game.
+        /// Get or set the serialized game.
         /// </summary>
-        public GameSerialization Game { get; private set; }
+        public GameSerialization Game { get; set; }
 
         /// <summary>
-        /// Get the name of this save.
+        /// Get or set the name of this save.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Get the creation time of this save.
+        /// Get or set the creation time of this save.
         /// </summary>
-        public DateTime CreationTime { get; private set; }
+        public DateTime CreationTime { get; set; }
 
         #endregion
 

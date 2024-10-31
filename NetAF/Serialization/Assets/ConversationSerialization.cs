@@ -21,9 +21,9 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get if the index of the current paragraph.
+        /// Get or set if the index of the current paragraph.
         /// </summary>
-        public readonly int CurrentParagraph = conversation?.Paragraphs?.ToList()?.IndexOf(conversation.CurrentParagraph) ?? NoCurrentParagraph;
+        public int CurrentParagraph { get; set; } = conversation?.Paragraphs?.ToList()?.IndexOf(conversation.CurrentParagraph) ?? NoCurrentParagraph;
 
         #endregion
 

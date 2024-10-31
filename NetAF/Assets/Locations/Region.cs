@@ -357,13 +357,14 @@ namespace NetAF.Assets.Locations
             base.RestoreFrom(serialization);
 
             var rooms = roomPositions.Select(x => x.Room).ToArray();
-            CurrentRoom = Array.Find(rooms, x => x.Identifier.Equals(serialization.CurrentRoom));
 
             foreach (var room in rooms)
             {
                 var roomSerialization = Array.Find(serialization.Rooms, x => room.Identifier.Equals(x.Identifier));
                 roomSerialization?.Restore(room);
             }
+
+            CurrentRoom = Array.Find(rooms, x => x.Identifier.Equals(serialization.CurrentRoom));
         }
 
         #endregion

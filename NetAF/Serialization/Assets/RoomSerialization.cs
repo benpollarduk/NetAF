@@ -12,24 +12,24 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get if the room has been visited.
+        /// Get or set if the room has been visited.
         /// </summary>
-        public readonly bool HasBeenVisited = room?.HasBeenVisited ?? false;
+        public bool HasBeenVisited { get; set; } = room?.HasBeenVisited ?? false;
 
         /// <summary>
-        /// Get the item serializations.
+        /// Get or set the item serializations.
         /// </summary>
-        public readonly ItemSerialization[] Items = room?.Items?.Select(x => new ItemSerialization(x))?.ToArray() ?? [];
+        public ItemSerialization[] Items { get; set; } = room?.Items?.Select(x => new ItemSerialization(x))?.ToArray() ?? [];
 
         /// <summary>
-        /// Get the exit serializations.
+        /// Get or set the exit serializations.
         /// </summary>
-        public readonly ExitSerialization[] Exits = room?.Exits?.Select(x => new ExitSerialization(x))?.ToArray() ?? [];
+        public ExitSerialization[] Exits { get; set; } = room?.Exits?.Select(x => new ExitSerialization(x))?.ToArray() ?? [];
 
         /// <summary>
-        /// Get the character serializations.
+        /// Get or set the character serializations.
         /// </summary>
-        public readonly NonPlayableCharacterSerialization[] Characters = room?.Characters?.Select(x => new NonPlayableCharacterSerialization(x))?.ToArray() ?? [];
+        public NonPlayableCharacterSerialization[] Characters { get; set; } = room?.Characters?.Select(x => new NonPlayableCharacterSerialization(x))?.ToArray() ?? [];
 
         #endregion
 

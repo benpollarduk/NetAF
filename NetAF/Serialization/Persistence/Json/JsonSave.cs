@@ -26,8 +26,7 @@ namespace NetAF.Serialization.Persistence.Json
         /// <returns>The restore point created from the Json.</returns>
         public static RestorePoint FromJson(string json)
         {
-            var settings = new JsonSerializerSettings { ContractResolver = new PrivateResolver() };
-            return JsonConvert.DeserializeObject<RestorePoint>(json, settings);
+            return JsonConvert.DeserializeObject<RestorePoint>(json);
         }
 
         /// <summary>

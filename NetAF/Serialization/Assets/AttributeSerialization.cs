@@ -9,24 +9,24 @@
         #region Properties
 
         /// <summary>
-        /// Get the name.
+        /// Get or set the name.
         /// </summary>
-        public readonly string Name = attribute.Name;
+        public string Name { get; set; } = attribute.Name;
 
         /// <summary>
-        /// Get the description.
+        /// Get or set the description.
         /// </summary>
-        public readonly string Description = attribute.Description;
+        public string Description { get; set; } = attribute.Description;
 
         /// <summary>
-        /// Get the minimum.
+        /// Get or set the minimum.
         /// </summary>
-        public readonly int Minimum = attribute.Minimum;
+        public int Minimum { get; set; } = attribute.Minimum;
 
         /// <summary>
-        /// Get the maximum.
+        /// Get or set the maximum.
         /// </summary>
-        public readonly int Maximum = attribute.Maximum;
+        public int Maximum { get; set; } = attribute.Maximum;
 
         #endregion
 
