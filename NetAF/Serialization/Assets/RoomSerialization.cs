@@ -14,7 +14,7 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get if the room has been visited.
         /// </summary>
-        public readonly bool HasBeenVisited = room.HasBeenVisited;
+        public readonly bool HasBeenVisited = room?.HasBeenVisited ?? false;
 
         /// <summary>
         /// Get the item serializations.

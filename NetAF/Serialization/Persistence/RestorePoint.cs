@@ -1,12 +1,12 @@
 ﻿using NetAF.Logic;
 using System;
 
-namespace NetAF.Serialization.Saves
+namespace NetAF.Serialization.Persistence
 {
     /// <summary>
-    /// Represents a save for restoring a Game.
+    /// Represents a restore point for a Game.
     /// </summary>
-    public class Save
+    public class RestorePoint
     {
         #region Properties
 
@@ -30,19 +30,19 @@ namespace NetAF.Serialization.Saves
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the Save class.
+        /// Initializes a new instance of the RestorePoint class.
         /// </summary>
-        private Save() { }
+        private RestorePoint() { }
 
         #endregion
 
         /// <summary>
-        /// Create a new Save.
+        /// Create a new restore point.
         /// </summary>
-        /// <param name="name">The name of the save.</param>
-        /// <param name="game">The game to save.</param>
-        /// <returns>The created Save.</returns>
-        public static Save Create(string name, Game game)
+        /// <param name="name">The name of the restore point.</param>
+        /// <param name="game">The game to create the restore point for.</param>
+        /// <returns>The restore point.</returns>
+        public static RestorePoint Create(string name, Game game)
         {
             return new()
             {

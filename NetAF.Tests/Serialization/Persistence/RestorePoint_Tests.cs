@@ -5,12 +5,12 @@ using NetAF.Assets.Locations;
 using NetAF.Logic;
 using NetAF.Utilities;
 using System;
-using NetAF.Serialization.Saves;
+using NetAF.Serialization.Persistence;
 
-namespace NetAF.Tests.Serialization.Saves
+namespace NetAF.Tests.Serialization.Persistence
 {
     [TestClass]
-    public class Save_Tests
+    public class RestorePoint_Tests
     {
         [TestMethod]
         public void GivenNameTest_WhenCreate_ThenReturnedSaveNameIsTest()
@@ -22,7 +22,7 @@ namespace NetAF.Tests.Serialization.Saves
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
-            var result = Save.Create("Test", game);
+            var result = RestorePoint.Create("Test", game);
 
             Assert.AreEqual("Test", result.Name);
         }
@@ -38,7 +38,7 @@ namespace NetAF.Tests.Serialization.Saves
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var now = DateTime.Now;
 
-            var result = Save.Create(string.Empty, game);
+            var result = RestorePoint.Create(string.Empty, game);
 
             Assert.IsTrue((result.CreationTime - now).TotalMinutes <= 1);
         }
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Serialization.Saves
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
-            var result = Save.Create(string.Empty, game);
+            var result = RestorePoint.Create(string.Empty, game);
 
             Assert.IsNotNull(result.Game);
         }

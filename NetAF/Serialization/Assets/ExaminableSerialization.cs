@@ -13,17 +13,17 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get the identifier.
         /// </summary>
-        public readonly string Identifier = examinable.Identifier.IdentifiableName;
+        public readonly string Identifier = examinable?.Identifier?.IdentifiableName;
 
         /// <summary>
         /// Get if it is player visible.
         /// </summary>
-        public readonly bool IsPlayerVisible = examinable.IsPlayerVisible;
+        public readonly bool IsPlayerVisible = examinable?.IsPlayerVisible ?? false;
 
         /// <summary>
         /// Get the attribute manager serializations.
         /// </summary>
-        public readonly AttributeManagerSerialization AttributeManager = new(examinable.Attributes);
+        public readonly AttributeManagerSerialization AttributeManager = new(examinable?.Attributes);
 
         #endregion
 

@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace NetAF.Serialization.Saves
+namespace NetAF.Serialization.Persistence.Json
 {
     /// <summary>
     /// Provides persistence for a save in the Json format.
@@ -10,37 +10,38 @@ namespace NetAF.Serialization.Saves
     public static class JsonSave
     {
         /// <summary>
-        /// Convert a save to Json.
+        /// Convert a restore point to Json.
         /// </summary>
-        /// <param name="save">The save.</param>
-        /// <returns>The save in Json.</returns>
-        public static string ToJson(Save save)
+        /// <param name="restorePoint">The restore point.</param>
+        /// <returns>The Json reatore point.</returns>
+        public static string ToJson(RestorePoint restorePoint)
         {
-            return JsonConvert.SerializeObject(save);
+            return JsonConvert.SerializeObject(restorePoint);
         }
 
         /// <summary>
-        /// Create a save from Json.
+        /// Create a restore point from Json.
         /// </summary>
         /// <param name="json">The json.</param>
-        /// <returns>The save created from the Json.</returns>
-        public static Save FromJson(string json)
+        /// <returns>The restore point created from the Json.</returns>
+        public static RestorePoint FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<Save>(json);
+            var settings = new JsonSerializerSettings { ContractResolver = new PrivateResolver() };
+            return JsonConvert.DeserializeObject<RestorePoint>(json, settings);
         }
 
         /// <summary>
-        /// Persist a save to a file.
+        /// Persist a restore point to a file.
         /// </summary>
         /// <param name="path">The file path.</param>
-        /// <param name="save">The save to persist.</param>
+        /// <param name="restorePoint">The restore point to persist.</param>
         /// <param name="message">A message detailing the result of the save, if the save was unsuccessful. If the save was successful this will be empty.</param>
         /// <returns>True if the save was successful else false.</returns>
-        public static bool ToFile(string path, Save save, out string message)
+        public static bool ToFile(string path, RestorePoint restorePoint, out string message)
         {
             try
             {
-                var json = ToJson(save);
+                var json = ToJson(restorePoint);
                 var directory = Path.GetDirectoryName(path);
 
                 if (!Directory.Exists(directory))
@@ -60,13 +61,13 @@ namespace NetAF.Serialization.Saves
         }
 
         /// <summary>
-        /// Return a save from a file.
+        /// Return a restore point from a file.
         /// </summary>
         /// <param name="path">The file path.</param>
-        /// <param name="save">The save.</param>
+        /// <param name="restorePoint">The restore point.</param>
         /// <param name="message">A message detailing the result of the load, if the load was unsuccessful. If the load was successful this will be empty.</param>
         /// <returns>True if the load was successful else false.</returns>
-        public static bool FromFile(string path, out Save save, out string message)
+        public static bool FromFile(string path, out RestorePoint restorePoint, out string message)
         {
             try
             {
@@ -75,13 +76,13 @@ namespace NetAF.Serialization.Saves
                 using (var reader = new StreamReader(path))
                     json = reader.ReadToEnd();
 
-                save = FromJson(json);
+                restorePoint = FromJson(json);
                 message = string.Empty;
                 return true;
             }
             catch (Exception e)
             {
-                save = null;
+                restorePoint = null;
                 message = e.Message;
                 return false;
             }

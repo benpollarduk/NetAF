@@ -4,10 +4,11 @@ using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
 using NetAF.Utilities;
-using NetAF.Serialization.Saves;
+using NetAF.Serialization.Persistence;
 using System.IO;
+using NetAF.Serialization.Persistence.Json;
 
-namespace NetAF.Tests.Serialization.Assets
+namespace NetAF.Tests.Serialization.Persistence.Json
 {
     [TestClass]
     public class JsonSave_Tests
@@ -21,10 +22,10 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var expectedMinusDateTime = """{"Game":{"Player":{"Items":[],"IsAlive":true,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}},"Overworld":{"Regions":[{"Rooms":[{"HasBeenVisited":true,"Items":[{"Identifier":"","IsPlayerVisible":false,"AttributeManager":{"Values":{}}}],"Exits":[],"Characters":[],"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}],"CurrentRoom":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}],"CurrentRegion":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}},"Name":"Test""";
             var json = JsonSave.ToJson(save);
-            
+
             Assert.IsTrue(json.StartsWith(expectedMinusDateTime));
         }
 
@@ -32,7 +33,7 @@ namespace NetAF.Tests.Serialization.Assets
         public void GivenSimpleJson_WhenFromJson_ThenValidSaveReturned()
         {
             var json = """{"Game":{"Player":{"Items":[],"IsAlive":true,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}},"Overworld":{"Regions":[{"Rooms":[{"HasBeenVisited":true,"Items":[{"Identifier":"","IsPlayerVisible":false,"AttributeManager":{"Values":{}}}],"Exits":[],"Characters":[],"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}],"CurrentRoom":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}],"CurrentRegion":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}}}},"Name":"Test","CreationTime":"2024-10-31T16:27:15.4755188+00:00"}""";
-            
+
             var result = JsonSave.FromJson(json);
 
             Assert.IsNotNull(result);
@@ -47,7 +48,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
             var result = JsonSave.ToFile(path, save, out _);
@@ -69,7 +70,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = "abc";
 
             var result = JsonSave.ToFile(path, save, out _);
@@ -91,7 +92,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = "abc";
 
             JsonSave.ToFile(path, save, out var message);
@@ -113,7 +114,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
             JsonSave.ToFile(path, save, out _);
@@ -136,7 +137,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = "abc";
 
             JsonSave.ToFile(path, save, out _);
@@ -159,7 +160,7 @@ namespace NetAF.Tests.Serialization.Assets
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var save = Save.Create("Test", game);
+            var save = RestorePoint.Create("Test", game);
             var path = "abc";
 
             JsonSave.ToFile(path, save, out _);

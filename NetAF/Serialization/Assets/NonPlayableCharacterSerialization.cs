@@ -13,7 +13,7 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get the conversation serialization.
         /// </summary>
-        public readonly ConversationSerialization Conversation = new(character.Conversation);
+        public readonly ConversationSerialization Conversation = new(character?.Conversation);
 
         #endregion
 

@@ -19,7 +19,7 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get if the character is alive.
         /// </summary>
-        public readonly bool IsAlive = character.IsAlive;
+        public readonly bool IsAlive = character?.IsAlive ?? false;
 
         #endregion
 
