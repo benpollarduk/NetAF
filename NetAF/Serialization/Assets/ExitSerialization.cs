@@ -11,9 +11,9 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get if the exit is locked.
+        /// Get or set if the exit is locked.
         /// </summary>
-        public readonly bool IsLocked = exit?.IsLocked ?? false;
+        public bool IsLocked { get; set; } = exit?.IsLocked ?? false;
 
         #endregion
 

@@ -11,9 +11,9 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the conversation serialization.
+        /// Get or set the conversation serialization.
         /// </summary>
-        public readonly ConversationSerialization Conversation = new(character?.Conversation);
+        public ConversationSerialization Conversation { get; set; } = new(character?.Conversation);
 
         #endregion
 

@@ -11,19 +11,19 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the identifier.
+        /// Get or set the identifier.
         /// </summary>
-        public readonly string Identifier = examinable?.Identifier?.IdentifiableName;
+        public string Identifier { get; set; } = examinable?.Identifier?.IdentifiableName;
 
         /// <summary>
-        /// Get if it is player visible.
+        /// Get or set if it is player visible.
         /// </summary>
-        public readonly bool IsPlayerVisible = examinable?.IsPlayerVisible ?? false;
+        public bool IsPlayerVisible { get; set; } = examinable?.IsPlayerVisible ?? false;
 
         /// <summary>
-        /// Get the attribute manager serializations.
+        /// Get or set the attribute manager serializations.
         /// </summary>
-        public readonly AttributeManagerSerialization AttributeManager = new(examinable?.Attributes);
+        public AttributeManagerSerialization AttributeManager { get; set; } = new(examinable?.Attributes);
 
         #endregion
 

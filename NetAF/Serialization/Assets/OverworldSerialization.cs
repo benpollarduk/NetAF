@@ -12,14 +12,14 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the region serializations.
+        /// Get or set the region serializations.
         /// </summary>
-        public readonly RegionSerialization[] Regions = overworld?.Regions?.Select(x => new RegionSerialization(x))?.ToArray() ?? [];
+        public RegionSerialization[] Regions { get; set; } = overworld?.Regions?.Select(x => new RegionSerialization(x))?.ToArray() ?? [];
 
         /// <summary>
-        /// Get the current region.
+        /// Get or set the current region.
         /// </summary>
-        public readonly string CurrentRegion = overworld?.CurrentRegion?.Identifier?.IdentifiableName;
+        public string CurrentRegion { get; set; } = overworld?.CurrentRegion?.Identifier?.IdentifiableName;
 
         #endregion
 

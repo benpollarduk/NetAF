@@ -12,14 +12,14 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the room serializations.
+        /// Get or set the room serializations.
         /// </summary>
-        public readonly RoomSerialization[] Rooms = region?.ToMatrix()?.ToRooms()?.Select(x => new RoomSerialization(x))?.ToArray() ?? [];
+        public RoomSerialization[] Rooms { get; set; } = region?.ToMatrix()?.ToRooms()?.Select(x => new RoomSerialization(x))?.ToArray() ?? [];
 
         /// <summary>
-        /// Get the current room.
+        /// Get or set the current room.
         /// </summary>
-        public readonly string CurrentRoom = region?.CurrentRoom?.Identifier?.IdentifiableName;
+        public string CurrentRoom { get; set; } = region?.CurrentRoom?.Identifier?.IdentifiableName;
 
         #endregion
 

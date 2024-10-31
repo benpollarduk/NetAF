@@ -12,14 +12,14 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get the item serializations.
+        /// Get or set the item serializations.
         /// </summary>
-        public readonly ItemSerialization[] Items = character?.Items?.Select(x => new ItemSerialization(x))?.ToArray() ?? [];
+        public ItemSerialization[] Items { get; set; } = character?.Items?.Select(x => new ItemSerialization(x))?.ToArray() ?? [];
 
         /// <summary>
-        /// Get if the character is alive.
+        /// Get or set if the character is alive.
         /// </summary>
-        public readonly bool IsAlive = character?.IsAlive ?? false;
+        public bool IsAlive { get; set; } = character?.IsAlive ?? false;
 
         #endregion
 
