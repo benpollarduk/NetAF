@@ -27,7 +27,7 @@ namespace NetAF.Tests.Serialization.Assets
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
             var serialization = new AttributeManagerSerialization(attributeManager2);
 
-            attributeManager1.RestoreFrom(serialization);
+            serialization.Restore(attributeManager1);
 
             Assert.AreEqual(1, attributeManager1.Count);
         }
@@ -40,7 +40,7 @@ namespace NetAF.Tests.Serialization.Assets
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
             var serialization = new AttributeManagerSerialization(attributeManager2);
 
-            attributeManager1.RestoreFrom(serialization);
+            serialization.Restore(attributeManager1);
             var attributeDictionary = attributeManager2.GetAsDictionary();
             var attribute = attributeDictionary.ElementAt(0).Key;
             var count = attributeDictionary.ElementAt(0).Value;
