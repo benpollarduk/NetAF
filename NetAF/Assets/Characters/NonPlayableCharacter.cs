@@ -84,7 +84,7 @@ namespace NetAF.Assets.Characters
         {
             base.RestoreFrom(serialization);
 
-            Conversation.RestoreFrom(serialization.Conversation);
+            Conversation?.RestoreFrom(serialization.Conversation);
         }
 
         #endregion
