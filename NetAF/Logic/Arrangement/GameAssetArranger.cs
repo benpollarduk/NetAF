@@ -46,7 +46,7 @@ namespace NetAF.Logic.Arrangement
             Rearrange(itemRecords);
 
             // move the characters to the new locations
-            Rearrange([.. characterRecords]);
+            Rearrange(characterRecords);
         }
 
         /// <summary>
@@ -191,12 +191,12 @@ namespace NetAF.Logic.Arrangement
                 var match = Array.Find(destinationMappings, x => x.Obj.Equals(mapping.Obj));
                 
                 // if the containers match, continue
-                if (match.Container.Equals(mapping.Container))
+                if (match != null && match.Container.Equals(mapping.Container))
                     continue;
 
                 var item = Array.Find(instances, x => x.Identifier.Equals(mapping.Obj));
                 var from = Array.Find(itemContainers, x => x.Identifier.Equals(mapping.Container));
-                var to = Array.Find(itemContainers, x => x.Identifier.Equals(match.Container));
+                var to = match != null ? Array.Find(itemContainers, x => x.Identifier.Equals(match.Container)) : null;
 
                 // item needs to be relocated
                 itemRecords.Add(new ItemFromTo(item, from, to));
@@ -226,12 +226,12 @@ namespace NetAF.Logic.Arrangement
                 var match = Array.Find(destinationMappings, x => x.Obj.Equals(mapping.Obj));
 
                 // if the containers match, continue
-                if (match.Container.Equals(mapping.Container))
+                if (match != null && match.Container.Equals(mapping.Container))
                     continue;
 
                 var character = Array.Find(instances, x => x.Identifier.Equals(mapping.Obj));
                 var from = Array.Find(rooms, x => x.Identifier.Equals(mapping.Container));
-                var to = Array.Find(rooms, (x) => x.Identifier.Equals(match.Container));
+                var to = match != null ? Array.Find(rooms, (x) => x.Identifier.Equals(match?.Container)) : null;
 
                 // character needs to be relocated
                 characterRecords.Add(new NonPlayableCharacterFromTo(character, from, to));
@@ -248,8 +248,8 @@ namespace NetAF.Logic.Arrangement
         {
             foreach (var record in records)
             {
-                record.From.RemoveItem(record.Item);
-                record.To.AddItem(record.Item);
+                record.From?.RemoveItem(record.Item);
+                record.To?.AddItem(record.Item);
             }
         }
 
@@ -261,8 +261,8 @@ namespace NetAF.Logic.Arrangement
         {
             foreach (var record in records)
             {
-                record.From.RemoveCharacter(record.Character);
-                record.To.AddCharacter(record.Character);
+                record.From?.RemoveCharacter(record.Character);
+                record.To?.AddCharacter(record.Character);
             }
         }
     }

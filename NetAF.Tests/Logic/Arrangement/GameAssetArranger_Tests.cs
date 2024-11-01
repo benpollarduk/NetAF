@@ -41,6 +41,60 @@ namespace NetAF.Tests.Logic.Arrangement
         }
 
         [TestMethod]
+        public void GivenAGame_WhenRestoreFromSerializedAndItemRemoved_ThenItemMissingInRestoredGame()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            RegionMaker regionMaker2 = new("REGION", string.Empty);
+            Item item2 = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room2 = new("ROOM", string.Empty, null, item2);
+            regionMaker2[0, 0, 0] = room2;
+            OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
+            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            room2.RemoveItem(item2);
+
+            GameSerialization serialization = new(game2);
+
+            GameAssetArranger.Arrange(game, serialization);
+
+            Assert.AreEqual(0, room.Items.Length);
+        }
+
+        [TestMethod]
+        public void GivenAGame_WhenRestoreFromSerializedAndCharacterRemoved_ThenCharacterMissingInRestoredGame()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            NonPlayableCharacter character = new("CHARACTER", string.Empty);
+            Room room = new("ROOM", string.Empty, null);
+            room.AddCharacter(character);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            RegionMaker regionMaker2 = new("REGION", string.Empty);
+            NonPlayableCharacter character2 = new("CHARACTER", string.Empty);
+            Room room2 = new("ROOM", string.Empty, null);
+            room2.AddCharacter(character2);
+            regionMaker2[0, 0, 0] = room2;
+            OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
+            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            room2.RemoveCharacter(character2);
+
+            GameSerialization serialization = new(game2);
+
+            GameAssetArranger.Arrange(game, serialization);
+
+            Assert.AreEqual(0, room.Characters.Length);
+        }
+
+        [TestMethod]
         public void GivenAGame_WhenRestoreFromSerializedAndPlayerDroppedAnItemInARoom_ThenPlayerDoesNotHaveItemInRestoredGame()
         {
             RegionMaker regionMaker = new("REGION", string.Empty);
