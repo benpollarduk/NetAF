@@ -4,7 +4,7 @@ using NetAF.Interpretation;
 namespace NetAF.Tests.Interpretation
 {
     [TestClass]
-    internal class CommandHelp_Tests
+    public class CommandHelp_Tests
     {
         [TestMethod]
         public void GivenACommandHelp_WhenEqualityCheckedWithEqualCommandHelp_ThenReturnTrue()
