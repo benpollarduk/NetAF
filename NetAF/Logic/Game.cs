@@ -9,7 +9,9 @@ using NetAF.Assets.Locations;
 using NetAF.Commands.Game;
 using NetAF.Extensions;
 using NetAF.Interpretation;
+using NetAF.Logic.Arrangement;
 using NetAF.Rendering.Frames;
+using NetAF.Serialization;
 using NetAF.Utilities;
 
 namespace NetAF.Logic
@@ -17,8 +19,14 @@ namespace NetAF.Logic
     /// <summary>
     /// Represents a game.
     /// </summary>
-    public sealed class Game
+    public sealed class Game : IRestoreFromObjectSerialization<GameSerialization>
     {
+        #region Fields
+
+        private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -72,6 +80,11 @@ namespace NetAF.Logic
         private IFrame CurrentFrame { get; set; }
 
         /// <summary>
+        /// Get the catalog of assets for this game.
+        /// </summary>
+        public AssetCatalog Catalog { get; private set; }
+
+        /// <summary>
         /// Occurs when the game begins drawing a frame.
         /// </summary>
         internal event EventHandler<IFrame> StartingFrameDraw;
@@ -102,11 +115,21 @@ namespace NetAF.Logic
             Overworld = overworld;
             Configuration = configuration;
             EndConditions = endConditions;
+            Catalog = AssetCatalog.FromGame(this);
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Get an array of inactive player locations.
+        /// </summary>
+        /// <returns>An array containing all locations of inactive platers.</returns>
+        internal PlayableCharacterLocation[] GetInactivePlayerLocations()
+        {
+            return [.. inactivePlayerLocations];
+        }
 
         /// <summary>
         /// Execute the game.
@@ -174,9 +197,27 @@ namespace NetAF.Logic
         /// Change to a specified player.
         /// </summary>
         /// <param name="player">The player to change to.</param>
-        public void ChangePlayer(PlayableCharacter player)
+        /// <param name="jumpToLastLocation">Jump to the last location, if it is known. Then true the player will be added at the last location, when false the current location will be used. By default this is true.</param>
+        public void ChangePlayer(PlayableCharacter player, bool jumpToLastLocation = true)
         {
+            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld?.CurrentRegion?.Identifier.IdentifiableName, Overworld?.CurrentRegion?.CurrentRoom?.Identifier.IdentifiableName));
+
+            var previous = Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier));
+
+            if (previous != null)
+                inactivePlayerLocations.Remove(previous);
+
             Player = player;
+
+            if (jumpToLastLocation && Overworld != null && previous?.RegionIdentifier != null && previous.RoomIdentifier != null)
+            {
+                var region = Array.Find(Overworld.Regions.ToArray(), x => x.Identifier.Equals(previous.RegionIdentifier));
+                var room = Array.Find(region.ToMatrix().ToRooms(), x => x.Identifier.Equals(previous.RoomIdentifier));
+
+                Overworld.Move(region);
+                var location = Overworld.CurrentRegion.GetPositionOfRoom(room);
+                Overworld.CurrentRegion.JumpToRoom(location.X, location.Y, location.Z);
+            }
         }
 
         /// <summary>
@@ -484,6 +525,33 @@ namespace NetAF.Logic
                         throw new NotImplementedException();
                 }
             }
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<GameSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(GameSerialization serialization)
+        {
+            // resolve asset locations
+            AssetArranger.Arrange(this, serialization);
+
+            // restore player
+            serialization.Player.Restore(Player);
+
+            // restore overworld
+            serialization.Overworld.Restore(Overworld);
+
+            // restore player locations
+            inactivePlayerLocations.Clear();
+
+            // restore all
+            foreach (var location in serialization.PlayableCharacterLocations)
+                inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
         }
 
         #endregion

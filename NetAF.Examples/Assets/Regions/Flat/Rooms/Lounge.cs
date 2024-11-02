@@ -36,17 +36,16 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             {
                 if (item != null)
                 {
-                    if (MugOfCoffee.Name.EqualsIdentifier(item.Identifier))
+                    if (CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
                         if (room.ContainsCharacter(Beth.Name))
                             return new(InteractionEffect.ItemUsedUp, item, "Beth takes the cup of coffee and smiles. Brownie points to you!");
 
-                        item.Morph(new EmptyCoffeeMug().Instantiate());
-                        return new(InteractionEffect.ItemMorphed, item, "As no one is about you decide to drink the coffee yourself. Your nose wasn't lying, it is bitter but delicious.");
+                        return new(InteractionEffect.SelfContained, item, "As no one is about you decide to drink the coffee yourself. Your nose wasn't lying, it is bitter but delicious.");
 
                     }
 
-                    if (EmptyCoffeeMug.Name.EqualsIdentifier(item.Identifier))
+                    if (CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
                         room.AddItem(item);
                         return new(InteractionEffect.ItemUsedUp, item, "You put the mug down on the coffee table, sick of carrying the bloody thing around. Beth is none too impressed.");

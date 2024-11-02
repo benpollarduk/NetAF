@@ -4,6 +4,8 @@ using System.Linq;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Assets.Locations
@@ -11,7 +13,7 @@ namespace NetAF.Assets.Locations
     /// <summary>
     /// Represents a room
     /// </summary>
-    public sealed class Room : ExaminableObject, IInteractWithItem
+    public sealed class Room : ExaminableObject, IInteractWithItem, IItemContainer, IRestoreFromObjectSerialization<RoomSerialization>
     {
         #region Properties
 
@@ -34,11 +36,6 @@ namespace NetAF.Assets.Locations
         /// Get the characters in this Room.
         /// </summary>
         public NonPlayableCharacter[] Characters { get; private set; } = [];
-
-        /// <summary>
-        /// Get the items in this Room.
-        /// </summary>
-        public Item[] Items { get; private set; }
 
         /// <summary>
         /// Get or set the interaction.
@@ -88,7 +85,7 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">This rooms identifier.</param>
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
-        public Room(Identifier identifier, Description description, params Exit[] exits): this(identifier, description, exits, null)
+        public Room(Identifier identifier, Description description, params Exit[] exits) : this(identifier, description, exits, null)
         {
         }
 
@@ -130,49 +127,12 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Add an exit to this room.
-        /// </summary>
-        /// <param name="exit">The exit to add.</param>
-        public void AddExit(Exit exit)
-        {
-            Exits = Exits.Add(exit);
-        }
-
-        /// <summary>
-        /// Add an item to this room.
-        /// </summary>
-        /// <param name="item">The item to add.</param>
-        public void AddItem(Item item)
-        {
-            Items = Items.Add(item);
-        }
-
-        /// <summary>
-        /// Remove an item from the room.
-        /// </summary>
-        /// <param name="item">The item to remove.</param>
-        /// <returns>The item removed from this room.</returns>
-        public void RemoveItem(Item item)
-        {
-            Items = Items.Remove(item);
-        }
-
-        /// <summary>
         /// Remove a character from the room.
         /// </summary>
         /// <param name="character">The character to remove.</param>
         public void RemoveCharacter(NonPlayableCharacter character)
         {
             Characters = Characters.Remove(character);
-        }
-
-        /// <summary>
-        /// Remove an exit from the room.
-        /// </summary>
-        /// <param name="exit">The exit to remove.</param>
-        public void RemoveExit(Exit exit)
-        {
-            Exits = Exits.Remove(exit);
         }
 
         /// <summary>
@@ -191,12 +151,6 @@ namespace NetAF.Assets.Locations
             if (Characters.Contains(target))
             {
                 RemoveCharacter(target as NonPlayableCharacter);
-                return target;
-            }
-
-            if (Exits.Contains(target))
-            {
-                RemoveExit(target as Exit);
                 return target;
             }
 
@@ -493,5 +447,64 @@ namespace NetAF.Assets.Locations
 
         #endregion
 
+        #region Implementation of IItemContainer
+
+        /// <summary>
+        /// Get the items.
+        /// </summary>
+        public Item[] Items { get; private set; } = [];
+
+        /// <summary>
+        /// Add an item.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        public void AddItem(Item item)
+        {
+            Items = Items.Add(item);
+        }
+
+        /// <summary>
+        /// Remove an item.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        public void RemoveItem(Item item)
+        {
+            Items = Items.Remove(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<RoomSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(RoomSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            HasBeenVisited = serialization.HasBeenVisited;
+
+            foreach (var exit in Exits)
+            {
+                var exitSerialization = Array.Find(serialization.Exits, x => exit.Identifier.Equals(x.Identifier));
+                exitSerialization?.Restore(exit);
+            }
+
+            foreach (var item in Items)
+            {
+                var itemSerialization = Array.Find(serialization.Items, x => item.Identifier.Equals(x.Identifier));
+                itemSerialization?.Restore(item);
+            }
+
+            foreach (var character in Characters)
+            {
+                var characterSerialization = Array.Find(serialization.Characters, x => character.Identifier.Equals(x.Identifier));
+                characterSerialization?.Restore(character);
+            }
+        }
+
+        #endregion
     }
 }

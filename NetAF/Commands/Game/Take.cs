@@ -43,7 +43,7 @@ namespace NetAF.Commands.Game
                 return new(ReactionResult.Error, $"{Item.Identifier.Name} cannot be taken.");
 
             game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(Item);
-            game.Player.AcquireItem(Item);
+            game.Player.AddItem(Item);
 
             return new(ReactionResult.OK, $"Took {Item.Identifier.Name}");
         }

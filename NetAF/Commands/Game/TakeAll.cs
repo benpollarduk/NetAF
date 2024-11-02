@@ -32,7 +32,7 @@ namespace NetAF.Commands.Game
             foreach (var item in game.Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsTakeable && x.IsPlayerVisible))
             {
                 game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
-                game.Player.AcquireItem(item);
+                game.Player.AddItem(item);
 
                 builder.Append($"{item.Identifier.Name}, ");
             }

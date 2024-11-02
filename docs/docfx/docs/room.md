@@ -25,18 +25,6 @@ A Region can be simply instantiated with a name and description.
 var room = new Room("Name", "Description.");
 ```
 
-Exits can be added to the Room with the **AddExit** method.
-
-```csharp
-room.AddExit(new Exit(Direction.East));
-```
-
-Exits can be removed from a Room with the **RemoveExit** method.
-
-```csharp
-region.RemoveExit(exit);
-```
-
 Items can be added to the Room with the **AddItem** method.
 
 ```csharp

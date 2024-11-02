@@ -35,7 +35,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
                 var player = new PlayableCharacter(string.Empty, string.Empty);
-                player.AcquireItem(new("Test", "Test"));
+                player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
                 builder.Build(room, ViewPoint.Create(region), player, string.Empty, [], KeyType.Full, 80, 50);
@@ -65,7 +65,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
                 var player = new PlayableCharacter(string.Empty, string.Empty);
-                player.AcquireItem(new("Test", "Test"));
+                player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
                 builder.Build(room, ViewPoint.Create(region), player, "Test", [], KeyType.Full, 80, 50);
@@ -95,7 +95,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
                 var player = new PlayableCharacter(string.Empty, string.Empty);
-                player.AcquireItem(new("Test", "Test"));
+                player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
                 builder.Build(room, ViewPoint.Create(region), player, string.Empty, [], KeyType.Dynamic, 80, 50);
@@ -125,7 +125,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
                 var player = new PlayableCharacter(string.Empty, string.Empty);
-                player.AcquireItem(new("Test", "Test"));
+                player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
                 var commands = new[]
                 {

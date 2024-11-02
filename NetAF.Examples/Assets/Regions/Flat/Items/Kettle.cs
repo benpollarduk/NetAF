@@ -26,10 +26,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
             {
                 Interaction = item =>
                 {
-                    if (item != null && EmptyCoffeeMug.Name.EqualsIdentifier(item.Identifier))
+                    if (item != null && CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
-                        item.Morph(new MugOfCoffee().Instantiate());
-                        return new(InteractionEffect.ItemMorphed, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
+                        return new(InteractionEffect.SelfContained, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
                     }
 
                     return new(InteractionEffect.NoEffect, item);

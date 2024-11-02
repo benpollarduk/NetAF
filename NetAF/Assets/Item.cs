@@ -1,11 +1,13 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets
 {
     /// <summary>
     /// Represents an item that can be used within the game.
     /// </summary>
-    public sealed class Item : ExaminableObject, IInteractWithItem
+    public sealed class Item : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<ItemSerialization>
     {
         #region Properties
 
@@ -48,22 +50,6 @@ namespace NetAF.Assets
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Handle item morphing.
-        /// </summary>
-        /// <param name="item">The item to morph into.</param>
-        public void Morph(Item item)
-        {
-            Identifier = item.Identifier;
-            Description = item.Description;
-            IsPlayerVisible = item.IsPlayerVisible;
-            IsTakeable = item.IsTakeable;
-        }
-
-        #endregion
-
         #region IInteractWithItem Members
 
         /// <summary>
@@ -74,6 +60,19 @@ namespace NetAF.Assets
         public InteractionResult Interact(Item item)
         {
             return Interaction.Invoke(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<ItemSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(ItemSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
         }
 
         #endregion

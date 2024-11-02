@@ -94,7 +94,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenDoesntHasItem_WhenContainsItem_ThenFalse()
+        public void GivenDoesNotHasItem_WhenContainsItem_ThenFalse()
         {
             var room = new Room(string.Empty, string.Empty);
             var item = new Item("A", string.Empty);
@@ -129,7 +129,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenDoesntHaveCharacter_WhenContainsCharacter_ThenFalse()
+        public void GivenDoesNotHaveCharacter_WhenContainsCharacter_ThenFalse()
         {
             var room = new Room(string.Empty, string.Empty);
             var character = new NonPlayableCharacter("A", string.Empty);
@@ -161,32 +161,6 @@ namespace NetAF.Tests.Assets.Locations
             var result = room.ContainsCharacter("A");
 
             Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void GivenHasExit_WhenRemoveExit_ThenExitRemoved()
-        {
-            var room = new Room(string.Empty, string.Empty);
-            var exit = new Exit(Direction.Down);
-            room.AddExit(exit);
-
-            room.RemoveExit(exit);
-            var result = room.ContainsExit(exit.Direction);
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GivenValidExit_WhenRemoveInteractionTarget_ThenExitRemoved()
-        {
-            var room = new Room(string.Empty, string.Empty);
-            var exit = new Exit(Direction.Down);
-            room.AddExit(exit);
-
-            room.RemoveInteractionTarget(exit);
-            var result = room.ContainsExit(exit.Direction);
-
-            Assert.IsFalse(result);
         }
 
         [TestMethod]
@@ -229,11 +203,9 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenExitName_WhenFindInteractionTarget_ThenReturnTrue()
         {
-            var room = new Room(string.Empty, string.Empty);
-            var exit = new Exit(Direction.North, false, new Identifier("North"));
-            room.AddExit(exit);
+            var room = new Room(string.Empty, string.Empty, new Exit(Direction.North, false, new Identifier("North")));
 
-            var result = room.FindInteractionTarget(exit.Identifier.IdentifiableName, out _);
+            var result = room.FindInteractionTarget("NORTH", out _);
 
             Assert.IsTrue(result);
         }

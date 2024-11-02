@@ -2,7 +2,7 @@
 using System.Text;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Color;
-using NetAF.Rendering.Presenter;
+using NetAF.Rendering.Presenters;
 using NetAF.Utilities;
 
 namespace NetAF.Rendering.Frames

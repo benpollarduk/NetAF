@@ -4,6 +4,7 @@ using System.Text;
 using NetAF.Assets.Attributes;
 using NetAF.Commands;
 using NetAF.Extensions;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Assets
@@ -112,6 +113,20 @@ namespace NetAF.Assets
         /// Get or set if this is visible to the player.
         /// </summary>
         public bool IsPlayerVisible { get; set; } = true;
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<ExaminableSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(ExaminableSerialization serialization)
+        {
+            IsPlayerVisible = serialization.IsPlayerVisible;
+            Attributes.RestoreFrom(serialization.AttributeManager);
+        }
 
         #endregion
     }

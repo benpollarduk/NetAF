@@ -1,12 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets.Locations
 {
     /// <summary>
     /// Represents an entire overworld.
     /// </summary>
-    public sealed class Overworld : ExaminableObject
+    public sealed class Overworld : ExaminableObject, IRestoreFromObjectSerialization<OverworldSerialization>
     {
         #region Fields
 
@@ -122,6 +125,27 @@ namespace NetAF.Assets.Locations
         public override ExaminationResult Examine(ExaminationScene scene)
         {
             return new(Description.GetDescription());
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<OverworldSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(OverworldSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            foreach (var region in Regions)
+            {
+                var regionSerialization = Array.Find(serialization.Regions, x => region.Identifier.Equals(x.Identifier));
+                regionSerialization?.Restore(region);
+            }
+
+            CurrentRegion = Array.Find(Regions, x => x.Identifier.Equals(serialization.CurrentRegion));
         }
 
         #endregion

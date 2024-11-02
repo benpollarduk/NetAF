@@ -1,11 +1,13 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets.Locations
 {
     /// <summary>
     /// Represents an exit from a GameLocation.
     /// </summary>
-    public sealed class Exit : ExaminableObject, IInteractWithItem
+    public sealed class Exit : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<ExitSerialization>
     {
         #region Properties
 
@@ -84,6 +86,21 @@ namespace NetAF.Assets.Locations
         public InteractionResult Interact(Item item)
         {
             return Interaction.Invoke(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<ExitSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(ExitSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            IsLocked = serialization.IsLocked;
         }
 
         #endregion

@@ -14,10 +14,6 @@
         /// </summary>
         ItemUsedUp,
         /// <summary>
-        /// Item morphed into another object.
-        /// </summary>
-        ItemMorphed,
-        /// <summary>
         /// A fatal effect to the interaction.
         /// </summary>
         FatalEffect,

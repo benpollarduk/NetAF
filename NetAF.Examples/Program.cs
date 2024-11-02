@@ -4,6 +4,7 @@ using NetAF.Assets;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Persistence;
 using NetAF.Examples.Assets.Player;
 using NetAF.Examples.Assets.Regions.Everglades;
 using NetAF.Examples.Assets.Regions.Flat;
@@ -106,7 +107,9 @@ namespace NetAF.Examples
                                 return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
 
                             return new(ReactionResult.OK, $"Jumped to {x} {y} {z}.");
-                        })
+                        }),
+                        new Save(),
+                        new Load()
                     ];
 
                     return overworld;

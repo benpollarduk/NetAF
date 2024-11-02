@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using NetAF.Assets.Interaction;
 using NetAF.Extensions;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Assets.Characters
 {
     /// <summary>
     /// Represents a generic in game character.
     /// </summary>
-    public abstract class Character : ExaminableObject, IInteractWithItem
+    public abstract class Character : ExaminableObject, IInteractWithItem, IItemContainer, IRestoreFromObjectSerialization<CharacterSerialization>
     {
         #region Properties
 
@@ -20,11 +23,6 @@ namespace NetAF.Assets.Characters
         /// Get or set the interaction.
         /// </summary>
         public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
-
-        /// <summary>
-        /// Get the items this Character holds.
-        /// </summary>
-        public Item[] Items { get; protected set; } = [];
 
         #endregion
 
@@ -46,24 +44,6 @@ namespace NetAF.Assets.Characters
         public virtual void Kill()
         {
             IsAlive = false;
-        }
-
-        /// <summary>
-        /// Acquire an item.
-        /// </summary>
-        /// <param name="item">The item to acquire.</param>
-        public virtual void AcquireItem(Item item)
-        {
-            Items = Items.Add(item);
-        }
-
-        /// <summary>
-        /// De-acquire an item.
-        /// </summary>
-        /// <param name="item">The item to de-acquire.</param>
-        public virtual void DequireItem(Item item)
-        {
-            Items = Items.Remove(item);
         }
 
         /// <summary>
@@ -109,8 +89,8 @@ namespace NetAF.Assets.Characters
             if (!HasItem(item))
                 return false;
             
-            DequireItem(item);
-            character.AcquireItem(item);
+            RemoveItem(item);
+            character.AddItem(item);
             return true;
 
         }
@@ -127,6 +107,54 @@ namespace NetAF.Assets.Characters
         public InteractionResult Interact(Item item)
         {
             return InteractWithItem(item);
+        }
+
+        #endregion
+
+        #region Implementation of IItemContainer
+
+        /// <summary>
+        /// Get the items.
+        /// </summary>
+        public Item[] Items { get; protected set; } = [];
+
+        /// <summary>
+        /// Add an item.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        public void AddItem(Item item)
+        {
+            Items = Items.Add(item);
+        }
+
+        /// <summary>
+        /// Remove an item.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        public void RemoveItem(Item item)
+        {
+            Items = Items.Remove(item);
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<CharacterSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(CharacterSerialization serialization)
+        {
+            base.RestoreFrom(serialization);
+
+            IsAlive = serialization.IsAlive;
+
+            foreach (var item in Items)
+            {
+                var itemSerialization = Array.Find(serialization.Items, x => item.Identifier.Equals(x.Identifier));
+                itemSerialization?.Restore(item);
+            }
         }
 
         #endregion

@@ -1,12 +1,14 @@
 ﻿using NetAF.Assets.Attributes;
 using NetAF.Commands;
+using NetAF.Serialization.Assets;
+using NetAF.Serialization;
 
 namespace NetAF.Assets
 {
     /// <summary>
     /// Represents any object that is examinable.
     /// </summary>
-    public interface IExaminable : IPlayerVisible
+    public interface IExaminable : IPlayerVisible, IRestoreFromObjectSerialization<ExaminableSerialization>
     {
         /// <summary>
         /// Get this objects identifier.

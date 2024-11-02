@@ -40,7 +40,7 @@ namespace NetAF.Commands.Game
                 return new(ReactionResult.Error, "You don't have that item.");
 
             game.Overworld.CurrentRegion.CurrentRoom.AddItem(Item);
-            game.Player.DequireItem(Item);
+            game.Player.RemoveItem(Item);
 
             return new(ReactionResult.OK, $"Dropped {Item.Identifier.Name}.");
         }

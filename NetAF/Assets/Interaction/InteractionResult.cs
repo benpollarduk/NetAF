@@ -33,29 +33,15 @@ namespace NetAF.Assets.Interaction
             Effect = effect;
             Item = item;
 
-            switch (effect)
+            Description = effect switch
             {
-                case InteractionEffect.FatalEffect:
-                    Description = "There was a fatal effect.";
-                    break;
-                case InteractionEffect.ItemMorphed:
-                    Description = "The item morphed.";
-                    break;
-                case InteractionEffect.ItemUsedUp:
-                    Description = "The item was used up.";
-                    break;
-                case InteractionEffect.NoEffect:
-                    Description = "There was no effect.";
-                    break;
-                case InteractionEffect.SelfContained:
-                    Description = "The effect was self contained.";
-                    break;
-                case InteractionEffect.TargetUsedUp:
-                    Description = "The target was used up.";
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                InteractionEffect.FatalEffect => "There was a fatal effect.",
+                InteractionEffect.ItemUsedUp => "The item was used up.",
+                InteractionEffect.NoEffect => "There was no effect.",
+                InteractionEffect.SelfContained => "The effect was self contained.",
+                InteractionEffect.TargetUsedUp => "The target was used up.",
+                _ => throw new NotImplementedException(),
+            };
         }
 
         /// <summary>
