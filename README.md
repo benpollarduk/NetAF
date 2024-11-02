@@ -123,6 +123,9 @@ Maps are automatically generated for regions and rooms, and can be viewed with t
 
 Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more.
 
+### Persistence
+Game state can be serialized allowing progress to be saved to file and restored later.
+
 ## Getting Started
 
 ### Clone the repo/pull NuGet
