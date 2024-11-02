@@ -116,7 +116,6 @@ namespace NetAF.Logic
             all.AddRange(catalog.ItemContainers);
             all.AddRange(catalog.Rooms);
             all.AddRange(catalog.Characters);
-            all.AddRange(GetAllExists(catalog.Rooms));
             all.Add(game.Player);
 
             catalog.Examinables = all.Distinct().ToArray();
@@ -143,24 +142,6 @@ namespace NetAF.Logic
             return [.. rooms];
         }
 
-        /// <summary>
-        /// Get all exits in a collection of rooms.
-        /// </summary>
-        /// <param name="rooms">The rooms.</param>
-        /// <returns>An array containing all exits.</returns>
-        private static Exit[] GetAllExists(Room[] rooms)
-        {
-            List<Exit> exits = [];
-
-            foreach (var room in rooms)
-            {
-                foreach (var exit in room.Exits)
-                    exits.Add(exit);
-            }
-
-            return [.. exits];
-        }
-            
         /// <summary>
         /// Get all characters in a collection of rooms.
         /// </summary>

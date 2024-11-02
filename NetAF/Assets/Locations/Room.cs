@@ -127,30 +127,12 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Add an exit to this room.
-        /// </summary>
-        /// <param name="exit">The exit to add.</param>
-        public void AddExit(Exit exit)
-        {
-            Exits = Exits.Add(exit);
-        }
-
-        /// <summary>
         /// Remove a character from the room.
         /// </summary>
         /// <param name="character">The character to remove.</param>
         public void RemoveCharacter(NonPlayableCharacter character)
         {
             Characters = Characters.Remove(character);
-        }
-
-        /// <summary>
-        /// Remove an exit from the room.
-        /// </summary>
-        /// <param name="exit">The exit to remove.</param>
-        public void RemoveExit(Exit exit)
-        {
-            Exits = Exits.Remove(exit);
         }
 
         /// <summary>
@@ -169,12 +151,6 @@ namespace NetAF.Assets.Locations
             if (Characters.Contains(target))
             {
                 RemoveCharacter(target as NonPlayableCharacter);
-                return target;
-            }
-
-            if (Exits.Contains(target))
-            {
-                RemoveExit(target as Exit);
                 return target;
             }
 

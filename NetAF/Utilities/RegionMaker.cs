@@ -2,7 +2,6 @@
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
-using NetAF.Extensions;
 
 namespace NetAF.Utilities
 {
@@ -115,8 +114,6 @@ namespace NetAF.Utilities
                 }
             }
 
-            LinkExits(region);
-
             // offset start room, matrix will have normalised positions
             region.SetStartRoom(x - rooms.Min(r => r.X), y - rooms.Min(r => r.Y), z - rooms.Min(r => r.Z));
 
@@ -147,31 +144,6 @@ namespace NetAF.Utilities
         #endregion
 
         #region StaticMethods
-
-        /// <summary>
-        /// Ensure all rooms within a region have exits that are linked to adjacent rooms.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        internal static void LinkExits(Region region)
-        {
-            foreach (var room in region.ToMatrix().ToRooms())
-            {
-                if (room == null)
-                    continue;
-
-                foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West, Direction.Up, Direction.Down })
-                {
-                    if (!room.FindExit(direction, true, out var exit)) 
-                        continue;
-
-                    var adjoining = region.GetAdjoiningRoom(direction, room);
-                    var inverse = direction.Inverse();
-
-                    if (adjoining != null && !adjoining.FindExit(inverse, true, out _))
-                        adjoining.AddExit(new(inverse, exit.IsLocked));
-                }
-            }
-        }
 
         /// <summary>
         /// Convert region to a 3D matrix of rooms.

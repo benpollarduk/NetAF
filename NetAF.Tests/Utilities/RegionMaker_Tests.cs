@@ -63,42 +63,6 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenNoExits_WhenLinkExits_ThenNoExits()
-        {
-            var room1 = new Room(Identifier.Empty, Description.Empty);
-            var room2 = new Room(Identifier.Empty, Description.Empty);
-            var regionMaker = new RegionMaker(string.Empty, string.Empty)
-            {
-                [0, 0, 0] = room1, 
-                [1, 0, 0] = room2
-            };
-            var region = regionMaker.Make();
-
-            RegionMaker.LinkExits(region);
-
-            Assert.IsFalse(region.CurrentRoom.ContainsExit(true));
-        }
-
-        [TestMethod]
-        public void GivenFirstRoomContainsExit_WhenLinkExits_Then2Exits()
-        {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty);
-            var regionMaker = new RegionMaker(string.Empty, string.Empty)
-            {
-                [0, 0, 0] = room1,
-                [1, 0, 0] = room2
-            };
-            var region = regionMaker.Make();
-
-            RegionMaker.LinkExits(region);
-
-            Assert.IsTrue(region.CurrentRoom.ContainsExit(true));
-            region.Move(Direction.East);
-            Assert.IsTrue(region.CurrentRoom.ContainsExit(true));
-        }
-
-        [TestMethod]
         public void Given4Rooms_WhenMake_Then4Rooms()
         {
             var room1 = new Room(Identifier.Empty, Description.Empty);

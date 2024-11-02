@@ -83,8 +83,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Exit_ThenExitsLengthIs1()
         {
-            Room room = new(string.Empty, string.Empty);
-            room.AddExit(new(Direction.North));
+            Room room = new(string.Empty, string.Empty, new Exit(Direction.North));
 
             RoomSerialization result = new(room);
 
