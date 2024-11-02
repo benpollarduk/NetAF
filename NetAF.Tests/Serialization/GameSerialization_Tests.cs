@@ -42,6 +42,23 @@ namespace NetAF.Tests.Serialization
         }
 
         [TestMethod]
+        public void Given2PlayableCharacterLocations_ThenPlayableCharacterLocationsContains2Elements()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("a", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            game.ChangePlayer(new PlayableCharacter("b", string.Empty));
+            game.ChangePlayer(new PlayableCharacter("c", string.Empty));
+
+            GameSerialization result = new(game);
+
+            Assert.AreEqual(2, result.PlayableCharacterLocations.Length);
+        }
+
+        [TestMethod]
         public void GivenAGame_WhenRestoreFromSerializedAndPlayerTookAnItemFromARoom_ThenPlayerHasItemInRestoredGame()
         {
             RegionMaker regionMaker = new("REGION", string.Empty);

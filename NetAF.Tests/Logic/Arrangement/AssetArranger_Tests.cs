@@ -10,7 +10,7 @@ using NetAF.Logic.Arrangement;
 namespace NetAF.Tests.Logic.Arrangement
 {
     [TestClass]
-    public class GameAssetArranger_Tests
+    public class AssetArranger_Tests
     {
         [TestMethod]
         public void GivenAGame_WhenRestoreFromSerializedAndPlayerTookAnItemFromARoom_ThenPlayerHasItemInRestoredGame()
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             GameSerialization serialization = new(game2);
 
-            GameAssetArranger.Arrange(game, serialization);
+            AssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(1, game.Player.Items.Length);
             Assert.AreEqual(0, room.Items.Length);
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             GameSerialization serialization = new(game2);
 
-            GameAssetArranger.Arrange(game, serialization);
+            AssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, room.Items.Length);
         }
@@ -89,7 +89,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             GameSerialization serialization = new(game2);
 
-            GameAssetArranger.Arrange(game, serialization);
+            AssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, room.Characters.Length);
         }
@@ -117,7 +117,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             GameSerialization serialization = new(game2);
 
-            GameAssetArranger.Arrange(game, serialization);
+            AssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, game.Player.Items.Length);
             Assert.AreEqual(1, room.Items.Length);
@@ -153,7 +153,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             GameSerialization serialization = new(game2);
 
-            GameAssetArranger.Arrange(game, serialization);
+            AssetArranger.Arrange(game, serialization);
 
             Assert.AreEqual(0, roomA.Characters.Length);
             Assert.AreEqual(1, roomB.Characters.Length);

@@ -1,5 +1,6 @@
 ﻿using NetAF.Logic;
 using NetAF.Serialization.Assets;
+using System.Linq;
 
 namespace NetAF.Serialization
 {
@@ -20,6 +21,11 @@ namespace NetAF.Serialization
         /// Get or set the overworld serialization.
         /// </summary>
         public OverworldSerialization Overworld { get; set; } = new(game?.Overworld);
+
+        /// <summary>
+        /// Get or set the overworld serialization.
+        /// </summary>
+        public PlayableCharacterLocationSerialization[] PlayableCharacterLocations { get; set; } = game?.GetInactivePlayerLocations().Select(x => new PlayableCharacterLocationSerialization(x)).ToArray() ?? [];
 
         #endregion
 

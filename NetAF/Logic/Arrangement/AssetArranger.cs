@@ -10,7 +10,7 @@ namespace NetAF.Logic.Arrangement
     /// <summary>
     /// Provides functionality to arrange assets within a game to match a serialization.
     /// </summary>
-    internal static class GameAssetArranger
+    internal static class AssetArranger
     {
         #region StaticMethods
 
@@ -24,99 +24,17 @@ namespace NetAF.Logic.Arrangement
             // get serialization of game in current state
             GameSerialization currentState = new(game);
 
-            // get all item containers
-            IItemContainer[] itemContainers = GetAllItemContainers(game);
-
-            // get all item instances
-            Item[] items = GetAllItems(itemContainers);
-
-            // get all rooms
-            Room[] rooms = GetAllRooms(game);
-
-            // get all NPC's
-            NonPlayableCharacter[] characters = GetAllCharacters(rooms);
-
             // determine which items have moved
-            var itemRecords = DetermineItemMoves(currentState, serialization, itemContainers, items);
+            var itemRecords = DetermineItemMoves(currentState, serialization, game.Catalog.ItemContainers, game.Catalog.Items);
             
             // determine which characters have moved
-            var characterRecords = DetermineCharacterMoves(currentState, serialization, rooms, characters);
+            var characterRecords = DetermineCharacterMoves(currentState, serialization, game.Catalog.Rooms, game.Catalog.Characters);
 
             // move the items to the new locations
             Rearrange(itemRecords);
 
             // move the characters to the new locations
             Rearrange(characterRecords);
-        }
-
-        /// <summary>
-        /// Get all rooms in a game.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <returns>An array containing all rooms.</returns>
-        private static Room[] GetAllRooms(Game game)
-        {
-            List<Room> rooms = [];
-
-            foreach (var region in game.Overworld.Regions)
-                foreach (var room in region.ToMatrix().ToRooms())
-                    rooms.Add(room);
-
-            return [.. rooms];
-        }
-
-        /// <summary>
-        /// Get all characters in a collection of rooms.
-        /// </summary>
-        /// <param name="rooms">The rooms.</param>
-        /// <returns>An array containing all characters.</returns>
-        private static NonPlayableCharacter[] GetAllCharacters(Room[] rooms)
-        {
-            List<NonPlayableCharacter> characters = [];
-
-            foreach (var room in rooms)
-            {
-                foreach (var character in room.Characters)
-                    characters.Add(character);
-            }
-
-            return [..  characters];
-        }
-
-        /// <summary>
-        /// Get all items in an array of item containers.
-        /// </summary>
-        /// <param name="itemContainers">The item containers.</param>
-        /// <returns>An array containing all items.</returns>
-        private static Item[] GetAllItems(IItemContainer[] itemContainers)
-        {
-            List<Item> items = [];
-
-            foreach (var itemContainer in itemContainers)
-                items.AddRange(itemContainer.Items);
-
-            return [.. items];
-        }
-
-        /// <summary>
-        /// Get all item containers in a game.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <returns>An array containing all item containers.</returns>
-        private static IItemContainer[] GetAllItemContainers(Game game)
-        {
-            List<IItemContainer> itemContainers = [];
-
-            itemContainers.Add(game.Player);
-
-            var rooms = GetAllRooms(game);
-
-            foreach (var room in rooms)
-                itemContainers.Add(room);
-
-            itemContainers.AddRange(GetAllCharacters(rooms));
-
-            return [.. itemContainers];
         }
 
         /// <summary>
