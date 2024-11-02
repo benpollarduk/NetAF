@@ -13,8 +13,6 @@ using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logic;
-using NetAF.Serialization.Persistence;
-using NetAF.Serialization.Persistence.Json;
 
 namespace NetAF.Examples
 {
@@ -109,28 +107,8 @@ namespace NetAF.Examples
 
                             return new(ReactionResult.OK, $"Jumped to {x} {y} {z}.");
                         }),
-                        // add a custom command to save the state of the game
-                        new(new("Save", "Save the game state to a specified path"), false, (g, a) =>
-                        {
-                            var result = JsonSave.ToFile(a[0], RestorePoint.Create("Test", g), out var message);
-
-                            if (!result)
-                                return new(ReactionResult.Error, $"Failed to save: {message}");
-
-                            return new(ReactionResult.OK, $"Saved.");
-                        }),
-                        // add a custom command to save the state of the game
-                        new(new("Load", "Load a game state from a specified path"), false, (g, a) =>
-                        {
-                            var result = JsonSave.FromFile(a[0], out var restorePoint, out var message);
-
-                            if (!result)
-                                return new(ReactionResult.Error, $"Failed to load: {message}");
-
-                            restorePoint.Game.Restore(g);
-
-                            return new(ReactionResult.OK, $"Loaded.");
-                        }),
+                        new Save(),
+                        new Load()
                     ];
 
                     return overworld;

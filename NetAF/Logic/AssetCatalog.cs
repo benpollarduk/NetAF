@@ -86,9 +86,11 @@ namespace NetAF.Logic
         /// <returns>The populate asset catalog.</returns>
         public static AssetCatalog FromGame(Game game)
         {
-            AssetCatalog contianer = new();
+            AssetCatalog contianer = new()
+            {
+                ItemContainers = GetAllItemContainers(game)
+            };
 
-            contianer.ItemContainers = GetAllItemContainers(game);
             contianer.Items = GetAllItems(contianer.ItemContainers);
             contianer.Rooms = GetAllRooms(game);
             contianer.Characters = GetAllCharacters(contianer.Rooms);
