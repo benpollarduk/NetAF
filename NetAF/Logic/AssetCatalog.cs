@@ -34,6 +34,11 @@ namespace NetAF.Logic
         /// </summary>
         public IItemContainer[] ItemContainers { get; private set; }
 
+        /// <summary>
+        /// Get the examinables.
+        /// </summary>
+        public IExaminable[] Examinables { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -63,6 +68,7 @@ namespace NetAF.Logic
             Items = Register(Items, examinables.Where(x => x is Item item && !Items.Contains(item)).Cast<Item>().ToArray());
             Characters = Register(Characters, examinables.Where(x => x is NonPlayableCharacter character && !Characters.Contains(character)).Cast<NonPlayableCharacter>().ToArray());
             ItemContainers = Register(ItemContainers, examinables.Where(x => x is IItemContainer container && !ItemContainers.Contains(container)).Cast<IItemContainer>().ToArray());
+            Examinables = Register(Examinables, examinables.Where(x => !Examinables.Contains(x)).ToArray());
         }
 
         #endregion
@@ -96,16 +102,26 @@ namespace NetAF.Logic
         /// <returns>The populate asset catalog.</returns>
         public static AssetCatalog FromGame(Game game)
         {
-            AssetCatalog contianer = new()
+            AssetCatalog catalog = new()
             {
                 ItemContainers = GetAllItemContainers(game)
             };
 
-            contianer.Items = GetAllItems(contianer.ItemContainers);
-            contianer.Rooms = GetAllRooms(game);
-            contianer.Characters = GetAllCharacters(contianer.Rooms);
+            catalog.Items = GetAllItems(catalog.ItemContainers);
+            catalog.Rooms = GetAllRooms(game);
+            catalog.Characters = GetAllCharacters(catalog.Rooms);
 
-            return contianer;
+            List<IExaminable> all = [];
+            all.AddRange(catalog.Items);
+            all.AddRange(catalog.ItemContainers);
+            all.AddRange(catalog.Rooms);
+            all.AddRange(catalog.Characters);
+            all.AddRange(GetAllExists(catalog.Rooms));
+            all.Add(game.Player);
+
+            catalog.Examinables = all.Distinct().ToArray();
+
+            return catalog;
         }
 
         /// <summary>
@@ -127,6 +143,24 @@ namespace NetAF.Logic
             return [.. rooms];
         }
 
+        /// <summary>
+        /// Get all exits in a collection of rooms.
+        /// </summary>
+        /// <param name="rooms">The rooms.</param>
+        /// <returns>An array containing all exits.</returns>
+        private static Exit[] GetAllExists(Room[] rooms)
+        {
+            List<Exit> exits = [];
+
+            foreach (var room in rooms)
+            {
+                foreach (var exit in room.Exits)
+                    exits.Add(exit);
+            }
+
+            return [.. exits];
+        }
+            
         /// <summary>
         /// Get all characters in a collection of rooms.
         /// </summary>

@@ -4,6 +4,7 @@ using NetAF.Assets.Locations;
 using NetAF.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Logic.Arrangement
 {
@@ -30,11 +31,17 @@ namespace NetAF.Logic.Arrangement
             // determine which characters have moved
             var characterRecords = DetermineCharacterMoves(currentState, serialization, game.Catalog.Rooms, game.Catalog.Characters);
 
+            // determine which exits need to change
+            var exitChanges = DetermineExitChanges(currentState, serialization, game.Catalog.Rooms);
+
             // move the items to the new locations
             Rearrange(itemRecords);
 
             // move the characters to the new locations
             Rearrange(characterRecords);
+
+            // handle exit changes
+            Rearrange(exitChanges);
         }
 
         /// <summary>
@@ -82,6 +89,27 @@ namespace NetAF.Logic.Arrangement
                 {
                     foreach (var character in room.Characters)
                         records.Add(new(character.Identifier, room.Identifier));
+                }
+            }
+
+            return [.. records];
+        }
+
+        /// <summary>
+        /// Get an array of ObjectToContainerMapping that all characters to their rooms.
+        /// </summary>
+        /// <param name="serialization">The serialization to get exit room mappings from.</param>
+        /// <returns>An array containing all exit to room mappings.</returns>
+        private static ObjectToContainerMapping[] GetExitToRoomMappings(GameSerialization serialization)
+        {
+            List<ObjectToContainerMapping> records = [];
+
+            foreach (var region in serialization.Overworld.Regions)
+            {
+                foreach (var room in region.Rooms)
+                {
+                    foreach (var exit in room.Exits)
+                        records.Add(new(exit.Identifier, room.Identifier));
                 }
             }
 
@@ -140,8 +168,11 @@ namespace NetAF.Logic.Arrangement
 
             foreach (var mapping in currentMappings)
             {
+                // find by room
+                var roomRecord = Array.Find(destinationMappings, x => x.Container.Equals(mapping.Container));
+
                 // find the matching item
-                var match = Array.Find(destinationMappings, x => x.Obj.Equals(mapping.Obj));
+                var match = Array.Find(roomRecord., x => x.Obj.Equals(mapping.Obj));
 
                 // if the containers match, continue
                 if (match != null && match.Container.Equals(mapping.Container))
@@ -156,6 +187,42 @@ namespace NetAF.Logic.Arrangement
             }
 
             return [.. characterRecords];
+        }
+
+        /// <summary>
+        /// Determine which exits need to change.
+        /// </summary>
+        /// <param name="currentState">The current state of the game.</param>
+        /// <param name="desiredState">The desired state of the game.</param>
+        /// <param name="rooms">All instances of rooms.</param>
+        /// <returns>An array detailing the required room changes.</returns>
+        private static RoomExitChange[] DetermineExitChanges(GameSerialization currentState, GameSerialization desiredState, Room[] rooms)
+        {
+            List<RoomExitChange> exitChanges = [];
+
+            var currentMappings = GetExitToRoomMappings(currentState);
+            var destinationMappings = GetExitToRoomMappings(desiredState);
+
+            foreach (var mapping in currentMappings)
+            {
+                // find the matching item
+                var match = Array.Find(destinationMappings, x => x.Obj.Equals(mapping.Obj));
+
+                // if the containers match, continue
+                if (match != null && match.Container.Equals(mapping.Container))
+                    continue;
+
+                var room = Array.Find(rooms, x => x.Identifier.Equals(mapping.Obj));
+                var exit = Array.Find(room.Exits, x => x.Identifier.Equals(mapping.Obj));
+
+                // if was in original it's a remove, otherwise an add
+                if
+
+                // exit needs to be changed
+                exitChanges.Add(new RoomExitChange(room, exit, ));
+            }
+
+            return [.. exitChanges];
         }
 
         /// <summary>
@@ -181,6 +248,26 @@ namespace NetAF.Logic.Arrangement
             {
                 record.From?.RemoveCharacter(record.Character);
                 record.To?.AddCharacter(record.Character);
+            }
+        }
+
+        /// <summary>
+        /// Handle exit changes.
+        /// </summary>
+        /// <param name="records">The records to rearrange.</param>
+        private static void Rearrange(RoomExitChange[] records)
+        {
+            foreach (var record in records)
+            {
+                switch (record.Change)
+                {
+                    case ExitChange.Add:
+                        record.Room.AddExit(record.Exit);
+                        break;
+                    case ExitChange.Remove:
+                        record.Room.RemoveExit(record.Exit);
+                        break;
+                }
             }
         }
     }

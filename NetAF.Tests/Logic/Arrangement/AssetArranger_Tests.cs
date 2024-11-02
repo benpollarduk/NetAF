@@ -158,5 +158,58 @@ namespace NetAF.Tests.Logic.Arrangement
             Assert.AreEqual(0, roomA.Characters.Length);
             Assert.AreEqual(1, roomB.Characters.Length);
         }
+
+        [TestMethod]
+        public void GivenAGame_WhenRestoreFromSerializedAndRoomHas1RemovedExit_ThenExitRemovedInRestoredGame()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            PlayableCharacter player = new("PLAYER", string.Empty, new Item("ITEM", string.Empty));
+            Room roomA = new("ROOM A", string.Empty, new Exit(Direction.North));
+            regionMaker[0, 0, 0] = roomA;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            RegionMaker regionMaker2 = new("REGION", string.Empty);
+            PlayableCharacter player2 = new("PLAYER", string.Empty, new Item("ITEM", string.Empty));
+            Room roomA2 = new("ROOM A", string.Empty, new Exit(Direction.North));
+            regionMaker2[0, 0, 0] = roomA2;
+            OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
+            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            roomA2.FindExit(Direction.North, true, out var exit);
+            roomA2.RemoveExit(exit);
+
+            GameSerialization serialization = new(game2);
+
+            AssetArranger.Arrange(game, serialization);
+
+            Assert.AreEqual(0, roomA.Exits.Length);
+        }
+
+        [TestMethod]
+        public void GivenAGame_WhenRestoreFromSerializedAndRoomHas1AddedExit_ThenExitAddedInRestoredGame()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            PlayableCharacter player = new("PLAYER", string.Empty, new Item("ITEM", string.Empty));
+            Room roomA = new("ROOM A", string.Empty);
+            regionMaker[0, 0, 0] = roomA;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            RegionMaker regionMaker2 = new("REGION", string.Empty);
+            PlayableCharacter player2 = new("PLAYER", string.Empty, new Item("ITEM", string.Empty));
+            Room roomA2 = new("ROOM A", string.Empty);
+            regionMaker2[0, 0, 0] = roomA2;
+            OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
+            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            roomA2.AddExit(new Exit(Direction.North));
+
+            GameSerialization serialization = new(game2);
+
+            AssetArranger.Arrange(game, serialization);
+
+            Assert.AreEqual(1, roomA.Exits.Length);
+        }
     }
 }
