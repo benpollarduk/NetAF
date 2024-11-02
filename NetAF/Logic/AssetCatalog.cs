@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Assets;
 using System.Collections.Generic;
 using System.Linq;
+using NetAF.Utilities;
 
 namespace NetAF.Logic
 {
@@ -42,6 +43,15 @@ namespace NetAF.Logic
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Registers a collection of examinables.
+        /// </summary>
+        /// <param name="templates">The templates to register.</param>
+        public void Register(params IAssetTemplate<IExaminable>[] templates)
+        {
+            Register(templates.Select(x => x.Instantiate()).ToArray());
+        }
 
         /// <summary>
         /// Registers a collection of examinables.

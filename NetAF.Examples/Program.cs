@@ -4,6 +4,7 @@ using NetAF.Assets;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Persistence;
 using NetAF.Examples.Assets.Player;
 using NetAF.Examples.Assets.Regions.Everglades;
 using NetAF.Examples.Assets.Regions.Flat;

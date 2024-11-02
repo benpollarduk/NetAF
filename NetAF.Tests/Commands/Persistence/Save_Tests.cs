@@ -6,6 +6,7 @@ using NetAF.Assets.Locations;
 using NetAF.Assets;
 using NetAF.Utilities;
 using System.IO;
+using NetAF.Commands.Persistence;
 
 namespace NetAF.Tests.Commands.Persistence
 {
@@ -23,7 +24,7 @@ namespace NetAF.Tests.Commands.Persistence
             var game = NetAF.Logic.Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
             var path = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
-            var command = new Save
+            var command = new Save()
             {
                 Arguments = [path]
             };

@@ -8,6 +8,7 @@ using NetAF.Utilities;
 using System.IO;
 using NetAF.Serialization.Persistence.Json;
 using NetAF.Serialization.Persistence;
+using NetAF.Commands.Persistence;
 
 namespace NetAF.Tests.Commands.Persistence
 {
@@ -27,7 +28,7 @@ namespace NetAF.Tests.Commands.Persistence
             var save = RestorePoint.Create("Test", game);
             JsonSave.ToFile(path, save, out _);
 
-            var command = new Load
+            var command = new Load()
             {
                 Arguments = [path]
             };

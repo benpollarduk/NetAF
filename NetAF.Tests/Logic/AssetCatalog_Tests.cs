@@ -10,6 +10,14 @@ namespace NetAF.Tests.Logic
     [TestClass]
     public class AssetCatalog_Tests
     {
+        private class CharacterTemplate : IAssetTemplate<NonPlayableCharacter>
+        {
+            public NonPlayableCharacter Instantiate()
+            {
+                return new NonPlayableCharacter("Template character", string.Empty);
+            }
+        }
+
         [TestMethod]
         public void Given1Item_WhenFromGame_ThenCatalogContains1Item()
         {
@@ -119,6 +127,23 @@ namespace NetAF.Tests.Logic
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new NonPlayableCharacter(string.Empty, string.Empty));
+
+            Assert.AreEqual(2, catalog.Characters.Length);
+        }
+
+        [TestMethod]
+        public void Given1Characters_WhenRegister1CharacterFromTemplate_ThenCatalogContains2Characters()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            room.AddCharacter(new(string.Empty, string.Empty));
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var catalog = AssetCatalog.FromGame(game);
+
+            catalog.Register(new CharacterTemplate());
 
             Assert.AreEqual(2, catalog.Characters.Length);
         }
