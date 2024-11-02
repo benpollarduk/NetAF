@@ -82,7 +82,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the catalog of assets for this game.
         /// </summary>
-        internal AssetCatalog Catalog { get; private set; }
+        public AssetCatalog Catalog { get; private set; }
 
         /// <summary>
         /// Occurs when the game begins drawing a frame.

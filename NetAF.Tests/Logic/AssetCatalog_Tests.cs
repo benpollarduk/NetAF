@@ -71,5 +71,56 @@ namespace NetAF.Tests.Logic
 
             Assert.AreEqual(3, catalog.ItemContainers.Length);
         }
+
+        [TestMethod]
+        public void Given1Room_WhenRegister1Room_ThenCatalogContains2Rooms()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            room.AddCharacter(new(string.Empty, string.Empty));
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var catalog = AssetCatalog.FromGame(game);
+
+            catalog.Register(new Room(string.Empty, string.Empty));
+
+            Assert.AreEqual(2, catalog.Rooms.Length);
+        }
+
+        [TestMethod]
+        public void Given1Item_WhenRegister1Item_ThenCatalogContains2Items()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            room.AddCharacter(new(string.Empty, string.Empty));
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var catalog = AssetCatalog.FromGame(game);
+
+            catalog.Register(new Item(string.Empty, string.Empty));
+
+            Assert.AreEqual(2, catalog.Items.Length);
+        }
+
+        [TestMethod]
+        public void Given1Characters_WhenRegister1Characters_ThenCatalogContains2Characters()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            room.AddCharacter(new(string.Empty, string.Empty));
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var catalog = AssetCatalog.FromGame(game);
+
+            catalog.Register(new NonPlayableCharacter(string.Empty, string.Empty));
+
+            Assert.AreEqual(2, catalog.Characters.Length);
+        }
     }
 }

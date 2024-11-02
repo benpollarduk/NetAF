@@ -9,7 +9,7 @@ namespace NetAF.Logic
     /// <summary>
     /// Provides a catalog of all assets in a game.
     /// </summary>
-    internal class AssetCatalog
+    public class AssetCatalog
     {
         #region Properties
 
