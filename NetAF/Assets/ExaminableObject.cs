@@ -17,9 +17,9 @@ namespace NetAF.Assets
         #region Properties
 
         /// <summary>
-        /// Get or set the callback handling all examination of this object.
+        /// Get the callback handling all examination of this object.
         /// </summary>
-        public ExaminationCallback Examination { get; set; } = request =>
+        public ExaminationCallback Examination { get; protected set; } = request =>
         {
             StringBuilder description = new();
 
@@ -57,19 +57,6 @@ namespace NetAF.Assets
 
             return new(description.ToString());
         };
-
-        #endregion
-
-        #region Overrides of Object
-
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
-        {
-            return Identifier.Name;
-        }
 
         #endregion
 
