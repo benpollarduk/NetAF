@@ -73,7 +73,7 @@ namespace NetAF.Assets
 
         #endregion
 
-        #region IExaminable Members
+        #region Implementation of IExaminable
 
         /// <summary>
         /// Get this objects identifier.
@@ -81,9 +81,9 @@ namespace NetAF.Assets
         public Identifier Identifier { get; protected set; }
 
         /// <summary>
-        /// Get or set a description of this object.
+        /// Get a description of this object.
         /// </summary>
-        public Description Description { get; set; }
+        public Description Description { get; protected set; }
 
         /// <summary>
         /// Get or set this objects commands.

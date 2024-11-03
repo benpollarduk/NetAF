@@ -15,9 +15,9 @@ namespace NetAF.Assets
         /// </summary>
         Identifier Identifier { get; }
         /// <summary>
-        /// Get or set a description of this object.
+        /// Get a description of this object.
         /// </summary>
-        Description Description { get; set; }
+        Description Description { get; }
         /// <summary>
         /// Get or set this objects commands.
         /// </summary>
