@@ -21,7 +21,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, new Exit(Direction.North));
+            var room = new Room(Name, Description, [new Exit(Direction.North)]);
 
             room.AddItem(new Shield().Instantiate());
             room.AddItem(new Table().Instantiate());

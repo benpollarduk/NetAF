@@ -18,7 +18,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -88,7 +88,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -110,7 +110,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -133,7 +133,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
@@ -156,7 +156,7 @@ namespace NetAF.Tests.Persistence.Json
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
-            var room = new Room(string.Empty, string.Empty, null, item);
+            var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();

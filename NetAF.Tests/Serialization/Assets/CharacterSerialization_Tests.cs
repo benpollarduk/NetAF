@@ -53,8 +53,8 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenCharacterThatIsAlive_WhenRestoreFromCharacterThatIsNotAlive_ThenCharacterIsNotAlive()
         {
-            PlayableCharacter character = new(string.Empty, string.Empty, new Item("a", "b"));
-            PlayableCharacter character2 = new(string.Empty, string.Empty, new Item("a", "b"));
+            PlayableCharacter character = new(string.Empty, string.Empty, [new Item("a", "b")]);
+            PlayableCharacter character2 = new(string.Empty, string.Empty, [new Item("a", "b")]);
             character2.Kill();
             CharacterSerialization serialization = new(character2);
 

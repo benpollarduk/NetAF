@@ -28,14 +28,13 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                                                       "A small stream flows east to west in front of you. The water is clear, and looks good enough to drink. On the bank is a stump where the bush was. To the south is the Kokiri forest.", 
                                                       () => room.ContainsItem(Bush.Name));
 
-            room = new(new Identifier(Name), description, new Exit(Direction.South));
+            room = new(new Identifier(Name), description, [new Exit(Direction.South)]);
 
             
-            var bush = new Bush().Instantiate();
             var rupee = new Rupee().Instantiate();
-            rupee.IsPlayerVisible = false;
+            Item bush = null;
 
-            bush.Interaction = item =>
+            bush = new Bush(item =>
             {
                 if (Sword.Name.EqualsExaminable(item))
                 {
@@ -45,7 +44,9 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            }).Instantiate();
+
+            rupee.IsPlayerVisible = false;
 
             room.AddItem(bush);
             room.AddItem(rupee);

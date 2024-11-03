@@ -26,11 +26,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
         {
             Room room = null;
 
-            ConditionalDescription description = new ConditionalDescription("You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. There is what appears to be a lead of some sort poking out from underneath the sofa. The kitchen is to the north.",
-                                                                            "You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. The kitchen is to the north.",
-                                                                            () => room.ContainsItem(Lead.Name));
-
-            room = new(new Identifier(Name), description, new Exit(Direction.North));
+            ConditionalDescription description = new("You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. There is what appears to be a lead of some sort poking out from underneath the sofa. The kitchen is to the north.",
+                                                     "You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. The kitchen is to the north.",
+                                                     () => room.ContainsItem(Lead.Name));
 
             room.AddCharacter(new Beth().Instantiate());
             room.AddItem(new Map().Instantiate());
@@ -39,7 +37,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             room.AddItem(new LoungeTV().Instantiate());
             room.AddItem(new Lead().Instantiate());
 
-            room.Interaction = item =>
+            room = new(new Identifier(Name), description, [new Exit(Direction.North)], interaction: item =>
             {
                 if (item != null)
                 {
@@ -63,7 +61,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            });
 
             return room;
         }

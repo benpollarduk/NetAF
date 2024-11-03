@@ -24,9 +24,9 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, string.Empty, new Exit(Direction.West), new Exit(Direction.North, true));
+            Room room = null;
 
-            InteractionResult innerCaveInteraction(Item item)
+            room = new Room(Name, string.Empty, [new Exit(Direction.West), new Exit(Direction.North, true)], interaction: item =>
             {
                 if (item != null && ConchShell.Name.EqualsExaminable(item))
                 {
@@ -38,15 +38,14 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
                     return new(InteractionEffect.NoEffect, item, "You slash wildly at the bats, but there are too many. Don't aggravate them!");
 
                 return new(InteractionEffect.NoEffect, item);
-            }
+            });
 
-            room.Interaction = innerCaveInteraction;
             room.SpecifyConditionalDescription(new ConditionalDescription("With the bats gone there is daylight to the north. To the west is the cave entrance", "As you enter the inner cave the screeching gets louder, and in the gloom you can make out what looks like a million sets of eyes looking back at you. Bats! You can just make out a few rays of light coming from the north, but the bats are blocking your way.", () => !room[Direction.North].IsLocked));
 
             return room;
 
         }
 
-        #endregion
+#endregion
     }
 }

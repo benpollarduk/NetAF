@@ -22,19 +22,14 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            var conchShell = new Item(Name, Description, true)
+            var conchShell = new Item(Name, Description, true, item =>
             {
-                Interaction = item =>
+                return item.Identifier.IdentifiableName switch
                 {
-                    switch (item.Identifier.IdentifiableName)
-                    {
-                        case Knife.Name:
-                            return new(InteractionEffect.FatalEffect, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
-                        default:
-                            return new(InteractionEffect.NoEffect, item);
-                    }
-                }
-            };
+                    Knife.Name => new(InteractionEffect.FatalEffect, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble."),
+                    _ => new(InteractionEffect.NoEffect, item),
+                };
+            });
 
             return conchShell;
         }

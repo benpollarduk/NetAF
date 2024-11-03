@@ -1,9 +1,10 @@
 ﻿using NetAF.Assets;
+using NetAF.Assets.Interaction;
 using NetAF.Utilities;
 
 namespace NetAF.Examples.Assets.Regions.Zelda.Items
 {
-    public class Bush : IAssetTemplate<Item>
+    public class Bush(InteractionCallback Interaction) : IAssetTemplate<Item>
     {
         #region Constants
 
@@ -20,7 +21,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            return new(Name, Description);
+            return new(Name, Description, interaction: Interaction);
         }
 
         #endregion

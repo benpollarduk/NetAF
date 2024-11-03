@@ -18,7 +18,8 @@ namespace NetAF.Assets.Characters
         /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
         /// <param name="description">The description of this NonPlayableCharacter.</param>
         /// <param name="conversation">The conversation.</param>
-        public NonPlayableCharacter(string identifier, string description, Conversation conversation = null) : this(new Identifier(identifier), new Description(description), conversation)
+        /// <param name="interaction">Specify the interaction.</param>
+        public NonPlayableCharacter(string identifier, string description, Conversation conversation = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), conversation, interaction)
         {
         }
 
@@ -28,11 +29,13 @@ namespace NetAF.Assets.Characters
         /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
         /// <param name="description">The description of this NonPlayableCharacter.</param>
         /// <param name="conversation">The conversation.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation = null) 
+        /// <param name="interaction">Specify the interaction.</param>
+        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation = null, InteractionCallback interaction = null) 
         {
             Identifier = identifier;
             Description = description;
             Conversation = conversation;
+            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 
         /// <summary>
@@ -42,8 +45,8 @@ namespace NetAF.Assets.Characters
         /// <param name="description">The description of this NonPlayableCharacter.</param>
         /// <param name="conversation">The conversation.</param>
         /// <param name="isAlive">Set if this NonPlayableCharacter is alive.</param>
-        /// <param name="interaction">Set this NonPlayableCharacter's interaction.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, InteractionCallback interaction) : this(identifier, description, conversation)
+        /// <param name="interaction">Specify the interaction.</param>
+        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, InteractionCallback interaction = null) : this(identifier, description, conversation, interaction)
         {
             IsAlive = isAlive;
             Interaction = interaction;
@@ -56,9 +59,9 @@ namespace NetAF.Assets.Characters
         /// <param name="description">The description of this NonPlayableCharacter.</param>
         /// <param name="conversation">The conversation.</param>
         /// <param name="isAlive">Set if this NonPlayableCharacter is alive.</param>
-        /// <param name="interaction">Set this NonPlayableCharacter's interaction.</param>
         /// <param name="examination">Set this NonPlayableCharacter's examination.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, InteractionCallback interaction, ExaminationCallback examination) : this(identifier, description, conversation, isAlive, interaction)
+        /// <param name="interaction">Specify the interaction.</param>
+        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, ExaminationCallback examination, InteractionCallback interaction = null) : this(identifier, description, conversation, isAlive, interaction)
         {
             Examination = examination;
         }

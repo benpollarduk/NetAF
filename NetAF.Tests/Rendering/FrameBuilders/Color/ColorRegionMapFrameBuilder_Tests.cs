@@ -30,8 +30,8 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
             stringBuilder.Resize(new Size(80, 50));
             var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
             var region = new Region(string.Empty, string.Empty);
-            region.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.Up)), 0, 0, 0);
-            region.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.Up)), 0, 0, 1);
+            region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
+            region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
 
             var result = builder.Build(region, 80, 50);
 
@@ -45,8 +45,8 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
             stringBuilder.Resize(new Size(80, 50));
             var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
             var region = new Region(string.Empty, string.Empty);
-            region.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.Up)), 0, 0, 0);
-            region.AddRoom(new(string.Empty, string.Empty, new Exit(Direction.Up)), 0, 0, 1);
+            region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
+            region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
             region.SetStartRoom(0, 0, 1);
 
             var result = builder.Build(region, 80, 50);

@@ -26,7 +26,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
                                                      "The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof. The window behind you south leads back into the bathroom.",
                                                      () => room.ContainsItem(CoffeeMug.Name));
 
-            room = new(new Identifier(Name), description, new Exit(Direction.South));
+            room = new(new Identifier(Name), description, [new Exit(Direction.South)]);
 
             room.AddItem(new Skylight().Instantiate());
             room.AddItem(new CoffeeMug().Instantiate());

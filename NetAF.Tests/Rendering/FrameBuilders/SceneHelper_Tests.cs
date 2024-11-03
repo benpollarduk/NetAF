@@ -27,9 +27,9 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         public void GivenRoomWithAView_WhenCreateViewpointAsString_ThenNonEmptyString()
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
-            var room = new Room(string.Empty, string.Empty, new Exit(Direction.East));
+            var room = new Room(string.Empty, string.Empty, [new Exit(Direction.East)]);
             regionMaker[0, 0, 0] = room;
-            regionMaker[1, 0, 0] = new Room("Test", "Test", new Exit(Direction.West));
+            regionMaker[1, 0, 0] = new Room("Test", "Test", [new Exit(Direction.West)]);
             var region = regionMaker.Make();
             var viewPoint = ViewPoint.Create(region);
 
@@ -52,12 +52,12 @@ namespace NetAF.Tests.Rendering.FrameBuilders
                 new Exit(Direction.Down)
             };
             regionMaker[1, 1, 1] = new(string.Empty, string.Empty, centralExits);
-            regionMaker[0, 1, 1] = new("Test", "Test", new Exit(Direction.East));
-            regionMaker[1, 0, 1] = new("Test", "Test", new Exit(Direction.North));
-            regionMaker[2, 1, 1] = new("Test", "Test", new Exit(Direction.West));
-            regionMaker[1, 2, 1] = new("Test", "Test", new Exit(Direction.South));
-            regionMaker[1, 1, 2] = new("Test", "Test", new Exit(Direction.Down));
-            regionMaker[1, 1, 0] = new("Test", "Test", new Exit(Direction.Up));
+            regionMaker[0, 1, 1] = new("Test", "Test", [new Exit(Direction.East)]);
+            regionMaker[1, 0, 1] = new("Test", "Test", [new Exit(Direction.North)]);
+            regionMaker[2, 1, 1] = new("Test", "Test", [new Exit(Direction.West)]);
+            regionMaker[1, 2, 1] = new("Test", "Test", [new Exit(Direction.South)]);
+            regionMaker[1, 1, 2] = new("Test", "Test", [new Exit(Direction.Down)]);
+            regionMaker[1, 1, 0] = new("Test", "Test", [new Exit(Direction.Up)]);
             var region = regionMaker.Make();
             var viewPoint = ViewPoint.Create(region);
 

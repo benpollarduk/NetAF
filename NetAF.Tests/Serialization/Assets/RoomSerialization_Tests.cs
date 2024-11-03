@@ -83,7 +83,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1Exit_ThenExitsLengthIs1()
         {
-            Room room = new(string.Empty, string.Empty, new Exit(Direction.North));
+            Room room = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
 
             RoomSerialization result = new(room);
 
@@ -93,10 +93,10 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenRoomThatHasNotBeenVisited_WhenRestoreFromRoomThatHasBeenVisited_ThenRoomHasBeenVisitedIsTrue()
         {
-            Room room = new(string.Empty, string.Empty, new Exit(Direction.North));
+            Room room = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
             room.AddItem(new(string.Empty, string.Empty));
             room.AddCharacter(new(string.Empty, string.Empty));
-            Room room2 = new(string.Empty, string.Empty, new Exit(Direction.North));
+            Room room2 = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
             room.AddItem(new(string.Empty, string.Empty));
             room.AddCharacter(new(string.Empty, string.Empty));
             room2.MovedInto(Direction.North);

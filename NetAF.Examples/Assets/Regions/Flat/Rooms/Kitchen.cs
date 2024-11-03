@@ -23,18 +23,16 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, new Exit(Direction.South), new Exit(Direction.East));
-
-            room.AddItem(new HamsterCage().Instantiate());
-            room.AddItem(new Kettle().Instantiate());
-
-            room.Interaction = (item) =>
+            var room = new Room(Name, Description, [new Exit(Direction.South), new Exit(Direction.East)], interaction: item =>
             {
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
                     return new(InteractionEffect.NoEffect, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            });
+
+            room.AddItem(new HamsterCage().Instantiate());
+            room.AddItem(new Kettle().Instantiate());
 
             return room;
         }

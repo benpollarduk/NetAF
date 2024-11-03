@@ -203,7 +203,7 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenExitName_WhenFindInteractionTarget_ThenReturnTrue()
         {
-            var room = new Room(string.Empty, string.Empty, new Exit(Direction.North, false, new Identifier("North")));
+            var room = new Room(string.Empty, string.Empty, [new Exit(Direction.North, false, new Identifier("North"))]);
 
             var result = room.FindInteractionTarget("NORTH", out _);
 

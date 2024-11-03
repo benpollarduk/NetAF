@@ -27,10 +27,11 @@ namespace NetAF.Examples.Assets.Regions.Flat
         {
             var roof = new Roof().Instantiate();
             var easternHallway = new EasternHallway().Instantiate();
-            var spareBedroom = new SpareBedroom().Instantiate();
             var lounge = new Lounge().Instantiate();
 
-            spareBedroom.Interaction = item =>
+            Room spareBedroom = null;
+            
+            spareBedroom = new SpareBedroom(item =>
             {
                 if (Lead.Name.EqualsIdentifier(item.Identifier))
                 {
@@ -57,7 +58,7 @@ namespace NetAF.Examples.Assets.Regions.Flat
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            }).Instantiate();
 
             var regionMaker = new RegionMaker(Name, Description)
             {

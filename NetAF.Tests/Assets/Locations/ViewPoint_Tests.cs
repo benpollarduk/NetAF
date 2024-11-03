@@ -12,11 +12,11 @@ namespace NetAF.Tests.Assets.Locations
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty)
             {
-                [1, 0, 0] = new(string.Empty, string.Empty, new Exit(Direction.North)),
-                [0, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.East)),
-                [1, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)),
-                [2, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.West)),
-                [1, 2, 0] = new(string.Empty, string.Empty, new Exit(Direction.South))
+                [1, 0, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North)]),
+                [0, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.East)]),
+                [1, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)]),
+                [2, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.West)]),
+                [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 1, 0);
 
@@ -33,11 +33,11 @@ namespace NetAF.Tests.Assets.Locations
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty)
             {
-                [1, 0, 0] = new(string.Empty, string.Empty, new Exit(Direction.North)),
-                [0, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.East)),
-                [1, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)),
-                [2, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.West)),
-                [1, 2, 0] = new(string.Empty, string.Empty, new Exit(Direction.South))
+                [1, 0, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North)]),
+                [0, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.East)]),
+                [1, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)]),
+                [2, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.West)]),
+                [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 0, 0);
 
@@ -54,11 +54,11 @@ namespace NetAF.Tests.Assets.Locations
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty)
             {
-                [1, 0, 0] = new(string.Empty, string.Empty, new Exit(Direction.North)),
-                [0, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.East)),
-                [1, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)),
-                [2, 1, 0] = new(string.Empty, string.Empty, new Exit(Direction.West)),
-                [1, 2, 0] = new(string.Empty, string.Empty, new Exit(Direction.South))
+                [1, 0, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North)]),
+                [0, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.East)]),
+                [1, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)]),
+                [2, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.West)]),
+                [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 0, 0);
 

@@ -20,7 +20,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            return new(Name, Description, new Exit(Direction.West));
+            return new(Name, Description, [new Exit(Direction.West)]);
         }
 
         #endregion
