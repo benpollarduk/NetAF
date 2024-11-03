@@ -126,7 +126,7 @@ namespace NetAF.Logic
         /// Get an array of inactive player locations.
         /// </summary>
         /// <returns>An array containing all locations of inactive platers.</returns>
-        internal PlayableCharacterLocation[] GetInactivePlayerLocations()
+        public PlayableCharacterLocation[] GetInactivePlayerLocations()
         {
             return [.. inactivePlayerLocations];
         }
