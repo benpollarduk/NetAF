@@ -2,6 +2,7 @@
 using NetAF.Interpretation;
 using NetAF.Serialization.Persistence.Json;
 using NetAF.Serialization.Persistence;
+using System.IO;
 
 namespace NetAF.Commands.Persistence
 {
@@ -29,7 +30,9 @@ namespace NetAF.Commands.Persistence
         /// <returns>The reaction.</returns>
         private static Reaction SaveGameToFile(Logic.Game game, string[] args)
         {
-            var result = JsonSave.ToFile(args[0], RestorePoint.Create("Test", game), out var message);
+            var path = args[0];
+            var fileName = Path.GetFileName(path);
+            var result = JsonSave.ToFile(path, RestorePoint.Create(fileName, game), out var message);
 
             if (!result)
                 return new(ReactionResult.Error, $"Failed to save: {message}");
