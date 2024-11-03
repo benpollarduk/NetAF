@@ -31,7 +31,7 @@ namespace NetAF.Assets
         /// <param name="identifier">This Items identifier.</param>
         /// <param name="description">A description of this Item.</param>
         /// <param name="isTakeable">Specify if this item is takeable.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public Item(string identifier, string description, bool isTakeable = false, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), isTakeable, interaction)
         {
         }
@@ -42,7 +42,7 @@ namespace NetAF.Assets
         /// <param name="identifier">This Items identifier.</param>
         /// <param name="description">A description of this Item.</param>
         /// <param name="isTakeable">Specify if this item is takeable.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public Item(Identifier identifier, Description description, bool isTakeable = false, InteractionCallback interaction = null)
         {
             Identifier = identifier;

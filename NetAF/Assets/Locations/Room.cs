@@ -65,7 +65,7 @@ namespace NetAF.Assets.Locations
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
         /// <param name="items">The items in this room.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), exits, items, interaction)
         {
         }
@@ -77,7 +77,7 @@ namespace NetAF.Assets.Locations
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
         /// <param name="items">The items in this room.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, InteractionCallback interaction = null)
         {
             Identifier = identifier;

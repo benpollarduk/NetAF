@@ -15,10 +15,10 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the NonPlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
-        /// <param name="description">The description of this NonPlayableCharacter.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public NonPlayableCharacter(string identifier, string description, Conversation conversation = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), conversation, interaction)
         {
         }
@@ -26,10 +26,10 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the NonPlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
-        /// <param name="description">The description of this NonPlayableCharacter.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation = null, InteractionCallback interaction = null) 
         {
             Identifier = identifier;
@@ -41,11 +41,11 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the NonPlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
-        /// <param name="description">The description of this NonPlayableCharacter.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
-        /// <param name="isAlive">Set if this NonPlayableCharacter is alive.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="isAlive">If this character is alive.</param>
+        /// <param name="interaction">The interaction.</param>
         public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, InteractionCallback interaction = null) : this(identifier, description, conversation, interaction)
         {
             IsAlive = isAlive;
@@ -55,12 +55,12 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the NonPlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This NonPlayableCharacter's identifier.</param>
-        /// <param name="description">The description of this NonPlayableCharacter.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
-        /// <param name="isAlive">Set if this NonPlayableCharacter is alive.</param>
-        /// <param name="examination">Set this NonPlayableCharacter's examination.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="isAlive">If this character is alive.</param>
+        /// <param name="examination">The examination.</param>
+        /// <param name="interaction">The interaction.</param>
         public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, ExaminationCallback examination, InteractionCallback interaction = null) : this(identifier, description, conversation, isAlive, interaction)
         {
             Examination = examination;

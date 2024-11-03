@@ -38,14 +38,11 @@ Interactions can be set up between different assets in the game. The **Interacti
 ```csharp
 var dartsBoard = new Item("Darts board", "A darts board.");
 
-var dart = new Item("Dart", "A dart")
+var dart = new Item("Dart", "A dart", interaction: item =>
 {
-    Interaction = item =>
-    {
-        if (item == dartsBoard)
-            return new InteractionResult(InteractionEffect.SelfContained, item, "The dart stuck in the darts board.");
+    if (item == dartsBoard)
+        return new InteractionResult(InteractionEffect.SelfContained, item, "The dart stuck in the darts board.");
 
-        return new InteractionResult(InteractionEffect.NoEffect, item);
-    }
-};
+     return new InteractionResult(InteractionEffect.NoEffect, item);
+});
 ```

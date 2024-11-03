@@ -37,7 +37,7 @@ namespace NetAF.Assets.Locations
         /// <param name="isLocked">If this exit is locked.</param>
         /// <param name="identifier">An identifier for the exit.</param>
         /// <param name="description">A description of the exit.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="interaction">The interaction.</param>
         public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null, InteractionCallback interaction = null)
         {
             Identifier = identifier ?? new(direction.ToString());

@@ -21,10 +21,10 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="items">The players items.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="interaction">The interaction.</param>
         public PlayableCharacter(string identifier, string description, Item[] items = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), items, interaction)
         {
         }
@@ -32,10 +32,10 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="items">The players items.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="interaction">The interaction.</param>
         public PlayableCharacter(Identifier identifier, Description description, Item[] items = null, InteractionCallback interaction = null) : this(identifier, description, true, items, interaction)
         {
         }
@@ -43,11 +43,11 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="canConverse">If this PlayableCharacter can converse with an IConverser.</param>
-        /// <param name="items">The players items.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="canConverse">If this object can converse with an IConverser.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="interaction">The interaction.</param>
         public PlayableCharacter(string identifier, string description, bool canConverse, Item[] items = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), canConverse, items, interaction)
         {
         }
@@ -55,11 +55,11 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="canConverse">If this PlayableCharacter can converse with an IConverser.</param>
-        /// <param name="items">The players items.</param>
-        /// <param name="interaction">Specify the interaction.</param>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="canConverse">If this object can converse with an IConverser.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="interaction">The interaction.</param>
         public PlayableCharacter(Identifier identifier, Description description, bool canConverse, Item[] items = null, InteractionCallback interaction = null)
         {
             Identifier = identifier;
