@@ -200,9 +200,9 @@ namespace NetAF.Logic
         /// <param name="jumpToLastLocation">Jump to the last location, if it is known. Then true the player will be added at the last location, when false the current location will be used. By default this is true.</param>
         public void ChangePlayer(PlayableCharacter player, bool jumpToLastLocation = true)
         {
-            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld?.CurrentRegion?.Identifier.IdentifiableName, Overworld?.CurrentRegion?.CurrentRoom?.Identifier.IdentifiableName));
+            inactivePlayerLocations.Add(new(Player?.Identifier?.IdentifiableName, Overworld?.CurrentRegion?.Identifier.IdentifiableName, Overworld?.CurrentRegion?.CurrentRoom?.Identifier.IdentifiableName));
 
-            var previous = Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier));
+            var previous = player != null ? Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier)) : null;
 
             if (previous != null)
                 inactivePlayerLocations.Remove(previous);

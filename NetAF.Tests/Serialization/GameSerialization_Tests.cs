@@ -27,6 +27,38 @@ namespace NetAF.Tests.Serialization
         }
 
         [TestMethod]
+        public void GivenAPlayer_ThenActivePlayerIdentifierIsNotNullOrEmpty()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("player", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            GameSerialization result = new(game);
+
+            Assert.IsNotNull(result.ActivePlayerIdentifier);
+            Assert.AreNotEqual(string.Empty, result.ActivePlayerIdentifier);
+        }
+
+        [TestMethod]
+        public void GivenNoPlayer_ThenActivePlayerIdentifierIsNull()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("player", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            game.ChangePlayer(null, false);
+
+            GameSerialization result = new(game);
+
+            Assert.IsNull(result.ActivePlayerIdentifier);
+        }
+
+        [TestMethod]
         public void GivenAnOverworld_ThenOverworldIsNotNull()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
