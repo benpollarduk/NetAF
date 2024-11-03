@@ -62,9 +62,9 @@ namespace NetAF.Assets.Characters
         #region Implementation of IConverser
 
         /// <summary>
-        /// Get or set the conversation.
+        /// Get the conversation.
         /// </summary>
-        public Conversation Conversation { get; set; }
+        public Conversation Conversation { get; }
 
         #endregion
 

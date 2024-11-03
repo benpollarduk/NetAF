@@ -21,14 +21,14 @@ var sword = new Item("Sword", "A heroes sword.", true);
 Like all Examinable objects, an Item can be assigned custom commands.
 
 ```csharp
-bomb.Commands =
+Item bomb = new("Bomb", "A bomb", commands:
 [
     new CustomCommand(new CommandHelp("Cut wire", "Cut the red wire."), true, (game, args) =>
     {
         game.Player.Kill();
         return new Reaction(ReactionResult.Fatal, "Boom!");
     })
-];
+]);
 ```
 
 ## Interaction

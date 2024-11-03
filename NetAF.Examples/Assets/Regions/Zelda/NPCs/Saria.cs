@@ -43,7 +43,15 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
         {
             NonPlayableCharacter saria = null;
 
-            saria = new NonPlayableCharacter(Name, Description, interaction: item =>
+            Conversation conversation = new
+            (
+                new("Hi Link, how's it going?"),
+                new("I lost my red rupee, if you find it will you please bring it to me?"),
+                new("Oh Link you are so adorable."),
+                new("OK Link your annoying me now, I'm just going to ignore you.", new First())
+            );
+
+            saria = new NonPlayableCharacter(Name, Description, conversation: conversation, interaction: item =>
             {
                 saria.FindItem(TailKey.Name, out var key);
 
@@ -77,14 +85,6 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
             });
 
             saria.AddItem(new TailKey().Instantiate());
-
-            saria.Conversation = new Conversation
-            (
-                new("Hi Link, how's it going?"),
-                new("I lost my red rupee, if you find it will you please bring it to me?"),
-                new("Oh Link you are so adorable."),
-                new("OK Link your annoying me now, I'm just going to ignore you.", new First())
-            );
 
             return saria;
         }

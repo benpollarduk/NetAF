@@ -8,8 +8,8 @@ namespace NetAF.Assets.Characters
     public interface IConverser : IExaminable
     {
         /// <summary>
-        /// Get or set the conversation.
+        /// Get the conversation.
         /// </summary>
-        Conversation Conversation { get; set; }
+        Conversation Conversation { get; }
     }
 }

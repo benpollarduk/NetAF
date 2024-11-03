@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Assets.Attributes;
+using NetAF.Assets.Interaction;
+using NetAF.Commands;
+using NetAF.Interpretation;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -46,6 +49,17 @@ namespace NetAF.Tests.Serialization.Assets
             ExaminableSerialization result = new(examinable);
 
             Assert.IsNotNull(result.AttributeManager);
+        }
+
+        [TestMethod]
+        public void Given1CustomCommand_ThenCustomCommandsHas1Element()
+        {
+            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => new Reaction(ReactionResult.OK, string.Empty));
+            Item examinable = new(string.Empty, string.Empty, commands: [command]);
+
+            ExaminableSerialization result = new(examinable);
+
+            Assert.AreEqual(1, result.Commands.Length);
         }
 
         [TestMethod]

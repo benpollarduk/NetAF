@@ -1,6 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Interaction;
 using NetAF.Interpretation;
+using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Commands
 {
@@ -9,8 +11,9 @@ namespace NetAF.Commands
     /// </summary>
     /// <param name="help">The help for this command.</param>
     /// <param name="isPlayerVisible">If this is visible to the player.</param>
+    /// <param name="interpretIfNotPlayerVisible">If this command can be interpreted when the IsPlayerVisible is false.</param>
     /// <param name="callback">The callback to invoke when this command is invoked.</param>
-    public class CustomCommand(CommandHelp help, bool isPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible
+    public class CustomCommand(CommandHelp help, bool isPlayerVisible, bool interpretIfNotPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible, IRestoreFromObjectSerialization<CustomCommandSerialization>
     {
         #region Properties
 
@@ -28,6 +31,11 @@ namespace NetAF.Commands
         /// Get the help for this command.
         /// </summary>
         public CommandHelp Help { get; } = help;
+
+        /// <summary>
+        /// Get if this command can be interpreted when the IsPlayerVisible is false.
+        /// </summary>
+        public bool InterpretIfNotPlayerVisible { get; set; } = interpretIfNotPlayerVisible;
 
         #endregion
 
@@ -51,6 +59,19 @@ namespace NetAF.Commands
         /// Get or set if this is visible to the player.
         /// </summary>
         public bool IsPlayerVisible { get; set; } = isPlayerVisible;
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<CustomCommandSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(CustomCommandSerialization serialization)
+        {
+            IsPlayerVisible = serialization.IsPlayerVisible;
+        }
 
         #endregion
     }

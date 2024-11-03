@@ -45,7 +45,7 @@ namespace NetAF.Examples
             {
                 CustomCommand[] commands =
                 [
-                    new CustomCommand(new CommandHelp($"Warp {otherRegion.Identifier.Name}", $"Use the {otherRegion.Identifier.Name} Sphere to warp to the {otherRegion.Identifier.Name}."), true, (g, _) =>
+                    new CustomCommand(new CommandHelp($"Warp {otherRegion.Identifier.Name}", $"Use the {otherRegion.Identifier.Name} Sphere to warp to the {otherRegion.Identifier.Name}."), true, true, (g, _) =>
                     {
                         var move = overworld?.Move(otherRegion) ?? false;
 
@@ -78,7 +78,7 @@ namespace NetAF.Examples
                     CustomCommand[] commands =
                     [
                         // add a hidden custom command to the overworld that allows jumping around a region for debugging purposes
-                        new(new("Jump", "Jump to a location in a region."), false, (g, a) =>
+                        new(new("Jump", "Jump to a location in a region."), false, true, (g, a) =>
                         {
                             var x = 0;
                             var y = 0;

@@ -21,10 +21,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenNotNullConversation_ThenConversationNotNull()
         {
-            NonPlayableCharacter character = new(string.Empty, string.Empty)
-            {
-                Conversation = new()
-            };
+            NonPlayableCharacter character = new(string.Empty, string.Empty, conversation: new());
 
             NonPlayableCharacterSerialization result = new(character);
 

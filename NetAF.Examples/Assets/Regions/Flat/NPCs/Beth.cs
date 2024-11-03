@@ -21,10 +21,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.NPCs
         /// <returns>The asset.</returns>
         public NonPlayableCharacter Instantiate()
         {
-            return new(Name, Description)
-            {
-                Conversation = new(new("Hello Ben."), new("How are you?", null, new First()))
-            };
+            return new(Name, Description, conversation: new(new("Hello Ben."), new("How are you?", null, new First())));
         }
 
         #endregion

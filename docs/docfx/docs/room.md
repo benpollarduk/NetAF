@@ -52,7 +52,8 @@ region.RemoveCharacter(character);
 Rooms can contain custom commands that allow the user to directly interact with the Room.
 
 ```csharp
-room.Commands =
+Room room = null;
+room = new("Dungeon", "A grim dungeon.", commands:
 [
     new CustomCommand(new CommandHelp("Pull lever", "Pull the lever."), true, (game, args) =>
     {
@@ -60,5 +61,5 @@ room.Commands =
         exit.Unlock();
         return new Reaction(ReactionResult.OK, "The exit was unlocked.");
     })
-];
+]);
 ```

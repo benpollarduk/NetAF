@@ -14,7 +14,7 @@ namespace NetAF.Commands.Persistence
         /// <summary>
         /// Initializes a new instance of the Load class.
         /// </summary>
-        public Load() : base(new CommandHelp("Load", "Load the game state from a file. The path should be specified as an absolute path"), true, LoadGameFromFile) { }
+        public Load() : base(new CommandHelp("Load", "Load the game state from a file. The path should be specified as an absolute path"), true, true, LoadGameFromFile) { }
 
         #endregion
 

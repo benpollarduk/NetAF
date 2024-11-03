@@ -113,6 +113,12 @@ namespace NetAF.Assets
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
             Attributes.RestoreFrom(serialization.AttributeManager);
+
+            foreach (var command in serialization.Commands)
+            {
+                var match = Array.Find(Commands, x => x.Help.Command.Equals(command.Command));
+                match?.RestoreFrom(command);
+            }
         }
 
         #endregion

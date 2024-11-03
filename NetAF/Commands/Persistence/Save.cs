@@ -16,7 +16,7 @@ namespace NetAF.Commands.Persistence
         /// <summary>
         /// Initializes a new instance of the Save class.
         /// </summary>
-        public Save() : base(new CommandHelp("Save", "Save the game state to a file. The path should be specified as an absolute path."), true, SaveGameToFile) { }
+        public Save() : base(new CommandHelp("Save", "Save the game state to a file. The path should be specified as an absolute path."), true, true, SaveGameToFile) { }
 
         #endregion
 

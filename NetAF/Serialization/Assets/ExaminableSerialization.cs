@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets;
+using System.Linq;
 
 namespace NetAF.Serialization.Assets
 {
@@ -24,6 +25,11 @@ namespace NetAF.Serialization.Assets
         /// Get or set the attribute manager serializations.
         /// </summary>
         public AttributeManagerSerialization AttributeManager { get; set; } = new(examinable?.Attributes);
+
+        /// <summary>
+        /// Get or set the command serializations.
+        /// </summary>
+        public CustomCommandSerialization[] Commands { get; set; } = examinable?.Commands?.Select(x => new CustomCommandSerialization(x)).ToArray() ?? [];
 
         #endregion
 

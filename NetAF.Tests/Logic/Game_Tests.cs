@@ -319,7 +319,7 @@ namespace NetAF.Tests.Logic
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, new GameConfiguration(new Size(50, 80), ExitMode.ExitApplication, new TestConsoleAdapter())).Invoke();
-                NonPlayableCharacter npc = new("", "") { Conversation = new Conversation(new Paragraph("Test", g => g.End())) };
+                NonPlayableCharacter npc = new("", "", conversation: new(new Paragraph("Test", g => g.End())));
                 game.StartConversation(npc);
 
                 game.Execute();

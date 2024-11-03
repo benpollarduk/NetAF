@@ -27,10 +27,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
         {
             var gridStringBuilder = new GridStringBuilder();
             var builder = new ColorConversationFrameBuilder(gridStringBuilder);
-            var converser = new NonPlayableCharacter("Test", "Test")
-            {
-                Conversation = new Conversation(new("Line 1"), new("Line 2"))
-            };
+            var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
             converser.Conversation.Respond(new Response("Test2"), null);

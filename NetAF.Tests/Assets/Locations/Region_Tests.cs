@@ -322,7 +322,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenResultRoomQualsInputRoom()
+        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenResultRoomEqualsInputRoom()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room(Identifier.Empty, Description.Empty);

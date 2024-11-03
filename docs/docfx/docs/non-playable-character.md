@@ -22,13 +22,13 @@ npc.Give(daisy, goblin);
 NonPlayableCharacters can contain custom commands that allow the user to directly interact with the character or other assets.
 
 ```csharp
-goblin.Commands =
+NonPlayableCharacter goblin = new("Goblin", "A vile goblin", commands:
 [
     new CustomCommand(new CommandHelp("Smile", "Crack a smile."), true, (game, args) =>
     {
         return new Reaction(ReactionResult.OK, "Well that felt weird.");
     })
-];
+]);
 ```
 
 ## Conversations
@@ -40,8 +40,7 @@ A NonPlayableCharacter can hold a conversation with the player.
 * A **Response** can also contain a callback to perform some action when the player selects that option.
 
 ```csharp
-goblin.Conversation = new Conversation(
-    new Paragraph("This is a the first line."),
+NonPlayableCharacter goblin = new("Goblin", "A vile goblin", conversation: new(
     new Paragraph("This is a question.")
     {
         Responses =
@@ -54,5 +53,5 @@ goblin.Conversation = new Conversation(
     new Paragraph("You picked first response, return to start of conversation.", new GoTo(1)),
     new Paragraph("You picked second response, return to start of conversation.", new GoTo(1)),
     new Paragraph("You picked third response, you are dead.", game => game.Player.Kill())
-);
+));
 ```

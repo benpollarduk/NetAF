@@ -35,7 +35,7 @@ namespace NetAF.Tests.Commands.Conversation
         public void GivenValidGameAndConverser_WhenInvoke_ThenInternal()
         {
             var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var converser = new NonPlayableCharacter(string.Empty, string.Empty) { Conversation = new NetAF.Conversations.Conversation(new Paragraph(string.Empty)) };
+            var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(converser);
             var command = new Next();
 
