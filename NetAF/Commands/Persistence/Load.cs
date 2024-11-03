@@ -5,7 +5,7 @@ using NetAF.Persistence.Json;
 namespace NetAF.Commands.Persistence
 {
     /// <summary>
-    /// Represents the Save command.
+    /// Represents the Load command.
     /// </summary>
     public class Load : CustomCommand
     {
