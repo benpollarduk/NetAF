@@ -46,9 +46,36 @@ namespace NetAF.Logic.Arrangement
         {
             List<ObjectToContainerMapping> records = [];
 
+            records.AddRange(GetItemsToContainerMappingsForAllPlayers(serialization));
+            records.AddRange(GetItemsToContainerMappingsForOverworld(serialization));
+
+            return [.. records];
+        }
+
+        /// <summary>
+        /// Get an array of ObjectToContainerMapping that all items to their containers for all players.
+        /// </summary>
+        /// <param name="serialization">The serialization to get item container mappings from.</param>
+        /// <returns>An array containing all item to container mappings.</returns>
+        private static ObjectToContainerMapping[] GetItemsToContainerMappingsForAllPlayers(GameSerialization serialization)
+        {
+            List<ObjectToContainerMapping> records = [];
+
             foreach (var player in serialization.Players)
                 foreach (var item in player.Items)
                     records.Add(new(item.Identifier, player.Identifier));
+
+            return [.. records];
+        }
+
+        /// <summary>
+        /// Get an array of ObjectToContainerMapping that all items to their containers for overworld.
+        /// </summary>
+        /// <param name="serialization">The serialization to get item container mappings from.</param>
+        /// <returns>An array containing all item to container mappings.</returns>
+        private static ObjectToContainerMapping[] GetItemsToContainerMappingsForOverworld(GameSerialization serialization)
+        {
+            List<ObjectToContainerMapping> records = [];
 
             foreach (var region in serialization.Overworld.Regions)
             {
