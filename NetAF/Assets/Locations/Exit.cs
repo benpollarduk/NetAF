@@ -40,7 +40,8 @@ namespace NetAF.Assets.Locations
         /// <param name="description">A description of the exit.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
+        /// <param name="examination">The examination.</param>
+        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier ?? new(direction.ToString());
             Direction = direction;
@@ -48,6 +49,9 @@ namespace NetAF.Assets.Locations
             IsLocked = isLocked;
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            
+            if (examination != null)
+                Examination = examination;
         }
 
         #endregion

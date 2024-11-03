@@ -34,7 +34,8 @@ namespace NetAF.Assets
         /// <param name="isTakeable">Specify if this item is takeable.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Item(string identifier, string description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), isTakeable, commands, interaction)
+        /// <param name="examination">The examination.</param>
+        public Item(string identifier, string description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), isTakeable, commands, interaction, examination)
         {
         }
 
@@ -46,13 +47,17 @@ namespace NetAF.Assets
         /// <param name="isTakeable">Specify if this item is takeable.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Item(Identifier identifier, Description description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null)
+        /// <param name="examination">The examination.</param>
+        public Item(Identifier identifier, Description description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;
             IsTakeable = isTakeable;
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            
+            if (examination != null)
+                Examination = examination;
         }
 
         #endregion

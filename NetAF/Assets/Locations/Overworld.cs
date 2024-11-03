@@ -44,7 +44,8 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">The identifier for this overworld.</param>
         /// <param name="description">A description of this overworld.</param>
         /// <param name="commands">This objects commands.</param>
-        public Overworld(string identifier, string description, CustomCommand[] commands = null) : this(new Identifier(identifier), new Description(description), commands)
+        /// <param name="examination">The examination.</param>
+        public Overworld(string identifier, string description, CustomCommand[] commands = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), commands, examination)
         {
         }
 
@@ -54,11 +55,15 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">The identifier for this overworld.</param>
         /// <param name="description">A description of this overworld.</param>
         /// <param name="commands">This objects commands.</param>
-        public Overworld(Identifier identifier, Description description, CustomCommand[] commands = null)
+        /// <param name="examination">The examination.</param>
+        public Overworld(Identifier identifier, Description description, CustomCommand[] commands = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;
             Commands = commands ?? [];
+
+            if (examination != null)
+                Examination = examination;
         }
 
         #endregion

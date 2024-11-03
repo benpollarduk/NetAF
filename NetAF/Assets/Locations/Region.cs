@@ -74,7 +74,8 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">This Regions identifier.</param>
         /// <param name="description">The description of this Region.</param>
         /// <param name="commands">This objects commands.</param>
-        public Region(string identifier, string description, CustomCommand[] commands = null) : this(new Identifier(identifier), new Description(description), commands)
+        /// <param name="examination">The examination.</param>
+        public Region(string identifier, string description, CustomCommand[] commands = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), commands, examination)
         {
         }
 
@@ -84,11 +85,15 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">This Regions identifier.</param>
         /// <param name="description">The description of this Region.</param>
         /// <param name="commands">This objects commands.</param>
-        public Region(Identifier identifier, Description description, CustomCommand[] commands = null)
+        /// <param name="examination">The examination.</param>
+        public Region(Identifier identifier, Description description, CustomCommand[] commands = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;
             Commands = commands ?? [];
+
+            if (examination != null)
+                Examination = examination;
         }
 
         #endregion

@@ -68,7 +68,8 @@ namespace NetAF.Assets.Locations
         /// <param name="items">The items in this room.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), exits, items, commands, interaction)
+        /// <param name="examination">The examination.</param>
+        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), exits, items, commands, interaction, examination)
         {
         }
 
@@ -81,7 +82,8 @@ namespace NetAF.Assets.Locations
         /// <param name="items">The items in this room.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
+        /// <param name="examination">The examination.</param>
+        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;
@@ -89,6 +91,9 @@ namespace NetAF.Assets.Locations
             Items = items ?? [];
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+
+            if (examination != null)
+                Examination = examination;
         }
 
         #endregion
