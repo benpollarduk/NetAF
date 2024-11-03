@@ -19,9 +19,9 @@ namespace NetAF.Assets
         /// </summary>
         Description Description { get; }
         /// <summary>
-        /// Get or set this objects commands.
+        /// Get this objects commands.
         /// </summary>
-        CustomCommand[] Commands { get; set; }
+        CustomCommand[] Commands { get; }
         /// <summary>
         /// Get the attribute manager for this object.
         /// </summary>

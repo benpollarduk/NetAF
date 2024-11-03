@@ -12,21 +12,14 @@ namespace NetAF.Tests.Interpretation
     [TestClass]
     public class CustomCommandInterpreter_Tests
     {
-        [TestInitialize]
-        public void Setup()
+        [TestMethod]
+        public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturnEmptyArray()
         {
-            overworld = new Overworld(Identifier.Empty, Description.Empty);
+            var overworld = new Overworld(Identifier.Empty, Description.Empty);
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
             region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             overworld.AddRegion(region);
-        }
-
-        private Overworld overworld;
-
-        [TestMethod]
-        public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturnEmptyArray()
-        {
             var interpreter = new CustomCommandInterpreter();
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
@@ -39,7 +32,12 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturn1CommandHelp()
         {
             var interpreter = new CustomCommandInterpreter();
-            overworld.Commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
+            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
@@ -51,7 +49,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenValidCustomCommand_WhenInterpret_ThenCommandInvoked()
         {
             var interpreter = new CustomCommandInterpreter();
-            overworld.Commands =
+            CustomCommand[] commands =
             [
                 new CustomCommand(new("Test", string.Empty), true, (_, _) =>
                 {
@@ -60,6 +58,11 @@ namespace NetAF.Tests.Interpretation
 
                 })
             ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
 
             interpreter.Interpret("Test", game);

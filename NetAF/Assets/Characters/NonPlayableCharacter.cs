@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -18,8 +19,9 @@ namespace NetAF.Assets.Characters
         /// <param name="identifier">The identifier.</param>
         /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
+        /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public NonPlayableCharacter(string identifier, string description, Conversation conversation = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), conversation, interaction)
+        public NonPlayableCharacter(string identifier, string description, Conversation conversation = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), conversation, commands, interaction)
         {
         }
 
@@ -29,12 +31,14 @@ namespace NetAF.Assets.Characters
         /// <param name="identifier">The identifier.</param>
         /// <param name="description">The description.</param>
         /// <param name="conversation">The conversation.</param>
+        /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation = null, InteractionCallback interaction = null) 
+        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation = null, CustomCommand[] commands = null, InteractionCallback interaction = null) 
         {
             Identifier = identifier;
             Description = description;
             Conversation = conversation;
+            Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 
@@ -43,27 +47,14 @@ namespace NetAF.Assets.Characters
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="description">The description.</param>
-        /// <param name="conversation">The conversation.</param>
         /// <param name="isAlive">If this character is alive.</param>
+        /// <param name="conversation">The conversation.</param>
+        /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, InteractionCallback interaction = null) : this(identifier, description, conversation, interaction)
+        public NonPlayableCharacter(Identifier identifier, Description description, bool isAlive, Conversation conversation = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(identifier, description, conversation, commands, interaction)
         {
             IsAlive = isAlive;
             Interaction = interaction;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the NonPlayableCharacter class.
-        /// </summary>
-        /// <param name="identifier">The identifier.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="conversation">The conversation.</param>
-        /// <param name="isAlive">If this character is alive.</param>
-        /// <param name="examination">The examination.</param>
-        /// <param name="interaction">The interaction.</param>
-        public NonPlayableCharacter(Identifier identifier, Description description, Conversation conversation, bool isAlive, ExaminationCallback examination, InteractionCallback interaction = null) : this(identifier, description, conversation, isAlive, interaction)
-        {
-            Examination = examination;
         }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
+using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -65,8 +66,9 @@ namespace NetAF.Assets.Locations
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
         /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), exits, items, interaction)
+        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), exits, items, commands, interaction)
         {
         }
 
@@ -77,13 +79,15 @@ namespace NetAF.Assets.Locations
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
         /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
-        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, InteractionCallback interaction = null)
+        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
         {
             Identifier = identifier;
             Description = description;
             Exits = exits ?? [];
             Items = items ?? [];
+            Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 

@@ -22,7 +22,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            return new(Name, Description, true, item =>
+            return new(Name, Description, true, interaction: item =>
             {
                 if (Kettle.Name.EqualsIdentifier(item.Identifier))
                 {

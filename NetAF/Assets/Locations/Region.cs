@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -72,19 +73,22 @@ namespace NetAF.Assets.Locations
         /// </summary>s
         /// <param name="identifier">This Regions identifier.</param>
         /// <param name="description">The description of this Region.</param>
-        public Region(string identifier, string description) : this(new Identifier(identifier), new Description(description))
+        /// <param name="commands">This objects commands.</param>
+        public Region(string identifier, string description, CustomCommand[] commands = null) : this(new Identifier(identifier), new Description(description), commands)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the Region class.
-        /// </summary>s
+        /// </summary>
         /// <param name="identifier">This Regions identifier.</param>
         /// <param name="description">The description of this Region.</param>
-        public Region(Identifier identifier, Description description)
+        /// <param name="commands">This objects commands.</param>
+        public Region(Identifier identifier, Description description, CustomCommand[] commands = null)
         {
             Identifier = identifier;
             Description = description;
+            Commands = commands ?? [];
         }
 
         #endregion

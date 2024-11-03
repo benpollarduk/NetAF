@@ -73,9 +73,9 @@ namespace NetAF.Assets
         public Description Description { get; protected set; }
 
         /// <summary>
-        /// Get or set this objects commands.
+        /// Get this objects commands.
         /// </summary>
-        public CustomCommand[] Commands { get; set; }
+        public CustomCommand[] Commands { get; protected set; }
 
         /// <summary>
         /// Get the attribute manager for this object.

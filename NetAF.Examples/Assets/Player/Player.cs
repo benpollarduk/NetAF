@@ -24,7 +24,7 @@ namespace NetAF.Examples.Assets.Player
         /// <returns>The asset.</returns>
         public PlayableCharacter Instantiate()
         {
-            var player = new PlayableCharacter(Name, Description, [new Knife().Instantiate()], i =>
+            var player = new PlayableCharacter(Name, Description, [new Knife().Instantiate()], interaction: i =>
             {
                 if (i == null)
                     return new(InteractionEffect.NoEffect, null);

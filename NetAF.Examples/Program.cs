@@ -43,23 +43,22 @@ namespace NetAF.Examples
 
             foreach (var otherRegion in otherRegions)
             {
-                room.AddItem(new Item($"{otherRegion.Identifier.Name} Sphere", "A glass sphere, about the size of a snooker ball. Inside you can see a swirling mist.", true)
-                {
-                    Commands =
-                    [
-                        new CustomCommand(new CommandHelp($"Warp {otherRegion.Identifier.Name}", $"Use the {otherRegion.Identifier.Name} Sphere to warp to the {otherRegion.Identifier.Name}."), true, (g, _) =>
-                        {
-                            var move = overworld?.Move(otherRegion) ?? false;
+                CustomCommand[] commands =
+                [
+                    new CustomCommand(new CommandHelp($"Warp {otherRegion.Identifier.Name}", $"Use the {otherRegion.Identifier.Name} Sphere to warp to the {otherRegion.Identifier.Name}."), true, (g, _) =>
+                    {
+                        var move = overworld?.Move(otherRegion) ?? false;
 
-                            if (!move)
-                                return new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
+                        if (!move)
+                            return new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
 
-                            g.DisplayTransition(string.Empty, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
+                        g.DisplayTransition(string.Empty, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
 
-                            return new Reaction(ReactionResult.Internal, string.Empty);
-                        })
-                    ]
-                });
+                        return new Reaction(ReactionResult.Internal, string.Empty);
+                    })
+                ];
+
+                room.AddItem(new Item($"{otherRegion.Identifier.Name} Sphere", "A glass sphere, about the size of a snooker ball. Inside you can see a swirling mist.", true, commands));
             }
         }
 
@@ -76,16 +75,7 @@ namespace NetAF.Examples
                         new Zelda().Instantiate()
                     };
 
-                    var overworld = new Overworld("Demo", "A demo of NetAF.");
-
-                    var hub = new Hub().Instantiate();
-                    PopulateHub(hub, overworld, [.. regions]);
-                    overworld.AddRegion(hub);
-
-                    foreach (var region in regions)
-                        overworld.AddRegion(region);
-
-                    overworld.Commands =
+                    CustomCommand[] commands =
                     [
                         // add a hidden custom command to the overworld that allows jumping around a region for debugging purposes
                         new(new("Jump", "Jump to a location in a region."), false, (g, a) =>
@@ -111,6 +101,15 @@ namespace NetAF.Examples
                         new Save(),
                         new Load()
                     ];
+
+                    var overworld = new Overworld("Demo", "A demo of NetAF.", commands);
+
+                    var hub = new Hub().Instantiate();
+                    PopulateHub(hub, overworld, [.. regions]);
+                    overworld.AddRegion(hub);
+
+                    foreach (var region in regions)
+                        overworld.AddRegion(region);
 
                     return overworld;
                 }

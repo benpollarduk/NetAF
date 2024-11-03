@@ -22,7 +22,7 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            var conchShell = new Item(Name, Description, true, item =>
+            var conchShell = new Item(Name, Description, true, interaction: item =>
             {
                 return item.Identifier.IdentifiableName switch
                 {

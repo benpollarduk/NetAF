@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -42,7 +43,8 @@ namespace NetAF.Assets.Locations
         /// </summary>
         /// <param name="identifier">The identifier for this overworld.</param>
         /// <param name="description">A description of this overworld.</param>
-        public Overworld(string identifier, string description) : this(new Identifier(identifier), new Description(description))
+        /// <param name="commands">This objects commands.</param>
+        public Overworld(string identifier, string description, CustomCommand[] commands = null) : this(new Identifier(identifier), new Description(description), commands)
         {
         }
 
@@ -51,10 +53,12 @@ namespace NetAF.Assets.Locations
         /// </summary>
         /// <param name="identifier">The identifier for this overworld.</param>
         /// <param name="description">A description of this overworld.</param>
-        public Overworld(Identifier identifier, Description description)
+        /// <param name="commands">This objects commands.</param>
+        public Overworld(Identifier identifier, Description description, CustomCommand[] commands = null)
         {
             Identifier = identifier;
             Description = description;
+            Commands = commands ?? [];
         }
 
         #endregion
