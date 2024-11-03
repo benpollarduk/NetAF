@@ -6,9 +6,9 @@ using NetAF.Assets.Locations;
 using NetAF.Assets;
 using NetAF.Utilities;
 using System.IO;
-using NetAF.Serialization.Persistence.Json;
-using NetAF.Serialization.Persistence;
 using NetAF.Commands.Persistence;
+using NetAF.Persistence;
+using NetAF.Persistence.Json;
 
 namespace NetAF.Tests.Commands.Persistence
 {

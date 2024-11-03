@@ -18,6 +18,14 @@ namespace NetAF.Tests.Logic
             }
         }
 
+        private class PlayerTemplate : IAssetTemplate<PlayableCharacter>
+        {
+            public PlayableCharacter Instantiate()
+            {
+                return new PlayableCharacter("Template player", string.Empty);
+            }
+        }
+
         [TestMethod]
         public void Given1Item_WhenFromGame_ThenCatalogContains1Item()
         {
@@ -146,6 +154,23 @@ namespace NetAF.Tests.Logic
             catalog.Register(new CharacterTemplate());
 
             Assert.AreEqual(2, catalog.Characters.Length);
+        }
+
+        [TestMethod]
+        public void Given1Player_WhenRegister1PlayerFromTemplate_ThenCatalogContains2Players()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, item);
+            room.AddCharacter(new(string.Empty, string.Empty));
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var catalog = AssetCatalog.FromGame(game);
+
+            catalog.Register(new PlayerTemplate());
+
+            Assert.AreEqual(2, catalog.Players.Length);
         }
     }
 }

@@ -13,9 +13,14 @@ namespace NetAF.Serialization
         #region Properties
 
         /// <summary>
-        /// Get or set the player serialization.
+        /// Get or set the active player identifier.
         /// </summary>
-        public CharacterSerialization Player { get; set; } = new(game?.Player);
+        public string ActivePlayerIdentifier { get; set; } = game?.Player?.Identifier?.IdentifiableName;
+
+        /// <summary>
+        /// Get or set the player serializations.
+        /// </summary>
+        public CharacterSerialization[] Players { get; set; } = game?.Catalog?.Players?.Select(x => new CharacterSerialization(x)).ToArray() ?? [];
 
         /// <summary>
         /// Get or set the overworld serialization.
@@ -25,7 +30,7 @@ namespace NetAF.Serialization
         /// <summary>
         /// Get or set the overworld serialization.
         /// </summary>
-        public PlayableCharacterLocationSerialization[] PlayableCharacterLocations { get; set; } = game?.GetInactivePlayerLocations().Select(x => new PlayableCharacterLocationSerialization(x)).ToArray() ?? [];
+        public PlayableCharacterLocationSerialization[] InactivePlayerLocations { get; set; } = game?.GetInactivePlayerLocations().Select(x => new PlayableCharacterLocationSerialization(x)).ToArray() ?? [];
 
         #endregion
 

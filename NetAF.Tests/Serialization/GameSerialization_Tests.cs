@@ -12,7 +12,7 @@ namespace NetAF.Tests.Serialization
     public class GameSerialization_Tests
     {
         [TestMethod]
-        public void GivenAPlayer_ThenPlayerIsNotNull()
+        public void GivenAPlayer_ThenPlayersIsNotNull()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -23,7 +23,39 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization result = new(game);
 
-            Assert.IsNotNull(result.Player);
+            Assert.IsNotNull(result.Players);
+        }
+
+        [TestMethod]
+        public void GivenAPlayer_ThenActivePlayerIdentifierIsNotNullOrEmpty()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("player", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            GameSerialization result = new(game);
+
+            Assert.IsNotNull(result.ActivePlayerIdentifier);
+            Assert.AreNotEqual(string.Empty, result.ActivePlayerIdentifier);
+        }
+
+        [TestMethod]
+        public void GivenNoPlayer_ThenActivePlayerIdentifierIsNull()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, item);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("player", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            game.ChangePlayer(null, false);
+
+            GameSerialization result = new(game);
+
+            Assert.IsNull(result.ActivePlayerIdentifier);
         }
 
         [TestMethod]
@@ -42,7 +74,7 @@ namespace NetAF.Tests.Serialization
         }
 
         [TestMethod]
-        public void Given2PlayableCharacterLocations_ThenPlayableCharacterLocationsContains2Elements()
+        public void Given2PlayableCharacterLocations_ThenInactivePlayerLocationsContains2Elements()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -55,7 +87,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization result = new(game);
 
-            Assert.AreEqual(2, result.PlayableCharacterLocations.Length);
+            Assert.AreEqual(2, result.InactivePlayerLocations.Length);
         }
 
         [TestMethod]

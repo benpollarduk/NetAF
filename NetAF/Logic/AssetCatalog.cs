@@ -39,6 +39,11 @@ namespace NetAF.Logic
         /// </summary>
         public IExaminable[] Examinables { get; private set; }
 
+        /// <summary>
+        /// Get the players.
+        /// </summary>
+        public PlayableCharacter[] Players { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -67,6 +72,7 @@ namespace NetAF.Logic
             Rooms = Register(Rooms, examinables.Where(x => x is Room room && !Rooms.Contains(room)).Cast<Room>().ToArray());
             Items = Register(Items, examinables.Where(x => x is Item item && !Items.Contains(item)).Cast<Item>().ToArray());
             Characters = Register(Characters, examinables.Where(x => x is NonPlayableCharacter character && !Characters.Contains(character)).Cast<NonPlayableCharacter>().ToArray());
+            Players = Register(Players, examinables.Where(x => x is PlayableCharacter character && !Players.Contains(character)).Cast<PlayableCharacter>().ToArray());
             ItemContainers = Register(ItemContainers, examinables.Where(x => x is IItemContainer container && !ItemContainers.Contains(container)).Cast<IItemContainer>().ToArray());
             Examinables = Register(Examinables, examinables.Where(x => !Examinables.Contains(x)).ToArray());
         }
@@ -110,12 +116,14 @@ namespace NetAF.Logic
             catalog.Items = GetAllItems(catalog.ItemContainers);
             catalog.Rooms = GetAllRooms(game);
             catalog.Characters = GetAllCharacters(catalog.Rooms);
+            catalog.Players = [game.Player];
 
             List<IExaminable> all = [];
             all.AddRange(catalog.Items);
             all.AddRange(catalog.ItemContainers);
             all.AddRange(catalog.Rooms);
             all.AddRange(catalog.Characters);
+            all.AddRange(catalog.Players);
             all.Add(game.Player);
 
             catalog.Examinables = all.Distinct().ToArray();

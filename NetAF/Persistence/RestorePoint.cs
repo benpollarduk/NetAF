@@ -1,7 +1,8 @@
 ﻿using NetAF.Logic;
+using NetAF.Serialization;
 using System;
 
-namespace NetAF.Serialization.Persistence
+namespace NetAF.Persistence
 {
     /// <summary>
     /// Represents a restore point for a Game.
