@@ -46,7 +46,7 @@ namespace NetAF.Tests.Commands.Game
         public void GivenTargetIsDead_WhenInvoke_ThenError()
         {
             var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
-            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, null, false, null);
+            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, false);
             var command = new Talk(npc);
 
             var result = command.Invoke(game);

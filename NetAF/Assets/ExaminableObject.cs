@@ -17,9 +17,9 @@ namespace NetAF.Assets
         #region Properties
 
         /// <summary>
-        /// Get or set the callback handling all examination of this object.
+        /// Get the callback handling all examination of this object.
         /// </summary>
-        public ExaminationCallback Examination { get; set; } = request =>
+        public ExaminationCallback Examination { get; protected set; } = request =>
         {
             StringBuilder description = new();
 
@@ -60,20 +60,7 @@ namespace NetAF.Assets
 
         #endregion
 
-        #region Overrides of Object
-
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
-        {
-            return Identifier.Name;
-        }
-
-        #endregion
-
-        #region IExaminable Members
+        #region Implementation of IExaminable
 
         /// <summary>
         /// Get this objects identifier.
@@ -81,14 +68,14 @@ namespace NetAF.Assets
         public Identifier Identifier { get; protected set; }
 
         /// <summary>
-        /// Get or set a description of this object.
+        /// Get a description of this object.
         /// </summary>
-        public Description Description { get; set; }
+        public Description Description { get; protected set; }
 
         /// <summary>
-        /// Get or set this objects commands.
+        /// Get this objects commands.
         /// </summary>
-        public CustomCommand[] Commands { get; set; }
+        public CustomCommand[] Commands { get; protected set; }
 
         /// <summary>
         /// Get the attribute manager for this object.
@@ -126,6 +113,12 @@ namespace NetAF.Assets
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
             Attributes.RestoreFrom(serialization.AttributeManager);
+
+            foreach (var command in serialization.Commands)
+            {
+                var match = Array.Find(Commands, x => x.Help.Command.Equals(command.Command));
+                match?.RestoreFrom(command);
+            }
         }
 
         #endregion

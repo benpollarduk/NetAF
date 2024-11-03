@@ -22,18 +22,13 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
         /// <returns>The item.</returns>
         public Item Instantiate()
         {
-            return new(Name, Description)
+            return new(Name, Description, interaction: item =>
             {
-                Interaction = item =>
-                {
-                    if (item != null && CoffeeMug.Name.EqualsIdentifier(item.Identifier))
-                    {
-                        return new(InteractionEffect.SelfContained, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
-                    }
+                if (item != null && CoffeeMug.Name.EqualsIdentifier(item.Identifier))
+                    return new(InteractionEffect.SelfContained, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
 
-                    return new(InteractionEffect.NoEffect, item);
-                }
-            };
+                return new(InteractionEffect.NoEffect, item);
+            });
         }
 
         #endregion

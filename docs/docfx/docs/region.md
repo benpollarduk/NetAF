@@ -60,14 +60,15 @@ region.UnlockDoorPair(Direction.East);
 Like all Examinable objects, Regions can be assigned custom commands.
 
 ```csharp
-region.Commands =
+Region region = null;
+region = new("Woodlands", "A quiet woodland.", commands:
 [
     new CustomCommand(new CommandHelp("Warp", "Warp to the start."), true, (game, args) =>
     {
         region.JumpToRoom(0, 0, 0);
         return new Reaction(ReactionResult.OK, "You warped to the start.");
     })
-];
+]);
 ```
 
 ## RegionMaker

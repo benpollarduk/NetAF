@@ -15,13 +15,13 @@ namespace NetAF.Assets
         /// </summary>
         Identifier Identifier { get; }
         /// <summary>
-        /// Get or set a description of this object.
+        /// Get a description of this object.
         /// </summary>
-        Description Description { get; set; }
+        Description Description { get; }
         /// <summary>
-        /// Get or set this objects commands.
+        /// Get this objects commands.
         /// </summary>
-        CustomCommand[] Commands { get; set; }
+        CustomCommand[] Commands { get; }
         /// <summary>
         /// Get the attribute manager for this object.
         /// </summary>

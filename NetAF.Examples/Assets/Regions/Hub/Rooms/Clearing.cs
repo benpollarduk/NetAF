@@ -45,10 +45,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
             );
 
-            room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."))
-            {
-                Conversation = conversation
-            });
+            room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."), conversation: conversation));
 
             return room;
         }

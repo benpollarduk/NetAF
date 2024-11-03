@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Commands;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
@@ -22,9 +23,9 @@ namespace NetAF.Assets.Locations
         public bool IsLocked { get; private set; }
 
         /// <summary>
-        /// Get or set the interaction.
+        /// Get the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new InteractionResult(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; private set; }
 
         #endregion
 
@@ -37,12 +38,16 @@ namespace NetAF.Assets.Locations
         /// <param name="isLocked">If this exit is locked.</param>
         /// <param name="identifier">An identifier for the exit.</param>
         /// <param name="description">A description of the exit.</param>
-        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null)
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
         {
             Identifier = identifier ?? new(direction.ToString());
             Direction = direction;
             Description = description ?? GenerateDescription();
             IsLocked = isLocked;
+            Commands = commands ?? [];
+            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 
         #endregion

@@ -50,7 +50,7 @@ namespace NetAF.Tests.Commands.Conversation
             var response = new Response("");
             var paragraph = new Paragraph(string.Empty) { Responses = [response] };
             var conversation = new NetAF.Conversations.Conversation(paragraph);
-            var converser = new NonPlayableCharacter(string.Empty, string.Empty) { Conversation = conversation };
+            var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: conversation);
             game.StartConversation(converser);
             var command = new Respond(response);
 

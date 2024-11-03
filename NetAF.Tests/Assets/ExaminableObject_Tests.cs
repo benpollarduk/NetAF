@@ -20,15 +20,14 @@ namespace NetAF.Tests.Assets
         }
 
         [TestMethod]
-        public void GivenExamine_WhenDefaultExaminationWith1CustomCommand_ThenCustomCommandIsIncuded()
+        public void GivenExamine_WhenDefaultExaminationWith1CustomCommand_ThenCustomCommandIsIncluded()
         {
-            var i = new Item("Test", "Test Description.")
-            {
-                Commands =
-                [
-                    new CustomCommand(new CommandHelp("Test Command", "Test Command Descritpion."), true, (_, _) => new Reaction(ReactionResult.OK, ""))
-                ]
-            };
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new CommandHelp("Test Command", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, ""))
+            ];
+
+            var i = new Item("Test", "Test Description.", commands: commands);
 
             var result = i.Examine(ExaminationScene.NoScene);
 
@@ -36,16 +35,15 @@ namespace NetAF.Tests.Assets
         }
 
         [TestMethod]
-        public void GivenExamine_WhenDefaultExaminationWith2CustomCommands_ThenCustomCommandsAreBothIncuded()
+        public void GivenExamine_WhenDefaultExaminationWith2CustomCommands_ThenCustomCommandsAreBothIncluded()
         {
-            var i = new Item("Test", "Test Description.")
-            {
-                Commands =
-                [
-                    new CustomCommand(new CommandHelp("A*", "Test Command Descritpion."), true, (_, _) => new Reaction(ReactionResult.OK, "")),
-                    new CustomCommand(new CommandHelp("B*", "Test Command Descritpion."), true, (_, _) => new Reaction(ReactionResult.OK, ""))
-                ]
-            };
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new CommandHelp("A*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, "")),
+                new CustomCommand(new CommandHelp("B*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, ""))
+            ];
+
+            var i = new Item("Test", "Test Description.", commands: commands);
 
             var result = i.Examine(ExaminationScene.NoScene);
 

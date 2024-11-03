@@ -66,19 +66,16 @@ namespace NetAF.Tests.Assets.Characters
         public void GivenUseItem_WhenFatalEffect_ThenIsAliveIsFalse()
         {
             var item = new Item("Test", string.Empty);
-            var pc = new PlayableCharacter(string.Empty, string.Empty)
+            var pc = new PlayableCharacter(string.Empty, string.Empty, interaction: i =>
             {
-                Interaction = i =>
-                {
-                    if (i == null)
-                        return new InteractionResult(InteractionEffect.NoEffect, null);
+                if (i == null)
+                    return new InteractionResult(InteractionEffect.NoEffect, null);
 
-                    if (i.Identifier.Name == "Test")
-                        return new InteractionResult(InteractionEffect.FatalEffect, i, "");
+                if (i.Identifier.Name == "Test")
+                    return new InteractionResult(InteractionEffect.FatalEffect, i, "");
 
-                    return new InteractionResult(InteractionEffect.NoEffect, i);
-                }
-            };
+                return new InteractionResult(InteractionEffect.NoEffect, i);
+            });
 
             pc.UseItem(item, pc);
 

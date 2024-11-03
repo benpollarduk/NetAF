@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
+﻿using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Examples.Assets.Regions.Flat.Items;
 using NetAF.Examples.Assets.Regions.Flat.NPCs;
@@ -28,14 +27,11 @@ namespace NetAF.Examples.Assets.Regions.Flat
         {
             var roof = new Roof().Instantiate();
             var easternHallway = new EasternHallway().Instantiate();
-            var spareBedroom = new SpareBedroom().Instantiate();
             var lounge = new Lounge().Instantiate();
 
-            lounge.Description = new ConditionalDescription("Your in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. There is what appears to be a lead of some sort poking out from underneath the sofa. The kitchen is to the north.",
-                "Your in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. The kitchen is to the north.",
-                () => roof.ContainsItem(Lead.Name));
-
-            spareBedroom.Interaction = item =>
+            Room spareBedroom = null;
+            
+            spareBedroom = new SpareBedroom(item =>
             {
                 if (Lead.Name.EqualsIdentifier(item.Identifier))
                 {
@@ -62,7 +58,7 @@ namespace NetAF.Examples.Assets.Regions.Flat
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            }).Instantiate();
 
             var regionMaker = new RegionMaker(Name, Description)
             {

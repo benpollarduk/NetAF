@@ -20,9 +20,9 @@ namespace NetAF.Assets.Characters
         public bool IsAlive { get; protected set; } = true;
 
         /// <summary>
-        /// Get or set the interaction.
+        /// Get the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; protected set; }
 
         #endregion
 

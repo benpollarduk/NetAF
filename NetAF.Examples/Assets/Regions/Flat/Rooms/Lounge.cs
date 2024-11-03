@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Interaction;
+﻿using NetAF.Assets;
+using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Examples.Assets.Regions.Flat.Items;
 using NetAF.Examples.Assets.Regions.Flat.NPCs;
@@ -23,16 +24,13 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, string.Empty, new Exit(Direction.North));
+            Room room = null;
 
-            room.AddCharacter(new Beth().Instantiate());
-            room.AddItem(new Map().Instantiate());
-            room.AddItem(new Canvas().Instantiate());
-            room.AddItem(new Table().Instantiate());
-            room.AddItem(new LoungeTV().Instantiate());
-            room.AddItem(new Lead().Instantiate());
+            ConditionalDescription description = new("You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. There is what appears to be a lead of some sort poking out from underneath the sofa. The kitchen is to the north.",
+                                                     "You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. The kitchen is to the north.",
+                                                     () => room.ContainsItem(Lead.Name));
 
-            room.Interaction = item =>
+            room = new(new Identifier(Name), description, [new Exit(Direction.North)], interaction: item =>
             {
                 if (item != null)
                 {
@@ -56,7 +54,14 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            });
+
+            room.AddCharacter(new Beth().Instantiate());
+            room.AddItem(new Map().Instantiate());
+            room.AddItem(new Canvas().Instantiate());
+            room.AddItem(new Table().Instantiate());
+            room.AddItem(new LoungeTV().Instantiate());
+            room.AddItem(new Lead().Instantiate());
 
             return room;
         }

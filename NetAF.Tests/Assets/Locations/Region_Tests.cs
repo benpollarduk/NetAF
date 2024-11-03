@@ -141,8 +141,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenCanMove_WhenMove_ThenTrue()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -156,8 +156,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenCantMove_WhenMove_ThenFalse()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -171,8 +171,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenCanMove_WhenMove_ThenCurrentRoomIsNewRoom()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -186,8 +186,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenCantMove_WhenMove_ThenCurrentRoomIsNotChanged()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -201,8 +201,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenNoAdjoiningRoom_WhenGetAdjoiningRoom_ThenNull()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -216,8 +216,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenAdjoiningRoom_WhenGetAdjoiningRoom_ThenNotNull()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -231,8 +231,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given2LockedDoors_WhenUnlockDoorPair_ThenTrue()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East, true));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West, true));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East, true)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West, true)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -246,8 +246,8 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given2LockedDoors_WhenUnlockDoorPair_ThenBothDoorsUnlocked()
         {
-            var room1 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.East, true));
-            var room2 = new Room(Identifier.Empty, Description.Empty, new Exit(Direction.West, true));
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East, true)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West, true)]);
 
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
@@ -322,7 +322,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenResultRoomQualsInputRoom()
+        public void GivenRoomAtX0Y0Z0_WhenNextPosition_ThenResultRoomEqualsInputRoom()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room(Identifier.Empty, Description.Empty);

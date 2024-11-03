@@ -41,11 +41,9 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
         /// <returns>The asset.</returns>
         public NonPlayableCharacter Instantiate()
         {
-            var saria = new NonPlayableCharacter(Name, Description);
+            NonPlayableCharacter saria = null;
 
-            saria.AddItem(new TailKey().Instantiate());
-
-            saria.Conversation = new Conversation
+            Conversation conversation = new
             (
                 new("Hi Link, how's it going?"),
                 new("I lost my red rupee, if you find it will you please bring it to me?"),
@@ -53,7 +51,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                 new("OK Link your annoying me now, I'm just going to ignore you.", new First())
             );
 
-            saria.Interaction = item =>
+            saria = new NonPlayableCharacter(Name, Description, conversation: conversation, interaction: item =>
             {
                 saria.FindItem(TailKey.Name, out var key);
 
@@ -84,7 +82,9 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                 }
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            });
+
+            saria.AddItem(new TailKey().Instantiate());
 
             return saria;
         }

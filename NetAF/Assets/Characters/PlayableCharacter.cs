@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Commands;
 
 namespace NetAF.Assets.Characters
 {
@@ -21,47 +22,57 @@ namespace NetAF.Assets.Characters
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="items">The players items.</param>
-        public PlayableCharacter(string identifier, string description, params Item[] items) : this(new Identifier(identifier), new Description(description), items)
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public PlayableCharacter(string identifier, string description, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), items, commands, interaction)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="items">The players items.</param>
-        public PlayableCharacter(Identifier identifier, Description description, params Item[] items) : this(identifier, description, true, items)
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public PlayableCharacter(Identifier identifier, Description description, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(identifier, description, true, items, commands, interaction)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="canConverse">If this PlayableCharacter can converse with an IConverser.</param>
-        /// <param name="items">The players items.</param>
-        public PlayableCharacter(string identifier, string description, bool canConverse, params Item[] items) : this(new Identifier(identifier), new Description(description), canConverse, items)
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="canConverse">If this object can converse with an IConverser.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public PlayableCharacter(string identifier, string description, bool canConverse, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), canConverse, items, commands, interaction)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the PlayableCharacter class.
         /// </summary>
-        /// <param name="identifier">This PlayableCharacter's identifier.</param>
-        /// <param name="description">The description of the player.</param>
-        /// <param name="canConverse">If this PlayableCharacter can converse with an IConverser.</param>
-        /// <param name="items">The players items.</param>
-        public PlayableCharacter(Identifier identifier, Description description, bool canConverse, params Item[] items)
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="canConverse">If this object can converse with an IConverser.</param>
+        /// <param name="items">The items.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public PlayableCharacter(Identifier identifier, Description description, bool canConverse, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
         {
             Identifier = identifier;
             Description = description;
             CanConverse = canConverse;
             Items = items ?? [];
+            Commands = commands ?? [];
+            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 
         #endregion

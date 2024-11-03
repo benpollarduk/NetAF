@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Interaction;
+﻿using NetAF.Assets;
+using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Examples.Assets.Regions.Zelda.Items;
 using NetAF.Examples.Assets.Regions.Zelda.NPCs;
@@ -24,10 +25,10 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, new Exit(Direction.South), new Exit(Direction.North), new Exit(Direction.East, true));
-            var door = new TailDoor().Instantiate();
+            var room = new Room(Name, Description, [new Exit(Direction.South), new Exit(Direction.North), new Exit(Direction.East, true)]);
+            Item door = null;
 
-            door.Interaction = item =>
+            door = new TailDoor(item =>
             {
                 if (TailKey.Name.EqualsExaminable(item))
                 {
@@ -42,7 +43,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                     return new(InteractionEffect.NoEffect, item, "Clang clang!");
 
                 return new(InteractionEffect.NoEffect, item);
-            };
+            }).Instantiate();
 
             room.AddItem(door);
             room.AddCharacter(new Saria(room).Instantiate());

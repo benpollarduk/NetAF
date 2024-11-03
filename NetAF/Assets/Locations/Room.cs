@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
+using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -38,9 +39,9 @@ namespace NetAF.Assets.Locations
         public NonPlayableCharacter[] Characters { get; private set; } = [];
 
         /// <summary>
-        /// Get or set the interaction.
+        /// Get the interaction.
         /// </summary>
-        public InteractionCallback Interaction { get; set; } = i => new(InteractionEffect.NoEffect, i);
+        public InteractionCallback Interaction { get; private set; }
 
         /// <summary>
         /// Get an exit.
@@ -64,7 +65,10 @@ namespace NetAF.Assets.Locations
         /// <param name="identifier">This rooms identifier.</param>
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
-        public Room(string identifier, string description, params Exit[] exits) : this(new Identifier(identifier), new Description(description), exits, null)
+        /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null) : this(new Identifier(identifier), new Description(description), exits, items, commands, interaction)
         {
         }
 
@@ -75,33 +79,16 @@ namespace NetAF.Assets.Locations
         /// <param name="description">This rooms description.</param>
         /// <param name="exits">The exits from this room.</param>
         /// <param name="items">The items in this room.</param>
-        public Room(string identifier, string description, Exit[] exits = null, params Item[] items) : this(new Identifier(identifier), new Description(description), exits, items)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Room class.
-        /// </summary>
-        /// <param name="identifier">This rooms identifier.</param>
-        /// <param name="description">This rooms description.</param>
-        /// <param name="exits">The exits from this room.</param>
-        public Room(Identifier identifier, Description description, params Exit[] exits) : this(identifier, description, exits, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Room class.
-        /// </summary>
-        /// <param name="identifier">This rooms identifier.</param>
-        /// <param name="description">This rooms description.</param>
-        /// <param name="exits">The exits from this room.</param>
-        /// <param name="items">The items in this room.</param>
-        public Room(Identifier identifier, Description description, Exit[] exits = null, params Item[] items)
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null)
         {
             Identifier = identifier;
             Description = description;
             Exits = exits ?? [];
             Items = items ?? [];
+            Commands = commands ?? [];
+            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
         }
 
         #endregion

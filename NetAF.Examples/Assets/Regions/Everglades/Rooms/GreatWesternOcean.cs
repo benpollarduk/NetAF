@@ -21,7 +21,7 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, new Exit(Direction.East));
+            var room = new Room(Name, Description, [new Exit(Direction.East)]);
             room.AddItem(new ConchShell().Instantiate());
             return room;
         }

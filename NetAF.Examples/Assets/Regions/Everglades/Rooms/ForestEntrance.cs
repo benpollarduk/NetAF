@@ -20,7 +20,7 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            return new(Name, Description, new Exit(Direction.North));
+            return new(Name, Description, [new Exit(Direction.North)]);
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace NetAF.Interpretation
             var commands = new List<CustomCommand>();
 
             foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null))
-                commands.AddRange(examinable.Commands);
+                commands.AddRange(examinable.Commands.Where(x => x.IsPlayerVisible || x.InterpretIfNotPlayerVisible));
 
             // check looking for just command, not including args
             var command = commands.Find(x => x.Help.Command.InsensitiveEquals(commandName));
