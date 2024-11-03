@@ -1,6 +1,6 @@
 ﻿using NetAF.Assets.Interaction;
 using NetAF.Interpretation;
-using NetAF.Serialization.Persistence.Json;
+using NetAF.Persistence.Json;
 
 namespace NetAF.Commands.Persistence
 {

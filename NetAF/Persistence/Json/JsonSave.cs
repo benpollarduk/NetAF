@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace NetAF.Serialization.Persistence.Json
+namespace NetAF.Persistence.Json
 {
     /// <summary>
     /// Provides persistence for a save in the Json format.

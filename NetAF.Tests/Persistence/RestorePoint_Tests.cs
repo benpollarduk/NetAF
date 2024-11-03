@@ -5,9 +5,9 @@ using NetAF.Assets.Locations;
 using NetAF.Logic;
 using NetAF.Utilities;
 using System;
-using NetAF.Serialization.Persistence;
+using NetAF.Persistence;
 
-namespace NetAF.Tests.Serialization.Persistence
+namespace NetAF.Tests.Persistence
 {
     [TestClass]
     public class RestorePoint_Tests

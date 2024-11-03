@@ -540,12 +540,19 @@ namespace NetAF.Logic
             // resolve asset locations
             AssetArranger.Arrange(this, serialization);
 
-            // restore all
-            foreach (var location in serialization.PlayableCharacterLocations)
+            // restore all inactive player locations
+            foreach (var location in serialization.InactivePlayerLocations)
                 inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
 
-            // restore player
-            serialization.Player.Restore(Player);
+            // restore all players
+            foreach (var player in serialization.Players)
+            {
+                var match = Array.Find(Catalog.Players, x => x.Identifier.Equals(player.Identifier));
+                match?.RestoreFrom(player);
+            }
+
+            // restore active player
+            Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
 
             // restore overworld
             serialization.Overworld.Restore(Overworld);

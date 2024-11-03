@@ -1,8 +1,8 @@
 ﻿using NetAF.Assets.Interaction;
 using NetAF.Interpretation;
-using NetAF.Serialization.Persistence.Json;
-using NetAF.Serialization.Persistence;
 using System.IO;
+using NetAF.Persistence;
+using NetAF.Persistence.Json;
 
 namespace NetAF.Commands.Persistence
 {

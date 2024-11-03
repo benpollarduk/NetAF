@@ -46,8 +46,9 @@ namespace NetAF.Logic.Arrangement
         {
             List<ObjectToContainerMapping> records = [];
 
-            foreach (var item in serialization.Player.Items)
-                records.Add(new(item.Identifier, serialization.Player.Identifier));
+            foreach (var player in serialization.Players)
+                foreach (var item in player.Items)
+                    records.Add(new(item.Identifier, player.Identifier));
 
             foreach (var region in serialization.Overworld.Regions)
             {
