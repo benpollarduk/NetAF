@@ -13,17 +13,17 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get or set the player identifier.
         /// </summary>
-        public string PlayerIdentifier { get; set; } = location.PlayerIdentifier;
+        public string PlayerIdentifier { get; set; } = location?.PlayerIdentifier;
 
         /// <summary>
         /// Get or set the region identifier.
         /// </summary>
-        public string RegionIdentifier { get; set; } = location.RegionIdentifier;
+        public string RegionIdentifier { get; set; } = location?.RegionIdentifier;
 
         /// <summary>
         /// Get or set the room identifier.
         /// </summary>
-        public string RoomIdentifier { get; set; } = location.RoomIdentifier;
+        public string RoomIdentifier { get; set; } = location?.RoomIdentifier;
 
         #endregion
 

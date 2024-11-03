@@ -540,6 +540,10 @@ namespace NetAF.Logic
             // resolve asset locations
             AssetArranger.Arrange(this, serialization);
 
+            // restore all
+            foreach (var location in serialization.PlayableCharacterLocations)
+                inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
+
             // restore player
             serialization.Player.Restore(Player);
 
@@ -548,10 +552,6 @@ namespace NetAF.Logic
 
             // restore player locations
             inactivePlayerLocations.Clear();
-
-            // restore all
-            foreach (var location in serialization.PlayableCharacterLocations)
-                inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
         }
 
         #endregion

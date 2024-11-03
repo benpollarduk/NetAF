@@ -32,7 +32,8 @@ namespace NetAF.Commands.Persistence
         {
             var path = args[0];
             var fileName = Path.GetFileName(path);
-            var result = JsonSave.ToFile(path, RestorePoint.Create(fileName, game), out var message);
+            var restorePoint = RestorePoint.Create(fileName, game);
+            var result = JsonSave.ToFile(path, restorePoint, out var message);
 
             if (!result)
                 return new(ReactionResult.Error, $"Failed to save: {message}");
