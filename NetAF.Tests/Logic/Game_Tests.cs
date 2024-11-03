@@ -437,5 +437,36 @@ namespace NetAF.Tests.Logic
 
             Assert.AreEqual("Room A", game.Overworld.CurrentRegion.CurrentRoom.Identifier.Name);
         }
+
+        [TestMethod]
+        public void GivenSimpleGame_WhenChangePlayerToNull_ThenPlayerUnchanged()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, new Exit(Direction.North));
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, new Exit(Direction.South));
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            game.ChangePlayer(null, false);
+
+            Assert.IsNotNull(game.Player);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGame_WhenChangePlayerToSamePlayerThenGetInactivePlayerLocations_ThenNoEntries()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, new Exit(Direction.North));
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, new Exit(Direction.South));
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+
+            game.ChangePlayer(game.Player, false);
+            var result = game.GetInactivePlayerLocations();
+
+            Assert.AreEqual(0, result.Length);
+        }
     }
 }
