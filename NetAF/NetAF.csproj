@@ -15,7 +15,7 @@
     <FileVersion>0.0.0.0</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>$(AssemblyName)</Title>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
@@ -34,7 +34,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\Readme.md">
+    <None Include="..\.nuget\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
