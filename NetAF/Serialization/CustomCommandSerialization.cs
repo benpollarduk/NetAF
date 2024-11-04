@@ -11,9 +11,9 @@ namespace NetAF.Serialization.Assets
         #region Properties
 
         /// <summary>
-        /// Get or set the command.
+        /// Get or set the command name.
         /// </summary>
-        public string Command { get; set; } = command?.Help?.Command;
+        public string CommandName { get; set; } = command?.Help?.Command;
 
         /// <summary>
         /// Get or set if it is player visible.

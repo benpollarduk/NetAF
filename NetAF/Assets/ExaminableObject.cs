@@ -116,7 +116,7 @@ namespace NetAF.Assets
 
             foreach (var command in serialization.Commands)
             {
-                var match = Array.Find(Commands, x => x.Help.Command.Equals(command.Command));
+                var match = Array.Find(Commands, x => x.Help.Command.Equals(command.CommandName));
                 match?.RestoreFrom(command);
             }
         }

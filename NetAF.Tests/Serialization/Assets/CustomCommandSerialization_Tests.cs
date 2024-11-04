@@ -10,13 +10,13 @@ namespace NetAF.Tests.Serialization.Assets
     public class CustomCommandSerialization_Tests
     {
         [TestMethod]
-        public void GivenCommandNameIsA_ThenCommandIsA()
+        public void GivenCommandNameIsA_ThenCommandNameIsA()
         {
             CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_,_) => new Reaction(ReactionResult.OK, string.Empty));
 
             CustomCommandSerialization result = new(command);
 
-            Assert.AreEqual("A", result.Command);
+            Assert.AreEqual("A", result.CommandName);
         }
 
         [TestMethod]
