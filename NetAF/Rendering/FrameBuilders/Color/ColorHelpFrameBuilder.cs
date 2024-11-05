@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 
@@ -87,7 +88,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                 {
                     gridStringBuilder.DrawWrapped(command.Command, leftMargin, lastY + 1, availableWidth, CommandColor, out _, out lastY);
                     gridStringBuilder.DrawWrapped("-", leftMargin + padding, lastY, availableWidth, CommandColor, out _, out lastY);
-                    gridStringBuilder.DrawWrapped(command.Description, leftMargin + padding + 2, lastY, availableWidth, CommandDescriptionColor, out _, out lastY);
+                    gridStringBuilder.DrawWrapped(command.Description.EnsureFinishedSentence(), leftMargin + padding + 2, lastY, availableWidth, CommandDescriptionColor, out _, out lastY);
                 }
                 else if (!string.IsNullOrEmpty(command.Command) && string.IsNullOrEmpty(command.Description))
                 {

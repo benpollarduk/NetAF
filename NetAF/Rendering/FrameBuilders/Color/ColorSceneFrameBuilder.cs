@@ -180,7 +180,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                         var contextualCommand = contextualCommands[index];
                         gridStringBuilder.DrawWrapped(contextualCommand.Command, leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
                         gridStringBuilder.DrawWrapped("-", dashStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
-                        gridStringBuilder.DrawWrapped(contextualCommand.Description, descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
+                        gridStringBuilder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
 
                         // only continue if not run out of space - the 1 is for the border the ...
                         if ((index < contextualCommands.Length - 1) && (lastY + 1 + requiredSpaceForPrompt >= height))
