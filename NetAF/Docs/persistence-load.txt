@@ -1,0 +1,20 @@
+title Persistence - Load
+
+participant Game
+participant Load
+participant JsonSave
+participant RestorePoint
+participant GameSerialization
+
+
+note over Load: Command
+Game->Load: Invoke
+Load->JsonSave:FromFile
+JsonSave->JsonSave:Read
+JsonSave->JsonSave:FromJson
+JsonSave->RestorePoint:Deserialize
+RestorePoint->GameSerialization:Deserialize
+GameSerialization->RestorePoint:GameSerialization
+RestorePoint->JsonSave:RestorePoint
+JsonSave->Load:RestorePoint
+Load->RestorePoint: Restore (Game)
