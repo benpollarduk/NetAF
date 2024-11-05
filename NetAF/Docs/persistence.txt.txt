@@ -1,0 +1,15 @@
+title Persistence
+
+participant Save (Command)
+participant RestorePoint
+participant GameSerialization
+participant JsonSave
+
+Save (Command)->RestorePoint:Create
+RestorePoint->GameSerialization:Construct from Game
+GameSerialization->RestorePoint:GameSerialization
+RestorePoint->Save (Command):RestorePoint
+Save (Command)->JsonSave:ToFile
+JsonSave->JsonSave:ToJson
+JsonSave->JsonSave:Write
+JsonSave->Save (Command):Result
