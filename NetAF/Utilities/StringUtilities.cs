@@ -10,7 +10,7 @@ namespace NetAF.Utilities
     /// <summary>
     /// Provides a helper class for string interpretation.
     /// </summary>
-    internal static class StringUtilities
+    public static class StringUtilities
     {
         /// <summary>
         /// Get the new line string.
@@ -122,7 +122,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="examinables">The examinables.</param>
         /// <returns>The sentence.</returns>
-        internal static string ConstructExaminablesAsSentence(IExaminable[] examinables)
+        public static string ConstructExaminablesAsSentence(IExaminable[] examinables)
         {
             if (!examinables.Any())
                 return string.Empty;
@@ -157,7 +157,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="attributes">The attributes.</param>
         /// <returns>The sentence.</returns>
-        internal static string ConstructAttributesAsString(Dictionary<Attribute, int> attributes)
+        public static string ConstructAttributesAsString(Dictionary<Attribute, int> attributes)
         {
             if (attributes?.Any() != true)
                 return string.Empty;
