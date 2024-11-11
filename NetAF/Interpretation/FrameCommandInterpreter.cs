@@ -7,7 +7,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting frame commands.
     /// </summary>
-    internal class FrameCommandInterpreter : IInterpreter
+    public sealed class FrameCommandInterpreter : IInterpreter
     {
         #region Constants
 

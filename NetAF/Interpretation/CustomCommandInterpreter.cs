@@ -10,7 +10,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting custom commands.
     /// </summary>
-    public class CustomCommandInterpreter : IInterpreter
+    public sealed class CustomCommandInterpreter : IInterpreter
     {
         #region Implementation of IInterpreter
 

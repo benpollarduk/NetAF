@@ -1,6 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Console.Rendering.FrameBuilders;
+using NetAF.Console.Rendering.FrameBuilders.Color;
 
 namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 {
@@ -12,7 +14,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
 
@@ -26,7 +28,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
@@ -41,7 +43,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);

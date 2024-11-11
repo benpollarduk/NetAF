@@ -4,6 +4,8 @@ using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Console.Rendering.FrameBuilders;
+using NetAF.Console.Rendering.FrameBuilders.Color;
 
 namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 {
@@ -31,7 +33,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 
                 var region = regionMaker.Make(1, 1, 0);
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
+                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -61,7 +63,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 
                 var region = regionMaker.Make(1, 1, 0);
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
+                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -91,7 +93,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 
                 var region = regionMaker.Make(1, 1, 0);
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
+                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -121,7 +123,7 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 
                 var region = regionMaker.Make(1, 1, 0);
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder());
+                var builder = new ColorSceneFrameBuilder(gridStringBuilder, new ColorRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);

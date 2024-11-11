@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets.Characters;
+using NetAF.Console.Rendering.Frames;
 using NetAF.Conversations;
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;

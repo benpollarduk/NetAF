@@ -1,4 +1,5 @@
-﻿using NetAF.Extensions;
+﻿using NetAF.Console.Rendering.Frames;
+using NetAF.Extensions;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.Frames;
 

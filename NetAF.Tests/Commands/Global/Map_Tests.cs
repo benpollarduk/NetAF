@@ -29,7 +29,7 @@ namespace NetAF.Tests.Commands.Global
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new NetAF.Assets.Locations.Exit(Direction.North)]), 0, 0, 0);
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new NetAF.Assets.Locations.Exit(Direction.South)]), 0, 1, 0);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Map();
 
             var result = command.Invoke(game);

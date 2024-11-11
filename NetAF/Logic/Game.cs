@@ -62,7 +62,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the configuration.
         /// </summary>
-        public GameConfiguration Configuration { get; private set; }
+        public IGameConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Get the end conditions.
@@ -107,7 +107,7 @@ namespace NetAF.Logic
         /// <param name="overworld">The games overworld.</param>
         /// <param name="endConditions">The games end conditions.</param>
         /// <param name="configuration">The configuration to use for this game.</param>
-        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, GameConfiguration configuration)
+        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, IGameConfiguration configuration)
         {
             Info = info;
             Introduction = introduction;
@@ -141,14 +141,14 @@ namespace NetAF.Logic
 
             IsExecuting = true;
 
-            Configuration.Adapter.Setup(this);
+            Configuration.Adapter?.Setup(this);
 
-            Refresh(Configuration.FrameBuilders.TitleFrameBuilder.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.TitleFrameBuilder?.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
             do
             {
                 if (ActiveConverser != null)
-                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter?.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+                    Refresh(Configuration.FrameBuilders?.ConversationFrameBuilder?.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter?.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
                 var input = GetInput();
                 var reaction = ExecuteLogicOnce(input, out var displayReactionToInput);
@@ -232,12 +232,12 @@ namespace NetAF.Logic
         /// <returns>The user input.</returns>
         private string GetInput()
         {
-            if (CurrentFrame.AcceptsInput)
+            if (CurrentFrame?.AcceptsInput ?? false)
                 return Configuration.Adapter.WaitForInput();
             
             var frame = CurrentFrame;
 
-            while (!Configuration.Adapter.WaitForAcknowledge() && CurrentFrame == frame)
+            while (!Configuration.Adapter?.WaitForAcknowledge() ?? false && CurrentFrame == frame)
                 DrawFrame(CurrentFrame);
 
             return string.Empty;
@@ -254,7 +254,7 @@ namespace NetAF.Logic
                 return;
 
             GetInput();
-            Refresh(Configuration.FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.GameOverFrameBuilder?.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
         }
@@ -271,7 +271,7 @@ namespace NetAF.Logic
                 return false;
 
             GetInput();
-            Refresh(Configuration.FrameBuilders.CompletionFrameBuilder.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.CompletionFrameBuilder?.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
 
@@ -286,7 +286,7 @@ namespace NetAF.Logic
         /// <returns>The reaction to the input.</returns>
         private Reaction ProcessInput(string input, out bool displayReaction)
         {
-            if (!CurrentFrame.AcceptsInput)
+            if (!CurrentFrame?.AcceptsInput ?? false)
             {
                 Refresh(string.Empty);
                 displayReaction = false;
@@ -373,7 +373,7 @@ namespace NetAF.Logic
         private void Enter()
         {
             State = GameState.Active;
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.SceneFrameBuilder?.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace NetAF.Logic
         /// <param name="message">Any message to display.</param>
         private void Refresh(string message)
         {
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.SceneFrameBuilder?.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace NetAF.Logic
                 .. Configuration.Interpreter.GetContextualCommandHelp(this),
             ];
 
-            Refresh(Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.HelpFrameBuilder?.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayMap()
         {
-            Refresh(Configuration.FrameBuilders.RegionMapFrameBuilder.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.RegionMapFrameBuilder?.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayAbout()
         {
-            Refresh(Configuration.FrameBuilders.AboutFrameBuilder.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.AboutFrameBuilder?.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace NetAF.Logic
         /// <param name="message">The message.</param>
         public void DisplayTransition(string title, string message)
         {
-            Refresh(Configuration.FrameBuilders.TransitionFrameBuilder.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders?.TransitionFrameBuilder?.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         #endregion
@@ -497,7 +497,7 @@ namespace NetAF.Logic
         /// <param name="configuration">The configuration for the game.</param>
         /// <param name="setup">A setup function to run on the created game after it has been created.</param>
         /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
+        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, IGameConfiguration configuration, GameSetupCallback setup = null)
         {
             return () =>
             {

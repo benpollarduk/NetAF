@@ -207,7 +207,7 @@ namespace NetAF.Extensions
         /// <param name="value">The value.</param>
         /// <param name="other">The other value.</param>
         /// <returns>The number of lines in the string.</returns>
-        internal static bool InsensitiveEquals(this string value, string other)
+        public static bool InsensitiveEquals(this string value, string other)
         {
             return value?.Equals(other, StringComparison.InvariantCultureIgnoreCase) ?? false;
         }
@@ -218,7 +218,7 @@ namespace NetAF.Extensions
         /// <param name="value">The value.</param>
         /// <param name="other">The other value.</param>
         /// <returns>The concatenated string.</returns>
-        internal static string AddSentence(this string value, string other)
+        public static string AddSentence(this string value, string other)
         {
             if (string.IsNullOrEmpty(value))
                 return other;

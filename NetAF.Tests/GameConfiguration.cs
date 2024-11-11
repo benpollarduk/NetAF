@@ -1,10 +1,11 @@
 ﻿using NetAF.Adapters;
 using NetAF.Assets;
 using NetAF.Interpretation;
+using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
-namespace NetAF.Logic
+namespace NetAF.Tests
 {
     /// <summary>
     /// Represents a configuration for a game.
@@ -12,9 +13,18 @@ namespace NetAF.Logic
     /// <param name="displaySize">The display size.</param>
     /// <param name="exitMode">The exit mode.</param>
     /// <param name="adapter">The I/O adapter.</param>
-    public class GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
+    public class TestGameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter) : IGameConfiguration
     {
-        #region Properties
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default game configuration.
+        /// </summary>
+        public static TestGameConfiguration Default => new(new Size(80, 50), ExitMode.ReturnToTitleScreen, null);
+
+        #endregion
+
+        #region Implementation of IGameConfiguration
 
         /// <summary>
         /// Get the display size.

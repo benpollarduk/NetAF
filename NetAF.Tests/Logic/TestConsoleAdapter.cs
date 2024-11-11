@@ -81,7 +81,7 @@ namespace NetAF.Tests.Logic
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            Out.WriteLine(frame.ToString());
+            Out?.WriteLine(frame?.ToString());
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace NetAF.Tests.Logic
         /// <returns>The input.</returns>
         public string WaitForInput()
         {
-            return In.ReadLine();
+            return In?.ReadLine();
         }
 
         #endregion

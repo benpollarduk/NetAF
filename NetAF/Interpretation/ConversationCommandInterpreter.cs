@@ -8,7 +8,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting conversation commands.
     /// </summary>
-    internal class ConversationCommandInterpreter : IInterpreter
+    public sealed class ConversationCommandInterpreter : IInterpreter
     {
         #region Constants
 

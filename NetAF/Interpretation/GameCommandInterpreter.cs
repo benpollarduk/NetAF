@@ -14,7 +14,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting game commands.
     /// </summary>
-    internal class GameCommandInterpreter : IInterpreter
+    public sealed class GameCommandInterpreter : IInterpreter
     {
         #region Constants
 

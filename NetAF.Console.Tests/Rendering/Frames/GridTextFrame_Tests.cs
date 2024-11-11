@@ -2,6 +2,10 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Console.Rendering.FrameBuilders;
+using NetAF.Console.Rendering.FrameBuilders.Color;
+using NetAF.Console.Rendering.Frames;
+using NetAF.Console.Rendering.Presenters;
 
 namespace NetAF.Console.Tests.Rendering.Frames
 {

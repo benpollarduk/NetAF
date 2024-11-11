@@ -2,6 +2,8 @@
 using NetAF.Rendering;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Console.Rendering.FrameBuilders;
+using NetAF.Console.Rendering.FrameBuilders.Color;
 
 namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
 {
@@ -28,11 +30,11 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
-                var mapBuilder = new ColorRoomMapBuilder();
                 var stringBuilder = new GridStringBuilder();
+                var mapBuilder = new ColorRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(stringBuilder, room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
             });
         }
 
@@ -56,11 +58,11 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
-                var mapBuilder = new ColorRoomMapBuilder();
                 var stringBuilder = new GridStringBuilder();
+                var mapBuilder = new ColorRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(stringBuilder, room, ViewPoint.Create(region), KeyType.Dynamic, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic, 0, 0, out _, out _);
             });
         }
 
@@ -75,11 +77,11 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
                 };
 
                 var region = regionMaker.Make(0, 0, 0);
-                var mapBuilder = new ColorRoomMapBuilder();
                 var stringBuilder = new GridStringBuilder();
+                var mapBuilder = new ColorRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(stringBuilder, regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
             });
         }
 
@@ -103,11 +105,11 @@ namespace NetAF.Console.Tests.Rendering.FrameBuilders.Color
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
-                var mapBuilder = new ColorRoomMapBuilder();
                 var stringBuilder = new GridStringBuilder();
+                var mapBuilder = new ColorRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(stringBuilder, room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
             });
         }
     }
