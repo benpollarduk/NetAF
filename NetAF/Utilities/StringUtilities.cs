@@ -15,7 +15,7 @@ namespace NetAF.Utilities
         /// <summary>
         /// Get the new line string.
         /// </summary>
-        internal const string Newline = "\n";
+        public const string Newline = "\n";
 
         /// <summary>
         /// Get the character for line feed.
@@ -88,7 +88,7 @@ namespace NetAF.Utilities
         /// <param name="paragraph">The paragraph.</param>
         /// <param name="maxWidth">The max line length.</param>
         /// <returns>The line cut from the paragraph.</returns>
-        internal static string CutLineFromParagraph(ref string paragraph, int maxWidth)
+        public static string CutLineFromParagraph(ref string paragraph, int maxWidth)
         {
             StringBuilder chunk = new();
 

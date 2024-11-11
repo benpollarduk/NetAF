@@ -2,7 +2,6 @@
 using NetAF.Assets.Interaction;
 using NetAF.Interpretation;
 using NetAF.Serialization;
-using NetAF.Serialization.Assets;
 
 namespace NetAF.Commands
 {

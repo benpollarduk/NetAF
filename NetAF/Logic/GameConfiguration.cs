@@ -21,6 +21,8 @@ namespace NetAF.Logic
         /// </summary>
         public static GameConfiguration Default => new(new Size(80, 50), ExitMode.ReturnToTitleScreen, new SystemConsoleAdapter());
 
+        public static object FrameBuilderCollections { get; private set; }
+
         #endregion
 
         #region Properties

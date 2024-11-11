@@ -7,7 +7,7 @@ namespace NetAF.Commands.Game
     /// Represents the Move command.
     /// </summary>
     /// <param name="direction">The direction to move.</param>
-    internal class Move(Direction direction) : ICommand
+    public class Move(Direction direction) : ICommand
     {
         #region Constants
 

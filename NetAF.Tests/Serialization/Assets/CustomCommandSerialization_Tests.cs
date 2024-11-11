@@ -2,7 +2,7 @@
 using NetAF.Assets.Interaction;
 using NetAF.Commands;
 using NetAF.Interpretation;
-using NetAF.Serialization.Assets;
+using NetAF.Serialization;
 
 namespace NetAF.Tests.Serialization.Assets
 {

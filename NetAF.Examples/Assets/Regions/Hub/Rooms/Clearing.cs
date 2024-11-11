@@ -3,7 +3,6 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
-using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 
 namespace NetAF.Examples.Assets.Regions.Hub.Rooms

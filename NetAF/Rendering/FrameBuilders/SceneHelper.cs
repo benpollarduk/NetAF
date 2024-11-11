@@ -10,7 +10,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Provides helper functionality for scenes.
     /// </summary>
-    internal static class SceneHelper
+    public static class SceneHelper
     {
         /// <summary>
         /// Create a view point string.
@@ -18,7 +18,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The view point.</param>
         /// <returns>The view point, as a string.</returns>
-        internal static string CreateViewpointAsString(Room room, ViewPoint viewPoint)
+        public static string CreateViewpointAsString(Room room, ViewPoint viewPoint)
         {
             StringBuilder view = new();
 
@@ -83,7 +83,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <returns>The characters, as a string.</returns>
-        internal static string CreateNPCString(Room room)
+        public static string CreateNPCString(Room room)
         {
             var characters = room.Characters.Where(c => c.IsPlayerVisible && c.IsAlive).ToArray<Character>();
 
