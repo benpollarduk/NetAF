@@ -12,19 +12,8 @@ namespace NetAF.Logic
     /// <param name="displaySize">The display size.</param>
     /// <param name="exitMode">The exit mode.</param>
     /// <param name="adapter">The I/O adapter.</param>
-    public sealed class GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
+    public class GameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter)
     {
-        #region StaticProperties
-
-        /// <summary>
-        /// Get the default game configuration.
-        /// </summary>
-        public static GameConfiguration Default => new(new Size(80, 50), ExitMode.ReturnToTitleScreen, new SystemConsoleAdapter());
-
-        public static object FrameBuilderCollections { get; private set; }
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -50,7 +39,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get or set the collection of frame builders to use to render the game.
         /// </summary>
-        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
+        public FrameBuilderCollection FrameBuilders { get; set; }
 
         /// <summary>
         /// Get or set the prefix to use when displaying errors.

@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
+using NetAF.Console.Rendering.FrameBuilders;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
 using NetAF.Utilities;

@@ -20,19 +20,19 @@ namespace NetAF.Utilities
         /// <summary>
         /// Get the character for line feed.
         /// </summary>
-        internal const char LF = (char)10;
+        public const char LF = (char)10;
 
         /// <summary>
         /// Get the character for carriage return.
         /// </summary>
-        internal const char CR = (char)13;
+        public const char CR = (char)13;
 
         /// <summary>
         /// Preen input to remove any ambiguity around special characters.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The preened input.</returns>
-        internal static string PreenInput(string input)
+        public static string PreenInput(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return string.Empty;
@@ -48,7 +48,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>The extracted work.</returns>
-        internal static string ExtractNextWordFromString(ref string input)
+        public static string ExtractNextWordFromString(ref string input)
         {
             const char space = (char)32;
 

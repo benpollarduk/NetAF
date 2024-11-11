@@ -21,14 +21,14 @@ namespace NetAF.Console.Adapters
         /// <returns>True if the key pressed returned the same ASCII character as the key property, else false.</returns>
         private static bool WaitForKeyPress(char key)
         {
-            return Console.ReadKey().KeyChar == key;
+            return System.Console.ReadKey().KeyChar == key;
         }
 
         #endregion
 
         #region Fields
 
-        private readonly TextWriterPresenter presenter = new(Console.Out);
+        private readonly TextWriterPresenter presenter = new(System.Console.Out);
 
         #endregion
 
@@ -40,10 +40,10 @@ namespace NetAF.Console.Adapters
         /// <param name="game">The game to set up for.</param>
         public void Setup(Game game)
         {
-            Console.Title = game.Info.Name;
+            System.Console.Title = game.Info.Name;
             Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
-            Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
-            Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
         }
 
         /// <summary>
@@ -52,12 +52,12 @@ namespace NetAF.Console.Adapters
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            Console.Clear();
+            System.Console.Clear();
 
             frame.Render(presenter);
 
-            Console.CursorVisible = frame.ShowCursor;
-            Console.SetCursorPosition(frame.CursorLeft, frame.CursorTop);
+            System.Console.CursorVisible = frame.ShowCursor;
+            System.Console.SetCursorPosition(frame.CursorLeft, frame.CursorTop);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace NetAF.Console.Adapters
         /// <returns>The input.</returns>
         public string WaitForInput()
         {
-            return Console.In.ReadLine();
+            return System.Console.In.ReadLine();
         }
 
         #endregion
