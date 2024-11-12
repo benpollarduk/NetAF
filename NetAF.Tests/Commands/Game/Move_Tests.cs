@@ -18,7 +18,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var command = new Move(Direction.East);
 
             var result = command.Invoke(game);
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var command = new Move(Direction.North);
 
             var result = command.Invoke(game);

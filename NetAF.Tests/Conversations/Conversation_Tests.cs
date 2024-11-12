@@ -13,7 +13,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversationWithOneParagraph_WhenConstructed_ThenCurrentParagraphIsFirstParagraph()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -55,7 +55,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversation_WhenNext_ThenResultIsInternal()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -67,7 +67,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversationWithOneParagraph_WhenNext_ThenCurrentParagraphIsUnchanged()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -81,7 +81,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversationWithTwoParagraphs_WhenNext_ThenCurrentParagraphIsSecondParagraph()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty), new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -94,7 +94,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenNull_WhenRespond_ThenReactionIsError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -106,7 +106,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenCurrentParagraphWithNoResponses_WhenRespond_ThenReactionIsError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             game.StartConversation(npc);
 
@@ -118,7 +118,7 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenCurrentParagraphWithResponse_WhenRespond_ThenReactionIsInternal()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var response = new Response(string.Empty, new Repeat());
             var paragraph = new Paragraph(string.Empty, new Repeat()) {  Responses = [response] };
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(paragraph));

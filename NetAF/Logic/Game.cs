@@ -235,9 +235,7 @@ namespace NetAF.Logic
             if (CurrentFrame?.AcceptsInput ?? false)
                 return Configuration.Adapter.WaitForInput();
             
-            var frame = CurrentFrame;
-
-            while (!Configuration.Adapter?.WaitForAcknowledge() ?? false && CurrentFrame == frame)
+            while (!Configuration.Adapter?.WaitForAcknowledge() ?? false)
                 DrawFrame(CurrentFrame);
 
             return string.Empty;

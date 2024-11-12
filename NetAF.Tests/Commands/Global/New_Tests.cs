@@ -21,7 +21,7 @@ namespace NetAF.Tests.Commands.Global
         [TestMethod]
         public void GivenValidGame_WhenInvoke_ThenOK()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, ConsoleGameConfiguration.Default).Invoke();
             var command = new New();
 
             var result = command.Invoke(game);
