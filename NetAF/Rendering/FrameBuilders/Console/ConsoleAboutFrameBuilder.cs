@@ -2,13 +2,13 @@
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color about frames.
+    /// Provides a builder of console about frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorAboutFrameBuilder(GridStringBuilder gridStringBuilder) : IAboutFrameBuilder
+    public sealed class ConsoleAboutFrameBuilder(GridStringBuilder gridStringBuilder) : IAboutFrameBuilder
     {
         #region Fields
 

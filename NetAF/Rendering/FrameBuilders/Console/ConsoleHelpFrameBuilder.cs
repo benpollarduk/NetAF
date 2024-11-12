@@ -3,13 +3,13 @@ using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color help frames.
+    /// Provides a builder of help frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorHelpFrameBuilder(GridStringBuilder gridStringBuilder) : IHelpFrameBuilder
+    public sealed class ConsoleHelpFrameBuilder(GridStringBuilder gridStringBuilder) : IHelpFrameBuilder
     {
         #region Fields
 

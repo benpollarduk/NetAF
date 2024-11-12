@@ -34,7 +34,7 @@ namespace NetAF.Tests.Logic
             Room room = new("ROOM", string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var catalog = AssetCatalog.FromGame(game);
 
@@ -49,7 +49,7 @@ namespace NetAF.Tests.Logic
             Room room = new("ROOM", string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var catalog = AssetCatalog.FromGame(game);
 
@@ -65,7 +65,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var catalog = AssetCatalog.FromGame(game);
 
@@ -81,7 +81,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var catalog = AssetCatalog.FromGame(game);
 
@@ -97,7 +97,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new Room(string.Empty, string.Empty));
@@ -114,7 +114,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new Item(string.Empty, string.Empty));
@@ -131,7 +131,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new NonPlayableCharacter(string.Empty, string.Empty));
@@ -148,7 +148,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new CharacterTemplate());
@@ -165,7 +165,7 @@ namespace NetAF.Tests.Logic
             room.AddCharacter(new(string.Empty, string.Empty));
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var catalog = AssetCatalog.FromGame(game);
 
             catalog.Register(new PlayerTemplate());

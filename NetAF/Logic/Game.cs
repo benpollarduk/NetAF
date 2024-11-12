@@ -62,7 +62,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the configuration.
         /// </summary>
-        public GameConfiguration Configuration { get; private set; }
+        public IGameConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Get the end conditions.
@@ -107,7 +107,7 @@ namespace NetAF.Logic
         /// <param name="overworld">The games overworld.</param>
         /// <param name="endConditions">The games end conditions.</param>
         /// <param name="configuration">The configuration to use for this game.</param>
-        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, GameConfiguration configuration)
+        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, IGameConfiguration configuration)
         {
             Info = info;
             Introduction = introduction;
@@ -148,13 +148,13 @@ namespace NetAF.Logic
             do
             {
                 if (ActiveConverser != null)
-                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter?.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
                 var input = GetInput();
                 var reaction = ExecuteLogicOnce(input, out var displayReactionToInput);
 
                 if (reaction?.Result == ReactionResult.Fatal)
-                    Player?.Kill();
+                    Player.Kill();
 
                 if (displayReactionToInput)
                     DisplayReaction(reaction);
@@ -206,7 +206,7 @@ namespace NetAF.Logic
             if (Player == player)
                 return;
 
-            inactivePlayerLocations.Add(new(Player?.Identifier?.IdentifiableName, Overworld?.CurrentRegion?.Identifier.IdentifiableName, Overworld?.CurrentRegion?.CurrentRoom?.Identifier.IdentifiableName));
+            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld.CurrentRegion.Identifier.IdentifiableName, Overworld.CurrentRegion.CurrentRoom.Identifier.IdentifiableName));
 
             var previous = Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier));
 
@@ -215,7 +215,7 @@ namespace NetAF.Logic
 
             Player = player;
 
-            if (jumpToLastLocation && Overworld != null && previous?.RegionIdentifier != null && previous.RoomIdentifier != null)
+            if (jumpToLastLocation && previous?.RegionIdentifier != null && previous.RoomIdentifier != null)
             {
                 var region = Array.Find(Overworld.Regions.ToArray(), x => x.Identifier.Equals(previous.RegionIdentifier));
                 var room = Array.Find(region.ToMatrix().ToRooms(), x => x.Identifier.Equals(previous.RoomIdentifier));
@@ -235,9 +235,7 @@ namespace NetAF.Logic
             if (CurrentFrame.AcceptsInput)
                 return Configuration.Adapter.WaitForInput();
             
-            var frame = CurrentFrame;
-
-            while (!Configuration.Adapter.WaitForAcknowledge() && CurrentFrame == frame)
+            while (!Configuration.Adapter.WaitForAcknowledge())
                 DrawFrame(CurrentFrame);
 
             return string.Empty;
@@ -295,7 +293,7 @@ namespace NetAF.Logic
 
             displayReaction = true;
             input = StringUtilities.PreenInput(input);
-            var interpretation = Configuration.Interpreter?.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
+            var interpretation = Configuration.Interpreter.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
 
             if (interpretation.WasInterpretedSuccessfully)
                 return interpretation.Command.Invoke(this);
@@ -497,11 +495,11 @@ namespace NetAF.Logic
         /// <param name="configuration">The configuration for the game.</param>
         /// <param name="setup">A setup function to run on the created game after it has been created.</param>
         /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
+        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, IGameConfiguration configuration, GameSetupCallback setup = null)
         {
             return () =>
             {
-                var game = new Game(info, introduction, assetGenerator?.GetPlayer(), assetGenerator?.GetOverworld(), conditions, configuration);
+                var game = new Game(info, introduction, assetGenerator.GetPlayer(), assetGenerator.GetOverworld(), conditions, configuration);
                 setup?.Invoke(game);
                 return game;
             };

@@ -1,20 +1,20 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
-using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders.Console;
+using NetAF.Rendering.FrameBuilders;
 
-namespace NetAF.Tests.Rendering.FrameBuilders.Color
+namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
     [TestClass]
-    public class ColorRegionMapFrameBuilder_Tests
+    public class ConsoleRegionMapFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenWidthOf80HeightOf50_WhenBuild_ThenNotNull()
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ConsoleRegionMapFrameBuilder(stringBuilder, new ConsoleRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
 
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ConsoleRegionMapFrameBuilder(stringBuilder, new ConsoleRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
@@ -43,7 +43,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
         {
             var stringBuilder = new GridStringBuilder();
             stringBuilder.Resize(new Size(80, 50));
-            var builder = new ColorRegionMapFrameBuilder(stringBuilder, new ColorRegionMapBuilder());
+            var builder = new ConsoleRegionMapFrameBuilder(stringBuilder, new ConsoleRegionMapBuilder(stringBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);

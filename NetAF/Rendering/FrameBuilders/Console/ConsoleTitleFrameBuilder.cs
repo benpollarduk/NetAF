@@ -1,13 +1,13 @@
 ﻿using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color title frames.
+    /// Provides a builder of title frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorTitleFrameBuilder(GridStringBuilder gridStringBuilder) : ITitleFrameBuilder
+    public sealed class ConsoleTitleFrameBuilder(GridStringBuilder gridStringBuilder) : ITitleFrameBuilder
     {
         #region Fields
 

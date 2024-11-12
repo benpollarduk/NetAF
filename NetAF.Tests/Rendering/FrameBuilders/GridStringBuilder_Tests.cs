@@ -1,6 +1,6 @@
-﻿using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.FrameBuilders.Console;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {

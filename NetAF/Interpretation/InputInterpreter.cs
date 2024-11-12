@@ -9,17 +9,8 @@ namespace NetAF.Interpretation
     /// Provides an object that can be used for interpreting game input.
     /// </summary>
     /// <param name="interpreters">The interpreters.</param>
-    internal class InputInterpreter(params IInterpreter[] interpreters) : IInterpreter
+    public sealed class InputInterpreter(params IInterpreter[] interpreters) : IInterpreter
     {
-        #region Properties
-
-        /// <summary>
-        /// Get the interpreters.
-        /// </summary>
-        protected IInterpreter[] Interpreters { get; } = interpreters;
-
-        #endregion
-
         #region Implementation of IInterpreter
 
         /// <summary>
@@ -31,7 +22,7 @@ namespace NetAF.Interpretation
             {
                 var l = new List<CommandHelp>();
 
-                foreach (var commands in Interpreters.Select(i => i.SupportedCommands))
+                foreach (var commands in interpreters.Select(i => i.SupportedCommands))
                 {
                     if (commands != null)
                         l.AddRange(commands);
@@ -49,7 +40,7 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            foreach (var interpreter in Interpreters)
+            foreach (var interpreter in interpreters)
             {
                 var result = interpreter.Interpret(input, game);
 
@@ -69,7 +60,7 @@ namespace NetAF.Interpretation
         {
             List<CommandHelp> l = [];
 
-            foreach (var interpreter in Interpreters)
+            foreach (var interpreter in interpreters)
             {
                 var contextualCommands = interpreter.GetContextualCommandHelp(game);
 

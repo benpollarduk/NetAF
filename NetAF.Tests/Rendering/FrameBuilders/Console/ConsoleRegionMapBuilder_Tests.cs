@@ -1,27 +1,27 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
-using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.FrameBuilders.Console;
 
-namespace NetAF.Tests.Rendering.FrameBuilders.Color
+namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
     [TestClass]
-    public class ColorRegionMapBuilder_Tests
+    public class ConsoleRegionMapBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaultValues_WhenBuildRegionMap_ThenNoException()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var builder = new ColorRegionMapBuilder();
+                var stringBuilder = new GridStringBuilder();
+                var builder = new ConsoleRegionMapBuilder(stringBuilder);
                 var region = new Region(string.Empty, string.Empty);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);
-                var stringBuilder = new GridStringBuilder();
                 stringBuilder.Resize(new Size(80, 50));
 
-                builder.BuildRegionMap(stringBuilder, region, 0, 0, 80, 50);
+                builder.BuildRegionMap(region, 0, 0, 80, 50);
             });
         }
     }

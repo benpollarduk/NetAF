@@ -7,7 +7,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting global commands.
     /// </summary>
-    internal class GlobalCommandInterpreter : IInterpreter
+    public sealed class GlobalCommandInterpreter : IInterpreter
     {
         #region Constants
 

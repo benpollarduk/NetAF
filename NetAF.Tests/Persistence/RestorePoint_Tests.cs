@@ -22,7 +22,7 @@ namespace NetAF.Tests.Persistence
             var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var result = RestorePoint.Create("Test", game);
 
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Persistence
             var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var now = DateTime.Now;
 
             var result = RestorePoint.Create(string.Empty, game);
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Persistence
             var room = new Room(string.Empty, string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var result = RestorePoint.Create(string.Empty, game);
 
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Persistence
             var room = new Room(string.Empty, string.Empty, null, commands: [command]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var restore = RestorePoint.Create(string.Empty, game);
             var s = JsonSave.ToJson(restore);

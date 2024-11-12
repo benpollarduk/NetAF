@@ -1,6 +1,6 @@
 ﻿using System;
 using NetAF.Assets;
-using NetAF.Rendering.FrameBuilders.Color;
+using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Utilities;
 
 namespace NetAF.Rendering.FrameBuilders

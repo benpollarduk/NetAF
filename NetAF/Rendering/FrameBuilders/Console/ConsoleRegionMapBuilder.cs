@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets.Locations;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a color builder for region maps.
+    /// Provides a builder for region maps.
     /// </summary>
-    public sealed class ColorRegionMapBuilder : IRegionMapBuilder
+    /// <param name="gridStringBuilder">The grid string builder.</param>
+    public sealed class ConsoleRegionMapBuilder(GridStringBuilder gridStringBuilder) : IRegionMapBuilder
     {
         #region Properties
 
@@ -93,8 +94,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="left">The left of the room.</param>
         /// <param name="top">The top of the room.</param>
         /// <param name="isCurrentRoom">True if this is the current room.</param>
-        /// <param name="gridStringBuilder">The string builder to use.</param>
-        private void DrawCurrentFloorRoom(Room room, int left, int top, bool isCurrentRoom, GridStringBuilder gridStringBuilder)
+        private void DrawCurrentFloorRoom(Room room, int left, int top, bool isCurrentRoom)
         {
             /*
              * |   |
@@ -189,8 +189,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="left">The left of the room.</param>
         /// <param name="top">The top of the room.</param>
-        /// <param name="gridStringBuilder">The string builder to use.</param>
-        private void DrawLowerLevelRoom(int left, int top, GridStringBuilder gridStringBuilder)
+        private void DrawLowerLevelRoom(int left, int top)
         {
             /*
              * .....
@@ -260,13 +259,12 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <summary>
         /// Build a map of a region.
         /// </summary>
-        /// <param name="gridStringBuilder">The string builder to use.</param>
         /// <param name="region">The region.</param>
         /// <param name="x">The x position to start building at.</param>
         /// <param name="y">The y position to start building at.</param>
         /// <param name="maxWidth">The maximum horizontal space available in which to build the map.</param>
         /// <param name="maxHeight">The maximum vertical space available in which to build the map.</param>
-        public void BuildRegionMap(GridStringBuilder gridStringBuilder, Region region, int x, int y, int maxWidth, int maxHeight)
+        public void BuildRegionMap(Region region, int x, int y, int maxWidth, int maxHeight)
         {
             var matrix = region.ToMatrix();
             var currentRoom = region.GetPositionOfRoom(region.CurrentRoom);
@@ -310,7 +308,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                 foreach (var position in lowerLevelRooms)
                 {
                     if (TryConvertMatrixPositionToGridLayoutPosition(x, y, maxWidth, maxHeight, matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
-                        DrawLowerLevelRoom(left, top, gridStringBuilder);
+                        DrawLowerLevelRoom(left, top);
                 }
             }
 
@@ -323,7 +321,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             foreach (var position in currentLevelRooms)
             {
                 if (TryConvertMatrixPositionToGridLayoutPosition(x, y, maxWidth, maxHeight, matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, left, top, position.Room == region.CurrentRoom, gridStringBuilder);
+                    DrawCurrentFloorRoom(position.Room, left, top, position.Room == region.CurrentRoom);
             }
         }
 

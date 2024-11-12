@@ -1,11 +1,11 @@
-﻿using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.FrameBuilders.Console;
 
-namespace NetAF.Tests.Rendering.FrameBuilders.Color
+namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
     [TestClass]
-    public class ColorHelpFrameBuilder_Tests
+    public class ConsoleHelpFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaults_WhenBuild_ThenNoException()
@@ -13,7 +13,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Color
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ColorHelpFrameBuilder(gridStringBuilder);
+                var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
                 builder.Build(string.Empty, string.Empty, [], 80, 50);
             });

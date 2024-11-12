@@ -18,7 +18,7 @@ namespace NetAF.Tests.Assets
             var overworld = new Overworld(string.Empty, string.Empty);
             region.AddRoom(room, 0, 0, 0);
             overworld.AddRegion(region);
-            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, GameConfiguration.Default);
+            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default);
 
             var result = new ExaminationRequest(player, gameCreator());
 
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Assets
             var overworld = new Overworld(string.Empty, string.Empty);
             region.AddRoom(room, 0, 0, 0);
             overworld.AddRegion(region);
-            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, GameConfiguration.Default);
+            var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default);
 
             var result = new ExaminationRequest(player, gameCreator());
 

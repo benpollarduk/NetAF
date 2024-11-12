@@ -1,4 +1,4 @@
-﻿namespace NetAF.Rendering.FrameBuilders.Color
+﻿namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
     /// Enumeration of ANSI colors.

@@ -1,6 +1,6 @@
 ﻿using NetAF.Commands;
 
-namespace NetAF.Serialization.Assets
+namespace NetAF.Serialization
 {
     /// <summary>
     /// Represents a serialization of a CustomCommand.

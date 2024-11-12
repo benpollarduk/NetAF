@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
+using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.Presenters;
 using NetAF.Utilities;
 

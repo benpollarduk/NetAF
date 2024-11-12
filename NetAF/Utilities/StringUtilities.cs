@@ -15,24 +15,24 @@ namespace NetAF.Utilities
         /// <summary>
         /// Get the new line string.
         /// </summary>
-        internal const string Newline = "\n";
+        public const string Newline = "\n";
 
         /// <summary>
         /// Get the character for line feed.
         /// </summary>
-        internal const char LF = (char)10;
+        public const char LF = (char)10;
 
         /// <summary>
         /// Get the character for carriage return.
         /// </summary>
-        internal const char CR = (char)13;
+        public const char CR = (char)13;
 
         /// <summary>
         /// Preen input to remove any ambiguity around special characters.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The preened input.</returns>
-        internal static string PreenInput(string input)
+        public static string PreenInput(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return string.Empty;
@@ -48,7 +48,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="input">The input string.</param>
         /// <returns>The extracted work.</returns>
-        internal static string ExtractNextWordFromString(ref string input)
+        public static string ExtractNextWordFromString(ref string input)
         {
             const char space = (char)32;
 
@@ -88,7 +88,7 @@ namespace NetAF.Utilities
         /// <param name="paragraph">The paragraph.</param>
         /// <param name="maxWidth">The max line length.</param>
         /// <returns>The line cut from the paragraph.</returns>
-        internal static string CutLineFromParagraph(ref string paragraph, int maxWidth)
+        public static string CutLineFromParagraph(ref string paragraph, int maxWidth)
         {
             StringBuilder chunk = new();
 

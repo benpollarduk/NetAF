@@ -1,14 +1,14 @@
 ﻿using NetAF.Assets.Locations;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color region map frames.
+    /// Provides a builder of region map frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="regionMapBuilder">A builder for region maps.</param>
-    public sealed class ColorRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder) : IRegionMapFrameBuilder
+    public sealed class ConsoleRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder) : IRegionMapFrameBuilder
     {
         #region Fields
 
@@ -60,7 +60,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
             gridStringBuilder.DrawWrapped(region.Identifier.Name, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, region.Identifier.Name.Length, TitleColor);
 
-            RegionMapBuilder?.BuildRegionMap(gridStringBuilder, region, leftMargin, lastY + 2, availableWidth, height - 4);
+            RegionMapBuilder?.BuildRegionMap(region, leftMargin, lastY + 2, availableWidth, height - 4);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
         }

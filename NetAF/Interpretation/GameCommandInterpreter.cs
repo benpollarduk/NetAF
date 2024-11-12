@@ -14,7 +14,7 @@ namespace NetAF.Interpretation
     /// <summary>
     /// Provides an object that can be used for interpreting game commands.
     /// </summary>
-    internal class GameCommandInterpreter : IInterpreter
+    public sealed class GameCommandInterpreter : IInterpreter
     {
         #region Constants
 
@@ -322,6 +322,60 @@ namespace NetAF.Interpretation
         }
 
         /// <summary>
+        /// Try and parse the Examine command for a location.
+        /// </summary>
+        /// <param name="noun">The noun.</param>
+        /// <param name="game">The game.</param>
+        /// <param name="command">The resolved command.</param>
+        /// <returns>True if the input could be parsed, else false.</returns>
+        private static bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
+        {
+            if (string.IsNullOrEmpty(noun))
+            {
+                // default to current room
+                command = new Examine(game.Overworld.CurrentRegion.CurrentRoom);
+                return true;
+            }
+
+            // check exits to room
+            if (TryParseToDirection(noun, out var direction))
+            {
+                if (game.Overworld.CurrentRegion.CurrentRoom.FindExit(direction, false, out var exit))
+                {
+                    command = new Examine(exit);
+                    return true;
+                }
+
+                command = new Unactionable($"There is no exit in this room to the {direction}");
+                return true;
+            }
+
+            // check room examination
+            if (Room.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld.CurrentRegion.CurrentRoom))
+            {
+                command = new Examine(game.Overworld.CurrentRegion.CurrentRoom);
+                return true;
+            }
+
+            // check region examination
+            if (Region.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld.CurrentRegion))
+            {
+                command = new Examine(game.Overworld.CurrentRegion);
+                return true;
+            }
+
+            // check overworld examination
+            if (Overworld.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld))
+            {
+                command = new Examine(game.Overworld);
+                return true;
+            }
+
+            command = null;
+            return false;
+        }
+
+        /// <summary>
         /// Try and parse the Examine command.
         /// </summary>
         /// <param name="text">The text to parse.</param>
@@ -345,6 +399,10 @@ namespace NetAF.Interpretation
                 return true;
             }
 
+            // try locations
+            if (TryParseExamineCommandLocations(noun, game, out command))
+                return true;
+
             // check player items
             if (game.Player.FindItem(noun, out var item))
             {
@@ -366,44 +424,10 @@ namespace NetAF.Interpretation
                 return true;
             }
 
-            // check exits to room
-            if (TryParseToDirection(noun, out var direction))
-            {
-                if (game.Overworld.CurrentRegion.CurrentRoom.FindExit(direction, false, out var exit))
-                {
-                    command = new Examine(exit);
-                    return true;
-                }
-
-                command = new Unactionable($"There is no exit in this room to the {direction}");
-                return true;
-            }
-
             // check self examination
             if (Me.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Player))
             {
                 command = new Examine(game.Player);
-                return true;
-            }
-
-            // check room examination
-            if (Room.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld.CurrentRegion.CurrentRoom))
-            {
-                command = new Examine(game.Overworld.CurrentRegion.CurrentRoom);
-                return true;
-            }
-
-            // check region examination
-            if (Region.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld.CurrentRegion))
-            {
-                command = new Examine(game.Overworld.CurrentRegion);
-                return true;
-            }
-
-            // check overworld examination
-            if (Overworld.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld))
-            {
-                command = new Examine(game.Overworld);
                 return true;
             }
 

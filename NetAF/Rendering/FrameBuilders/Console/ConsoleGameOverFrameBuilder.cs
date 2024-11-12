@@ -1,13 +1,13 @@
 ﻿using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color game over frames.
+    /// Provides a builder of game over frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorGameOverFrameBuilder(GridStringBuilder gridStringBuilder) : IGameOverFrameBuilder
+    public sealed class ConsoleGameOverFrameBuilder(GridStringBuilder gridStringBuilder) : IGameOverFrameBuilder
     {
         #region Fields
 

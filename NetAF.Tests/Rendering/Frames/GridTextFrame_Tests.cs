@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.FrameBuilders.Color;
-using NetAF.Rendering.Frames;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.FrameBuilders.Console;
+using NetAF.Rendering.Frames;
 using NetAF.Rendering.Presenters;
 
 namespace NetAF.Tests.Rendering.Frames

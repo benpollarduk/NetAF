@@ -1,13 +1,13 @@
 ﻿using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color completion frames.
+    /// Provides a builder of transition frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorCompletionFrameBuilder(GridStringBuilder gridStringBuilder) : ICompletionFrameBuilder
+    public sealed class ConsoleTransitionFrameBuilder(GridStringBuilder gridStringBuilder) : ITransitionFrameBuilder
     {
         #region Fields
 
@@ -33,22 +33,22 @@ namespace NetAF.Rendering.FrameBuilders.Color
         public AnsiColor TitleColor { get; set; } = AnsiColor.Green;
 
         /// <summary>
-        /// Get or set the description color.
+        /// Get or set the message color.
         /// </summary>
-        public AnsiColor DescriptionColor { get; set; } = AnsiColor.White;
+        public AnsiColor MessageColor { get; set; } = AnsiColor.Yellow;
 
         #endregion
 
-        #region Implementation of ICompletionFrameBuilder
+        #region Implementation of ITransitionFrameBuilder
 
         /// <summary>
         /// Build a frame.
         /// </summary>
+        /// <param name="title">The title to display to the user.</param>
         /// <param name="message">The message to display to the user.</param>
-        /// <param name="reason">The reason the game ended.</param>
         /// <param name="width">The width of the frame.</param>
         /// <param name="height">The height of the frame.</param>
-        public IFrame Build(string message, string reason, int width, int height)
+        public IFrame Build(string title, string message, int width, int height)
         {
             gridStringBuilder.Resize(new(width, height));
 
@@ -56,12 +56,18 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
             var availableWidth = width - 4;
             const int leftMargin = 2;
+            var lastY = 2;
 
-            gridStringBuilder.DrawWrapped(message, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
+            if (!string.IsNullOrEmpty(title))
+            {
+                gridStringBuilder.DrawWrapped(title, leftMargin, lastY, availableWidth, TitleColor, out _, out lastY);
 
-            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, message.Length, TitleColor);
+                gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
-            gridStringBuilder.DrawWrapped(reason.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out _);
+                lastY += 3;
+            }
+
+            gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY, availableWidth, MessageColor, out _, out _);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
         }

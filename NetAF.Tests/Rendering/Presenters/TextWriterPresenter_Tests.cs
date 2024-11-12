@@ -14,7 +14,7 @@ namespace NetAF.Tests.Rendering.Presenters
             var textWriter = new StringWriter();
             var character = 'C';
             var presenter = new TextWriterPresenter(textWriter);
-            
+
             presenter.Write(character);
 
             Assert.AreEqual(character, presenter.ToString().First());

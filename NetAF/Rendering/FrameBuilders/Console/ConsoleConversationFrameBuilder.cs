@@ -6,13 +6,13 @@ using NetAF.Conversations;
 using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of color conversation frames.
+    /// Provides a builder of conversation frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ColorConversationFrameBuilder(GridStringBuilder gridStringBuilder) : IConversationFrameBuilder
+    public sealed class ConsoleConversationFrameBuilder(GridStringBuilder gridStringBuilder) : IConversationFrameBuilder
     {
         #region Fields
 

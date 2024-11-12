@@ -20,14 +20,14 @@ namespace NetAF.Tests.Logic.Arrangement
             Room room = new("ROOM", string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             Item item2 = new("ITEM", string.Empty) { IsPlayerVisible = false };
             Room room2 = new("ROOM", string.Empty, null, [item2]);
             regionMaker2[0, 0, 0] = room2;
             OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
-            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             game2.Player.AddItem(item2);
             room2.RemoveItem(item2);
@@ -48,14 +48,14 @@ namespace NetAF.Tests.Logic.Arrangement
             Room room = new("ROOM", string.Empty, null, [item]);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             Item item2 = new("ITEM", string.Empty) { IsPlayerVisible = false };
             Room room2 = new("ROOM", string.Empty, null, [item2]);
             regionMaker2[0, 0, 0] = room2;
             OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
-            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             room2.RemoveItem(item2);
 
@@ -75,7 +75,7 @@ namespace NetAF.Tests.Logic.Arrangement
             room.AddCharacter(character);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             NonPlayableCharacter character2 = new("CHARACTER", string.Empty);
@@ -83,7 +83,7 @@ namespace NetAF.Tests.Logic.Arrangement
             room2.AddCharacter(character2);
             regionMaker2[0, 0, 0] = room2;
             OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
-            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             room2.RemoveCharacter(character2);
 
@@ -102,14 +102,14 @@ namespace NetAF.Tests.Logic.Arrangement
             Room room = new("ROOM", string.Empty);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             PlayableCharacter player2 = new("PLAYER", string.Empty, [new Item("ITEM", string.Empty)]);
             Room room2 = new("ROOM", string.Empty);
             regionMaker2[0, 0, 0] = room2;
             OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
-            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             var i = game2.Player.Items[0];
             game2.Player.RemoveItem(i);
@@ -135,7 +135,7 @@ namespace NetAF.Tests.Logic.Arrangement
             regionMaker[0, 0, 0] = roomA;
             regionMaker[1, 0, 0] = roomB;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             PlayableCharacter player2 = new("PLAYER", string.Empty, [new Item("ITEM", string.Empty)]);
@@ -146,7 +146,7 @@ namespace NetAF.Tests.Logic.Arrangement
             regionMaker2[0, 0, 0] = roomA2;
             regionMaker2[1, 0, 0] = roomB2;
             OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
-            var game2 = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, GameConfiguration.Default).Invoke();
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), player2), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
             roomA2.RemoveCharacter(npc2);
             roomB2.AddCharacter(npc2);

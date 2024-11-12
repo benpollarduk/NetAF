@@ -9,14 +9,14 @@ using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 using NetAF.Utilities;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder for color scene frames.
+    /// Provides a builder for scene frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="roomMapBuilder">A builder to use for room maps.</param>
-    public sealed class ColorSceneFrameBuilder(GridStringBuilder gridStringBuilder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
+    public sealed class ConsoleSceneFrameBuilder(GridStringBuilder gridStringBuilder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
         #region Fields
 
@@ -143,7 +143,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
 
                 gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
 
-                roomMapBuilder?.BuildRoomMap(gridStringBuilder, room, viewPoint, keyType, leftMargin, lastY + linePadding, out _, out lastY);
+                roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, leftMargin, lastY + linePadding, out _, out lastY);
 
                 if (player.Items.Any())
                     gridStringBuilder.DrawWrapped("You have: " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
@@ -183,7 +183,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
                         gridStringBuilder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
 
                         // only continue if not run out of space - the 1 is for the border the ...
-                        if ((index < contextualCommands.Length - 1) && (lastY + 1 + requiredSpaceForPrompt >= height))
+                        if (index < contextualCommands.Length - 1 && lastY + 1 + requiredSpaceForPrompt >= height)
                         {
                             gridStringBuilder.DrawWrapped("...", leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
                             break;

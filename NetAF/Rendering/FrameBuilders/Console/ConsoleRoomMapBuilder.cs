@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets.Locations;
 
-namespace NetAF.Rendering.FrameBuilders.Color
+namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a color room map builder.
+    /// Provides a room map builder.
     /// </summary>
-    public sealed class ColorRoomMapBuilder : IRoomMapBuilder
+    /// <param name="gridStringBuilder">The grid string builder.</param>
+    public sealed class ConsoleRoomMapBuilder(GridStringBuilder gridStringBuilder) : IRoomMapBuilder
     {
         #region Properties
 
@@ -86,10 +87,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawNorthBorder(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawNorthBorder(Room room, ViewPoint viewPoint, int startX, int startY)
         {
             gridStringBuilder.SetCell(startX, startY, Corner, BoundaryColor);
             gridStringBuilder.SetCell(startX + 1, startY, HorizontalBoundary, BoundaryColor);
@@ -129,10 +129,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawSouthBorder(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawSouthBorder(Room room, ViewPoint viewPoint, int startX, int startY)
         {
             gridStringBuilder.SetCell(startX, startY + 6, Corner, BoundaryColor);
             gridStringBuilder.SetCell(startX + 1, startY + 6, HorizontalBoundary, BoundaryColor);
@@ -172,10 +171,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawEastBorder(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawEastBorder(Room room, ViewPoint viewPoint, int startX, int startY)
         {
             gridStringBuilder.SetCell(startX + 8, startY + 1, VerticalBoundary, BoundaryColor);
 
@@ -211,10 +209,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawWestBorder(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawWestBorder(Room room, ViewPoint viewPoint, int startX, int startY)
         {
             gridStringBuilder.SetCell(startX, startY + 1, VerticalBoundary, BoundaryColor);
 
@@ -250,10 +247,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawUpExit(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawUpExit(Room room, ViewPoint viewPoint, int startX, int startY)
         {
             if (room.HasLockedExitInDirection(Direction.Up))
             {
@@ -273,10 +269,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawDownExit(Room room, ViewPoint viewPoint, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawDownExit(Room room, ViewPoint viewPoint,  int startX, int startY)
         {
             if (room.HasLockedExitInDirection(Direction.Down))
             {
@@ -295,10 +290,9 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// Draw the item or character.
         /// </summary>
         /// <param name="room">The room.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
-        private void DrawItemOrCharacter(Room room, GridStringBuilder gridStringBuilder, int startX, int startY)
+        private void DrawItemOrCharacter(Room room, int startX, int startY)
         {
             if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
                 gridStringBuilder.SetCell(startX + 4, startY + 3, ItemOrCharacterInRoom, ItemOrCharacterColor);
@@ -310,12 +304,11 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <param name="key">The key type.</param>
-        /// <param name="gridStringBuilder">The builder to use for the map.</param>
         /// <param name="startX">The start position, x.</param>
         /// <param name="startY">The start position, x.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        private void DrawKey(Room room, ViewPoint viewPoint, KeyType key, GridStringBuilder gridStringBuilder, int startX, int startY, out int endX, out int endY)
+        private void DrawKey(Room room, ViewPoint viewPoint, KeyType key, int startX, int startY, out int endX, out int endY)
         {
             Dictionary<string, AnsiColor> keyLines = [];
             var lockedExitString = $"{LockedExit} = Locked Exit";
@@ -380,7 +373,6 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <summary>
         /// Build a map for a room.
         /// </summary>
-        /// <param name="gridStringBuilder">The string builder to use.</param>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <param name="key">The key type.</param>
@@ -388,7 +380,7 @@ namespace NetAF.Rendering.FrameBuilders.Color
         /// <param name="startY">The start position, x.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        public void BuildRoomMap(GridStringBuilder gridStringBuilder, Room room, ViewPoint viewPoint, KeyType key, int startX, int startY, out int endX, out int endY)
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key, int startX, int startY, out int endX, out int endY)
         {
             /*
              * *-| N |-*
@@ -400,14 +392,14 @@ namespace NetAF.Rendering.FrameBuilders.Color
              * *-| S |-*
              */
 
-            DrawNorthBorder(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawSouthBorder(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawEastBorder(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawWestBorder(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawUpExit(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawDownExit(room, viewPoint, gridStringBuilder, startX, startY);
-            DrawItemOrCharacter(room, gridStringBuilder, startX, startY);
-            DrawKey(room, viewPoint, key, gridStringBuilder, startX, startY, out endX, out endY);
+            DrawNorthBorder(room, viewPoint, startX, startY);
+            DrawSouthBorder(room, viewPoint, startX, startY);
+            DrawEastBorder(room, viewPoint, startX, startY);
+            DrawWestBorder(room, viewPoint, startX, startY);
+            DrawUpExit(room, viewPoint, startX, startY);
+            DrawDownExit(room, viewPoint, startX, startY);
+            DrawItemOrCharacter(room, startX, startY);
+            DrawKey(room, viewPoint, key,  startX, startY, out endX, out endY);
 
             if (endY < startY + 6)
                 endY = startY + 6;
