@@ -141,20 +141,20 @@ namespace NetAF.Logic
 
             IsExecuting = true;
 
-            Configuration.Adapter?.Setup(this);
+            Configuration.Adapter.Setup(this);
 
-            Refresh(Configuration.FrameBuilders?.TitleFrameBuilder?.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.TitleFrameBuilder.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
             do
             {
                 if (ActiveConverser != null)
-                    Refresh(Configuration.FrameBuilders?.ConversationFrameBuilder?.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter?.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
 
                 var input = GetInput();
                 var reaction = ExecuteLogicOnce(input, out var displayReactionToInput);
 
                 if (reaction?.Result == ReactionResult.Fatal)
-                    Player?.Kill();
+                    Player.Kill();
 
                 if (displayReactionToInput)
                     DisplayReaction(reaction);
@@ -206,7 +206,7 @@ namespace NetAF.Logic
             if (Player == player)
                 return;
 
-            inactivePlayerLocations.Add(new(Player?.Identifier?.IdentifiableName, Overworld?.CurrentRegion?.Identifier.IdentifiableName, Overworld?.CurrentRegion?.CurrentRoom?.Identifier.IdentifiableName));
+            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld.CurrentRegion.Identifier.IdentifiableName, Overworld.CurrentRegion.CurrentRoom.Identifier.IdentifiableName));
 
             var previous = Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier));
 
@@ -215,7 +215,7 @@ namespace NetAF.Logic
 
             Player = player;
 
-            if (jumpToLastLocation && Overworld != null && previous?.RegionIdentifier != null && previous.RoomIdentifier != null)
+            if (jumpToLastLocation && previous?.RegionIdentifier != null && previous.RoomIdentifier != null)
             {
                 var region = Array.Find(Overworld.Regions.ToArray(), x => x.Identifier.Equals(previous.RegionIdentifier));
                 var room = Array.Find(region.ToMatrix().ToRooms(), x => x.Identifier.Equals(previous.RoomIdentifier));
@@ -232,10 +232,10 @@ namespace NetAF.Logic
         /// <returns>The user input.</returns>
         private string GetInput()
         {
-            if (CurrentFrame?.AcceptsInput ?? false)
+            if (CurrentFrame.AcceptsInput)
                 return Configuration.Adapter.WaitForInput();
             
-            while (!Configuration.Adapter?.WaitForAcknowledge() ?? false)
+            while (!Configuration.Adapter.WaitForAcknowledge())
                 DrawFrame(CurrentFrame);
 
             return string.Empty;
@@ -252,7 +252,7 @@ namespace NetAF.Logic
                 return;
 
             GetInput();
-            Refresh(Configuration.FrameBuilders?.GameOverFrameBuilder?.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
         }
@@ -269,7 +269,7 @@ namespace NetAF.Logic
                 return false;
 
             GetInput();
-            Refresh(Configuration.FrameBuilders?.CompletionFrameBuilder?.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.CompletionFrameBuilder.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
             GetInput();
             End();
 
@@ -284,7 +284,7 @@ namespace NetAF.Logic
         /// <returns>The reaction to the input.</returns>
         private Reaction ProcessInput(string input, out bool displayReaction)
         {
-            if (!CurrentFrame?.AcceptsInput ?? false)
+            if (!CurrentFrame.AcceptsInput)
             {
                 Refresh(string.Empty);
                 displayReaction = false;
@@ -293,7 +293,7 @@ namespace NetAF.Logic
 
             displayReaction = true;
             input = StringUtilities.PreenInput(input);
-            var interpretation = Configuration.Interpreter?.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
+            var interpretation = Configuration.Interpreter.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
 
             if (interpretation.WasInterpretedSuccessfully)
                 return interpretation.Command.Invoke(this);
@@ -371,7 +371,7 @@ namespace NetAF.Logic
         private void Enter()
         {
             State = GameState.Active;
-            Refresh(Configuration.FrameBuilders?.SceneFrameBuilder?.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace NetAF.Logic
         /// <param name="message">Any message to display.</param>
         private void Refresh(string message)
         {
-            Refresh(Configuration.FrameBuilders?.SceneFrameBuilder?.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace NetAF.Logic
                 .. Configuration.Interpreter.GetContextualCommandHelp(this),
             ];
 
-            Refresh(Configuration.FrameBuilders?.HelpFrameBuilder?.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayMap()
         {
-            Refresh(Configuration.FrameBuilders?.RegionMapFrameBuilder?.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.RegionMapFrameBuilder.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace NetAF.Logic
         /// </summary>
         public void DisplayAbout()
         {
-            Refresh(Configuration.FrameBuilders?.AboutFrameBuilder?.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.AboutFrameBuilder.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace NetAF.Logic
         /// <param name="message">The message.</param>
         public void DisplayTransition(string title, string message)
         {
-            Refresh(Configuration.FrameBuilders?.TransitionFrameBuilder?.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            Refresh(Configuration.FrameBuilders.TransitionFrameBuilder.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         #endregion
@@ -499,7 +499,7 @@ namespace NetAF.Logic
         {
             return () =>
             {
-                var game = new Game(info, introduction, assetGenerator?.GetPlayer(), assetGenerator?.GetOverworld(), conditions, configuration);
+                var game = new Game(info, introduction, assetGenerator.GetPlayer(), assetGenerator.GetOverworld(), conditions, configuration);
                 setup?.Invoke(game);
                 return game;
             };
