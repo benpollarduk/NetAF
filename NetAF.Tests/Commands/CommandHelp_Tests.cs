@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands;
 
-namespace NetAF.Tests.Interpretation
+namespace NetAF.Tests.Commands
 {
     [TestClass]
     public class CommandHelp_Tests
@@ -65,6 +65,16 @@ namespace NetAF.Tests.Interpretation
             CommandHelp command = new("A", string.Empty, "B");
 
             var result = command.Equals("C");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenACommandHelp_WhenEqualityWithStringThatIsEmpty_ThenReturnFalse()
+        {
+            CommandHelp command = new("A", string.Empty, string.Empty);
+
+            var result = command.Equals(string.Empty);
 
             Assert.IsFalse(result);
         }

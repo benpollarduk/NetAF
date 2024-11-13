@@ -12,7 +12,7 @@ namespace NetAF.Commands.Conversation
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Exit", "End the conversation");
+        public static CommandHelp CommandHelp { get; } = new("End", "End the conversation");
 
         #endregion
 

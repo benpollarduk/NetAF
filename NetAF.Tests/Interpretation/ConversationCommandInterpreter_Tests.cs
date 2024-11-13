@@ -5,6 +5,7 @@ using NetAF.Conversations;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Commands.Conversation;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -91,7 +92,7 @@ namespace NetAF.Tests.Interpretation
 
             game.StartConversation(npc);
 
-            var result = interpreter.Interpret("End", game);
+            var result = interpreter.Interpret(End.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -105,7 +106,7 @@ namespace NetAF.Tests.Interpretation
 
             game.StartConversation(npc);
 
-            var result = interpreter.Interpret("", game);
+            var result = interpreter.Interpret(string.Empty, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

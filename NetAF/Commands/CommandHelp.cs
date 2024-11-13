@@ -55,7 +55,7 @@ namespace NetAF.Commands
         /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
         public bool Equals(string other)
         {
-            return Command.InsensitiveEquals(other) || Shortcut.InsensitiveEquals(other);
+            return Command.InsensitiveEquals(other) || (!string.IsNullOrEmpty(Shortcut) && Shortcut.InsensitiveEquals(other));
         }
 
         #endregion
