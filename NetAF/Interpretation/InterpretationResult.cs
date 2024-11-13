@@ -1,5 +1,5 @@
 ﻿using NetAF.Commands;
-using NetAF.Commands.Game;
+using NetAF.Commands.Scene;
 
 namespace NetAF.Interpretation
 {

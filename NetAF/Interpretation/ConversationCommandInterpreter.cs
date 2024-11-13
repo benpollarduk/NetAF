@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NetAF.Commands;
 using NetAF.Commands.Conversation;
 using NetAF.Extensions;
 using NetAF.Logic;
@@ -10,15 +11,6 @@ namespace NetAF.Interpretation
     /// </summary>
     public sealed class ConversationCommandInterpreter : IInterpreter
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the end command.
-        /// </summary>
-        public const string End = "End";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -26,7 +18,7 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new(End, "End the conversation")
+            End.CommandHelp
         ];
 
         #endregion
@@ -49,7 +41,7 @@ namespace NetAF.Interpretation
             if (game.ActiveConverser == null)
                 return InterpretationResult.Fail;
 
-            if (input.InsensitiveEquals(End))
+            if (End.CommandHelp.Equals(input))
                 return new(true, new End());
 
             if (string.IsNullOrEmpty(input.Trim()))
@@ -74,7 +66,7 @@ namespace NetAF.Interpretation
             if (game.ActiveConverser?.Conversation == null) 
                 return [];
 
-            var commands = new List<CommandHelp> { new(End, "End the conversation") };
+            var commands = new List<CommandHelp> { End.CommandHelp };
 
             if (game.ActiveConverser.Conversation.CurrentParagraph?.CanRespond ?? false)
             {

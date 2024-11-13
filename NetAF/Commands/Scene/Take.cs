@@ -1,14 +1,23 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Take command.
     /// </summary>
     /// <param name="item">The item to take.</param>
-    internal class Take(Item item) : ICommand
+    public class Take(Item item) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", "T");
+
+        #endregion
+
         #region Properties
 
         /// <summary>

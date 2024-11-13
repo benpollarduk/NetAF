@@ -2,11 +2,11 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
-using NetAF.Commands.Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
+using NetAF.Commands.Scene;
 
-namespace NetAF.Tests.Commands.Game
+namespace NetAF.Tests.Commands.Scene
 {
     [TestClass]
     public class TakeAll_Tests
@@ -20,7 +20,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);
@@ -58,7 +58,7 @@ namespace NetAF.Tests.Commands.Game
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
             var command = new TakeAll();
 
             var result = command.Invoke(game);

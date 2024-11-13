@@ -1,5 +1,5 @@
-﻿using NetAF.Commands.Global;
-using NetAF.Extensions;
+﻿using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation
@@ -9,35 +9,6 @@ namespace NetAF.Interpretation
     /// </summary>
     public sealed class GlobalCommandInterpreter : IInterpreter
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the about command.
-        /// </summary>
-        public const string About = "About";
-
-        /// <summary>
-        /// Get the exit command.
-        /// </summary>
-        public const string Exit = "Exit";
-
-        /// <summary>
-        /// Get the help command.
-        /// </summary>
-        public const string Help = "Help";
-
-        /// <summary>
-        /// Get the map command.
-        /// </summary>
-        public const string Map = "Map";
-
-        /// <summary>
-        /// Get the new command.
-        /// </summary>
-        public const string New = "New";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -45,10 +16,10 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new(About, "View information about the games creator"),
-            new(Map, "View a map of the current region"),
-            new(Exit, "Exit the game"),
-            new(New, "Start a new game")
+            About.CommandHelp,
+            Map.CommandHelp,
+            Exit.CommandHelp,
+            New.CommandHelp
         ];
 
         #endregion
@@ -68,19 +39,19 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (input.InsensitiveEquals(About))
+            if (About.CommandHelp.Equals(input))
                 return new(true, new About());
 
-            if (input.InsensitiveEquals(Exit))
+            if (Exit.CommandHelp.Equals(input))
                 return new(true, new Exit());
 
-            if (input.InsensitiveEquals(Help))
+            if (Help.CommandHelp.Equals(input))
                 return new(true, new Help());
 
-            if (input.InsensitiveEquals(Map))
+            if (Map.CommandHelp.Equals(input))
                 return new(true, new Map());
 
-            if (input.InsensitiveEquals(New))
+            if (New.CommandHelp.Equals(input))
                 return new(true, new New());
 
             return InterpretationResult.Fail;

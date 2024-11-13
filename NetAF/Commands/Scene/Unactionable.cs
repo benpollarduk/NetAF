@@ -1,11 +1,11 @@
 ﻿using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Unactionable command.
     /// </summary>
-    internal class Unactionable : ICommand
+    public class Unactionable : ICommand
     {
         #region Properties
 

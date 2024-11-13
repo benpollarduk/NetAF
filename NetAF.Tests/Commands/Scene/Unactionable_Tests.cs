@@ -1,8 +1,8 @@
 ﻿using NetAF.Assets.Interaction;
-using NetAF.Commands.Game;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Commands.Scene;
 
-namespace NetAF.Tests.Commands.Game
+namespace NetAF.Tests.Commands.Scene
 {
     [TestClass]
     public class Unactionable_Tests

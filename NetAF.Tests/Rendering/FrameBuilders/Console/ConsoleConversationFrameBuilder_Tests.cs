@@ -1,9 +1,9 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Conversations;
-using NetAF.Interpretation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {

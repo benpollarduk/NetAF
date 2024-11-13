@@ -1,14 +1,23 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Examine command.
     /// </summary>
     /// <param name="examinable">The examinable.</param>
-    internal class Examine(IExaminable examinable) : ICommand
+    public class Examine(IExaminable examinable) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Examine", "Examine anything in the game", "X");
+
+        #endregion
+
         #region Properties
 
         /// <summary>

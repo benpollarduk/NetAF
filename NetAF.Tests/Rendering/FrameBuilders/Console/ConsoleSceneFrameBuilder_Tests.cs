@@ -1,11 +1,11 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {

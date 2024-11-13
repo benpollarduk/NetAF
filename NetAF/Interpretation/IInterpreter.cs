@@ -1,4 +1,5 @@
-﻿using NetAF.Logic;
+﻿using NetAF.Commands;
+using NetAF.Logic;
 
 namespace NetAF.Interpretation
 {

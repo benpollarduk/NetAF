@@ -1,5 +1,5 @@
-﻿using NetAF.Commands.Frame;
-using NetAF.Extensions;
+﻿using NetAF.Commands;
+using NetAF.Commands.Frame;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation
@@ -9,30 +9,6 @@ namespace NetAF.Interpretation
     /// </summary>
     public sealed class FrameCommandInterpreter : IInterpreter
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the commands off command.
-        /// </summary>
-        public const string CommandsOff = "CommandsOff";
-
-        /// <summary>
-        /// Get the commands on command.
-        /// </summary>
-        public const string CommandsOn = "CommandsOn";
-
-        /// <summary>
-        /// Get the keys on command.
-        /// </summary>
-        public const string KeyOn = "KeyOn";
-
-        /// <summary>
-        /// Get the commands off command.
-        /// </summary>
-        public const string KeyOff = "KeyOff";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -40,8 +16,8 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new CommandHelp($"{CommandsOn} / {CommandsOff}", "Turn commands on/off"),
-            new CommandHelp($"{KeyOn} / {KeyOff} ", "Turn the key on/off")
+            new CommandHelp($"{CommandsOn.CommandHelp.Command} / {CommandsOff.CommandHelp.Command}", "Turn commands on/off"),
+            new CommandHelp($"{KeyOn.CommandHelp.Command} / {KeyOff.CommandHelp.Command} ", "Turn the key on/off")
         ];
 
         #endregion
@@ -61,16 +37,16 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (input.InsensitiveEquals(CommandsOff))
+            if (CommandsOff.CommandHelp.Equals(input))
                 return new(true, new CommandsOff());
 
-            if (input.InsensitiveEquals(CommandsOn))
+            if (CommandsOn.CommandHelp.Equals(input))
                 return new(true, new CommandsOn());
 
-            if (input.InsensitiveEquals(KeyOff))
+            if (KeyOff.CommandHelp.Equals(input))
                 return new(true, new KeyOff());
 
-            if (input.InsensitiveEquals(KeyOn))
+            if (KeyOn.CommandHelp.Equals(input))
                 return new(true, new KeyOn());
 
             return InterpretationResult.Fail;

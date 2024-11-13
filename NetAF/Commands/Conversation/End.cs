@@ -5,8 +5,17 @@ namespace NetAF.Commands.Conversation
     /// <summary>
     /// Represents the End command.
     /// </summary>
-    internal class End : ICommand
+    public class End : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("End", "End the conversation");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

@@ -4,6 +4,7 @@ using NetAF.Assets.Locations;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Commands.Frame;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -39,7 +40,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(FrameCommandInterpreter.KeyOff, game);
+            var result = interpreter.Interpret(KeyOff.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -50,7 +51,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(FrameCommandInterpreter.KeyOn, game);
+            var result = interpreter.Interpret(KeyOn.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -61,7 +62,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(FrameCommandInterpreter.CommandsOff, game);
+            var result = interpreter.Interpret(CommandsOff.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -72,7 +73,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(FrameCommandInterpreter.CommandsOn, game);
+            var result = interpreter.Interpret(CommandsOn.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

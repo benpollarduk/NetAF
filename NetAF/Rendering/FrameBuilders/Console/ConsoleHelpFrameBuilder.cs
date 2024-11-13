@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using NetAF.Commands;
 using NetAF.Extensions;
-using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Console

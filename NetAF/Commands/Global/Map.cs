@@ -5,8 +5,17 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Map command.
     /// </summary>
-    internal class Map : ICommand
+    public class Map : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Map", "View map of the current region");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

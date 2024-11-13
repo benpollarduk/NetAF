@@ -11,7 +11,7 @@
         public static readonly IInterpreter Default = new InputInterpreter(
             new FrameCommandInterpreter(),
             new GlobalCommandInterpreter(),
-            new GameCommandInterpreter(),
+            new SceneCommandInterpreter(),
             new CustomCommandInterpreter(),
             new ConversationCommandInterpreter());
     }

@@ -1,7 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Interaction;
 using NetAF.Commands;
-using NetAF.Interpretation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NetAF.Tests.Assets

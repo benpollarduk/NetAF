@@ -1,14 +1,23 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Drop command.
     /// </summary>
     /// <param name="item">The item to take.</param>
-    internal class Drop(Item item) : ICommand
+    public class Drop(Item item) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Drop", "Drop an item", "R");
+
+        #endregion
+
         #region Properties
 
         /// <summary>

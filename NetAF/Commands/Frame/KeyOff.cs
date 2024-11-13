@@ -6,8 +6,17 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the KeyOff command.
     /// </summary>
-    internal class KeyOff : ICommand
+    public class KeyOff : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("KeyOff", "Turn the key off");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>
