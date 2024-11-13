@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NetAF.Commands.Game;
+using NetAF.Commands;
+using NetAF.Commands.Scene;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation

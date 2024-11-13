@@ -12,7 +12,6 @@ using NetAF.Examples.Assets.Regions.Hub;
 using NetAF.Examples.Assets.Regions.Zelda;
 using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
-using NetAF.Interpretation;
 using NetAF.Logic;
 
 namespace NetAF.Examples

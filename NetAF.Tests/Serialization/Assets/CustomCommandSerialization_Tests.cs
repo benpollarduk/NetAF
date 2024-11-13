@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Interaction;
 using NetAF.Commands;
-using NetAF.Interpretation;
 using NetAF.Serialization;
 
 namespace NetAF.Tests.Serialization.Assets

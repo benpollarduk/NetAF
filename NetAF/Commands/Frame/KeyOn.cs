@@ -6,8 +6,17 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the KeyOn command.
     /// </summary>
-    internal class KeyOn : ICommand
+    public class KeyOn : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("KeyOn", "Turn the key on");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

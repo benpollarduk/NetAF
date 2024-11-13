@@ -2,13 +2,22 @@
 using System.Text;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Take all command.
     /// </summary>
-    internal class TakeAll : ICommand
+    public class TakeAll : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Take all", "Take all items in the current room");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

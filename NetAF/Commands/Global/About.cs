@@ -5,8 +5,17 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the About command.
     /// </summary>
-    internal class About : ICommand
+    public class About : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("About", "View information about the games creator");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

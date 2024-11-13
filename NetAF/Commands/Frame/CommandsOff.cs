@@ -5,8 +5,17 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the CommandsOff command.
     /// </summary>
-    internal class CommandsOff : ICommand
+    public class CommandsOff : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("CommandsOff", "Turn commands off");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

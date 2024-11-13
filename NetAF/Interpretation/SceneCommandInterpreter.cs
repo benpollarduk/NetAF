@@ -5,138 +5,18 @@ using NetAF.Assets;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
-using NetAF.Commands.Game;
+using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation
 {
     /// <summary>
-    /// Provides an object that can be used for interpreting game commands.
+    /// Provides an object that can be used for interpreting scene commands.
     /// </summary>
-    public sealed class GameCommandInterpreter : IInterpreter
+    public sealed class SceneCommandInterpreter : IInterpreter
     {
         #region Constants
-
-        /// <summary>
-        /// Get the north command.
-        /// </summary>
-        public const string North = "North";
-
-        /// <summary>
-        /// Get the north (short) command.
-        /// </summary>
-        public const string NorthShort = "N";
-
-        /// <summary>
-        /// Get the south command.
-        /// </summary>
-        public const string South = "South";
-
-        /// <summary>
-        /// Get the south (short) command.
-        /// </summary>
-        public const string SouthShort = "S";
-
-        /// <summary>
-        /// Get the east command.
-        /// </summary>
-        public const string East = "East";
-
-        /// <summary>
-        /// Get the east (short) command.
-        /// </summary>
-        public const string EastShort = "E";
-
-        /// <summary>
-        /// Get the west command.
-        /// </summary>
-        public const string West = "West";
-
-        /// <summary>
-        /// Get the west (short) command.
-        /// </summary>
-        public const string WestShort = "W";
-
-        /// <summary>
-        /// Get the up command.
-        /// </summary>
-        public const string Up = "Up";
-
-        /// <summary>
-        /// Get the up (short) command.
-        /// </summary>
-        public const string UpShort = "U";
-
-        /// <summary>
-        /// Get the down command.
-        /// </summary>
-        public const string Down = "Down";
-
-        /// <summary>
-        /// Get the down (short) command.
-        /// </summary>
-        public const string DownShort = "D";
-
-        /// <summary>
-        /// Get the drop command.
-        /// </summary>
-        public const string Drop = "Drop";
-
-        /// <summary>
-        /// Get the drop (short) command.
-        /// </summary>
-        public const string DropShort = "R";
-
-        /// <summary>
-        /// Get the use command.
-        /// </summary>
-        public const string Use = "Use";
-
-        /// <summary>
-        /// Get the on command.
-        /// </summary>
-        public const string On = "On";
-
-        /// <summary>
-        /// Get the talk command.
-        /// </summary>
-        public const string Talk = "Talk";
-
-        /// <summary>
-        /// Get the talk (short) command.
-        /// </summary>
-        public const string TalkShort = "L";
-
-        /// <summary>
-        /// Get the to command.
-        /// </summary>
-        public const string To = "To";
-
-        /// <summary>
-        /// Get the take command.
-        /// </summary>
-        public const string Take = "Take";
-
-        /// <summary>
-        /// Get the take (short) command.
-        /// </summary>
-        public const string TakeShort = "T";
-
-        /// <summary>
-        /// Get the all command.
-        /// </summary>
-        public const string All = "All";
-
-        /// <summary>
-        /// Get the examine command.
-        /// </summary>
-        public const string Examine = "Examine";
-
-        /// <summary>
-        /// Get the examine (short) command.
-        /// </summary>
-        public const string ExamineShort = "X";
 
         /// <summary>
         /// Get the me command.
@@ -172,19 +52,19 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new CommandHelp($"{North}/{NorthShort}", "Move north"),
-            new CommandHelp($"{East}/{EastShort}", "Move east"),
-            new CommandHelp($"{South}/{SouthShort}", "Move south"),
-            new CommandHelp($"{West}/{WestShort}", "Move west"),
-            new CommandHelp($"{Up}/{UpShort}", "Move up"),
-            new CommandHelp($"{Down}/{DownShort}", "Move down"),
-            new CommandHelp($"{Drop}/{DropShort} {Variable}", "Drop an item"),
-            new CommandHelp($"{Examine}/{ExamineShort} {Variable}", "Examine anything in the game"),
-            new CommandHelp($"{Take}/{TakeShort} {Variable}", "Take an item"),
-            new CommandHelp($"{Take}/{TakeShort} {All}", "Take all items in the current room"),
-            new CommandHelp($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"),
-            new CommandHelp($"{Use} {Variable}", "Use an item on the current room"),
-            new CommandHelp($"{Use} {Variable} {On.ToLower()} {Variable}", "Use an item on another item or character")
+            Move.NorthCommandHelp,
+            Move.EastCommandHelp,
+            Move.SouthCommandHelp,
+            Move.WestCommandHelp,
+            Move.UpCommandHelp,
+            Move.DownCommandHelp,
+            Drop.CommandHelp,
+            Examine.CommandHelp,
+            Take.CommandHelp,
+            TakeAll.CommandHelp,
+            Talk.TalkCommandHelp,
+            UseOn.UseCommandHelp,
+            new CommandHelp($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command} {Variable}", UseOn.OnCommandHelp.Description)
         ];
 
         #endregion
@@ -226,7 +106,7 @@ namespace NetAF.Interpretation
         {
             SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
-            if (!Drop.Equals(verb, StringComparison.CurrentCultureIgnoreCase) && !DropShort.Equals(verb, StringComparison.CurrentCultureIgnoreCase))
+            if (!Drop.CommandHelp.Equals(verb))
             {
                 command = null;
                 return false;
@@ -248,7 +128,7 @@ namespace NetAF.Interpretation
         {
             SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
-            if (!Take.InsensitiveEquals(verb) && !TakeShort.InsensitiveEquals(verb))
+            if (!Take.CommandHelp.Equals(verb))
             {
                 command = null;
                 return false;
@@ -267,7 +147,7 @@ namespace NetAF.Interpretation
                     return true;
                 }
             }
-            else if (noun.InsensitiveEquals(All))
+            else if (TakeAll.CommandHelp.Equals($"{verb} {noun}"))
             {
                 command = new TakeAll();
                 return true;
@@ -293,14 +173,14 @@ namespace NetAF.Interpretation
         {
             SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
-            if (!Talk.InsensitiveEquals(verb) && !TalkShort.InsensitiveEquals(verb))
+            if (!Talk.TalkCommandHelp.Equals(verb))
             {
                 command = null;
                 return false;
             }
 
             // determine if a target has been specified
-            if (noun.Length > 3 && noun.Substring(0, 2).InsensitiveEquals($"{To} "))
+            if (noun.Length > 3 && Talk.ToCommandHelp.Equals(noun.Substring(0, 2)))
             {
                 noun = noun.Remove(0, 3);
 
@@ -386,7 +266,7 @@ namespace NetAF.Interpretation
         {
             SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
-            if (!verb.InsensitiveEquals(Examine) && !verb.InsensitiveEquals(ExamineShort))
+            if (!Examine.CommandHelp.Equals(verb))
             {
                 command = null;
                 return false;
@@ -454,7 +334,7 @@ namespace NetAF.Interpretation
         {
             SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
-            if (!Use.InsensitiveEquals(verb))
+            if (!UseOn.UseCommandHelp.Equals(verb))
             {
                 command = null;
                 return false;
@@ -462,7 +342,7 @@ namespace NetAF.Interpretation
 
             IInteractWithItem target;
             var itemName = noun;
-            var onPadded = $" {On} ";
+            var onPadded = $" {UseOn.OnCommandHelp.Command} ";
 
             if (noun.CaseInsensitiveContains(onPadded))
             {
@@ -507,37 +387,37 @@ namespace NetAF.Interpretation
         /// <returns>The result of the parse.</returns>
         private static bool TryParseToDirection(string text, out Direction direction)
         {
-            if (text.InsensitiveEquals(North) || text.InsensitiveEquals(NorthShort))
+            if (Move.NorthCommandHelp.Equals(text))
             {
                 direction = Direction.North;
                 return true;
             }
 
-            if (text.InsensitiveEquals(East) || text.InsensitiveEquals(EastShort))
+            if (Move.EastCommandHelp.Equals(text))
             {
                 direction = Direction.East;
                 return true;
             }
 
-            if (text.InsensitiveEquals(South) || text.InsensitiveEquals(SouthShort))
+            if (Move.SouthCommandHelp.Equals(text))
             {
                 direction = Direction.South;
                 return true;
             }
 
-            if (text.InsensitiveEquals(West) || text.InsensitiveEquals(WestShort))
+            if (Move.WestCommandHelp.Equals(text))
             {
                 direction = Direction.West;
                 return true;
             }
 
-            if (text.InsensitiveEquals(Up) || text.InsensitiveEquals(UpShort))
+            if (Move.UpCommandHelp.Equals(text))
             {
                 direction = Direction.Up;
                 return true;
             }
 
-            if (text.InsensitiveEquals(Down) || text.InsensitiveEquals(DownShort))
+            if (Move.DownCommandHelp.Equals(text))
             {
                 direction = Direction.Down;
                 return true;
@@ -605,41 +485,41 @@ namespace NetAF.Interpretation
             List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(new($"{North}/{NorthShort}", "Move north"));
+                commands.Add(Move.NorthCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(new($"{East}/{EastShort}", "Move east"));
+                commands.Add(Move.EastCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(new($"{South}/{SouthShort}", "Move south"));
+                commands.Add(Move.SouthCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(new($"{West}/{WestShort}", "Move west"));
+                commands.Add(Move.WestCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(new($"{Up}/{UpShort}", "Move up"));
+                commands.Add(Move.UpCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(new($"{Down}/{DownShort}", "Move down"));
+                commands.Add(Move.DownCommandHelp);
 
-            commands.Add(new($"{Examine}/{ExamineShort} {Variable}", "Examine anything in the game"));
+            commands.Add(new($"{Examine.CommandHelp.Command}/{Examine.CommandHelp.Shortcut} {Variable}", ""));
 
             if (game.Player.Items.Any())
-                commands.Add(new($"{Drop}/{DropShort} {Variable}", "Drop an item"));
+                commands.Add(Drop.CommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
             {
-                commands.Add(new($"{Take}/{TakeShort} {Variable}", "Take an item"));
-                commands.Add(new($"{Take}/{TakeShort} {All}", "Take all items in the current room"));
+                commands.Add(Take.CommandHelp);
+                commands.Add(TakeAll.CommandHelp);
             }
 
             if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
-                commands.Add(new($"{Talk}/{TalkShort} {To.ToLower()} {Variable}", "Talk to a character"));
+                commands.Add(new($"{Talk.TalkCommandHelp.Command}/{Talk.TalkCommandHelp.Shortcut} {Talk.ToCommandHelp.Command.ToLower()} {Variable}", Talk.TalkCommandHelp.Description));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
             {
-                commands.Add(new($"{Use} {Variable}", "Use an item on the current room"));
-                commands.Add(new($"{Use} {Variable} {On.ToLower()} {Variable}", "Use an item on another item or character"));
+                commands.Add(new($"{UseOn.UseCommandHelp.Command} {Variable}", UseOn.UseCommandHelp.Description));
+                commands.Add(new($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command.ToLower()} {Variable}", UseOn.OnCommandHelp.Description));
             }
 
             return [.. commands];

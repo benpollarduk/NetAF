@@ -5,8 +5,17 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the New command.
     /// </summary>
-    internal class New : ICommand
+    public class New : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("New", "Start a new game");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

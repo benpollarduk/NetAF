@@ -1,7 +1,7 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Talk command.
@@ -9,6 +9,20 @@ namespace NetAF.Commands.Game
     /// <param name="converser">The converser.</param>
     internal class Talk(IConverser converser) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp TalkCommandHelp { get; } = new("Talk", "Talk to a character", "L");
+
+        /// <summary>
+        /// Get the command help for to.
+        /// </summary>
+        public static CommandHelp ToCommandHelp { get; } = new("To", "The character to talk to");
+
+        #endregion
+
         #region Properties
 
         /// <summary>

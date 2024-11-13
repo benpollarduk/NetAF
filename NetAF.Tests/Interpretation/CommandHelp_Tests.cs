@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Interpretation;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -35,6 +35,36 @@ namespace NetAF.Tests.Interpretation
             CommandHelp second = new("A", "A");
 
             var result = first.Equals(second);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenACommandHelp_WhenEqualityWithStringMatchingCommand_ThenReturnTrue()
+        {
+            CommandHelp command = new("A", string.Empty);
+
+            var result = command.Equals("A");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenACommandHelp_WhenEqualityWithStringMatchingShortcut_ThenReturnTrue()
+        {
+            CommandHelp command = new(string.Empty, string.Empty, "A");
+
+            var result = command.Equals("A");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenACommandHelp_WhenEqualityWithStringThatDoesntMatch_ThenReturnFalse()
+        {
+            CommandHelp command = new("A", string.Empty, "B");
+
+            var result = command.Equals("C");
 
             Assert.IsFalse(result);
         }

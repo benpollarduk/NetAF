@@ -63,7 +63,7 @@ namespace NetAF.Tests.Persistence
         [TestMethod]
         public void GivenSimpleGameWithCustomCommand_WhenFromJsonFromNewlyCreatedJson_ThenRestorePointIsNotNull()
         {
-            var command = new CustomCommand(new NetAF.Interpretation.CommandHelp("TEST COMMAND", string.Empty), true, true, null);
+            var command = new CustomCommand(new CommandHelp("TEST COMMAND", string.Empty), true, true, null);
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var room = new Room(string.Empty, string.Empty, null, commands: [command]);
             regionMaker[0, 0, 0] = room;

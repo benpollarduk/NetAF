@@ -2,15 +2,29 @@
 using NetAF.Assets;
 using NetAF.Assets.Interaction;
 
-namespace NetAF.Commands.Game
+namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the UseOn command.
     /// </summary>
     /// <param name="item">The item to use.</param>
     /// <param name="target">The target of the command.</param>
-    internal class UseOn(Item item, IInteractWithItem target) : ICommand
+    public class UseOn(Item item, IInteractWithItem target) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp UseCommandHelp { get; } = new("Use", "Use an item on the current room");
+
+        /// <summary>
+        /// Get the command help for on.
+        /// </summary>
+        public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on another item or character");
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -65,7 +79,7 @@ namespace NetAF.Commands.Game
                     break;
 
                 case InteractionEffect.TargetUsedUp:
-                    
+
                     if (Target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
                         game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(Target);
 

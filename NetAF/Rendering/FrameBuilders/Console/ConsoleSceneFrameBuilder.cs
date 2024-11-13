@@ -3,9 +3,9 @@ using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Commands.Game;
+using NetAF.Commands;
+using NetAF.Commands.Scene;
 using NetAF.Extensions;
-using NetAF.Interpretation;
 using NetAF.Rendering.Frames;
 using NetAF.Utilities;
 

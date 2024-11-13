@@ -5,8 +5,17 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Help command.
     /// </summary>
-    internal class Help : ICommand
+    public class Help : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Help", "View game help");
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>
