@@ -30,7 +30,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.ChangeMode(new AboutMode());
-            return new(ReactionResult.Silent, string.Empty);
+            return new(ReactionResult.ModeChanged, string.Empty);
         }
 
         #endregion

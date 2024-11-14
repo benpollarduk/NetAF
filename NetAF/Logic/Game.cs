@@ -165,9 +165,9 @@ namespace NetAF.Logic
                     // display the reaction now
                     DisplayReaction(reaction);
                 }
-                else if (Mode.Type == GameModeType.Information)
+                else if (reaction.Result != ReactionResult.ModeChanged && Mode.Type == GameModeType.Information)
                 {
-                    // revert back to scene mode
+                    // revert back to scene mode as the command didn't change the mode and the current mode is information, essentially the mode has expired
                     ChangeMode(new SceneMode());
                 }
 
@@ -359,6 +359,7 @@ namespace NetAF.Logic
                     ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, message));
                     break;
                 case ReactionResult.Silent:
+                case ReactionResult.ModeChanged:
                     break;
                 case ReactionResult.OK:
                 case ReactionResult.Fatal:
