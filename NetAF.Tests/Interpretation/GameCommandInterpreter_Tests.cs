@@ -27,7 +27,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenEmptyString_WhenInterpret_ThenReturnFalse()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(string.Empty, game);
 
@@ -38,7 +38,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenEast_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.EastCommandHelp.Command, game);
 
@@ -49,7 +49,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenEastShort_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.EastCommandHelp.Shortcut, game);
 
@@ -60,7 +60,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNorth_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.NorthCommandHelp.Command, game);
 
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNorthShort_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.NorthCommandHelp.Shortcut, game);
 
@@ -82,7 +82,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenSouth_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.SouthCommandHelp.Command, game);
 
@@ -93,7 +93,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenSouthShort_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.SouthCommandHelp.Shortcut, game);
 
@@ -104,7 +104,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenWest_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.WestCommandHelp.Command, game);
 
@@ -115,7 +115,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenWestShort_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Move.WestCommandHelp.Shortcut, game);
 
@@ -126,7 +126,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExamine_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command, game);
 
@@ -137,7 +137,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExamineRoom_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + SceneCommandInterpreter.Room, game);
 
@@ -148,7 +148,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExamineRegion_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + SceneCommandInterpreter.Region, game);
 
@@ -159,7 +159,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExamineOverworld_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + SceneCommandInterpreter.Overworld, game);
 
@@ -170,7 +170,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenExamineMe_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + SceneCommandInterpreter.Me, game);
 
@@ -181,7 +181,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenTake_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             overworld.CurrentRegion.CurrentRoom.AddItem(new(Identifier.Empty, Description.Empty, true));
 
             var result = interpreter.Interpret(Take.CommandHelp.Command, game);
@@ -193,7 +193,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenTakeNonTakeable_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             overworld.CurrentRegion.CurrentRoom.AddItem(new(Identifier.Empty, Description.Empty));
 
             var result = interpreter.Interpret(Take.CommandHelp.Command, game);
@@ -205,7 +205,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenDrop_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game= Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Drop.CommandHelp.Command, game);
 
@@ -216,7 +216,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenTalk_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Talk.TalkCommandHelp.Command, game);
 
@@ -227,7 +227,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenUse_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(UseOn.UseCommandHelp.Command, game);
 
@@ -238,7 +238,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenUseOn_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret($"{UseOn.UseCommandHelp.Command} test {UseOn.OnCommandHelp.Command} test", game);
 

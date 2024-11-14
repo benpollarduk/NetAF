@@ -51,9 +51,7 @@ namespace NetAF.Examples
                         if (!move)
                             return new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
 
-                        g.DisplayTransition(string.Empty, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
-
-                        return new Reaction(ReactionResult.Internal, string.Empty);
+                        return new Reaction(ReactionResult.OK, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
                     })
                 ];
 
@@ -120,8 +118,8 @@ namespace NetAF.Examples
             }
             catch (Exception e)
             {
-                System.Console.WriteLine($"Exception caught running demo: {e.Message}");
-                System.Console.ReadKey();
+                Console.WriteLine($"Exception caught running demo: {e.Message}");
+                Console.ReadKey();
             }
         }
     }

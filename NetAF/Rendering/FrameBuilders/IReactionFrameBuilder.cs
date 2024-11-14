@@ -3,9 +3,9 @@
 namespace NetAF.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Represents any object that can build transition frames.
+    /// Represents any object that can build reaction frames.
     /// </summary>
-    public interface ITransitionFrameBuilder
+    public interface IReactionFrameBuilder
     {
         /// <summary>
         /// Build a frame.

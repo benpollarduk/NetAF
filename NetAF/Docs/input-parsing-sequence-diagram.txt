@@ -4,7 +4,7 @@ participant Console
 participant Game
 participant Interpreter
 
-note over Interpreter: Provided by:\nInputInterpreter\nGlobalCommandInterpreter\nFrameCommandInterpreter \nGameCommandInterpreter
+note over Interpreter: Provided by:\nInputInterpreter\nGlobalCommandInterpreter\nFrameCommandInterpreter \nSceneCommandInterpreter \nConversationCommandInterpreter \nCustomCommandInterpreter
 
 Console->Game: Input
 Game->Interpreter: Interpret

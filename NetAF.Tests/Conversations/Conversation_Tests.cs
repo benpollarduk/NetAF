@@ -4,6 +4,9 @@ using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
+using NetAF.Assets.Locations;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Conversations
 {
@@ -13,9 +16,14 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversationWithOneParagraph_WhenConstructed_ThenCurrentParagraphIsFirstParagraph()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = npc.Conversation.CurrentParagraph;
 
@@ -53,23 +61,33 @@ namespace NetAF.Tests.Conversations
         }
 
         [TestMethod]
-        public void GivenConverserWithAConversation_WhenNext_ThenResultIsInternal()
+        public void GivenConverserWithAConversation_WhenNext_ThenResultIsSilent()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = npc.Conversation.Next(game);
 
-            Assert.AreEqual(ReactionResult.Internal, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
 
         [TestMethod]
         public void GivenConverserWithAConversationWithOneParagraph_WhenNext_ThenCurrentParagraphIsUnchanged()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var startParagraph = npc.Conversation.CurrentParagraph;
             npc.Conversation.Next(game);
@@ -81,9 +99,14 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenConverserWithAConversationWithTwoParagraphs_WhenNext_ThenCurrentParagraphIsSecondParagraph()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), null, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty), new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             npc.Conversation.Next(game);
             var result = npc.Conversation.CurrentParagraph;
@@ -94,9 +117,14 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenNull_WhenRespond_ThenReactionIsError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = npc.Conversation.Respond(null, game);
 
@@ -106,9 +134,14 @@ namespace NetAF.Tests.Conversations
         [TestMethod]
         public void GivenCurrentParagraphWithNoResponses_WhenRespond_ThenReactionIsError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = npc.Conversation.Respond(new Response(string.Empty), game);
 
@@ -116,17 +149,22 @@ namespace NetAF.Tests.Conversations
         }
 
         [TestMethod]
-        public void GivenCurrentParagraphWithResponse_WhenRespond_ThenReactionIsInternal()
+        public void GivenCurrentParagraphWithResponse_WhenRespond_ThenReactionIsSilent()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var response = new Response(string.Empty, new Repeat());
             var paragraph = new Paragraph(string.Empty, new Repeat()) {  Responses = [response] };
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(paragraph));
-            game.StartConversation(npc);
+            npc.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = npc.Conversation.Respond(response, game);
 
-            Assert.AreEqual(ReactionResult.Internal, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
     }
 }

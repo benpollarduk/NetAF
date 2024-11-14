@@ -61,9 +61,6 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            if (game.ActiveConverser?.Conversation != null)
-                return [];
-
             List<CommandHelp> help = [];
 
             foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null)) 

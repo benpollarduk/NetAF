@@ -62,7 +62,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             RegionMapBuilder?.BuildRegionMap(region, leftMargin, lastY + 2, availableWidth, height - 4);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
 
         #endregion

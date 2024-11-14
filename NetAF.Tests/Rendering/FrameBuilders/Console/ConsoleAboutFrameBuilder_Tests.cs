@@ -16,7 +16,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleAboutFrameBuilder(gridStringBuilder);
 
-                builder.Build(string.Empty, Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke(), 80, 50);
+                builder.Build(string.Empty, Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke(), 80, 50);
             });
         }
     }

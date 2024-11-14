@@ -3,7 +3,7 @@ using NetAF.Adapters;
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
 
-namespace NetAF.Tests.Logic
+namespace NetAF.Tests
 {
     /// <summary>
     /// Provides a console adapter for tests.
@@ -13,28 +13,13 @@ namespace NetAF.Tests.Logic
         #region Properties
 
         /// <summary>
-        /// Get or set the input bytes.
-        /// </summary>
-        public byte[] InBytes { get; set; } = [];
-
-        /// <summary>
-        /// Get or set the output bytes.
-        /// </summary>
-        public byte[] OutBytes { get; set; } = [];
-
-        /// <summary>
-        /// Get or set the output error bytes.
-        /// </summary>
-        public byte[] ErrorBytes { get; set; } = [];
-
-        /// <summary>
         /// Get the input stream.
         /// </summary>
         public TextReader In
         {
             get
             {
-                var memoryStream = new MemoryStream(InBytes);
+                var memoryStream = new MemoryStream();
                 return new StreamReader(memoryStream);
             }
         }
@@ -46,7 +31,7 @@ namespace NetAF.Tests.Logic
         {
             get
             {
-                var memoryStream = new MemoryStream(OutBytes);
+                var memoryStream = new MemoryStream();
                 return new StreamWriter(memoryStream);
             }
         }
@@ -58,7 +43,7 @@ namespace NetAF.Tests.Logic
         {
             get
             {
-                var memoryStream = new MemoryStream(ErrorBytes);
+                var memoryStream = new MemoryStream();
                 return new StreamWriter(memoryStream);
             }
         }

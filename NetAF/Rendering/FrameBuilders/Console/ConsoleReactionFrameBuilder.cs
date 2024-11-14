@@ -4,10 +4,10 @@ using NetAF.Rendering.Frames;
 namespace NetAF.Rendering.FrameBuilders.Console
 {
     /// <summary>
-    /// Provides a builder of transition frames.
+    /// Provides a builder of reaction frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ConsoleTransitionFrameBuilder(GridStringBuilder gridStringBuilder) : ITransitionFrameBuilder
+    public sealed class ConsoleReactionFrameBuilder(GridStringBuilder gridStringBuilder) : IReactionFrameBuilder
     {
         #region Fields
 
@@ -30,16 +30,16 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Get or set the title color.
         /// </summary>
-        public AnsiColor TitleColor { get; set; } = AnsiColor.Green;
+        public AnsiColor TitleColor { get; set; } = AnsiColor.White;
 
         /// <summary>
         /// Get or set the message color.
         /// </summary>
-        public AnsiColor MessageColor { get; set; } = AnsiColor.Yellow;
+        public AnsiColor MessageColor { get; set; } = AnsiColor.White;
 
         #endregion
 
-        #region Implementation of ITransitionFrameBuilder
+        #region Implementation of IReactionFrameBuilder
 
         /// <summary>
         /// Build a frame.
@@ -69,7 +69,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY, availableWidth, MessageColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
 
         #endregion

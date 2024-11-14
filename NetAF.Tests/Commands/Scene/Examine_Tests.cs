@@ -23,7 +23,7 @@ namespace NetAF.Tests.Commands.Scene
         [TestMethod]
         public void GivenSomethingToExamine_WhenInvoke_ThenOK()
         {
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var region = new Region(Identifier.Empty, Description.Empty);
             var command = new Examine(region);
 

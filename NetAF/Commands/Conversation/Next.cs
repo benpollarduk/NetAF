@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Conversation
 {
@@ -19,13 +20,15 @@ namespace NetAF.Commands.Conversation
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            if (game.ActiveConverser == null)
+            var mode = game.Mode as ConversationMode;
+
+            if (mode?.Converser == null)
                 return new(ReactionResult.Error, "No converser.");
 
-            if (game.ActiveConverser.Conversation == null)
+            if (mode.Converser.Conversation == null)
                 return new(ReactionResult.Error, "No conversation.");
 
-            return game.ActiveConverser.Conversation.Next(game);
+            return mode.Converser.Conversation.Next(game);
         }
 
         #endregion

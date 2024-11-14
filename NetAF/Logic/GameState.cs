@@ -14,6 +14,10 @@
         /// </summary>
         Active,
         /// <summary>
+        /// Finishing.
+        /// </summary>
+        Finishing,
+        /// <summary>
         /// Finished.
         /// </summary>
         Finished

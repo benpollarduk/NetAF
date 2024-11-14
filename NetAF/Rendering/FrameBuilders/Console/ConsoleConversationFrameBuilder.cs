@@ -168,7 +168,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
             gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, leftMargin + 2, availableHeight, BackgroundColor) { AcceptsInput = true, ShowCursor = true };
+            return new GridTextFrame(gridStringBuilder, leftMargin + 2, availableHeight, BackgroundColor) { ShowCursor = true };
         }
 
         #endregion

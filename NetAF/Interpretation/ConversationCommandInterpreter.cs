@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using NetAF.Commands;
 using NetAF.Commands.Conversation;
+using NetAF.Commands.Global;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Interpretation
 {
@@ -38,7 +40,9 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (game.ActiveConverser == null)
+            var mode = game.Mode as ConversationMode;
+
+            if (mode?.Converser == null)
                 return InterpretationResult.Fail;
 
             if (End.CommandHelp.Equals(input))
@@ -50,8 +54,8 @@ namespace NetAF.Interpretation
             if (!int.TryParse(input, out var index))
                 return InterpretationResult.Fail;
             
-            if (index > 0 && index <= game.ActiveConverser.Conversation?.CurrentParagraph?.Responses?.Length)
-                return new(true, new Respond(game.ActiveConverser.Conversation.CurrentParagraph.Responses[index - 1]));
+            if (index > 0 && index <= mode.Converser.Conversation?.CurrentParagraph?.Responses?.Length)
+                return new(true, new Respond(mode.Converser.Conversation.CurrentParagraph.Responses[index - 1]));
 
             return InterpretationResult.Fail;
         }
@@ -63,19 +67,23 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            if (game.ActiveConverser?.Conversation == null) 
+            var mode = game.Mode as ConversationMode;
+
+            if (mode?.Converser?.Conversation == null) 
                 return [];
 
-            var commands = new List<CommandHelp> { End.CommandHelp };
+            var commands = new List<CommandHelp>();
 
-            if (game.ActiveConverser.Conversation.CurrentParagraph?.CanRespond ?? false)
+            if (mode.Converser.Conversation.CurrentParagraph?.CanRespond ?? false)
             {
-                for (var i = 0; i < game.ActiveConverser.Conversation.CurrentParagraph.Responses.Length; i++)
+                for (var i = 0; i < mode.Converser.Conversation.CurrentParagraph.Responses.Length; i++)
                 {
-                    var response = game.ActiveConverser.Conversation.CurrentParagraph.Responses[i];
+                    var response = mode.Converser.Conversation.CurrentParagraph.Responses[i];
                     commands.Add(new CommandHelp((i + 1).ToString(), response.Line.EnsureFinishedSentence().ToSpeech()));
                 }
             }
+
+            commands.Add(new CommandHelp(End.CommandHelp.Command, "End the conversation"));
 
             return [.. commands];
         }

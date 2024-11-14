@@ -7,6 +7,15 @@
     /// <param name="description">A description of the result.</param>
     public sealed class Reaction(ReactionResult result, string description)
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Provides a default value for OK.
+        /// </summary>
+        internal static Reaction OK => new(ReactionResult.OK, string.Empty);
+
+        #endregion
+
         #region Properties
 
         /// <summary>

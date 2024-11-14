@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
-using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logic.Arrangement;
-using NetAF.Rendering.Frames;
+using NetAF.Logic.Modes;
 using NetAF.Serialization;
 using NetAF.Utilities;
 
@@ -34,11 +32,6 @@ namespace NetAF.Logic
         /// Get or set the current state.
         /// </summary>
         private GameState State { get; set; }
-
-        /// <summary>
-        /// Get the active converser.
-        /// </summary>
-        public IConverser ActiveConverser { get; private set; }
 
         /// <summary>
         /// Get the player.
@@ -71,29 +64,14 @@ namespace NetAF.Logic
         public GameEndConditions EndConditions { get; private set; }
 
         /// <summary>
-        /// Get if this is executing.
-        /// </summary>
-        public bool IsExecuting { get; private set; }
-
-        /// <summary>
-        /// Get or set the current Frame.
-        /// </summary>
-        private IFrame CurrentFrame { get; set; }
-
-        /// <summary>
         /// Get the catalog of assets for this game.
         /// </summary>
         public AssetCatalog Catalog { get; private set; }
 
         /// <summary>
-        /// Occurs when the game begins drawing a frame.
+        /// Get the mode.
         /// </summary>
-        internal event EventHandler<IFrame> StartingFrameDraw;
-
-        /// <summary>
-        /// Occurs when the game finishes drawing a frame.
-        /// </summary>
-        internal event EventHandler<IFrame> FinishedFrameDraw;
+        public IGameMode Mode { get; private set; }
 
         #endregion
 
@@ -124,6 +102,15 @@ namespace NetAF.Logic
         #region Methods
 
         /// <summary>
+        /// Change mode to a specified mode.
+        /// </summary>
+        /// <param name="mode">The mode.</param>
+        public void ChangeMode(IGameMode mode)
+        {
+            Mode = mode;
+        }
+
+        /// <summary>
         /// Get an array of inactive player locations.
         /// </summary>
         /// <returns>An array containing all locations of inactive platers.</returns>
@@ -137,61 +124,121 @@ namespace NetAF.Logic
         /// </summary>
         internal void Execute()
         {
-            if (IsExecuting)
-                return;
+            // if the game is in an active state don't re-execute
+            switch (State)
+            {
+                case GameState.Active:
+                case GameState.Finishing:
+                    return;
+            }
 
-            IsExecuting = true;
+            // enter the game
+            Enter();
 
+            // setup the adapter for this game
             Configuration.Adapter.Setup(this);
 
-            Refresh(Configuration.FrameBuilders.TitleFrameBuilder.Build(Info.Name, Introduction, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+            // change mode to show the title screen
+            ChangeMode(new TitleMode());
+
+            // hold end mode
+            IGameMode endMode;
 
             do
             {
-                if (ActiveConverser != null)
-                    Refresh(Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {ActiveConverser.Identifier.Name}", ActiveConverser, Configuration.Interpreter.GetContextualCommandHelp(this), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
+                // always render the current mode
+                RenderCurrentMode();
 
+                // get the input
                 var input = GetInput();
-                var reaction = ExecuteLogicOnce(input, out var displayReactionToInput);
 
-                if (reaction?.Result == ReactionResult.Fatal)
+                // process the input
+                var reaction = ProcessInput(input);
+
+                // if there was a fatal reaction, kill the player
+                if (reaction.Result == ReactionResult.Fatal)
                     Player.Kill();
 
-                if (displayReactionToInput)
+                // if the reaction should be displayed
+                if (reaction.Result != ReactionResult.Silent)
+                {
+                    // display the reaction now
                     DisplayReaction(reaction);
+                }
+                else if (Mode.Type == GameModeType.Information)
+                {
+                    // revert back to scene mode
+                    ChangeMode(new SceneMode());
+                }
 
-                var complete = TestAndHandleGameCompletion();
-
-                if (!complete)
-                    TestAndHandleGameOver();
+                // check if the game has ended
+                if (CheckForGameEnd(EndConditions, out endMode))
+                    End();
             }
-            while (State != GameState.Finished);
+            while (State != GameState.Finishing);
 
-            IsExecuting = false;
+            // render the last mode
+            RenderCurrentMode();
+
+            // wait for acknowledge
+            GetInput();
+
+            // if an end mode specified
+            if (endMode != null)
+            {
+                // set and render the end mode
+                ChangeMode(endMode);
+                RenderCurrentMode();
+
+                // wait for acknowledge
+                GetInput();
+            }
+
+            // finished execution
+            State = GameState.Finished;
         }
 
         /// <summary>
-        /// Execute game logic once to get a reaction.
+        /// Render the current mode.
         /// </summary>
-        /// <param name="input">The input to process.</param>
-        /// <param name="displayReaction">Will be set to true if the reaction should be displayed.</param>
-        /// <returns>The reaction to the input.</returns>
-        private Reaction ExecuteLogicOnce(string input, out bool displayReaction)
+        private void RenderCurrentMode()
         {
-            switch (State)
+            // perform the render
+            var result = Mode.Render(this);
+
+            // if this was aborted by the mode
+            if (result == RenderState.Aborted)
             {
-                case GameState.NotStarted:
-                    Enter();
-                    displayReaction = false;
-                    return null;
-                case GameState.Finished:
-                    displayReaction = false;
-                    return null;
-                case GameState.Active:
-                    return ProcessInput(input, out displayReaction);
-                default:
-                    throw new ArgumentOutOfRangeException($"State {State} is not handled.");
+                // revert back to scene mode
+                ChangeMode(new SceneMode());
+
+                // render
+                Mode.Render(this);
             }
+        }
+
+        /// <summary>
+        /// Check to see if the game has ended.
+        /// </summary>
+        /// <param name="endConditions">The end conditions.</param>
+        /// <param name="mode">The game mode.</param>
+        /// <returns>True if the game has ended, else false.</returns>
+        private bool CheckForGameEnd(GameEndConditions endConditions, out IGameMode mode)
+        {
+            // check to see if the completion conditions have been met
+            var completionCheckResult = endConditions.CompletionCondition(this) ?? EndCheckResult.NotEnded;
+            var gameOverCheckResult = endConditions.GameOverCondition(this) ?? EndCheckResult.NotEnded;
+
+            // check conditions and set end mode appropriately
+            if (completionCheckResult.HasEnded)
+                mode = new CompletionMode(completionCheckResult.Title, completionCheckResult.Description);
+            else if (gameOverCheckResult.HasEnded)
+                mode = new GameOverMode(gameOverCheckResult.Title, gameOverCheckResult.Description);
+            else
+                mode = null;
+
+            // return if either condition was true
+            return completionCheckResult.HasEnded || gameOverCheckResult.HasEnded;
         }
 
         /// <summary>
@@ -233,76 +280,70 @@ namespace NetAF.Logic
         /// <returns>The user input.</returns>
         private string GetInput()
         {
-            if (CurrentFrame.AcceptsInput)
-                return Configuration.Adapter.WaitForInput();
-            
-            while (!Configuration.Adapter.WaitForAcknowledge())
-                DrawFrame(CurrentFrame);
+            // input is handled based on the current modes type
+            switch (Mode.Type)
+            {
+                case GameModeType.Information:
 
-            return string.Empty;
+                    // wait for acknowledge
+                    while (!Configuration.Adapter.WaitForAcknowledge())
+                    {
+                        // something other was entered, render again unless that was aborted
+                        if (Mode.Render(this) != RenderState.Aborted)
+                            break;
+                    }
+
+                    // acknowledge complete
+                    return string.Empty;
+
+                case GameModeType.Interactive:
+
+                    // get and return user input
+                    return Configuration.Adapter.WaitForInput();
+
+                default:
+                    throw new NotImplementedException($"No handling for case {Mode.Type}.");
+            }
         }
 
         /// <summary>
-        /// Test and handle the game over condition.
-        /// </summary>
-        private void TestAndHandleGameOver()
-        {
-            var gameOverCheckResult = EndConditions.GameOverCondition(this) ?? EndCheckResult.NotEnded;
-
-            if (!gameOverCheckResult.HasEnded)
-                return;
-
-            GetInput();
-            Refresh(Configuration.FrameBuilders.GameOverFrameBuilder.Build(gameOverCheckResult.Title, gameOverCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-            GetInput();
-            End();
-        }
-
-        /// <summary>
-        /// Test and handle the completion condition.
-        /// </summary>
-        /// <returns>True if the condition was met.</returns>
-        private bool TestAndHandleGameCompletion()
-        {
-            var endCheckResult = EndConditions.CompletionCondition(this) ?? EndCheckResult.NotEnded;
-
-            if (!endCheckResult.HasEnded) 
-                return false;
-
-            GetInput();
-            Refresh(Configuration.FrameBuilders.CompletionFrameBuilder.Build(endCheckResult.Title, endCheckResult.Description, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-            GetInput();
-            End();
-
-            return true;
-        }
-
-        /// <summary>
-        /// Process input to get a reaction.
+        /// Process input.
         /// </summary>
         /// <param name="input">The input to process.</param>
-        /// <param name="displayReaction">Will be set to true if the reaction should be displayed.</param>
         /// <returns>The reaction to the input.</returns>
-        private Reaction ProcessInput(string input, out bool displayReaction)
+        private Reaction ProcessInput(string input)
         {
-            if (!CurrentFrame.AcceptsInput)
-            {
-                Refresh(string.Empty);
-                displayReaction = false;
-                return new Reaction(ReactionResult.OK, string.Empty);
-            }
+            // if just an information mode no additional processing needed
+            if (Mode.Type == GameModeType.Information)
+                return new Reaction(ReactionResult.Silent, string.Empty);
 
-            displayReaction = true;
+            // preen input to help with processing
             input = StringUtilities.PreenInput(input);
+
+            // try global interpreter
             var interpretation = Configuration.Interpreter.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
 
+            // if interpretation was successful then process
             if (interpretation.WasInterpretedSuccessfully)
                 return interpretation.Command.Invoke(this);
 
+            // try mode interpreter
+            if (Mode.Interpreter != null)
+            {
+                // try mode specific interpreter
+                interpretation = Mode.Interpreter.Interpret(input, this);
+
+                // if interpretation was successful then process
+                if (interpretation.WasInterpretedSuccessfully)
+                    return interpretation.Command.Invoke(this);
+            }
+
+            // something was entered, but can't be processed
             if (!string.IsNullOrEmpty(input))
                 return new(ReactionResult.Error, $"{input} was not valid input.");
 
-            return new(ReactionResult.OK, string.Empty);
+            // empty string
+            return new(ReactionResult.Silent, string.Empty);
         }
 
         /// <summary>
@@ -315,54 +356,16 @@ namespace NetAF.Logic
             {
                 case ReactionResult.Error:
                     var message = Configuration.ErrorPrefix + ": " + reaction.Description;
-                    Refresh(message);
+                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, message));
+                    break;
+                case ReactionResult.Silent:
                     break;
                 case ReactionResult.OK:
-                    Refresh(reaction.Description);
-                    break;
-                case ReactionResult.Internal:
-                    break;
                 case ReactionResult.Fatal:
-                    Refresh(reaction.Description);
+                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
                     break;
                 default:
                     throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        /// Start a conversation with a converser.
-        /// </summary>
-        /// <param name="converser">The element to engage conversation with.</param>
-        internal void StartConversation(IConverser converser)
-        {
-            ActiveConverser = converser;
-            ActiveConverser?.Conversation?.Next(this);
-        }
-
-        /// <summary>
-        /// End a conversation with a converser.
-        /// </summary>
-        internal void EndConversation()
-        {
-            ActiveConverser = null;
-        }
-
-        /// <summary>
-        /// Draw a Frame onto the output stream.
-        /// </summary>
-        /// <param name="frame">The frame to draw.</param>
-        private void DrawFrame(IFrame frame)
-        {
-            try
-            {
-                StartingFrameDraw?.Invoke(this, frame);
-                Configuration.Adapter.RenderFrame(frame);
-                FinishedFrameDraw?.Invoke(this, frame);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("An exception was caught drawing the frame: {0}", e.Message);
             }
         }
 
@@ -372,7 +375,6 @@ namespace NetAF.Logic
         private void Enter()
         {
             State = GameState.Active;
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, string.Empty, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         /// <summary>
@@ -380,7 +382,7 @@ namespace NetAF.Logic
         /// </summary>
         internal void End()
         {
-            State = GameState.Finished;
+            State = GameState.Finishing;
         }
 
         /// <summary>
@@ -421,65 +423,6 @@ namespace NetAF.Logic
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Characters.Where(x => x.IsPlayerVisible));
             examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Exits.Where(x => x.IsPlayerVisible));
             return [.. examinables];
-        }
-
-        /// <summary>
-        /// Refresh the current frame.
-        /// </summary>
-        /// <param name="message">Any message to display.</param>
-        private void Refresh(string message)
-        {
-            Refresh(Configuration.FrameBuilders.SceneFrameBuilder.Build(Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(Overworld.CurrentRegion), Player, message, Configuration.DisplayCommandListInSceneFrames ? Configuration.Interpreter.GetContextualCommandHelp(this) : null, Configuration.SceneMapKeyType, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-        }
-
-        /// <summary>
-        /// Refresh the display.
-        /// </summary>
-        /// <param name="frame">The frame to display.</param>
-        private void Refresh(IFrame frame)
-        {
-            CurrentFrame = frame;
-            DrawFrame(frame);
-        }
-
-        /// <summary>
-        /// Display the help frame.
-        /// </summary>
-        public void DisplayHelp()
-        {
-            List<CommandHelp> commands =
-            [
-                .. Configuration.Interpreter.SupportedCommands,
-                .. Configuration.Interpreter.GetContextualCommandHelp(this),
-            ];
-
-            Refresh(Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands.Distinct().ToArray(), Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-        }
-
-        /// <summary>
-        /// Display the map frame.
-        /// </summary>
-        public void DisplayMap()
-        {
-            Refresh(Configuration.FrameBuilders.RegionMapFrameBuilder.Build(Overworld.CurrentRegion, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-        }
-
-        /// <summary>
-        /// Display the about frame.
-        /// </summary>
-        public void DisplayAbout()
-        {
-            Refresh(Configuration.FrameBuilders.AboutFrameBuilder.Build("About", this, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
-        }
-
-        /// <summary>
-        /// Display a transition frame.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="message">The message.</param>
-        public void DisplayTransition(string title, string message)
-        {
-            Refresh(Configuration.FrameBuilders.TransitionFrameBuilder.Build(title, message, Configuration.DisplaySize.Width, Configuration.DisplaySize.Height));
         }
 
         #endregion

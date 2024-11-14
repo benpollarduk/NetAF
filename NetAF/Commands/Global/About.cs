@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Global
 {
@@ -28,9 +29,8 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.DisplayAbout();
-
-            return new(ReactionResult.Internal, string.Empty);
+            game.ChangeMode(new AboutMode());
+            return new(ReactionResult.Silent, string.Empty);
         }
 
         #endregion

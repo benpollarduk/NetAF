@@ -1,18 +1,28 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Logic.Modes;
 
-namespace NetAF.Commands.Conversation
+namespace NetAF.Commands.Global
 {
     /// <summary>
     /// Represents the End command.
     /// </summary>
     public class End : ICommand
     {
+        #region Constants
+
+        /// <summary>
+        /// Get the string for successful ended.
+        /// </summary>
+        public const string SuccessfulEnd = "Ended.";
+
+        #endregion
+
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("End", "End the conversation");
+        public static CommandHelp CommandHelp { get; } = new("End", "End the current mode");
 
         #endregion
 
@@ -28,8 +38,8 @@ namespace NetAF.Commands.Conversation
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.EndConversation();
-            return new(ReactionResult.OK, "Ended the conversation.");
+            game.ChangeMode(new SceneMode());
+            return new(ReactionResult.OK, SuccessfulEnd);
         }
 
         #endregion

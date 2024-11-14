@@ -1,4 +1,6 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Logic;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Global
 {
@@ -23,13 +25,13 @@ namespace NetAF.Commands.Global
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.DisplayMap();
-            return new(ReactionResult.Internal, string.Empty);
+            game.ChangeMode(new RegionMapMode());
+            return new(ReactionResult.Silent, string.Empty);
         }
 
         #endregion
