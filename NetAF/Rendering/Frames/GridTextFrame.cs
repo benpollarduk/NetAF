@@ -55,20 +55,16 @@ namespace NetAF.Rendering.Frames
         /// <summary>
         /// Determine if color is suppressed. If the NO_COLOR environment variable is present and set to anything other than '0' or 'false' this will return true.
         /// </summary>
-        /// <returns>True if the NO_COLOR ebviroment variable is present and set to anything other than '0' or 'false', else false.</returns>
+        /// <returns>True if the NO_COLOR environment variable is present and set to anything other than '0' or 'false', else false.</returns>
         internal static bool IsColorSuppressed()
         {
             var value = Environment.GetEnvironmentVariable(NO_COLOR)?.ToLower() ?? string.Empty;
 
-            switch (value)
+            return value switch
             {
-                case "":
-                case "0":
-                case "false":
-                    return false;
-                default:
-                    return true;
-            }
+                "" or "0" or "false" => false,
+                _ => true,
+            };
         }
 
         /// <summary>
@@ -134,11 +130,6 @@ namespace NetAF.Rendering.Frames
         /// Get or set if the cursor should be shown.
         /// </summary>
         public bool ShowCursor { get; set; } = true;
-
-        /// <summary>
-        /// Get or set if this Frame accepts input.
-        /// </summary>
-        public bool AcceptsInput { get; set; } = true;
 
         /// <summary>
         /// Render this frame on a presenter.

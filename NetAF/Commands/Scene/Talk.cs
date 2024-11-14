@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Scene
 {
@@ -56,8 +57,11 @@ namespace NetAF.Commands.Scene
             if (Converser is Character character && !character.IsAlive)
                 return new(ReactionResult.Error, $"{character.Identifier.Name} is dead.");
 
-            game.StartConversation(Converser);
-            return new(ReactionResult.Internal, "Engaged in conversation.");
+            // begin conversation
+            Converser.Conversation?.Next(game);
+
+            game.ChangeMode(new ConversationMode(Converser));
+            return new(ReactionResult.Silent, "Engaged in conversation.");
         }
 
         #endregion

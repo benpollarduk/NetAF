@@ -12,9 +12,9 @@ namespace NetAF.Commands.Scene
         #region Constants
 
         /// <summary>
-        /// Get the prefix for successful moves.
+        /// Get the string for successful moves.
         /// </summary>
-        public const string SuccessfulMovePrefix = "Moved";
+        public const string SuccessfulMove = "Moved.";
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "No game specified.");
 
             if (game.Overworld.CurrentRegion.Move(Direction))
-                return new(ReactionResult.OK, $"{SuccessfulMovePrefix} {Direction}.");
+                return new(ReactionResult.OK, SuccessfulMove);
 
             return new(ReactionResult.Error, $"Could not move {Direction}.");
         }

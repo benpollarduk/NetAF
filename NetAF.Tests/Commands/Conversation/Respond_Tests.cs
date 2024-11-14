@@ -4,6 +4,9 @@ using NetAF.Commands.Conversation;
 using NetAF.Conversations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
+using NetAF.Assets.Locations;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Commands.Conversation
 {
@@ -23,7 +26,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenNullResponse_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Respond(null);
 
             var result = command.Invoke(game);
@@ -34,7 +37,7 @@ namespace NetAF.Tests.Commands.Conversation
         [TestMethod]
         public void GivenNoConverser_WhenInvoke_ThenError()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var response = new Response("");
             var command = new Respond(response);
 
@@ -44,19 +47,24 @@ namespace NetAF.Tests.Commands.Conversation
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenInternal()
+        public void GivenValidGame_WhenInvoke_ThenSilent()
         {
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var response = new Response("");
             var paragraph = new Paragraph(string.Empty) { Responses = [response] };
             var conversation = new NetAF.Conversations.Conversation(paragraph);
             var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: conversation);
-            game.StartConversation(converser);
+            converser.Conversation.Next(game);
+            game.ChangeMode(new ConversationMode(converser));
             var command = new Respond(response);
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Internal, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
     }
 }

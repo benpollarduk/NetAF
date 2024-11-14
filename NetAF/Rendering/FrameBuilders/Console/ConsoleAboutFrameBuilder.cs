@@ -81,7 +81,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             else
                 gridStringBuilder.DrawWrapped("NetAF by Ben Pollard 2011 - 2023.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
 
         #endregion

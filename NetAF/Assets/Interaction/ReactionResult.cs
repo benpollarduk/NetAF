@@ -14,9 +14,9 @@
         /// </summary>
         OK,
         /// <summary>
-        /// An internal reaction.
+        /// A silent reaction.
         /// </summary>
-        Internal,
+        Silent,
         /// <summary>
         /// A reaction that has a fatal effect on the player.
         /// </summary>

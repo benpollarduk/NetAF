@@ -14,7 +14,7 @@ namespace NetAF.Tests.Commands.Scene
         [TestMethod]
         public void GivenNoCharacter_WhenInvoke_ThenError()
         {
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Drop(null);
 
             var result = command.Invoke(game);
@@ -26,7 +26,7 @@ namespace NetAF.Tests.Commands.Scene
         public void GivenNoItem_WhenInvoke_ThenError()
         {
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Drop(null);
 
             var result = command.Invoke(game);
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Commands.Scene
             overworld.AddRegion(region);
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var item = new Item(new Identifier("A"), Description.Empty, true);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Drop(item);
 
             var result = command.Invoke(game);
@@ -63,7 +63,7 @@ namespace NetAF.Tests.Commands.Scene
             var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var item = new Item(new Identifier("A"), Description.Empty, true);
             character.AddItem(item);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Drop(item);
 
             var result = command.Invoke(game);

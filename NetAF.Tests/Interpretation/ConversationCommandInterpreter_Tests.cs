@@ -5,7 +5,7 @@ using NetAF.Conversations;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Commands.Conversation;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoActiveConverser_WhenGetContextualCommands_ThenReturnEmptyArray()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -39,10 +39,10 @@ namespace NetAF.Tests.Interpretation
         public void GivenActiveConverserNoResponses_WhenGetContextualCommands_ThenReturnArrayWith1Element()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, new(new Paragraph("Test")));
 
-            game.StartConversation(npc);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenActiveConverser1CustomCommand_WhenGetContextualCommands_ThenReturnArrayWith2Elements()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var conversation = new Conversation(
                 new Paragraph("Test")
                 {
@@ -64,8 +64,9 @@ namespace NetAF.Tests.Interpretation
                 }
             );
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
+            npc.Conversation.Next(game);
 
-            game.StartConversation(npc);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -76,7 +77,7 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoActiveConverser_WhenInterpret_ThenWasInterpretedSuccessfullyIsFalse()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(string.Empty, game);
 
@@ -87,12 +88,12 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoActiveConverserAndEnd_WhenInterpret_ThenWasInterpretedSuccessfullyIsTrue()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph("Test")));
 
-            game.StartConversation(npc);
+            game.ChangeMode(new ConversationMode(npc));
 
-            var result = interpreter.Interpret(End.CommandHelp.Command, game);
+            var result = interpreter.Interpret(NetAF.Commands.Global.End.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -101,10 +102,10 @@ namespace NetAF.Tests.Interpretation
         public void GivenNoActiveConverserAndEmpty_WhenInterpret_ThenWasInterpretedSuccessfullyIsTrue()
         {
             var interpreter = new ConversationCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, new Conversation(new Paragraph("Test")));
 
-            game.StartConversation(npc);
+            game.ChangeMode(new ConversationMode(npc));
 
             var result = interpreter.Interpret(string.Empty, game);
 

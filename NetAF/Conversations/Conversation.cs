@@ -58,7 +58,7 @@ namespace NetAF.Conversations
         public Reaction Next(Game game)
         {
             if (Paragraphs == null || !Paragraphs.Any())
-                return new(ReactionResult.Internal, "No paragraphs.");
+                return new(ReactionResult.Silent, "No paragraphs.");
 
             var entryParagraph = CurrentParagraph;
 
@@ -71,7 +71,7 @@ namespace NetAF.Conversations
                 }
                 else
                 {
-                    return new(ReactionResult.Internal, "Awaiting response.");
+                    return new(ReactionResult.Silent, "Awaiting response.");
                 }
             }
             else if (CurrentParagraph == null)
@@ -84,14 +84,14 @@ namespace NetAF.Conversations
             }
 
             if ((CurrentParagraph == null) || (CurrentParagraph == entryParagraph))
-                return new(ReactionResult.Internal, "End of conversation.");
+                return new(ReactionResult.Silent, "End of conversation.");
 
             CurrentParagraph.Action?.Invoke(game);
 
             var line = CurrentParagraph.Line.ToSpeech();
             Log = Log.Add(new(Participant.Other, line));
 
-            return new(ReactionResult.Internal, line);
+            return new(ReactionResult.Silent, line);
         }
 
         /// <summary>

@@ -1,4 +1,7 @@
 ﻿using NetAF.Assets.Interaction;
+using NetAF.Logic.Modes;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Commands.Global
 {
@@ -28,8 +31,16 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.DisplayHelp();
-            return new(ReactionResult.Internal, string.Empty);
+            List<CommandHelp> commands =
+            [
+                .. game.Configuration.Interpreter.SupportedCommands,
+                .. game.Configuration.Interpreter.GetContextualCommandHelp(game),
+                .. game.Mode.Interpreter?.SupportedCommands ?? [],
+                .. game.Mode.Interpreter?.GetContextualCommandHelp(game) ?? [],
+            ];
+
+            game.ChangeMode(new HelpMode([.. commands.Distinct()]));
+            return new(ReactionResult.Silent, string.Empty);
         }
 
         #endregion

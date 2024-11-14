@@ -4,7 +4,6 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
-using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 using NetAF.Utilities;
@@ -57,34 +56,6 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         public bool DisplayMessagesInIsolation { get; set; } = true;
 
-        /// <summary>
-        /// Get or set if movement messages should be suppressed.
-        /// </summary>
-        public bool SuppressMovementMessages { get; set; } = true;
-
-        #endregion
-
-        #region StaticMethods
-
-        /// <summary>
-        /// Determine if a string is a confirmation to a movement.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>True is the message was a movement confirmation, else false.</returns>
-        private static bool IsMovementConfirmation(string message)
-        {
-            if (string.IsNullOrEmpty(message))
-                return false;
-
-            foreach (var dir in new[] { Direction.North, Direction.South, Direction.East, Direction.West, Direction.Up, Direction.Down })
-            {
-                if (message.InsensitiveEquals($"{Move.SuccessfulMovePrefix} {dir}."))
-                    return true;
-            }
-
-            return false;
-        }
-
         #endregion
 
         #region Implementation of ISceneFrameBuilder
@@ -95,20 +66,16 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="room">Specify the Room.</param>
         /// <param name="viewPoint">Specify the viewpoint from the room.</param>
         /// <param name="player">Specify the player.</param>
-        /// <param name="message">Any additional message.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="keyType">The type of key to use.</param>
         /// <param name="width">The width of the frame.</param>
         /// <param name="height">The height of the frame.</param>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, string message, CommandHelp[] contextualCommands, KeyType keyType, int width, int height)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, int width, int height)
         {
             var availableWidth = width - 4;
             var availableHeight = height - 2;
             const int leftMargin = 2;
             const int linePadding = 2;
-            var isMovementMessage = IsMovementConfirmation(message);
-            var displayMessage = !string.IsNullOrEmpty(message) && (!isMovementMessage || !SuppressMovementMessages);
-            var acceptInput = !(DisplayMessagesInIsolation && displayMessage);
 
             gridStringBuilder.Resize(new(width, height));
 
@@ -117,85 +84,70 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridStringBuilder.DrawWrapped(room.Identifier.Name, leftMargin, 2, availableWidth, TextColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, room.Identifier.Name.Length, TextColor);
 
-            if (DisplayMessagesInIsolation && displayMessage)
-            {
-                // display the message in isolation
+            // display the scene
 
-                gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
-            }
+            gridStringBuilder.DrawWrapped(room.Description.GetDescription().EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
+
+            var extendedDescription = string.Empty;
+
+            if (room.Items.Any())
+                extendedDescription = extendedDescription.AddSentence(room.Examine(new(player, room)).Description.EnsureFinishedSentence());
             else
+                extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
+
+            extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
+
+            if (viewPoint.Any)
+                extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint));
+
+            gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
+
+            roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, leftMargin, lastY + linePadding, out _, out lastY);
+
+            if (player.Items.Any())
+                gridStringBuilder.DrawWrapped("You have: " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+
+            if (player.Attributes.Count > 0)
+                gridStringBuilder.DrawWrapped(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+
+            if (contextualCommands?.Any() ?? false)
             {
-                // display the scene
+                const int requiredSpaceForDivider = 3;
+                const int requiredSpaceForPrompt = 4;
+                const int requiredSpaceForCommandHeader = 3;
+                var requiredYToFitAllCommands = height - requiredSpaceForCommandHeader - requiredSpaceForPrompt - requiredSpaceForDivider - contextualCommands.Length;
+                var yStart = Math.Max(requiredYToFitAllCommands, lastY);
+                lastY = yStart;
 
-                gridStringBuilder.DrawWrapped(room.Description.GetDescription().EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
+                gridStringBuilder.DrawHorizontalDivider(lastY + linePadding, BorderColor);
+                gridStringBuilder.DrawWrapped("You can:", leftMargin, lastY + 4, availableWidth, CommandsColor, out _, out lastY);
 
-                var extendedDescription = string.Empty;
+                var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
+                const int padding = 4;
+                var dashStartX = leftMargin + maxCommandLength + padding;
+                var descriptionStartX = dashStartX + 2;
+                lastY++;
 
-                if (room.Items.Any())
-                    extendedDescription = extendedDescription.AddSentence(room.Examine(new(player, room)).Description.EnsureFinishedSentence());
-                else
-                    extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
-
-                extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
-
-                if (viewPoint.Any)
-                    extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint));
-
-                gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
-
-                roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, leftMargin, lastY + linePadding, out _, out lastY);
-
-                if (player.Items.Any())
-                    gridStringBuilder.DrawWrapped("You have: " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
-
-                if (player.Attributes.Count > 0)
-                    gridStringBuilder.DrawWrapped(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
-
-                if (!DisplayMessagesInIsolation && displayMessage)
+                for (var index = 0; index < contextualCommands.Length; index++)
                 {
-                    gridStringBuilder.DrawHorizontalDivider(lastY + 3, BorderColor);
-                    gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY + 5, availableWidth, TextColor, out _, out lastY);
-                }
+                    var contextualCommand = contextualCommands[index];
+                    gridStringBuilder.DrawWrapped(contextualCommand.Command, leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
+                    gridStringBuilder.DrawWrapped("-", dashStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
+                    gridStringBuilder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
 
-                if (contextualCommands?.Any() ?? false)
-                {
-                    const int requiredSpaceForDivider = 3;
-                    const int requiredSpaceForPrompt = 4;
-                    const int requiredSpaceForCommandHeader = 3;
-                    var requiredYToFitAllCommands = height - requiredSpaceForCommandHeader - requiredSpaceForPrompt - requiredSpaceForDivider - contextualCommands.Length;
-                    var yStart = Math.Max(requiredYToFitAllCommands, lastY);
-                    lastY = yStart;
-
-                    gridStringBuilder.DrawHorizontalDivider(lastY + linePadding, BorderColor);
-                    gridStringBuilder.DrawWrapped("You can:", leftMargin, lastY + 4, availableWidth, CommandsColor, out _, out lastY);
-
-                    var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
-                    const int padding = 4;
-                    var dashStartX = leftMargin + maxCommandLength + padding;
-                    var descriptionStartX = dashStartX + 2;
-                    lastY++;
-
-                    for (var index = 0; index < contextualCommands.Length; index++)
+                    // only continue if not run out of space - the 1 is for the border the ...
+                    if (index < contextualCommands.Length - 1 && lastY + 1 + requiredSpaceForPrompt >= height)
                     {
-                        var contextualCommand = contextualCommands[index];
-                        gridStringBuilder.DrawWrapped(contextualCommand.Command, leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
-                        gridStringBuilder.DrawWrapped("-", dashStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
-                        gridStringBuilder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
-
-                        // only continue if not run out of space - the 1 is for the border the ...
-                        if (index < contextualCommands.Length - 1 && lastY + 1 + requiredSpaceForPrompt >= height)
-                        {
-                            gridStringBuilder.DrawWrapped("...", leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
-                            break;
-                        }
+                        gridStringBuilder.DrawWrapped("...", leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
+                        break;
                     }
                 }
-
-                gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
-                gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
             }
 
-            return new GridTextFrame(gridStringBuilder, 4, availableHeight, BackgroundColor) { AcceptsInput = acceptInput, ShowCursor = acceptInput };
+            gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
+            gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
+
+            return new GridTextFrame(gridStringBuilder, 4, availableHeight, BackgroundColor) { ShowCursor = true };
         }
 
         #endregion

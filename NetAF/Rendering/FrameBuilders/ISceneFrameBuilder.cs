@@ -16,11 +16,10 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="room">Specify the Room.</param>
         /// <param name="viewPoint">Specify the viewpoint from the room.</param>
         /// <param name="player">Specify the player.</param>
-        /// <param name="message">Any additional message.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="keyType">The type of key to use.</param>
         /// <param name="width">The width of the frame.</param>
         /// <param name="height">The height of the frame.</param>
-        IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, string message, CommandHelp[] contextualCommands, KeyType keyType, int width, int height);
+        IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, int width, int height);
     }
 }

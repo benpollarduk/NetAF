@@ -96,7 +96,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 }
             }
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { AcceptsInput = false, ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
 
         #endregion

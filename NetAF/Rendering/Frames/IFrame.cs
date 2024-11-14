@@ -20,10 +20,6 @@ namespace NetAF.Rendering.Frames
         /// </summary>
         bool ShowCursor { get; set; }
         /// <summary>
-        /// Get or set if this Frame accepts input.
-        /// </summary>
-        bool AcceptsInput { get; set; }
-        /// <summary>
         /// Render this frame on a presenter.
         /// </summary>
         /// <param name="presenter">The presenter.</param>

@@ -22,19 +22,19 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenInternal()
+        public void GivenValidGame_WhenInvoke_ThenSilent()
         {
             var overworld = new Overworld(Identifier.Empty, Description.Empty);
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new NetAF.Assets.Locations.Exit(Direction.North)]), 0, 0, 0);
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new NetAF.Assets.Locations.Exit(Direction.South)]), 0, 1, 0);
             overworld.AddRegion(region);
-            var game = NetAF.Logic.Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, ConsoleGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Map();
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Internal, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
     }
 }

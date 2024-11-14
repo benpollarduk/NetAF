@@ -8,6 +8,7 @@ using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Interpretation
 {
@@ -52,24 +53,62 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            Move.NorthCommandHelp,
-            Move.EastCommandHelp,
-            Move.SouthCommandHelp,
-            Move.WestCommandHelp,
-            Move.UpCommandHelp,
-            Move.DownCommandHelp,
-            Drop.CommandHelp,
-            Examine.CommandHelp,
-            Take.CommandHelp,
+            GetShortCutFormattedCommandHelp(Move.NorthCommandHelp),
+            GetShortCutFormattedCommandHelp(Move.EastCommandHelp),
+            GetShortCutFormattedCommandHelp(Move.SouthCommandHelp),
+            GetShortCutFormattedCommandHelp(Move.WestCommandHelp),
+            GetShortCutFormattedCommandHelp(Move.UpCommandHelp),
+            GetShortCutFormattedCommandHelp(Move.DownCommandHelp),
+            GetVariableFormattedCommandHelp(Drop.CommandHelp),
+            GetVariableFormattedCommandHelp(Examine.CommandHelp),
+            GetVariableFormattedCommandHelp(Take.CommandHelp),
             TakeAll.CommandHelp,
-            Talk.TalkCommandHelp,
-            UseOn.UseCommandHelp,
-            new CommandHelp($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command} {Variable}", UseOn.OnCommandHelp.Description)
+            GetTalkToCommandHelp(),
+            GetVariableFormattedCommandHelp(UseOn.UseCommandHelp),
+            GetUseOnCommandHelp()
         ];
 
         #endregion
 
         #region StaticMethods
+
+        /// <summary>
+        /// Get a command help for the talk to command.
+        /// </summary>
+        /// <returns>The command help.</returns>
+        private static CommandHelp GetTalkToCommandHelp()
+        {
+            return new($"{Talk.TalkCommandHelp.Command}/{Talk.TalkCommandHelp.Shortcut} {Talk.ToCommandHelp.Command.ToLower()} {Variable}", Talk.TalkCommandHelp.Description);
+        }
+
+        /// <summary>
+        /// Get a command help for the use on command.
+        /// </summary>
+        /// <returns>The command help.</returns>
+        private static CommandHelp GetUseOnCommandHelp()
+        {
+            return new($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command.ToLower()} {Variable}", UseOn.OnCommandHelp.Description);
+        }
+
+        /// <summary>
+        /// Get a shortcut formatted command help.
+        /// </summary>
+        /// <param name="commandHelp">The original command help.</param>
+        /// <returns>A shortcut formatted command help.</returns>
+        private static CommandHelp GetShortCutFormattedCommandHelp(CommandHelp commandHelp)
+        {
+            return new($"{commandHelp.Command}/{commandHelp.Shortcut}", commandHelp.Description);
+        }
+
+        /// <summary>
+        /// Get a variable formatted command help.
+        /// </summary>
+        /// <param name="commandHelp">The original command help.</param>
+        /// <returns>A variable formatted command help.</returns>
+        private static CommandHelp GetVariableFormattedCommandHelp(CommandHelp commandHelp)
+        {
+            return new($"{commandHelp.Command}/{commandHelp.Shortcut} {Variable}", commandHelp.Description);
+        }
 
         /// <summary>
         /// Split text in to a verb and a noun.
@@ -479,47 +518,49 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            if (game.ActiveConverser?.Conversation != null)
+            var mode = game.Mode as ConversationMode;
+
+            if (mode?.Converser?.Conversation != null)
                 return [];
 
             List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(Move.NorthCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.NorthCommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(Move.EastCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.EastCommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(Move.SouthCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.SouthCommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(Move.WestCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.WestCommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(Move.UpCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.UpCommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(Move.DownCommandHelp);
+                commands.Add(GetShortCutFormattedCommandHelp(Move.DownCommandHelp));
 
-            commands.Add(new($"{Examine.CommandHelp.Command}/{Examine.CommandHelp.Shortcut} {Variable}", ""));
+            commands.Add(GetVariableFormattedCommandHelp(Examine.CommandHelp));
 
             if (game.Player.Items.Any())
-                commands.Add(Drop.CommandHelp);
+                commands.Add(GetVariableFormattedCommandHelp(Drop.CommandHelp));
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
             {
-                commands.Add(Take.CommandHelp);
+                commands.Add(GetVariableFormattedCommandHelp(Take.CommandHelp));
                 commands.Add(TakeAll.CommandHelp);
             }
 
             if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
-                commands.Add(new($"{Talk.TalkCommandHelp.Command}/{Talk.TalkCommandHelp.Shortcut} {Talk.ToCommandHelp.Command.ToLower()} {Variable}", Talk.TalkCommandHelp.Description));
+                commands.Add(GetTalkToCommandHelp());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
             {
-                commands.Add(new($"{UseOn.UseCommandHelp.Command} {Variable}", UseOn.UseCommandHelp.Description));
-                commands.Add(new($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command.ToLower()} {Variable}", UseOn.OnCommandHelp.Description));
+                commands.Add(GetVariableFormattedCommandHelp(UseOn.UseCommandHelp));
+                commands.Add(GetUseOnCommandHelp());
             }
 
             return [.. commands];

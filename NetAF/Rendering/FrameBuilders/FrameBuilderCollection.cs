@@ -10,9 +10,9 @@
     /// <param name="completionFrameBuilder">The builder to use for building completion frames.</param>
     /// <param name="gameOverFrameBuilder">The builder to use for building game over frames.</param>
     /// <param name="aboutFrameBuilder">The builder to use for building about frames.</param>
-    /// <param name="transitionFrameBuilder">The builder to use for building transition frames.</param>
+    /// <param name="reactionFrameBuilder">The builder to use for building reaction frames.</param>
     /// <param name="conversationFrameBuilder">The builder to use for building conversation frames.</param>
-    public class FrameBuilderCollection(ITitleFrameBuilder titleFrameBuilder, ISceneFrameBuilder sceneFrameBuilder, IRegionMapFrameBuilder regionMapFrameBuilder, IHelpFrameBuilder helpFrameBuilder, ICompletionFrameBuilder completionFrameBuilder, IGameOverFrameBuilder gameOverFrameBuilder, IAboutFrameBuilder aboutFrameBuilder, ITransitionFrameBuilder transitionFrameBuilder, IConversationFrameBuilder conversationFrameBuilder)
+    public class FrameBuilderCollection(ITitleFrameBuilder titleFrameBuilder, ISceneFrameBuilder sceneFrameBuilder, IRegionMapFrameBuilder regionMapFrameBuilder, IHelpFrameBuilder helpFrameBuilder, ICompletionFrameBuilder completionFrameBuilder, IGameOverFrameBuilder gameOverFrameBuilder, IAboutFrameBuilder aboutFrameBuilder, IReactionFrameBuilder reactionFrameBuilder, IConversationFrameBuilder conversationFrameBuilder)
     {
         #region Properties
 
@@ -52,9 +52,9 @@
         public IAboutFrameBuilder AboutFrameBuilder { get; } = aboutFrameBuilder;
 
         /// <summary>
-        /// Get the builder to use for transition frames.
+        /// Get the builder to use for reaction frames.
         /// </summary>
-        public ITransitionFrameBuilder TransitionFrameBuilder { get; } = transitionFrameBuilder;
+        public IReactionFrameBuilder ReactionModeFrameBuilder { get; } = reactionFrameBuilder;
 
         /// <summary>
         /// Get the builder to use for conversation frames.
