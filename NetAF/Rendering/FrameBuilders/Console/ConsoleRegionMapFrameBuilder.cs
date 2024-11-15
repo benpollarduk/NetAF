@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Locations;
+﻿using NetAF.Assets;
+using NetAF.Assets.Locations;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Console
@@ -46,21 +47,20 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// Build a frame.
         /// </summary>
         /// <param name="region">The region.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        public IFrame Build(Region region, int width, int height)
+        /// <param name="size">The size of the frame.</param>
+        public IFrame Build(Region region, Size size)
         {
-            gridStringBuilder.Resize(new(width, height));
+            gridStringBuilder.Resize(size);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
-            var availableWidth = width - 4;
+            var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
             gridStringBuilder.DrawWrapped(region.Identifier.Name, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, region.Identifier.Name.Length, TitleColor);
 
-            RegionMapBuilder?.BuildRegionMap(region, leftMargin, lastY + 2, availableWidth, height - 4);
+            RegionMapBuilder?.BuildRegionMap(region, leftMargin, lastY + 2, new Size(availableWidth, size.Height - 4));
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Conversations;
@@ -103,16 +104,15 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="title">The title to display to the user.</param>
         /// <param name="converser">The converser.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        public IFrame Build(string title, IConverser converser, CommandHelp[] contextualCommands, int width, int height)
+        /// <param name="size">The size of the frame.</param>
+        public IFrame Build(string title, IConverser converser, CommandHelp[] contextualCommands, Size size)
         {
-            gridStringBuilder.Resize(new(width, height));
+            gridStringBuilder.Resize(size);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
-            var availableWidth = width - 4;
-            var availableHeight = height - 2;
+            var availableWidth = size.Width - 4;
+            var availableHeight = size.Height - 2;
             const int leftMargin = 2;
             const int linePadding = 2;
             var lastY = 2;

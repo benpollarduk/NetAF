@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Commands;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
@@ -38,7 +39,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, 80, 50);
+                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, new Size(80, 50));
             });
         }
 
@@ -68,7 +69,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, 80, 50);
+                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, new Size(80, 50));
             });
         }
 
@@ -98,7 +99,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Dynamic, 80, 50);
+                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Dynamic, new Size(80, 50));
             });
         }
 
@@ -133,7 +134,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                     new CommandHelp("Test", "Test")
                 };
 
-                builder.Build(room, ViewPoint.Create(region), player, commands, KeyType.Full, 80, 50);
+                builder.Build(room, ViewPoint.Create(region), player, commands, KeyType.Full, new Size(80, 50));
             });
         }
     }

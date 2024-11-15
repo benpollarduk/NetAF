@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 
 namespace NetAF.Rendering.FrameBuilders.Console
@@ -213,8 +214,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         /// <param name="gridStartX">The x position to start at in the grid.</param>
         /// <param name="gridStartY">The x position to start at in the grid.</param>
-        /// <param name="gridAvailableWidth">The available width, in the grid.</param>
-        /// <param name="gridAvailableHeight">The available height, in the grid.</param>
+        /// <param name="availableSize">The available size, in the grid.</param>
         /// <param name="matrix">The matrix.</param>
         /// <param name="roomX">The x position of the room, in the matrix.</param>
         /// <param name="roomY">The y position of the room, in the matrix.</param>
@@ -223,7 +223,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="gridLeft">The left position to begin rendering the room at, in the grid.</param>
         /// <param name="gridTop">The top position to begin rendering the room at, in the grid.</param>
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
-        private static bool TryConvertMatrixPositionToGridLayoutPosition(int gridStartX, int gridStartY, int gridAvailableWidth, int gridAvailableHeight, Matrix matrix, int roomX, int roomY, int playerX, int playerY, out int gridLeft, out int gridTop)
+        private static bool TryConvertMatrixPositionToGridLayoutPosition(int gridStartX, int gridStartY, Size availableSize, Matrix matrix, int roomX, int roomY, int playerX, int playerY, out int gridLeft, out int gridTop)
         {
             const int roomWidth = 5;
             const int roomHeight = 3;
@@ -233,23 +233,23 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridTop = gridStartY + (matrix.Height - 1) * roomHeight - roomY * roomHeight;
 
             // check if map will fit
-            if (matrix.Width * roomWidth > gridAvailableWidth || matrix.Height * roomHeight > gridAvailableHeight)
+            if (matrix.Width * roomWidth > availableSize.Width || matrix.Height * roomHeight > availableSize.Height)
             {
                 // centralise on player
-                gridLeft += gridAvailableWidth / 2 - playerX * roomWidth + roomWidth / 2;
-                gridTop += gridAvailableHeight / 2 + (playerY - matrix.Height) * roomHeight - roomHeight / 2;
+                gridLeft += availableSize.Width / 2 - playerX * roomWidth + roomWidth / 2;
+                gridTop += availableSize.Height / 2 + (playerY - matrix.Height) * roomHeight - roomHeight / 2;
             }
             else
             {
                 // centralise on area
-                gridLeft += (int)Math.Floor(gridAvailableWidth / 2d - matrix.Width / 2d * roomWidth);
-                gridTop += (int)Math.Floor(gridAvailableHeight / 2d - matrix.Height / 2d * roomHeight);
+                gridLeft += (int)Math.Floor(availableSize.Width / 2d - matrix.Width / 2d * roomWidth);
+                gridTop += (int)Math.Floor(availableSize.Height / 2d - matrix.Height / 2d * roomHeight);
             }
 
             return gridLeft >= gridStartX &&
-                   gridLeft + roomWidth - 1 < gridAvailableWidth &&
+                   gridLeft + roomWidth - 1 < availableSize.Width &&
                    gridTop >= gridStartY &&
-                   gridTop + roomHeight - 1 < gridAvailableHeight;
+                   gridTop + roomHeight - 1 < availableSize.Height;
         }
 
         #endregion
@@ -262,9 +262,8 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="region">The region.</param>
         /// <param name="x">The x position to start building at.</param>
         /// <param name="y">The y position to start building at.</param>
-        /// <param name="maxWidth">The maximum horizontal space available in which to build the map.</param>
-        /// <param name="maxHeight">The maximum vertical space available in which to build the map.</param>
-        public void BuildRegionMap(Region region, int x, int y, int maxWidth, int maxHeight)
+        /// <param name="maxSize">The maximum size available in which to build the map.</param>
+        public void BuildRegionMap(Region region, int x, int y, Size maxSize)
         {
             var matrix = region.ToMatrix();
             var currentRoom = region.GetPositionOfRoom(region.CurrentRoom);
@@ -274,6 +273,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             var visitedRoomPositions = rooms.Select(region.GetPositionOfRoom).Where(r => r.Room.HasBeenVisited).ToList();
             var multiLevel = matrix.Depth > 1;
             var indicatorLength = 3 + matrix.Depth.ToString().Length;
+            var maxAvailableWidth = maxSize.Width;
 
             if (multiLevel)
             {
@@ -288,13 +288,13 @@ namespace NetAF.Rendering.FrameBuilders.Console
                         continue;
 
                     if (floor == currentFloor)
-                        gridStringBuilder.DrawWrapped($"{CurrentFloorIndicator} L{floor}", x, ++y, maxWidth, VisitedBoundaryColor, out _, out _);
+                        gridStringBuilder.DrawWrapped($"{CurrentFloorIndicator} L{floor}", x, ++y, maxAvailableWidth, VisitedBoundaryColor, out _, out _);
                     else
-                        gridStringBuilder.DrawWrapped($"L{floor}", x + 2, ++y, maxWidth, LowerLevelColor, out _, out _);
+                        gridStringBuilder.DrawWrapped($"L{floor}", x + 2, ++y, maxAvailableWidth, LowerLevelColor, out _, out _);
                 }
 
                 x += indicatorLength;
-                maxWidth -= indicatorLength;
+                maxAvailableWidth -= indicatorLength;
             }
 
             // firstly draw lower levels
@@ -307,7 +307,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
                 foreach (var position in lowerLevelRooms)
                 {
-                    if (TryConvertMatrixPositionToGridLayoutPosition(x, y, maxWidth, maxHeight, matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
+                    if (TryConvertMatrixPositionToGridLayoutPosition(x, y, new Size(maxAvailableWidth, maxSize.Height), matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
                         DrawLowerLevelRoom(left, top);
                 }
             }
@@ -320,7 +320,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             foreach (var position in currentLevelRooms)
             {
-                if (TryConvertMatrixPositionToGridLayoutPosition(x, y, maxWidth, maxHeight, matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
+                if (TryConvertMatrixPositionToGridLayoutPosition(x, y, new Size(maxAvailableWidth, maxSize.Height), matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
                     DrawCurrentFloorRoom(position.Room, left, top, position.Room == region.CurrentRoom);
             }
         }

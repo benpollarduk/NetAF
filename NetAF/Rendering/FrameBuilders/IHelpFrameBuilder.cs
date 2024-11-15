@@ -1,4 +1,5 @@
-﻿using NetAF.Commands;
+﻿using NetAF.Assets;
+using NetAF.Commands;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
@@ -14,8 +15,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="title">The title.</param>
         /// <param name="description">The description.</param>
         /// <param name="commandHelp">The command help.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        IFrame Build(string title, string description, CommandHelp[] commandHelp, int width, int height);
+        /// <param name="size">The size of the frame.</param>
+        IFrame Build(string title, string description, CommandHelp[] commandHelp, Size size);
     }
 }

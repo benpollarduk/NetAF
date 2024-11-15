@@ -1,4 +1,5 @@
-﻿using NetAF.Extensions;
+﻿using NetAF.Assets;
+using NetAF.Extensions;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders.Console
@@ -46,15 +47,14 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         /// <param name="title">The title to display to the user.</param>
         /// <param name="message">The message to display to the user.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        public IFrame Build(string title, string message, int width, int height)
+        /// <param name="size">The size of the frame.</param>
+        public IFrame Build(string title, string message, Size size)
         {
-            gridStringBuilder.Resize(new(width, height));
+            gridStringBuilder.Resize(size);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
-            var availableWidth = width - 4;
+            var availableWidth = size.Width - 4;
             const int leftMargin = 2;
             var lastY = 2;
 

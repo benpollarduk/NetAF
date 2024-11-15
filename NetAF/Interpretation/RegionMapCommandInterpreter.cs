@@ -1,14 +1,14 @@
 ﻿using NetAF.Commands;
-using NetAF.Commands.Frame;
+using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation
 {
     /// <summary>
-    /// Provides an object that can be used for interpreting frame commands.
+    /// Provides an object that can be used for interpreting region map commands.
     /// </summary>
-    public sealed class FrameCommandInterpreter : IInterpreter
+    public sealed class RegionMapCommandInterpreter : IInterpreter
     {
         #region StaticProperties
 
@@ -17,8 +17,9 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new CommandHelp($"{CommandsOn.CommandHelp.Command} / {CommandsOff.CommandHelp.Command}", "Turn commands on/off"),
-            new CommandHelp($"{KeyOn.CommandHelp.Command} / {KeyOff.CommandHelp.Command} ", "Turn the key on/off")
+            Up.CommandHelp,
+            Down.CommandHelp,
+            End.CommandHelp
         ];
 
         #endregion
@@ -38,17 +39,11 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (CommandsOff.CommandHelp.Equals(input))
-                return new(true, new CommandsOff());
+            if (Up.CommandHelp.Equals(input))
+                return new(true, new Up());
 
-            if (CommandsOn.CommandHelp.Equals(input))
-                return new(true, new CommandsOn());
-
-            if (KeyOff.CommandHelp.Equals(input))
-                return new(true, new KeyOff());
-
-            if (KeyOn.CommandHelp.Equals(input))
-                return new(true, new KeyOn());
+            if (Down.CommandHelp.Equals(input))
+                return new(true, new Down());
 
             return InterpretationResult.Fail;
         }
@@ -60,7 +55,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return [];
+            return [new CommandHelp(End.CommandHelp.Command, "Finish looking at the map")];
         }
 
         #endregion

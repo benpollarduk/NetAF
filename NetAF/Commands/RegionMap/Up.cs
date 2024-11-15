@@ -1,20 +1,19 @@
 ﻿using NetAF.Assets.Interaction;
-using NetAF.Logic;
 using NetAF.Logic.Modes;
 
-namespace NetAF.Commands.Global
+namespace NetAF.Commands.RegionMap
 {
     /// <summary>
-    /// Represents the Map command.
+    /// Represents the Up command.
     /// </summary>
-    public class Map : ICommand
+    public class Up : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Map", "View map of the current region");
+        public static CommandHelp CommandHelp { get; } = new("Up", "Shift to the next level", "U");
 
         #endregion
 
@@ -25,13 +24,18 @@ namespace NetAF.Commands.Global
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Game game)
+        public Reaction Invoke(Logic.Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new RegionMapMode(RegionMapMode.PlayerLevel));
-            return new(ReactionResult.ModeChanged, string.Empty);
+            if (game.Mode is RegionMapMode regionMapMode)
+            {
+                regionMapMode.Level--;
+                return new(ReactionResult.Silent, "Shifted down a level.");
+            }
+
+            return new(ReactionResult.Error, "Not in region map mode.");
         }
 
         #endregion

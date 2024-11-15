@@ -68,16 +68,15 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="player">Specify the player.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="keyType">The type of key to use.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, int width, int height)
+        /// <param name="size">The size of the frame.</param>
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, Size size)
         {
-            var availableWidth = width - 4;
-            var availableHeight = height - 2;
+            var availableWidth = size.Width - 4;
+            var availableHeight = size.Height - 2;
             const int leftMargin = 2;
             const int linePadding = 2;
 
-            gridStringBuilder.Resize(new(width, height));
+            gridStringBuilder.Resize(size);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
@@ -115,7 +114,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 const int requiredSpaceForDivider = 3;
                 const int requiredSpaceForPrompt = 4;
                 const int requiredSpaceForCommandHeader = 3;
-                var requiredYToFitAllCommands = height - requiredSpaceForCommandHeader - requiredSpaceForPrompt - requiredSpaceForDivider - contextualCommands.Length;
+                var requiredYToFitAllCommands = size.Height - requiredSpaceForCommandHeader - requiredSpaceForPrompt - requiredSpaceForDivider - contextualCommands.Length;
                 var yStart = Math.Max(requiredYToFitAllCommands, lastY);
                 lastY = yStart;
 
@@ -136,7 +135,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                     gridStringBuilder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableWidth, CommandsColor, out _, out lastY);
 
                     // only continue if not run out of space - the 1 is for the border the ...
-                    if (index < contextualCommands.Length - 1 && lastY + 1 + requiredSpaceForPrompt >= height)
+                    if (index < contextualCommands.Length - 1 && lastY + 1 + requiredSpaceForPrompt >= size.Height)
                     {
                         gridStringBuilder.DrawWrapped("...", leftMargin, lastY + 1, availableWidth, CommandsColor, out _, out lastY);
                         break;

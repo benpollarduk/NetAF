@@ -33,7 +33,7 @@ namespace NetAF.Logic.Modes
             commands.AddRange(Interpreter.GetContextualCommandHelp(game));
             commands.AddRange(game.Configuration.Interpreter.GetContextualCommandHelp(game));
 
-            var frame = game.Configuration.FrameBuilders.SceneFrameBuilder.Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, game.Configuration.DisplayCommandListInSceneFrames ? [.. commands] : null, game.Configuration.SceneMapKeyType, game.Configuration.DisplaySize.Width, game.Configuration.DisplaySize.Height);
+            var frame = game.Configuration.FrameBuilders.SceneFrameBuilder.Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, game.Configuration.DisplayCommandListInSceneFrames ? [.. commands] : null, game.Configuration.SceneMapKeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
             return RenderState.Completed;
         }
