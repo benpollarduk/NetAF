@@ -6,7 +6,7 @@ namespace NetAF.Commands.Persistence
     /// <summary>
     /// Represents the Load command.
     /// </summary>
-    public class Load : CustomCommand
+    public sealed class Load : CustomCommand
     {
         #region Constructors
 

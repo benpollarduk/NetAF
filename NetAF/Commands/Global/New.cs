@@ -5,7 +5,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the New command.
     /// </summary>
-    public class New : ICommand
+    public sealed class New : ICommand
     {
         #region StaticProperties
 

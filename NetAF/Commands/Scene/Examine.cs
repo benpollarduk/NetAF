@@ -7,7 +7,7 @@ namespace NetAF.Commands.Scene
     /// Represents the Examine command.
     /// </summary>
     /// <param name="examinable">The examinable.</param>
-    public class Examine(IExaminable examinable) : ICommand
+    public sealed class Examine(IExaminable examinable) : ICommand
     {
         #region StaticProperties
 
@@ -15,15 +15,6 @@ namespace NetAF.Commands.Scene
         /// Get the command help.
         /// </summary>
         public static CommandHelp CommandHelp { get; } = new("Examine", "Examine anything in the game", "X");
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the examinable.
-        /// </summary>
-        public IExaminable Examinable { get; } = examinable;
 
         #endregion
 
@@ -36,10 +27,10 @@ namespace NetAF.Commands.Scene
         /// <returns>The reaction.</returns>
         public Reaction Invoke(Logic.Game game)
         {
-            if (Examinable == null)
+            if (examinable == null)
                 return new(ReactionResult.Error, "Nothing to examine.");
 
-            return new(ReactionResult.OK, Examinable.Examine(new ExaminationScene(game)).Description);
+            return new(ReactionResult.OK, examinable.Examine(new ExaminationScene(game)).Description);
         }
 
         #endregion

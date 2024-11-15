@@ -6,7 +6,7 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the KeyOff command.
     /// </summary>
-    public class KeyOff : ICommand
+    public sealed class KeyOff : ICommand
     {
         #region StaticProperties
 

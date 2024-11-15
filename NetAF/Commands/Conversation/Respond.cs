@@ -8,17 +8,8 @@ namespace NetAF.Commands.Conversation
     /// Represents the Respond command.
     /// </summary>
     /// <param name="response">The response.</param>
-    internal class Respond(Response response) : ICommand
+    public sealed class Respond(Response response) : ICommand
     {
-        #region Properties
-
-        /// <summary>
-        /// Get the conversation response.
-        /// </summary>
-        public Response Response { get; } = response;
-
-        #endregion
-
         #region Implementation of ICommand
 
         /// <summary>
@@ -31,7 +22,7 @@ namespace NetAF.Commands.Conversation
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            if (Response == null)
+            if (response == null)
                 return new(ReactionResult.Error, "No response specified.");
 
             var mode = game.Mode as ConversationMode;
@@ -39,7 +30,7 @@ namespace NetAF.Commands.Conversation
             if (mode?.Converser?.Conversation == null)
                 return new(ReactionResult.Error, "No active conversation.");
 
-            return mode.Converser.Conversation.Respond(Response, game);
+            return mode.Converser.Conversation.Respond(response, game);
         }
 
         #endregion

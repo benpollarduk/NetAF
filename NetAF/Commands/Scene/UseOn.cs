@@ -9,7 +9,7 @@ namespace NetAF.Commands.Scene
     /// </summary>
     /// <param name="item">The item to use.</param>
     /// <param name="target">The target of the command.</param>
-    public class UseOn(Item item, IInteractWithItem target) : ICommand
+    public sealed class UseOn(Item item, IInteractWithItem target) : ICommand
     {
         #region StaticProperties
 
@@ -25,20 +25,6 @@ namespace NetAF.Commands.Scene
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Get the item.
-        /// </summary>
-        public Item Item { get; } = item;
-
-        /// <summary>
-        /// Get the target.
-        /// </summary>
-        public IInteractWithItem Target { get; } = target;
-
-        #endregion
-
         #region Implementation of ICommand
 
         /// <summary>
@@ -51,16 +37,16 @@ namespace NetAF.Commands.Scene
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            if (Item == null)
+            if (item == null)
                 return new(ReactionResult.Error, "You must specify an item.");
 
-            if (Target == null)
+            if (target == null)
                 return new(ReactionResult.Error, "You must specify a target.");
 
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify the character that is using this item.");
 
-            var result = Target.Interact(Item);
+            var result = target.Interact(item);
 
             switch (result.Effect)
             {
@@ -71,17 +57,17 @@ namespace NetAF.Commands.Scene
 
                 case InteractionEffect.ItemUsedUp:
 
-                    if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(Item))
-                        game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(Item);
-                    else if (game.Player.HasItem(Item))
-                        game.Player.RemoveItem(Item);
+                    if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(item))
+                        game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
+                    else if (game.Player.HasItem(item))
+                        game.Player.RemoveItem(item);
 
                     break;
 
                 case InteractionEffect.TargetUsedUp:
 
-                    if (Target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
-                        game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(Target);
+                    if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
+                        game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(target);
 
                     break;
 

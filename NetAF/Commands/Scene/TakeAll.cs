@@ -7,7 +7,7 @@ namespace NetAF.Commands.Scene
     /// <summary>
     /// Represents the Take all command.
     /// </summary>
-    public class TakeAll : ICommand
+    public sealed class TakeAll : ICommand
     {
         #region StaticProperties
 

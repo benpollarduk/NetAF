@@ -6,7 +6,7 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the KeyOn command.
     /// </summary>
-    public class KeyOn : ICommand
+    public sealed class KeyOn : ICommand
     {
         #region StaticProperties
 

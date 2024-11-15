@@ -7,7 +7,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Map command.
     /// </summary>
-    public class Map : ICommand
+    public sealed class Map : ICommand
     {
         #region StaticProperties
 

@@ -8,7 +8,7 @@ namespace NetAF.Commands.Scene
     /// Represents the Talk command.
     /// </summary>
     /// <param name="converser">The converser.</param>
-    internal class Talk(IConverser converser) : ICommand
+    public sealed class Talk(IConverser converser) : ICommand
     {
         #region StaticProperties
 
@@ -21,15 +21,6 @@ namespace NetAF.Commands.Scene
         /// Get the command help for to.
         /// </summary>
         public static CommandHelp ToCommandHelp { get; } = new("To", "The character to talk to");
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the converser.
-        /// </summary>
-        public IConverser Converser { get; } = converser;
 
         #endregion
 
@@ -51,16 +42,16 @@ namespace NetAF.Commands.Scene
             if (!game.Player.CanConverse)
                 return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot converse.");
 
-            if (Converser == null)
+            if (converser == null)
                 return new(ReactionResult.Error, "No-one is around to talk to.");
 
-            if (Converser is Character character && !character.IsAlive)
+            if (converser is Character character && !character.IsAlive)
                 return new(ReactionResult.Error, $"{character.Identifier.Name} is dead.");
 
             // begin conversation
-            Converser.Conversation?.Next(game);
+            converser.Conversation?.Next(game);
 
-            game.ChangeMode(new ConversationMode(Converser));
+            game.ChangeMode(new ConversationMode(converser));
             return new(ReactionResult.Silent, "Engaged in conversation.");
         }
 

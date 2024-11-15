@@ -9,7 +9,7 @@ namespace NetAF.Commands.RegionMap
     /// Represents the Pan command.
     /// </summary>
     /// <param name="direction">The direction to pan.</param>
-    public class Pan(Direction direction) : ICommand
+    public sealed class Pan(Direction direction) : ICommand
     {
         #region Constants
 

@@ -7,7 +7,7 @@ namespace NetAF.Commands.Scene
     /// Represents the Move command.
     /// </summary>
     /// <param name="direction">The direction to move.</param>
-    public class Move(Direction direction) : ICommand
+    public sealed class Move(Direction direction) : ICommand
     {
         #region Constants
 

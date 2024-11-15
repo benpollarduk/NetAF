@@ -6,7 +6,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the End command.
     /// </summary>
-    public class End : ICommand
+    public sealed class End : ICommand
     {
         #region Constants
 

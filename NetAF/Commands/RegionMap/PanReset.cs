@@ -6,7 +6,7 @@ namespace NetAF.Commands.RegionMap
     /// <summary>
     /// Represents the PanReset command.
     /// </summary>
-    public class PanReset : ICommand
+    public sealed class PanReset : ICommand
     {
         #region StaticProperties
 

@@ -5,6 +5,8 @@ using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands.RegionMap;
+using NetAF.Utilities;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -22,6 +24,34 @@ namespace NetAF.Tests.Interpretation
         }
 
         private Overworld overworld;
+
+        [TestMethod]
+        public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturnNonEmptyArray()
+        {
+            var interpreter = new RegionMapCommandInterpreter();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
+            Room top = new(string.Empty, string.Empty, [new Exit(Direction.Down)]);
+            Room south = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
+            Room north = new(string.Empty, string.Empty, [new Exit(Direction.South)]);
+            Room west = new(string.Empty, string.Empty, [new Exit(Direction.East)]);
+            Room east = new(string.Empty, string.Empty, [new Exit(Direction.West)]);
+            Room center = new(string.Empty, string.Empty, [new Exit(Direction.Down)]);
+            regionMaker[1, 1, 1] = center;
+            regionMaker[0, 1, 1] = west;
+            regionMaker[2, 1, 1] = east;
+            regionMaker[1, 2, 1] = north;
+            regionMaker[1, 0, 1] = south;
+            regionMaker[1, 2, 1] = top;
+            regionMaker[1, 0, 1] = bottom;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.IsTrue(result.Length > 0);
+        }
 
         [TestMethod]
         public void GivenEmptyString_WhenInterpret_ThenReturnFalse()

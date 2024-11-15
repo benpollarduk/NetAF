@@ -5,7 +5,7 @@ namespace NetAF.Commands.Scene
     /// <summary>
     /// Represents the Unactionable command.
     /// </summary>
-    public class Unactionable : ICommand
+    public sealed class Unactionable : ICommand
     {
         #region Properties
 
