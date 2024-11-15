@@ -25,7 +25,6 @@ Overworld
 Rooms contain exits. Exits can be locked to block progress through the game.
 
 ```csharp
-// create a test room
 Room room = new("Test Room", "A test room.", [new(Direction.North)]);
 ```
 
