@@ -5,7 +5,7 @@ namespace NetAF.Commands.Frame
     /// <summary>
     /// Represents the CommandsOff command.
     /// </summary>
-    public class CommandsOff : ICommand
+    public sealed class CommandsOff : ICommand
     {
         #region StaticProperties
 

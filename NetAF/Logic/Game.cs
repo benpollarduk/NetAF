@@ -270,7 +270,7 @@ namespace NetAF.Logic
 
                 Overworld.Move(region);
                 var location = Overworld.CurrentRegion.GetPositionOfRoom(room);
-                Overworld.CurrentRegion.JumpToRoom(location.X, location.Y, location.Z);
+                Overworld.CurrentRegion.JumpToRoom(location.Position);
             }
         }
 

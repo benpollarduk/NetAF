@@ -119,7 +119,7 @@ namespace NetAF.Assets.Locations
                     for (var x = 0; x < matrix.Width; x++)
                     {
                         if (room == matrix[x, y, z])
-                            return new(room, x, y, z);
+                            return new(room, new Point3D(x, y, z));
                     }
                 }
             }
@@ -151,7 +151,7 @@ namespace NetAF.Assets.Locations
             var addable = !roomPositions.Exists(r => r.Room == room ||  r.IsAtPosition(x, y, z));
 
             if (addable)
-                roomPositions.Add(new(room, x, y, z));
+                roomPositions.Add(new(room, new Point3D(x, y, z)));
 
             return addable;
         }
@@ -179,8 +179,8 @@ namespace NetAF.Assets.Locations
             if (roomPosition == null)
                 return null;
 
-            NextPosition(roomPosition.X, roomPosition.Y, roomPosition.Z, direction, out var x, out var y, out var z);
-            return this[x, y, z];
+            NextPosition(roomPosition.Position, direction, out var next);
+            return this[next.X, next.Y, next.Z];
         }
 
         /// <summary>
@@ -270,13 +270,11 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Jump to a room.
         /// </summary>
-        /// <param name="x">The x location of the room.</param>
-        /// <param name="y">The y location of the room.</param>
-        /// <param name="z">The z location of the room.</param>
+        /// <param name="location">The location of the room.</param>
         /// <returns>True if the room could be jumped to, else false.</returns>
-        public bool JumpToRoom(int x, int y, int z)
+        public bool JumpToRoom(Point3D location)
         {
-            var roomPosition = roomPositions.Find(r => r.IsAtPosition(x, y, z));
+            var roomPosition = roomPositions.Find(r => r.IsAtPosition(location));
 
             if (roomPosition == null)
                 return false;
@@ -293,46 +291,30 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get the next position given a current position.
         /// </summary>
-        /// <param name="x">The current X.</param>
-        /// <param name="y">The current Y.</param>
-        /// <param name="z">The current Z.</param>
+        /// <param name="current">The current position.</param>
         /// <param name="direction">The direction.</param>
-        /// <param name="nextX">The next X.</param>
-        /// <param name="nextY">The next Y.</param>
-        /// <param name="nextZ">The next Z.</param>
-        internal static void NextPosition(int x, int y, int z, Direction direction, out int nextX, out int nextY, out int nextZ)
+        /// <param name="next">The next position.</param>
+        internal static void NextPosition(Point3D current, Direction direction, out Point3D next)
         {
             switch (direction)
             {
                 case Direction.North:
-                    nextX = x;
-                    nextY = y + 1;
-                    nextZ = z;
+                    next = new Point3D(current.X, current.Y + 1, current.Z);
                     break;
                 case Direction.East:
-                    nextX = x + 1;
-                    nextY = y;
-                    nextZ = z;
+                    next = new Point3D(current.X + 1, current.Y, current.Z);
                     break;
                 case Direction.South:
-                    nextX = x;
-                    nextY = y - 1;
-                    nextZ = z;
+                    next = new Point3D(current.X, current.Y - 1, current.Z);
                     break;
                 case Direction.West:
-                    nextX = x - 1;
-                    nextY = y;
-                    nextZ = z;
+                    next = new Point3D(current.X - 1, current.Y, current.Z);
                     break;
                 case Direction.Up:
-                    nextX = x;
-                    nextY = y;
-                    nextZ = z + 1;
+                    next = new Point3D(current.X, current.Y, current.Z + 1);
                     break;
                 case Direction.Down:
-                    nextX = x;
-                    nextY = y;
-                    nextZ = z - 1;
+                    next = new Point3D(current.X, current.Y, current.Z - 1);
                     break;
                 default:
                     throw new NotImplementedException();

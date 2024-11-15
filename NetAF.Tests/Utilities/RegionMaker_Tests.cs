@@ -20,7 +20,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void Given1RoomCollection_WhenConvertToRoomMatrix_ThenNotNull()
         {
-            var room = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 0, 0, 0);
+            var room = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(0, 0, 0));
 
             var matrix = RegionMaker.ConvertToRoomMatrix(new[] { room });
 
@@ -30,7 +30,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void Given1RoomCollection_WhenConvertToRoomMatrix_Then1x1Matrix()
         {
-            var room = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 0, 0, 0);
+            var room = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(0, 0, 0));
 
             var matrix = RegionMaker.ConvertToRoomMatrix(new[] { room });
 
@@ -41,8 +41,8 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void Given2RoomCollection_WhenConvertToRoomMatrix_Then1x2Matrix()
         {
-            var room1 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 0, 0, 0);
-            var room2 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 0, 1, 0);
+            var room1 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(0, 0, 0));
+            var room2 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(0, 1, 0));
 
             var matrix = RegionMaker.ConvertToRoomMatrix(new[] { room1, room2 });
 
@@ -53,8 +53,8 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void Given2RoomCollection_WhenConvertToRoomMatrix_Then2x1Matrix()
         {
-            var room1 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 0, 0, 0);
-            var room2 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), 1, 0, 0);
+            var room1 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(0, 0, 0));
+            var room2 = new RoomPosition(new Room(Identifier.Empty, Description.Empty), new Point3D(1, 0, 0));
 
             var matrix = RegionMaker.ConvertToRoomMatrix(new[] { room1, room2 });
 

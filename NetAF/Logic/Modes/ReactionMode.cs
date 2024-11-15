@@ -64,7 +64,7 @@ namespace NetAF.Logic.Modes
             if (string.IsNullOrEmpty(message))
                 return RenderState.Aborted;
 
-            var frame = game.Configuration.FrameBuilders.ReactionModeFrameBuilder.Build(title, message, game.Configuration.DisplaySize.Width, game.Configuration.DisplaySize.Height);
+            var frame = game.Configuration.FrameBuilders.ReactionModeFrameBuilder.Build(title, message, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
             return RenderState.Completed;
         }

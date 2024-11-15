@@ -21,7 +21,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);
                 stringBuilder.Resize(new Size(80, 50));
 
-                builder.BuildRegionMap(region, 0, 0, 80, 50);
+                builder.BuildRegionMap(region, new Point2D(0, 0), new Point3D(0, 0, 0), new Size(80, 50));
             });
         }
     }

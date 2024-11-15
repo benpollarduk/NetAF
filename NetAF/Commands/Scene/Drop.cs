@@ -7,7 +7,7 @@ namespace NetAF.Commands.Scene
     /// Represents the Drop command.
     /// </summary>
     /// <param name="item">The item to take.</param>
-    public class Drop(Item item) : ICommand
+    public sealed class Drop(Item item) : ICommand
     {
         #region StaticProperties
 
@@ -15,15 +15,6 @@ namespace NetAF.Commands.Scene
         /// Get the command help.
         /// </summary>
         public static CommandHelp CommandHelp { get; } = new("Drop", "Drop an item", "R");
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the item.
-        /// </summary>
-        public Item Item { get; } = item;
 
         #endregion
 
@@ -42,16 +33,16 @@ namespace NetAF.Commands.Scene
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify a character.");
 
-            if (Item == null)
+            if (item == null)
                 return new(ReactionResult.Error, "You must specify what to drop.");
 
-            if (!game.Player.HasItem(Item))
+            if (!game.Player.HasItem(item))
                 return new(ReactionResult.Error, "You don't have that item.");
 
-            game.Overworld.CurrentRegion.CurrentRoom.AddItem(Item);
-            game.Player.RemoveItem(Item);
+            game.Overworld.CurrentRegion.CurrentRoom.AddItem(item);
+            game.Player.RemoveItem(item);
 
-            return new(ReactionResult.OK, $"Dropped {Item.Identifier.Name}.");
+            return new(ReactionResult.OK, $"Dropped {item.Identifier.Name}.");
         }
 
         #endregion

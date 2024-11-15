@@ -49,7 +49,7 @@ namespace NetAF.Logic.Modes
         /// <returns>The render state.</returns>
         public RenderState Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {Converser.Identifier.Name}", Converser, Interpreter.GetContextualCommandHelp(game), game.Configuration.DisplaySize.Width, game.Configuration.DisplaySize.Height);
+            var frame = game.Configuration.FrameBuilders.ConversationFrameBuilder.Build($"Conversation with {Converser.Identifier.Name}", Converser, Interpreter.GetContextualCommandHelp(game), game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
             return RenderState.Completed;
         }

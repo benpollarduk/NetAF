@@ -1,4 +1,5 @@
-﻿using NetAF.Rendering.Frames;
+﻿using NetAF.Assets;
+using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -12,8 +13,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="message">The message to display to the user.</param>
         /// <param name="reason">The reason the game ended.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        IFrame Build(string message, string reason, int width, int height);
+        /// <param name="size">The size of the frame.</param>
+        IFrame Build(string message, string reason, Size size);
     }
 }

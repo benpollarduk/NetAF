@@ -8,7 +8,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Help command.
     /// </summary>
-    public class Help : ICommand
+    public sealed class Help : ICommand
     {
         #region StaticProperties
 

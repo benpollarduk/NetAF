@@ -7,7 +7,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Map command.
     /// </summary>
-    public class Map : ICommand
+    public sealed class Map : ICommand
     {
         #region StaticProperties
 
@@ -30,7 +30,7 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new RegionMapMode());
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
             return new(ReactionResult.ModeChanged, string.Empty);
         }
 

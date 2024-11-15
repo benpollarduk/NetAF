@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using NetAF.Assets;
 using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering.Frames;
@@ -11,12 +12,6 @@ namespace NetAF.Rendering.FrameBuilders.Console
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     public sealed class ConsoleHelpFrameBuilder(GridStringBuilder gridStringBuilder) : IHelpFrameBuilder
     {
-        #region Fields
-
-        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -59,15 +54,14 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="title">The title.</param>
         /// <param name="description">The description.</param>
         /// <param name="commandHelp">The command help.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        public IFrame Build(string title, string description, CommandHelp[] commandHelp, int width, int height)
+        /// <param name="size">The size of the frame.</param>
+        public IFrame Build(string title, string description, CommandHelp[] commandHelp, Size size)
         {
-            gridStringBuilder.Resize(new(width, height));
+            gridStringBuilder.Resize(size);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
-            var availableWidth = width - 4;
+            var availableWidth = size.Width - 4;
             const int leftMargin = 2;
             var padding = (commandHelp.Any() ? commandHelp.Max(x => x.Command.Length) : 0) + 1;
 
@@ -81,7 +75,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             foreach (var command in commandHelp)
             {
-                if (lastY >= height - 1)
+                if (lastY >= size.Height - 1)
                     break;
 
                 if (!string.IsNullOrEmpty(command.Command) && !string.IsNullOrEmpty(command.Description))

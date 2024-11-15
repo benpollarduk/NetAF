@@ -22,5 +22,10 @@
         /// Get the conversation command interpreter.
         /// </summary>
         public static IInterpreter ConversationInterpreter { get; } = new ConversationCommandInterpreter();
+
+        /// <summary>
+        /// Get the region map command interpreter.
+        /// </summary>
+        public static IInterpreter RegionMapCommandInterpreter { get; } = new RegionMapCommandInterpreter();
     }
 }

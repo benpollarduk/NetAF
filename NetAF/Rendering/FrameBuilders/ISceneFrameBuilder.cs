@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Characters;
+﻿using NetAF.Assets;
+using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Rendering.Frames;
@@ -18,8 +19,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="player">Specify the player.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="keyType">The type of key to use.</param>
-        /// <param name="width">The width of the frame.</param>
-        /// <param name="height">The height of the frame.</param>
-        IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, int width, int height);
+        /// <param name="size">The size of the frame.</param>
+        IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, Size size);
     }
 }

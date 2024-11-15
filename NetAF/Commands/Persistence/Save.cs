@@ -8,7 +8,7 @@ namespace NetAF.Commands.Persistence
     /// <summary>
     /// Represents the Save command.
     /// </summary>
-    public class Save : CustomCommand
+    public sealed class Save : CustomCommand
     {
         #region Constructors
 

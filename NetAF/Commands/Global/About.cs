@@ -6,7 +6,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the About command.
     /// </summary>
-    public class About : ICommand
+    public sealed class About : ICommand
     {
         #region StaticProperties
 

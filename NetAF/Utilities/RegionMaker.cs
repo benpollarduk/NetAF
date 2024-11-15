@@ -47,7 +47,7 @@ namespace NetAF.Utilities
                 if (element != null)
                     rooms.Remove(element);
 
-                rooms.Add(new RoomPosition(value, x, y, z));
+                rooms.Add(new RoomPosition(value, new Point3D(x, y, z)));
             }
         }
 
@@ -84,7 +84,7 @@ namespace NetAF.Utilities
         /// <returns>The created region.</returns>
         public Region Make(RoomPosition startPosition)
         {
-            return Make(startPosition.X, startPosition.Y, startPosition.Z);
+            return Make(startPosition.Position.X, startPosition.Position.Y, startPosition.Position.Z);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace NetAF.Utilities
             }
 
             // offset start room, matrix will have normalised positions
-            region.SetStartRoom(x - rooms.Min(r => r.X), y - rooms.Min(r => r.Y), z - rooms.Min(r => r.Z));
+            region.SetStartRoom(x - rooms.Min(r => r.Position.X), y - rooms.Min(r => r.Position.Y), z - rooms.Min(r => r.Position.Z));
 
             return region;
         }
@@ -154,9 +154,9 @@ namespace NetAF.Utilities
             if (roomPositions == null || roomPositions.Count == 0)
                 return null;
 
-            var minX = roomPositions.Min(x => x.X);
-            var minY = roomPositions.Min(x => x.Y);
-            var minZ = roomPositions.Min(x => x.Z);
+            var minX = roomPositions.Min(x => x.Position.X);
+            var minY = roomPositions.Min(x => x.Position.Y);
+            var minZ = roomPositions.Min(x => x.Position.Z);
 
             var xNormalisationOffset = 0 - minX;
             var yNormalisationOffset = 0 - minY;
@@ -165,7 +165,7 @@ namespace NetAF.Utilities
             List<RoomPosition> normalisedPositions = [];
 
             foreach (var roomPosition in roomPositions)
-                normalisedPositions.Add(new RoomPosition(roomPosition.Room, roomPosition.X + xNormalisationOffset, roomPosition.Y + yNormalisationOffset, roomPosition.Z + zNormalisationOffset));
+                normalisedPositions.Add(new RoomPosition(roomPosition.Room, new Point3D(roomPosition.Position.X + xNormalisationOffset, roomPosition.Position.Y + yNormalisationOffset, roomPosition.Position.Z + zNormalisationOffset)));
 
             return new([.. normalisedPositions]);
         }

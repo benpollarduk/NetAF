@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Console;
 
@@ -15,7 +16,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleGameOverFrameBuilder(gridStringBuilder);
 
-                builder.Build(string.Empty, string.Empty, 80, 50);
+                builder.Build(string.Empty, string.Empty, new Size(80, 50));
             });
         }
     }

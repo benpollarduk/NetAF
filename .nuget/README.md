@@ -95,7 +95,7 @@ NetAF provides frames for rendering the various game screens. These are fully ex
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
 
-Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more.
+Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more. Maps support panning and switching between vertical levels.
 
 ### Persistence
 Game state can be serialized allowing progress to be saved to file and restored later.

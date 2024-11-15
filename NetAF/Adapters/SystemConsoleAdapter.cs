@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Rendering.Frames;
 using NetAF.Rendering.Presenters;

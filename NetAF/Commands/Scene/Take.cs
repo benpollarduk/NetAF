@@ -7,7 +7,7 @@ namespace NetAF.Commands.Scene
     /// Represents the Take command.
     /// </summary>
     /// <param name="item">The item to take.</param>
-    public class Take(Item item) : ICommand
+    public sealed class Take(Item item) : ICommand
     {
         #region StaticProperties
 
@@ -15,15 +15,6 @@ namespace NetAF.Commands.Scene
         /// Get the command help.
         /// </summary>
         public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", "T");
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the item.
-        /// </summary>
-        public Item Item { get; } = item;
 
         #endregion
 
@@ -42,19 +33,19 @@ namespace NetAF.Commands.Scene
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify a character.");
 
-            if (Item == null)
+            if (item == null)
                 return new(ReactionResult.Error, "You must specify what to take.");
 
-            if (!game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(Item))
+            if (!game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(item))
                 return new(ReactionResult.Error, "The room does not contain that item.");
 
-            if (!Item.IsTakeable)
-                return new(ReactionResult.Error, $"{Item.Identifier.Name} cannot be taken.");
+            if (!item.IsTakeable)
+                return new(ReactionResult.Error, $"{item.Identifier.Name} cannot be taken.");
 
-            game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(Item);
-            game.Player.AddItem(Item);
+            game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
+            game.Player.AddItem(item);
 
-            return new(ReactionResult.OK, $"Took {Item.Identifier.Name}");
+            return new(ReactionResult.OK, $"Took {item.Identifier.Name}");
         }
 
         #endregion

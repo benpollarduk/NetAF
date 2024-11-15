@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Commands;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
@@ -18,7 +19,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleConversationFrameBuilder(gridStringBuilder);
 
-                builder.Build("Test", null, null, 80, 50);
+                builder.Build("Test", null, null, new Size(80, 50));
             });
         }
 
@@ -32,7 +33,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
             converser.Conversation.Next(null);
             converser.Conversation.Respond(new Response("Test2"), null);
 
-            var result = builder.Build("Test", converser, null, 80, 50);
+            var result = builder.Build("Test", converser, null, new Size(80, 50));
 
             Assert.IsNotNull(result);
         }
@@ -49,7 +50,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 new CommandHelp("Test", "Test")
             };
 
-            var result = builder.Build("Test", null, commands, 80, 50);
+            var result = builder.Build("Test", null, commands, new Size(80, 50));
 
             Assert.IsNotNull(result);
         }

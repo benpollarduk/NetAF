@@ -5,7 +5,7 @@ namespace NetAF.Commands.Global
     /// <summary>
     /// Represents the Exit command.
     /// </summary>
-    public class Exit : ICommand
+    public sealed class Exit : ICommand
     {
         #region StaticProperties
 

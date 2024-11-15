@@ -265,37 +265,37 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenNorth_WhenNextPosition_ThenXTheSameYIncrements()
         {
-            Region.NextPosition(0, 0, 0, Direction.North, out var x, out var y, out _);
+            Region.NextPosition(new Point3D(0, 0, 0), Direction.North, out var next);
 
-            Assert.AreEqual(0, x);
-            Assert.AreEqual(1, y);
+            Assert.AreEqual(0, next.X);
+            Assert.AreEqual(1, next.Y);
         }
 
         [TestMethod]
         public void GivenSouth_WhenNextPosition_ThenXTheSameYDecrements()
         {
-            Region.NextPosition(0, 0, 0, Direction.South, out var x, out var y, out _);
+            Region.NextPosition(new Point3D(0, 0, 0), Direction.South, out var next);
 
-            Assert.AreEqual(0, x);
-            Assert.AreEqual(-1, y);
+            Assert.AreEqual(0, next.X);
+            Assert.AreEqual(-1, next.Y);
         }
 
         [TestMethod]
         public void GivenWest_WhenNextPosition_ThenXDecrementsYTheSame()
         {
-            Region.NextPosition(0, 0, 0, Direction.West, out var x, out var y, out _);
+            Region.NextPosition(new Point3D(0, 0, 0), Direction.West, out var next);
 
-            Assert.AreEqual(-1, x);
-            Assert.AreEqual(0, y);
+            Assert.AreEqual(-1, next.X);
+            Assert.AreEqual(0, next.Y);
         }
 
         [TestMethod]
         public void GivenEast_WhenNextPosition_ThenXIncrementsYTheSame()
         {
-            Region.NextPosition(0, 0, 0, Direction.East, out var x, out var y, out _);
+            Region.NextPosition(new Point3D(0, 0, 0), Direction.East, out var next);
 
-            Assert.AreEqual(1, x);
-            Assert.AreEqual(0, y);
+            Assert.AreEqual(1, next.X);
+            Assert.AreEqual(0, next.Y);
         }
 
         [TestMethod]
@@ -342,9 +342,9 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.GetPositionOfRoom(room);
 
-            Assert.AreEqual(0, result.X);
-            Assert.AreEqual(0, result.Y);
-            Assert.AreEqual(0, result.Z);
+            Assert.AreEqual(0, result.Position.X);
+            Assert.AreEqual(0, result.Position.Y);
+            Assert.AreEqual(0, result.Position.Z);
         }
 
         [TestMethod]
@@ -403,7 +403,7 @@ namespace NetAF.Tests.Assets.Locations
             region.AddRoom(room, 0, 0, 0);
             region.AddRoom(room, 1, 0, 0);
 
-            var result = region.JumpToRoom(0, 100, 0);
+            var result = region.JumpToRoom(new Point3D(0, 100, 0));
 
             Assert.IsFalse(result);
         }
@@ -418,7 +418,7 @@ namespace NetAF.Tests.Assets.Locations
             region.AddRoom(room2, 1, 0, 0);
             region.SetStartRoom(room1);
 
-            var result = region.JumpToRoom(1,0,0);
+            var result = region.JumpToRoom(new Point3D(1, 0, 0));
 
             Assert.IsTrue(result);
         }

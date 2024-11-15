@@ -116,9 +116,9 @@ NetAF provides frames for rendering the various game screens. These are fully ex
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
 
-![image](https://github.com/ben-pollard-uk/adventure-framework/assets/129943363/b6c05233-6856-4103-be44-be1c73a85874)
+![image](https://github.com/user-attachments/assets/3b1accf2-877f-4279-9e8c-733ebea0a59c)
 
-Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more.
+Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more. Maps support panning and switching between vertical levels.
 
 ### Persistence
 Game state can be serialized allowing progress to be saved to file and restored later.

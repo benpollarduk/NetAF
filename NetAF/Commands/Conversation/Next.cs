@@ -6,7 +6,7 @@ namespace NetAF.Commands.Conversation
     /// <summary>
     /// Represents the Next command.
     /// </summary>
-    internal class Next : ICommand
+    public sealed class Next : ICommand
     {
         #region Implementation of ICommand
 
