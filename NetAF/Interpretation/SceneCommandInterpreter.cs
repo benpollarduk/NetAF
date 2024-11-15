@@ -53,18 +53,18 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            GetShortCutFormattedCommandHelp(Move.NorthCommandHelp),
-            GetShortCutFormattedCommandHelp(Move.EastCommandHelp),
-            GetShortCutFormattedCommandHelp(Move.SouthCommandHelp),
-            GetShortCutFormattedCommandHelp(Move.WestCommandHelp),
-            GetShortCutFormattedCommandHelp(Move.UpCommandHelp),
-            GetShortCutFormattedCommandHelp(Move.DownCommandHelp),
-            GetVariableFormattedCommandHelp(Drop.CommandHelp),
-            GetVariableFormattedCommandHelp(Examine.CommandHelp),
-            GetVariableFormattedCommandHelp(Take.CommandHelp),
+            Move.NorthCommandHelp.FormattedToDisplayShortcut(),
+            Move.EastCommandHelp.FormattedToDisplayShortcut(),
+            Move.SouthCommandHelp.FormattedToDisplayShortcut(),
+            Move.WestCommandHelp.FormattedToDisplayShortcut(),
+            Move.UpCommandHelp.FormattedToDisplayShortcut(),
+            Move.DownCommandHelp.FormattedToDisplayShortcut(),
+            Drop.CommandHelp.FormattedToDisplayShortcutAndVariable(),
+            Examine.CommandHelp.FormattedToDisplayShortcutAndVariable(),
+            Take.CommandHelp.FormattedToDisplayShortcutAndVariable(),
             TakeAll.CommandHelp,
             GetTalkToCommandHelp(),
-            GetVariableFormattedCommandHelp(UseOn.UseCommandHelp),
+            UseOn.UseCommandHelp.FormattedToDisplayShortcutAndVariable(),
             GetUseOnCommandHelp()
         ];
 
@@ -88,26 +88,6 @@ namespace NetAF.Interpretation
         private static CommandHelp GetUseOnCommandHelp()
         {
             return new($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command.ToLower()} {Variable}", UseOn.OnCommandHelp.Description);
-        }
-
-        /// <summary>
-        /// Get a shortcut formatted command help.
-        /// </summary>
-        /// <param name="commandHelp">The original command help.</param>
-        /// <returns>A shortcut formatted command help.</returns>
-        private static CommandHelp GetShortCutFormattedCommandHelp(CommandHelp commandHelp)
-        {
-            return new($"{commandHelp.Command}/{commandHelp.Shortcut}", commandHelp.Description);
-        }
-
-        /// <summary>
-        /// Get a variable formatted command help.
-        /// </summary>
-        /// <param name="commandHelp">The original command help.</param>
-        /// <returns>A variable formatted command help.</returns>
-        private static CommandHelp GetVariableFormattedCommandHelp(CommandHelp commandHelp)
-        {
-            return new($"{commandHelp.Command}/{commandHelp.Shortcut} {Variable}", commandHelp.Description);
         }
 
         /// <summary>
@@ -526,31 +506,31 @@ namespace NetAF.Interpretation
             List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.NorthCommandHelp));
+                commands.Add(Move.NorthCommandHelp.FormattedToDisplayShortcut());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.EastCommandHelp));
+                commands.Add(Move.EastCommandHelp.FormattedToDisplayShortcut());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.SouthCommandHelp));
+                commands.Add(Move.SouthCommandHelp.FormattedToDisplayShortcut());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.WestCommandHelp));
+                commands.Add(Move.WestCommandHelp.FormattedToDisplayShortcut());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.UpCommandHelp));
+                commands.Add(Move.UpCommandHelp.FormattedToDisplayShortcut());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(GetShortCutFormattedCommandHelp(Move.DownCommandHelp));
+                commands.Add(Move.DownCommandHelp.FormattedToDisplayShortcut());
 
-            commands.Add(GetVariableFormattedCommandHelp(Examine.CommandHelp));
+            commands.Add(Examine.CommandHelp.FormattedToDisplayShortcutAndVariable());
 
             if (game.Player.Items.Any())
-                commands.Add(GetVariableFormattedCommandHelp(Drop.CommandHelp));
+                commands.Add(Drop.CommandHelp.FormattedToDisplayShortcutAndVariable());
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
             {
-                commands.Add(GetVariableFormattedCommandHelp(Take.CommandHelp));
+                commands.Add(Take.CommandHelp.FormattedToDisplayShortcutAndVariable());
                 commands.Add(TakeAll.CommandHelp);
             }
 
@@ -559,7 +539,7 @@ namespace NetAF.Interpretation
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
             {
-                commands.Add(GetVariableFormattedCommandHelp(UseOn.UseCommandHelp));
+                commands.Add(UseOn.UseCommandHelp.FormattedToDisplayShortcutAndVariable());
                 commands.Add(GetUseOnCommandHelp());
             }
 

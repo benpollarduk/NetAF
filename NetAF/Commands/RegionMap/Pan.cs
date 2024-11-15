@@ -25,32 +25,32 @@ namespace NetAF.Commands.RegionMap
         /// <summary>
         /// Get the command help for north.
         /// </summary>
-        public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", "N");
+        public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", "N");
 
         /// <summary>
         /// Get the command help for south.
         /// </summary>
-        public static CommandHelp SouthCommandHelp { get; } = new("South", "Move south", "S");
+        public static CommandHelp SouthCommandHelp { get; } = new("South", "Pan south", "S");
 
         /// <summary>
         /// Get the command help for east.
         /// </summary>
-        public static CommandHelp EastCommandHelp { get; } = new("East", "Move east", "E");
+        public static CommandHelp EastCommandHelp { get; } = new("East", "Pan east", "E");
 
         /// <summary>
         /// Get the command help for west.
         /// </summary>
-        public static CommandHelp WestCommandHelp { get; } = new("West", "Move west", "W");
+        public static CommandHelp WestCommandHelp { get; } = new("West", "Pan west", "W");
 
         /// <summary>
         /// Get the command help for up.
         /// </summary>
-        public static CommandHelp UpCommandHelp { get; } = new("Up", "Move up", "U");
+        public static CommandHelp UpCommandHelp { get; } = new("Up", "Pan up", "U");
 
         /// <summary>
         /// Get the command help for down.
         /// </summary>
-        public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", "D");
+        public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", "D");
 
         #endregion
 
