@@ -52,15 +52,6 @@ namespace NetAF.Commands.Scene
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Get the direction.
-        /// </summary>
-        public Direction Direction { get; } = direction;
-
-        #endregion
-
         #region Implementation of ICommand
 
         /// <summary>
@@ -73,10 +64,10 @@ namespace NetAF.Commands.Scene
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            if (game.Overworld.CurrentRegion.Move(Direction))
+            if (game.Overworld.CurrentRegion.Move(direction))
                 return new(ReactionResult.OK, SuccessfulMove);
 
-            return new(ReactionResult.Error, $"Could not move {Direction}.");
+            return new(ReactionResult.Error, $"Could not move {direction}.");
         }
 
         #endregion

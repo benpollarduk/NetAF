@@ -35,23 +35,45 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenUp_WhenInterpret_ThenReturnTrue()
+        public void GivenPanNorth_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new RegionMapCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(PanUp.CommandHelp.Command, game);
+            var result = interpreter.Interpret(Pan.NorthCommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]
-        public void GivenDown_WhenInterpret_ThenReturnTrue()
+        public void GivenPanSouth_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new RegionMapCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(PanDown.CommandHelp.Command, game);
+            var result = interpreter.Interpret(Pan.SouthCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenPanEast_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new RegionMapCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Pan.EastCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenPanWest_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new RegionMapCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Pan.WestCommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -62,7 +84,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new RegionMapCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(PanNorth.CommandHelp.Command, game);
+            var result = interpreter.Interpret(Pan.UpCommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
@@ -73,29 +95,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new RegionMapCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(PanSouth.CommandHelp.Command, game);
-
-            Assert.IsTrue(result.WasInterpretedSuccessfully);
-        }
-
-        [TestMethod]
-        public void GivenPanLeft_WhenInterpret_ThenReturnTrue()
-        {
-            var interpreter = new RegionMapCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-
-            var result = interpreter.Interpret(PanWest.CommandHelp.Command, game);
-
-            Assert.IsTrue(result.WasInterpretedSuccessfully);
-        }
-
-        [TestMethod]
-        public void GivenPanRight_WhenInterpret_ThenReturnTrue()
-        {
-            var interpreter = new RegionMapCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-
-            var result = interpreter.Interpret(PanEast.CommandHelp.Command, game);
+            var result = interpreter.Interpret(Pan.DownCommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

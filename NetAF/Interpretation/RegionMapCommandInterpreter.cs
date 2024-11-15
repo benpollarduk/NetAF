@@ -1,4 +1,5 @@
-﻿using NetAF.Commands;
+﻿using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
@@ -19,12 +20,12 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            PanUp.CommandHelp,
-            PanDown.CommandHelp,
-            PanNorth.CommandHelp,
-            PanSouth.CommandHelp,
-            PanWest.CommandHelp,
-            PanEast.CommandHelp,
+            Pan.NorthCommandHelp,
+            Pan.SouthCommandHelp,
+            Pan.EastCommandHelp,
+            Pan.WestCommandHelp,
+            Pan.UpCommandHelp,
+            Pan.DownCommandHelp,
             PanReset.CommandHelp,
             End.CommandHelp,
         ];
@@ -46,23 +47,23 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (PanUp.CommandHelp.Equals(input))
-                return new(true, new PanUp());
+            if (Pan.NorthCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.North));
 
-            if (PanDown.CommandHelp.Equals(input))
-                return new(true, new PanDown());
+            if (Pan.SouthCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.South));
 
-            if (PanNorth.CommandHelp.Equals(input))
-                return new(true, new PanNorth());
+            if (Pan.EastCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.East));
 
-            if (PanSouth.CommandHelp.Equals(input))
-                return new(true, new PanSouth());
+            if (Pan.WestCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.West));
 
-            if (PanWest.CommandHelp.Equals(input))
-                return new(true, new PanWest());
+            if (Pan.UpCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.Up));
 
-            if (PanEast.CommandHelp.Equals(input))
-                return new(true, new PanEast());
+            if (Pan.DownCommandHelp.Equals(input))
+                return new(true, new Pan(Direction.Down));
 
             if (PanReset.CommandHelp.Equals(input))
                 return new(true, new PanReset());
@@ -84,23 +85,23 @@ namespace NetAF.Interpretation
 
             if (game.Mode is RegionMapMode regionMapMode)
             {
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanUp.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanUp.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.North)))
+                    commands.Add(Pan.NorthCommandHelp);
 
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanDown.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanDown.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.South)))
+                    commands.Add(Pan.SouthCommandHelp);
 
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanNorth.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanNorth.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.East)))
+                    commands.Add(Pan.EastCommandHelp);
 
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanSouth.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanSouth.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.West)))
+                    commands.Add(Pan.WestCommandHelp);
 
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanWest.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanWest.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Up)))
+                    commands.Add(Pan.UpCommandHelp);
 
-                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanEast.GetPanPosition(regionMapMode.FocusPosition)))
-                    commands.Add(PanEast.CommandHelp);
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Down)))
+                    commands.Add(Pan.DownCommandHelp);
 
                 if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom)))
                     commands.Add(PanReset.CommandHelp);
