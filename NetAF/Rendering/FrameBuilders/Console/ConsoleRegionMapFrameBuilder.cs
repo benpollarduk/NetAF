@@ -60,7 +60,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridStringBuilder.DrawWrapped(region.Identifier.Name, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, region.Identifier.Name.Length, TitleColor);
 
-            RegionMapBuilder?.BuildRegionMap(region, leftMargin, lastY + 2, new Size(availableWidth, size.Height - 4));
+            RegionMapBuilder?.BuildRegionMap(region, new Point2D(leftMargin, lastY + 2), new Size(availableWidth, size.Height - 4));
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

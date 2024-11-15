@@ -101,7 +101,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
 
-            roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, leftMargin, lastY + linePadding, out _, out lastY);
+            roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
 
             if (player.Items.Any())
                 gridStringBuilder.DrawWrapped("You have: " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);

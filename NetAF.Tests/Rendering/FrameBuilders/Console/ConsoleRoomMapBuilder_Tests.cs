@@ -4,6 +4,7 @@ using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Rendering.FrameBuilders.Console
 {
@@ -34,7 +35,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
             });
         }
 
@@ -62,7 +63,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic, new Point2D(0, 0), out _, out _);
             });
         }
 
@@ -81,7 +82,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
             });
         }
 
@@ -109,7 +110,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, 0, 0, out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
             });
         }
     }
