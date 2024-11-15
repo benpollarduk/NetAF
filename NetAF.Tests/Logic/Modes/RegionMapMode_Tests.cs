@@ -39,13 +39,43 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenPositionInBounds_WhenPanToPosition_ThenReturnTrue()
+        public void GivenPositionInBoundsAndVisited_WhenPanToPosition_ThenReturnTrue()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
 
             var result = RegionMapMode.CanPanToPosition(regionMaker.Make(), new Point3D(0, 0, 0));
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenPositionInBoundsButNotVisited_WhenPanToPosition_ThenReturnFalse()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            Room room2 = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            regionMaker[1, 0, 0] = room2;
+
+            var result = RegionMapMode.CanPanToPosition(regionMaker.Make(), new Point3D(1, 0, 0));
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenPositionInBoundsButNotVisitedButRegionIsVisibleWithoutDiscovery_WhenPanToPosition_ThenReturnTrue()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            Room room2 = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            regionMaker[1, 0, 0] = room2;
+            var region = regionMaker.Make();
+            region.VisibleWithoutDiscovery = true;
+
+            var result = RegionMapMode.CanPanToPosition(region, new Point3D(1, 0, 0));
 
             Assert.IsTrue(result);
         }
