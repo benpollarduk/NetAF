@@ -1,28 +1,30 @@
-﻿using NetAF.Interpretation;
+﻿using NetAF.Assets;
+using NetAF.Assets.Locations;
+using NetAF.Interpretation;
 
 namespace NetAF.Logic.Modes
 {
     /// <summary>
     /// Provides a display mode for region map.
     /// </summary>
-    /// <param name="level">The level to display. To use the player level use RegionMapMode.PlayerLevel.</param>
-    public sealed class RegionMapMode(int level) : IGameMode
+    /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
+    public sealed class RegionMapMode(Point3D focusPosition) : IGameMode
     {
-        #region Constants
+        #region StaticProperties
 
         /// <summary>
         /// Get the value to use to display the player level.
         /// </summary>
-        public const int PlayerLevel = -1;
+        public static Point3D Player => new Point3D(-1, -1, -1);
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Get or set the level to display. To use the player level use RegionMapMode.PlayerLevel.
+        /// Get or set the position to focus on. To use the player position use RegionMapMode.Player.
         /// </summary>
-        public int Level { get; set; } = level;
+        public Point3D FocusPosition { get; set; } = focusPosition;
 
         #endregion
 
@@ -45,9 +47,29 @@ namespace NetAF.Logic.Modes
         /// <returns>The render state.</returns>
         public RenderState Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.RegionMapFrameBuilder.Build(game.Overworld.CurrentRegion, game.Configuration.DisplaySize);
+            // if focusing on the player, find their location
+            if (FocusPosition.Equals(Player))
+                FocusPosition = game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position;
+
+            var frame = game.Configuration.FrameBuilders.RegionMapFrameBuilder.Build(game.Overworld.CurrentRegion, game.Configuration.DisplaySize, FocusPosition);
             game.Configuration.Adapter.RenderFrame(frame);
             return RenderState.Completed;
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Determine if a pan position is valid.
+        /// </summary>
+        /// <param name="region">The region.</param>
+        /// <param name="position">The position.</param>
+        /// <returns>True if the pan position is valid, else false.</returns>
+        public static bool CanPanToPosition(Region region, Point3D position)
+        {
+            var matrix = region.ToMatrix();
+            return matrix[position.X, position.Y, position.Z] != null;
         }
 
         #endregion

@@ -4,10 +4,8 @@
     /// Represents a room position.
     /// </summary>
     /// <param name="room">The room/</param>
-    /// <param name="x">The x position of the room.</param>
-    /// <param name="y">The y position of the room.</param>
-    /// <param name="z">The z position of the room.</param>
-    public class RoomPosition(Room room, int x, int y, int z)
+    /// <param name="position">The position of the room.</param>
+    public class RoomPosition(Room room, Point3D position)
     {
         #region Properties
 
@@ -17,19 +15,9 @@
         public Room Room { get; } = room;
 
         /// <summary>
-        /// Get the X position of the room.
+        /// Get the position of the room.
         /// </summary>
-        public int X { get; } = x;
-
-        /// <summary>
-        /// Get the Y position of the room.
-        /// </summary>
-        public int Y { get; } = y;
-
-        /// <summary>
-        /// Get the Z position of the room.
-        /// </summary>
-        public int Z { get; } = z;
+        public Point3D Position { get; } = position;
 
         #endregion
 
@@ -44,7 +32,17 @@
         /// <returns>True if this is at the position, else false.</returns>
         public bool IsAtPosition(int x, int y, int z)
         {
-            return X == x && Y == y && Z == z;
+            return IsAtPosition(new Point3D(x, y, z));
+        }
+
+        /// <summary>
+        /// Get if this RoomPosition is at a position.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <returns>True if this is at the position, else false.</returns>
+        public bool IsAtPosition(Point3D position)
+        {
+            return Position.X == position.X && Position.Y == position.Y && Position.Z == position.Z;
         }
 
         #endregion

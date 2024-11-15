@@ -29,17 +29,17 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get the width of the matrix.
         /// </summary>
-        public int Width => roomPositions.Length > 0 ? roomPositions.Max(r => r.X) - roomPositions.Min(r => r.X) + 1 : 0;
+        public int Width => roomPositions.Length > 0 ? roomPositions.Max(r => r.Position.X) - roomPositions.Min(r => r.Position.X) + 1 : 0;
 
         /// <summary>
         /// Get the height of the matrix.
         /// </summary>
-        public int Height => roomPositions.Length > 0 ? roomPositions.Max(r => r.Y) - roomPositions.Min(r => r.Y) + 1 : 0;
+        public int Height => roomPositions.Length > 0 ? roomPositions.Max(r => r.Position.Y) - roomPositions.Min(r => r.Position.Y) + 1 : 0;
 
         /// <summary>
         /// Get the depth of the matrix.
         /// </summary>
-        public int Depth => roomPositions.Length > 0 ? roomPositions.Max(r => r.Z) - roomPositions.Min(r => r.Z) + 1 : 0;
+        public int Depth => roomPositions.Length > 0 ? roomPositions.Max(r => r.Position.Z) - roomPositions.Min(r => r.Position.Z) + 1 : 0;
 
         #endregion
 

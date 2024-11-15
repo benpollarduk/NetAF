@@ -2,6 +2,8 @@
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -17,9 +19,14 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            Up.CommandHelp,
-            Down.CommandHelp,
-            End.CommandHelp
+            PanUp.CommandHelp,
+            PanDown.CommandHelp,
+            PanNorth.CommandHelp,
+            PanSouth.CommandHelp,
+            PanWest.CommandHelp,
+            PanEast.CommandHelp,
+            PanReset.CommandHelp,
+            End.CommandHelp,
         ];
 
         #endregion
@@ -39,11 +46,26 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (Up.CommandHelp.Equals(input))
-                return new(true, new Up());
+            if (PanUp.CommandHelp.Equals(input))
+                return new(true, new PanUp());
 
-            if (Down.CommandHelp.Equals(input))
-                return new(true, new Down());
+            if (PanDown.CommandHelp.Equals(input))
+                return new(true, new PanDown());
+
+            if (PanNorth.CommandHelp.Equals(input))
+                return new(true, new PanNorth());
+
+            if (PanSouth.CommandHelp.Equals(input))
+                return new(true, new PanSouth());
+
+            if (PanWest.CommandHelp.Equals(input))
+                return new(true, new PanWest());
+
+            if (PanEast.CommandHelp.Equals(input))
+                return new(true, new PanEast());
+
+            if (PanReset.CommandHelp.Equals(input))
+                return new(true, new PanReset());
 
             return InterpretationResult.Fail;
         }
@@ -55,7 +77,35 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return [new CommandHelp(End.CommandHelp.Command, "Finish looking at the map")];
+            List<CommandHelp> commands = [];
+
+            if (game.Mode is RegionMapMode regionMapMode)
+            {
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanUp.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanUp.CommandHelp);
+
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanDown.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanDown.CommandHelp);
+
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanNorth.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanNorth.CommandHelp);
+
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanSouth.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanSouth.CommandHelp);
+
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanWest.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanWest.CommandHelp);
+
+                if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanEast.GetPanPosition(regionMapMode.FocusPosition)))
+                    commands.Add(PanEast.CommandHelp);
+
+                if (!regionMapMode.FocusPosition.Equals(RegionMapMode.Player))
+                    commands.Add(PanReset.CommandHelp);
+
+                commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map"));
+            }
+
+            return [.. commands];
         }
 
         #endregion

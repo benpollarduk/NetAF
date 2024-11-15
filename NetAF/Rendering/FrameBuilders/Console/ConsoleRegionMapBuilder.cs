@@ -55,6 +55,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         public char CurrentFloorIndicator { get; set; } = Convert.ToChar("*");
 
         /// <summary>
+        /// Get or set the focused room boundary color.
+        /// </summary>
+        public AnsiColor FocusedBoundaryColor { get; set; } = AnsiColor.Cyan;
+
+        /// <summary>
         /// Get or set the visited room boundary color.
         /// </summary>
         public AnsiColor VisitedBoundaryColor { get; set; } = AnsiColor.White;
@@ -93,16 +98,22 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         /// <param name="room">The room to draw.</param>
         /// <param name="topLeft">The top left of the room.</param>
-        /// <param name="isCurrentRoom">True if this is the current room.</param>
-        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, bool isCurrentRoom)
+        /// <param name="isPlayerRoom">True if this is the player room.</param>
+        /// <param name="isFocusRoom">True if this is the focus room.</param>
+        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, bool isPlayerRoom, bool isFocusRoom)
         {
             /*
              * |   |
              *  ^Ov|
              * |---|
-             */
+             */            
 
-            var color = room.HasBeenVisited ? VisitedBoundaryColor : UnvisitedBoundaryColor;
+            AnsiColor color = UnvisitedBoundaryColor;
+
+            if (isFocusRoom)
+                color = FocusedBoundaryColor;
+            else if (room.HasBeenVisited)
+                color = VisitedBoundaryColor;
 
             gridStringBuilder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
 
@@ -141,7 +152,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             else
                 gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, EmptySpace, color);
 
-            if (isCurrentRoom)
+            if (isPlayerRoom)
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Player, PlayerColor);
             else
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, EmptySpace, color);
@@ -213,28 +224,26 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="gridStartPosition">The position to start building at.</param>
         /// <param name="availableSize">The available size, in the grid.</param>
         /// <param name="matrix">The matrix.</param>
-        /// <param name="roomX">The x position of the room, in the matrix.</param>
-        /// <param name="roomY">The y position of the room, in the matrix.</param>
-        /// <param name="playerX">The x position of the player, in the matrix.</param>
-        /// <param name="playerY">The y position of the player, in the matrix.</param>
+        /// <param name="roomPosition">The position of the room, in the matrix.</param>
+        /// <param name="playerPosition">The x position of the player, in the matrix.</param>
         /// <param name="gridLeft">The left position to begin rendering the room at, in the grid.</param>
         /// <param name="gridTop">The top position to begin rendering the room at, in the grid.</param>
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
-        private static bool TryConvertMatrixPositionToGridLayoutPosition(Point2D gridStartPosition, Size availableSize, Matrix matrix, int roomX, int roomY, int playerX, int playerY, out int gridLeft, out int gridTop)
+        private static bool TryConvertMatrixPositionToGridLayoutPosition(Point2D gridStartPosition, Size availableSize, Matrix matrix, Point2D roomPosition, Point2D playerPosition, out int gridLeft, out int gridTop)
         {
             const int roomWidth = 5;
             const int roomHeight = 3;
 
             // set position of room, Y is inverted
-            gridLeft = gridStartPosition.X + roomX * roomWidth;
-            gridTop = gridStartPosition.Y + (matrix.Height - 1) * roomHeight - roomY * roomHeight;
+            gridLeft = gridStartPosition.X + roomPosition.X * roomWidth;
+            gridTop = gridStartPosition.Y + (matrix.Height - 1) * roomHeight - roomPosition.Y * roomHeight;
 
             // check if map will fit
             if (matrix.Width * roomWidth > availableSize.Width || matrix.Height * roomHeight > availableSize.Height)
             {
                 // centralise on player
-                gridLeft += availableSize.Width / 2 - playerX * roomWidth + roomWidth / 2;
-                gridTop += availableSize.Height / 2 + (playerY - matrix.Height) * roomHeight - roomHeight / 2;
+                gridLeft += availableSize.Width / 2 - playerPosition.X * roomWidth + roomWidth / 2;
+                gridTop += availableSize.Height / 2 + (playerPosition.Y - matrix.Height) * roomHeight - roomHeight / 2;
             }
             else
             {
@@ -259,11 +268,13 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <param name="region">The region.</param>
         /// <param name="startPosition">The position to start building at.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point2D startPosition, Size maxSize)
+        /// <param name="focusPosition">The position to focus on.</param>
+        public void BuildRegionMap(Region region, Point2D startPosition, Size maxSize, Point3D focusPosition)
         {
             var matrix = region.ToMatrix();
-            var currentRoom = region.GetPositionOfRoom(region.CurrentRoom);
-            var currentFloor = currentRoom.Z;
+            var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);
+            var playerFloor = playerRoom.Position.Z;
+            var focusFloor = focusPosition.Z;
             var rooms = matrix.ToRooms().Where(r => r != null).ToArray();
             var unvisitedRoomPositions = rooms.Select(region.GetPositionOfRoom).Where(r => !r.Room.HasBeenVisited).ToList();
             var visitedRoomPositions = rooms.Select(region.GetPositionOfRoom).Where(r => r.Room.HasBeenVisited).ToList();
@@ -279,13 +290,13 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
                 for (var floor = matrix.Depth - 1; floor >= 0; floor--)
                 {
-                    var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Z == floor).ToArray();
+                    var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Position.Z == floor).ToArray();
 
                     // only draw levels indicators where a region is visible without discovery or a room on the floor has been visited
                     if (!region.VisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
                         continue;
 
-                    if (floor == currentFloor)
+                    if (floor == playerFloor)
                         gridStringBuilder.DrawWrapped($"{CurrentFloorIndicator} L{floor}", x, ++y, maxAvailableWidth, VisitedBoundaryColor, out _, out _);
                     else
                         gridStringBuilder.DrawWrapped($"L{floor}", x + 2, ++y, maxAvailableWidth, LowerLevelColor, out _, out _);
@@ -298,28 +309,28 @@ namespace NetAF.Rendering.FrameBuilders.Console
             // firstly draw lower levels
             if (ShowLowerFloors)
             {
-                List<RoomPosition> lowerLevelRooms = [.. visitedRoomPositions.Where(r => r.Z < currentFloor)];
+                List<RoomPosition> lowerLevelRooms = [.. visitedRoomPositions.Where(r => r.Position.Z < focusFloor)];
 
                 if (region.VisibleWithoutDiscovery)
-                    lowerLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Z < currentFloor));
+                    lowerLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Position.Z < focusFloor));
 
                 foreach (var position in lowerLevelRooms)
                 {
-                    if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
+                    if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, new Point2D(position.Position.X, position.Position.Y), new Point2D(playerRoom.Position.X, playerRoom.Position.Y), out var left, out var top))
                         DrawLowerLevelRoom(new Point2D(left, top));
                 }
             }
 
-            // now current level
-            List<RoomPosition> currentLevelRooms = [.. visitedRoomPositions.Where(r => r.Z == currentFloor)];
+            // now focus level
+            List<RoomPosition> focusLevelRooms = [.. visitedRoomPositions.Where(r => r.Position.Z == focusFloor)];
 
             if (region.VisibleWithoutDiscovery)
-                currentLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Z == currentFloor));
+                focusLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Position.Z == focusFloor));
 
-            foreach (var position in currentLevelRooms)
+            foreach (var position in focusLevelRooms)
             {
-                if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, position.X, position.Y, currentRoom.X, currentRoom.Y, out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), position.Room == region.CurrentRoom);
+                if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, new Point2D(position.Position.X, position.Position.Y), new Point2D(playerRoom.Position.X, playerRoom.Position.Y), out var left, out var top))
+                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
             }
         }
 

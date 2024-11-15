@@ -48,7 +48,8 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="size">The size of the frame.</param>
-        public IFrame Build(Region region, Size size)
+        /// <param name="focusPosition">The position to focus on.</param>
+        public IFrame Build(Region region, Size size, Point3D focusPosition)
         {
             gridStringBuilder.Resize(size);
 
@@ -60,7 +61,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridStringBuilder.DrawWrapped(region.Identifier.Name, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, region.Identifier.Name.Length, TitleColor);
 
-            RegionMapBuilder?.BuildRegionMap(region, new Point2D(leftMargin, lastY + 2), new Size(availableWidth, size.Height - 4));
+            RegionMapBuilder?.BuildRegionMap(region, new Point2D(leftMargin, lastY + 2), new Size(availableWidth, size.Height - 4), focusPosition);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

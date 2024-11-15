@@ -14,6 +14,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="size">The size of the frame.</param>
-        IFrame Build(Region region, Size size);
+        /// <param name="focusPosition">The position to focus on.</param>
+        IFrame Build(Region region, Size size, Point3D focusPosition);
     }
 }

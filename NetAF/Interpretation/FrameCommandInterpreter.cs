@@ -1,6 +1,5 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Frame;
-using NetAF.Commands.RegionMap;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation

@@ -5,7 +5,6 @@ using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands.Frame;
-using NetAF.Commands.RegionMap;
 
 namespace NetAF.Tests.Interpretation
 {

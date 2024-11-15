@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -42,10 +43,10 @@ namespace NetAF.Tests.Assets.Locations
         {
             List<RoomPosition> roomPositions =
             [
-                new(new(string.Empty, string.Empty), 0, 0, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 1),
-                new(new(string.Empty, string.Empty), 0, 1, 2)
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
             ];
             var matrix = new Matrix([.. roomPositions]);
 
@@ -59,10 +60,10 @@ namespace NetAF.Tests.Assets.Locations
         {
             List<RoomPosition> roomPositions =
             [
-                new(new(string.Empty, string.Empty), 0, 0, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 1),
-                new(new(string.Empty, string.Empty), 0, 1, 2)
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
             ];
             var matrix = new Matrix([.. roomPositions]);
 
@@ -76,10 +77,10 @@ namespace NetAF.Tests.Assets.Locations
         {
             List<RoomPosition> roomPositions =
             [
-                new(new(string.Empty, string.Empty), 0, 0, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 1),
-                new(new(string.Empty, string.Empty), 0, 1, 2)
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
             ];
             var matrix = new Matrix([.. roomPositions]);
 
@@ -93,10 +94,10 @@ namespace NetAF.Tests.Assets.Locations
         {
             List<RoomPosition> roomPositions =
             [
-                new(new(string.Empty, string.Empty), 0, 0, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 0),
-                new(new(string.Empty, string.Empty), 0, 1, 1),
-                new(new(string.Empty, string.Empty), 0, 1, 2)
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
             ];
             var matrix = new Matrix([.. roomPositions]);
 

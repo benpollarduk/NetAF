@@ -4,16 +4,16 @@ using NetAF.Logic.Modes;
 namespace NetAF.Commands.RegionMap
 {
     /// <summary>
-    /// Represents the Down command.
+    /// Represents the PanReset command.
     /// </summary>
-    public class Down : ICommand
+    public class PanReset : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Down", "Shift to the previous level", "D");
+        public static CommandHelp CommandHelp { get; } = new("Reset", "Reset pan", "Z");
 
         #endregion
 
@@ -31,8 +31,8 @@ namespace NetAF.Commands.RegionMap
 
             if (game.Mode is RegionMapMode regionMapMode)
             {
-                regionMapMode.Level--;
-                return new(ReactionResult.Silent, "Shifted down a level.");
+                regionMapMode.FocusPosition = RegionMapMode.Player;
+                return new(ReactionResult.Silent, "Reset pan.");
             }
 
             return new(ReactionResult.Error, "Not in region map mode.");

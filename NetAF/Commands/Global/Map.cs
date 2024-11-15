@@ -30,7 +30,7 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new RegionMapMode(RegionMapMode.PlayerLevel));
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
             return new(ReactionResult.ModeChanged, string.Empty);
         }
 

@@ -88,7 +88,7 @@ namespace NetAF.Examples
                                 _ = int.TryParse(a[2], out z);
                             }
 
-                            var result = g.Overworld.CurrentRegion.JumpToRoom(x, y, z);
+                            var result = g.Overworld.CurrentRegion.JumpToRoom(new Point3D(x, y, z));
 
                             if (!result)
                                 return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
