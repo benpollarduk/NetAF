@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
@@ -13,8 +14,9 @@ namespace NetAF.Rendering.FrameBuilders
         /// Build a frame.
         /// </summary>
         /// <param name="region">The region.</param>
-        /// <param name="size">The size of the frame.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        IFrame Build(Region region, Size size, Point3D focusPosition);
+        /// <param name="contextualCommands">The contextual commands to display.</param>
+        /// <param name="size">The size of the frame.</param>
+        IFrame Build(Region region, Point3D focusPosition, CommandHelp[] contextualCommands, Size size);
     }
 }

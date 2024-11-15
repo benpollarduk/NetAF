@@ -67,6 +67,9 @@ namespace NetAF.Interpretation
             if (PanReset.CommandHelp.Equals(input))
                 return new(true, new PanReset());
 
+            if (End.CommandHelp.Equals(input))
+                return new(true, new End());
+
             return InterpretationResult.Fail;
         }
 
@@ -99,7 +102,7 @@ namespace NetAF.Interpretation
                 if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, PanEast.GetPanPosition(regionMapMode.FocusPosition)))
                     commands.Add(PanEast.CommandHelp);
 
-                if (!regionMapMode.FocusPosition.Equals(RegionMapMode.Player))
+                if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom)))
                     commands.Add(PanReset.CommandHelp);
 
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map"));

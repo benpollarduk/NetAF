@@ -51,7 +51,7 @@ namespace NetAF.Logic.Modes
             if (FocusPosition.Equals(Player))
                 FocusPosition = game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position;
 
-            var frame = game.Configuration.FrameBuilders.RegionMapFrameBuilder.Build(game.Overworld.CurrentRegion, game.Configuration.DisplaySize, FocusPosition);
+            var frame = game.Configuration.FrameBuilders.RegionMapFrameBuilder.Build(game.Overworld.CurrentRegion, FocusPosition, Interpreter?.GetContextualCommandHelp(game) ?? [], game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
             return RenderState.Completed;
         }
@@ -69,7 +69,8 @@ namespace NetAF.Logic.Modes
         public static bool CanPanToPosition(Region region, Point3D position)
         {
             var matrix = region.ToMatrix();
-            return matrix[position.X, position.Y, position.Z] != null;
+            var room = matrix[position.X, position.Y, position.Z];
+            return room != null && room.HasBeenVisited;
         }
 
         #endregion

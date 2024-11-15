@@ -31,8 +31,17 @@ namespace NetAF.Commands.RegionMap
 
             if (game.Mode is RegionMapMode regionMapMode)
             {
-                regionMapMode.FocusPosition = RegionMapMode.Player;
-                return new(ReactionResult.Silent, "Reset pan.");
+                var currentPosition = game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom);
+
+                if (!regionMapMode.FocusPosition.Equals(currentPosition))
+                {
+                    regionMapMode.FocusPosition = RegionMapMode.Player;
+                    return new(ReactionResult.Silent, "Reset pan.");
+                }
+                else
+                {
+                    return new(ReactionResult.Silent, "Can't reset pan as reset position is the same as the focus position.");
+                }
             }
 
             return new(ReactionResult.Error, "Not in region map mode.");
