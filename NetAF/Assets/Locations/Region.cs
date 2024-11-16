@@ -62,7 +62,7 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get if the current region is visible without discovery.
         /// </summary>
-        public bool VisibleWithoutDiscovery { get; set; }
+        public bool IsVisibleWithoutDiscovery { get; set; }
 
         #endregion
 
@@ -356,6 +356,7 @@ namespace NetAF.Assets.Locations
             }
 
             CurrentRoom = Array.Find(rooms, x => x.Identifier.Equals(serialization.CurrentRoom));
+            IsVisibleWithoutDiscovery = serialization.IsVisibleWithoutDiscovery;
         }
 
         #endregion

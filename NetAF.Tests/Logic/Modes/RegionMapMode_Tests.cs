@@ -65,7 +65,7 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenPositionInBoundsButNotVisitedButRegionIsVisibleWithoutDiscovery_WhenPanToPosition_ThenReturnTrue()
+        public void GivenPositionInBoundsButNotVisitedButRegionIsVisibleWithoutDiscoveryIsTrue_WhenPanToPosition_ThenReturnTrue()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -73,7 +73,7 @@ namespace NetAF.Tests.Logic.Modes
             regionMaker[0, 0, 0] = room;
             regionMaker[1, 0, 0] = room2;
             var region = regionMaker.Make();
-            region.VisibleWithoutDiscovery = true;
+            region.IsVisibleWithoutDiscovery = true;
 
             var result = RegionMapMode.CanPanToPosition(region, new Point3D(1, 0, 0));
 

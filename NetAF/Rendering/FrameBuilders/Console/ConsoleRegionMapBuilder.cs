@@ -293,7 +293,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                     var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Position.Z == floor).ToArray();
 
                     // only draw levels indicators where a region is visible without discovery or a room on the floor has been visited
-                    if (!region.VisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
+                    if (!region.IsVisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
                         continue;
 
                     if (floor == playerFloor)
@@ -311,7 +311,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             {
                 List<RoomPosition> lowerLevelRooms = [.. visitedRoomPositions.Where(r => r.Position.Z < focusFloor)];
 
-                if (region.VisibleWithoutDiscovery)
+                if (region.IsVisibleWithoutDiscovery)
                     lowerLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Position.Z < focusFloor));
 
                 foreach (var position in lowerLevelRooms)
@@ -324,7 +324,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             // now focus level
             List<RoomPosition> focusLevelRooms = [.. visitedRoomPositions.Where(r => r.Position.Z == focusFloor)];
 
-            if (region.VisibleWithoutDiscovery)
+            if (region.IsVisibleWithoutDiscovery)
                 focusLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Position.Z == focusFloor));
 
             foreach (var position in focusLevelRooms)

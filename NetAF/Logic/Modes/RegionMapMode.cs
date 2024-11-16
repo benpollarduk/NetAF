@@ -70,7 +70,7 @@ namespace NetAF.Logic.Modes
         {
             var matrix = region.ToMatrix();
             var room = matrix[position.X, position.Y, position.Z];
-            return room != null && (room.HasBeenVisited || region.VisibleWithoutDiscovery);
+            return room != null && (room.HasBeenVisited || region.IsVisibleWithoutDiscovery);
         }
 
         #endregion

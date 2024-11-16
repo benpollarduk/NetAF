@@ -21,6 +21,11 @@ namespace NetAF.Serialization.Assets
         /// </summary>
         public string CurrentRoom { get; set; } = region?.CurrentRoom?.Identifier?.IdentifiableName;
 
+        /// <summary>
+        /// Get or set if the region is visible without discovery.
+        /// </summary>
+        public bool IsVisibleWithoutDiscovery { get; set; } = region?.IsVisibleWithoutDiscovery ?? false;
+
         #endregion
 
         #region Implementation of IObjectSerialization<Region>
