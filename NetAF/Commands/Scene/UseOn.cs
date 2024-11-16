@@ -73,7 +73,7 @@ namespace NetAF.Commands.Scene
                     throw new NotImplementedException();
             }
 
-            return new(ReactionResult.OK, result.Description);
+            return new(ReactionResult.Inform, result.Description);
         }
 
         #endregion

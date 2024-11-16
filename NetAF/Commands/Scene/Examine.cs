@@ -30,7 +30,7 @@ namespace NetAF.Commands.Scene
             if (examinable == null)
                 return new(ReactionResult.Error, "Nothing to examine.");
 
-            return new(ReactionResult.OK, examinable.Examine(new ExaminationScene(game)).Description);
+            return new(ReactionResult.Inform, examinable.Examine(new ExaminationScene(game)).Description);
         }
 
         #endregion

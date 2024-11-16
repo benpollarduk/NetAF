@@ -65,7 +65,7 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "No game specified.");
 
             if (game.Overworld.CurrentRegion.Move(direction))
-                return new(ReactionResult.OK, SuccessfulMove);
+                return new(ReactionResult.Inform, SuccessfulMove);
 
             return new(ReactionResult.Error, $"Could not move {direction}.");
         }

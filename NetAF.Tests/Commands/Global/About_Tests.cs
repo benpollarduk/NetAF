@@ -23,7 +23,7 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenModeChanged()
+        public void GivenValidGame_WhenInvoke_ThenGameModeChanged()
         {
             var overworld = new Overworld(Identifier.Empty, Description.Empty);
             var region = new Region(Identifier.Empty, Description.Empty);
@@ -35,7 +35,7 @@ namespace NetAF.Tests.Commands.Global
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.ModeChanged, result.Result);
+            Assert.AreEqual(ReactionResult.GameModeChanged, result.Result);
         }
     }
 }

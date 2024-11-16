@@ -48,7 +48,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenTargetIsNpc_WhenInvoke_ThenOK()
+        public void GivenTargetIsNpc_WhenInvoke_ThenInform()
         {
             var item = new Item(Identifier.Empty, Description.Empty, true);
             var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty);
@@ -64,11 +64,11 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
 
         [TestMethod]
-        public void GivenTargetIsPlayer_WhenInvoke_ThenOK()
+        public void GivenTargetIsPlayer_WhenInvoke_ThenInform()
         {
             var item = new Item(Identifier.Empty, Description.Empty, true);
             var pc = new PlayableCharacter(Identifier.Empty, Description.Empty);
@@ -82,11 +82,11 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
 
         [TestMethod]
-        public void GivenTargetIsRoom_WhenInvoke_ThenOK()
+        public void GivenTargetIsRoom_WhenInvoke_ThenInform()
         {
             var item = new Item(Identifier.Empty, Description.Empty, true);
             var room = new Room(Identifier.Empty, Description.Empty);
@@ -100,7 +100,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

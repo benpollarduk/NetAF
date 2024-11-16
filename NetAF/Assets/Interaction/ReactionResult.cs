@@ -6,20 +6,20 @@
     public enum ReactionResult
     {
         /// <summary>
-        /// An error reaction.
+        /// An error occurred.
         /// </summary>
         Error = 0,
         /// <summary>
-        /// An OK reaction.
+        /// The user should be informed.
         /// </summary>
-        OK,
+        Inform,
         /// <summary>
-        /// A silent reaction.
+        /// The user should not be informed.
         /// </summary>
         Silent,
         /// <summary>
-        /// A mode change reaction.
+        /// The game mode was changed.
         /// </summary>
-        ModeChanged
+        GameModeChanged
     }
 }

@@ -29,7 +29,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.End();
-            return new(ReactionResult.OK, "New game.");
+            return new(ReactionResult.Silent, "New game.");
         }
 
         #endregion

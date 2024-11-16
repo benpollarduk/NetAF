@@ -23,7 +23,7 @@ namespace NetAF.Tests.Assets
         {
             CustomCommand[] commands =
             [
-                new CustomCommand(new CommandHelp("Test Command", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, ""))
+                new CustomCommand(new CommandHelp("Test Command", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.Inform, ""))
             ];
 
             var i = new Item("Test", "Test Description.", commands: commands);
@@ -38,8 +38,8 @@ namespace NetAF.Tests.Assets
         {
             CustomCommand[] commands =
             [
-                new CustomCommand(new CommandHelp("A*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, "")),
-                new CustomCommand(new CommandHelp("B*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.OK, ""))
+                new CustomCommand(new CommandHelp("A*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.Inform, "")),
+                new CustomCommand(new CommandHelp("B*", "Test Command Description."), true, true, (_, _) => new Reaction(ReactionResult.Inform, ""))
             ];
 
             var i = new Item("Test", "Test Description.", commands: commands);

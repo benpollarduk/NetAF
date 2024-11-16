@@ -27,7 +27,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenCanMove_WhenInvoke_ThenOK()
+        public void GivenCanMove_WhenInvoke_ThenInform()
         {
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

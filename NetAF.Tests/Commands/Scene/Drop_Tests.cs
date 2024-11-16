@@ -53,7 +53,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenItemIsDroppable_WhenInvoke_ThenOK()
+        public void GivenItemIsDroppable_WhenInvoke_ThenInform()
         {
             var room = new Room(Identifier.Empty, Description.Empty);
             var region = new Region(string.Empty, string.Empty);
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenCommandNameIsA_ThenCommandNameIsA()
         {
-            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_,_) => Reaction.OK);
+            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_,_) => Reaction.Inform);
 
             CustomCommandSerialization result = new(command);
 
@@ -21,7 +21,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenIsPlayerVisibleIsTrue_ThenCommandIsPlayerVisibleIsTrue()
         {
-            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.OK);
+            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
 
             CustomCommandSerialization result = new(command);
 
@@ -31,8 +31,8 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenACustomCommand_WhenRestoreFrom_ThenIsPlayerVisibleSetCorrectly()
         {
-            CustomCommand command1 = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.OK);
-            CustomCommand command2 = new(new CommandHelp("A", string.Empty), false, true, (_, _) => Reaction.OK);
+            CustomCommand command1 = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
+            CustomCommand command2 = new(new CommandHelp("A", string.Empty), false, true, (_, _) => Reaction.Inform);
 
             CustomCommandSerialization serialization = new(command1);
 

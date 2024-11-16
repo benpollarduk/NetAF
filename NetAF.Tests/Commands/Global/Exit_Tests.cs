@@ -19,14 +19,14 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenOK()
+        public void GivenValidGame_WhenInvoke_ThenSilent()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
             var command = new Exit();
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
     }
 }

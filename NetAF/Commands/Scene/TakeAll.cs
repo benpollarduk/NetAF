@@ -49,7 +49,7 @@ namespace NetAF.Commands.Scene
             if (builder.Length > 0)
             {
                 builder.Remove(builder.Length - 2, 2);
-                return new(ReactionResult.OK, $"Took {builder}.");
+                return new(ReactionResult.Inform, $"Took {builder}.");
             }
             else
             {
