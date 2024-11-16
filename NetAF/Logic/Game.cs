@@ -9,6 +9,8 @@ using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logic.Arrangement;
+using NetAF.Logic.Callbacks;
+using NetAF.Logic.Configuration;
 using NetAF.Logic.Modes;
 using NetAF.Serialization;
 using NetAF.Utilities;
@@ -155,17 +157,13 @@ namespace NetAF.Logic
                 // process the input
                 var reaction = ProcessInput(input);
 
-                // if there was a fatal reaction, kill the player
-                if (reaction.Result == ReactionResult.Fatal)
-                    Player.Kill();
-
                 // if the reaction should be displayed
                 if (reaction.Result != ReactionResult.Silent)
                 {
                     // display the reaction now
                     DisplayReaction(reaction);
                 }
-                else if (reaction.Result != ReactionResult.ModeChanged && Mode.Type == GameModeType.Information)
+                else if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
                 {
                     // revert back to scene mode as the command didn't change the mode and the current mode is information, essentially the mode has expired
                     ChangeMode(new SceneMode());
@@ -359,10 +357,9 @@ namespace NetAF.Logic
                     ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, message));
                     break;
                 case ReactionResult.Silent:
-                case ReactionResult.ModeChanged:
+                case ReactionResult.GameModeChanged:
                     break;
-                case ReactionResult.OK:
-                case ReactionResult.Fatal:
+                case ReactionResult.Inform:
                     ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
                     break;
                 default:

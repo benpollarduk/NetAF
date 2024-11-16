@@ -4,7 +4,7 @@ using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering;
 
-namespace NetAF.Logic
+namespace NetAF.Logic.Configuration
 {
     /// <summary>
     /// Represents a configuration for a console game.

@@ -29,7 +29,7 @@ namespace NetAF.Commands.Frame
                 return new(ReactionResult.Error, "No game specified.");
 
             game.Configuration.DisplayCommandListInSceneFrames = false;
-            return new(ReactionResult.OK, "Commands have been turned off.");
+            return new(ReactionResult.Inform, "Commands have been turned off.");
         }
 
         #endregion

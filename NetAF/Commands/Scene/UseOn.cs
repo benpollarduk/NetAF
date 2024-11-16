@@ -50,11 +50,6 @@ namespace NetAF.Commands.Scene
 
             switch (result.Effect)
             {
-                case InteractionEffect.FatalEffect:
-
-                    game.Player.Kill();
-                    return new(ReactionResult.Fatal, result.Description);
-
                 case InteractionEffect.ItemUsedUp:
 
                     if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(item))
@@ -78,7 +73,7 @@ namespace NetAF.Commands.Scene
                     throw new NotImplementedException();
             }
 
-            return new(ReactionResult.OK, result.Description);
+            return new(ReactionResult.Inform, result.Description);
         }
 
         #endregion

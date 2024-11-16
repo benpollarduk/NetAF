@@ -12,6 +12,8 @@ namespace NetAF.Utilities
     /// </summary>
     public static class StringUtilities
     {
+        #region Constants
+
         /// <summary>
         /// Get the new line string.
         /// </summary>
@@ -26,6 +28,10 @@ namespace NetAF.Utilities
         /// Get the character for carriage return.
         /// </summary>
         public const char CR = (char)13;
+
+        #endregion
+        
+        #region StaticMethods
 
         /// <summary>
         /// Preen input to remove any ambiguity around special characters.
@@ -169,5 +175,7 @@ namespace NetAF.Utilities
 
             return builder.ToString();
         }
+
+        #endregion
     }
 }

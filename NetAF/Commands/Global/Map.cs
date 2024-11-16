@@ -31,7 +31,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
-            return new(ReactionResult.ModeChanged, string.Empty);
+            return new(ReactionResult.GameModeChanged, string.Empty);
         }
 
         #endregion

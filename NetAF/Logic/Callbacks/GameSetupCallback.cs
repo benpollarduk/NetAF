@@ -1,4 +1,4 @@
-﻿namespace NetAF.Logic
+﻿namespace NetAF.Logic.Callbacks
 {
     /// <summary>
     /// Represents the callback used for Game setup.

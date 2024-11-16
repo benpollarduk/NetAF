@@ -34,7 +34,7 @@ namespace NetAF.Commands.Persistence
 
             restorePoint.Game.Restore(game);
 
-            return new(ReactionResult.OK, $"Loaded.");
+            return new(ReactionResult.Inform, $"Loaded.");
         }
 
         #endregion

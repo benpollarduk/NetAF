@@ -39,7 +39,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.ChangeMode(new SceneMode());
-            return new(ReactionResult.OK, SuccessfulEnd);
+            return new(ReactionResult.Inform, SuccessfulEnd);
         }
 
         #endregion

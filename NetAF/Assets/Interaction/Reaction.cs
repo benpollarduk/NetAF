@@ -10,9 +10,9 @@
         #region StaticProperties
 
         /// <summary>
-        /// Provides a default value for OK.
+        /// Provides a default value for Inform.
         /// </summary>
-        internal static Reaction OK => new(ReactionResult.OK, string.Empty);
+        internal static Reaction Inform { get; } = new(ReactionResult.Inform, string.Empty);
 
         #endregion
 

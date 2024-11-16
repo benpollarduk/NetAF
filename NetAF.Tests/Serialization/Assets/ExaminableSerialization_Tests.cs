@@ -53,7 +53,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void Given1CustomCommand_ThenCustomCommandsHas1Element()
         {
-            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.OK);
+            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
             Item examinable = new(string.Empty, string.Empty, commands: [command]);
 
             ExaminableSerialization result = new(examinable);

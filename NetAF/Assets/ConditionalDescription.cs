@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Assets
+﻿namespace NetAF.Assets
 {
     /// <summary>
     /// Represents a conditional description of an object.

@@ -19,14 +19,14 @@ namespace NetAF.Tests.Commands.Frame
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenOK()
+        public void GivenValidGame_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new CommandsOn();
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace NetAF.Commands.Persistence
             if (!result)
                 return new(ReactionResult.Error, $"Failed to save: {message}");
 
-            return new(ReactionResult.OK, $"Saved.");
+            return new(ReactionResult.Inform, $"Saved.");
         }
 
         #endregion

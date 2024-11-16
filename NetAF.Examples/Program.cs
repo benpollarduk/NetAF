@@ -13,6 +13,7 @@ using NetAF.Examples.Assets.Regions.Zelda;
 using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Logic.Configuration;
 
 namespace NetAF.Examples
 {
@@ -51,7 +52,7 @@ namespace NetAF.Examples
                         if (!move)
                             return new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
 
-                        return new Reaction(ReactionResult.OK, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
+                        return new Reaction(ReactionResult.Inform, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
                     })
                 ];
 
@@ -93,7 +94,7 @@ namespace NetAF.Examples
                             if (!result)
                                 return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
 
-                            return new(ReactionResult.OK, $"Jumped to {x} {y} {z}.");
+                            return new(ReactionResult.Inform, $"Jumped to {x} {y} {z}.");
                         }),
                         new Save(),
                         new Load()

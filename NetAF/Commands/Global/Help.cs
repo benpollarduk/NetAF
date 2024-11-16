@@ -40,7 +40,7 @@ namespace NetAF.Commands.Global
             ];
 
             game.ChangeMode(new HelpMode([.. commands.Distinct()]));
-            return new(ReactionResult.ModeChanged, string.Empty);
+            return new(ReactionResult.GameModeChanged, string.Empty);
         }
 
         #endregion

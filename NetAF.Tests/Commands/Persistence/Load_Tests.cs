@@ -16,7 +16,7 @@ namespace NetAF.Tests.Commands.Persistence
     public class Load_Tests
     {
         [TestMethod]
-        public void GivenValidPathAndFileExists_WhenInvoke_ThenOK()
+        public void GivenValidPathAndFileExists_WhenInvoke_ThenInform()
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -40,7 +40,7 @@ namespace NetAF.Tests.Commands.Persistence
             if (fileExists)
                 File.Delete(path);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
 
         [TestMethod]

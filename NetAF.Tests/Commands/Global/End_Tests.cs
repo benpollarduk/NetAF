@@ -22,7 +22,7 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenOK()
+        public void GivenValidGame_WhenInvoke_ThenInform()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -33,7 +33,7 @@ namespace NetAF.Tests.Commands.Global
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

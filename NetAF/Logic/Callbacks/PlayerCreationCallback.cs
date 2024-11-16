@@ -1,6 +1,6 @@
 ﻿using NetAF.Assets.Characters;
 
-namespace NetAF.Logic
+namespace NetAF.Logic.Callbacks
 {
     /// <summary>
     /// Represents a callback for Player creation.

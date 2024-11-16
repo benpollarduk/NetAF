@@ -21,7 +21,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenSomethingToExamine_WhenInvoke_ThenOK()
+        public void GivenSomethingToExamine_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var region = new Region(Identifier.Empty, Description.Empty);
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.OK, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
     }
 }

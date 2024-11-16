@@ -42,7 +42,7 @@ namespace NetAF.Commands.Scene
             game.Overworld.CurrentRegion.CurrentRoom.AddItem(item);
             game.Player.RemoveItem(item);
 
-            return new(ReactionResult.OK, $"Dropped {item.Identifier.Name}.");
+            return new(ReactionResult.Inform, $"Dropped {item.Identifier.Name}.");
         }
 
         #endregion
