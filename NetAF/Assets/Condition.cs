@@ -1,4 +1,4 @@
-﻿namespace NetAF.Assets.Interaction
+﻿namespace NetAF.Assets
 {
     /// <summary>
     /// Represents a callback for conditions.
