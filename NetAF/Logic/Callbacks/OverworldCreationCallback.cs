@@ -1,6 +1,6 @@
 ﻿using NetAF.Assets.Locations;
 
-namespace NetAF.Logic
+namespace NetAF.Logic.Callbacks
 {
     /// <summary>
     /// Represents a callback for Overworld creation.

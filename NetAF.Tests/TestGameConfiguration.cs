@@ -2,6 +2,7 @@
 using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Logic;
+using NetAF.Logic.Configuration;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 

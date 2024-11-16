@@ -163,6 +163,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
+using NetAF.Logic.Coniguration;
 using NetAF.Utilities;
 
 namespace NetAF.GettingStarted

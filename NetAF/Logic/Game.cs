@@ -9,6 +9,8 @@ using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logic.Arrangement;
+using NetAF.Logic.Callbacks;
+using NetAF.Logic.Configuration;
 using NetAF.Logic.Modes;
 using NetAF.Serialization;
 using NetAF.Utilities;
