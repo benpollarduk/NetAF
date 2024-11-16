@@ -155,10 +155,6 @@ namespace NetAF.Logic
                 // process the input
                 var reaction = ProcessInput(input);
 
-                // if there was a fatal reaction, kill the player
-                if (reaction.Result == ReactionResult.Fatal)
-                    Player.Kill();
-
                 // if the reaction should be displayed
                 if (reaction.Result != ReactionResult.Silent)
                 {
@@ -362,7 +358,6 @@ namespace NetAF.Logic
                 case ReactionResult.ModeChanged:
                     break;
                 case ReactionResult.OK:
-                case ReactionResult.Fatal:
                     ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
                     break;
                 default:

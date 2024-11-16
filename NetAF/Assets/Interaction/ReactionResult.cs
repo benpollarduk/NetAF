@@ -20,10 +20,6 @@
         /// <summary>
         /// A mode change reaction.
         /// </summary>
-        ModeChanged,
-        /// <summary>
-        /// A reaction that has a fatal effect on the player.
-        /// </summary>
-        Fatal
+        ModeChanged
     }
 }

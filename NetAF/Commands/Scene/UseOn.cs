@@ -50,11 +50,6 @@ namespace NetAF.Commands.Scene
 
             switch (result.Effect)
             {
-                case InteractionEffect.FatalEffect:
-
-                    game.Player.Kill();
-                    return new(ReactionResult.Fatal, result.Description);
-
                 case InteractionEffect.ItemUsedUp:
 
                     if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(item))
