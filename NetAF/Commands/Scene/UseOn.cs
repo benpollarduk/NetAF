@@ -35,7 +35,8 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game.</param>
         /// <param name="item">The item that expired.</param>
-        private static void ItemExpired(Game game, Item item)
+        /// <param name="target">The target that the item was used on.</param>
+        private static void ItemExpired(Game game, Item item, IInteractWithItem target)
         {
             List<IItemContainer> containers = [];
 
@@ -43,7 +44,10 @@ namespace NetAF.Commands.Scene
             containers.Add(game.Overworld.CurrentRegion.CurrentRoom);
             containers.AddRange(game.Overworld.CurrentRegion.CurrentRoom.Characters ?? []);
             
-            foreach (var container in from IItemContainer container in containers where container.Items.Contains(item) select container)
+            if (target is IItemContainer targetContainer)
+                containers.Add(targetContainer);
+            
+            foreach (var container in from IItemContainer container in containers.Distinct() where container.Items.Contains(item) select container)
                 container.RemoveItem(item);
         }
 
@@ -51,7 +55,7 @@ namespace NetAF.Commands.Scene
         /// Handle a target expiring.
         /// </summary>
         /// <param name="game">The game.</param>
-        /// <param name="target">The item that expired.</param>
+        /// <param name="target">The target that expired.</param>
         private static void TargetExpired(Game game, IInteractWithItem target)
         {
             if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
@@ -93,27 +97,27 @@ namespace NetAF.Commands.Scene
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify the character that is using this item.");
 
-            var result = target.Interact(item);
+            var interaction = target.Interact(item);
 
-            switch (result.Result)
+            switch (interaction.Result)
             {
                 case InteractionResult.NeitherItemOrTargetExpired:
                     break;
                 case InteractionResult.ItemExpired:
-                    ItemExpired(game, item);
+                    ItemExpired(game, item, target);
                     break;
                 case InteractionResult.TargetExpired:
                     TargetExpired(game, target);
                     break;
                 case InteractionResult.ItemAndTargetExpired:
-                    ItemExpired(game, item);
+                    ItemExpired(game, item, target);
                     TargetExpired(game, target);
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return new(ReactionResult.Inform, result.Description);
+            return new(ReactionResult.Inform, interaction.Description);
         }
 
         #endregion
