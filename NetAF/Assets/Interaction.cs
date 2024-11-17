@@ -35,10 +35,11 @@ namespace NetAF.Assets
 
             Description = result switch
             {
-                InteractionResult.NeitherItemOrTargetExpired => "There was no effect.",
-                InteractionResult.ItemExpired => "The item expired.",
-                InteractionResult.TargetExpired => "The target expired.",
-                InteractionResult.ItemAndTargetExpired => "Both the item and target expired.",
+                InteractionResult.NoChange => "There was no effect.",
+                InteractionResult.ItemExpires => "The item expires.",
+                InteractionResult.TargetExpires => "The target expires.",
+                InteractionResult.ItemAndTargetExpires => "Both the item and target expires.",
+                InteractionResult.PlayerDies => "The player dies.",
                 _ => throw new NotImplementedException($"No implementation for ${result}."),
             };
         }

@@ -24,9 +24,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
             return new(Name, Description, interaction: item =>
             {
                 if (item != null && CoffeeMug.Name.EqualsIdentifier(item.Identifier))
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
+                    return new(InteractionResult.NoChange, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             });
         }
 

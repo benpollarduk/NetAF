@@ -41,8 +41,8 @@ var dartsBoard = new Item("Darts board", "A darts board.");
 var dart = new Item("Dart", "A dart", interaction: item =>
 {
     if (item == dartsBoard)
-        return new Interaction(InteractionResult.NeitherItemOrTargetExpired, item, "The dart stuck in the darts board.");
+        return new Interaction(InteractionResult.NoChange, item, "The dart stuck in the darts board.");
 
-     return new Interaction(InteractionResult.NeitherItemOrTargetExpired, item);
+     return new Interaction(InteractionResult.NoChange, item);
 });
 ```

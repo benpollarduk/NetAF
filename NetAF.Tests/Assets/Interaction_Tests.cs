@@ -9,7 +9,7 @@ namespace NetAF.Tests.Assets
         [TestMethod]
         public void GivenConstructor_WhenExplicitDescription_ThenDescriptionIsAsSpecified()
         {
-            Interaction instance = new(InteractionResult.NeitherItemOrTargetExpired, null, "A");
+            Interaction instance = new(InteractionResult.NoChange, null, "A");
 
             var result = instance.Description;
 
@@ -19,27 +19,27 @@ namespace NetAF.Tests.Assets
         [TestMethod]
         public void GivenConstructor_WhenItemUsedUp_ThenGeneratedDescriptionIsCorrect()
         {
-            Interaction instance = new(InteractionResult.ItemExpired, null);
+            Interaction instance = new(InteractionResult.ItemExpires, null);
 
             var result = instance.Description;
 
-            Assert.AreEqual("The item expired.", result);
+            Assert.AreEqual("The item expires.", result);
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenItemAndTargetExpired_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenItemAndTargetExpires_ThenGeneratedDescriptionIsCorrect()
         {
-            Interaction instance = new(InteractionResult.ItemAndTargetExpired, null);
+            Interaction instance = new(InteractionResult.ItemAndTargetExpires, null);
 
             var result = instance.Description;
 
-            Assert.AreEqual("Both the item and target expired.", result);
+            Assert.AreEqual("Both the item and target expires.", result);
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenNeitherItemOrTargetExpired_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenNoChange_ThenGeneratedDescriptionIsCorrect()
         {
-            Interaction instance = new(InteractionResult.NeitherItemOrTargetExpired, null);
+            Interaction instance = new(InteractionResult.NoChange, null);
 
             var result = instance.Description;
 
@@ -47,13 +47,23 @@ namespace NetAF.Tests.Assets
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenTargetExpired_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenTargetExpires_ThenGeneratedDescriptionIsCorrect()
         {
-            Interaction instance = new(InteractionResult.TargetExpired, null);
+            Interaction instance = new(InteractionResult.TargetExpires, null);
 
             var result = instance.Description;
 
-            Assert.AreEqual("The target expired.", result);
+            Assert.AreEqual("The target expires.", result);
+        }
+
+        [TestMethod]
+        public void GivenConstructor_WhenPlayerDies_ThenGeneratedDescriptionIsCorrect()
+        {
+            Interaction instance = new(InteractionResult.PlayerDies, null);
+
+            var result = instance.Description;
+
+            Assert.AreEqual("The player dies.", result);
         }
     }
 }

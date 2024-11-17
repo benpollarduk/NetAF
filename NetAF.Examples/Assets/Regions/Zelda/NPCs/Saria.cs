@@ -59,12 +59,12 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                 {
                     saria.RemoveItem(key);
                     room.AddItem(key);
-                    return new(InteractionResult.ItemExpired, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
+                    return new(InteractionResult.ItemExpires, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
                 }
 
                 if (Shield.Name.EqualsIdentifier(item.Identifier))
                 {
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
+                    return new(InteractionResult.NoChange, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
                 }
 
                 if (Sword.Name.EqualsIdentifier(item.Identifier) && saria.IsAlive)
@@ -72,15 +72,15 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                     saria.Kill();
 
                     if (!saria.HasItem(key))
-                        return new(InteractionResult.NeitherItemOrTargetExpired, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
+                        return new(InteractionResult.NoChange, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
 
                     saria.RemoveItem(key);
                     room.AddItem(key);
 
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
+                    return new(InteractionResult.NoChange, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
                 }
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             });
 
             saria.AddItem(new TailKey().Instantiate());

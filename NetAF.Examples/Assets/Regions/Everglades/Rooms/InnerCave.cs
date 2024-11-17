@@ -30,13 +30,13 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
                 if (item != null && ConchShell.Name.EqualsExaminable(item))
                 {
                     room[Direction.North].Unlock();
-                    return new(InteractionResult.ItemExpired, item, "You blow into the Conch Shell. The Conch Shell howls, the  bats leave! Conch shell crumbles to pieces.");
+                    return new(InteractionResult.ItemExpires, item, "You blow into the Conch Shell. The Conch Shell howls, the  bats leave! Conch shell crumbles to pieces.");
                 }
 
                 if (item != null && Knife.Name.EqualsExaminable(item))
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "You slash wildly at the bats, but there are too many. Don't aggravate them!");
+                    return new(InteractionResult.NoChange, item, "You slash wildly at the bats, but there are too many. Don't aggravate them!");
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             });
 
             room.SpecifyConditionalDescription(new ConditionalDescription("With the bats gone there is daylight to the north. To the west is the cave entrance", "As you enter the inner cave the screeching gets louder, and in the gloom you can make out what looks like a million sets of eyes looking back at you. Bats! You can just make out a few rays of light coming from the north, but the bats are blocking your way.", () => !room[Direction.North].IsLocked));

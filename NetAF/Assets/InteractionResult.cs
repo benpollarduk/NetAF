@@ -6,20 +6,24 @@
     public enum InteractionResult
     {
         /// <summary>
-        /// Neither the item or the target expired.
+        /// No change.
         /// </summary>
-        NeitherItemOrTargetExpired = 0,
+        NoChange = 0,
         /// <summary>
-        /// The item expired.
+        /// The item expires.
         /// </summary>
-        ItemExpired,
+        ItemExpires,
         /// <summary>
-        /// The target expired.
+        /// The target expires.
         /// </summary>
-        TargetExpired,
+        TargetExpires,
         /// <summary>
-        /// The item and the target expired.
+        /// The item and the target expires.
         /// </summary>
-        ItemAndTargetExpired
+        ItemAndTargetExpires,
+        /// <summary>
+        /// The player dies.
+        /// </summary>
+        PlayerDies
     }
 }

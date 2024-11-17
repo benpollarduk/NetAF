@@ -38,10 +38,10 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                 if (Sword.Name.EqualsExaminable(item))
                 {
                     rupee.IsPlayerVisible = true;
-                    return new(InteractionResult.TargetExpired, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
+                    return new(InteractionResult.TargetExpires, item, "You slash wildly at the bush and reduce it to a stump. This exposes a red rupee, that must have been what was glinting from within the bush...");
                 }
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             }).Instantiate();
 
             rupee.IsPlayerVisible = false;

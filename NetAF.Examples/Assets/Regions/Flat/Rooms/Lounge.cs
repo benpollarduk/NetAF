@@ -36,23 +36,23 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
                     if (CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
                         if (room.ContainsCharacter(Beth.Name))
-                            return new(InteractionResult.ItemExpired, item, "Beth takes the cup of coffee and smiles. Brownie points to you!");
+                            return new(InteractionResult.ItemExpires, item, "Beth takes the cup of coffee and smiles. Brownie points to you!");
 
-                        return new(InteractionResult.NeitherItemOrTargetExpired, item, "As no one is about you decide to drink the coffee yourself. Your nose wasn't lying, it is bitter but delicious.");
+                        return new(InteractionResult.NoChange, item, "As no one is about you decide to drink the coffee yourself. Your nose wasn't lying, it is bitter but delicious.");
 
                     }
 
                     if (CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
                         room.AddItem(item);
-                        return new(InteractionResult.ItemExpired, item, "You put the mug down on the coffee table, sick of carrying the bloody thing around. Beth is none too impressed.");
+                        return new(InteractionResult.ItemExpires, item, "You put the mug down on the coffee table, sick of carrying the bloody thing around. Beth is none too impressed.");
                     }
 
                     if (Guitar.Name.EqualsIdentifier(item.Identifier))
-                        return new(InteractionResult.NeitherItemOrTargetExpired, item, "You strum the guitar frantically trying to impress Beth, she smiles but looks at you like you are a fool. The guitar just isn't loud enough when it is not plugged in...");
+                        return new(InteractionResult.NoChange, item, "You strum the guitar frantically trying to impress Beth, she smiles but looks at you like you are a fool. The guitar just isn't loud enough when it is not plugged in...");
                 }
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             });
 
             room.AddCharacter(new Beth().Instantiate());

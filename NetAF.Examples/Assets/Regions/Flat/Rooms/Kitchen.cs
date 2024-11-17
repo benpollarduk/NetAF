@@ -26,9 +26,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             var room = new Room(Name, Description, [new Exit(Direction.South), new Exit(Direction.East)], interaction: item =>
             {
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
+                    return new(InteractionResult.NoChange, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             });
 
             room.AddItem(new HamsterCage().Instantiate());

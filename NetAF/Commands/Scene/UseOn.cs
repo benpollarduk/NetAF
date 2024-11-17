@@ -36,7 +36,7 @@ namespace NetAF.Commands.Scene
         /// <param name="game">The game.</param>
         /// <param name="item">The item that expired.</param>
         /// <param name="target">The target that the item was used on.</param>
-        private static void ItemExpired(Game game, Item item, IInteractWithItem target)
+        private static void ItemExpires(Game game, Item item, IInteractWithItem target)
         {
             List<IItemContainer> containers = [];
 
@@ -56,7 +56,7 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game.</param>
         /// <param name="target">The target that expired.</param>
-        private static void TargetExpired(Game game, IInteractWithItem target)
+        private static void TargetExpires(Game game, IInteractWithItem target)
         {
             if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
                 game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(target);
@@ -101,17 +101,20 @@ namespace NetAF.Commands.Scene
 
             switch (interaction.Result)
             {
-                case InteractionResult.NeitherItemOrTargetExpired:
+                case InteractionResult.NoChange:
                     break;
-                case InteractionResult.ItemExpired:
-                    ItemExpired(game, item, target);
+                case InteractionResult.ItemExpires:
+                    ItemExpires(game, item, target);
                     break;
-                case InteractionResult.TargetExpired:
-                    TargetExpired(game, target);
+                case InteractionResult.TargetExpires:
+                    TargetExpires(game, target);
                     break;
-                case InteractionResult.ItemAndTargetExpired:
-                    ItemExpired(game, item, target);
-                    TargetExpired(game, target);
+                case InteractionResult.ItemAndTargetExpires:
+                    ItemExpires(game, item, target);
+                    TargetExpires(game, target);
+                    break;
+                case InteractionResult.PlayerDies:
+                    game.Player.Kill();
                     break;
                 default:
                     throw new NotImplementedException();

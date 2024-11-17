@@ -36,7 +36,7 @@ namespace NetAF.Examples.Assets.Regions.Flat
                 if (Lead.Name.EqualsIdentifier(item.Identifier))
                 {
                     spareBedroom.AddItem(new(item.Identifier, item.Description, true));
-                    return new(InteractionResult.ItemExpired, item, "The lead fits snugly into the input socket on the amp.");
+                    return new(InteractionResult.ItemExpires, item, "The lead fits snugly into the input socket on the amp.");
                 }
 
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
@@ -48,16 +48,16 @@ namespace NetAF.Examples.Assets.Regions.Flat
                         if (lounge.FindCharacter(Beth.Name, out var b))
                         {
                             lounge.RemoveCharacter(b);
-                            return new(InteractionResult.NeitherItemOrTargetExpired, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings. Beth's had enough! She bolts for the front door leaving it wide open! You are free to leave the flat! You unplug the guitar.");
+                            return new(InteractionResult.NoChange, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings. Beth's had enough! She bolts for the front door leaving it wide open! You are free to leave the flat! You unplug the guitar.");
                         }
 
-                        return new(InteractionResult.NeitherItemOrTargetExpired, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings.");
+                        return new(InteractionResult.NoChange, item, "The guitar plugs in with a satisfying click. You play some punk and the amp sings.");
                     }
 
-                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "You have no lead so you can't use the guitar with the amp...");
+                    return new(InteractionResult.NoChange, item, "You have no lead so you can't use the guitar with the amp...");
                 }
 
-                return new(InteractionResult.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NoChange, item);
             }).Instantiate();
 
             var regionMaker = new RegionMaker(Name, Description)
