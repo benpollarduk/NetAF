@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -102,17 +101,17 @@ namespace NetAF.Commands.Scene
 
             var result = target.Interact(item);
 
-            switch (result.Effect)
+            switch (result.Result)
             {
-                case InteractionEffect.NeitherItemOrTargetExpired:
+                case InteractionResult.NeitherItemOrTargetExpired:
                     break;
-                case InteractionEffect.ItemExpired:
+                case InteractionResult.ItemExpired:
                     ItemExpired(game, item);
                     break;
-                case InteractionEffect.TargetExpired:
+                case InteractionResult.TargetExpired:
                     TargetExpired(game, target);
                     break;
-                case InteractionEffect.ItemAndTargetExpired:
+                case InteractionResult.ItemAndTargetExpired:
                     ItemExpired(game, item);
                     TargetExpired(game, target);
                     break;

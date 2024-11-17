@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Commands;
+﻿using NetAF.Commands;
 
 namespace NetAF.Assets.Characters
 {
@@ -76,7 +75,7 @@ namespace NetAF.Assets.Characters
             CanConverse = canConverse;
             Items = items ?? [];
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NeitherItemOrTargetExpired, i));
+            Interaction = interaction ?? (i => new(InteractionResult.NeitherItemOrTargetExpired, i));
 
             if (examination != null)
                 Examination = examination;
@@ -91,8 +90,8 @@ namespace NetAF.Assets.Characters
         /// </summary>
         /// <param name="item">The item to use.</param>
         /// <param name="targetObject">A target object to use the item on.</param>
-        /// <returns>The result of the items usage.</returns>
-        public InteractionResult UseItem(Item item, IInteractWithItem targetObject)
+        /// <returns>The interaction.</returns>
+        public Interaction UseItem(Item item, IInteractWithItem targetObject)
         {
             return targetObject.Interact(item);
         }

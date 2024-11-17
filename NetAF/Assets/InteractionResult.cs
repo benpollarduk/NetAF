@@ -1,9 +1,9 @@
-﻿namespace NetAF.Assets.Interaction
+﻿namespace NetAF.Assets
 {
     /// <summary>
-    /// Enumeration of interaction effects.
+    /// Enumeration of interaction results.
     /// </summary>
-    public enum InteractionEffect
+    public enum InteractionResult
     {
         /// <summary>
         /// Neither the item or the target expired.

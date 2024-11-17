@@ -1,15 +1,15 @@
-﻿using NetAF.Assets.Interaction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 
-namespace NetAF.Tests.Assets.Interaction
+namespace NetAF.Tests.Assets
 {
     [TestClass]
-    public class InteractionResult_Tests
+    public class Interaction_Tests
     {
         [TestMethod]
         public void GivenConstructor_WhenExplicitDescription_ThenDescriptionIsAsSpecified()
         {
-            var instance = new InteractionResult(InteractionEffect.NeitherItemOrTargetExpired, null, "A");
+            Interaction instance = new(InteractionResult.NeitherItemOrTargetExpired, null, "A");
 
             var result = instance.Description;
 
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Assets.Interaction
         [TestMethod]
         public void GivenConstructor_WhenItemUsedUp_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.ItemExpired, null);
+            Interaction instance = new(InteractionResult.ItemExpired, null);
 
             var result = instance.Description;
 
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Assets.Interaction
         [TestMethod]
         public void GivenConstructor_WhenItemAndTargetExpired_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.ItemAndTargetExpired, null);
+            Interaction instance = new(InteractionResult.ItemAndTargetExpired, null);
 
             var result = instance.Description;
 
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Assets.Interaction
         [TestMethod]
         public void GivenConstructor_WhenNeitherItemOrTargetExpired_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.NeitherItemOrTargetExpired, null);
+            Interaction instance = new(InteractionResult.NeitherItemOrTargetExpired, null);
 
             var result = instance.Description;
 
@@ -49,7 +49,7 @@ namespace NetAF.Tests.Assets.Interaction
         [TestMethod]
         public void GivenConstructor_WhenTargetExpired_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.TargetExpired, null);
+            Interaction instance = new(InteractionResult.TargetExpired, null);
 
             var result = instance.Description;
 

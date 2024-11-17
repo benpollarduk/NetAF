@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NetAF.Tests.Assets
@@ -15,7 +14,7 @@ namespace NetAF.Tests.Assets
 
             var result = item.Interact(item2);
 
-            Assert.AreEqual(InteractionEffect.NeitherItemOrTargetExpired, result.Effect);
+            Assert.AreEqual(InteractionResult.NeitherItemOrTargetExpired, result.Result);
         }
     }
 }

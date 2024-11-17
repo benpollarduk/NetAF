@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Examples.Assets.Items;
 using NetAF.Utilities;
 
@@ -25,9 +24,9 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Items
             var conchShell = new Item(Name, Description, true, interaction: item =>
             {
                 if (item.Identifier.Equals(Knife.Name))
-                    return new(InteractionEffect.TargetExpired, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
+                    return new(InteractionResult.TargetExpired, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
 
-                return new(InteractionEffect.NeitherItemOrTargetExpired, item);
+                return new(InteractionResult.NeitherItemOrTargetExpired, item);
             });
 
             return conchShell;

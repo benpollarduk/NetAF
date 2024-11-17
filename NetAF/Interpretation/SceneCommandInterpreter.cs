@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
