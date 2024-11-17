@@ -1,10 +1,10 @@
-﻿using NetAF.Assets.Interaction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.Global;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Assets.Characters;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Global
 {

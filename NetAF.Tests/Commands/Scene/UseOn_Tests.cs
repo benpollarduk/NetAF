@@ -1,11 +1,11 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.Scene;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Scene
 {

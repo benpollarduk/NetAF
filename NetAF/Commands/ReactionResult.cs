@@ -1,4 +1,4 @@
-﻿namespace NetAF.Assets.Interaction
+﻿namespace NetAF.Commands
 {
     /// <summary>
     /// Enumeration of reaction results.

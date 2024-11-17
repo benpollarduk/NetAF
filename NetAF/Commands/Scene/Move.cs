@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Assets.Locations;
+﻿using NetAF.Assets.Locations;
 
 namespace NetAF.Commands.Scene
 {

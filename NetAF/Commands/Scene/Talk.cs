@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Scene

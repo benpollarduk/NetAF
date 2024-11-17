@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Rendering;
+﻿using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
 {

@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Assets
+﻿namespace NetAF.Assets
 {
     /// <summary>
     /// Represents the result of an examination.

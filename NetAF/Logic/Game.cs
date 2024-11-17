@@ -5,6 +5,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;

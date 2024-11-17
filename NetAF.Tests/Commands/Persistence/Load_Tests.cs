@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
@@ -9,6 +8,7 @@ using System.IO;
 using NetAF.Commands.Persistence;
 using NetAF.Persistence;
 using NetAF.Persistence.Json;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Persistence
 {

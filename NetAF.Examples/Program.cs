@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Persistence;

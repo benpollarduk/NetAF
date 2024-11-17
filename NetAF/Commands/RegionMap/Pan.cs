@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Logic.Modes;
 

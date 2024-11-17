@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Logic.Modes;
+﻿using NetAF.Logic.Modes;
 using System.Collections.Generic;
 using System.Linq;
 

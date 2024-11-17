@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Commands.Global
+﻿namespace NetAF.Commands.Global
 {
     /// <summary>
     /// Represents the Exit command.

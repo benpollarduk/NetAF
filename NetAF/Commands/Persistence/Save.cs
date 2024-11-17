@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using System.IO;
+﻿using System.IO;
 using NetAF.Persistence;
 using NetAF.Persistence.Json;
 
