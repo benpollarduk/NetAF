@@ -19,7 +19,6 @@ namespace NetAF.Logic.Modes
         /// Render the current state of a game.
         /// </summary>
         /// <param name="game">The game.</param>
-        /// <returns>The render state.</returns>
-        RenderState Render(Game game);
+        void Render(Game game);
     }
 }

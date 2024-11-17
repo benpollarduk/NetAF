@@ -1,9 +1,9 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.Scene;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Scene
 {
@@ -27,7 +27,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenCanMove_WhenInvoke_ThenInform()
+        public void GivenCanMove_WhenInvoke_ThenSilent()
         {
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Inform, result.Result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
     }
 }

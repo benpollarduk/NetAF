@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -32,8 +31,8 @@ namespace NetAF.Assets.Characters
         /// Interact with a specified item.
         /// </summary>
         /// <param name="item">The item to interact with.</param>
-        /// <returns>The result of the interaction.</returns>
-        protected virtual InteractionResult InteractWithItem(Item item)
+        /// <returns>The interaction.</returns>
+        protected virtual Interaction InteractWithItem(Item item)
         {
             return Interaction.Invoke(item);
         }
@@ -103,8 +102,8 @@ namespace NetAF.Assets.Characters
         /// Interact with an item.
         /// </summary>
         /// <param name="item">The item to interact with.</param>
-        /// <returns>The result of the interaction.</returns>
-        public InteractionResult Interact(Item item)
+        /// <returns>The interaction.</returns>
+        public Interaction Interact(Item item)
         {
             return InteractWithItem(item);
         }

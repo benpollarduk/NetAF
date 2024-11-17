@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Assets.Attributes;
-using NetAF.Assets.Interaction;
 using NetAF.Commands;
 using NetAF.Serialization.Assets;
 

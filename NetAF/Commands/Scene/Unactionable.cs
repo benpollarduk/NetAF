@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Commands.Scene
+﻿namespace NetAF.Commands.Scene
 {
     /// <summary>
     /// Represents the Unactionable command.

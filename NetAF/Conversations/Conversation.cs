@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Serialization.Assets;
 using NetAF.Serialization;
+using NetAF.Commands;
 
 namespace NetAF.Conversations
 {

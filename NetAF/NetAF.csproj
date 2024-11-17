@@ -24,6 +24,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Assets\Interaction\**" />
+    <EmbeddedResource Remove="Assets\Interaction\**" />
+    <None Remove="Assets\Interaction\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>NetAF.Tests</_Parameter1>
     </AssemblyAttribute>

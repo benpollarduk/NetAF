@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Commands;
+﻿using NetAF.Commands;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
@@ -54,7 +53,7 @@ namespace NetAF.Assets
             Description = description;
             IsTakeable = isTakeable;
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionResult.NeitherItemOrTargetExpired, i));
             
             if (examination != null)
                 Examination = examination;
@@ -68,8 +67,8 @@ namespace NetAF.Assets
         /// Interact with an item.
         /// </summary>
         /// <param name="item">The item to interact with.</param>
-        /// <returns>The result of the interaction.</returns>
-        public InteractionResult Interact(Item item)
+        /// <returns>The interaction.</returns>
+        public Interaction Interact(Item item)
         {
             return Interaction.Invoke(item);
         }

@@ -26,8 +26,7 @@ namespace NetAF.Logic.Modes
         /// Render the current state of a game.
         /// </summary>
         /// <param name="game">The game.</param>
-        /// <returns>The render state.</returns>
-        public RenderState Render(Game game)
+        public void Render(Game game)
         {
             List<CommandHelp> commands = [];
             commands.AddRange(Interpreter.GetContextualCommandHelp(game));
@@ -35,7 +34,6 @@ namespace NetAF.Logic.Modes
 
             var frame = game.Configuration.FrameBuilders.SceneFrameBuilder.Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, game.Configuration.DisplayCommandListInSceneFrames ? [.. commands] : null, game.Configuration.SceneMapKeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
-            return RenderState.Completed;
         }
 
         #endregion

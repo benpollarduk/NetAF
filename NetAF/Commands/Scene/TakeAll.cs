@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Text;
-using NetAF.Assets.Interaction;
 
 namespace NetAF.Commands.Scene
 {

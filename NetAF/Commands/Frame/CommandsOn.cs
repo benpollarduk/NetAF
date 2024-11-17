@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Commands.Frame
+﻿namespace NetAF.Commands.Frame
 {
     /// <summary>
     /// Represents the CommandsOn command.

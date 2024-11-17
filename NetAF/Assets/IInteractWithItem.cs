@@ -1,4 +1,4 @@
-﻿namespace NetAF.Assets.Interaction
+﻿namespace NetAF.Assets
 {
     /// <summary>
     /// Represents any object that can interact with an item.
@@ -9,7 +9,7 @@
         /// Interact with an item.
         /// </summary>
         /// <param name="item">The item to interact with.</param>
-        /// <returns>The result of the interaction.</returns>
-        InteractionResult Interact(Item item);
+        /// <returns>The interaction.</returns>
+        Interaction Interact(Item item);
     }
 }

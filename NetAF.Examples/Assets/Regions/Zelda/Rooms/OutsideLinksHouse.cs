@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
 using NetAF.Examples.Assets.Regions.Zelda.Items;
 using NetAF.Examples.Assets.Regions.Zelda.NPCs;
@@ -36,13 +35,13 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
                         exit.Unlock();
 
                     room.RemoveItem(door);
-                    return new(InteractionEffect.ItemUsedUp, item, "The Tail Key fits perfectly in the lock, you turn it and the door swings open, revealing a gaping cave mouth...");
+                    return new(InteractionResult.ItemExpired, item, "The Tail Key fits perfectly in the lock, you turn it and the door swings open, revealing a gaping cave mouth...");
                 }
 
                 if (Sword.Name.EqualsExaminable(item))
-                    return new(InteractionEffect.NoEffect, item, "Clang clang!");
+                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "Clang clang!");
 
-                return new(InteractionEffect.NoEffect, item);
+                return new(InteractionResult.NeitherItemOrTargetExpired, item);
             }).Instantiate();
 
             room.AddItem(door);

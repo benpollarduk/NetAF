@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Commands;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

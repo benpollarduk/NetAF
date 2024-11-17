@@ -25,12 +25,10 @@ namespace NetAF.Logic.Modes
         /// Render the current state of a game.
         /// </summary>
         /// <param name="game">The game.</param>
-        /// <returns>The render state.</returns>
-        public RenderState Render(Game game)
+        public void Render(Game game)
         {
             var frame = game.Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", string.Empty, commands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
-            return RenderState.Completed;
         }
 
         #endregion

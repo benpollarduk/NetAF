@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Extensions;
 using NetAF.Utilities;
 
@@ -25,9 +24,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
             return new(Name, Description, interaction: item =>
             {
                 if (item != null && CoffeeMug.Name.EqualsIdentifier(item.Identifier))
-                    return new(InteractionEffect.SelfContained, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
+                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "You put some instant coffee granuals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
 
-                return new(InteractionEffect.NoEffect, item);
+                return new(InteractionResult.NeitherItemOrTargetExpired, item);
             });
         }
 

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
 using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
@@ -25,15 +25,11 @@ namespace NetAF.Logic
         #region Fields
 
         private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
+        private GameState state;
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Get or set the current state.
-        /// </summary>
-        private GameState State { get; set; }
 
         /// <summary>
         /// Get the player.
@@ -127,15 +123,15 @@ namespace NetAF.Logic
         internal void Execute()
         {
             // if the game is in an active state don't re-execute
-            switch (State)
+            switch (state)
             {
                 case GameState.Active:
                 case GameState.Finishing:
                     return;
             }
 
-            // enter the game
-            Enter();
+            // game is active
+            state = GameState.Active;
 
             // setup the adapter for this game
             Configuration.Adapter.Setup(this);
@@ -149,7 +145,7 @@ namespace NetAF.Logic
             do
             {
                 // always render the current mode
-                RenderCurrentMode();
+                Mode.Render(this);
 
                 // get the input
                 var input = GetInput();
@@ -173,10 +169,10 @@ namespace NetAF.Logic
                 if (CheckForGameEnd(EndConditions, out endMode))
                     End();
             }
-            while (State != GameState.Finishing);
+            while (state != GameState.Finishing);
 
             // render the last mode
-            RenderCurrentMode();
+            Mode.Render(this);
 
             // wait for acknowledge
             GetInput();
@@ -186,33 +182,14 @@ namespace NetAF.Logic
             {
                 // set and render the end mode
                 ChangeMode(endMode);
-                RenderCurrentMode();
+                Mode.Render(this);
 
                 // wait for acknowledge
                 GetInput();
             }
 
             // finished execution
-            State = GameState.Finished;
-        }
-
-        /// <summary>
-        /// Render the current mode.
-        /// </summary>
-        private void RenderCurrentMode()
-        {
-            // perform the render
-            var result = Mode.Render(this);
-
-            // if this was aborted by the mode
-            if (result == RenderState.Aborted)
-            {
-                // revert back to scene mode
-                ChangeMode(new SceneMode());
-
-                // render
-                Mode.Render(this);
-            }
+            state = GameState.Finished;
         }
 
         /// <summary>
@@ -286,9 +263,8 @@ namespace NetAF.Logic
                     // wait for acknowledge
                     while (!Configuration.Adapter.WaitForAcknowledge())
                     {
-                        // something other was entered, render again unless that was aborted
-                        if (Mode.Render(this) != RenderState.Aborted)
-                            break;
+                        // something other was entered, render again
+                        Mode.Render(this);
                     }
 
                     // acknowledge complete
@@ -368,19 +344,11 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Enter the game.
-        /// </summary>
-        private void Enter()
-        {
-            State = GameState.Active;
-        }
-
-        /// <summary>
         /// End the game.
         /// </summary>
-        internal void End()
+        public void End()
         {
-            State = GameState.Finishing;
+            state = GameState.Finishing;
         }
 
         /// <summary>

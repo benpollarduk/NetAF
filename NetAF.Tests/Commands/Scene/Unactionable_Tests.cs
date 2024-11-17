@@ -1,6 +1,6 @@
-﻿using NetAF.Assets.Interaction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands.Scene;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Scene
 {

@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Assets.Interaction;
 using NetAF.Utilities;
 
 namespace NetAF.Examples.Assets.Regions.Zelda.Items

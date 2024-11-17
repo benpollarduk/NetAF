@@ -1,7 +1,7 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Commands.Global;
+﻿using NetAF.Commands.Global;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Global
 {

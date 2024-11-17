@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Commands;
+﻿using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -41,7 +40,7 @@ namespace NetAF.Assets.Characters
             Description = description;
             Conversation = conversation;
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionResult.NeitherItemOrTargetExpired, i));
 
             if (examination != null)
                 Examination = examination;

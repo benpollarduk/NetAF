@@ -1,6 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-
-namespace NetAF.Commands
+﻿namespace NetAF.Commands
 {
     /// <summary>
     /// Represents a command.

@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic.Modes;
@@ -7,6 +6,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.RegionMap
 {

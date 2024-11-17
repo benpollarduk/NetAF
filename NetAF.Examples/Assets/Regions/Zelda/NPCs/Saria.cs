@@ -1,5 +1,5 @@
-﻿using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
+﻿using NetAF.Assets;
+using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
@@ -59,13 +59,12 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                 {
                     saria.RemoveItem(key);
                     room.AddItem(key);
-                    item.IsPlayerVisible = false;
-                    return new(InteractionEffect.SelfContained, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
+                    return new(InteractionResult.ItemExpired, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
                 }
 
                 if (Shield.Name.EqualsIdentifier(item.Identifier))
                 {
-                    return new(InteractionEffect.NoEffect, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
+                    return new(InteractionResult.NeitherItemOrTargetExpired, item, $"{saria.Identifier.Name} looks at your shield, but seems pretty unimpressed.");
                 }
 
                 if (Sword.Name.EqualsIdentifier(item.Identifier) && saria.IsAlive)
@@ -73,15 +72,15 @@ namespace NetAF.Examples.Assets.Regions.Zelda.NPCs
                     saria.Kill();
 
                     if (!saria.HasItem(key))
-                        return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
+                        return new(InteractionResult.NeitherItemOrTargetExpired, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead.");
 
                     saria.RemoveItem(key);
                     room.AddItem(key);
 
-                    return new(InteractionEffect.SelfContained, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
+                    return new(InteractionResult.NeitherItemOrTargetExpired, item, $"You strike {saria.Identifier.Name} in the face with the sword and she falls down dead. When she fell you saw something drop to out of her hand, it looked like a key...");
                 }
 
-                return new(InteractionEffect.NoEffect, item);
+                return new(InteractionResult.NeitherItemOrTargetExpired, item);
             });
 
             saria.AddItem(new TailKey().Instantiate());

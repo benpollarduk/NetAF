@@ -1,5 +1,4 @@
-﻿using NetAF.Assets.Interaction;
-using NetAF.Conversations;
+﻿using NetAF.Conversations;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Conversation

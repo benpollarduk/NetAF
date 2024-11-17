@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Interaction;
+﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Examples.Assets.Regions.Flat.Items;
 using NetAF.Extensions;
@@ -26,9 +26,9 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             var room = new Room(Name, Description, [new Exit(Direction.South), new Exit(Direction.East)], interaction: item =>
             {
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
-                    return new(InteractionEffect.NoEffect, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
+                    return new(InteractionResult.NeitherItemOrTargetExpired, item, "Playing guitar in the kitchen is pretty stupid don't you think?");
 
-                return new(InteractionEffect.NoEffect, item);
+                return new(InteractionResult.NeitherItemOrTargetExpired, item);
             });
 
             room.AddItem(new HamsterCage().Instantiate());

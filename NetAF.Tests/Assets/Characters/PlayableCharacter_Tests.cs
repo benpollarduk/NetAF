@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Interaction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NetAF.Tests.Assets.Characters
@@ -60,26 +59,6 @@ namespace NetAF.Tests.Assets.Characters
             var result = pc.HasItem(item);
 
             Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GivenUseItem_WhenFatalEffect_ThenIsAliveIsFalse()
-        {
-            var item = new Item("Test", string.Empty);
-            var pc = new PlayableCharacter(string.Empty, string.Empty, interaction: i =>
-            {
-                if (i == null)
-                    return new InteractionResult(InteractionEffect.NoEffect, null);
-
-                if (i.Identifier.Name == "Test")
-                    return new InteractionResult(InteractionEffect.FatalEffect, i, "");
-
-                return new InteractionResult(InteractionEffect.NoEffect, i);
-            });
-
-            pc.UseItem(item, pc);
-
-            Assert.IsFalse(pc.IsAlive);
         }
     }
 }
