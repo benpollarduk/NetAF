@@ -13,6 +13,8 @@ A *Game* encapsulates all assets and provides top level logic. When the *Game* i
 * When a *GameMode* is rendered a *IFrameBuilder* can be used to generate an instance of *IFrame*.
 * An instace of *IFrame* can be rendered on to an *IIOAdapter* which will display the *IFrame* to the user.
 
+![Input-Parsing](../../Architecture/input-parsing-sequence-diagram.png)
+
 ## Extensibility
 NetAF is designed to be extensible.
 
