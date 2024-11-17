@@ -34,14 +34,6 @@ A PlayableCharacter can lose an item with the **RemoveItem** method.
 player.RemoveItem(mallet);
 ```
 
-A PlayableCharacter can use an item on another asset:
-
-```csharp
-var trapDoor = new Exit(Direction.Down);
-var mallet = new Item("Mallet", "A large mallet.");
-player.UseItem(mallet, trapDoor);
-```
-
 A PlayableCharacter can give an item to a non-playable character.
 
 ```csharp

@@ -42,12 +42,9 @@ namespace NetAF.Commands.Scene
             containers.Add(game.Player);
             containers.Add(game.Overworld.CurrentRegion.CurrentRoom);
             containers.AddRange(game.Overworld.CurrentRegion.CurrentRoom.Characters ?? []);
-
-            foreach (var container in containers)
-            {
-                if (container.Items.Contains(item))
-                    container.RemoveItem(item);
-            }
+            
+            foreach (var container in from IItemContainer container in containers where container.Items.Contains(item) select container)
+                container.RemoveItem(item);
         }
 
         /// <summary>
@@ -62,11 +59,8 @@ namespace NetAF.Commands.Scene
 
             if (target is Item item)
             {
-                foreach (var npc in game.Overworld.CurrentRegion.CurrentRoom.Characters ?? [])
-                {
-                    if (npc.HasItem(item))
-                        npc.RemoveItem(item);
-                }
+                foreach (var npc in from NonPlayableCharacter npc in game.Overworld.CurrentRegion.CurrentRoom.Characters ?? [] where npc.HasItem(item) select npc)
+                    npc.RemoveItem(item);
 
                 if (game.Player.HasItem(item))
                     game.Player.RemoveItem(item);

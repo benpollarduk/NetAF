@@ -82,20 +82,5 @@ namespace NetAF.Assets.Characters
         }
 
         #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Use an item.
-        /// </summary>
-        /// <param name="item">The item to use.</param>
-        /// <param name="targetObject">A target object to use the item on.</param>
-        /// <returns>The interaction.</returns>
-        public Interaction UseItem(Item item, IInteractWithItem targetObject)
-        {
-            return targetObject.Interact(item);
-        }
-
-        #endregion
     }
 }
