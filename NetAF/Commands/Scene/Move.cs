@@ -9,15 +9,6 @@ namespace NetAF.Commands.Scene
     /// <param name="direction">The direction to move.</param>
     public sealed class Move(Direction direction) : ICommand
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the string for successful moves.
-        /// </summary>
-        public const string SuccessfulMove = "Moved.";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -65,7 +56,7 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "No game specified.");
 
             if (game.Overworld.CurrentRegion.Move(direction))
-                return new(ReactionResult.Inform, SuccessfulMove);
+                return new(ReactionResult.Silent, $"Moved {direction}.");
 
             return new(ReactionResult.Error, $"Could not move {direction}.");
         }

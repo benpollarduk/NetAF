@@ -8,15 +8,6 @@ namespace NetAF.Commands.Global
     /// </summary>
     public sealed class End : ICommand
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the string for successful ended.
-        /// </summary>
-        public const string SuccessfulEnd = "Ended.";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -39,7 +30,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.ChangeMode(new SceneMode());
-            return new(ReactionResult.Inform, SuccessfulEnd);
+            return new(ReactionResult.Silent, "Ended.");
         }
 
         #endregion

@@ -11,15 +11,6 @@ namespace NetAF.Commands.RegionMap
     /// <param name="direction">The direction to pan.</param>
     public sealed class Pan(Direction direction) : ICommand
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the string for successful pan.
-        /// </summary>
-        public const string SuccessfulPan = "Panned.";
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -104,7 +95,7 @@ namespace NetAF.Commands.RegionMap
                 if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, newPosition))
                 {
                     regionMapMode.FocusPosition = newPosition;
-                    return new(ReactionResult.Silent, SuccessfulPan);
+                    return new(ReactionResult.Silent, $"Panned {direction}.");
                 }
                 else
                 {
