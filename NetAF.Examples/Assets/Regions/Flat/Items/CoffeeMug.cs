@@ -26,10 +26,10 @@ namespace NetAF.Examples.Assets.Regions.Flat.Items
             {
                 if (Kettle.Name.EqualsIdentifier(item.Identifier))
                 {
-                    return new(InteractionEffect.SelfContained, item, "You put some instant coffee graduals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
+                    return new(InteractionEffect.NeitherItemOrTargetExpired, item, "You put some instant coffee graduals into the mug and add some freshly boiled water from the Kettle. The coffee smells amazing!");
                 }
 
-                return new(InteractionEffect.NoEffect, item);
+                return new(InteractionEffect.NeitherItemOrTargetExpired, item);
             });
         }
 

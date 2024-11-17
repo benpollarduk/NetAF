@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NetAF.Assets;
+using NetAF.Assets.Characters;
 using NetAF.Assets.Interaction;
+using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
 {
@@ -22,6 +26,56 @@ namespace NetAF.Commands.Scene
         /// Get the command help for on.
         /// </summary>
         public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on another item or character");
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Handle an item expiring.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="item">The item that expired.</param>
+        private static void ItemExpired(Game game, Item item)
+        {
+            List<IItemContainer> containers = [];
+
+            containers.Add(game.Player);
+            containers.Add(game.Overworld.CurrentRegion.CurrentRoom);
+            containers.AddRange(game.Overworld.CurrentRegion.CurrentRoom.Characters ?? []);
+
+            foreach (var container in containers)
+            {
+                if (container.Items.Contains(item))
+                    container.RemoveItem(item);
+            }
+        }
+
+        /// <summary>
+        /// Handle a target expiring.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="target">The item that expired.</param>
+        private static void TargetExpired(Game game, IInteractWithItem target)
+        {
+            if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
+                game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(target);
+
+            if (target is Item item)
+            {
+                foreach (var npc in game.Overworld.CurrentRegion.CurrentRoom.Characters ?? [])
+                {
+                    if (npc.HasItem(item))
+                        npc.RemoveItem(item);
+                }
+
+                if (game.Player.HasItem(item))
+                    game.Player.RemoveItem(item);
+            }
+
+            if (target is Character character)
+                character.Kill();
+        }
 
         #endregion
 
@@ -50,24 +104,17 @@ namespace NetAF.Commands.Scene
 
             switch (result.Effect)
             {
-                case InteractionEffect.ItemUsedUp:
-
-                    if (game.Overworld.CurrentRegion.CurrentRoom.ContainsItem(item))
-                        game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
-                    else if (game.Player.HasItem(item))
-                        game.Player.RemoveItem(item);
-
+                case InteractionEffect.NeitherItemOrTargetExpired:
                     break;
-
-                case InteractionEffect.TargetUsedUp:
-
-                    if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
-                        game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(target);
-
+                case InteractionEffect.ItemExpired:
+                    ItemExpired(game, item);
                     break;
-
-                case InteractionEffect.NoEffect:
-                case InteractionEffect.SelfContained:
+                case InteractionEffect.TargetExpired:
+                    TargetExpired(game, target);
+                    break;
+                case InteractionEffect.ItemAndTargetExpired:
+                    ItemExpired(game, item);
+                    TargetExpired(game, target);
                     break;
                 default:
                     throw new NotImplementedException();

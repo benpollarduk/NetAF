@@ -54,7 +54,7 @@ namespace NetAF.Assets
             Description = description;
             IsTakeable = isTakeable;
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionEffect.NeitherItemOrTargetExpired, i));
             
             if (examination != null)
                 Examination = examination;

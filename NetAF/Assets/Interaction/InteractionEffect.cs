@@ -6,24 +6,20 @@
     public enum InteractionEffect
     {
         /// <summary>
-        /// No effect to the interaction on either the item or the target.
+        /// Neither the item or the target expired.
         /// </summary>
-        NoEffect = 0,
+        NeitherItemOrTargetExpired = 0,
         /// <summary>
-        /// Item was used up.
+        /// The item expired.
         /// </summary>
-        ItemUsedUp,
+        ItemExpired,
         /// <summary>
-        /// A fatal effect to the interaction.
+        /// The target expired.
         /// </summary>
-        FatalEffect,
+        TargetExpired,
         /// <summary>
-        /// The target was used up.
+        /// The item and the target expired.
         /// </summary>
-        TargetUsedUp,
-        /// <summary>
-        /// Any other self contained effect.
-        /// </summary>
-        SelfContained
+        ItemAndTargetExpired
     }
 }

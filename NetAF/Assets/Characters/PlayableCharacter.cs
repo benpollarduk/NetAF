@@ -76,7 +76,7 @@ namespace NetAF.Assets.Characters
             CanConverse = canConverse;
             Items = items ?? [];
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionEffect.NeitherItemOrTargetExpired, i));
 
             if (examination != null)
                 Examination = examination;
@@ -94,12 +94,7 @@ namespace NetAF.Assets.Characters
         /// <returns>The result of the items usage.</returns>
         public InteractionResult UseItem(Item item, IInteractWithItem targetObject)
         {
-            var result = targetObject.Interact(item);
-
-            if (result.Effect == InteractionEffect.FatalEffect)
-                IsAlive = false;
-
-            return result;
+            return targetObject.Interact(item);
         }
 
         #endregion

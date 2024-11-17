@@ -90,7 +90,7 @@ namespace NetAF.Assets.Locations
             Exits = exits ?? [];
             Items = items ?? [];
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionEffect.NeitherItemOrTargetExpired, i));
 
             if (examination != null)
                 Examination = examination;

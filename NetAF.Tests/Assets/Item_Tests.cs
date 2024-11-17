@@ -8,14 +8,14 @@ namespace NetAF.Tests.Assets
     public class Item_Tests
     {
         [TestMethod]
-        public void Given2Items_WhenInteract_ThenNoEffect()
+        public void Given2Items_WhenInteract_ThenNeitherItemOrTargetExpired()
         {
             var item = new Item(string.Empty, string.Empty);
             var item2 = new Item(string.Empty, string.Empty);
 
             var result = item.Interact(item2);
 
-            Assert.AreEqual(InteractionEffect.NoEffect, result.Effect);
+            Assert.AreEqual(InteractionEffect.NeitherItemOrTargetExpired, result.Effect);
         }
     }
 }

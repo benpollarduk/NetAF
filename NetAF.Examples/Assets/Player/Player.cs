@@ -27,18 +27,18 @@ namespace NetAF.Examples.Assets.Player
             var player = new PlayableCharacter(Name, Description, [new Knife().Instantiate()], interaction: i =>
             {
                 if (i == null)
-                    return new(InteractionEffect.NoEffect, null);
+                    return new(InteractionEffect.NeitherItemOrTargetExpired, null);
 
                 if (Knife.Name.EqualsExaminable(i))
-                    return new(InteractionEffect.FatalEffect, i, "You slash wildly at your own throat. You are dead.");
+                    return new(InteractionEffect.TargetExpired, i, "You slash wildly at your own throat. You are dead.");
 
                 if (CoffeeMug.Name.EqualsIdentifier(i.Identifier))
-                    return new(InteractionEffect.NoEffect, i, "If there was some coffee in the mug you could drink it.");
+                    return new(InteractionEffect.NeitherItemOrTargetExpired, i, "If there was some coffee in the mug you could drink it.");
 
                 if (Guitar.Name.EqualsIdentifier(i.Identifier))
-                    return new(InteractionEffect.NoEffect, i, "You bust out some Bad Religion. Cracking, shame the guitar isn't plugged in to an amplified though...");
+                    return new(InteractionEffect.NeitherItemOrTargetExpired, i, "You bust out some Bad Religion. Cracking, shame the guitar isn't plugged in to an amplified though...");
 
-                return new(InteractionEffect.NoEffect, i);
+                return new(InteractionEffect.NeitherItemOrTargetExpired, i);
             });
 
             return player;

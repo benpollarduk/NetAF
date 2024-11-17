@@ -35,12 +35,11 @@ namespace NetAF.Assets.Interaction
 
             Description = effect switch
             {
-                InteractionEffect.FatalEffect => "There was a fatal effect.",
-                InteractionEffect.ItemUsedUp => "The item was used up.",
-                InteractionEffect.NoEffect => "There was no effect.",
-                InteractionEffect.SelfContained => "The effect was self contained.",
-                InteractionEffect.TargetUsedUp => "The target was used up.",
-                _ => throw new NotImplementedException(),
+                InteractionEffect.NeitherItemOrTargetExpired => "There was no effect.",
+                InteractionEffect.ItemExpired => "The item expired.",
+                InteractionEffect.TargetExpired => "The target expired.",
+                InteractionEffect.ItemAndTargetExpired => "Both the item and target expired.",
+                _ => throw new NotImplementedException($"No implementation for ${effect}."),
             };
         }
 

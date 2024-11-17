@@ -1,7 +1,4 @@
-﻿using NetAF.Commands.Global;
-using NetAF.Commands.Scene;
-using NetAF.Extensions;
-using NetAF.Interpretation;
+﻿using NetAF.Interpretation;
 
 namespace NetAF.Logic.Modes
 {

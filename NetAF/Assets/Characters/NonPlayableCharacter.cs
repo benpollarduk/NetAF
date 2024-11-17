@@ -41,7 +41,7 @@ namespace NetAF.Assets.Characters
             Description = description;
             Conversation = conversation;
             Commands = commands ?? [];
-            Interaction = interaction ?? (i => new(InteractionEffect.NoEffect, i));
+            Interaction = interaction ?? (i => new(InteractionEffect.NeitherItemOrTargetExpired, i));
 
             if (examination != null)
                 Examination = examination;

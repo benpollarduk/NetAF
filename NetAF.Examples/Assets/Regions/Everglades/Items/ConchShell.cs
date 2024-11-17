@@ -24,11 +24,10 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Items
         {
             var conchShell = new Item(Name, Description, true, interaction: item =>
             {
-                return item.Identifier.IdentifiableName switch
-                {
-                    Knife.Name => new(InteractionEffect.FatalEffect, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble."),
-                    _ => new(InteractionEffect.NoEffect, item),
-                };
+                if (item.Identifier.Equals(Knife.Name))
+                    return new(InteractionEffect.TargetExpired, item, "You slash at the conch shell and it shatters into tiny pieces. Without the conch shell you are well and truly in trouble.");
+
+                return new(InteractionEffect.NeitherItemOrTargetExpired, item);
             });
 
             return conchShell;

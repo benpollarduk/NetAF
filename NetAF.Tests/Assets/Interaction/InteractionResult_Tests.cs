@@ -9,7 +9,7 @@ namespace NetAF.Tests.Assets.Interaction
         [TestMethod]
         public void GivenConstructor_WhenExplicitDescription_ThenDescriptionIsAsSpecified()
         {
-            var instance = new InteractionResult(InteractionEffect.NoEffect, null, "A");
+            var instance = new InteractionResult(InteractionEffect.NeitherItemOrTargetExpired, null, "A");
 
             var result = instance.Description;
 
@@ -17,29 +17,29 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenFatal_ThenGeneratedDescriptionIsCorrect()
-        {
-            var instance = new InteractionResult(InteractionEffect.FatalEffect, null);
-
-            var result = instance.Description;
-
-            Assert.AreEqual("There was a fatal effect.", result);
-        }
-
-        [TestMethod]
         public void GivenConstructor_WhenItemUsedUp_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.ItemUsedUp, null);
+            var instance = new InteractionResult(InteractionEffect.ItemExpired, null);
 
             var result = instance.Description;
 
-            Assert.AreEqual("The item was used up.", result);
+            Assert.AreEqual("The item expired.", result);
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenNoEffect_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenItemAndTargetExpired_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.NoEffect, null);
+            var instance = new InteractionResult(InteractionEffect.ItemAndTargetExpired, null);
+
+            var result = instance.Description;
+
+            Assert.AreEqual("Both the item and target expired.", result);
+        }
+
+        [TestMethod]
+        public void GivenConstructor_WhenNeitherItemOrTargetExpired_ThenGeneratedDescriptionIsCorrect()
+        {
+            var instance = new InteractionResult(InteractionEffect.NeitherItemOrTargetExpired, null);
 
             var result = instance.Description;
 
@@ -47,23 +47,13 @@ namespace NetAF.Tests.Assets.Interaction
         }
 
         [TestMethod]
-        public void GivenConstructor_WhenSelfContained_ThenGeneratedDescriptionIsCorrect()
+        public void GivenConstructor_WhenTargetExpired_ThenGeneratedDescriptionIsCorrect()
         {
-            var instance = new InteractionResult(InteractionEffect.SelfContained, null);
+            var instance = new InteractionResult(InteractionEffect.TargetExpired, null);
 
             var result = instance.Description;
 
-            Assert.AreEqual("The effect was self contained.", result);
-        }
-
-        [TestMethod]
-        public void GivenConstructor_WhenTargetUsedUp_ThenGeneratedDescriptionIsCorrect()
-        {
-            var instance = new InteractionResult(InteractionEffect.TargetUsedUp, null);
-
-            var result = instance.Description;
-
-            Assert.AreEqual("The target was used up.", result);
+            Assert.AreEqual("The target expired.", result);
         }
     }
 }
