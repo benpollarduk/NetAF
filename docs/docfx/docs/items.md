@@ -33,7 +33,7 @@ Item bomb = new("Bomb", "A bomb", commands:
 
 ## Interaction
 
-Interactions can be set up between different assets in the game. The **InteractionResult** contains the result of the interaction, and allows the game to react to the interaction.
+Interactions can be set up between different assets in the game. The **Interaction** contains the result of the interaction, and allows the game to react to the interaction.
 
 ```csharp
 var dartsBoard = new Item("Darts board", "A darts board.");
@@ -41,8 +41,8 @@ var dartsBoard = new Item("Darts board", "A darts board.");
 var dart = new Item("Dart", "A dart", interaction: item =>
 {
     if (item == dartsBoard)
-        return new InteractionResult(InteractionEffect.SelfContained, item, "The dart stuck in the darts board.");
+        return new Interaction(InteractionResult.NeitherItemOrTargetExpired, item, "The dart stuck in the darts board.");
 
-     return new InteractionResult(InteractionEffect.NoEffect, item);
+     return new Interaction(InteractionResult.NeitherItemOrTargetExpired, item);
 });
 ```
