@@ -20,7 +20,6 @@ namespace NetAF.Tests
                                                             new CustomCommandInterpreter());
 
         public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
-        public string ErrorPrefix { get; set; } = "Oops";
         public bool DisplayCommandListInSceneFrames { get; set; } = true;
         public KeyType SceneMapKeyType { get; set; } = KeyType.Dynamic;
         public IIOAdapter Adapter { get; private set; } = adapter;

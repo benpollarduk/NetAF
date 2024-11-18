@@ -153,17 +153,8 @@ namespace NetAF.Logic
                 // process the input
                 var reaction = ProcessInput(input);
 
-                // if the reaction should be displayed
-                if (reaction.Result != ReactionResult.Silent)
-                {
-                    // display the reaction now
-                    DisplayReaction(reaction);
-                }
-                else if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
-                {
-                    // revert back to scene mode as the command didn't change the mode and the current mode is information, essentially the mode has expired
-                    ChangeMode(new SceneMode());
-                }
+                // handle the reaction
+                HandleReaction(reaction);
 
                 // check if the game has ended
                 if (CheckForGameEnd(EndConditions, out endMode))
@@ -190,6 +181,25 @@ namespace NetAF.Logic
 
             // finished execution
             state = GameState.Finished;
+        }
+
+        /// <summary>
+        /// Handle a reaction.
+        /// </summary>
+        /// <param name="reaction">The reaction to handle.</param>
+        private void HandleReaction(Reaction reaction)
+        {
+            // check if needed to 
+            if (reaction.Result == ReactionResult.Error || reaction.Result == ReactionResult.Inform)
+            {
+                // display the reaction
+                ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
+            }
+            else if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
+            {
+                // revert back to scene mode as the command didn't change the mode and the current mode information, essentially the mode has expired
+                ChangeMode(new SceneMode());
+            }
         }
 
         /// <summary>
@@ -318,29 +328,6 @@ namespace NetAF.Logic
 
             // empty string
             return new(ReactionResult.Silent, string.Empty);
-        }
-
-        /// <summary>
-        /// Display a reaction.
-        /// </summary>
-        /// <param name="reaction">The reaction to handle.</param>
-        private void DisplayReaction(Reaction reaction)
-        {
-            switch (reaction.Result)
-            {
-                case ReactionResult.Error:
-                    var message = Configuration.ErrorPrefix + ": " + reaction.Description;
-                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, message));
-                    break;
-                case ReactionResult.Silent:
-                case ReactionResult.GameModeChanged:
-                    break;
-                case ReactionResult.Inform:
-                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
         }
 
         /// <summary>

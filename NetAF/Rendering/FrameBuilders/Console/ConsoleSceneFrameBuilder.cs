@@ -56,6 +56,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         public bool DisplayMessagesInIsolation { get; set; } = true;
 
+        /// <summary>
+        /// Get or set the command title.
+        /// </summary>
+        public string CommandTitle { get; set; } = "You can:";
+
         #endregion
 
         #region Implementation of ISceneFrameBuilder
@@ -119,7 +124,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 lastY = yStart;
 
                 gridStringBuilder.DrawHorizontalDivider(lastY + linePadding, BorderColor);
-                gridStringBuilder.DrawWrapped("You can:", leftMargin, lastY + 4, availableWidth, CommandsColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(CommandTitle, leftMargin, lastY + 4, availableWidth, CommandsColor, out _, out lastY);
 
                 var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
                 const int padding = 4;

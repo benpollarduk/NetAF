@@ -38,6 +38,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         public AnsiColor MessageColor { get; set; } = AnsiColor.White;
 
+        /// <summary>
+        /// Get or set the error message color.
+        /// </summary>
+        public AnsiColor ErrorMessageColor { get; set; } = AnsiColor.White;
+
         #endregion
 
         #region Implementation of IReactionFrameBuilder
@@ -47,8 +52,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         /// <param name="title">The title to display to the user.</param>
         /// <param name="message">The message to display to the user.</param>
+        /// <param name="isError">If the message is an error.</param>
         /// <param name="size">The size of the frame.</param>
-        public IFrame Build(string title, string message, Size size)
+        public IFrame Build(string title, string message, bool isError, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -67,8 +73,8 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 lastY += 3;
             }
 
-            gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY, availableWidth, MessageColor, out _, out _);
-
+            gridStringBuilder.DrawWrapped(message.EnsureFinishedSentence(), leftMargin, lastY, availableWidth, isError ? ErrorMessageColor : MessageColor, out _, out _);
+            
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
 

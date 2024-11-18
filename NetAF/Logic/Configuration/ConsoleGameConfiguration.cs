@@ -46,11 +46,6 @@ namespace NetAF.Logic.Configuration
         public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
 
         /// <summary>
-        /// Get or set the prefix to use when displaying errors.
-        /// </summary>
-        public string ErrorPrefix { get; set; } = "Oops";
-
-        /// <summary>
         /// Get or set if the command list is displayed in scene frames.
         /// </summary>
         public bool DisplayCommandListInSceneFrames { get; set; } = true;

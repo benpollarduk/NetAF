@@ -52,6 +52,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         public AnsiColor InputColor { get; set; } = AnsiColor.White;
 
+        /// <summary>
+        /// Get or set the command title.
+        /// </summary>
+        public string CommandTitle { get; set; } = "You can:";
+
         #endregion
 
         #region Implementation of IRegionMapFrameBuilder
@@ -90,7 +95,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 var requiredYToFitAllCommands = size.Height - commandSpace;
 
                 gridStringBuilder.DrawHorizontalDivider(requiredYToFitAllCommands, BorderColor);
-                gridStringBuilder.DrawWrapped("You can:", leftMargin, requiredYToFitAllCommands + 2, availableWidth, CommandsColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(CommandTitle, leftMargin, requiredYToFitAllCommands + 2, availableWidth, CommandsColor, out _, out lastY);
 
                 var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
                 const int padding = 4;

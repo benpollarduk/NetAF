@@ -58,6 +58,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// </summary>
         public AnsiColor InputColor { get; set; } = AnsiColor.White;
 
+        /// <summary>
+        /// Get or set the command title.
+        /// </summary>
+        public string CommandTitle { get; set; } = "You can:";
+
         #endregion
 
         #region StaticMethods
@@ -149,7 +154,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             if (contextualCommands?.Any() ?? false)
             {
                 gridStringBuilder.DrawHorizontalDivider(lastY + linePadding, BorderColor);
-                gridStringBuilder.DrawWrapped("You can:", leftMargin, lastY + 4, availableWidth, ResponseColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(CommandTitle, leftMargin, lastY + 4, availableWidth, ResponseColor, out _, out lastY);
 
                 var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
                 const int padding = 4;
