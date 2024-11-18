@@ -9,15 +9,28 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
     public class ConsoleReactionFrameBuilder_Tests
     {
         [TestMethod]
-        public void GivenDefaults_WhenBuild_ThenNoException()
+        public void GivenDefaultsAndRenderErrorMessage_WhenBuild_ThenNoException()
         {
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleReactionFrameBuilder(gridStringBuilder);
 
-                builder.Build(string.Empty, string.Empty, new Size(80, 50));
+                builder.Build(string.Empty, string.Empty, true, new Size(80, 50));
             });
         }
+
+        [TestMethod]
+        public void GivenDefaultsAndRenderNonMessage_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleReactionFrameBuilder(gridStringBuilder);
+
+                builder.Build(string.Empty, string.Empty, false, new Size(80, 50));
+            });
+        }
+
     }
 }

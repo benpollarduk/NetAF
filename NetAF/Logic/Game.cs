@@ -193,7 +193,7 @@ namespace NetAF.Logic
             if (reaction.Result == ReactionResult.Error || reaction.Result == ReactionResult.Inform)
             {
                 // display the reaction
-                ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction.Description));
+                ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction));
             }
             else if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
             {

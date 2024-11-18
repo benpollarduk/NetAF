@@ -8,6 +8,7 @@ using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic.Modes;
 using NetAF.Logic.Configuration;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Logic
 {
@@ -145,7 +146,7 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-                game.ChangeMode(new ReactionMode("Test", "Test"));
+                game.ChangeMode(new ReactionMode("Test", Reaction.Inform));
             });
         }
 

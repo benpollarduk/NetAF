@@ -1,4 +1,5 @@
-﻿using NetAF.Interpretation;
+﻿using NetAF.Commands;
+using NetAF.Interpretation;
 
 namespace NetAF.Logic.Modes
 {
@@ -6,9 +7,8 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for reaction.
     /// </summary>
     /// <param name="title">The title.</param>
-    /// <param name="message">The message.</param>
-    /// <param name="isError">If the message is an error..</param> 
-    public sealed class ReactionMode(string title, string message, bool isError) : IGameMode
+    /// <param name="reaction">The reaction.</param>
+    public sealed class ReactionMode(string title, Reaction reaction) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -28,7 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.ReactionModeFrameBuilder.Build(title, message, isError, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.ReactionModeFrameBuilder.Build(title, reaction.Description, reaction.Result == ReactionResult.Error, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
