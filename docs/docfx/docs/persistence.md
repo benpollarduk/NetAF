@@ -75,3 +75,11 @@ game.Catalog.Register(sword);
 
 By registering with the *AssetCatalog* the game will be able to resolve references to the object when deserialization 
 is applied.
+
+## Sequencing
+
+### Save
+![Persistence-Save](~/images/persistence-save.png)
+
+### Load
+![Persistence-Load](~/images/persistence-load.png)

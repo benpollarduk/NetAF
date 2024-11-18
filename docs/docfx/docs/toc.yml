@@ -25,3 +25,5 @@ items:
   href: end-conditions.md
 - name: Persistence
   href: persistence.md
+- name: Architecture
+  href: architecture.md
