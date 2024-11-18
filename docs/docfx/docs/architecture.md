@@ -21,5 +21,5 @@ NetAF is designed to be extensible.
 * **ICommand** allows commands to be added.
 * **IInterpreter** allows commands to be interpreted.
 * **IGameMode** allows custom modes to be added to a *Game*.
-* **IFrameBuilders** callows custom instances instances of *IFrame* to be created which are used to render the game state to the user.
+* **IFrameBuilders** allows custom instances instances of *IFrame* to be created which are used to render the game state to the user.
 * **IIOAdaper** provides an interface to get input from the user and render the game state back to them. *SystemConsoleAdapter* provides a wrapper around *System.Console*, however custom implementations can be added to support different types of application.
