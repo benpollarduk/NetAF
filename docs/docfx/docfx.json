@@ -38,6 +38,8 @@
     "globalMetadata": {
       "_appName": "NetAF",
       "_appTitle": "NetAF",
+      "_appLogoPath": "images/logo.png",
+      "_appFaviconPath": "images/logo.png",
       "_enableSearch": true,
       "pdf": true
     }
