@@ -1,4 +1,4 @@
-# Architecture Overview
+# Architecture
 
 ## Overview
 NetAF has a simple architecture and understanding it will help when developing games.
@@ -11,9 +11,9 @@ A *Game* encapsulates all assets and provides top level logic. When the *Game* i
 * The returned *Command* is then invoked and returns a *Reaction* that details the result. Some instances of *ICommand* deal with interactions between assets. In this case an *Interaction* between an *Item* and a target is invoked and the result returned the *ICommand* which will return an appropriate *Reaction*.
 * The *Game* processes the *Reaction*. Some instances of *Reaction* will trigger the *Game* to change *GameMode* to either display the *Reaction* or enter another*GameMode*.
 * When a *GameMode* is rendered a *IFrameBuilder* can be used to generate an instance of *IFrame*.
-* An instace of *IFrame* can be rendered on to an *IIOAdapter* which will display the *IFrame* to the user.
+* An instance of *IFrame* can be rendered on to an *IIOAdapter* which will display the *IFrame* to the user.
 
-![Input-Parsing](../../Architecture/input-parsing-sequence-diagram.png)
+![Input-Parsing](~/images/input-parsing-sequence-diagram.png)
 
 ## Extensibility
 NetAF is designed to be extensible.

@@ -26,4 +26,4 @@ items:
 - name: Persistence
   href: persistence.md
 - name: Architecture
-  href: architecture-overview.md
+  href: architecture.md
