@@ -50,6 +50,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         public char Player { get; set; } = Convert.ToChar("O");
 
         /// <summary>
+        /// Get or set the character to use for indicating the focus.
+        /// </summary>
+        public char Focus { get; set; } = Convert.ToChar("+");
+
+        /// <summary>
         /// Get or set the character to use for the current floor.
         /// </summary>
         public char CurrentFloorIndicator { get; set; } = Convert.ToChar("*");
@@ -154,6 +159,8 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
             if (isPlayerRoom)
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Player, PlayerColor);
+            else if (isFocusRoom)
+                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Focus, FocusedBoundaryColor);
             else
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, EmptySpace, color);
 
