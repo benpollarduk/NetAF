@@ -37,6 +37,8 @@ namespace NetAF.Persistence
 
         #endregion
 
+        #region StaticMethods
+
         /// <summary>
         /// Create a new restore point.
         /// </summary>
@@ -52,5 +54,7 @@ namespace NetAF.Persistence
                 Game = new(game)
             };
         }
+
+        #endregion
     }
 }
