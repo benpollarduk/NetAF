@@ -13,7 +13,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", "T");
+        public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", "T", displayAs: "Take/T __");
 
         #endregion
 

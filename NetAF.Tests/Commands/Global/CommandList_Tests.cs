@@ -10,12 +10,12 @@ using NetAF.Commands;
 namespace NetAF.Tests.Commands.Global
 {
     [TestClass]
-    public class Help_Tests
+    public class CommandList_Tests
     {
         [TestMethod]
         public void GivenNullGame_WhenInvoke_ThenError()
         {
-            var command = new Help(End.CommandHelp);
+            var command = new CommandList();
 
             var result = command.Invoke(null);
 
@@ -35,7 +35,7 @@ namespace NetAF.Tests.Commands.Global
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.ChangeMode(new AboutMode());
-            var command = new Help(End.CommandHelp);
+            var command = new CommandList();
 
             var result = command.Invoke(game);
 

@@ -9,12 +9,28 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic.Modes;
 using NetAF.Logic.Configuration;
 using NetAF.Commands;
+using NetAF.Commands.Scene;
 
 namespace NetAF.Tests.Logic
 {
     [TestClass]
     public class Game_Tests
     {
+        [TestMethod]
+        public void GivenEmptyRoom_WhenGetContextualCommands_ThenNotNullOrEmpty()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = game.GetContextualCommands();
+
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Length > 0);
+        }
+
         [TestMethod]
         public void GivenEmptyRoom_WhenGetAllPlayerVisibleExaminables_ThenNotNull()
         {
@@ -166,6 +182,21 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
+        public void GivenSimpleGame_WhenChangeModeToCommandList_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new(string.Empty, string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+                game.ChangeMode(new CommandListMode([]));
+            });
+        }
+
+        [TestMethod]
         public void GivenSimpleGame_WhenChangeModeToHelp_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
@@ -176,7 +207,7 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-                game.ChangeMode(new HelpMode([]));
+                game.ChangeMode(new HelpMode(Take.CommandHelp));
             });
         }
 

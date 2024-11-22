@@ -4,6 +4,7 @@ using NetAF.Assets.Locations;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -67,12 +68,58 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenHelp_WhenInterpret_ThenReturnTrue()
+        public void GivenHelpWithCommand_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new SceneMode());
+
+            var result = interpreter.Interpret($"{NetAF.Commands.Global.Help.CommandHelp.Command} {NetAF.Commands.Scene.Examine.CommandHelp.Command}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenHelpWithShortcut_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new SceneMode());
+
+            var result = interpreter.Interpret($"{NetAF.Commands.Global.Help.CommandHelp.Command} {NetAF.Commands.Scene.Examine.CommandHelp.Shortcut}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenHelpWithNoCommand_WhenInterpret_ThenReturnFalse()
         {
             var interpreter = new GlobalCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(NetAF.Commands.Global.Help.CommandHelp.Command, game);
+
+            Assert.IsFalse(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenHelpWithUnknownCommand_WhenInterpret_ThenReturnFalse()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{NetAF.Commands.Global.Help.CommandHelp.Command} ABC", game);
+
+            Assert.IsFalse(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenCommands_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(NetAF.Commands.Global.CommandList.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

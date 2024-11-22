@@ -4,10 +4,10 @@ using NetAF.Interpretation;
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for help.
+    /// Provides a display mode for command list.
     /// </summary>
-    /// <param name="command">The command to display.</param>
-    public sealed class HelpMode(CommandHelp command) : IGameMode
+    /// <param name="commands">The commands to display.</param>
+    public sealed class CommandListMode(CommandHelp[] commands) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -27,7 +27,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.HelpFrameBuilder.Build(command, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.CommandListFrameBuilder.Build("Help", string.Empty, commands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

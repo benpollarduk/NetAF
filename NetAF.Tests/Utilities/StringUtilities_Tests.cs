@@ -175,5 +175,32 @@ namespace NetAF.Tests.Utilities
 
             Assert.AreEqual("Test: 1\tTest2: 1", result);
         }
+
+        [TestMethod]
+        public void GivenEmptyString_WhenSplitTextToVerbAndNoun_ThenReturnEmptyVerbAndNoun()
+        {
+            StringUtilities.SplitTextToVerbAndNoun(string.Empty, out var verb, out var noun);
+
+            Assert.AreEqual(string.Empty, verb);
+            Assert.AreEqual(string.Empty, noun);
+        }
+
+        [TestMethod]
+        public void GivenABC_WhenSplitTextToVerbAndNoun_TheNounABCVerbEmpty()
+        {
+            StringUtilities.SplitTextToVerbAndNoun("ABC", out var verb, out var noun);
+
+            Assert.AreEqual("ABC", verb);
+            Assert.AreEqual(string.Empty, noun);
+        }
+
+        [TestMethod]
+        public void GivenABCSpaceXYZ_WhenSplitTextToVerbAndNoun_TheNounABCVerbXYZ()
+        {
+            StringUtilities.SplitTextToVerbAndNoun("ABC XYZ", out var verb, out var noun);
+
+            Assert.AreEqual("ABC", verb);
+            Assert.AreEqual("XYZ", noun);
+        }
     }
 }

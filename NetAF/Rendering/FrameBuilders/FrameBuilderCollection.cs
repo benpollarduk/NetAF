@@ -6,13 +6,14 @@
     /// <param name="titleFrameBuilder">The builder to use for building title frames.</param>
     /// <param name="sceneFrameBuilder">The builder to use for building scene frames.</param>
     /// <param name="regionMapFrameBuilder">The builder to use for building region map frames.</param>
+    /// <param name="commandListFrameBuilder">The builder to use for building command list frames.</param>
     /// <param name="helpFrameBuilder">The builder to use for building help frames.</param>
     /// <param name="completionFrameBuilder">The builder to use for building completion frames.</param>
     /// <param name="gameOverFrameBuilder">The builder to use for building game over frames.</param>
     /// <param name="aboutFrameBuilder">The builder to use for building about frames.</param>
     /// <param name="reactionFrameBuilder">The builder to use for building reaction frames.</param>
     /// <param name="conversationFrameBuilder">The builder to use for building conversation frames.</param>
-    public class FrameBuilderCollection(ITitleFrameBuilder titleFrameBuilder, ISceneFrameBuilder sceneFrameBuilder, IRegionMapFrameBuilder regionMapFrameBuilder, IHelpFrameBuilder helpFrameBuilder, ICompletionFrameBuilder completionFrameBuilder, IGameOverFrameBuilder gameOverFrameBuilder, IAboutFrameBuilder aboutFrameBuilder, IReactionFrameBuilder reactionFrameBuilder, IConversationFrameBuilder conversationFrameBuilder)
+    public class FrameBuilderCollection(ITitleFrameBuilder titleFrameBuilder, ISceneFrameBuilder sceneFrameBuilder, IRegionMapFrameBuilder regionMapFrameBuilder, ICommandListFrameBuilder commandListFrameBuilder, IHelpFrameBuilder helpFrameBuilder, ICompletionFrameBuilder completionFrameBuilder, IGameOverFrameBuilder gameOverFrameBuilder, IAboutFrameBuilder aboutFrameBuilder, IReactionFrameBuilder reactionFrameBuilder, IConversationFrameBuilder conversationFrameBuilder)
     {
         #region Properties
 
@@ -30,6 +31,11 @@
         /// Get the builder to use for region map frames.
         /// </summary>
         public IRegionMapFrameBuilder RegionMapFrameBuilder { get; } = regionMapFrameBuilder;
+
+        /// <summary>
+        /// Get the builder to use for command list frames.
+        /// </summary>
+        public ICommandListFrameBuilder CommandListFrameBuilder { get; } = commandListFrameBuilder;
 
         /// <summary>
         /// Get the builder to use for help frames.

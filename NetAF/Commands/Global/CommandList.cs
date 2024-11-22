@@ -3,17 +3,16 @@
 namespace NetAF.Commands.Global
 {
     /// <summary>
-    /// Represents the Help command.
+    /// Represents the Commands command.
     /// </summary>
-    /// <param name="command">The command to display help for.</param>
-    public sealed class Help(CommandHelp command) : ICommand
+    public sealed class CommandList : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Help", "View detailed help for a command");
+        public static CommandHelp CommandHelp { get; } = new("Commands", "View a list of commands");
 
         #endregion
 
@@ -29,7 +28,7 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new HelpMode(command));
+            game.ChangeMode(new CommandListMode(game.GetContextualCommands()));
             return new(ReactionResult.GameModeChanged, string.Empty);
         }
 

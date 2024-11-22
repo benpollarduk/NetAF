@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Assets.Locations;
+﻿using NetAF.Assets.Locations;
 
 namespace NetAF.Commands.Scene
 {
@@ -14,32 +13,32 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help for north.
         /// </summary>
-        public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", "N");
+        public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", "N", displayAs: "North/N");
 
         /// <summary>
         /// Get the command help for south.
         /// </summary>
-        public static CommandHelp SouthCommandHelp { get; } = new("South", "Move south", "S");
+        public static CommandHelp SouthCommandHelp { get; } = new("South", "Move south", "S", displayAs: "South/S");
 
         /// <summary>
         /// Get the command help for east.
         /// </summary>
-        public static CommandHelp EastCommandHelp { get; } = new("East", "Move east", "E");
+        public static CommandHelp EastCommandHelp { get; } = new("East", "Move east", "E", displayAs: "East/E");
 
         /// <summary>
         /// Get the command help for west.
         /// </summary>
-        public static CommandHelp WestCommandHelp { get; } = new("West", "Move west", "W");
+        public static CommandHelp WestCommandHelp { get; } = new("West", "Move west", "W", displayAs: "West/W");
 
         /// <summary>
         /// Get the command help for up.
         /// </summary>
-        public static CommandHelp UpCommandHelp { get; } = new("Up", "Move up", "U");
+        public static CommandHelp UpCommandHelp { get; } = new("Up", "Move up", "U", displayAs: "Up/U");
 
         /// <summary>
         /// Get the command help for down.
         /// </summary>
-        public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", "D");
+        public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", "D", displayAs: "Down/D");
 
         #endregion
 

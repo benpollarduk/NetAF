@@ -1,6 +1,9 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Global;
+using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Utilities;
+using System;
 
 namespace NetAF.Interpretation
 {
@@ -19,7 +22,9 @@ namespace NetAF.Interpretation
             About.CommandHelp,
             Map.CommandHelp,
             Exit.CommandHelp,
-            New.CommandHelp
+            New.CommandHelp,
+            Help.CommandHelp,
+            CommandList.CommandHelp
         ];
 
         #endregion
@@ -39,19 +44,33 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (About.CommandHelp.Equals(input))
+            StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var noun);
+
+            if (About.CommandHelp.Equals(verb))
                 return new(true, new About());
 
-            if (Exit.CommandHelp.Equals(input))
+            if (Exit.CommandHelp.Equals(verb))
                 return new(true, new Exit());
 
-            if (Help.CommandHelp.Equals(input))
-                return new(true, new Help());
+            if (Help.CommandHelp.Equals(verb))
+            {
+                if (string.IsNullOrEmpty(noun))
+                    return InterpretationResult.Fail;
 
-            if (Map.CommandHelp.Equals(input))
+                var commands = game.GetContextualCommands();
+                var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
+                
+                if (command != null)
+                    return new(true, new Help(command));
+            }
+
+            if (CommandList.CommandHelp.Equals(verb))
+                return new(true, new CommandList());
+
+            if (Map.CommandHelp.Equals(verb))
                 return new(true, new Map());
 
-            if (New.CommandHelp.Equals(input))
+            if (New.CommandHelp.Equals(verb))
                 return new(true, new New());
 
             return InterpretationResult.Fail;

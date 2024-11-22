@@ -8,6 +8,7 @@ using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
+using NetAF.Utilities;
 
 namespace NetAF.Interpretation
 {
@@ -38,11 +39,6 @@ namespace NetAF.Interpretation
         /// </summary>
         public const string Overworld = "Overworld";
 
-        /// <summary>
-        /// Get a string representing a variable.
-        /// </summary>
-        private const string Variable = "__";
-
         #endregion
 
         #region StaticProperties
@@ -52,66 +48,24 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            Move.NorthCommandHelp.FormattedToDisplayShortcut(),
-            Move.EastCommandHelp.FormattedToDisplayShortcut(),
-            Move.SouthCommandHelp.FormattedToDisplayShortcut(),
-            Move.WestCommandHelp.FormattedToDisplayShortcut(),
-            Move.UpCommandHelp.FormattedToDisplayShortcut(),
-            Move.DownCommandHelp.FormattedToDisplayShortcut(),
-            Drop.CommandHelp.FormattedToDisplayShortcutAndVariable(),
-            Examine.CommandHelp.FormattedToDisplayShortcutAndVariable(),
-            Take.CommandHelp.FormattedToDisplayShortcutAndVariable(),
+            Move.NorthCommandHelp,
+            Move.EastCommandHelp,
+            Move.SouthCommandHelp,
+            Move.WestCommandHelp,
+            Move.UpCommandHelp,
+            Move.DownCommandHelp,
+            Drop.CommandHelp,
+            Examine.CommandHelp,
+            Take.CommandHelp,
             TakeAll.CommandHelp,
-            GetTalkToCommandHelp(),
-            UseOn.UseCommandHelp.FormattedToDisplayShortcutAndVariable(),
-            GetUseOnCommandHelp()
+            Talk.TalkCommandHelp,
+            UseOn.UseCommandHelp,
+            UseOn.OnCommandHelp
         ];
 
         #endregion
 
         #region StaticMethods
-
-        /// <summary>
-        /// Get a command help for the talk to command.
-        /// </summary>
-        /// <returns>The command help.</returns>
-        private static CommandHelp GetTalkToCommandHelp()
-        {
-            return new($"{Talk.TalkCommandHelp.Command}/{Talk.TalkCommandHelp.Shortcut} {Talk.ToCommandHelp.Command.ToLower()} {Variable}", Talk.TalkCommandHelp.Description);
-        }
-
-        /// <summary>
-        /// Get a command help for the use on command.
-        /// </summary>
-        /// <returns>The command help.</returns>
-        private static CommandHelp GetUseOnCommandHelp()
-        {
-            return new($"{UseOn.UseCommandHelp.Command} {Variable} {UseOn.OnCommandHelp.Command.ToLower()} {Variable}", UseOn.OnCommandHelp.Description);
-        }
-
-        /// <summary>
-        /// Split text in to a verb and a noun.
-        /// </summary>
-        /// <param name="text">The text to split.</param>
-        /// <param name="verb">The verb.</param>
-        /// <param name="noun">The noun.</param>
-        private static void SplitTextToVerbAndNoun(string text, out string verb, out string noun)
-        {
-            // if there is a space
-            if (text.IndexOf(" ", StringComparison.Ordinal) > -1)
-            {
-                // verb all text up to space
-                verb = text.Substring(0, text.IndexOf(" ", StringComparison.Ordinal)).Trim();
-
-                // noun is all text after space
-                noun = text.Substring(text.IndexOf(" ", StringComparison.Ordinal)).Trim();
-            }
-            else
-            {
-                verb = text;
-                noun = string.Empty;
-            }
-        }
 
         /// <summary>
         /// Try and parse the Drop command.
@@ -122,7 +76,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseDropCommand(string text, Game game, out ICommand command)
         {
-            SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
             if (!Drop.CommandHelp.Equals(verb))
             {
@@ -144,7 +98,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTakeCommand(string text, Game game, out ICommand command)
         {
-            SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
             if (!Take.CommandHelp.Equals(verb))
             {
@@ -189,7 +143,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTalkCommand(string text, Game game, out ICommand command)
         {
-            SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
             if (!Talk.TalkCommandHelp.Equals(verb))
             {
@@ -282,7 +236,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseExamineCommand(string text, Game game, out ICommand command)
         {
-            SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
             if (!Examine.CommandHelp.Equals(verb))
             {
@@ -350,7 +304,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseUseOnCommand(string text, Game game, out ICommand command)
         {
-            SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
 
             if (!UseOn.UseCommandHelp.Equals(verb))
             {
@@ -505,41 +459,41 @@ namespace NetAF.Interpretation
             List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(Move.NorthCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.NorthCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(Move.EastCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.EastCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(Move.SouthCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.SouthCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(Move.WestCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.WestCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(Move.UpCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.UpCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(Move.DownCommandHelp.FormattedToDisplayShortcut());
+                commands.Add(Move.DownCommandHelp);
 
-            commands.Add(Examine.CommandHelp.FormattedToDisplayShortcutAndVariable());
+            commands.Add(Examine.CommandHelp);
 
             if (game.Player.Items.Any())
-                commands.Add(Drop.CommandHelp.FormattedToDisplayShortcutAndVariable());
+                commands.Add(Drop.CommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
             {
-                commands.Add(Take.CommandHelp.FormattedToDisplayShortcutAndVariable());
+                commands.Add(Take.CommandHelp);
                 commands.Add(TakeAll.CommandHelp);
             }
 
             if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
-                commands.Add(GetTalkToCommandHelp());
+                commands.Add(Talk.TalkCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
             {
-                commands.Add(UseOn.UseCommandHelp.FormattedToDisplayShortcutAndVariable());
-                commands.Add(GetUseOnCommandHelp());
+                commands.Add(UseOn.UseCommandHelp);
+                commands.Add(UseOn.OnCommandHelp);
             }
 
             return [.. commands];

@@ -378,6 +378,23 @@ namespace NetAF.Logic
             return [.. examinables];
         }
 
+        /// <summary>
+        /// Get all commands that are valid in the current context.
+        /// </summary>
+        /// <returns>An array of all commands that are valid in the current context.</returns>
+        public CommandHelp[] GetContextualCommands()
+        {
+            List<CommandHelp> commands = 
+            [
+                .. Configuration.Interpreter.SupportedCommands,
+                .. Configuration.Interpreter.GetContextualCommandHelp(this),
+                .. Mode?.Interpreter?.SupportedCommands ?? [],
+                .. Mode?.Interpreter?.GetContextualCommandHelp(this) ?? [],
+            ];
+
+            return [.. commands.Distinct()];
+        }
+
         #endregion
 
         #region StaticMethods
