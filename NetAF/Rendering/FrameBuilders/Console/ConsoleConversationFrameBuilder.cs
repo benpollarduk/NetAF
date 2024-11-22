@@ -46,7 +46,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Get or set the player message color.
         /// </summary>
-        public AnsiColor PlayerMessageColor { get; set; } = AnsiColor.Blue;
+        public AnsiColor PlayerMessageColor { get; set; } = AnsiColor.White;
 
         /// <summary>
         /// Get or set the response color.
