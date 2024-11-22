@@ -6,7 +6,7 @@ There are three main types of Command.
 * **Global Commands** are used to interact with the program running the game.
 * **Custom Commands** allow developers to add custom commands to the game without having to worry about extended the games interpreters.
 
-## Game Commands
+## Scene Commands
 
 ### Drop
 Allows players to drop an item. **R** can be used as a shortcut.
@@ -137,11 +137,18 @@ Exit the current game.
 exit
 ```
 
-### Help
-Displays a Help screen listing all available commands.
+### Commands
+Displays a list of all available commands.
 
 ```
-help
+commands
+```
+
+### Help
+Displays a help screen for a specific command.
+
+```
+help examine
 ```
 
 ### KeyOn / KeyOff
