@@ -280,6 +280,7 @@ namespace NetAF.Assets.Locations
                 return false;
 
             CurrentRoom = roomPosition.Room;
+            CurrentRoom.MovedInto(null);
 
             return true;
         }
