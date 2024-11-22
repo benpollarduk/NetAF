@@ -36,7 +36,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Get or set the title color.
         /// </summary>
-        public AnsiColor TitleColor { get; set; } = AnsiColor.Green;
+        public AnsiColor TitleColor { get; set; } = AnsiColor.White;
 
         /// <summary>
         /// Get or set the player message color.
