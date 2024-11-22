@@ -86,7 +86,7 @@ namespace NetAF.Assets.Locations
         /// <param name="description">The description of this Region.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="examination">The examination.</param>
-        public Region(Identifier identifier, Description description, CustomCommand[] commands = null, ExaminationCallback examination = null)
+        public Region(Identifier identifier, IDescription description, CustomCommand[] commands = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;

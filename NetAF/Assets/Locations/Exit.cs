@@ -40,7 +40,7 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, Description description = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
+        public Exit(Direction direction, bool isLocked = false, Identifier identifier = null, IDescription description = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier ?? new(direction.ToString());
             Direction = direction;
@@ -61,7 +61,7 @@ namespace NetAF.Assets.Locations
         /// Generate a description for this exit.
         /// </summary>
         /// <returns>The completed Description.</returns>
-        private Description GenerateDescription()
+        private IDescription GenerateDescription()
         {
             return new ConditionalDescription($"The exit {Direction.ToString().ToLower()} is locked.", $"The exit {Direction.ToString().ToLower()} is unlocked.", () => IsLocked);
         }

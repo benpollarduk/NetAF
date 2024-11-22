@@ -47,7 +47,7 @@ namespace NetAF.Assets
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Item(Identifier identifier, Description description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
+        public Item(Identifier identifier, IDescription description, bool isTakeable = false, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;

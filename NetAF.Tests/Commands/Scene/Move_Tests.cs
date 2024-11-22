@@ -14,8 +14,8 @@ namespace NetAF.Tests.Commands.Scene
         public void GivenCantMove_WhenInvoke_ThenError()
         {
             var region = new Region(Identifier.Empty, Description.Empty);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
@@ -30,11 +30,46 @@ namespace NetAF.Tests.Commands.Scene
         public void GivenCanMove_WhenInvoke_ThenSilent()
         {
             var region = new Region(Identifier.Empty, Description.Empty);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Move(Direction.North);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenCanMoveToPreviouslyUnvisitedRoomWithIntroduction_WhenInvoke_ThenInform()
+        {
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, new("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Move(Direction.North);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenCanMoveToPreviouslyVisitedRoomWithIntroduction_WhenInvoke_ThenSilent()
+        {
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, new("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            new Move(Direction.North).Invoke(game);
+            new Move(Direction.South).Invoke(game);
+
             var command = new Move(Direction.North);
 
             var result = command.Invoke(game);

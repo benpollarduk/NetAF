@@ -17,7 +17,7 @@ namespace NetAF.Assets
         /// <summary>
         /// Get a description of this object.
         /// </summary>
-        Description Description { get; }
+        IDescription Description { get; }
         /// <summary>
         /// Get this objects commands.
         /// </summary>

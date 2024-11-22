@@ -70,7 +70,7 @@ namespace NetAF.Assets
         /// <summary>
         /// Get a description of this object.
         /// </summary>
-        public Description Description { get; protected set; }
+        public IDescription Description { get; protected set; }
 
         /// <summary>
         /// Get this objects commands.

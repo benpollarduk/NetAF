@@ -3,8 +3,8 @@
     /// <summary>
     /// Represents a description of an object.
     /// </summary>
-    /// <param name="description">The description</param>
-    public class Description(string description)
+    /// <param name="description">The description of this object.</param>
+    public sealed class Description(string description) : IDescription
     {
         #region StaticProperties
 
@@ -15,24 +15,15 @@
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Get or set the description.
-        /// </summary>
-        protected string DefaultDescription { get; set; } = description;
-
-        #endregion
-
-        #region Methods
+        #region Implementation of IDescription
 
         /// <summary>
         /// Get the description.
         /// </summary>
         /// <returns>The description.</returns>
-        public virtual string GetDescription()
+        public string GetDescription()
         {
-            return DefaultDescription;
+            return description;
         }
 
         #endregion
