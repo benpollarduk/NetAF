@@ -58,11 +58,14 @@ namespace NetAF.Rendering.FrameBuilders.Console
             const int leftMargin = 2;
 
             gridStringBuilder.DrawWrapped(title, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
-            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, CommandColor);
+            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
             lastY += 3;
 
-            gridStringBuilder.DrawWrapped($"Command: {commandHelp.Command}", leftMargin, lastY, availableWidth, CommandDescriptionColor, out _, out lastY);
+            gridStringBuilder.DrawWrapped($"Command: {commandHelp.Command}", leftMargin, lastY, availableWidth, CommandColor, out _, out lastY);
+
+            if (!string.IsNullOrEmpty(commandHelp.Shortcut))
+                gridStringBuilder.DrawWrapped($"Shortcut: {commandHelp.Shortcut}", leftMargin, lastY + 2, availableWidth, CommandColor, out _, out lastY);
 
             gridStringBuilder.DrawWrapped($"Description: {commandHelp.Description.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
