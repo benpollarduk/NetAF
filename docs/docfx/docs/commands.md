@@ -137,11 +137,18 @@ Exit the current game.
 exit
 ```
 
-### Help
-Displays a Help screen listing all available commands.
+### Commands
+Displays a list of all available commands.
 
 ```
-help
+commands
+```
+
+### Help
+Displays a help screen for a specific command.
+
+```
+help examine
 ```
 
 ### KeyOn / KeyOff
