@@ -105,16 +105,7 @@ namespace NetAF.Logic.Modes
                 return true;
 
             // may still be able to pan if there is a room on the Z plane and the region is visible without discovery OR a room on that Z plane has been visited
-            var matrix = region.ToMatrix();
-            var allRoomsOnSpecifiedZLevel = matrix.FindAllRoomsOnZ(position.Z);
-
-            foreach (var room in allRoomsOnSpecifiedZLevel)
-            {
-                if (IsRoomPannable(room, region.IsVisibleWithoutDiscovery))
-                    return true;
-            }
-
-            return false;
+            return region.ToMatrix().FindAllRoomsOnZ(position.Z).Where(x => IsRoomPannable(x, region.IsVisibleWithoutDiscovery)).ToArray().Length > 0;
         }
 
         /// <summary>

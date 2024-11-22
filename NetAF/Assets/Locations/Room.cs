@@ -440,15 +440,6 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Specify a conditional description of this room.
-        /// </summary>
-        /// <param name="description">The description of this room.</param>
-        public void SpecifyConditionalDescription(ConditionalDescription description)
-        {
-            Description = description;
-        }
-
-        /// <summary>
         /// Handle movement into this GameLocation.
         /// </summary>
         /// <param name="fromDirection">The direction movement into this Room is from. Use null if there is no direction.</param>

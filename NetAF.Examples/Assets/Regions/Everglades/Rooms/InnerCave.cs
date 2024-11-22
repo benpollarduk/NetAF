@@ -25,7 +25,8 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
         {
             Room room = null;
 
-            room = new Room(Name, string.Empty, [new Exit(Direction.West), new Exit(Direction.North, true)], interaction: item =>
+            var description = new ConditionalDescription("With the bats gone there is daylight to the north. To the west is the cave entrance", "As you enter the inner cave the screeching gets louder, and in the gloom you can make out what looks like a million sets of eyes looking back at you. Bats! You can just make out a few rays of light coming from the north, but the bats are blocking your way.", () => !room[Direction.North].IsLocked);
+            room = new Room(new(Name), description, [new Exit(Direction.West), new Exit(Direction.North, true)], interaction: item =>
             {
                 if (item != null && ConchShell.Name.EqualsExaminable(item))
                 {
@@ -38,8 +39,6 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
 
                 return new(InteractionResult.NoChange, item);
             });
-
-            room.SpecifyConditionalDescription(new ConditionalDescription("With the bats gone there is daylight to the north. To the west is the cave entrance", "As you enter the inner cave the screeching gets louder, and in the gloom you can make out what looks like a million sets of eyes looking back at you. Bats! You can just make out a few rays of light coming from the north, but the bats are blocking your way.", () => !room[Direction.North].IsLocked));
 
             return room;
 

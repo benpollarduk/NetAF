@@ -139,5 +139,16 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.AreEqual(1, result.Length);
         }
+
+        [TestMethod]
+        public void Given2Point1UnitApart_WhenDistanceBetweenPoints_Then1()
+        {
+            Point3D a = new(0, 0, 0);
+            Point3D b = new(1, 0, 0);
+
+            var result = Matrix.DistanceBetweenPoints(a, b);
+
+            Assert.AreEqual(1, (int)result);
+        }
     }
 }
