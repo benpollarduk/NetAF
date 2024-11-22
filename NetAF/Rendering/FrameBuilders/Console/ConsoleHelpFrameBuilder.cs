@@ -24,6 +24,11 @@ namespace NetAF.Rendering.FrameBuilders.Console
         public AnsiColor BorderColor { get; set; } = AnsiColor.BrightBlack;
 
         /// <summary>
+        /// Get or set the title color.
+        /// </summary>
+        public AnsiColor TitleColor { get; set; } = AnsiColor.White;
+
+        /// <summary>
         /// Get or set the command color.
         /// </summary>
         public AnsiColor CommandColor { get; set; } = AnsiColor.Green;
@@ -40,9 +45,10 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Build a frame.
         /// </summary>
+        /// <param name="title">The title.</param>
         /// <param name="commandHelp">The command help.</param>
         /// <param name="size">The size of the frame.</param>
-        public IFrame Build(CommandHelp commandHelp, Size size)
+        public IFrame Build(string title, CommandHelp commandHelp, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -51,14 +57,17 @@ namespace NetAF.Rendering.FrameBuilders.Console
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
-            gridStringBuilder.DrawWrapped(commandHelp.Command, leftMargin, 2, availableWidth, CommandColor, out _, out var lastY);
-            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, commandHelp.Command.Length, CommandColor);
+            gridStringBuilder.DrawWrapped(title, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
+            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, CommandColor);
 
             lastY += 3;
 
-            var description = !string.IsNullOrEmpty(commandHelp.Instructions) ? commandHelp.Instructions : commandHelp.Description;
+            gridStringBuilder.DrawWrapped($"Command: {commandHelp.Command}", leftMargin, lastY, availableWidth, CommandDescriptionColor, out _, out lastY);
 
-            gridStringBuilder.DrawWrapped(description.EnsureFinishedSentence(), leftMargin, lastY, availableWidth, CommandDescriptionColor, out _, out _);
+            gridStringBuilder.DrawWrapped($"Description: {commandHelp.Description.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+
+            if (!string.IsNullOrEmpty(commandHelp.Instructions))
+                gridStringBuilder.DrawWrapped($"Description: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
             if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                 gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out _);

@@ -16,7 +16,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
-                builder.Build(new NetAF.Commands.CommandHelp("Test", "Test 2"), new Size(80, 50));
+                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), new Size(80, 50));
             });
         }
 
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
-                builder.Build(new NetAF.Commands.CommandHelp("Test", "Test 2", "Test 3."), new Size(80, 50));
+                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2", "Test 3."), new Size(80, 50));
             });
         }
     }
