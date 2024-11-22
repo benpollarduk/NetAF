@@ -211,7 +211,7 @@ namespace NetAF.Assets.Locations
         public void SetStartRoom(Room room)
         {
             CurrentRoom = room;
-            CurrentRoom.MovedInto(null);
+            CurrentRoom.MovedInto();
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace NetAF.Assets.Locations
                 return false;
 
             CurrentRoom = roomPosition.Room;
-            CurrentRoom.MovedInto(null);
+            CurrentRoom.MovedInto();
 
             return true;
         }

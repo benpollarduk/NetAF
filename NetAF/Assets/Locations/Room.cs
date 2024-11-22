@@ -50,12 +50,12 @@ namespace NetAF.Assets.Locations
         public Exit this[Direction direction] => Array.Find(Exits, e => e.Direction == direction);
 
         /// <summary>
-        /// Get which direction this Room was entered from.
+        /// Get which direction this room was entered from.
         /// </summary>
         public Direction? EnteredFrom { get; private set; }
 
         /// <summary>
-        /// Get an introduction for this Room.
+        /// Get an introduction for this room.
         /// </summary>
         public IDescription Introduction { get; private set; }
 
@@ -440,13 +440,21 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Handle movement into this GameLocation.
+        /// Handle movement into this room.
         /// </summary>
-        /// <param name="fromDirection">The direction movement into this Room is from. Use null if there is no direction.</param>
-        public void MovedInto(Direction? fromDirection)
+        public void MovedInto()
+        {
+            HasBeenVisited = true;
+        }
+
+        /// <summary>
+        /// Handle movement into this room.
+        /// </summary>
+        /// <param name="fromDirection">The direction movement into this room.</param>
+        public void MovedInto(Direction fromDirection)
         {
             EnteredFrom = fromDirection;
-            HasBeenVisited = true;
+            MovedInto();
         }
 
         #endregion
