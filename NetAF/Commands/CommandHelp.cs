@@ -9,7 +9,9 @@ namespace NetAF.Commands
     /// <param name="command">The command.</param>
     /// <param name="description">The help.</param>
     /// <param name="shortcut">A shortcut for the command.</param>
-    public sealed class CommandHelp(string command, string description, string shortcut = "") : IEquatable<CommandHelp>, IEquatable<string>
+    /// <param name="instructions">A instructions on how to use the command.</param>
+    /// <param name="displayAs">A string overriding how the command should be displayed..</param>
+    public sealed class CommandHelp(string command, string description, string shortcut = "", string instructions = "", string displayAs = "") : IEquatable<CommandHelp>, IEquatable<string>
     {
         #region Properties
 
@@ -27,6 +29,21 @@ namespace NetAF.Commands
         /// Get the shortcut for the command.
         /// </summary>
         public string Shortcut { get; } = shortcut;
+
+        /// <summary>
+        /// Get the instructions of the command.
+        /// </summary>
+        public string Instructions { get; } = instructions;
+
+        /// <summary>
+        /// Get how this command should be displayed.
+        /// </summary>
+        public string DisplayAs { get; } = displayAs;
+
+        /// <summary>
+        /// Get a string representing the command as it should be displayed to the user.
+        /// </summary>
+        public string DisplayCommand => !string.IsNullOrEmpty(DisplayAs) ? DisplayAs : Command;
 
         #endregion
 

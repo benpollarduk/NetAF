@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NetAF.Assets;
-using NetAF.Assets.Attributes;
 using NetAF.Extensions;
 
 namespace NetAF.Utilities
@@ -163,7 +163,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="attributes">The attributes.</param>
         /// <returns>The sentence.</returns>
-        public static string ConstructAttributesAsString(Dictionary<Attribute, int> attributes)
+        public static string ConstructAttributesAsString(Dictionary<Assets.Attributes.Attribute, int> attributes)
         {
             if (attributes?.Any() != true)
                 return string.Empty;
@@ -174,6 +174,30 @@ namespace NetAF.Utilities
                 builder.Append($"{attributes.Keys.ElementAt(i).Name}: {attributes.Values.ElementAt(i)}{(i < attributes.Count - 1 ? "\t" : string.Empty)}");
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Split text in to a verb and a noun.
+        /// </summary>
+        /// <param name="text">The text to split.</param>
+        /// <param name="verb">The verb.</param>
+        /// <param name="noun">The noun.</param>
+        public static void SplitTextToVerbAndNoun(string text, out string verb, out string noun)
+        {
+            // if there is a space
+            if (text.IndexOf(" ", StringComparison.Ordinal) > -1)
+            {
+                // verb all text up to space
+                verb = text.Substring(0, text.IndexOf(" ", StringComparison.Ordinal)).Trim();
+
+                // noun is all text after space
+                noun = text.Substring(text.IndexOf(" ", StringComparison.Ordinal)).Trim();
+            }
+            else
+            {
+                verb = text;
+                noun = string.Empty;
+            }
         }
 
         #endregion

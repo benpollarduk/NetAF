@@ -19,12 +19,12 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp UseCommandHelp { get; } = new("Use", "Use an item on the current room");
+        public static CommandHelp UseCommandHelp { get; } = new("Use", "Use an item on the current room", displayAs: "Use __");
 
         /// <summary>
         /// Get the command help for on.
         /// </summary>
-        public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on another item or character");
+        public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on another item or character", displayAs: "Use __ on __");
 
         #endregion
 

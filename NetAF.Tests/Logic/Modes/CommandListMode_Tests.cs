@@ -5,11 +5,12 @@ using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Logic.Modes;
 using NetAF.Commands.Global;
+using NetAF.Commands.Scene;
 
 namespace NetAF.Tests.Logic.Modes
 {
     [TestClass]
-    public class HelpMode_Tests
+    public class CommandListMode_Tests
     {
         [TestMethod]
         public void GivenNew_WhenRender_ThenNoExceptionThrown()
@@ -21,7 +22,7 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-                var mode = new HelpMode(End.CommandHelp);
+                var mode = new CommandListMode([End.CommandHelp, Take.CommandHelp]);
 
                 mode.Render(game);
             });

@@ -16,8 +16,10 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            new CommandHelp($"{CommandsOn.CommandHelp.Command} / {CommandsOff.CommandHelp.Command}", "Turn commands on/off"),
-            new CommandHelp($"{KeyOn.CommandHelp.Command} / {KeyOff.CommandHelp.Command} ", "Turn the key on/off")
+            CommandsOn.CommandHelp,
+            CommandsOff.CommandHelp,
+            KeyOn.CommandHelp,
+            KeyOff.CommandHelp
         ];
 
         #endregion

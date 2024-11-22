@@ -156,7 +156,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 gridStringBuilder.DrawHorizontalDivider(lastY + linePadding, BorderColor);
                 gridStringBuilder.DrawWrapped(CommandTitle, leftMargin, lastY + 4, availableWidth, ResponseColor, out _, out lastY);
 
-                var maxCommandLength = contextualCommands.Max(x => x.Command.Length);
+                var maxCommandLength = contextualCommands.Max(x => x.DisplayCommand.Length);
                 const int padding = 4;
                 var dashStartX = leftMargin + maxCommandLength + padding;
                 var descriptionStartX = dashStartX + 2;
@@ -164,7 +164,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
 
                 foreach (var contextualCommand in contextualCommands)
                 {
-                    gridStringBuilder.DrawWrapped(contextualCommand.Command, leftMargin, lastY + 1, availableWidth, ResponseColor, out _, out lastY);
+                    gridStringBuilder.DrawWrapped(contextualCommand.DisplayCommand, leftMargin, lastY + 1, availableWidth, ResponseColor, out _, out lastY);
                     gridStringBuilder.DrawWrapped("-", dashStartX, lastY, availableWidth, ResponseColor, out _, out lastY);
                     gridStringBuilder.DrawWrapped(contextualCommand.Description, descriptionStartX, lastY, availableWidth, ResponseColor, out _, out lastY);
                 }

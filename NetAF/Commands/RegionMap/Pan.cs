@@ -15,32 +15,32 @@ namespace NetAF.Commands.RegionMap
         /// <summary>
         /// Get the command help for north.
         /// </summary>
-        public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", "N");
+        public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", "N", displayAs: "North/N");
 
         /// <summary>
         /// Get the command help for south.
         /// </summary>
-        public static CommandHelp SouthCommandHelp { get; } = new("South", "Pan south", "S");
+        public static CommandHelp SouthCommandHelp { get; } = new("South", "Pan south", "S", displayAs: "South/S");
 
         /// <summary>
         /// Get the command help for east.
         /// </summary>
-        public static CommandHelp EastCommandHelp { get; } = new("East", "Pan east", "E");
+        public static CommandHelp EastCommandHelp { get; } = new("East", "Pan east", "E", displayAs: "East/E");
 
         /// <summary>
         /// Get the command help for west.
         /// </summary>
-        public static CommandHelp WestCommandHelp { get; } = new("West", "Pan west", "W");
+        public static CommandHelp WestCommandHelp { get; } = new("West", "Pan west", "W", displayAs: "West/W");
 
         /// <summary>
         /// Get the command help for up.
         /// </summary>
-        public static CommandHelp UpCommandHelp { get; } = new("Up", "Pan up", "U");
+        public static CommandHelp UpCommandHelp { get; } = new("Up", "Pan up", "U", displayAs: "Up/U");
 
         /// <summary>
         /// Get the command help for down.
         /// </summary>
-        public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", "D");
+        public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", "D", displayAs: "Down/D");
 
         #endregion
 
