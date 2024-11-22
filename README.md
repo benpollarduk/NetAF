@@ -85,7 +85,8 @@ NetAF also provides global commands to help with game flow and option management
   * **About** - display version information.
   * **CommandsOn / CommandsOff** - toggle commands on/off.
   * **Exit** - exit the game.
-  * **Help** - display the help screen.
+  * **Help X** - display the help screen for a command.
+  * **Commands** - display the command list.
   * **KeyOn / KeyOff** - turn the Key on/off.
   * **Map** - display the map.
   * **New** - start a new game.
