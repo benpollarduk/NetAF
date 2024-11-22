@@ -105,5 +105,50 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.AreEqual(4, result.Length);
         }
+
+        [TestMethod]
+        public void Given2RoomsOnZ2_WhenFindAllRoomsOnZ_Then2Rooms()
+        {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
+            ];
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.FindAllRoomsOnZ(0);
+
+            Assert.AreEqual(2, result.Length);
+        }
+
+        [TestMethod]
+        public void Given1RoomOnZ1_WhenFindAllRoomsOnZ_Then1Room()
+        {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2))
+            ];
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.FindAllRoomsOnZ(1);
+
+            Assert.AreEqual(1, result.Length);
+        }
+
+        [TestMethod]
+        public void Given2Point1UnitApart_WhenDistanceBetweenPoints_Then1()
+        {
+            Point3D a = new(0, 0, 0);
+            Point3D b = new(1, 0, 0);
+
+            var result = Matrix.DistanceBetweenPoints(a, b);
+
+            Assert.AreEqual(1, (int)result);
+        }
     }
 }

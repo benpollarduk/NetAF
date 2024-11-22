@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Locations;
+﻿using NetAF.Assets;
+using NetAF.Assets.Locations;
 
 namespace NetAF.Commands.Scene
 {
@@ -54,8 +55,19 @@ namespace NetAF.Commands.Scene
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            if (game.Overworld.CurrentRegion.Move(direction))
+            var region = game.Overworld.CurrentRegion;
+            var targetRoom = region.GetAdjoiningRoom(direction);
+            var movingToPreviouslyUnvisitedRoom = targetRoom != null && !targetRoom.HasBeenVisited;
+
+            if (region.Move(direction))
+            {
+                var introduction = targetRoom?.Introduction?.GetDescription() ?? string.Empty;
+
+                if (movingToPreviouslyUnvisitedRoom && !string.IsNullOrEmpty(introduction))
+                    return new(ReactionResult.Inform, introduction);
+
                 return new(ReactionResult.Silent, $"Moved {direction}.");
+            }
 
             return new(ReactionResult.Error, $"Could not move {direction}.");
         }

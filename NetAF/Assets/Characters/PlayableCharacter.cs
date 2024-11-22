@@ -40,7 +40,7 @@ namespace NetAF.Assets.Characters
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public PlayableCharacter(Identifier identifier, Description description, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(identifier, description, true, items, commands, interaction, examination)
+        public PlayableCharacter(Identifier identifier, IDescription description, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(identifier, description, true, items, commands, interaction, examination)
         {
         }
 
@@ -68,7 +68,7 @@ namespace NetAF.Assets.Characters
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public PlayableCharacter(Identifier identifier, Description description, bool canConverse, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
+        public PlayableCharacter(Identifier identifier, IDescription description, bool canConverse, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;

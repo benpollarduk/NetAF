@@ -50,9 +50,14 @@ namespace NetAF.Assets.Locations
         public Exit this[Direction direction] => Array.Find(Exits, e => e.Direction == direction);
 
         /// <summary>
-        /// Get which direction this Room was entered from.
+        /// Get which direction this room was entered from.
         /// </summary>
         public Direction? EnteredFrom { get; private set; }
+
+        /// <summary>
+        /// Get an introduction for this room.
+        /// </summary>
+        public IDescription Introduction { get; private set; }
 
         #endregion
 
@@ -68,7 +73,7 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), exits, items, commands, interaction, examination)
+        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), Assets.Description.Empty, exits, items, commands, interaction, examination)
         {
         }
 
@@ -82,10 +87,41 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Room(Identifier identifier, Description description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
+        public Room(Identifier identifier, IDescription description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(identifier, description, Assets.Description.Empty, exits, items, commands, interaction, examination)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Room class.
+        /// </summary>
+        /// <param name="identifier">This rooms identifier.</param>
+        /// <param name="description">This rooms description.</param>
+        /// <param name="introduction">An introduction to this room.</param>
+        /// <param name="exits">The exits from this room.</param>
+        /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        /// <param name="examination">The examination.</param>
+        public Room(string identifier, string description, string introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), new Description(introduction), exits, items, commands, interaction, examination)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Room class.
+        /// </summary>
+        /// <param name="identifier">This rooms identifier.</param>
+        /// <param name="description">This rooms description.</param>
+        /// <param name="introduction">An introduction to this room.</param>
+        /// <param name="exits">The exits from this room.</param>
+        /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        /// <param name="examination">The examination.</param>
+        public Room(Identifier identifier, IDescription description, Description introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;
+            Introduction = introduction;
             Exits = exits ?? [];
             Items = items ?? [];
             Commands = commands ?? [];
@@ -404,22 +440,21 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Specify a conditional description of this room.
+        /// Handle movement into this room.
         /// </summary>
-        /// <param name="description">The description of this room.</param>
-        public void SpecifyConditionalDescription(ConditionalDescription description)
+        public void MovedInto()
         {
-            Description = description;
+            HasBeenVisited = true;
         }
 
         /// <summary>
-        /// Handle movement into this GameLocation.
+        /// Handle movement into this room.
         /// </summary>
-        /// <param name="fromDirection">The direction movement into this Room is from. Use null if there is no direction.</param>
-        public void MovedInto(Direction? fromDirection)
+        /// <param name="fromDirection">The direction movement into this room.</param>
+        public void MovedInto(Direction fromDirection)
         {
             EnteredFrom = fromDirection;
-            HasBeenVisited = true;
+            MovedInto();
         }
 
         #endregion

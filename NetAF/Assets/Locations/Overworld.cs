@@ -56,7 +56,7 @@ namespace NetAF.Assets.Locations
         /// <param name="description">A description of this overworld.</param>
         /// <param name="commands">This objects commands.</param>
         /// <param name="examination">The examination.</param>
-        public Overworld(Identifier identifier, Description description, CustomCommand[] commands = null, ExaminationCallback examination = null)
+        public Overworld(Identifier identifier, IDescription description, CustomCommand[] commands = null, ExaminationCallback examination = null)
         {
             Identifier = identifier;
             Description = description;

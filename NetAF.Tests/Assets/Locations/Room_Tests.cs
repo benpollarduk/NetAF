@@ -19,7 +19,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenVisited_WhenGetHasBeenVisited_ThenTrue()
         {
             var room = new Room(string.Empty, string.Empty);
-            room.MovedInto(null);
+            room.MovedInto();
 
             Assert.IsTrue(room.HasBeenVisited);
         }

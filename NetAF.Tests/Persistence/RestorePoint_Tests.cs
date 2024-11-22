@@ -65,7 +65,7 @@ namespace NetAF.Tests.Persistence
         {
             var command = new CustomCommand(new CommandHelp("TEST COMMAND", string.Empty), true, true, null);
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
-            var room = new Room(string.Empty, string.Empty, null, commands: [command]);
+            var room = new Room(string.Empty, string.Empty, exits: null, commands: [command]);
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
