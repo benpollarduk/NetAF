@@ -6,7 +6,7 @@
     /// <param name="titleFrameBuilder">The builder to use for building title frames.</param>
     /// <param name="sceneFrameBuilder">The builder to use for building scene frames.</param>
     /// <param name="regionMapFrameBuilder">The builder to use for building region map frames.</param>
-    /// <param name="commandListFrameBuilder">The builder to use for building help frames.</param>
+    /// <param name="commandListFrameBuilder">The builder to use for building command list frames.</param>
     /// <param name="helpFrameBuilder">The builder to use for building help frames.</param>
     /// <param name="completionFrameBuilder">The builder to use for building completion frames.</param>
     /// <param name="gameOverFrameBuilder">The builder to use for building game over frames.</param>
