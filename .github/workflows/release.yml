@@ -85,7 +85,7 @@ jobs:
     - name: Build documentation
       run: docfx docs/docfx/docfx.json
 
-    - name: Copy website files, commit and tag, then push changes to BP.AdventureFramework-docs
+    - name: Copy website files, commit and tag, then push changes to NetAF-docs
       run: |
         mkdir NetAF-docs
         cd NetAF-docs
