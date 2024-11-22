@@ -74,9 +74,9 @@ NonPlayableCharacter npc = new("Gary", "The antagonist of the story.");
   
 ### Commands
 NetAF provides commands for interacting with game elements:
-  * **Drop X** - drop an item.
+  * **Drop X** - drop an item, where X is the item.
   * **Examine X** - allows items, characters and environments to be examined.
-  * **Take X** - take an item.
+  * **Take X** - take an item, where X is the item.
   * **Talk to X** - talk to a NPC, where X is the NPC.
   * **Use X on Y** - use an item. Items can be used on a variety of targets. Where X is the item and Y is the target.
   * **N, S, E, W, U, D** - traverse through the rooms in a region.
@@ -85,7 +85,7 @@ NetAF also provides global commands to help with game flow and option management
   * **About** - display version information.
   * **CommandsOn / CommandsOff** - toggle commands on/off.
   * **Exit** - exit the game.
-  * **Help X** - display the help screen for a command.
+  * **Help X** - display the help screen for a command, where X is the command.
   * **Commands** - display the command list.
   * **KeyOn / KeyOff** - turn the Key on/off.
   * **Map** - display the map.
