@@ -17,47 +17,47 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Get or set the character used for representing a locked exit.
         /// </summary>
-        public char LockedExit { get; set; } = Convert.ToChar("x");
+        public char LockedExit { get; set; } = 'x';
 
         /// <summary>
         /// Get or set the character used for representing an unlocked exit.
         /// </summary>
-        public char UnLockedExit { get; set; } = Convert.ToChar(" ");
+        public char UnLockedExit { get; set; } = ' ';
 
         /// <summary>
         /// Get or set the character used for representing an empty space.
         /// </summary>
-        public char EmptySpace { get; set; } = Convert.ToChar(" ");
+        public char EmptySpace { get; set; } = ' ';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
         /// </summary>
-        public char VerticalBoundary { get; set; } = Convert.ToChar("|");
+        public char VerticalBoundary { get; set; } = '|';
 
         /// <summary>
         /// Get or set the character to use for horizontal boundaries.
         /// </summary>
-        public char HorizontalBoundary { get; set; } = Convert.ToChar("-");
+        public char HorizontalBoundary { get; set; } = '-';
 
         /// <summary>
         /// Get or set the character to use for lower levels.
         /// </summary>
-        public char LowerLevel { get; set; } = Convert.ToChar(".");
+        public char LowerLevel { get; set; } = '.';
 
         /// <summary>
         /// Get or set the character to use for indicating the player.
         /// </summary>
-        public char Player { get; set; } = Convert.ToChar("O");
+        public char Player { get; set; } = 'O';
 
         /// <summary>
         /// Get or set the character to use for indicating the focus.
         /// </summary>
-        public char Focus { get; set; } = Convert.ToChar("+");
+        public char Focus { get; set; } = '+';
 
         /// <summary>
         /// Get or set the character to use for the current floor.
         /// </summary>
-        public char CurrentFloorIndicator { get; set; } = Convert.ToChar("*");
+        public char CurrentFloorIndicator { get; set; } = '*';
 
         /// <summary>
         /// Get or set the focused room boundary color.
@@ -153,7 +153,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             if (room.HasLockedExitInDirection(Direction.Up))
                 gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, LockedExit, LockedExitColor);
             else if (room.HasUnlockedExitInDirection(Direction.Up))
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, Convert.ToChar("^"), color);
+                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, '^', color);
             else
                 gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, EmptySpace, color);
 
@@ -167,7 +167,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             if (room.HasLockedExitInDirection(Direction.Down))
                 gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, LockedExit, LockedExitColor);
             else if (room.HasUnlockedExitInDirection(Direction.Down))
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, Convert.ToChar("v"), color);
+                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, 'v', color);
             else
                 gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, EmptySpace, color);
 

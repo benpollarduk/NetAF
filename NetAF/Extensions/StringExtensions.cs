@@ -63,9 +63,9 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(word))
                 return false;
 
-            var space = Convert.ToChar(" ");
+            var space = ' ';
             var words = word.TrimEnd(space).Split(space);
-            var lastWord = words[words.Length - 1];
+            var lastWord = words[^1];
             return lastWord.ToUpper().EndsWith('S');
         }
 
@@ -79,10 +79,10 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(word))
                 return string.Empty;
 
-            var space = Convert.ToChar(" ");
+            var space = ' ';
             var words = word.TrimEnd(space).Split(space);
             var firstWord = words[0];
-            var lastWord = words[words.Length - 1];
+            var lastWord = words[^1];
 
             if (IsPlural(lastWord))
                 return "some";
@@ -135,7 +135,7 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            if (value.EndsWith(".") || value.EndsWith("!") || value.EndsWith("?"))
+            if (value.EndsWith('.') || value.EndsWith('!') || value.EndsWith('?'))
                 return value.Remove(value.Length - 1);
 
             return value;
