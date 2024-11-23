@@ -51,7 +51,7 @@ namespace NetAF.Persistence
             {
                 Name = name,
                 CreationTime = DateTime.Now,
-                Game = new(game)
+                Game = GameSerialization.FromGame(game)
             };
         }
 

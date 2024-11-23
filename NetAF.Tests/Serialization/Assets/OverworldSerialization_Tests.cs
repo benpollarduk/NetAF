@@ -8,33 +8,33 @@ namespace NetAF.Tests.Serialization.Assets
     public class OverworldSerialization_Tests
     {
         [TestMethod]
-        public void GivenInRegionA_ThenCurrentRegionIsA()
+        public void GivenInRegionA_WhenFromOverworld_ThenCurrentRegionIsA()
         {
             Overworld overworld = new(string.Empty, string.Empty);
             overworld.AddRegion(new("A", string.Empty));
 
-            OverworldSerialization result = new(overworld);
+            OverworldSerialization result = OverworldSerialization.FromOverworld(overworld);
 
             Assert.AreEqual("A", result.CurrentRegion);
         }
 
         [TestMethod]
-        public void GivenNoRegions_ThenRegionsLengthIs0()
+        public void GivenNoRegions_WhenFromOverworld_ThenRegionsLengthIs0()
         {
             Overworld overworld = new(string.Empty, string.Empty);
 
-            OverworldSerialization result = new(overworld);
+            OverworldSerialization result = OverworldSerialization.FromOverworld(overworld);
 
             Assert.AreEqual(0, result.Regions.Length);
         }
 
         [TestMethod]
-        public void Given1Region_ThenRegionsLengthIs1()
+        public void Given1Region_WhenFromOverworld_ThenRegionsLengthIs1()
         {
             Overworld overworld = new(string.Empty, string.Empty);
             overworld.AddRegion(new("A", string.Empty));
 
-            OverworldSerialization result = new(overworld);
+            OverworldSerialization result = OverworldSerialization.FromOverworld(overworld);
 
             Assert.AreEqual(1, result.Regions.Length);
         }
@@ -49,7 +49,7 @@ namespace NetAF.Tests.Serialization.Assets
             overworld2.AddRegion(new(string.Empty, string.Empty));
             overworld2.AddRegion(new("TARGET", string.Empty));
             overworld2.Move(overworld2.Regions[1]);
-            OverworldSerialization serialization = new(overworld2);
+            OverworldSerialization serialization = OverworldSerialization.FromOverworld(overworld2);
 
             serialization.Restore(overworld);
 

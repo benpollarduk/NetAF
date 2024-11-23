@@ -2,7 +2,7 @@
 using NetAF.Logic;
 using NetAF.Serialization.Assets;
 
-namespace NetAF.Tests.Serialization.Assets
+namespace NetAF.Tests.Logic
 {
     [TestClass]
     public class PlayableCharacterLocation_Tests
@@ -11,7 +11,7 @@ namespace NetAF.Tests.Serialization.Assets
         public void GivenSerialization_WhenFromSerialization_ThenRestoredCorrectly()
         {
             PlayableCharacterLocation location = new("a", "b", "c");
-            PlayableCharacterLocationSerialization serialization = new(location);
+            PlayableCharacterLocationSerialization serialization = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
             var result = PlayableCharacterLocation.FromSerialization(serialization);
 

@@ -8,10 +8,10 @@ namespace NetAF.Tests.Assets.Attributes
     internal class Attribute_Tests
     {
         [TestMethod]
-        public void GivenFromSerialization_ThenAttributeRestoredCorrectly()
+        public void GivenFromSerialization_WhenFromAttribute_ThenAttributeRestoredCorrectly()
         {
             Attribute attribute = new("a", "b", 1, 10);
-            AttributeSerialization serialization = new(attribute);
+            AttributeSerialization serialization = AttributeSerialization.FromAttribute(attribute);
 
             var result = Attribute.FromSerialization(serialization);
 

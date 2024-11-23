@@ -8,34 +8,34 @@ namespace NetAF.Tests.Serialization.Assets
     public class ConversationSerialization_Tests
     {
         [TestMethod]
-        public void GivenNoCurrentParagraph_ThenCurrentParagraphIsNoCurrentParagraph()
+        public void GivenNoCurrentParagraph_WhenFromConversation_ThenCurrentParagraphIsNoCurrentParagraph()
         {
             Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
 
-            ConversationSerialization result = new(conversation);
+            ConversationSerialization result = ConversationSerialization.FromConversation(conversation);
 
             Assert.AreEqual(ConversationSerialization.NoCurrentParagraph, result.CurrentParagraph);
         }
 
         [TestMethod]
-        public void GivenCurrentParagraphIsElement0_ThenCurrentParagraphIs0()
+        public void GivenCurrentParagraphIsElement0_WhenFromConversation_ThenCurrentParagraphIs0()
         {
             Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
 
-            ConversationSerialization result = new(conversation);
+            ConversationSerialization result = ConversationSerialization.FromConversation(conversation);
 
             Assert.AreEqual(0, result.CurrentParagraph);
         }
 
         [TestMethod]
-        public void GivenCurrentParagraphIsElement1_ThenCurrentParagraphIs1()
+        public void GivenCurrentParagraphIsElement1_WhenFromConversation_ThenCurrentParagraphIs1()
         {
             Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
             conversation.Next(null);
 
-            var result = new ConversationSerialization(conversation);
+            var result = ConversationSerialization.FromConversation(conversation);
 
             Assert.AreEqual(1, result.CurrentParagraph);
         }
@@ -46,7 +46,7 @@ namespace NetAF.Tests.Serialization.Assets
             Conversation conversation = new(new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation.Next(null);
             Conversation conversation2 = new();
-            ConversationSerialization serialization = new(conversation2);
+            ConversationSerialization serialization = ConversationSerialization.FromConversation(conversation2);
 
             serialization.Restore(conversation);
 
@@ -60,7 +60,7 @@ namespace NetAF.Tests.Serialization.Assets
             Conversation conversation2 = new(new Paragraph(string.Empty), new Paragraph(string.Empty), new Paragraph(string.Empty));
             conversation2.Next(null);
             conversation2.Next(null);
-            ConversationSerialization serialization = new(conversation2);
+            ConversationSerialization serialization = ConversationSerialization.FromConversation(conversation2);
 
             serialization.Restore(conversation);
 

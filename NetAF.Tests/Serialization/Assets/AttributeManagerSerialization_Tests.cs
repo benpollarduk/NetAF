@@ -9,12 +9,12 @@ namespace NetAF.Tests.Serialization.Assets
     public class AttributeManagerSerialization_Tests
     {
         [TestMethod]
-        public void Given1Attributes_ThenValuesHas1Element()
+        public void Given1Attributes_WhenFromAttributeManager_ThenValuesHas1Element()
         {
             AttributeManager attributeManager = new();
             attributeManager.Add(new Attribute("A", "B", 5, 10), 0);
 
-            var result = new AttributeManagerSerialization(attributeManager);
+            var result = AttributeManagerSerialization.FromAttributeManager(attributeManager);
 
             Assert.AreEqual(1, result.Values.Count);
         }
@@ -25,7 +25,7 @@ namespace NetAF.Tests.Serialization.Assets
             AttributeManager attributeManager1 = new();
             AttributeManager attributeManager2 = new();
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
-            var serialization = new AttributeManagerSerialization(attributeManager2);
+            var serialization = AttributeManagerSerialization.FromAttributeManager(attributeManager2);
 
             serialization.Restore(attributeManager1);
 
@@ -33,12 +33,12 @@ namespace NetAF.Tests.Serialization.Assets
         }
 
         [TestMethod]
-        public void Given0Attributes_WhenRestoreFromARestorationWith1Attribute_ThenAttributeRestoredCorrectly()
+        public void Given0Attributes_WhenRestoreFromARestorationWith1Attribute_When_Restore_ThenAttributeRestoredCorrectly()
         {
             AttributeManager attributeManager1 = new();
             AttributeManager attributeManager2 = new();
             attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
-            var serialization = new AttributeManagerSerialization(attributeManager2);
+            var serialization = AttributeManagerSerialization.FromAttributeManager(attributeManager2);
 
             serialization.Restore(attributeManager1);
             var attributeDictionary = attributeManager2.GetAsDictionary();

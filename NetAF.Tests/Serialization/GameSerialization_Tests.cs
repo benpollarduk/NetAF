@@ -12,7 +12,7 @@ namespace NetAF.Tests.Serialization
     public class GameSerialization_Tests
     {
         [TestMethod]
-        public void GivenAPlayer_ThenPlayersIsNotNull()
+        public void GivenAPlayer_WhenFromGame_ThenPlayersIsNotNull()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -21,13 +21,13 @@ namespace NetAF.Tests.Serialization
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            GameSerialization result = new(game);
+            GameSerialization result = GameSerialization.FromGame(game);
 
             Assert.IsNotNull(result.Players);
         }
 
         [TestMethod]
-        public void GivenAPlayer_ThenActivePlayerIdentifierIsNotNullOrEmpty()
+        public void GivenAPlayer_WhenFromGame_ThenActivePlayerIdentifierIsNotNullOrEmpty()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -36,14 +36,14 @@ namespace NetAF.Tests.Serialization
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("player", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            GameSerialization result = new(game);
+            GameSerialization result = GameSerialization.FromGame(game);
 
             Assert.IsNotNull(result.ActivePlayerIdentifier);
             Assert.AreNotEqual(string.Empty, result.ActivePlayerIdentifier);
         }
 
         [TestMethod]
-        public void GivenAnOverworld_ThenOverworldIsNotNull()
+        public void GivenAnOverworld_WhenFromGame_ThenOverworldIsNotNull()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -52,13 +52,13 @@ namespace NetAF.Tests.Serialization
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            GameSerialization result = new(game);
+            GameSerialization result = GameSerialization.FromGame(game);
 
             Assert.IsNotNull(result.Overworld);
         }
 
         [TestMethod]
-        public void Given2PlayableCharacterLocations_ThenInactivePlayerLocationsContains2Elements()
+        public void Given2PlayableCharacterLocations_WhenFromGame_ThenInactivePlayerLocationsContains2Elements()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
@@ -69,7 +69,7 @@ namespace NetAF.Tests.Serialization
             game.ChangePlayer(new PlayableCharacter("b", string.Empty));
             game.ChangePlayer(new PlayableCharacter("c", string.Empty));
 
-            GameSerialization result = new(game);
+            GameSerialization result = GameSerialization.FromGame(game);
 
             Assert.AreEqual(2, result.InactivePlayerLocations.Length);
         }
@@ -94,7 +94,7 @@ namespace NetAF.Tests.Serialization
             game2.Player.AddItem(item2);
             room2.RemoveItem(item2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             serialization.Restore(game);
 
@@ -123,7 +123,7 @@ namespace NetAF.Tests.Serialization
             game2.Player.RemoveItem(i);
             room2.AddItem(i);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             serialization.Restore(game);
 
@@ -159,7 +159,7 @@ namespace NetAF.Tests.Serialization
             roomA2.RemoveCharacter(npc2);
             roomB2.AddCharacter(npc2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             serialization.Restore(game);
 

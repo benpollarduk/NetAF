@@ -8,11 +8,11 @@ namespace NetAF.Tests.Serialization.Assets
     public class ExitSerialization_Tests
     {
         [TestMethod]
-        public void GivenIsLocked_ThenIsLockedIsTrue()
+        public void GivenIsLocked_WhenFromExit_ThenIsLockedIsTrue()
         {
             Exit exit = new(Direction.North, true);
 
-            ExitSerialization result = new(exit);
+            ExitSerialization result = ExitSerialization.FromExit(exit);
 
             Assert.IsTrue(result.IsLocked);
         }
@@ -22,7 +22,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Exit exit = new(Direction.North, false);
             Exit exit2 = new(Direction.North, true);
-            ExitSerialization serialization = new(exit2);
+            ExitSerialization serialization = ExitSerialization.FromExit(exit2);
 
             serialization.Restore(exit);
 
