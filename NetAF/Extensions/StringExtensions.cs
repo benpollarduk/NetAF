@@ -66,7 +66,7 @@ namespace NetAF.Extensions
             var space = Convert.ToChar(" ");
             var words = word.TrimEnd(space).Split(space);
             var lastWord = words[words.Length - 1];
-            return lastWord.EndsWith("S", StringComparison.CurrentCultureIgnoreCase);
+            return lastWord.ToUpper().EndsWith('S');
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace NetAF.Extensions
 
             if (IsPlural(lastWord))
                 return "some";
-            if (IsVowel(firstWord[0].ToString()) && !firstWord.StartsWith("U", StringComparison.CurrentCultureIgnoreCase))
+            if (IsVowel(firstWord[0].ToString()) && !firstWord.ToUpper().StartsWith('U'))
                 return "an";
 
             return "a";
@@ -116,13 +116,13 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            if (value.EndsWith(".") || value.EndsWith("!") || value.EndsWith("?"))
+            if (value.EndsWith('.') || value.EndsWith('!') || value.EndsWith('?'))
                 return value;
 
-            if (value.EndsWith(","))
-                return value.Substring(0, value.Length - 1) + ".";
+            if (value.EndsWith(','))
+                return value.Substring(0, value.Length - 1) + '.';
 
-            return value + ".";
+            return value + '.';
         }
 
         /// <summary>
@@ -180,11 +180,11 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(value))
                 return "\"\"";
 
-            if (!value.StartsWith("\""))
-                value = "\"" + value;
+            if (!value.StartsWith('"'))
+                value = '"' + value;
 
-            if (!value.EndsWith("\""))
-                value += "\"";
+            if (!value.EndsWith('"'))
+                value += '"';
 
             return value;
         }

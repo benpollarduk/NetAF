@@ -17,7 +17,7 @@ namespace NetAF.Utilities
         /// <summary>
         /// Get the new line string.
         /// </summary>
-        public const string Newline = "\n";
+        public const char Newline = '\n';
 
         /// <summary>
         /// Get the character for line feed.

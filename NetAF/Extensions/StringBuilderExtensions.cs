@@ -20,10 +20,10 @@ namespace NetAF.Extensions
 
             var str = value.ToString();
 
-            if (str.EndsWith(".") || str.EndsWith("!") || str.EndsWith("?"))
+            if (str.EndsWith('.') || str.EndsWith('!') || str.EndsWith('?'))
                 return;
 
-            if (str.EndsWith(","))
+            if (str.EndsWith(','))
                 value.Remove(value.Length - 1, 1);
 
             value.Append(".");
