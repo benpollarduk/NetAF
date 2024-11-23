@@ -1,5 +1,4 @@
-﻿using System;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Utilities;
 
@@ -202,7 +201,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="color">The color of the underline.</param>
         public void DrawUnderline(int x, int y, int length, AnsiColor color)
         {
-            var underline = Convert.ToChar("-");
+            var underline = '-';
 
             for (var i = 0; i < length; i++)
                 SetCell(x + i, y, underline, color);

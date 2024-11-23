@@ -1,5 +1,4 @@
-﻿using NetAF.Assets;
-using NetAF.Assets.Locations;
+﻿using NetAF.Assets.Locations;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets

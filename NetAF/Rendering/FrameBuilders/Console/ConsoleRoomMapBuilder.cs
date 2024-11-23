@@ -17,37 +17,37 @@ namespace NetAF.Rendering.FrameBuilders.Console
         /// <summary>
         /// Get or set the character used for representing a locked exit.
         /// </summary>
-        public char LockedExit { get; set; } = Convert.ToChar("x");
+        public char LockedExit { get; set; } = 'x';
 
         /// <summary>
         /// Get or set the character used for representing there is an item or a character in the room.
         /// </summary>
-        public char ItemOrCharacterInRoom { get; set; } = Convert.ToChar("?");
+        public char ItemOrCharacterInRoom { get; set; } = '?';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
         /// </summary>
-        public char VerticalBoundary { get; set; } = Convert.ToChar("|");
+        public char VerticalBoundary { get; set; } = '|';
 
         /// <summary>
         /// Get or set the character to use for horizontal boundaries.
         /// </summary>
-        public char HorizontalBoundary { get; set; } = Convert.ToChar("-");
+        public char HorizontalBoundary { get; set; } = '-';
 
         /// <summary>
         /// Get or set the character to use for vertical exit borders.
         /// </summary>
-        public char VerticalExitBorder { get; set; } = Convert.ToChar("|");
+        public char VerticalExitBorder { get; set; } = '|';
 
         /// <summary>
         /// Get or set the character to use for horizontal exit borders.
         /// </summary>
-        public char HorizontalExitBorder { get; set; } = Convert.ToChar("-");
+        public char HorizontalExitBorder { get; set; } = '-';
 
         /// <summary>
         /// Get or set the character to use for corners.
         /// </summary>
-        public char Corner { get; set; } = Convert.ToChar("+");
+        public char Corner { get; set; } = '+';
 
         /// <summary>
         /// Get or set the padding between the key and the map.
@@ -105,9 +105,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y, VerticalExitBorder, BoundaryColor);
 
                 if (viewPoint[Direction.North]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, Convert.ToChar("n"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'n', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, Convert.ToChar("N"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'N', UnvisitedExitColor);
 
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y, VerticalExitBorder, BoundaryColor);
             }
@@ -146,9 +146,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 6, VerticalExitBorder, BoundaryColor);
 
                 if (viewPoint[Direction.South]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, Convert.ToChar("s"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 's', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, Convert.ToChar("S"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 'S', UnvisitedExitColor);
 
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 6, VerticalExitBorder, BoundaryColor);
             }
@@ -186,9 +186,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 2, HorizontalExitBorder, BoundaryColor);
 
                 if (viewPoint[Direction.East]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, Convert.ToChar("e"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'e', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, Convert.ToChar("E"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'E', UnvisitedExitColor);
 
                 gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 4, HorizontalExitBorder, BoundaryColor);
             }
@@ -223,9 +223,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
                 gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 2, HorizontalExitBorder, BoundaryColor);
 
                 if (viewPoint[Direction.West]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, Convert.ToChar("w"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'w', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, Convert.ToChar("W"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'W', UnvisitedExitColor);
 
                 gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 4, HorizontalExitBorder, BoundaryColor);
             }
@@ -254,9 +254,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
             else if (room.HasUnlockedExitInDirection(Direction.Up))
             {
                 if (viewPoint[Direction.Up]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, Convert.ToChar("u"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'u', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, Convert.ToChar("U"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'U', UnvisitedExitColor);
             }
         }
 
@@ -275,9 +275,9 @@ namespace NetAF.Rendering.FrameBuilders.Console
             else if (room.HasUnlockedExitInDirection(Direction.Down))
             {
                 if (viewPoint[Direction.Down]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, Convert.ToChar("d"), VisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'd', VisitedExitColor);
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, Convert.ToChar("D"), UnvisitedExitColor);
+                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'D', UnvisitedExitColor);
             }
         }
 
