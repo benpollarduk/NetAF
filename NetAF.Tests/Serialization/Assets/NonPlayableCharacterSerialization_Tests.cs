@@ -9,21 +9,21 @@ namespace NetAF.Tests.Serialization.Assets
     public class NonPlayableCharacterSerialization_Tests
     {
         [TestMethod]
-        public void GivenNullConversation_ThenConversationNotNull()
+        public void GivenNullConversation_WhenFromNonPlayableCharacter_ThenConversationNotNull()
         {
             NonPlayableCharacter character = new(string.Empty, string.Empty);
 
-            NonPlayableCharacterSerialization result = new(character);
+            NonPlayableCharacterSerialization result = NonPlayableCharacterSerialization.FromNonPlayableCharacter(character);
 
             Assert.IsNotNull(result.Conversation);
         }
 
         [TestMethod]
-        public void GivenNotNullConversation_ThenConversationNotNull()
+        public void GivenNotNullConversation_WhenFromNonPlayableCharacter_ThenConversationNotNull()
         {
             NonPlayableCharacter character = new(string.Empty, string.Empty, conversation: new());
 
-            NonPlayableCharacterSerialization result = new(character);
+            NonPlayableCharacterSerialization result = NonPlayableCharacterSerialization.FromNonPlayableCharacter(character);
 
             Assert.IsNotNull(result.Conversation);
         }
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Serialization.Assets
             NonPlayableCharacter character = new(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
             NonPlayableCharacter character2 = new(string.Empty, string.Empty, new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty)));
             character2.Conversation.Next(null);
-            NonPlayableCharacterSerialization serialization = new(character2);
+            NonPlayableCharacterSerialization serialization = NonPlayableCharacterSerialization.FromNonPlayableCharacter(character2);
 
             serialization.Restore(character);
 

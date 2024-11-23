@@ -5,25 +5,43 @@ namespace NetAF.Serialization.Assets
     /// <summary>
     /// Represents a serialization of a PlayableCharacterLocation.
     /// </summary>
-    /// <param name="location">The location to serialize.</param>
-    public sealed class PlayableCharacterLocationSerialization(PlayableCharacterLocation location) : IObjectSerialization<PlayableCharacterLocation>
+    public sealed class PlayableCharacterLocationSerialization : IObjectSerialization<PlayableCharacterLocation>
     {
         #region Properties
 
         /// <summary>
         /// Get or set the player identifier.
         /// </summary>
-        public string PlayerIdentifier { get; set; } = location?.PlayerIdentifier;
+        public string PlayerIdentifier { get; set; }
 
         /// <summary>
         /// Get or set the region identifier.
         /// </summary>
-        public string RegionIdentifier { get; set; } = location?.RegionIdentifier;
+        public string RegionIdentifier { get; set; }
 
         /// <summary>
         /// Get or set the room identifier.
         /// </summary>
-        public string RoomIdentifier { get; set; } = location?.RoomIdentifier;
+        public string RoomIdentifier { get; set; }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Create a new serialization from a PlayableCharacterLocation.
+        /// </summary>
+        /// <param name="playableCharacterLocation">The PlayableCharacterLocation to create the serialization from.</param>
+        /// <returns>The serialization.</returns>
+        public static PlayableCharacterLocationSerialization FromPlayableCharacterLocation(PlayableCharacterLocation playableCharacterLocation)
+        {
+            return new()
+            {
+                PlayerIdentifier = playableCharacterLocation?.PlayerIdentifier,
+                RegionIdentifier = playableCharacterLocation?.RegionIdentifier,
+                RoomIdentifier = playableCharacterLocation?.RoomIdentifier
+            };
+        }
 
         #endregion
 

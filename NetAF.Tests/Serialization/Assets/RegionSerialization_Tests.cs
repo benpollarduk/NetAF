@@ -8,33 +8,33 @@ namespace NetAF.Tests.Serialization.Assets
     public class RegionSerialization_Tests
     {
         [TestMethod]
-        public void GivenInRoomA_ThenCurrentRoomIsA()
+        public void GivenInRoomA_WhenFromRegion_ThenCurrentRoomIsA()
         {
             Region region = new(string.Empty, string.Empty);
             region.AddRoom(new("A", string.Empty), 0, 0, 0);
 
-            RegionSerialization result = new(region);
+            RegionSerialization result = RegionSerialization.FromRegion(region);
 
             Assert.AreEqual("A", result.CurrentRoom);
         }
 
         [TestMethod]
-        public void GivenNoRooms_ThenRoomsLengthIs0()
+        public void GivenNoRooms_WhenFromRegion_ThenRoomsLengthIs0()
         {
             Region region = new(string.Empty, string.Empty);
 
-            RegionSerialization result = new(region);
+            RegionSerialization result = RegionSerialization.FromRegion(region);
 
             Assert.AreEqual(0, result.Rooms.Length);
         }
 
         [TestMethod]
-        public void Given1Room_ThenRoomsLengthIs1()
+        public void Given1Room_WhenFromRegion_ThenRoomsLengthIs1()
         {
             Region region = new(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
 
-            RegionSerialization result = new(region);
+            RegionSerialization result = RegionSerialization.FromRegion(region);
 
             Assert.AreEqual(1, result.Rooms.Length);
         }
@@ -49,7 +49,7 @@ namespace NetAF.Tests.Serialization.Assets
             region2.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.North)]), 0, 0, 0);
             region2.AddRoom(new("TARGET", string.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             region2.Move(Direction.North);
-            RegionSerialization serialization = new(region2);
+            RegionSerialization serialization = RegionSerialization.FromRegion(region2);
 
             serialization.Restore(region);
 

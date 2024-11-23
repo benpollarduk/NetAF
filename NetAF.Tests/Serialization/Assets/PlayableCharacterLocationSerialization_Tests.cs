@@ -8,31 +8,31 @@ namespace NetAF.Tests.Serialization.Assets
     public class PlayableCharacterLocationSerialization_Tests
     {
         [TestMethod]
-        public void GivenPlayableCharacterLocationWhenPlayerIdentifierIsA_ThenPlayerIdentifierIsA()
+        public void GivenPlayableCharacterLocationWhenPlayerIdentifierIsA_WhenFromPlayableCharacterLocation_ThenPlayerIdentifierIsA()
         {
             PlayableCharacterLocation location = new("A", string.Empty, string.Empty);
 
-            PlayableCharacterLocationSerialization result = new(location);
+            PlayableCharacterLocationSerialization result = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
             Assert.AreEqual("A", result.PlayerIdentifier);
         }
 
         [TestMethod]
-        public void GivenPlayableCharacterLocationWhenRegionIdentifierIsA_ThenRegionIdentifierIsA()
+        public void GivenPlayableCharacterLocationWhenRegionIdentifierIsA_WhenFromPlayableCharacterLocation_ThenRegionIdentifierIsA()
         {
             PlayableCharacterLocation location = new(string.Empty, "A", string.Empty);
 
-            PlayableCharacterLocationSerialization result = new(location);
+            PlayableCharacterLocationSerialization result = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
             Assert.AreEqual("A", result.RegionIdentifier);
         }
 
         [TestMethod]
-        public void GivenPlayableCharacterLocationWhenRoomIdentifierIsA_ThenRoomIdentifierIsA()
+        public void GivenPlayableCharacterLocationWhenRoomIdentifierIsA_WhenFromPlayableCharacterLocation_ThenRoomIdentifierIsA()
         {
             PlayableCharacterLocation location = new(string.Empty, string.Empty, "A");
 
-            PlayableCharacterLocationSerialization result = new(location);
+            PlayableCharacterLocationSerialization result = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
             Assert.AreEqual("A", result.RoomIdentifier);
         }
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             PlayableCharacterLocation location = new("a", "b", "c");
             PlayableCharacterLocation location2 = new(string.Empty, string.Empty, string.Empty);
-            PlayableCharacterLocationSerialization serialization = new(location);
+            PlayableCharacterLocationSerialization serialization = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
             serialization.Restore(location2);
 

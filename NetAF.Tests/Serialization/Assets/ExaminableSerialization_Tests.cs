@@ -10,52 +10,52 @@ namespace NetAF.Tests.Serialization.Assets
     public class ExaminableSerialization_Tests
     {
         [TestMethod]
-        public void GivenIdentifierIsA_ThenIdentifierIsA()
+        public void GivenIdentifierIsA_WhenFromIExaminable_ThenIdentifierIsA()
         {
             Item examinable = new("A", string.Empty);
 
-            ExaminableSerialization result = new(examinable);
+            ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
             Assert.AreEqual("A", result.Identifier);
         }
 
         [TestMethod]
-        public void GivenIsPlayerVisibleIsFalse_ThenIsPlayerVisibleIsFalse()
+        public void GivenIsPlayerVisibleIsFalse_WhenFromIExaminable_ThenIsPlayerVisibleIsFalse()
         {
             Item examinable = new(string.Empty, string.Empty) { IsPlayerVisible = false };
 
-            ExaminableSerialization result = new(examinable);
+            ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
             Assert.IsFalse(result.IsPlayerVisible);
         }
 
         [TestMethod]
-        public void GivenIsPlayerVisibleIsTrue_ThenIsPlayerVisibleIsTrue()
+        public void GivenIsPlayerVisibleIsTrue_WhenFromIExaminable_ThenIsPlayerVisibleIsTrue()
         {
             Item examinable = new(string.Empty, string.Empty) { IsPlayerVisible = true };
 
-            ExaminableSerialization result = new(examinable);
+            ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
             Assert.IsTrue(result.IsPlayerVisible);
         }
 
         [TestMethod]
-        public void GivenNoAttributes_ThenAttributeNotNull()
+        public void GivenNoAttributes_WhenFromIExaminable_ThenAttributeNotNull()
         {
             Item examinable = new(string.Empty, string.Empty);
 
-            ExaminableSerialization result = new(examinable);
+            ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
             Assert.IsNotNull(result.AttributeManager);
         }
 
         [TestMethod]
-        public void Given1CustomCommand_ThenCustomCommandsHas1Element()
+        public void Given1CustomCommand_WhenFromIExaminable_ThenCustomCommandsHas1Element()
         {
             CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
             Item examinable = new(string.Empty, string.Empty, commands: [command]);
 
-            ExaminableSerialization result = new(examinable);
+            ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
             Assert.AreEqual(1, result.Commands.Length);
         }
@@ -65,7 +65,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
             Item item2 = new(string.Empty, string.Empty) { IsPlayerVisible = true };
-            ExaminableSerialization serialization = new(item2);
+            ExaminableSerialization serialization = ExaminableSerialization.FromIExaminable(item2);
 
             serialization.Restore(item);
 
@@ -78,7 +78,7 @@ namespace NetAF.Tests.Serialization.Assets
             Item item = new(string.Empty, string.Empty);
             Item item2 = new(string.Empty, string.Empty);
             item2.Attributes.Add(new Attribute(string.Empty, string.Empty, 0, 1), 1);
-            ExaminableSerialization serialization = new(item2);
+            ExaminableSerialization serialization = ExaminableSerialization.FromIExaminable(item2);
 
             serialization.Restore(item);
 

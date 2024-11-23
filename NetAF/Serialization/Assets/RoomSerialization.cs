@@ -6,30 +6,53 @@ namespace NetAF.Serialization.Assets
     /// <summary>
     /// Represents a serialization of a Room.
     /// </summary>
-    /// <param name="room">The room to serialize.</param>
-    public sealed class RoomSerialization(Room room) : ExaminableSerialization(room), IObjectSerialization<Room>
+    public sealed class RoomSerialization : ExaminableSerialization, IObjectSerialization<Room>
     {
         #region Properties
 
         /// <summary>
         /// Get or set if the room has been visited.
         /// </summary>
-        public bool HasBeenVisited { get; set; } = room?.HasBeenVisited ?? false;
+        public bool HasBeenVisited { get; set; }
 
         /// <summary>
         /// Get or set the item serializations.
         /// </summary>
-        public ItemSerialization[] Items { get; set; } = room?.Items?.Select(x => new ItemSerialization(x))?.ToArray() ?? [];
+        public ItemSerialization[] Items { get; set; }
 
         /// <summary>
         /// Get or set the exit serializations.
         /// </summary>
-        public ExitSerialization[] Exits { get; set; } = room?.Exits?.Select(x => new ExitSerialization(x))?.ToArray() ?? [];
+        public ExitSerialization[] Exits { get; set; }
 
         /// <summary>
         /// Get or set the character serializations.
         /// </summary>
-        public NonPlayableCharacterSerialization[] Characters { get; set; } = room?.Characters?.Select(x => new NonPlayableCharacterSerialization(x))?.ToArray() ?? [];
+        public NonPlayableCharacterSerialization[] Characters { get; set; }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Create a new serialization from a Room.
+        /// </summary>
+        /// <param name="room">The Room to create the serialization from.</param>
+        /// <returns>The serialization.</returns>
+        public static RoomSerialization FromRoom(Room room)
+        {
+            return new()
+            {
+                Identifier = room?.Identifier?.IdentifiableName,
+                IsPlayerVisible = room?.IsPlayerVisible ?? false,
+                AttributeManager = AttributeManagerSerialization.FromAttributeManager(room?.Attributes),
+                Commands = room?.Commands?.Select(CustomCommandSerialization.FromCustomCommand).ToArray() ?? [],
+                HasBeenVisited = room?.HasBeenVisited ?? false,
+                Items = room?.Items?.Select(ItemSerialization.FromItem).ToArray() ?? [],
+                Exits = room?.Exits?.Select(ExitSerialization.FromExit).ToArray() ?? [],
+                Characters = room?.Characters?.Select(NonPlayableCharacterSerialization.FromNonPlayableCharacter).ToArray() ?? []
+            };
+        }
 
         #endregion
 

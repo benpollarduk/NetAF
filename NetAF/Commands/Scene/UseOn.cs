@@ -83,7 +83,7 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");

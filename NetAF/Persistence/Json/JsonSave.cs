@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using System.Text.Json;
 
 namespace NetAF.Persistence.Json
 {
@@ -16,7 +16,7 @@ namespace NetAF.Persistence.Json
         /// <returns>The Json reatore point.</returns>
         public static string ToJson(RestorePoint restorePoint)
         {
-            return JsonConvert.SerializeObject(restorePoint);
+            return JsonSerializer.Serialize(restorePoint);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace NetAF.Persistence.Json
         /// <returns>The restore point created from the Json.</returns>
         public static RestorePoint FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<RestorePoint>(json);
+            return JsonSerializer.Deserialize<RestorePoint>(json);
         }
 
         /// <summary>

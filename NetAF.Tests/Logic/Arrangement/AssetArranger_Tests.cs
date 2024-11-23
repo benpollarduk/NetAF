@@ -32,7 +32,7 @@ namespace NetAF.Tests.Logic.Arrangement
             game2.Player.AddItem(item2);
             room2.RemoveItem(item2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             AssetArranger.Arrange(game, serialization);
 
@@ -59,7 +59,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             room2.RemoveItem(item2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             AssetArranger.Arrange(game, serialization);
 
@@ -87,7 +87,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             room2.RemoveCharacter(character2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             AssetArranger.Arrange(game, serialization);
 
@@ -115,7 +115,7 @@ namespace NetAF.Tests.Logic.Arrangement
             game2.Player.RemoveItem(i);
             room2.AddItem(i);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             AssetArranger.Arrange(game, serialization);
 
@@ -151,7 +151,7 @@ namespace NetAF.Tests.Logic.Arrangement
             roomA2.RemoveCharacter(npc2);
             roomB2.AddCharacter(npc2);
 
-            GameSerialization serialization = new(game2);
+            GameSerialization serialization = GameSerialization.FromGame(game2);
 
             AssetArranger.Arrange(game, serialization);
 

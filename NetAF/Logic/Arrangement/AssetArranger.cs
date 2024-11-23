@@ -22,7 +22,7 @@ namespace NetAF.Logic.Arrangement
         public static void Arrange(Game game, GameSerialization serialization)
         {
             // get serialization of game in current state
-            GameSerialization currentState = new(game);
+            GameSerialization currentState = GameSerialization.FromGame(game);
 
             // determine which items have moved
             var itemRecords = DetermineItemMoves(currentState, serialization, game.Catalog.ItemContainers, game.Catalog.Items);
