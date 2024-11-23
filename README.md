@@ -1,7 +1,7 @@
 <div align="center">
 
 # NetAF
-A C# library that provides a framework for building text adventures and interactive stories in .NET.
+NetAF is a lightweight .NET 8 library for building text based adventures.
 
 ![icon](.nuget/Icon.bmp)
 

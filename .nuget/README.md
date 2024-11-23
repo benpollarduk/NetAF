@@ -2,7 +2,7 @@
 A C# library that provides a framework for building text adventures and interactive stories in .NET.
 
 ## Overview
-NetAF is a .NET Standard 2.0 implementation of a framework for building text based adventures.
+NetAF is a lightweight .NET 8 library for building text based adventures.
 
 At its core NetAF provides simple classes for developing game elements:
 
