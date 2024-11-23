@@ -28,15 +28,6 @@ namespace NetAF.Persistence
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the RestorePoint class.
-        /// </summary>
-        private RestorePoint() { }
-
-        #endregion
-
         #region StaticMethods
 
         /// <summary>
