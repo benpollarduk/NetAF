@@ -20,6 +20,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new Take(null);
 
             var result = command.Invoke(game);
@@ -37,6 +38,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new Take(null);
 
             var result = command.Invoke(game);
@@ -55,6 +57,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new Take(item);
 
             var result = command.Invoke(game);
@@ -74,6 +77,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new Take(item);
 
             var result = command.Invoke(game);
@@ -93,6 +97,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new Take(item);
 
             var result = command.Invoke(game);

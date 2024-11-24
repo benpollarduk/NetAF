@@ -12,6 +12,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Region region = new(string.Empty, string.Empty);
             region.AddRoom(new("A", string.Empty), 0, 0, 0);
+            region.Enter();
 
             RegionSerialization result = RegionSerialization.FromRegion(region);
 
@@ -33,6 +34,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Region region = new(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
+            region.Enter();
 
             RegionSerialization result = RegionSerialization.FromRegion(region);
 
@@ -48,6 +50,7 @@ namespace NetAF.Tests.Serialization.Assets
             Region region2 = new(string.Empty, string.Empty);
             region2.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.North)]), 0, 0, 0);
             region2.AddRoom(new("TARGET", string.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            region2.Enter();
             region2.Move(Direction.North);
             RegionSerialization serialization = RegionSerialization.FromRegion(region2);
 

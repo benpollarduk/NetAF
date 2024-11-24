@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {
@@ -16,6 +17,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
             var room = new Room(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             var region = regionMaker.Make();
+            region.Enter();
             var viewPoint = ViewPoint.Create(region);
 
             var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
@@ -31,6 +33,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
             regionMaker[0, 0, 0] = room;
             regionMaker[1, 0, 0] = new Room("Test", "Test", [new Exit(Direction.West)]);
             var region = regionMaker.Make();
+            region.Enter();
             var viewPoint = ViewPoint.Create(region);
 
             var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
@@ -59,6 +62,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
             regionMaker[1, 1, 2] = new("Test", "Test", [new Exit(Direction.Down)]);
             regionMaker[1, 1, 0] = new("Test", "Test", [new Exit(Direction.Up)]);
             var region = regionMaker.Make();
+            region.Enter();
             var viewPoint = ViewPoint.Create(region);
 
             var result = SceneHelper.CreateViewpointAsString(regionMaker[1, 1, 1], viewPoint);

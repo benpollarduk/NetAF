@@ -123,6 +123,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 0, 1, 0);
+            region.Enter();
 
             Assert.AreEqual(2, region.Rooms);
         }
@@ -138,6 +139,7 @@ namespace NetAF.Tests.Assets.Locations
             region.AddRoom(room2, 0, 1, 0);
 
             region.SetStartRoom(room2);
+            region.Enter();
 
             Assert.AreEqual(room2, region.CurrentRoom);
         }
@@ -151,6 +153,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             var result = region.Move(Direction.East);
 
@@ -166,6 +169,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             var result = region.Move(Direction.West);
 
@@ -181,6 +185,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             region.Move(Direction.East);
 
@@ -196,6 +201,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             region.Move(Direction.West);
             
@@ -226,6 +232,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             var result = region.GetAdjoiningRoom(Direction.East, region.CurrentRoom);
             
@@ -241,6 +248,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             var result = region.UnlockDoorPair(Direction.East);
 
@@ -256,6 +264,7 @@ namespace NetAF.Tests.Assets.Locations
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
 
             room1.FindExit(Direction.East, true, out var room1Exit);
             room2.FindExit(Direction.West, true, out var room2Exit);
