@@ -13,56 +13,6 @@ namespace NetAF.Tests.Rendering.Frames
     public class GridTextFrame_Tests
     {
         [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetToEmptyString_WhenIsColorSuppressed_ThenReturnFalse()
-        {
-            Environment.SetEnvironmentVariable(GridTextFrame.NO_COLOR, "");
-
-            var result = GridTextFrame.IsColorSuppressed();
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetTo0_WhenIsColorSuppressed_ThenReturnFalse()
-        {
-            Environment.SetEnvironmentVariable(GridTextFrame.NO_COLOR, "0");
-
-            var result = GridTextFrame.IsColorSuppressed();
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetToFalse_WhenIsColorSuppressed_ThenReturnFalse()
-        {
-            Environment.SetEnvironmentVariable(GridTextFrame.NO_COLOR, "False");
-
-            var result = GridTextFrame.IsColorSuppressed();
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetTo1_WhenIsColorSuppressed_ThenReturnTrue()
-        {
-            Environment.SetEnvironmentVariable(GridTextFrame.NO_COLOR, "1");
-
-            var result = GridTextFrame.IsColorSuppressed();
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetToTrue_WhenIsColorSuppressed_ThenReturnTrue()
-        {
-            Environment.SetEnvironmentVariable(GridTextFrame.NO_COLOR, "True");
-
-            var result = GridTextFrame.IsColorSuppressed();
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
         public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
         {
             var gridStringBuilder = new GridStringBuilder();

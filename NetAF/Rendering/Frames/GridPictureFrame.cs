@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.Presenters;
@@ -13,55 +12,120 @@ namespace NetAF.Rendering.Frames
     /// <param name="builder">The builder that creates the frame.</param>
     public sealed class GridPictureFrame(GridPictureBuilder builder) : IFrame
     {
-        #region Constants
+        #region Methods
 
         /// <summary>
-        /// Get the value for the NO_COLOR environment variable.
+        /// Get the foreground color for a cell.
         /// </summary>
-        internal const string NO_COLOR = "NO_COLOR";
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="suppressColor">Specify if color should be suppressed.</param>
+        /// <returns>The color.</returns>
+        private AnsiColor GetForegroundColor(int x, int y, bool suppressColor)
+        {
+            return !suppressColor ? builder.GetCellForegroundColor(x, y) : AnsiColor.White;
+        }
 
         /// <summary>
-        /// Get the ANSI escape sequence to hide the cursor.
+        /// Get the background color for a cell.
         /// </summary>
-        private const string ANSI_HIDE_CURSOR = "\u001b[?25l";
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="suppressColor">Specify if color should be suppressed.</param>
+        /// <returns>The color.</returns>
+        private AnsiColor GetBackgroundColor(int x, int y, bool suppressColor)
+        {
+            return !suppressColor ? builder.GetCellBackgroundColor(x, y) : AnsiColor.White;
+        }
+
+        /// <summary>
+        /// Render a single character.
+        /// </summary>
+        /// <param name="presenter">The presenter.</param>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="suppressColor">True if color should be suppressed, else false.</param>
+        /// <param name="lastForeground">The last foreground color.</param>
+        /// <param name="lastBackground">The last background color.</param>
+        private void RenderCharacter(IFramePresenter presenter, int x, int y, bool suppressColor, ref AnsiColor lastForeground, ref AnsiColor lastBackground)
+        {
+            var c = builder.GetCharacter(x, y);
+            var backgroundColor = GetBackgroundColor(x, y, suppressColor);
+
+            UpdateBackgroundColor(presenter, x, y, backgroundColor, ref lastBackground);
+
+            if (c != 0)
+            {
+                var foregroundColor = GetForegroundColor(x, y, suppressColor);
+                UpdateForegroundColor(presenter, x, y, foregroundColor, ref lastForeground);
+                presenter.Write(c);
+            }
+            else
+            {
+                presenter.Write(" ");
+            }
+        }
+
+        /// <summary>
+        /// Update the background color, if required.
+        /// </summary>
+        /// <param name="presenter">The presenter.</param>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="backgroundColor">The background color.</param>
+        /// <param name="lastBackgroundColor">The last background color.</param>
+        private void UpdateBackgroundColor(IFramePresenter presenter, int x, int y, AnsiColor backgroundColor, ref AnsiColor lastBackgroundColor)
+        {
+            if (RequiresColorChange(x, y, lastBackgroundColor, backgroundColor))
+            {
+                lastBackgroundColor = backgroundColor;
+                presenter.Write(Ansi.GetAnsiBackgroundEscapeSequence(backgroundColor));
+            }
+        }
+
+        /// <summary>
+        /// Update the foreground color, if required.
+        /// </summary>
+        /// <param name="presenter">The presenter.</param>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="foregroundColor">The foreground color.</param>
+        /// <param name="lastForegroundColor">The last foreground color.</param>
+        private void UpdateForegroundColor(IFramePresenter presenter, int x, int y, AnsiColor foregroundColor, ref AnsiColor lastForegroundColor)
+        {
+            if (RequiresColorChange(x, y, lastForegroundColor, foregroundColor))
+            {
+                lastForegroundColor = foregroundColor;
+                presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
+            }
+        }
 
         #endregion
 
         #region StaticMethods
 
         /// <summary>
-        /// Determine if color is suppressed. If the NO_COLOR environment variable is present and set to anything other than '0' or 'false' this will return true.
+        /// Get if a cell is the first cell.
         /// </summary>
-        /// <returns>True if the NO_COLOR environment variable is present and set to anything other than '0' or 'false', else false.</returns>
-        internal static bool IsColorSuppressed()
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <returns>True if the first cell, else false.</returns>
+        private static bool IsFirstCell(int x, int y)
         {
-            var value = Environment.GetEnvironmentVariable(NO_COLOR)?.ToLower() ?? string.Empty;
-
-            return value switch
-            {
-                "" or "0" or "false" => false,
-                _ => true,
-            };
+            return x == 0 && y == 0;
         }
 
         /// <summary>
-        /// Get an ANSI escape sequence for a foreground color.
+        /// Get if a color change is required.
         /// </summary>
-        /// <param name="color">The foreground color.</param>
-        /// <returns>The ANSI escape sequence.</returns>
-        private static string GetAnsiForegroundEscapeSequence(AnsiColor color)
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The x position of the cell.</param>
+        /// <param name="current">The current color.</param>
+        /// <param name="next">The next color.</param>
+        /// <returns>True if a color change is required, else false.</returns>
+        private static bool RequiresColorChange(int x, int y, AnsiColor current, AnsiColor next)
         {
-            return $"\u001B[{(int)color}m";
-        }
-
-        /// <summary>
-        /// Get an ANSI escape sequence for a background color.
-        /// </summary>
-        /// <param name="color">The background color.</param>
-        /// <returns>The ANSI escape sequence.</returns>
-        private static string GetAnsiBackgroundEscapeSequence(AnsiColor color)
-        {
-            return $"\u001B[{(int)color + 10}m";
+            return IsFirstCell(x, y) || next != current;
         }
 
         #endregion
@@ -114,9 +178,9 @@ namespace NetAF.Rendering.Frames
         /// <param name="presenter">The presenter.</param>
         public void Render(IFramePresenter presenter)
         {
-            var suppressColor = IsColorSuppressed();
+            var suppressColor = Ansi.IsColorSuppressed();
 
-            presenter.Write(ANSI_HIDE_CURSOR);
+            presenter.Write(Ansi.ANSI_HIDE_CURSOR);
 
             AnsiColor lastBackground = AnsiColor.Black;
             AnsiColor lastForeground = AnsiColor.White;
@@ -125,32 +189,7 @@ namespace NetAF.Rendering.Frames
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
                 {
-                    var c = builder.GetCharacter(x, y);
-
-                    var backgroundColor = !suppressColor ? builder.GetCellBackgroundColor(x, y) : AnsiColor.Black;
-
-                    if (x == 0 && y == 0 || backgroundColor != lastBackground)
-                    {
-                        lastBackground = backgroundColor;
-                        presenter.Write(GetAnsiBackgroundEscapeSequence(backgroundColor));
-                    }
-
-                    if (c != 0)
-                    {
-                        var foregroundColor = !suppressColor ? builder.GetCellForegroundColor(x, y) : AnsiColor.White;
-
-                        if (x == 0 && y == 0 || foregroundColor != lastForeground)
-                        {
-                            lastForeground = foregroundColor;
-                            presenter.Write(GetAnsiForegroundEscapeSequence(foregroundColor));
-                        }
-
-                        presenter.Write(c);
-                    }
-                    else
-                    {
-                        presenter.Write(" ");
-                    }
+                    RenderCharacter(presenter, x, y, suppressColor, ref lastForeground, ref lastBackground);
                 }
 
                 if (y < builder.DisplaySize.Height - 1)

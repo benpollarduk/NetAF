@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Console;
 using NetAF.Rendering.Presenters;
@@ -16,70 +15,12 @@ namespace NetAF.Rendering.Frames
     /// <param name="backgroundColor">The background color.</param>
     public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IFrame
     {
-        #region Constants
-
-        /// <summary>
-        /// Get the value for the NO_COLOR environment variable.
-        /// </summary>
-        internal const string NO_COLOR = "NO_COLOR";
-
-        /// <summary>
-        /// Get the ANSI escape sequence to hide the cursor.
-        /// </summary>
-        private const string ANSI_HIDE_CURSOR = "\u001b[?25l";
-
-        /// <summary>
-        /// Get the ANSI escape sequence to show the cursor.
-        /// </summary>
-        private const string ANSI_SHOW_CURSOR = "\u001b[?25h";
-
-        #endregion
-
         #region Properties
 
         /// <summary>
         /// Get the background color.
         /// </summary>
         public AnsiColor BackgroundColor { get; } = backgroundColor;
-
-        #endregion
-
-        #region StaticMethods
-
-        /// <summary>
-        /// Determine if color is suppressed. If the NO_COLOR environment variable is present and set to anything other than '0' or 'false' this will return true.
-        /// </summary>
-        /// <returns>True if the NO_COLOR environment variable is present and set to anything other than '0' or 'false', else false.</returns>
-        internal static bool IsColorSuppressed()
-        {
-            var value = Environment.GetEnvironmentVariable(NO_COLOR)?.ToLower() ?? string.Empty;
-
-            return value switch
-            {
-                "" or "0" or "false" => false,
-                _ => true,
-            };
-        }
-
-        /// <summary>
-        /// Get an ANSI escape sequence for a foreground color.
-        /// </summary>
-        /// <param name="color">The foreground color.</param>
-        /// <returns>The ANSI escape sequence.</returns>
-        private static string GetAnsiForegroundEscapeSequence(AnsiColor color)
-        {
-            return $"\u001B[{(int)color}m";
-        }
-
-        /// <summary>
-        /// Get an ANSI escape sequence for a background color.
-        /// </summary>
-        /// <param name="color">The background color.</param>
-        /// <returns>The ANSI escape sequence.</returns>
-        private static string GetAnsiBackgroundEscapeSequence(AnsiColor color)
-        {
-            return $"\u001B[{(int)color + 10}m";
-        }
 
         #endregion
 
@@ -131,12 +72,12 @@ namespace NetAF.Rendering.Frames
         /// <param name="presenter">The presenter.</param>
         public void Render(IFramePresenter presenter)
         {
-            var suppressColor = IsColorSuppressed();
+            var suppressColor = Ansi.IsColorSuppressed();
 
             if (!suppressColor)
-                presenter.Write(GetAnsiBackgroundEscapeSequence(BackgroundColor));
+                presenter.Write(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
 
-            presenter.Write(ANSI_HIDE_CURSOR);
+            presenter.Write(Ansi.ANSI_HIDE_CURSOR);
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -148,7 +89,7 @@ namespace NetAF.Rendering.Frames
                     {
                         if (!suppressColor)
                         {
-                            presenter.Write(GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
+                            presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
                         }
 
                         presenter.Write(c);
@@ -163,7 +104,7 @@ namespace NetAF.Rendering.Frames
                     presenter.Write(builder.LineTerminator);
             }
 
-            presenter.Write(ANSI_SHOW_CURSOR);
+            presenter.Write(Ansi.ANSI_SHOW_CURSOR);
         }
 
         #endregion
