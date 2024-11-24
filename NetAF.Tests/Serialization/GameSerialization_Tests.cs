@@ -66,6 +66,7 @@ namespace NetAF.Tests.Serialization
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("a", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             game.ChangePlayer(new PlayableCharacter("b", string.Empty));
             game.ChangePlayer(new PlayableCharacter("c", string.Empty));
 

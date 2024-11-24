@@ -189,15 +189,31 @@ namespace NetAF.Logic
         /// <param name="reaction">The reaction to handle.</param>
         private void HandleReaction(Reaction reaction)
         {
-            // check if needed to 
+            // 1. check if needed to display the reaction
             if (reaction.Result == ReactionResult.Error || reaction.Result == ReactionResult.Inform)
             {
                 // display the reaction
-                ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, reaction));
+                ChangeMode(new ReactionMode(Overworld.CurrentRegion?.CurrentRoom?.Identifier.Name, reaction));
+                return;
             }
-            else if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
+            
+            // 2. check that there is a room - it may be that the region changed and needs to be entered
+            if (Overworld.CurrentRegion.CurrentRoom == null)
             {
-                // revert back to scene mode as the command didn't change the mode and the current mode information, essentially the mode has expired
+                // enter the region
+                var regionEnterReaction = Overworld.CurrentRegion.Enter();
+
+                // if the reaction wasn't silent then show reaction, else revert back to scene mode
+                if (regionEnterReaction.Result != ReactionResult.Silent)
+                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, regionEnterReaction));
+                else
+                    ChangeMode(new SceneMode());
+            }
+
+            // 3. check if command didn't change the mode and the current mode type is information, essentially the mode has expired
+            if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
+            {
+                // revert back to scene mode as the 
                 ChangeMode(new SceneMode());
             }
         }

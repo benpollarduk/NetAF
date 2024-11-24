@@ -21,6 +21,7 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+                game.Overworld.CurrentRegion.Enter();
                 var mode = new RegionMapMode(RegionMapMode.Player);
 
                 mode.Render(game);
@@ -33,8 +34,10 @@ namespace NetAF.Tests.Logic.Modes
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
+            var region = regionMaker.Make();
+            region.Enter();
 
-            var result = RegionMapMode.CanPanToPosition(regionMaker.Make(), new Point3D(1, 1, 1));
+            var result = RegionMapMode.CanPanToPosition(region, new Point3D(1, 1, 1));
 
             Assert.IsFalse(result);
         }
@@ -45,8 +48,10 @@ namespace NetAF.Tests.Logic.Modes
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
+            var region = regionMaker.Make();
+            region.Enter();
 
-            var result = RegionMapMode.CanPanToPosition(regionMaker.Make(), new Point3D(0, 0, 0));
+            var result = RegionMapMode.CanPanToPosition(region, new Point3D(0, 0, 0));
 
             Assert.IsTrue(result);
         }
@@ -59,8 +64,10 @@ namespace NetAF.Tests.Logic.Modes
             Room room2 = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             regionMaker[1, 0, 0] = room2;
+            var region = regionMaker.Make();
+            region.Enter();
 
-            var result = RegionMapMode.CanPanToPosition(regionMaker.Make(), new Point3D(1, 0, 0));
+            var result = RegionMapMode.CanPanToPosition(region, new Point3D(1, 0, 0));
 
             Assert.IsFalse(result);
         }
@@ -75,6 +82,7 @@ namespace NetAF.Tests.Logic.Modes
             regionMaker[1, 0, 0] = room2;
             var region = regionMaker.Make();
             region.IsVisibleWithoutDiscovery = true;
+            region.Enter();
 
             var result = RegionMapMode.CanPanToPosition(region, new Point3D(1, 0, 0));
 
@@ -92,6 +100,7 @@ namespace NetAF.Tests.Logic.Modes
             var region = regionMaker.Make();
             region.JumpToRoom(new(1, 0, 1));
             region.JumpToRoom(new(0, 0, 0));
+            region.Enter();
 
             var result = RegionMapMode.CanPanToPosition(region, new Point3D(0, 0, 1));
 
@@ -107,6 +116,7 @@ namespace NetAF.Tests.Logic.Modes
             regionMaker[0, 0, 0] = room;
             regionMaker[1, 0, 1] = room2;
             var region = regionMaker.Make();
+            region.Enter();
 
             var result = RegionMapMode.CanPanToPosition(region, new Point3D(0, 0, 1));
 
@@ -123,6 +133,7 @@ namespace NetAF.Tests.Logic.Modes
             regionMaker[1, 0, 1] = room2;
             var region = regionMaker.Make();
             region.IsVisibleWithoutDiscovery = true;
+            region.Enter();
 
             var result = RegionMapMode.CanPanToPosition(region, new Point3D(0, 0, 1));
 
@@ -141,6 +152,7 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[1, 0, 1] = room2;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+                game.Overworld.CurrentRegion.Enter();
                 var mode = new RegionMapMode(new Point3D(0, 0, 1));
 
                 game.Overworld.CurrentRegion.JumpToRoom(new(1, 0, 1));

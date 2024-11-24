@@ -19,6 +19,7 @@ namespace NetAF.Tests.Assets.Locations
                 [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 1, 0);
+            region.Enter();
 
             var result = ViewPoint.Create(region);
 
@@ -40,6 +41,7 @@ namespace NetAF.Tests.Assets.Locations
                 [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 0, 0);
+            region.Enter();
 
             var result = ViewPoint.Create(region);
 
@@ -61,6 +63,7 @@ namespace NetAF.Tests.Assets.Locations
                 [1, 2, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
             };
             var region = regionMaker.Make(1, 0, 0);
+            region.Enter();
 
             var result = ViewPoint.Create(region).Any;
 

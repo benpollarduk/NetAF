@@ -12,7 +12,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
     {
         #region Constants
 
-        private const string Name = "Jungle Clearing";
+        public const string Name = "Jungle Clearing";
         private const string Description = "You are in a small clearing in a jungle, tightly enclosed by undergrowth. You have no idea how you got here. The chirps and buzzes coming from insects in the undergrowth are intense. There are some stone pedestals in front of you. Each has a small globe on top of it.";
 
         #endregion
