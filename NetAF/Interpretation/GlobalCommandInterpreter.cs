@@ -58,7 +58,7 @@ namespace NetAF.Interpretation
                     return InterpretationResult.Fail;
 
                 var commands = game.GetContextualCommands();
-                var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
+                var command = Array.Find(commands, x => x.Command.IsPlayerVisible && (x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun)));
                 
                 if (command != null)
                     return new(true, new Help(command));
