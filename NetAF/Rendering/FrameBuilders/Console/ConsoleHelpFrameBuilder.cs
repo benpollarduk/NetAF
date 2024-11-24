@@ -70,7 +70,7 @@ namespace NetAF.Rendering.FrameBuilders.Console
             gridStringBuilder.DrawWrapped($"Description: {commandHelp.Description.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
             if (!string.IsNullOrEmpty(commandHelp.Instructions))
-                gridStringBuilder.DrawWrapped($"Description: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
             if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                 gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out _);

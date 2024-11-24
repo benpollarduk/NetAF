@@ -24,7 +24,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help for on.
         /// </summary>
-        public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on another item or character", displayAs: "Use __ on __");
+        public static CommandHelp OnCommandHelp { get; } = new("On", "Use an item on a target", displayAs: "Use __ on __", instructions: "Use an item on another item or another character.");
 
         #endregion
 

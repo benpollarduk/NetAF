@@ -1,5 +1,4 @@
 ﻿using NetAF.Persistence.Json;
-using System;
 
 namespace NetAF.Commands.Persistence
 {
@@ -27,21 +26,14 @@ namespace NetAF.Commands.Persistence
         /// <returns>The reaction.</returns>
         private static Reaction LoadGameFromFile(Logic.Game game, string[] args)
         {
-            try
-            {
-                var result = JsonSave.FromFile(args[0], out var restorePoint, out var message);
+            var result = JsonSave.FromFile(args[0], out var restorePoint, out var message);
 
-                if (!result)
-                    return new(ReactionResult.Error, $"Failed to load: {message}");
+            if (!result)
+                return new(ReactionResult.Error, $"Failed to load: {message}");
 
-                restorePoint.Game.Restore(game);
+            restorePoint.Game.Restore(game);
 
-                return new(ReactionResult.Inform, $"Loaded.");
-            }
-            catch (Exception e)
-            {
-                return new(ReactionResult.Error, $"Error loading from file: {e.Message}");
-            }
+            return new(ReactionResult.Inform, $"Loaded.");
         }
 
         #endregion

@@ -486,5 +486,16 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.AreEqual(room, region.CurrentRoom);
         }
+
+        [TestMethod]
+        public void GivenCurrentRoomNullAndNoRooms_WhenEnter_ThenCurrentRoomIsNull()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+
+            region.Enter();
+
+            Assert.IsNull(region.CurrentRoom);
+        }
     }
 }
