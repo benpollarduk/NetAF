@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -21,6 +22,7 @@ namespace NetAF.Tests.Assets.Locations
             var room1 = new Room(Identifier.Empty, Description.Empty);
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(room1, 0, 0, 0);
+            region.Enter();
 
             Assert.IsNotNull(region.CurrentRoom);
         }
@@ -36,6 +38,7 @@ namespace NetAF.Tests.Assets.Locations
             region.AddRoom(room1, 0, 0, 0);
             region.AddRoom(room2, 0, 1, 0);
             region.AddRoom(room3, 1, 0, 0);
+            region.Enter();
 
             Assert.AreEqual(room1, region.CurrentRoom);
         }
@@ -53,6 +56,7 @@ namespace NetAF.Tests.Assets.Locations
             region.AddRoom(room3, 1, 1, 0);
 
             region.SetStartRoom(1, 1, 0);
+            region.Enter();
 
             Assert.AreEqual(room3, region.CurrentRoom);
         }
@@ -421,6 +425,57 @@ namespace NetAF.Tests.Assets.Locations
             var result = region.JumpToRoom(new Point3D(1, 0, 0));
 
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenCurrentRoomNull_WhenEnter_ThenCurrentRoomNotNull()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            region.SetStartRoom(room);
+
+            region.Enter();
+
+            Assert.IsNotNull(region.CurrentRoom);
+        }
+
+        [TestMethod]
+        public void GivenCurrentRoomNullAndStartRoomHasNoIntroduction_WhenEnter_ThenSilentReaction()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            region.SetStartRoom(room);
+
+            var result = region.Enter();
+
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenCurrentRoomNullAndStartRoomHasNoIntroduction_WhenEnter_ThenInformReaction()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty, "ABC");
+            region.AddRoom(room, 0, 0, 0);
+            region.SetStartRoom(room);
+
+            var result = region.Enter();
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenCurrentRoomNullAndNoStartRoomAssigned_WhenEnter_ThenCurrentRoomIsFirstRoom()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            region.Enter();
+
+            Assert.AreEqual(room, region.CurrentRoom);
         }
     }
 }

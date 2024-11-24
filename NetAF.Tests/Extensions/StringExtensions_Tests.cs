@@ -201,6 +201,14 @@ namespace NetAF.Tests.Extensions
         }
 
         [TestMethod]
+        public void GivenNullExaminable_WhenEqualsExaminable_ThenFalse()
+        {
+            var result = "A".EqualsExaminable(null);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void GivenStringIsEqualToExaminable_WhenEqualsExaminable_ThenTrue()
         {
             var result = "A".EqualsExaminable(new Item("A".ToIdentifier(), Description.Empty));

@@ -16,7 +16,7 @@ namespace NetAF.Assets.Locations
     {
         #region Fields
 
-        private Room currentRoom;
+        private Room startRoom;
         private readonly List<RoomPosition> roomPositions = [];
 
         #endregion
@@ -31,24 +31,7 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Get the current room.
         /// </summary>
-        public Room CurrentRoom
-        {
-            get
-            {
-                if (currentRoom != null) 
-                    return currentRoom;
-
-                if (roomPositions.Count > 0)
-                {
-                    var first = roomPositions[0].Room;
-                    SetStartRoom(first);
-                    currentRoom = first;
-                }
-
-                return currentRoom;
-            }
-            private set { currentRoom = value; }
-        }
+        public Room CurrentRoom { get; private set; }
 
         /// <summary>
         /// Get a room at a specified location.
@@ -99,6 +82,34 @@ namespace NetAF.Assets.Locations
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Enter this region.
+        /// </summary>
+        /// <returns>The reaction.</returns>
+        internal Reaction Enter()
+        {
+            if (startRoom == null && roomPositions.Count > 0)
+            {
+                var first = roomPositions[0].Room;
+                SetStartRoom(first);
+            }
+
+            if (CurrentRoom != startRoom)
+                CurrentRoom = startRoom;
+
+            if (CurrentRoom == null)
+                return new Reaction(ReactionResult.Error, "CurrentRoom is null.");
+
+            var wasVisited = CurrentRoom.HasBeenVisited;
+            CurrentRoom.MovedInto();
+            var introduction = CurrentRoom.Introduction.GetDescription();
+
+            if (wasVisited || string.IsNullOrEmpty(introduction))
+                return Reaction.Silent;
+            else
+                return new Reaction(ReactionResult.Inform, introduction);
+        }
 
         /// <summary>
         /// Get the position of a room.
@@ -210,8 +221,7 @@ namespace NetAF.Assets.Locations
         /// <param name="room">The Room to start in.</param>
         public void SetStartRoom(Room room)
         {
-            CurrentRoom = room;
-            CurrentRoom.MovedInto();
+            startRoom = room;
         }
 
         /// <summary>

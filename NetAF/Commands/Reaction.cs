@@ -14,6 +14,11 @@
         /// </summary>
         internal static Reaction Inform { get; } = new(ReactionResult.Inform, string.Empty);
 
+        /// <summary>
+        /// Provides a default value for Silent.
+        /// </summary>
+        internal static Reaction Silent { get; } = new(ReactionResult.Silent, string.Empty);
+
         #endregion
 
         #region Properties
