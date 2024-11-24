@@ -22,6 +22,7 @@ namespace NetAF.Tests.Persistence.Json
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var save = RestorePoint.Create("Test", game);
             var expectedMinusDateTime = """{"Game":{"ActivePlayerIdentifier":"","Players":[{"Items":[],"IsAlive":true,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}},"Commands":[]}],"Overworld":{"Regions":[{"Rooms":[{"HasBeenVisited":true,"Items":[{"Identifier":"","IsPlayerVisible":false,"AttributeManager":{"Values":{}},"Commands":[]}],"Exits":[],"Characters":[],"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}},"Commands":[]}],"CurrentRoom":"","IsVisibleWithoutDiscovery":false,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}},"Commands":[]}],"CurrentRegion":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":{}},"Commands":[]},"InactivePlayerLocations":[]},"Name":"Test""";
             var json = JsonSave.ToJson(save);

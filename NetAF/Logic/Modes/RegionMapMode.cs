@@ -139,6 +139,9 @@ namespace NetAF.Logic.Modes
             foreach (var room in allSnabbableRooms)
                 distances.Add(room, Matrix.DistanceBetweenPoints(position, matrix[room].Value));
 
+            if (distances.Count == 0)
+                return position;
+
             var targetRoom = distances.OrderBy(x => x.Value).First().Key;
             return matrix[targetRoom].Value;
         }

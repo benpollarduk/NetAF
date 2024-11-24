@@ -31,6 +31,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var stringBuilder = new GridStringBuilder();
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
@@ -59,6 +60,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var stringBuilder = new GridStringBuilder();
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
@@ -78,6 +80,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(0, 0, 0);
+                region.Enter();
                 var stringBuilder = new GridStringBuilder();
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
@@ -106,6 +109,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var stringBuilder = new GridStringBuilder();
                 var mapBuilder = new ConsoleRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));

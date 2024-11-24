@@ -59,7 +59,8 @@ namespace NetAF.Tests.Commands.Scene
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, npc);
 
             var result = command.Invoke(game);
@@ -78,6 +79,7 @@ namespace NetAF.Tests.Commands.Scene
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, pc), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, pc);
 
             var result = command.Invoke(game);
@@ -96,6 +98,7 @@ namespace NetAF.Tests.Commands.Scene
             overworld.AddRegion(region);
             var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, room);
 
             var result = command.Invoke(game);
@@ -117,6 +120,7 @@ namespace NetAF.Tests.Commands.Scene
             overworld.AddRegion(region);
             var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, room);
             command.Invoke(game);
 
@@ -139,6 +143,7 @@ namespace NetAF.Tests.Commands.Scene
                 return new Interaction(InteractionResult.TargetExpires, i);
             });
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, player);
             command.Invoke(game);
 
@@ -161,6 +166,7 @@ namespace NetAF.Tests.Commands.Scene
                 return new Interaction(InteractionResult.ItemAndTargetExpires, i);
             });
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, player);
             command.Invoke(game);
 
@@ -185,6 +191,7 @@ namespace NetAF.Tests.Commands.Scene
                 return new Interaction(InteractionResult.ItemExpires, i);
             });
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, player);
             command.Invoke(game);
 
@@ -210,6 +217,7 @@ namespace NetAF.Tests.Commands.Scene
             overworld.AddRegion(region);
             var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, npc);
             command.Invoke(game);
 
@@ -235,6 +243,7 @@ namespace NetAF.Tests.Commands.Scene
             overworld.AddRegion(region);
             var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, npc);
             command.Invoke(game);
 

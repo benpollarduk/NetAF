@@ -33,6 +33,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
@@ -63,6 +64,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
@@ -93,6 +95,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
@@ -123,6 +126,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders.Console
                 };
 
                 var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);

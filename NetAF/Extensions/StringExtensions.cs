@@ -50,7 +50,7 @@ namespace NetAF.Extensions
         /// <returns>True if this string equals the identifier, else false.</returns>
         public static bool EqualsExaminable(this string value, IExaminable examinable)
         {
-            return examinable.Identifier.Equals(value);
+            return examinable?.Identifier.Equals(value) ?? false;
         }
 
         /// <summary>

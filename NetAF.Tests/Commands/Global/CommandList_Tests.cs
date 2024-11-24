@@ -33,6 +33,7 @@ namespace NetAF.Tests.Commands.Global
             region.AddRoom(room, 0, 0, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
+            region.Enter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.ChangeMode(new AboutMode());
             var command = new CommandList();

@@ -8,6 +8,7 @@ using NetAF.Examples.Assets.Player;
 using NetAF.Examples.Assets.Regions.Everglades;
 using NetAF.Examples.Assets.Regions.Flat;
 using NetAF.Examples.Assets.Regions.Hub;
+using NetAF.Examples.Assets.Regions.Hub.Rooms;
 using NetAF.Examples.Assets.Regions.Zelda;
 using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
@@ -38,7 +39,7 @@ namespace NetAF.Examples
 
         private static void PopulateHub(Region hub, Overworld overworld, Region[] otherRegions)
         {
-            var room = hub.CurrentRoom;
+            hub.TryFindRoom(Clearing.Name, out var room);
 
             foreach (var otherRegion in otherRegions)
             {

@@ -40,7 +40,7 @@ namespace NetAF.Assets
         /// <returns>The identifiable string.</returns>
         private static string ToIdentifiableString(string value)
         {
-            return value.ToUpper().Replace(" ", string.Empty);
+            return value?.ToUpper().Replace(" ", string.Empty) ?? string.Empty;
         }
 
         #endregion
