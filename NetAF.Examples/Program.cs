@@ -14,6 +14,10 @@ using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Configuration;
+using NetAF.Logic.Modes;
+using NetAF.Rendering.FrameBuilders.Console;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.Frames;
 
 namespace NetAF.Examples
 {
@@ -95,6 +99,20 @@ namespace NetAF.Examples
                                 return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
 
                             return new(ReactionResult.Inform, $"Jumped to {x} {y} {z}.");
+                        }),
+                        new(new("Picture", "Display a picture."), true, true, (g, a) =>
+                        {
+                            var gridPictureBuilder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.BrightWhite);
+                            gridPictureBuilder.Resize(new(10, 10));
+                            gridPictureBuilder.SetCell(0, 0, 'C', AnsiColor.Cyan, AnsiColor.Magenta);
+                            gridPictureBuilder.SetCell(1, 0, 'D', AnsiColor.Blue, AnsiColor.Red);
+                            gridPictureBuilder.SetCell(2, 0, 'C', AnsiColor.Cyan, AnsiColor.Magenta);
+                            gridPictureBuilder.SetCell(3, 0, 'D', AnsiColor.Blue, AnsiColor.Red);
+                            gridPictureBuilder.SetCell(4, 0, 'C', AnsiColor.Cyan, AnsiColor.Magenta);
+                            gridPictureBuilder.SetCell(5, 0, 'D', AnsiColor.Blue, AnsiColor.Red);
+                            var frame = new GridPictureFrame(gridPictureBuilder);
+                            g.ChangeMode(new DirectRenderMode(frame));
+                            return new(ReactionResult.GameModeChanged, string.Empty);
                         }),
                         new Save(),
                         new Load()

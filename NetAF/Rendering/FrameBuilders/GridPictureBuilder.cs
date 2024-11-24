@@ -7,12 +7,14 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Provides a class for building pictures in a grid.
     /// </summary>
-    public class GridPictureBuilder
+    /// <param name="background">The background color.</param>
+    /// <param name="foreground">The foreground color.</param>
+    public class GridPictureBuilder(AnsiColor background, AnsiColor foreground)
     {
         #region Fields
 
-        private AnsiColor[,] foregroundColors;
-        private AnsiColor[,] backgroundColors;
+        private AnsiColor?[,] foregroundColors;
+        private AnsiColor?[,] backgroundColors;
         private char[,] buffer;
 
         #endregion
@@ -62,7 +64,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <returns>The cell foreground color.</returns>
         public AnsiColor GetCellForegroundColor(int x, int y)
         {
-            return foregroundColors[x, y];
+            return foregroundColors[x, y] ?? foreground;
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <returns>The cell background color.</returns>
         public AnsiColor GetCellBackgroundColor(int x, int y)
         {
-            return backgroundColors[x, y];
+            return backgroundColors[x, y] ?? background;
         }
 
         /// <summary>
@@ -82,8 +84,32 @@ namespace NetAF.Rendering.FrameBuilders
         public void Flush()
         {
             buffer = new char[DisplaySize.Width, DisplaySize.Height];
-            backgroundColors = new AnsiColor[DisplaySize.Width, DisplaySize.Height];
-            foregroundColors = new AnsiColor[DisplaySize.Width, DisplaySize.Height];
+            backgroundColors = new AnsiColor?[DisplaySize.Width, DisplaySize.Height];
+            foregroundColors = new AnsiColor?[DisplaySize.Width, DisplaySize.Height];
+        }
+
+        /// <summary>
+        /// Set a cell.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <param name="backgroundColor">The backgroundColor color of the cell.</param>
+        public void SetCell(int x, int y, AnsiColor backgroundColor)
+        {
+            backgroundColors[x, y] = backgroundColor;
+        }
+
+        /// <summary>
+        /// Set a cell.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <param name="character">The character.</param>
+        /// <param name="foregroundColor">The foreground color of the cell.</param>
+        public void SetCell(int x, int y, char character, AnsiColor foregroundColor)
+        {
+            buffer[x, y] = character;
+            foregroundColors[x, y] = foregroundColor;
         }
 
         /// <summary>

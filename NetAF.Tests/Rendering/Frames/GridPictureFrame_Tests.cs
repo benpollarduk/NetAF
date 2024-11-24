@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Rendering.FrameBuilders.Console;
@@ -15,7 +14,7 @@ namespace NetAF.Tests.Rendering.Frames
         [TestMethod]
         public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
         {
-            var gridPictureBuilder = new GridPictureBuilder();
+            var gridPictureBuilder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
             gridPictureBuilder.Resize(new(10, 10));
             gridPictureBuilder.SetCell(0, 0, 'C', AnsiColor.Black, AnsiColor.Green);
             gridPictureBuilder.SetCell(1, 0, 'D', AnsiColor.Green, AnsiColor.Black);
