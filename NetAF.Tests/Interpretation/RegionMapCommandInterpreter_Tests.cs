@@ -26,7 +26,7 @@ namespace NetAF.Tests.Interpretation
         private Overworld overworld;
 
         [TestMethod]
-        public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturnNonEmptyArray()
+        public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturn8Commands()
         {
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
@@ -36,21 +36,23 @@ namespace NetAF.Tests.Interpretation
             Room north = new(string.Empty, string.Empty, [new Exit(Direction.South)]);
             Room west = new(string.Empty, string.Empty, [new Exit(Direction.East)]);
             Room east = new(string.Empty, string.Empty, [new Exit(Direction.West)]);
-            Room center = new(string.Empty, string.Empty, [new Exit(Direction.Down)]);
+            Room center = new(string.Empty, string.Empty, [new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West), new Exit(Direction.Up), new Exit(Direction.Down)]);
             regionMaker[1, 1, 1] = center;
             regionMaker[0, 1, 1] = west;
             regionMaker[2, 1, 1] = east;
             regionMaker[1, 2, 1] = north;
             regionMaker[1, 0, 1] = south;
-            regionMaker[1, 2, 1] = top;
-            regionMaker[1, 0, 1] = bottom;
+            regionMaker[1, 1, 2] = top;
+            regionMaker[1, 1, 0] = bottom;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
+            game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1)));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.AreEqual(8, result.Length);
         }
 
         [TestMethod]
