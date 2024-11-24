@@ -57,7 +57,6 @@ namespace NetAF.Rendering.FrameBuilders
         public void Resize(Size displaySize)
         {
             DisplaySize = displaySize;
-            colors = new AnsiColor[displaySize.Width, displaySize.Height];
             Flush();
         }
 
@@ -89,6 +88,7 @@ namespace NetAF.Rendering.FrameBuilders
         public void Flush()
         {
             buffer = new char[DisplaySize.Width, DisplaySize.Height];
+            colors = new AnsiColor[DisplaySize.Width, DisplaySize.Height];
         }
 
         /// <summary>

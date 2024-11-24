@@ -40,8 +40,6 @@ namespace NetAF.Rendering.FrameBuilders
         public void Resize(Size displaySize)
         {
             DisplaySize = displaySize;
-            backgroundColors = new AnsiColor[displaySize.Width, displaySize.Height];
-            foregroundColors = new AnsiColor[displaySize.Width, displaySize.Height];
             Flush();
         }
 
@@ -75,7 +73,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <returns>The cell background color.</returns>
         public AnsiColor GetCellBackgroundColor(int x, int y)
         {
-            return foregroundColors[x, y];
+            return backgroundColors[x, y];
         }
 
         /// <summary>
@@ -84,6 +82,8 @@ namespace NetAF.Rendering.FrameBuilders
         public void Flush()
         {
             buffer = new char[DisplaySize.Width, DisplaySize.Height];
+            backgroundColors = new AnsiColor[DisplaySize.Width, DisplaySize.Height];
+            foregroundColors = new AnsiColor[DisplaySize.Width, DisplaySize.Height];
         }
 
         /// <summary>
