@@ -8,13 +8,10 @@ using NetAF.Utilities;
 namespace NetAF.Rendering.Frames
 {
     /// <summary>
-    /// Provides a grid based frame for displaying a command based interface.
+    /// Provides a grid based frame for displaying a picture.
     /// </summary>
     /// <param name="builder">The builder that creates the frame.</param>
-    /// <param name="cursorLeft">The cursor left position.</param>
-    /// <param name="cursorTop">The cursor top position.</param>
-    /// <param name="backgroundColor">The background color.</param>
-    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IFrame
+    public sealed class GridPictureFrame(GridPictureBuilder builder) : IFrame
     {
         #region Constants
 
@@ -27,20 +24,6 @@ namespace NetAF.Rendering.Frames
         /// Get the ANSI escape sequence to hide the cursor.
         /// </summary>
         private const string ANSI_HIDE_CURSOR = "\u001b[?25l";
-
-        /// <summary>
-        /// Get the ANSI escape sequence to show the cursor.
-        /// </summary>
-        private const string ANSI_SHOW_CURSOR = "\u001b[?25h";
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Get the background color.
-        /// </summary>
-        public AnsiColor BackgroundColor { get; } = backgroundColor;
 
         #endregion
 
@@ -113,17 +96,17 @@ namespace NetAF.Rendering.Frames
         /// <summary>
         /// Get the cursor left position.
         /// </summary>
-        public int CursorLeft { get; } = cursorLeft;
+        public int CursorLeft { get; } = 0;
 
         /// <summary>
         /// Get the cursor top position.
         /// </summary>
-        public int CursorTop { get; } = cursorTop;
+        public int CursorTop { get; } = 0;
 
         /// <summary>
         /// Get or set if the cursor should be shown.
         /// </summary>
-        public bool ShowCursor { get; set; } = true;
+        public bool ShowCursor { get; set; } = false;
 
         /// <summary>
         /// Render this frame on a presenter.
@@ -133,10 +116,10 @@ namespace NetAF.Rendering.Frames
         {
             var suppressColor = IsColorSuppressed();
 
-            if (!suppressColor)
-                presenter.Write(GetAnsiBackgroundEscapeSequence(BackgroundColor));
-
             presenter.Write(ANSI_HIDE_CURSOR);
+
+            AnsiColor lastBackground = AnsiColor.Black;
+            AnsiColor lastForeground = AnsiColor.White;
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -144,11 +127,22 @@ namespace NetAF.Rendering.Frames
                 {
                     var c = builder.GetCharacter(x, y);
 
+                    var backgroundColor = !suppressColor ? builder.GetCellBackgroundColor(x, y) : AnsiColor.Black;
+
+                    if (x == 0 && y == 0 || backgroundColor != lastBackground)
+                    {
+                        lastBackground = backgroundColor;
+                        presenter.Write(GetAnsiBackgroundEscapeSequence(backgroundColor));
+                    }
+
                     if (c != 0)
                     {
-                        if (!suppressColor)
+                        var foregroundColor = !suppressColor ? builder.GetCellForegroundColor(x, y) : AnsiColor.White;
+
+                        if (x == 0 && y == 0 || foregroundColor != lastForeground)
                         {
-                            presenter.Write(GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
+                            lastForeground = foregroundColor;
+                            presenter.Write(GetAnsiForegroundEscapeSequence(foregroundColor));
                         }
 
                         presenter.Write(c);
@@ -162,8 +156,6 @@ namespace NetAF.Rendering.Frames
                 if (y < builder.DisplaySize.Height - 1)
                     presenter.Write(builder.LineTerminator);
             }
-
-            presenter.Write(ANSI_SHOW_CURSOR);
         }
 
         #endregion
