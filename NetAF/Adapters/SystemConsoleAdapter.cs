@@ -42,7 +42,6 @@ namespace NetAF.Adapters
             System.Console.Title = game.Info.Name;
             Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
             System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
-            System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
         }
 
         /// <summary>
