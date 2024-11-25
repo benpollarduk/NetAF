@@ -88,6 +88,53 @@ namespace NetAF.Rendering.Console
         }
 
         /// <summary>
+        /// Safe set a cell background.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <param name="backgroundColor">The background color of the cell.</param>
+        private void SafeSetCellBackground(int x, int y, AnsiColor backgroundColor)
+        {
+            if (IsCellSafe(x, y))
+                backgroundColors[x, y] = backgroundColor;
+        }
+
+        /// <summary>
+        /// Safe set a cell foreground.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <param name="foregroundColor">The foreground color of the cell.</param>
+        private void SafeSetCellForeground(int x, int y, AnsiColor foregroundColor)
+        {
+            if (IsCellSafe(x, y))
+                foregroundColors[x, y] = foregroundColor;
+        }
+
+        /// <summary>
+        /// Safe set a cell character.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <param name="character">The character.</param>
+        private void SafeSetCellCharacter(int x, int y, char character)
+        {
+            if (IsCellSafe(x, y))
+                buffer[x, y] = character;
+        }
+
+        /// <summary>
+        /// Determine if a cell is safe.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <returns>True if the cell if safe, else false.</returns>
+        private bool IsCellSafe(int x, int y)
+        {
+            return x >= 0 && x < DisplaySize.Width && y >= 0 && y < DisplaySize.Height;
+        }
+
+        /// <summary>
         /// Set a cell.
         /// </summary>
         /// <param name="x">The x position of the cell.</param>
@@ -95,7 +142,7 @@ namespace NetAF.Rendering.Console
         /// <param name="backgroundColor">The backgroundColor color of the cell.</param>
         public void SetCell(int x, int y, AnsiColor backgroundColor)
         {
-            backgroundColors[x, y] = backgroundColor;
+            SafeSetCellBackground(x, y, backgroundColor);
         }
 
         /// <summary>
@@ -107,8 +154,8 @@ namespace NetAF.Rendering.Console
         /// <param name="foregroundColor">The foreground color of the cell.</param>
         public void SetCell(int x, int y, char character, AnsiColor foregroundColor)
         {
-            buffer[x, y] = character;
-            foregroundColors[x, y] = foregroundColor;
+            SafeSetCellCharacter(x, y, character);
+            SafeSetCellForeground(x, y, foregroundColor);
         }
 
         /// <summary>
@@ -121,9 +168,67 @@ namespace NetAF.Rendering.Console
         /// <param name="backgroundColor">The backgroundColor color of the cell.</param>
         public void SetCell(int x, int y, char character, AnsiColor foregroundColor, AnsiColor backgroundColor)
         {
-            buffer[x, y] = character;
-            foregroundColors[x, y] = foregroundColor;
-            backgroundColors[x, y] = backgroundColor;
+            SafeSetCellCharacter(x, y, character);
+            SafeSetCellForeground(x, y, foregroundColor);
+            SafeSetCellBackground(x, y, backgroundColor);
+        }
+
+        /// <summary>
+        /// Draw a rectangle.
+        /// </summary>
+        /// <param name="left">The left position of the rectangle.</param>
+        /// <param name="top">The top position of the rectangle.</param>
+        /// <param name="width">The width of the rectangle.</param>
+        /// <param name="height">The height of the rectangle.</param>
+        /// <param name="borderColor">The border color of the cell.</param>
+        /// <param name="fillColor">The fill color of the cell.</param>
+        public void DrawRectangle(int left, int top, int width, int height, AnsiColor borderColor, AnsiColor fillColor)
+        {
+            for (var x = left; x < left + width; x++)
+            {
+                SafeSetCellBackground(x, top, borderColor);
+                SafeSetCellBackground(x, top + height - 1, borderColor);
+                SafeSetCellCharacter(x, top, ' ');
+                SafeSetCellCharacter(x, top + height - 1, ' ');
+            }
+
+            for (var y = top; y < top + height; y++)
+            {
+                SafeSetCellBackground(left, y, borderColor);
+                SafeSetCellBackground(left + width - 1, y, borderColor);
+                SafeSetCellCharacter(left, y, ' ');
+                SafeSetCellCharacter(left + width - 1, y, ' ');
+            }
+
+            for (var y = top + 1; y < top + height - 1; y++)
+            {
+                for (var x = left + 1; x < left + width - 1; x++)
+                {
+                    SafeSetCellBackground(x, y, fillColor);
+                    SafeSetCellCharacter(x, y, ' ');
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draw a rectangle.
+        /// </summary>
+        /// <param name="left">The left position of the rectangle.</param>
+        /// <param name="top">The top position of the rectangle.</param>
+        /// <param name="width">The width of the rectangle.</param>
+        /// <param name="height">The height of the rectangle.</param>
+        /// <param name="character">The character to use for the texture.</param>
+        /// <param name="foregroundColor">The foregroundColor color of the texture.</param>
+        public void DrawTexture(int left, int top, int width, int height, char character, AnsiColor foregroundColor)
+        {
+            for (var y = top; y < top + height; y++)
+            {
+                for (var x = left; x < left + width; x++)
+                {
+                    SafeSetCellForeground(x, y, foregroundColor);
+                    SafeSetCellCharacter(x, y, character);
+                }
+            }
         }
 
         #endregion

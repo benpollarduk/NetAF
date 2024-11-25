@@ -1,7 +1,4 @@
-﻿using System.Text;
-using NetAF.Utilities;
-
-namespace NetAF.Rendering.Console
+﻿namespace NetAF.Rendering.Console
 {
     /// <summary>
     /// Provides a grid based frame for displaying a picture.
@@ -123,31 +120,6 @@ namespace NetAF.Rendering.Console
         private static bool RequiresColorChange(int x, int y, AnsiColor current, AnsiColor next)
         {
             return IsFirstCell(x, y) || next != current;
-        }
-
-        #endregion
-
-        #region Overrides of Object
-
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
-        {
-            StringBuilder stringBuilder = new();
-
-            for (var y = 0; y < builder.DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < builder.DisplaySize.Width; x++)
-                {
-                    stringBuilder.Append(builder.GetCharacter(x, y));
-                }
-
-                stringBuilder.Append(StringUtilities.Newline);
-            }
-
-            return stringBuilder.ToString();
         }
 
         #endregion

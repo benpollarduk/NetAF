@@ -22,7 +22,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the background color.
         /// </summary>
-        public AnsiColor BackgroundColor { get; set; }
+        public AnsiColor BackgroundColor { get; set; } = AnsiColor.Black;
 
         /// <summary>
         /// Get or set the border color.
