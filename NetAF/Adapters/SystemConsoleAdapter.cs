@@ -1,7 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Rendering.Frames;
-using NetAF.Rendering.Presenters;
+using NetAF.Rendering;
+using NetAF.Rendering.Console;
 using NetAF.Utilities;
 
 namespace NetAF.Adapters

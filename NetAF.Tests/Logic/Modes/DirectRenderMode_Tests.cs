@@ -4,8 +4,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Logic.Modes;
-using NetAF.Rendering.Frames;
-using NetAF.Rendering.FrameBuilders;
+using NetAF.Rendering.Console;
 
 namespace NetAF.Tests.Logic.Modes
 {
@@ -22,7 +21,7 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-                var mode = new DirectRenderMode(new GridTextFrame(new GridStringBuilder(), 0, 0, NetAF.Rendering.FrameBuilders.Console.AnsiColor.Red));
+                var mode = new DirectRenderMode(new GridTextFrame(new GridStringBuilder(), 0, 0, AnsiColor.Red));
 
                 mode.Render(game);
             });

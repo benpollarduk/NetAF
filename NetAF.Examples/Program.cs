@@ -15,9 +15,7 @@ using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Configuration;
 using NetAF.Logic.Modes;
-using NetAF.Rendering.FrameBuilders.Console;
-using NetAF.Rendering.FrameBuilders;
-using NetAF.Rendering.Frames;
+using NetAF.Rendering.Console;
 
 namespace NetAF.Examples
 {

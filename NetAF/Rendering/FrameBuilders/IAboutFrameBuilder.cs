@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
 {

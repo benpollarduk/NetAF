@@ -1,4 +1,5 @@
-﻿using NetAF.Rendering.FrameBuilders.Console;
+﻿using NetAF.Rendering.Console;
+using NetAF.Rendering.Console.FrameBuilders;
 
 namespace NetAF.Rendering.FrameBuilders
 {

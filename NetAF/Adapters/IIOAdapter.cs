@@ -1,5 +1,5 @@
 ﻿using NetAF.Logic;
-using NetAF.Rendering.Frames;
+using NetAF.Rendering;
 
 namespace NetAF.Adapters
 {

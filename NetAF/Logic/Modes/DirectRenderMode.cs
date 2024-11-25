@@ -1,5 +1,5 @@
 ﻿using NetAF.Interpretation;
-using NetAF.Rendering.Frames;
+using NetAF.Rendering;
 
 namespace NetAF.Logic.Modes
 {
