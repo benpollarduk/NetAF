@@ -2,9 +2,9 @@
 A C# library that provides a framework for building text adventures and interactive stories in .NET.
 
 ## Overview
-NetAF is a lightweight .NET 8 library for building text based adventures.
+NetAF is a simple, lightweight library for building text based adventures.
 
-At its core NetAF provides simple classes for developing game elements:
+At its core NetAF provides simple classes for developing and controlling the flow of games.
 
 ### Environments
 Environments are broken down in to three elements - Overworld, Region and Room. An Overworld contains one or more Regions. A Region contains one or more Rooms. 
