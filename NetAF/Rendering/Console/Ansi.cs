@@ -54,16 +54,6 @@ namespace NetAF.Rendering.Console
         }
 
         /// <summary>
-        /// Get an ANSI escape sequence for a background color.
-        /// </summary>
-        /// <param name="color">The background color.</param>
-        /// <returns>The ANSI escape sequence.</returns>
-        public static string GetAnsiBackgroundEscapeSequence(AnsiColor color)
-        {
-            return GetAnsiBackgroundEscapeSequence(color.R, color.G, color.B);
-        }
-
-        /// <summary>
         /// Get an ANSI escape sequence for a foreground color.
         /// </summary>
         /// <param name="r">The red channel.</param>
@@ -73,6 +63,16 @@ namespace NetAF.Rendering.Console
         public static string GetAnsiForegroundEscapeSequence(byte r, byte g, byte b)
         {
             return $"\u001b[38;2;{r};{g};{b}m";
+        }
+
+        /// <summary>
+        /// Get an ANSI escape sequence for a background color.
+        /// </summary>
+        /// <param name="color">The background color.</param>
+        /// <returns>The ANSI escape sequence.</returns>
+        public static string GetAnsiBackgroundEscapeSequence(AnsiColor color)
+        {
+            return GetAnsiBackgroundEscapeSequence(color.R, color.G, color.B);
         }
 
         /// <summary>

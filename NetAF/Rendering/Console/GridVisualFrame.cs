@@ -60,6 +60,10 @@
             }
         }
 
+        #endregion
+
+        #region StaticMethods
+
         /// <summary>
         /// Update the background color, if required.
         /// </summary>
@@ -68,7 +72,7 @@
         /// <param name="y">The x position of the cell.</param>
         /// <param name="backgroundColor">The background color.</param>
         /// <param name="lastBackgroundColor">The last background color.</param>
-        private void UpdateBackgroundColor(IFramePresenter presenter, int x, int y, AnsiColor backgroundColor, ref AnsiColor lastBackgroundColor)
+        private static void UpdateBackgroundColor(IFramePresenter presenter, int x, int y, AnsiColor backgroundColor, ref AnsiColor lastBackgroundColor)
         {
             if (RequiresColorChange(x, y, lastBackgroundColor, backgroundColor))
             {
@@ -85,7 +89,7 @@
         /// <param name="y">The x position of the cell.</param>
         /// <param name="foregroundColor">The foreground color.</param>
         /// <param name="lastForegroundColor">The last foreground color.</param>
-        private void UpdateForegroundColor(IFramePresenter presenter, int x, int y, AnsiColor foregroundColor, ref AnsiColor lastForegroundColor)
+        private static void UpdateForegroundColor(IFramePresenter presenter, int x, int y, AnsiColor foregroundColor, ref AnsiColor lastForegroundColor)
         {
             if (RequiresColorChange(x, y, lastForegroundColor, foregroundColor))
             {
@@ -93,10 +97,6 @@
                 presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
             }
         }
-
-        #endregion
-
-        #region StaticMethods
 
         /// <summary>
         /// Get if a cell is the first cell.
