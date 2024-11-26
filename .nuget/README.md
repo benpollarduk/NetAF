@@ -91,6 +91,7 @@ NetAF provides frames for rendering the various game screens. These are fully ex
    * Game over frame.
    * Transition frame.
    * Conversation frame.
+   * Visual frame.
 
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
