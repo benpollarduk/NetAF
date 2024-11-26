@@ -86,8 +86,8 @@ namespace NetAF.Assets
         /// Examine this object.
         /// </summary>
         /// <param name="scene">The scene this object is being examined from.</param>
-        /// <returns>A ExaminationResult detailing the examination of this object.</returns>
-        public virtual ExaminationResult Examine(ExaminationScene scene)
+        /// <returns>The examination.</returns>
+        public virtual Examination Examine(ExaminationScene scene)
         {
             return Examination(new(this, scene));
         }

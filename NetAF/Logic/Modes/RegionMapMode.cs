@@ -17,7 +17,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the value to use to display the player level.
         /// </summary>
-        public static Point3D Player => new Point3D(int.MinValue, int.MinValue, int.MinValue);
+        public static Point3D Player => new(int.MinValue, int.MinValue, int.MinValue);
 
         #endregion
 

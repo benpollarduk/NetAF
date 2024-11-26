@@ -1,5 +1,6 @@
 ﻿using System;
 using NetAF.Assets;
+using NetAF.Rendering.Console;
 using NetAF.Utilities;
 
 namespace NetAF.Extensions
@@ -234,7 +235,7 @@ namespace NetAF.Extensions
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The modified string.</returns>
-        internal static string StartWithLower(this string value)
+        public static string StartWithLower(this string value)
         {
             if (string.IsNullOrEmpty(value))
                 return value;
@@ -243,6 +244,16 @@ namespace NetAF.Extensions
                 return value.ToLower();
 
             return $"{value.Substring(0, 1).ToLower()}{value.Substring(1)}";
+        }
+
+        /// <summary>
+        /// Create a texture from this string.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The texture.</returns>
+        public static Texture ToTexture(this string value)
+        {
+            return new(value);
         }
 
         #endregion

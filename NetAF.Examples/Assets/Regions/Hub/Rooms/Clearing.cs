@@ -28,6 +28,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
             var room = new Room(Name, Description);
 
             var conversation = new Conversation(
+            [
                 new("Squarrrkkk!"),
                 new("Would you like to change modes?", "ModeQuestion")
                 {
@@ -43,7 +44,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
                 new("Eeek, simple be fine too! Shame it's been deleted. Maybe it will be implemented again one day! Eeek!", new ToName("ModeQuestion")),
                 new("Squarrk! Legacy, looks old. Shame it's been deleted. Maybe it will be implemented again one day! Arrk!", new ToName("ModeQuestion")),
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
-            );
+            ]);
 
             room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."), conversation: conversation));
 

@@ -4,6 +4,6 @@
     /// Represents the callback for examinations.
     /// </summary>
     /// <param name="request">The examination request.</param>
-    /// <returns>A string representing the result of the examination.</returns>
-    public delegate ExaminationResult ExaminationCallback(ExaminationRequest request);
+    /// <returns>The examination.</returns>
+    public delegate Examination ExaminationCallback(ExaminationRequest request);
 }

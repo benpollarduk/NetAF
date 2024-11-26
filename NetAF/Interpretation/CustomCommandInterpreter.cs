@@ -34,8 +34,8 @@ namespace NetAF.Interpretation
             var commandName = entries[0];
             var args = entries.Remove(commandName);
 
-            var commands = new List<CustomCommand>();
-
+            List<CustomCommand> commands = [];
+            
             foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null))
                 commands.AddRange(examinable.Commands.Where(x => x.IsPlayerVisible || x.InterpretIfNotPlayerVisible));
 
