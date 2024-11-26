@@ -65,9 +65,6 @@ namespace NetAF.Examples
         {
             try
             {
-                Console.WriteLine(Ansi.GetAnsiBackgroundEscapeSequence(123, 57, 63));
-                Console.WriteLine("Hello");
-
                 static Overworld overworldCreator()
                 {
                     var regions = new List<Region>

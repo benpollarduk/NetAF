@@ -35,7 +35,10 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
             [ 
                 new(new("Look", "Look around."), true, true, (g, a) =>
                 {
-                    var frame = new ClearingVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
+                    //var frame = new ClearingVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
+                    var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder());
+                    var frame = frameBuilder.Build(Name, string.Empty, GridVisualBuilderHelper.FromImage(@"C:\test\j.jpg", new(70, 40)), new(80, 50));
+                    
                     g.ChangeMode(new DirectRenderMode(frame));
                     return new(ReactionResult.GameModeChanged, string.Empty);
                 })

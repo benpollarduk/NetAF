@@ -56,45 +56,5 @@ namespace NetAF.Tests.Rendering.Console
 
             Assert.IsTrue(result);
         }
-
-        [TestMethod]
-        public void GivenRed_WhenFindNearestAnsiColor_ThenReturnAnsiColorBrightRed()
-        {
-            var result = Ansi.FindNearestAnsiColor(255, 0, 0);
-
-            Assert.AreEqual(AnsiColor.BrightRed, result);
-        }
-
-        [TestMethod]
-        public void GivenGreen_WhenFindNearestAnsiColor_ThenReturnAnsiColorBrightGreen()
-        {
-            var result = Ansi.FindNearestAnsiColor(0, 255, 0);
-
-            Assert.AreEqual(AnsiColor.BrightGreen, result);
-        }
-
-        [TestMethod]
-        public void GivenBlue_WhenFindNearestAnsiColor_ThenReturnAnsiColorBrightBlue()
-        {
-            var result = Ansi.FindNearestAnsiColor(0, 0, 255);
-
-            Assert.AreEqual(AnsiColor.BrightBlue, result);
-        }
-
-        [TestMethod]
-        public void GivenWhite_WhenFindNearestAnsiColor_ThenReturnAnsiColorBrightWhite()
-        {
-            var result = Ansi.FindNearestAnsiColor(255, 255, 255);
-
-            Assert.AreEqual(AnsiColor.BrightWhite, result);
-        }
-
-        [TestMethod]
-        public void GivenBlack_WhenFindNearestAnsiColor_ThenReturnAnsiColorBlack()
-        {
-            var result = Ansi.FindNearestAnsiColor(0, 0, 0);
-
-            Assert.AreEqual(AnsiColor.Black, result);
-        }
     }
 }

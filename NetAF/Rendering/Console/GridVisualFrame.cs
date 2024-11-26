@@ -119,7 +119,7 @@
         /// <returns>True if a color change is required, else false.</returns>
         private static bool RequiresColorChange(int x, int y, AnsiColor current, AnsiColor next)
         {
-            return IsFirstCell(x, y) || next != current;
+            return IsFirstCell(x, y) || !next.Equals(current);
         }
 
         #endregion

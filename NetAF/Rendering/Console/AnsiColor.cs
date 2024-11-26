@@ -1,77 +1,181 @@
-﻿namespace NetAF.Rendering.Console
+﻿using System;
+
+namespace NetAF.Rendering.Console
 {
     /// <summary>
-    /// Enumeration of ANSI colors.
+    /// Represents an ANSI color.
     /// </summary>
-    public enum AnsiColor
+    /// <param name="r">The red channel.</param>
+    /// <param name="g">The green channel.</param>
+    /// <param name="b">The blue channel.</param>
+    public struct AnsiColor(byte r, byte g, byte b) : IEquatable<AnsiColor>
     {
+        #region Properties
+
         /// <summary>
-        /// Reset (0).
+        /// Get the red channel.
         /// </summary>
-        Reset = 0,
+        public readonly byte R => r;
+
         /// <summary>
-        /// Black (30).
+        /// Get the green channel.
         /// </summary>
-        Black = 30,
+        public readonly byte G => g;
+
         /// <summary>
-        /// Red (31).
+        /// Get the blue channel.
         /// </summary>
-        Red = 31,
+        public readonly byte B => b;
+
+        #endregion
+
+        #region Overrides of Object
+
         /// <summary>
-        /// Green (32).
+        /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
-        Green = 32,
+        /// <param name="obj">An object to compare with this object.</param>
+        /// <returns>
+        /// <see langword="true" /> if the current object is equal to the <paramref name="obj" /> parameter; otherwise, <see langword="false" />.</returns>
+        public override readonly bool Equals(object obj)
+        {
+            return obj is AnsiColor color && Equals(color);
+        }
+
+        #endregion
+
+        #region Implementation of IEquatable<AnsiColor>
+
         /// <summary>
-        /// Yellow (33).
+        /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
-        Yellow = 33,
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        public readonly bool Equals(AnsiColor other)
+        {
+            return R == other.R && G == other.G && B == other.B;
+        }
+
+        #endregion
+
+        #region StaticProperties
+
         /// <summary>
-        /// Blue (34).
+        /// Black.
         /// </summary>
-        Blue = 34,
+        public static AnsiColor Black { get; }
+
         /// <summary>
-        /// Magenta (35).
+        /// Red.
         /// </summary>
-        Magenta = 35,
+        public static AnsiColor Red { get; } = new(128, 0, 0);
+
         /// <summary>
-        /// Cyan (36).
+        /// Green.
         /// </summary>
-        Cyan = 36,
+        public static AnsiColor Green { get; } = new(0, 128, 0);
+
         /// <summary>
-        /// White (37).
+        /// Yellow
         /// </summary>
-        White = 37,
+        public static AnsiColor Yellow { get; } = new(128, 128, 0);
+
         /// <summary>
-        /// Bright black (90).
+        /// Blue.
         /// </summary>
-        BrightBlack = 90,
+        public static AnsiColor Blue { get; } = new(0, 0, 128);
+
         /// <summary>
-        /// Bright red (91).
+        /// Magenta.
         /// </summary>
-        BrightRed = 91,
+        public static AnsiColor Magenta { get; } = new(128, 0, 128);
+
         /// <summary>
-        /// Bright green (92).
+        /// Cyan.
         /// </summary>
-        BrightGreen = 92,
+        public static AnsiColor Cyan { get; } = new(0, 128, 128);
+
         /// <summary>
-        /// Bright yellow (93).
+        /// White.
         /// </summary>
-        BrightYellow = 93,
+        public static AnsiColor White { get; } = new(192, 192, 192);
+
         /// <summary>
-        /// Bright blue (94).
+        /// Bright black.
         /// </summary>
-        BrightBlue = 94,
+        public static AnsiColor BrightBlack { get; } = new(128, 128, 128);
+
         /// <summary>
-        /// Bright magenta (95).
+        /// Bright red.
         /// </summary>
-        BrightMagenta = 95,
+        public static AnsiColor BrightRed { get; } = new(255, 0, 0);
+
         /// <summary>
-        /// Bright cyan (96).
+        /// Bright green.
         /// </summary>
-        BrightCyan = 96,
+        public static AnsiColor BrightGreen { get; } = new(0, 255, 0);
+
         /// <summary>
-        /// Bright white (97).
+        /// Bright yellow.
         /// </summary>
-        BrightWhite = 97
+        public static AnsiColor BrightYellow { get; } = new(255, 255, 0);
+
+        /// <summary>
+        /// Bright blue.
+        /// </summary>
+        public static AnsiColor BrightBlue { get; } = new(0, 0, 255);
+
+        /// <summary>
+        /// Bright magenta.
+        /// </summary>
+        public static AnsiColor BrightMagenta { get; } = new(255, 0, 255);
+
+        /// <summary>
+        /// Bright cyan.
+        /// </summary>
+        public static AnsiColor BrightCyan { get; } = new(0, 255, 255);
+
+        /// <summary>
+        /// Bright white.
+        /// </summary>
+        public static AnsiColor BrightWhite { get; } = new(255, 255, 255);
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Determines whether two specified AnsiColors have the same value.
+        /// </summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        // <see langword="true" /> if the value of a is the same as the value of b, else <see langword="false" />.</returns>
+        public static bool operator ==(AnsiColor left, AnsiColor right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether two specified AnsiColors have different values.
+        /// </summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        // <see langword="true" /> if the value of a is different to the value of b, else <see langword="false" />.</returns>
+        public static bool operator !=(AnsiColor left, AnsiColor right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override readonly int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
     }
 }

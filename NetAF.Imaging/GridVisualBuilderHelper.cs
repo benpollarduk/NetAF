@@ -35,8 +35,7 @@ namespace NetAF.Imaging
                 for (var x = 0; x < size.Width; x++)
                 {
                     Rgba32 pixel = pixelArray[y * size.Width + x];
-                    AnsiColor color = Ansi.FindNearestAnsiColor(pixel.R, pixel.G, pixel.B);
-                    builder.SetCell(x, y, color);
+                    builder.SetCell(x, y, new(pixel.R, pixel.G, pixel.B));
                 }
             }
 
