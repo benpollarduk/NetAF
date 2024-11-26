@@ -1,4 +1,7 @@
 ﻿using NetAF.Assets.Locations;
+using NetAF.Commands;
+using NetAF.Examples.Assets.Regions.Everglades.Visuals;
+using NetAF.Logic.Modes;
 using NetAF.Utilities;
 
 namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
@@ -20,7 +23,16 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            return new(Name, Description, [new Exit(Direction.North)]);
+            return new(Name, Description, [new Exit(Direction.North)], commands:
+            [
+                new(new("Look", "Look around the area."), true, true, (g, a) =>
+                {
+                    var frame = new ForestEntranceVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
+                    g.ChangeMode(new DirectRenderMode(frame));
+                    return new(ReactionResult.GameModeChanged, string.Empty);
+                })
+             ]);
+
         }
 
         #endregion

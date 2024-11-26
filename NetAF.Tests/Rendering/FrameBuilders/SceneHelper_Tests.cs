@@ -3,7 +3,6 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {

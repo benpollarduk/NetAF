@@ -1,7 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
-using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
 {

@@ -5,7 +5,7 @@ namespace NetAF.Assets
     /// <summary>
     /// Represents an interaction.
     /// </summary>
-    public sealed class Interaction : Result
+    public sealed class Interaction
     {
         #region Properties
 
@@ -18,6 +18,11 @@ namespace NetAF.Assets
         /// Get the item used in the interaction.
         /// </summary>
         public Item Item { get; }
+
+        /// <summary>
+        /// Get the description of the interaction.
+        /// </summary>
+        public string Description { get; }
 
         #endregion
 
@@ -49,12 +54,12 @@ namespace NetAF.Assets
         /// </summary>
         /// <param name="result">The result of the interaction.</param>
         /// <param name="item">The item used in the interaction.</param>
-        /// <param name="descriptionOfEffect">A description of the effect.</param>
-        public Interaction(InteractionResult result, Item item, string descriptionOfEffect)
+        /// <param name="description">A description of the interaction.</param>
+        public Interaction(InteractionResult result, Item item, string description)
         {
             Result = result;
             Item = item;
-            Description = descriptionOfEffect;
+            Description = description;
         }
 
         #endregion

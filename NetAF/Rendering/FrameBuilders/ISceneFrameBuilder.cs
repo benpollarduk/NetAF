@@ -2,7 +2,6 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
-using NetAF.Rendering.Frames;
 
 namespace NetAF.Rendering.FrameBuilders
 {

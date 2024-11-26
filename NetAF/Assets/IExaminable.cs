@@ -30,7 +30,7 @@ namespace NetAF.Assets
         /// Examine this object.
         /// </summary>
         /// <param name="scene">The scene this object is being examined from.</param>
-        /// <returns>A ExaminationResult detailing the examination of this object.</returns>
-        ExaminationResult Examine(ExaminationScene scene);
+        /// <returns>The examination.</returns>
+        Examination Examine(ExaminationScene scene);
     }
 }
