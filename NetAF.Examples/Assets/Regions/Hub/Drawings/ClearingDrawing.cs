@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets;
+using NetAF.Extensions;
 using NetAF.Rendering.Console;
 using NetAF.Utilities;
 
@@ -15,13 +16,13 @@ namespace NetAF.Examples.Assets.Regions.Hub.Drawings
             builder.SetCell(12, 7, AnsiColor.BrightYellow);
             builder.SetCell(8, 9, AnsiColor.BrightYellow);
             builder.DrawRectangle(6, 6, 5, 3, AnsiColor.BrightYellow, AnsiColor.BrightYellow);
-            builder.DrawTexture(6, 6, 5, 3, ':', AnsiColor.Yellow);
+            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), AnsiColor.Yellow);
         }
 
         private static void DrawGrass(GridPictureBuilder builder)
         {
             builder.DrawRectangle(0, 25, 80, 25, AnsiColor.BrightGreen, AnsiColor.BrightGreen);
-            builder.DrawTexture(0, 25, 80, 25, '#', AnsiColor.Green);
+            builder.DrawTexture(0, 25, 80, 25, "#".ToTexture(), AnsiColor.Green);
         }
 
         private static void DrawTree(GridPictureBuilder builder, int x, int y)

@@ -211,24 +211,63 @@ namespace NetAF.Rendering.Console
         }
 
         /// <summary>
-        /// Draw a rectangle.
+        /// Draw a texture.
         /// </summary>
-        /// <param name="left">The left position of the rectangle.</param>
-        /// <param name="top">The top position of the rectangle.</param>
-        /// <param name="width">The width of the rectangle.</param>
-        /// <param name="height">The height of the rectangle.</param>
-        /// <param name="character">The character to use for the texture.</param>
+        /// <param name="left">The left position of the area to draw within.</param>
+        /// <param name="top">The top position of the area to draw within.</param>
+        /// <param name="width">The width of the area to draw within.</param>
+        /// <param name="height">The height of the area to draw within.</param>
+        /// <param name="texture">The texture.</param>
         /// <param name="foregroundColor">The foregroundColor color of the texture.</param>
-        public void DrawTexture(int left, int top, int width, int height, char character, AnsiColor foregroundColor)
+        public void DrawTexture(int left, int top, int width, int height, Texture texture, AnsiColor foregroundColor)
         {
             for (var y = top; y < top + height; y++)
             {
                 for (var x = left; x < left + width; x++)
                 {
                     SafeSetCellForeground(x, y, foregroundColor);
-                    SafeSetCellCharacter(x, y, character);
+                    SafeSetCellCharacter(x, y, GetCharacterFromTexture(x, y, texture));
                 }
             }
+        }
+
+        /// <summary>
+        /// Draw a texture over all cells where the background color matches the specified color.
+        /// </summary>
+        /// <param name="left">The left position of the area to draw within.</param>
+        /// <param name="top">The top position of the area to draw within.</param>
+        /// <param name="width">The width of the area to draw within.</param>
+        /// <param name="height">The height of the area to draw within.</param>
+        /// <param name="backgroundColor">The background color.</param>
+        /// <param name="texture">The texture.</param>
+        /// <param name="foregroundColor">The foregroundColor color of the texture.</param>
+        public void DrawTextureOverBackgroundColor(int left, int top, int width, int height, AnsiColor backgroundColor, Texture texture, AnsiColor foregroundColor)
+        {
+            for (var y = top; y < top + height; y++)
+            {
+                for (var x = left; x < left + width; x++)
+                {
+                    if (GetCellBackgroundColor(x, y) == backgroundColor)
+                    {
+                        SafeSetCellForeground(x, y, foregroundColor);
+                        SafeSetCellCharacter(x, y, GetCharacterFromTexture(x, y, texture));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get a character to use from a texture at a specified position within a region of interest.
+        /// </summary>
+        /// <param name="x">The x position within the region of interest.</param>
+        /// <param name="y">The y position within the region of interest.</param>
+        /// <param name="texture">The texture.</param>
+        /// <returns>The character from the texture to use at the specified position.</returns>
+        private static char GetCharacterFromTexture(int x, int y, Texture texture)
+        {
+            var textureX = x % texture.Width;
+            var textureY = y % texture.Height;
+            return texture[textureX, textureY];
         }
 
         #endregion

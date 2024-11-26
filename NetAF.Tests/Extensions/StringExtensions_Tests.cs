@@ -458,5 +458,15 @@ namespace NetAF.Tests.Extensions
 
             Assert.AreEqual("aA", result);
         }
+
+        [TestMethod]
+        public void GivenAA_WhenToTexture_ThenReturnATextureWithWidth2Height1()
+        {
+            var value = "AA";
+            var result = value.ToTexture();
+
+            Assert.AreEqual(2, result.Width);
+            Assert.AreEqual(1, result.Height);
+        }
     }
 }
