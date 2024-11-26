@@ -1,11 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
-using NetAF.Examples.Assets.Regions.Hub.Drawings;
-using NetAF.Logic.Modes;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 
@@ -28,15 +25,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, commands:
-            [ 
-                new(new("Look", "Look around."), true, true, (g, a) =>
-                {
-                    var frame = new ClearingVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
-                    g.ChangeMode(new DirectRenderMode(frame));
-                    return new(ReactionResult.GameModeChanged, string.Empty);
-                })
-             ]);
+            var room = new Room(Name, Description);
 
             var conversation = new Conversation(
             [

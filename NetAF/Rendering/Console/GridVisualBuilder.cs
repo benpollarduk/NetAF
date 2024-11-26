@@ -247,7 +247,7 @@ namespace NetAF.Rendering.Console
             {
                 for (var x = left; x < left + width; x++)
                 {
-                    if (GetCellBackgroundColor(x, y) == backgroundColor)
+                    if (IsCellSafe(x, y) && GetCellBackgroundColor(x, y) == backgroundColor)
                     {
                         SafeSetCellForeground(x, y, foregroundColor);
                         SafeSetCellCharacter(x, y, GetCharacterFromTexture(x, y, texture));

@@ -82,8 +82,8 @@ namespace NetAF.Rendering.Console.FrameBuilders
 
             if (contextualCommands?.Any() ?? false)
             {
-                const int requiredSpaceForDivider = 3;
-                const int requiredSpaceForPrompt = 2;
+                const int requiredSpaceForDivider = 2;
+                const int requiredSpaceForPrompt = 3;
                 const int requiredSpaceForCommandHeader = 3;
                 commandSpace = requiredSpaceForCommandHeader + requiredSpaceForPrompt + requiredSpaceForDivider + contextualCommands.Length;
                 var requiredYToFitAllCommands = size.Height - commandSpace;
