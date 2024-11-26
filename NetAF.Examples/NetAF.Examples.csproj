@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetAF.Imaging\NetAF.Imaging.csproj" />
     <ProjectReference Include="..\NetAF\NetAF.csproj" />
   </ItemGroup>
 

@@ -64,7 +64,7 @@ namespace NetAF.Rendering.Console
         /// <summary>
         /// Black.
         /// </summary>
-        public static AnsiColor Black { get; }
+        public static AnsiColor Black { get; } = new(0, 0, 0);
 
         /// <summary>
         /// Red.
