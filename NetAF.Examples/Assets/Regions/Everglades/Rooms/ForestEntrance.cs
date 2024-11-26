@@ -28,7 +28,7 @@ namespace NetAF.Examples.Assets.Regions.Everglades.Rooms
                 new(new("Look", "Look around the area."), true, true, (g, a) =>
                 {
                     var frame = new ForestEntranceVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
-                    g.ChangeMode(new DirectRenderMode(frame));
+                    g.ChangeMode(new VisualMode(frame));
                     return new(ReactionResult.GameModeChanged, string.Empty);
                 })
              ]);

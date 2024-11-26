@@ -31,12 +31,12 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the name color.
         /// </summary>
-        public AnsiColor NameColor { get; set; } = AnsiColor.Green;
+        public AnsiColor NameColor { get; set; } = NetAFPalette.NetAFGreen;
 
         /// <summary>
         /// Get or set the description color.
         /// </summary>
-        public AnsiColor DescriptionColor { get; set; } = AnsiColor.Yellow;
+        public AnsiColor DescriptionColor { get; set; } = NetAFPalette.NetAFYellow;
 
         /// <summary>
         /// Get or set the author color.

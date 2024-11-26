@@ -25,7 +25,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the title color.
         /// </summary>
-        public AnsiColor TitleColor { get; set; } = AnsiColor.Green;
+        public AnsiColor TitleColor { get; set; } = NetAFPalette.NetAFGreen;
 
         /// <summary>
         /// Get or set the description color.

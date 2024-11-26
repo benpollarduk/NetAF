@@ -63,22 +63,22 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the item or character color.
         /// </summary>
-        public AnsiColor ItemOrCharacterColor { get; set; } = AnsiColor.Blue;
+        public AnsiColor ItemOrCharacterColor { get; set; } = NetAFPalette.NetAFBlue;
 
         /// <summary>
         /// Get or set the locked exit color.
         /// </summary>
-        public AnsiColor LockedExitColor { get; set; } = AnsiColor.Red;
+        public AnsiColor LockedExitColor { get; set; } = NetAFPalette.NetAFRed;
 
         /// <summary>
         /// Get or set the visited exit color.
         /// </summary>
-        public AnsiColor VisitedExitColor { get; set; } = AnsiColor.Yellow;
+        public AnsiColor VisitedExitColor { get; set; } = NetAFPalette.NetAFYellow;
 
         /// <summary>
         /// Get or set the unvisited exit color.
         /// </summary>
-        public AnsiColor UnvisitedExitColor { get; set; } = AnsiColor.Green;
+        public AnsiColor UnvisitedExitColor { get; set; } = NetAFPalette.NetAFGreen;
 
         #endregion
 

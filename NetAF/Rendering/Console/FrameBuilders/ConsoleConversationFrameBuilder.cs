@@ -35,7 +35,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the player message color.
         /// </summary>
-        public AnsiColor NonPlayerMessageColor { get; set; } = AnsiColor.Yellow;
+        public AnsiColor NonPlayerMessageColor { get; set; } = NetAFPalette.NetAFYellow;
 
         /// <summary>
         /// Get or set the player message color.

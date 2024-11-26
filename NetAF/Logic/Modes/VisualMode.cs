@@ -4,10 +4,10 @@ using NetAF.Rendering;
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for direct rendering of a frame.
+    /// Provides a display mode for rendering of visual frame.
     /// </summary>
     /// <param name="frame">The frame to render.</param>
-    public sealed class DirectRenderMode(IFrame frame) : IGameMode
+    public sealed class VisualMode(IFrame frame) : IGameMode
     {
         #region Implementation of IGameMode
 

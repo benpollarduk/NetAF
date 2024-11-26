@@ -78,12 +78,12 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the player color.
         /// </summary>
-        public AnsiColor PlayerColor { get; set; } = AnsiColor.Blue;
+        public AnsiColor PlayerColor { get; set; } = NetAFPalette.NetAFBlue;
 
         /// <summary>
         /// Get or set the locked exit color.
         /// </summary>
-        public AnsiColor LockedExitColor { get; set; } = AnsiColor.Red;
+        public AnsiColor LockedExitColor { get; set; } = NetAFPalette.NetAFRed;
 
         /// <summary>
         /// Get or set the lower level color.
