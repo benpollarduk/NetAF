@@ -10,12 +10,6 @@ namespace NetAF.Rendering.Console.FrameBuilders
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     public sealed class ConsoleReactionFrameBuilder(GridStringBuilder gridStringBuilder) : IReactionFrameBuilder
     {
-        #region Fields
-
-        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
-
-        #endregion
-
         #region Properties
 
         /// <summary>

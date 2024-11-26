@@ -1,10 +1,10 @@
 ﻿namespace NetAF.Rendering.Console
 {
     /// <summary>
-    /// Provides a grid based frame for displaying a picture.
+    /// Provides a grid based frame for displaying a visual.
     /// </summary>
     /// <param name="builder">The builder that creates the frame.</param>
-    public sealed class GridPictureFrame(GridPictureBuilder builder) : IFrame
+    public sealed class GridVisualFrame(GridVisualBuilder builder) : IFrame
     {
         #region Methods
 

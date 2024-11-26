@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAF.Examples", "NetAF.Exa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAF.Tests", "NetAF.Tests\NetAF.Tests.csproj", "{169B1AA8-A051-4A95-89A3-06B911F4715C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAF.Imaging", "NetAF.Imaging\NetAF.Imaging.csproj", "{5EE31D47-2452-4C0A-954F-43714E67037C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAF.Imaging.Tests", "NetAF.Imaging.Tests\NetAF.Imaging.Tests.csproj", "{2F7EA2D2-6EB7-432F-ADCD-F7549B7EB024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{169B1AA8-A051-4A95-89A3-06B911F4715C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{169B1AA8-A051-4A95-89A3-06B911F4715C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{169B1AA8-A051-4A95-89A3-06B911F4715C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE31D47-2452-4C0A-954F-43714E67037C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE31D47-2452-4C0A-954F-43714E67037C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE31D47-2452-4C0A-954F-43714E67037C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE31D47-2452-4C0A-954F-43714E67037C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7EA2D2-6EB7-432F-ADCD-F7549B7EB024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7EA2D2-6EB7-432F-ADCD-F7549B7EB024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7EA2D2-6EB7-432F-ADCD-F7549B7EB024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7EA2D2-6EB7-432F-ADCD-F7549B7EB024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

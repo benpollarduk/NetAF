@@ -17,13 +17,6 @@ namespace NetAF.Rendering.Console.FrameBuilders
     /// <param name="roomMapBuilder">A builder to use for room maps.</param>
     public sealed class ConsoleSceneFrameBuilder(GridStringBuilder gridStringBuilder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
-        #region Fields
-
-        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
-        private readonly IRoomMapBuilder roomMapBuilder = roomMapBuilder;
-
-        #endregion
-
         #region Properties
 
         /// <summary>

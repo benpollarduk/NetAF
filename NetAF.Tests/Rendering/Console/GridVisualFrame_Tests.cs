@@ -6,16 +6,16 @@ using NetAF.Rendering.Console;
 namespace NetAF.Tests.Rendering.Console
 {
     [TestClass]
-    public class GridPictureFrame_Tests
+    public class GridVisualFrame_Tests
     {
         [TestMethod]
         public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
         {
-            var gridPictureBuilder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var gridPictureBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             gridPictureBuilder.Resize(new(10, 10));
             gridPictureBuilder.SetCell(0, 0, 'C', AnsiColor.Black, AnsiColor.Green);
             gridPictureBuilder.SetCell(1, 0, 'D', AnsiColor.Green, AnsiColor.Black);
-            var frame = new GridPictureFrame(gridPictureBuilder);
+            var frame = new GridVisualFrame(gridPictureBuilder);
             byte[] data;
 
             using (var stream = new MemoryStream())

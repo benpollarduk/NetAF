@@ -4,12 +4,12 @@ using NetAF.Rendering.Console;
 namespace NetAF.Tests.Rendering.Console
 {
     [TestClass]
-    public class GridPictureBuilder_Tests
+    public class GridVisualBuilder_Tests
     {
         [TestMethod]
         public void GivenBlank_WhenSetCell_ThenCharacterSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             builder.SetCell(0, 0, 'C', AnsiColor.Red);
@@ -21,7 +21,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenSetCell_ThenForegroundColorSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             builder.SetCell(0, 0, 'C', AnsiColor.Red, AnsiColor.Green);
@@ -33,7 +33,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenSetCell_ThenBackgroundColorSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             builder.SetCell(0, 0, AnsiColor.Green);
@@ -45,7 +45,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenNotSet_ThenBackgroundColorSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             var background = builder.GetCellBackgroundColor(0, 0);
@@ -56,7 +56,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenNotSet_ThenForegroundColorSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             var foreground = builder.GetCellForegroundColor(0, 0);
@@ -67,7 +67,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenDrawRectangle3x3_ThenCellsSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             builder.DrawRectangle(0, 0, 3, 3, AnsiColor.Black, AnsiColor.Red);
@@ -86,7 +86,7 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenDrawTexture3x3_ThenCellsSetCorrectly()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
             Texture texture = new("ABC\nDEF\nGHI");
 
@@ -116,11 +116,10 @@ namespace NetAF.Tests.Rendering.Console
         [TestMethod]
         public void GivenBlank_WhenDrawTextureOverBackgroundColor3x3OverRed_ThenOnlyRedCellsModified()
         {
-            var builder = new GridPictureBuilder(AnsiColor.Black, AnsiColor.White);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
             char unset = '\0';
             Texture texture = new("ABC\nDEF\nGHI");
-
             builder.SetCell(1, 1, AnsiColor.Red);
 
             builder.DrawTextureOverBackgroundColor(0, 0, 3, 3, AnsiColor.Red, texture, AnsiColor.Green);
@@ -144,6 +143,37 @@ namespace NetAF.Tests.Rendering.Console
             Assert.AreEqual(AnsiColor.White, builder.GetCellForegroundColor(0, 2));
             Assert.AreEqual(AnsiColor.White, builder.GetCellForegroundColor(1, 2));
             Assert.AreEqual(AnsiColor.White, builder.GetCellForegroundColor(2, 2));
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenOverlayGridPictureBuilder_ThenOverlayAppliedCorrectly()
+        {
+            var overlay = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            overlay.Resize(new(1, 1));
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            overlay.SetCell(0, 0, 'C', AnsiColor.Cyan, AnsiColor.Red);
+
+            builder.Overlay(1, 1, overlay);
+
+            Assert.AreEqual('C', builder.GetCharacter(1, 1));
+            Assert.AreEqual(AnsiColor.Cyan, builder.GetCellForegroundColor(1, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 1));
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenOverlayGridStringBuilder_ThenOverlayAppliedCorrectly()
+        {
+            var overlay = new GridStringBuilder();
+            overlay.Resize(new(1, 1));
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            overlay.SetCell(0, 0, 'C', AnsiColor.Cyan);
+
+            builder.Overlay(1, 1, overlay);
+
+            Assert.AreEqual('C', builder.GetCharacter(1, 1));
+            Assert.AreEqual(AnsiColor.Cyan, builder.GetCellForegroundColor(1, 1));
         }
     }
 }

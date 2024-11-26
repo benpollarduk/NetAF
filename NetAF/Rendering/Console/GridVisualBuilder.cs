@@ -4,11 +4,11 @@ using NetAF.Utilities;
 namespace NetAF.Rendering.Console
 {
     /// <summary>
-    /// Provides a class for building pictures in a grid.
+    /// Provides a class for building visuals in a grid.
     /// </summary>
     /// <param name="background">The background color.</param>
     /// <param name="foreground">The foreground color.</param>
-    public class GridPictureBuilder(AnsiColor background, AnsiColor foreground)
+    public class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
     {
         #region Fields
 
@@ -255,6 +255,51 @@ namespace NetAF.Rendering.Console
                 }
             }
         }
+
+        /// <summary>
+        /// Overlay another GridVisualBuilder on top of this.
+        /// </summary>
+        /// <param name="x">The x position to begin overlaying the GridVisualBuilder at.</param>
+        /// <param name="y">The y position to begin overlaying the GridVisualBuilder at.</param>
+        /// <param name="gridGridVisualBuilder">The GridVisualBuilder to overlay.</param>
+        public void Overlay(int x, int y, GridVisualBuilder gridGridVisualBuilder)
+        {
+            for (var top = 0; top < gridGridVisualBuilder.DisplaySize.Height; top++)
+            {
+                for (var left = 0; left < gridGridVisualBuilder.DisplaySize.Width; left++)
+                {
+                    var transposedX = left + x;
+                    var transposedY = top + y;
+                    SafeSetCellBackground(transposedX, transposedY, gridGridVisualBuilder.GetCellBackgroundColor(left, top));
+                    SafeSetCellForeground(transposedX, transposedY, gridGridVisualBuilder.GetCellForegroundColor(left, top));
+                    SafeSetCellCharacter(transposedX, transposedY, gridGridVisualBuilder.GetCharacter(left, top));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Overlay a GridStringBuilder on top of this.
+        /// </summary>
+        /// <param name="x">The x position to begin overlaying the GridStringBuilder at.</param>
+        /// <param name="y">The y position to begin overlaying the GridStringBuilder at.</param>
+        /// <param name="gridStringBuilder">The GridStringBuilder to overlay.</param>
+        public void Overlay(int x, int y, GridStringBuilder gridStringBuilder)
+        {
+            for (var top = 0; top < gridStringBuilder.DisplaySize.Height; top++)
+            {
+                for (var left = 0; left < gridStringBuilder.DisplaySize.Width; left++)
+                {
+                    var transposedX = left + x;
+                    var transposedY = top + y;
+                    SafeSetCellForeground(transposedX, transposedY, gridStringBuilder.GetCellColor(left, top));
+                    SafeSetCellCharacter(transposedX, transposedY, gridStringBuilder.GetCharacter(left, top));
+                }
+            }
+        }
+
+        #endregion
+
+        #region StaticMethods
 
         /// <summary>
         /// Get a character to use from a texture at a specified position within a region of interest.

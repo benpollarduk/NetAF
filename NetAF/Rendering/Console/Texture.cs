@@ -71,7 +71,7 @@ namespace NetAF.Rendering.Console
         /// <param name="texture">The texture to create the kernel from. The string will be split at newlines to create the 2D texture.</param>
         private void CreateKernel(string texture)
         {
-            var lines = texture.Split();
+            var lines = texture.Split(StringUtilities.Newline);
             int width = lines.Max(x => x.Length);
             int height = lines.Length;
             kernel = new char[width, height];

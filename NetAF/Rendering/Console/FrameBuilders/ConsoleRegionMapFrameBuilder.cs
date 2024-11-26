@@ -14,12 +14,6 @@ namespace NetAF.Rendering.Console.FrameBuilders
     /// <param name="regionMapBuilder">A builder for region maps.</param>
     public sealed class ConsoleRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder) : IRegionMapFrameBuilder
     {
-        #region Fields
-
-        private readonly GridStringBuilder gridStringBuilder = gridStringBuilder;
-
-        #endregion
-
         #region Properties
 
         /// <summary>

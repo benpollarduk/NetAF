@@ -1,14 +1,15 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Rendering.FrameBuilders;
+using System;
 
 namespace NetAF.Rendering.Console.FrameBuilders
 {
     /// <summary>
-    /// Provides a builder of title frames.
+    /// Provides a builder of visual frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ConsoleTitleFrameBuilder(GridStringBuilder gridStringBuilder) : ITitleFrameBuilder
+    public sealed class ConsoleVisualFrameBuilder(GridStringBuilder gridStringBuilder) : IVisualFrameBuilder
     {
         #region Properties
 
@@ -34,15 +35,16 @@ namespace NetAF.Rendering.Console.FrameBuilders
 
         #endregion
 
-        #region Implementation of ITitleFrameBuilder
+        #region Implementation of IVisualFrameBuilder
 
         /// <summary>
         /// Build a frame.
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="description">The description.</param>
+        /// <param name="gridVisualBuilder">The grid visual builder.</param>
         /// <param name="size">The size of the frame.</param>
-        public IFrame Build(string title, string description, Size size)
+        public IFrame Build(string title, string description, GridVisualBuilder gridVisualBuilder, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -55,9 +57,21 @@ namespace NetAF.Rendering.Console.FrameBuilders
 
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
-            gridStringBuilder.DrawWrapped(description.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out _);
+            if (!string.IsNullOrEmpty(description))
+                gridStringBuilder.DrawWrapped(description.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out lastY);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
+            lastY += 3;
+
+            GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
+            finalBuilder.Resize(size);
+
+            var xOffset = Math.Max(leftMargin, (size.Width / 2) - (gridVisualBuilder.DisplaySize.Width / 2));
+            var yOffset = Math.Max(lastY, (size.Height / 2) - (gridVisualBuilder.DisplaySize.Height / 2));
+
+            finalBuilder.Overlay(0, 0, gridStringBuilder);
+            finalBuilder.Overlay(xOffset, yOffset, gridVisualBuilder);
+
+            return new GridVisualFrame(finalBuilder) { ShowCursor = false };
         }
 
         #endregion

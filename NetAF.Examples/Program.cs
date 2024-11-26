@@ -14,6 +14,7 @@ using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Configuration;
+using NetAF.Rendering.Console;
 
 namespace NetAF.Examples
 {
@@ -64,6 +65,9 @@ namespace NetAF.Examples
         {
             try
             {
+                Console.WriteLine(Ansi.GetAnsiBackgroundEscapeSequence(123, 57, 63));
+                Console.WriteLine("Hello");
+
                 static Overworld overworldCreator()
                 {
                     var regions = new List<Region>

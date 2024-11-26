@@ -5,7 +5,10 @@ using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
 using NetAF.Examples.Assets.Regions.Hub.Drawings;
+using NetAF.Imaging;
 using NetAF.Logic.Modes;
+using NetAF.Rendering.Console;
+using NetAF.Rendering.Console.FrameBuilders;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 
@@ -32,13 +35,14 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
             [ 
                 new(new("Look", "Look around."), true, true, (g, a) =>
                 {
-                    var frame = new ClearingDrawing(g.Configuration.DisplaySize).Instantiate();
+                    var frame = new ClearingVisualFrame(Name, g.Configuration.DisplaySize).Instantiate();
                     g.ChangeMode(new DirectRenderMode(frame));
                     return new(ReactionResult.GameModeChanged, string.Empty);
                 })
              ]);
 
             var conversation = new Conversation(
+            [
                 new("Squarrrkkk!"),
                 new("Would you like to change modes?", "ModeQuestion")
                 {
@@ -54,7 +58,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
                 new("Eeek, simple be fine too! Shame it's been deleted. Maybe it will be implemented again one day! Eeek!", new ToName("ModeQuestion")),
                 new("Squarrk! Legacy, looks old. Shame it's been deleted. Maybe it will be implemented again one day! Arrk!", new ToName("ModeQuestion")),
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
-            );
+            ]);
 
             room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."), conversation: conversation));
 

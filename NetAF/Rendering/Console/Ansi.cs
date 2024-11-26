@@ -121,6 +121,30 @@ namespace NetAF.Rendering.Console
             return $"\u001B[{(int)color + 10}m";
         }
 
+        /// <summary>
+        /// Get an ANSI escape sequence for a foreground color.
+        /// </summary>
+        /// <param name="r">The red channel.</param>
+        /// <param name="g">The green channel.</param>
+        /// <param name="b">The blue channel.</param>
+        /// <returns>The ANSI escape sequence.</returns>
+        public static string GetAnsiForegroundEscapeSequence(byte r, byte g, byte b)
+        {
+            return $"\u001b[38;2;{r};{g};{b}m";
+        }
+
+        /// <summary>
+        /// Get an ANSI escape sequence for a background color.
+        /// </summary>
+        /// <param name="r">The red channel.</param>
+        /// <param name="g">The green channel.</param>
+        /// <param name="b">The blue channel.</param>
+        /// <returns>The ANSI escape sequence.</returns>
+        public static string GetAnsiBackgroundEscapeSequence(byte r, byte g, byte b)
+        {
+            return $"\u001b[48;2;{r};{g};{b}m";
+        }
+
         #endregion
     }
 }
