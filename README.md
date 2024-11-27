@@ -141,7 +141,7 @@ builder.DrawRectangle(5, 5, 1, 6, trunk, trunk);
 
 // create a frame
 var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder());
-var frame = frameBuilder.Build("Tree", "An visual of a tree", builder, game.Configuration.DisplaySize);
+var frame = frameBuilder.Build("Tree", "A visual of a tree.", builder, game.Configuration.DisplaySize);
 
 // display the frame in the game
 game.ChangeMode(new VisualMode(frame));
