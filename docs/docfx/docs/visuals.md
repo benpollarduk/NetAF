@@ -66,7 +66,7 @@ return new Room("Hillside", "A wild hillside with a lone tree", commands:
 ```
 
 ### Applying Textures
-A texturizer can be applied to add extra depth to the image. The *ITextureizer* interface allows custom texturizers to be created. *BrightnessTexturizer* adds textures to the visual based on the background color.
+A texturizer can be applied to add extra depth to the image. The *ITexturizer* interface allows custom texturizers to be created. *BrightnessTexturizer* adds textures to the visual based on the background color.
 
 ```csharp
 var frame = new GridVisualFrame(VisualHelper.FromImage(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console, new BrightnessTexturizer()));
