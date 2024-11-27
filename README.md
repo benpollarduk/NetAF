@@ -146,23 +146,7 @@ var frame = builder.Build(name, string.Empty, builder, size);
 game.ChangeMode(new VisualMode(frame));
 ```
 
-#### NetAF.Imaging
-The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed on the console.
-
-![image](https://github.com/user-attachments/assets/68714a47-21c6-4661-ba8f-cd089750f8ed)
-
-This only requires a few simple steps. Here is a simple room that contains a command to look at the view. The *VisualHelper* from [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) takes care of generating the visual.
-```csharp
-return new Room("Hillside", "A wild hillside with a lone tree", commands:
-[
-    new CustomCommand(new CommandHelp("Look at view", "Look at the current view."), true, true, (game, args) =>
-    {
-        var frame = new GridVisualFrame(VisualHelper.FromImage(imagePath, game.Configuration.DisplaySize, new CellSize(8, 12)));
-        game.ChangeMode(new VisualMode(frame));
-        return new(ReactionResult.GameModeChanged, string.Empty);
-    })
- ]);
-```
+The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed in a game.
 
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
