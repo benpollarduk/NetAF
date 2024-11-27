@@ -116,7 +116,37 @@ NetAF provides frames for rendering the various game screens. These are fully ex
    * Conversation frame.
    * Visual frame.
 
-### NetAF.Imaging
+#### Visuals
+Although NetAF is primarily focused on text and interactive fiction, there are times where adding a visual can enrich the game.
+
+The *GridVisualBuilder* class can be used to create a picture that can be displayed in a game:
+
+```csharp
+// create a builder for drawing the tree
+var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.BrightWhite);
+builder.Resize(new(80, 50));
+
+// colors to use for the tree
+AnsiColor trunk = new(127, 50, 50);
+AnsiColor canopy = new(50, 200, 50);
+
+// draw the tree
+builder.SetCell(5, 0, Canopy);
+builder.DrawRectangle(4, 1, 3, 1, canopy, canopy);
+builder.DrawRectangle(3, 2, 5, 1, canopy, canopy);
+builder.DrawRectangle(2, 3, 7, 1, canopy, canopy);
+builder.DrawRectangle(1, 4, 9, 1, canopy, canopy);
+builder.DrawRectangle(0, 5, 11, 1, canopy, canopy);
+builder.DrawRectangle(5, 5, 1, 6, trunk, trunk);
+
+// create a frame
+var frame = builder.Build(name, string.Empty, builder, size);
+
+// display the frame in the game
+game.ChangeMode(new VisualMode(frame));
+```
+
+#### NetAF.Imaging
 The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed on the console.
 
 ![image](https://github.com/user-attachments/assets/68714a47-21c6-4661-ba8f-cd089750f8ed)
