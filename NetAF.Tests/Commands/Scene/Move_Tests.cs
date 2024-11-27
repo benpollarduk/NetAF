@@ -49,7 +49,7 @@ namespace NetAF.Tests.Commands.Scene
         {
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
-            region.AddRoom(new Room(new("Target"), Description.Empty, new("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, new Description("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Commands.Scene
         {
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new Room(new("Origin"), Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
-            region.AddRoom(new Room(new("Target"), Description.Empty, new("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
+            region.AddRoom(new Room(new("Target"), Description.Empty, new Description("ABC"), [new Exit(Direction.South)]), 0, 1, 0);
             var overworld = new Overworld(string.Empty, string.Empty);
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
