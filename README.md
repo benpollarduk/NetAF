@@ -149,6 +149,8 @@ game.ChangeMode(new VisualMode(frame));
 
 The rendered tree:
 
+![image](https://github.com/user-attachments/assets/d5bac165-9439-401e-be3f-bfad8e7d92b7)
+
 The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed in a game.
 
 ### Maps
