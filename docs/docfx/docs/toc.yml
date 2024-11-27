@@ -23,6 +23,8 @@ items:
   href: frame-builders.md
 - name: End Conditions
   href: end-conditions.md
+- name: Visuals
+  href: visuals.md
 - name: Persistence
   href: persistence.md
 - name: Architecture
