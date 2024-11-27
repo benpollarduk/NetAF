@@ -103,8 +103,7 @@ namespace NetAF.Extensions
             if (value.Length != 1)
                 return false;
 
-            var vowels = new[] { "A", "E", "I", "O", "U" };
-            return Array.Exists(vowels, x => x.InsensitiveEquals(value));
+            return value[0] is 'A' or 'a' or 'E' or 'e' or 'I' or 'i' or 'O' or 'o' or 'U' or 'u';
         }
 
         /// <summary>
@@ -155,8 +154,8 @@ namespace NetAF.Extensions
             if (value.Length == 1)
                 return value.ToUpper();
 
-            var first = value.Substring(0, 1).ToUpper();
-            var rest = value.Substring(1, value.Length - 1);
+            var first = value[..1].ToUpper();
+            var rest = value[1..];
 
             return $"{first}{rest}";
         }
