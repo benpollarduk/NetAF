@@ -99,8 +99,8 @@ NetAF provides classes for handling interpretation of input. Interpretation is e
 ### Conversations
 Conversations can be held between the player and a NPC. Conversations support multiple lines of dialogue and responses.
 
-![image](https://github.com/ben-pollard-uk/adventure-framework/assets/129943363/5ed1afc0-1ab8-4d35-9c90-dd848f18bfda)
-  
+![image](https://github.com/user-attachments/assets/ad5261cf-8918-4955-8536-73644930614a)
+
 ### Attributes
 All game assets support customisable attributes. This provides the possibility to build systems within a game, for example adding currency and trading, adding HP to enemies, MP to your character, durability to Items etc.
 
