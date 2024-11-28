@@ -14,7 +14,7 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Get or set the values.
         /// </summary>
-        public Dictionary<AttributeSerialization, int> Values { get; set; }
+        public List<AttributeAndValueSerialization> Values { get; set; }
 
         #endregion
 
@@ -27,9 +27,14 @@ namespace NetAF.Serialization.Assets
         /// <returns>The serialization.</returns>
         public static AttributeManagerSerialization FromAttributeManager(AttributeManager attributeManager)
         {
+            List<KeyValuePair<Attribute, int>> values = [];
+
+            foreach (var pair in attributeManager?.GetAsDictionary() ?? [])
+                values.Add(pair);
+
             return new()
             {
-                Values = attributeManager?.GetAsDictionary()?.ToDictionary(x => AttributeSerialization.FromAttribute(x.Key), x => x.Value) ?? []
+                Values = values?.Select(AttributeAndValueSerialization.FromAttributeAndValue).ToList() ?? []
             };
         }
 

@@ -12,6 +12,15 @@ namespace NetAF.Assets.Locations
     /// </summary>
     public sealed class Overworld : ExaminableObject, IRestoreFromObjectSerialization<OverworldSerialization>
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default examination for an Overworld.
+        /// </summary>
+        public static ExaminationCallback DefaultOverworldExamination => ExamineThis;
+
+        #endregion
+
         #region Fields
 
         private Region currentRegion;
@@ -61,9 +70,7 @@ namespace NetAF.Assets.Locations
             Identifier = identifier;
             Description = description;
             Commands = commands ?? [];
-
-            if (examination != null)
-                Examination = examination;
+            Examination = examination ?? DefaultOverworldExamination;
         }
 
         #endregion
@@ -124,16 +131,19 @@ namespace NetAF.Assets.Locations
 
         #endregion
 
-        #region Overrides of ExaminableObject
+        #region StaticMethods
 
         /// <summary>
-        /// Examine this object.
+        /// Examine this Overworld.
         /// </summary>
-        /// <param name="scene">The scene this object is being examined from.</param>
+        /// <param name="request">The examination request.</param>
         /// <returns>The examination.</returns>
-        public override Examination Examine(ExaminationScene scene)
+        private static Examination ExamineThis(ExaminationRequest request)
         {
-            return new(Description.GetDescription());
+            if (request.Examinable is not Overworld overworld)
+                return DefaultExamination(request);
+
+            return new(overworld.Description.GetDescription());
         }
 
         #endregion

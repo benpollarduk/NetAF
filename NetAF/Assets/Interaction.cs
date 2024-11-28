@@ -7,6 +7,15 @@ namespace NetAF.Assets
     /// </summary>
     public sealed class Interaction
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get a default interaction for no change.
+        /// </summary>
+        public static InteractionCallback NoChange => i => new(InteractionResult.NoChange, i);
+
+        #endregion
+
         #region Properties
 
         /// <summary>

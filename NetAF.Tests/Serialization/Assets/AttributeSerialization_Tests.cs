@@ -5,14 +5,14 @@ using NetAF.Serialization.Assets;
 namespace NetAF.Tests.Serialization.Assets
 {
     [TestClass]
-    public class AttributeSerialization_Tests
+    public class AttributeAndValueSerialization_Tests
     {
         [TestMethod]
         public void GivenAttributeWhenNameIsA_WhenFromAttribute_ThenNameIsA()
         {
             Attribute attribute = new("A", "B", 5, 10);
 
-            AttributeSerialization result = AttributeSerialization.FromAttribute(attribute);
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
             Assert.AreEqual("A", result.Name);
         }
@@ -22,7 +22,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Attribute attribute = new("A", "B", 5, 10);
 
-            AttributeSerialization result = AttributeSerialization.FromAttribute(attribute);
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
             Assert.AreEqual("B", result.Description);
         }
@@ -32,7 +32,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Attribute attribute = new("A", "B", 5, 10);
 
-            AttributeSerialization result = AttributeSerialization.FromAttribute(attribute);
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
             Assert.AreEqual(5, result.Minimum);
         }
@@ -42,24 +42,19 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Attribute attribute = new("A", "B", 5, 10);
 
-            AttributeSerialization result = AttributeSerialization.FromAttribute(attribute);
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
             Assert.AreEqual(10, result.Maximum);
         }
 
         [TestMethod]
-        public void GivenEmptyAttribute_WhenRestoreFrom_ThenAttributeRestoredCorrectly()
+        public void GivenAttributeWhenValueIs3_WhenFromAttribute_ThenValueIs3()
         {
-            Attribute attribute = new("a", "b", 1, 10);
-            Attribute attribute2 = new(string.Empty, string.Empty, 0, 0);
-            AttributeSerialization serialization = AttributeSerialization.FromAttribute(attribute);
+            Attribute attribute = new("A", "B", 5, 10);
 
-            serialization.Restore(attribute2);
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 3));
 
-            Assert.AreEqual("a", attribute2.Name);
-            Assert.AreEqual("b", attribute2.Description);
-            Assert.AreEqual(1, attribute2.Minimum);
-            Assert.AreEqual(10, attribute2.Maximum);
+            Assert.AreEqual(3, result.Value);
         }
     }
 }

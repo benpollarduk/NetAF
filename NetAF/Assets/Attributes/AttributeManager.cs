@@ -106,6 +106,9 @@ namespace NetAF.Assets.Attributes
         /// <returns>The value.</returns>
         public int GetValue(Attribute attribute)
         {
+            if (attribute == null)
+                return 0;
+
             return attributes.TryGetValue(attribute, out var value) ? value : 0;
         }
 
@@ -220,8 +223,11 @@ namespace NetAF.Assets.Attributes
         {
             RemoveAll();
 
-            foreach (var value in serialization.Values)
-                Add(Attribute.FromSerialization(value.Key), value.Value);
+            foreach (var keyValuePair in serialization.Values)
+            {
+                var attribute = new Attribute(keyValuePair.Name, keyValuePair.Description, keyValuePair.Minimum, keyValuePair.Maximum);
+                Add(attribute, keyValuePair.Value);
+            }    
         }
 
         #endregion

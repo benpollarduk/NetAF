@@ -17,6 +17,16 @@ namespace NetAF.Tests.Assets.Attributes
         }
 
         [TestMethod]
+        public void GivenNonExistentAttribute_WhenGetValue_ThenReturn0()
+        {
+            AttributeManager manager = new();
+
+            var result = manager.GetValue("");
+
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
         public void GivenNoAttributes_WhenAdd_ThenOneAttribute()
         {
             AttributeManager manager = new();

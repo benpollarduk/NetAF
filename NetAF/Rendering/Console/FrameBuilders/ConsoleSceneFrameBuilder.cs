@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
@@ -87,10 +86,15 @@ namespace NetAF.Rendering.Console.FrameBuilders
 
             var extendedDescription = string.Empty;
 
-            if (room.Items.Any())
-                extendedDescription = extendedDescription.AddSentence(room.Examine(new(player, room)).Description.EnsureFinishedSentence());
+            if (room.Items.Length != 0)
+            {
+                var roomExamination = Room.DefaultRoomExamination.Invoke(new ExaminationRequest(room, new ExaminationScene(player, room)));
+                extendedDescription = extendedDescription.AddSentence(roomExamination.Description.EnsureFinishedSentence());
+            }
             else
+            {
                 extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
+            }
 
             extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
 
