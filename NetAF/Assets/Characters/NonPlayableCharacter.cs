@@ -40,7 +40,7 @@ namespace NetAF.Assets.Characters
             Description = description;
             Conversation = conversation;
             Commands = commands ?? [];
-            Interaction = interaction ?? Assets.Interaction.NoChange;
+            Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
             Examination = examination ?? DefaultExamination;
         }
 

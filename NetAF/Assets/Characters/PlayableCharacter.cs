@@ -75,7 +75,7 @@ namespace NetAF.Assets.Characters
             CanConverse = canConverse;
             Items = items ?? [];
             Commands = commands ?? [];
-            Interaction = interaction ?? Assets.Interaction.NoChange;
+            Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
             Examination = examination ?? DefaultExamination;
         }
 

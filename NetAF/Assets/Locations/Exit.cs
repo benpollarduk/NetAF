@@ -47,7 +47,7 @@ namespace NetAF.Assets.Locations
             Description = description ?? GenerateDescription();
             IsLocked = isLocked;
             Commands = commands ?? [];
-            Interaction = interaction ?? Assets.Interaction.NoChange;
+            Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
             Examination = examination ?? DefaultExamination;
         }
 
