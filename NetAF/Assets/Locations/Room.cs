@@ -15,6 +15,15 @@ namespace NetAF.Assets.Locations
     /// </summary>
     public sealed class Room : ExaminableObject, IInteractWithItem, IItemContainer, IRestoreFromObjectSerialization<RoomSerialization>
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default examination for a Room.
+        /// </summary>
+        public static ExaminationCallback DefaultRoomExamination => ExamineThis;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -126,9 +135,7 @@ namespace NetAF.Assets.Locations
             Items = items ?? [];
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
-
-            if (examination != null)
-                Examination = examination;
+            Examination = examination ?? DefaultRoomExamination;
         }
 
         #endregion
@@ -202,28 +209,6 @@ namespace NetAF.Assets.Locations
         private Interaction InteractWithItem(Item item)
         {
             return Interaction.Invoke(item);
-        }
-
-        /// <summary>
-        /// Handle examination this Room.
-        /// </summary>
-        /// <param name="scene">The scene this object is being examined from.</param>
-        /// <returns>The examination.</returns>
-        public override Examination Examine(ExaminationScene scene)
-        {
-            if (!Array.Exists(Items, i => i.IsPlayerVisible))
-                return new("There is nothing to examine.");
-
-            if (Items.Count(i => i.IsPlayerVisible) == 1)
-            {
-                var singularItem = Items.Where(i => i.IsPlayerVisible).ToArray()[0];
-                return new($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
-            }
-
-            var items = Items.Cast<IExaminable>().ToArray();
-            var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
-            var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
-            return new($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
         }
 
         /// <summary>
@@ -455,6 +440,35 @@ namespace NetAF.Assets.Locations
         {
             EnteredFrom = fromDirection;
             MovedInto();
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Examine this Room.
+        /// </summary>
+        /// <param name="request">The examination request.</param>
+        /// <returns>The examination.</returns>
+        private static Examination ExamineThis(ExaminationRequest request)
+        {
+            if (request.Examinable is not Room room)
+                return DefaultExamination(request);
+
+            if (!Array.Exists(room.Items, i => i.IsPlayerVisible))
+                return new("There is nothing to examine.");
+
+            if (room.Items.Count(i => i.IsPlayerVisible) == 1)
+            {
+                Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
+                return new($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
+            }
+
+            var items = room.Items.Cast<IExaminable>().ToArray();
+            var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
+            var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
+            return new($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
         }
 
         #endregion

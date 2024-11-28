@@ -14,6 +14,15 @@ namespace NetAF.Assets.Locations
     /// </summary>
     public sealed class Region : ExaminableObject, IRestoreFromObjectSerialization<RegionSerialization>
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default examination for a Region.
+        /// </summary>
+        public static ExaminationCallback DefaultRegionExamination => ExamineThis;
+
+        #endregion
+
         #region Fields
 
         private Room startRoom;
@@ -74,9 +83,7 @@ namespace NetAF.Assets.Locations
             Identifier = identifier;
             Description = description;
             Commands = commands ?? [];
-
-            if (examination != null)
-                Examination = examination;
+            Examination = examination ?? DefaultRegionExamination;
         }
 
         #endregion
@@ -300,6 +307,19 @@ namespace NetAF.Assets.Locations
         #region StaticMethods
 
         /// <summary>
+        /// Examine this Region.
+        /// </summary>
+        /// <param name="request">The examination request.</param>
+        /// <returns>The examination.</returns>
+        private static Examination ExamineThis(ExaminationRequest request)
+        {
+            if (request.Examinable is not Region region)
+                return DefaultExamination(request);
+
+            return new(region.Identifier + ": " + region.Description.GetDescription());
+        }
+
+        /// <summary>
         /// Get the next position given a current position.
         /// </summary>
         /// <param name="current">The current position.</param>
@@ -330,20 +350,6 @@ namespace NetAF.Assets.Locations
                 default:
                     throw new NotImplementedException();
             }
-        }
-
-        #endregion
-
-        #region Overrides of ExaminableObject
-
-        /// <summary>
-        /// Examine this object.
-        /// </summary>
-        /// <param name="scene">The scene this object is being examined from.</param>
-        /// <returns>The examination.</returns>
-        public override Examination Examine(ExaminationScene scene)
-        {
-            return new(Identifier + ": " + Description.GetDescription());
         }
 
         #endregion

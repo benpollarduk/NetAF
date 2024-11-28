@@ -14,12 +14,12 @@ namespace NetAF.Assets
     /// </summary>
     public class ExaminableObject : IExaminable
     {
-        #region Properties
+        #region StaticProperties
 
         /// <summary>
-        /// Get the callback handling all examination of this object.
+        /// Get a default examination for an ExaminableObject.
         /// </summary>
-        public ExaminationCallback Examination { get; protected set; } = request =>
+        public static ExaminationCallback DefaultExamination => request =>
         {
             StringBuilder description = new();
 
@@ -60,6 +60,15 @@ namespace NetAF.Assets
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Get the callback handling all examination of this object.
+        /// </summary>
+        public ExaminationCallback Examination { get; protected set; }
+
+        #endregion
+
         #region Implementation of IExaminable
 
         /// <summary>
@@ -87,7 +96,7 @@ namespace NetAF.Assets
         /// </summary>
         /// <param name="scene">The scene this object is being examined from.</param>
         /// <returns>The examination.</returns>
-        public virtual Examination Examine(ExaminationScene scene)
+        public Examination Examine(ExaminationScene scene)
         {
             return Examination(new(this, scene));
         }

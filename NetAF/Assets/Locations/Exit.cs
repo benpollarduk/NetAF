@@ -48,9 +48,7 @@ namespace NetAF.Assets.Locations
             IsLocked = isLocked;
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
-            
-            if (examination != null)
-                Examination = examination;
+            Examination = examination ?? DefaultExamination;
         }
 
         #endregion

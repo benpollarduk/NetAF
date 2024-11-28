@@ -54,9 +54,7 @@ namespace NetAF.Assets
             IsTakeable = isTakeable;
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
-            
-            if (examination != null)
-                Examination = examination;
+            Examination = examination ?? DefaultExamination;
         }
 
         #endregion

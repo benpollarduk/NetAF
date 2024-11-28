@@ -25,7 +25,16 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description);
+            var room = new Room(Name, Description, examination: request =>
+            {
+                if (request.Scene.Examiner.Attributes.GetValue("Coin") == 0)
+                {
+                    request.Scene.Examiner.Attributes.Add("Coin", 1);
+                    return new Examination("Well look at that, you found a coin.");
+                }
+
+                return Room.DefaultRoomExamination(request);
+            });
 
             var conversation = new Conversation(
             [
@@ -46,7 +55,13 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
             ]);
 
-            room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."), conversation: conversation));
+            room.AddCharacter(new NonPlayableCharacter(new Identifier("Parrot"), new Description("A brightly colored parrot."), conversation: conversation, interaction: item =>
+            {
+                if (item.Identifier.Equals("Knife"))
+                    return new Interaction(InteractionResult.TargetExpires, item, "You slash at the parrot, in a flash of red feathers it is no more! The beast is vanquished!");
+
+                return new(InteractionResult.NoChange, item);
+            }));
 
             return room;
         }
