@@ -2,6 +2,7 @@
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands;
+using NetAF.Assets.Characters;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -491,11 +492,30 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenCurrentRoomNullAndNoRooms_WhenEnter_ThenCurrentRoomIsNull()
         {
             var region = new Region(string.Empty, string.Empty);
-            var room = new Room(string.Empty, string.Empty);
 
             region.Enter();
 
             Assert.IsNull(region.CurrentRoom);
+        }
+
+        [TestMethod]
+        public void GivenNotRegion_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var region = new Region(string.Empty, "A region");
+
+            var result = region.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void GivenRegion_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var region = new Region(string.Empty, "A region");
+
+            var result = region.Examination(new ExaminationRequest(region, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+
+            Assert.IsTrue(result.Description.Length > 0);
         }
     }
 }

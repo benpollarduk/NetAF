@@ -243,5 +243,45 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void GivenNotRoom_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room");
+
+            var result = room.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void GivenNoItems_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room");
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given1Item_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room", items: [new Item("a", "b")]);
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given2Items_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room", items: [new Item("a", "b"), new Item("c", "d")]);
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
     }
 }

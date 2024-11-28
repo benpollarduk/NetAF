@@ -56,5 +56,15 @@ namespace NetAF.Tests.Serialization.Assets
 
             Assert.AreEqual(3, result.Value);
         }
+
+        [TestMethod]
+        public void GivenRestore_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                AttributeAndValueSerialization value = new();
+                value.Restore(new System.Collections.Generic.KeyValuePair<Attribute, int>());
+            });
+        }
     }
 }

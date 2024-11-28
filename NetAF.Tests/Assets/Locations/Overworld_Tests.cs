@@ -1,5 +1,7 @@
 ﻿using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets.Characters;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -71,6 +73,26 @@ namespace NetAF.Tests.Assets.Locations
             var result = overworld.Move(region);
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenNotOverworld_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var overworld = new Overworld(string.Empty, "An overworld");
+
+            var result = overworld.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void GivenOverworld_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var overworld = new Overworld(string.Empty, "An overworld");
+
+            var result = overworld.Examination(new ExaminationRequest(overworld, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+
+            Assert.IsTrue(result.Description.Length > 0);
         }
     }
 }
