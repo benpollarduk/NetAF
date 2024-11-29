@@ -199,5 +199,69 @@ namespace NetAF.Tests.Assets.Attributes
 
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod]
+        public void GivenNonExistentAttributeIdentifiedByString_WhenAny_ThenReturnFalse()
+        {
+            AttributeManager manager = new();
+
+            var result = manager.Any("test");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExistentAttributeIdentifiedByStringWithValueOf0_WhenAny_ThenReturnFalse()
+        {
+            AttributeManager manager = new();
+            manager.Add("test", 0);
+
+            var result = manager.Any("test");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExistentAttributeIdentifiedByStringWithValueOf1_WhenAny_ThenReturnTrue()
+        {
+            AttributeManager manager = new();
+            manager.Add("test", 1);
+
+            var result = manager.Any("test");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenNonExistentAttribute_WhenAny_ThenReturnFalse()
+        {
+            AttributeManager manager = new();
+
+            var result = manager.Any(new Attribute("test", string.Empty, 0, 1));
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExistentAttribute_WhenAny_ThenReturnFalse()
+        {
+            AttributeManager manager = new();
+            manager.Add("test", 0);
+
+            var result = manager.Any(new Attribute("test", string.Empty, 0, 1));
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExistentAttribute_WhenAny_ThenReturnTrue()
+        {
+            AttributeManager manager = new();
+            manager.Add("test", 1);
+
+            var result = manager.Any(new Attribute("test", string.Empty, 0, 1));
+
+            Assert.IsTrue(result);
+        }
     }
 }

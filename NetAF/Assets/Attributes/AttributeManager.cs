@@ -109,7 +109,31 @@ namespace NetAF.Assets.Attributes
             if (attribute == null)
                 return 0;
 
-            return attributes.TryGetValue(attribute, out var value) ? value : 0;
+            var match = GetMatch(attribute);
+            return attributes.TryGetValue(match, out var value) ? value : 0;
+        }
+
+        /// <summary>
+        /// Get if there is any of a specified attribute.
+        /// </summary>
+        /// <param name="attributeName">The name of the attribute.</param>
+        /// <returns>True if there are any, else false.</returns>
+        public bool Any(string attributeName)
+        {
+            return GetValue(attributes.Keys.FirstOrDefault(x => x.Name.InsensitiveEquals(attributeName))) > 0;
+        }
+
+        /// <summary>
+        /// Get if there is any of a specified attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <returns>True if there are any, else false.</returns>
+        public bool Any(Attribute attribute)
+        {
+            if (attribute == null)
+                return false;
+
+            return GetValue(attribute) > 0;
         }
 
         /// <summary>
