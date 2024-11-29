@@ -1,4 +1,6 @@
-﻿namespace NetAF.Commands.Frame
+﻿using NetAF.Logic.Modes;
+
+namespace NetAF.Commands.Frame
 {
     /// <summary>
     /// Represents the CommandsOn command.
@@ -26,7 +28,7 @@
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.Configuration.DisplayCommandListInSceneFrames = true;
+            SceneMode.DisplayCommandList = true;
             return new(ReactionResult.Inform, "Commands have been turned on.");
         }
 

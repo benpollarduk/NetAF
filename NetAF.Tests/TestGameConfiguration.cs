@@ -3,7 +3,6 @@ using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using NetAF.Logic.Configuration;
-using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Tests
@@ -20,8 +19,6 @@ namespace NetAF.Tests
                                                             new CustomCommandInterpreter());
 
         public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
-        public bool DisplayCommandListInSceneFrames { get; set; } = true;
-        public KeyType SceneMapKeyType { get; set; } = KeyType.Dynamic;
         public IIOAdapter Adapter { get; private set; } = adapter;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using NetAF.Adapters;
 using NetAF.Assets;
 using NetAF.Interpretation;
-using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Configuration
@@ -32,16 +31,6 @@ namespace NetAF.Logic.Configuration
         /// Get or set the collection of frame builders to use to render the game.
         /// </summary>
         public FrameBuilderCollection FrameBuilders { get; set; }
-
-        /// <summary>
-        /// Get or set if the command list is displayed in scene frames.
-        /// </summary>
-        public bool DisplayCommandListInSceneFrames { get; set; }
-
-        /// <summary>
-        /// Get or set the type of key to use on the scene map.
-        /// </summary>
-        public KeyType SceneMapKeyType { get; set; }
 
         /// <summary>
         /// Get the I/O adapter.
