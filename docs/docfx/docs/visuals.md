@@ -31,6 +31,9 @@ var frame = frameBuilder.Build("Tree", "A visual of a tree.", builder, game.Conf
 // display the frame in the game
 game.ChangeMode(new VisualMode(frame));
 ```
+This will render the following:
+
+![Tree](~/images/visuals-tree.png)
 
 ## NetAF.Imaging
 The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed in a game.
@@ -41,33 +44,45 @@ Generating visuals is made easy with the *VisualHelper* class. The following exa
 var displaySize = new Size(80, 50);
 var adapter = new SystemConsoleAdapter();
 
-var frame = new GridVisualFrame(VisualHelper.FromImage(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console));
+var frame = VisualHelper.CreateFrame(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console);
 adapter.RenderFrame(frame);
 ```
 
 This can be used in a game:
 
 ```csharp
-var frame = new GridVisualFrame(VisualHelper.FromImage(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console));
+var frame = VisualHelper.CreateFrame(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console);
 game.ChangeMode(new VisualMode(frame));
 ```
 
-Here is a simple room that contains a command to look at the view.
+Image a simple room that contains a command to look at the view. The source image for the view is this image:
+
+![Tree-Original](~/images/visuals-tree-original.jpg)
+
+The code looks like this:
+
 ```csharp
 return new Room("Hillside", "A wild hillside with a lone tree", commands:
 [
     new CustomCommand(new CommandHelp("Look at view", "Look at the current view."), true, true, (game, args) =>
     {
-        var frame = new GridVisualFrame(VisualHelper.FromImage(@"C:\TestImage.jpg", game.Configuration.DisplaySize, CellAspectRatio.Console));
+        var frame = VisualHelper.CreateFrame("visuals-tree-original.jpg", game.Configuration.DisplaySize, CellAspectRatio.Console);
         game.ChangeMode(new VisualMode(frame));
         return new(ReactionResult.GameModeChanged, string.Empty);
     })
  ]);
 ```
 
+And the output looks like this:
+
+![Tree-Without-Texture](~/images/visuals-tree-without-texture.png)
+
 ### Applying Textures
 A texturizer can be applied to add extra depth to the image. The *ITexturizer* interface allows custom texturizers to be created. *BrightnessTexturizer* adds textures to the visual based on the background color.
 
 ```csharp
-var frame = new GridVisualFrame(VisualHelper.FromImage(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console, new BrightnessTexturizer()));
+var frame = VisualHelper.CreateFrame(@"C:\TestImage.jpg", displaySize, CellAspectRatio.Console, new BrightnessTexturizer());
 ```
+The texturized image looks like this:
+
+![Tree-With-Texture](~/images/visuals-tree-with-texture.png)
