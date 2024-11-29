@@ -25,7 +25,7 @@
         /// <summary>
         /// Get the default NetAF yellow.
         /// </summary>
-        public static AnsiColor NetAFYellow { get; } = new(255, 255, 128);
+        public static AnsiColor NetAFYellow { get; } = new(220, 220, 85);
 
         #endregion
     }
