@@ -69,7 +69,9 @@ namespace NetAF.Assets
         /// <param name="description">The current description.</param>
         private static void AddCommandsToDescription(ExaminationRequest request, ref StringBuilder description)
         {
-            if (request.Examinable.Commands == null || request.Examinable.Commands.Length == 0)
+            var commands = request.Examinable.Commands?.Where(x => x.IsPlayerVisible).ToArray() ?? [];
+
+            if (commands.Length == 0)
                 return;
 
             if (description.Length > 0)
@@ -77,9 +79,9 @@ namespace NetAF.Assets
 
             description.Append($"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ");
 
-            for (int i = 0; i < request.Examinable.Commands.Length; i++)
+            for (int i = 0; i < commands.Length; i++)
             {
-                CustomCommand customCommand = request.Examinable.Commands[i];
+                CustomCommand customCommand = commands[i];
                 description.Append($"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ");
             }
 
