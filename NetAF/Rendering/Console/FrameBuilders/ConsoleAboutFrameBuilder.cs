@@ -53,6 +53,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <param name="title">The title.</param>
         /// <param name="game">The game.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         public IFrame Build(string title, Game game, Size size)
         {
             gridStringBuilder.Resize(size);

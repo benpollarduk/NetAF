@@ -14,6 +14,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="title">The title.</param>
         /// <param name="game">The game.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         IFrame Build(string title, Game game, Size size);
     }
 }

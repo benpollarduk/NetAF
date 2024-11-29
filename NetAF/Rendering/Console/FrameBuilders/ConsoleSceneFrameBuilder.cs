@@ -66,6 +66,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="keyType">The type of key to use.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, Size size)
         {
             var availableWidth = size.Width - 4;

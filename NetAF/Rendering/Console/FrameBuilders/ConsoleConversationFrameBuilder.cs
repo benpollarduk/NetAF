@@ -104,6 +104,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <param name="converser">The converser.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         public IFrame Build(string title, IConverser converser, CommandHelp[] contextualCommands, Size size)
         {
             gridStringBuilder.Resize(size);

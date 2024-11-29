@@ -42,6 +42,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <param name="message">The message to display to the user.</param>
         /// <param name="reason">The reason the game ended.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         public IFrame Build(string message, string reason, Size size)
         {
             gridStringBuilder.Resize(size);

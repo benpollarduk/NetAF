@@ -14,6 +14,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="message">The message to display to the user.</param>
         /// <param name="isError">If the message is an error.</param>
         /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
         IFrame Build(string title, string message, bool isError, Size size);
     }
 }
