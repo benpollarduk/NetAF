@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NetAF.Assets.Locations
@@ -86,6 +87,29 @@ namespace NetAF.Assets.Locations
                 return 0d;
 
             return DistanceBetweenPoints(aPos.Value, bPos.Value);
+        }
+
+        /// <summary>
+        /// Find all Z that have visited rooms.
+        /// </summary>
+        /// <returns>An array containing all Z with visited rooms.</returns>
+        public int[] FindAllZWithVisitedRooms()
+        {
+            List<int> floors = [];
+
+            for (var floor = 0; floor < Depth; floor++)
+            {
+                foreach (var room in FindAllRoomsOnZ(floor))
+                {
+                    if (room.HasBeenVisited)
+                    {
+                        floors.Add(floor);
+                        continue;
+                    }
+                }
+            }
+
+            return [.. floors];
         }
 
         #endregion

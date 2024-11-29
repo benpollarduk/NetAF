@@ -26,31 +26,8 @@ namespace NetAF.Assets
             if (request.Examinable.Description != null)
                 description.Append(request.Examinable.Description.GetDescription());
 
-            if (request.Examinable.Commands?.Any() ?? false)
-            {
-                if (description.Length > 0)
-                    description.Append(" ");
-
-                description.Append($"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ");
-
-                for (int i = 0; i < request.Examinable.Commands.Length; i++)
-                {
-                    CustomCommand customCommand = request.Examinable.Commands[i];
-                    description.Append($"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ");
-                }
-
-                if (description.ToString().EndsWith(", "))
-                {
-                    description.Remove(description.Length - 2, 2);
-                    description.EnsureFinishedSentence();
-                }
-            }
-
-            if (description.Length == 0)
-                description.Append(request.Examinable.Identifier.Name);
-
-            if (description.Length == 0)
-                description.Append(request.Examinable.GetType().Name);
+            AddCommandsToDescription(request, ref description);
+            EnsureAtleastABasicDescription(request, ref description);
 
             if (request.Examinable.Attributes.Count > 0)
                 description.Append($"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
@@ -66,6 +43,52 @@ namespace NetAF.Assets
         /// Get the callback handling all examination of this object.
         /// </summary>
         public ExaminationCallback Examination { get; protected set; }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Ensure that at least a basic description has been added.
+        /// </summary>
+        /// <param name="request">The examination request.</param>
+        /// <param name="description">The current description.</param>
+        private static void EnsureAtleastABasicDescription(ExaminationRequest request, ref StringBuilder description)
+        {
+            if (description.Length == 0)
+                description.Append(request.Examinable.Identifier.Name);
+
+            if (description.Length == 0)
+                description.Append(request.Examinable.GetType().Name);
+        }
+
+        /// <summary>
+        /// Add any commands to the description.
+        /// </summary>
+        /// <param name="request">The examination request.</param>
+        /// <param name="description">The current description.</param>
+        private static void AddCommandsToDescription(ExaminationRequest request, ref StringBuilder description)
+        {
+            if (request.Examinable.Commands == null || request.Examinable.Commands.Length == 0)
+                return;
+
+            if (description.Length > 0)
+                description.Append(' ');
+
+            description.Append($"{Environment.NewLine}{Environment.NewLine}{request.Examinable.Identifier.Name} provides the following commands: ");
+
+            for (int i = 0; i < request.Examinable.Commands.Length; i++)
+            {
+                CustomCommand customCommand = request.Examinable.Commands[i];
+                description.Append($"{Environment.NewLine}\"{customCommand.Help.Command}\" - {customCommand.Help.Description.RemoveSentenceEnd()}, ");
+            }
+
+            if (description.ToString().EndsWith(", "))
+            {
+                description.Remove(description.Length - 2, 2);
+                description.EnsureFinishedSentence();
+            }
+        }
 
         #endregion
 

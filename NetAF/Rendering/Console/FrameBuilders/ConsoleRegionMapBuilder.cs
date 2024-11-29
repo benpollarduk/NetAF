@@ -286,7 +286,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
             var rooms = matrix.ToRooms().Where(r => r != null).ToArray();
             var unvisitedRoomPositions = rooms.Select(region.GetPositionOfRoom).Where(r => !r.Room.HasBeenVisited).ToList();
             var visitedRoomPositions = rooms.Select(region.GetPositionOfRoom).Where(r => r.Room.HasBeenVisited).ToList();
-            var multiLevel = matrix.Depth > 1;
+            var multiLevel = matrix.Depth > 1 && (region.IsVisibleWithoutDiscovery || matrix.FindAllZWithVisitedRooms().Length > 1);
             var indicatorLength = 3 + matrix.Depth.ToString().Length;
             var maxAvailableWidth = maxSize.Width;
             var x = startPosition.X;

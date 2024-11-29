@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using NetAF.Assets;
+using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -149,6 +150,32 @@ namespace NetAF.Tests.Assets.Locations
             var result = Matrix.DistanceBetweenPoints(a, b);
 
             Assert.AreEqual(1, (int)result);
+        }
+
+        [TestMethod]
+        public void GivenVisitedRoomOn1And1VisitedRoomOn3_When_ThenReturnContaining1And3()
+        {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 1)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 2)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 3))
+            ];
+
+            var serialization = RoomSerialization.FromRoom(roomPositions[2].Room);
+            serialization.HasBeenVisited = true;
+            roomPositions[2].Room.RestoreFrom(serialization);
+            roomPositions[4].Room.RestoreFrom(serialization);
+
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.FindAllZWithVisitedRooms();
+
+            Assert.AreEqual(2, result.Length);
+            Assert.AreEqual(1, result[0]);
+            Assert.AreEqual(3, result[1]);
         }
     }
 }
