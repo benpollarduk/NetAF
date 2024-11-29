@@ -158,15 +158,18 @@ namespace NetAF.Logic
 
                 // check if the game has ended
                 if (CheckForGameEnd(EndConditions, out endMode))
+                {
+                    // end the game
                     End();
+
+                    // render the last mode
+                    Mode.Render(this);
+
+                    // wait for acknowledge before exiting
+                    GetInput();
+                }
             }
             while (state != GameState.Finishing);
-
-            // render the last mode
-            Mode.Render(this);
-
-            // wait for acknowledge
-            GetInput();
 
             // if an end mode specified
             if (endMode != null)
@@ -208,6 +211,8 @@ namespace NetAF.Logic
                     ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, regionEnterReaction));
                 else
                     ChangeMode(new SceneMode());
+
+                return;
             }
 
             // 3. check if command didn't change the mode and the current mode type is information, essentially the mode has expired

@@ -30,7 +30,7 @@ namespace NetAF.Examples.Assets.Player
                     return new(InteractionResult.NoChange, null);
 
                 if (Knife.Name.EqualsExaminable(i))
-                    return new(InteractionResult.TargetExpires, i, "You slash wildly at your own throat. You are dead.");
+                    return new(InteractionResult.TargetExpires, i, "You slash wildly at your own throat. Your jugular opens spilling blood everywhere. As you loose consciousness you are filled with a deep sense of regret.");
 
                 if (CoffeeMug.Name.EqualsIdentifier(i.Identifier))
                     return new(InteractionResult.NoChange, i, "If there was some coffee in the mug you could drink it.");
