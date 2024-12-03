@@ -49,5 +49,15 @@ namespace NetAF.Tests.Rendering.Console
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void GivenR10G15B20_WhenToGray_ThenReturnColorWithR15G15B15()
+        {
+            var result = new AnsiColor(10, 15, 20).ToGray();
+
+            Assert.AreEqual(15, result.R);
+            Assert.AreEqual(15, result.G);
+            Assert.AreEqual(15, result.B);
+        }
     }
 }

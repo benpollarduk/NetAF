@@ -17,7 +17,7 @@
         /// <returns>The color.</returns>
         private AnsiColor GetForegroundColor(int x, int y, bool suppressColor)
         {
-            return !suppressColor ? builder.GetCellForegroundColor(x, y) : AnsiColor.White;
+            return !suppressColor ? builder.GetCellForegroundColor(x, y) : builder.GetCellForegroundColor(x, y).ToGray();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@
         /// <returns>The color.</returns>
         private AnsiColor GetBackgroundColor(int x, int y, bool suppressColor)
         {
-            return !suppressColor ? builder.GetCellBackgroundColor(x, y) : AnsiColor.White;
+            return !suppressColor ? builder.GetCellBackgroundColor(x, y) : builder.GetCellBackgroundColor(x, y).ToGray();
         }
 
         /// <summary>
