@@ -11,7 +11,7 @@ using NetAF.Utilities;
 namespace NetAF.Assets.Locations
 {
     /// <summary>
-    /// Represents a room
+    /// Represents a room.
     /// </summary>
     public sealed class Room : ExaminableObject, IInteractWithItem, IItemContainer, IRestoreFromObjectSerialization<RoomSerialization>
     {
