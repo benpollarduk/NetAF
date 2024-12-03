@@ -243,7 +243,7 @@ namespace NetAF.Assets.Attributes
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(AttributeManagerSerialization serialization)
+        void IRestoreFromObjectSerialization<AttributeManagerSerialization>.RestoreFrom(AttributeManagerSerialization serialization)
         {
             RemoveAll();
 

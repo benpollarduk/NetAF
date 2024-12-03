@@ -77,11 +77,10 @@ namespace NetAF.Assets.Characters
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(NonPlayableCharacterSerialization serialization)
+        void IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>.RestoreFrom(NonPlayableCharacterSerialization serialization)
         {
-            base.RestoreFrom(serialization);
-
-            Conversation?.RestoreFrom(serialization.Conversation);
+            ((IRestoreFromObjectSerialization<CharacterSerialization>)this).RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ConversationSerialization>)Conversation)?.RestoreFrom(serialization.Conversation);
         }
 
         #endregion

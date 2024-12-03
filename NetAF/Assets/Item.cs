@@ -79,9 +79,9 @@ namespace NetAF.Assets
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(ItemSerialization serialization)
+        void IRestoreFromObjectSerialization<ItemSerialization>.RestoreFrom(ItemSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
         }
 
         #endregion

@@ -360,9 +360,9 @@ namespace NetAF.Assets.Locations
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(RegionSerialization serialization)
+        void IRestoreFromObjectSerialization<RegionSerialization>.RestoreFrom(RegionSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
 
             var rooms = roomPositions.Select(x => x.Room).ToArray();
 

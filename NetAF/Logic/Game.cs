@@ -13,6 +13,7 @@ using NetAF.Logic.Callbacks;
 using NetAF.Logic.Configuration;
 using NetAF.Logic.Modes;
 using NetAF.Serialization;
+using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Logic
@@ -474,7 +475,7 @@ namespace NetAF.Logic
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(GameSerialization serialization)
+        void IRestoreFromObjectSerialization<GameSerialization>.RestoreFrom(GameSerialization serialization)
         {
             // resolve asset locations
             AssetArranger.Arrange(this, serialization);
@@ -487,7 +488,7 @@ namespace NetAF.Logic
             foreach (var player in serialization.Players)
             {
                 var match = Array.Find(Catalog.Players, x => x.Identifier.Equals(player.Identifier));
-                match?.RestoreFrom(player);
+                ((IRestoreFromObjectSerialization<CharacterSerialization>)match)?.RestoreFrom(player);
             }
 
             // restore active player

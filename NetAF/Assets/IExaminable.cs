@@ -8,7 +8,7 @@ namespace NetAF.Assets
     /// <summary>
     /// Represents any object that is examinable.
     /// </summary>
-    public interface IExaminable : IPlayerVisible, IRestoreFromObjectSerialization<ExaminableSerialization>
+    public interface IExaminable : IPlayerVisible
     {
         /// <summary>
         /// Get this objects identifier.
