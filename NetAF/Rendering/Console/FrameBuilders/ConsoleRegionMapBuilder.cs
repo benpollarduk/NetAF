@@ -63,7 +63,7 @@ namespace NetAF.Rendering.Console.FrameBuilders
         /// <summary>
         /// Get or set the focused room boundary color.
         /// </summary>
-        public AnsiColor FocusedBoundaryColor { get; set; } = AnsiColor.Cyan;
+        public AnsiColor FocusedBoundaryColor { get; set; } = NetAFPalette.NetAFBlue;
 
         /// <summary>
         /// Get or set the visited room boundary color.
