@@ -36,7 +36,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="item">The item to restore.</param>
         public void Restore(Item item)
         {
-            item.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<ItemSerialization>)item).RestoreFrom(this);
         }
 
         #endregion

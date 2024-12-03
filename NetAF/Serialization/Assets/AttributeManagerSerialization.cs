@@ -48,7 +48,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="attributeManager">The attribute manager to restore.</param>
         public void Restore(AttributeManager attributeManager)
         {
-            attributeManager.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<AttributeManagerSerialization>)attributeManager).RestoreFrom(this);
         }
 
         #endregion

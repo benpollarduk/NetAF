@@ -53,7 +53,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="location">The attribute to restore.</param>
         public void Restore(PlayableCharacterLocation location)
         {
-            location.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>)location).RestoreFrom(this);
         }
 
         #endregion

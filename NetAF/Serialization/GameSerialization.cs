@@ -61,7 +61,7 @@ namespace NetAF.Serialization
         /// <param name="game">The asset to restore.</param>
         public void Restore(Game game)
         {
-            game.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<GameSerialization>)game).RestoreFrom(this);
         }
 
         #endregion

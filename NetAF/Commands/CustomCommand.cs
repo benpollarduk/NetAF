@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets;
 using NetAF.Serialization;
-using NetAF.Serialization.Assets;
 
 namespace NetAF.Commands
 {

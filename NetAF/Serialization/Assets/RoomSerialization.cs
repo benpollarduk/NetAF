@@ -64,7 +64,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="room">The room to restore.</param>
         public void Restore(Room room)
         {
-            room.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<RoomSerialization>)room).RestoreFrom(this);
         }
 
         #endregion
