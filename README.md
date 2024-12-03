@@ -123,6 +123,10 @@ For more information see the [Visuals](https://benpollarduk.github.io/NetAF-docs
 
 The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension package can be used to extend the basic NetAF visual functions to allow conversion of images to visuals that can be displayed in a game.
 
+#### NO_COLOR
+NetAF supports the [NO_COLOR](https://no-color.org/) standard through the NO_COLOR environment variable. To disable color in console output 
+add the NO_COLOR environment variable and assign it a non-zero value. This will disable color output on the console.
+
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
 
