@@ -5,7 +5,7 @@ using NetAF.Serialization.Assets;
 namespace NetAF.Assets.Locations
 {
     /// <summary>
-    /// Represents an exit from a GameLocation.
+    /// Represents an exit from a room.
     /// </summary>
     public sealed class Exit : ExaminableObject, IInteractWithItem, IRestoreFromObjectSerialization<ExitSerialization>
     {
