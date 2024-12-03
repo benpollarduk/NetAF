@@ -161,10 +161,8 @@ The quickest way to start getting to grips with NetAF is to take a look at the [
 
 ### Example game
 An example game is provided in the [NetAF.Examples](https://github.com/benpollarduk/adventure-framework/tree/main/NetAF.Examples) directory 
-and have been designed with the aim of showcasing the various features.
+and has been designed with the aim of showcasing the various features.
 
-### Running the examples
-The example applications can be used to execute the example NetAF game and demonstrate the core principals of the framework. 
 Set the **NetAF.Examples** project as the start up project and then build and run to start the application.
 
 ## Documentation
