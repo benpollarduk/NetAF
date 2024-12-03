@@ -10,6 +10,6 @@
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="obj">The obj to restore.</param>
-        public void Restore(T obj);
+        void Restore(T obj);
     }
 }

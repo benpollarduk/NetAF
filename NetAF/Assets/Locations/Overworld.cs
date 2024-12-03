@@ -154,9 +154,9 @@ namespace NetAF.Assets.Locations
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(OverworldSerialization serialization)
+        void IRestoreFromObjectSerialization<OverworldSerialization>.RestoreFrom(OverworldSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
 
             foreach (var region in Regions)
             {

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using NetAF.Assets;
 using NetAF.Serialization.Assets;
+using NetAF.Serialization;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -166,8 +167,8 @@ namespace NetAF.Tests.Assets.Locations
 
             var serialization = RoomSerialization.FromRoom(roomPositions[2].Room);
             serialization.HasBeenVisited = true;
-            roomPositions[2].Room.RestoreFrom(serialization);
-            roomPositions[4].Room.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<RoomSerialization>)roomPositions[2].Room).RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<RoomSerialization>)roomPositions[4].Room).RestoreFrom(serialization);
 
             var matrix = new Matrix([.. roomPositions]);
 

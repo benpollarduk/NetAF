@@ -29,6 +29,20 @@ namespace NetAF.Rendering.Console
 
         #endregion
 
+        #region Methods
+
+        /// <summary>
+        /// Convert this color to the nearest gray.
+        /// </summary>
+        /// <returns>The nearest gray.</returns>
+        public AnsiColor ToGray()
+        {
+            var gray = (byte)((R + B + G) / 3);
+            return new AnsiColor(gray, gray, gray);
+        }
+
+        #endregion
+
         #region Overrides of Object
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace NetAF.Logic
         public static PlayableCharacterLocation FromSerialization(PlayableCharacterLocationSerialization serialization)
         {
             PlayableCharacterLocation location = new(string.Empty, string.Empty, string.Empty);
-            location.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>)location).RestoreFrom(serialization);
             return location;
         }
 
@@ -52,7 +52,7 @@ namespace NetAF.Logic
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(PlayableCharacterLocationSerialization serialization)
+        void IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>.RestoreFrom(PlayableCharacterLocationSerialization serialization)
         {
             PlayerIdentifier = serialization.PlayerIdentifier;
             RegionIdentifier = serialization.RegionIdentifier;

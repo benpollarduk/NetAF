@@ -65,7 +65,7 @@ namespace NetAF.Commands
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(CustomCommandSerialization serialization)
+        void IRestoreFromObjectSerialization<CustomCommandSerialization>.RestoreFrom(CustomCommandSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
         }

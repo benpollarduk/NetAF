@@ -4,6 +4,7 @@ using System.Text;
 using NetAF.Assets.Attributes;
 using NetAF.Commands;
 using NetAF.Extensions;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using NetAF.Utilities;
 
@@ -12,7 +13,7 @@ namespace NetAF.Assets
     /// <summary>
     /// Represents an object that can be examined.
     /// </summary>
-    public class ExaminableObject : IExaminable
+    public class ExaminableObject : IExaminable, IRestoreFromObjectSerialization<ExaminableSerialization>
     {
         #region StaticProperties
 
@@ -143,15 +144,15 @@ namespace NetAF.Assets
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(ExaminableSerialization serialization)
+        void IRestoreFromObjectSerialization<ExaminableSerialization>.RestoreFrom(ExaminableSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
-            Attributes.RestoreFrom(serialization.AttributeManager);
+            ((IRestoreFromObjectSerialization<AttributeManagerSerialization>)Attributes).RestoreFrom(serialization.AttributeManager);
 
             foreach (var command in serialization.Commands)
             {
                 var match = Array.Find(Commands, x => x.Help.Command.Equals(command.CommandName));
-                match?.RestoreFrom(command);
+                ((IRestoreFromObjectSerialization<CustomCommandSerialization>)match)?.RestoreFrom(command);
             }
         }
 

@@ -126,7 +126,7 @@ namespace NetAF.Conversations
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(ConversationSerialization serialization)
+        void IRestoreFromObjectSerialization<ConversationSerialization>.RestoreFrom(ConversationSerialization serialization)
         {
             if (serialization.CurrentParagraph == ConversationSerialization.NoCurrentParagraph)
                 CurrentParagraph = null;

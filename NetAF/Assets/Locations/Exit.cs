@@ -102,9 +102,9 @@ namespace NetAF.Assets.Locations
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(ExitSerialization serialization)
+        void IRestoreFromObjectSerialization<ExitSerialization>.RestoreFrom(ExitSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
 
             IsLocked = serialization.IsLocked;
         }

@@ -143,9 +143,9 @@ namespace NetAF.Assets.Characters
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(CharacterSerialization serialization)
+        void IRestoreFromObjectSerialization<CharacterSerialization>.RestoreFrom(CharacterSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
 
             IsAlive = serialization.IsAlive;
 

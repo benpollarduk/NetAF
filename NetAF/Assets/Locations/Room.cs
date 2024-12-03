@@ -520,9 +520,9 @@ namespace NetAF.Assets.Locations
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        public void RestoreFrom(RoomSerialization serialization)
+        void IRestoreFromObjectSerialization<RoomSerialization>.RestoreFrom(RoomSerialization serialization)
         {
-            base.RestoreFrom(serialization);
+            ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
 
             HasBeenVisited = serialization.HasBeenVisited;
 

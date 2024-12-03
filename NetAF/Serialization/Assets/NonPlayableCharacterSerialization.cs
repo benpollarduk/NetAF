@@ -48,7 +48,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="character">The character to restore.</param>
         public void Restore(NonPlayableCharacter character)
         {
-            character.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>)character).RestoreFrom(this);
         }
 
         #endregion

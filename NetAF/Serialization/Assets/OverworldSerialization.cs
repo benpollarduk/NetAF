@@ -52,7 +52,7 @@ namespace NetAF.Serialization.Assets
         /// <param name="overworld">The overworld to restore.</param>
         public void Restore(Overworld overworld)
         {
-            overworld.RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<OverworldSerialization>)overworld).RestoreFrom(this);
         }
 
         #endregion
