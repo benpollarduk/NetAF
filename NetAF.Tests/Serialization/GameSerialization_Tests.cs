@@ -97,7 +97,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = GameSerialization.FromGame(game2);
 
-            serialization.Restore(game);
+            ((IObjectSerialization<Game>)serialization).Restore(game);
 
             Assert.AreEqual(1, game.Player.Items.Length);
             Assert.AreEqual(0, room.Items.Length);
@@ -126,7 +126,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = GameSerialization.FromGame(game2);
 
-            serialization.Restore(game);
+            ((IObjectSerialization<Game>)serialization).Restore(game);
 
             Assert.AreEqual(0, game.Player.Items.Length);
             Assert.AreEqual(1, room.Items.Length);
@@ -162,7 +162,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization serialization = GameSerialization.FromGame(game2);
 
-            serialization.Restore(game);
+            ((IObjectSerialization<Game>)serialization).Restore(game);
 
             Assert.AreEqual(0, roomA.Characters.Length);
             Assert.AreEqual(1, roomB.Characters.Length);

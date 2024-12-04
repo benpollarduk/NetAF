@@ -50,7 +50,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="overworld">The overworld to restore.</param>
-        public void Restore(Overworld overworld)
+        void IObjectSerialization<Overworld>.Restore(Overworld overworld)
         {
             ((IRestoreFromObjectSerialization<OverworldSerialization>)overworld).RestoreFrom(this);
         }

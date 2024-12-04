@@ -50,7 +50,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="character">The character to restore.</param>
-        public void Restore(Character character)
+        void IObjectSerialization<Character>.Restore(Character character)
         {
             ((IRestoreFromObjectSerialization<CharacterSerialization>)character).RestoreFrom(this);
         }

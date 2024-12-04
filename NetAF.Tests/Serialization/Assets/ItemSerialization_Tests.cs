@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Assets.Attributes;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -16,7 +17,7 @@ namespace NetAF.Tests.Serialization.Assets
             item2.Attributes.Add(new Attribute(string.Empty, string.Empty, 0, 1), 1);
             ItemSerialization serialization = ItemSerialization.FromItem(item2);
 
-            serialization.Restore(item);
+            ((IObjectSerialization<Item>)serialization).Restore(item);
 
             Assert.AreEqual(1, item.Attributes.Count);
         }

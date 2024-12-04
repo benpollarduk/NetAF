@@ -62,7 +62,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="room">The room to restore.</param>
-        public void Restore(Room room)
+        void IObjectSerialization<Room>.Restore(Room room)
         {
             ((IRestoreFromObjectSerialization<RoomSerialization>)room).RestoreFrom(this);
         }

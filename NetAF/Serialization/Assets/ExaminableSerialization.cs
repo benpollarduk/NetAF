@@ -58,7 +58,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="examinable">The examinable to restore.</param>
-        public virtual void Restore(IExaminable examinable)
+        void IObjectSerialization<IExaminable>.Restore(IExaminable examinable)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)examinable).RestoreFrom(this);
         }

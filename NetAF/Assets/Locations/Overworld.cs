@@ -161,7 +161,7 @@ namespace NetAF.Assets.Locations
             foreach (var region in Regions)
             {
                 var regionSerialization = Array.Find(serialization.Regions, x => region.Identifier.Equals(x.Identifier));
-                regionSerialization?.Restore(region);
+                ((IObjectSerialization<Region>)regionSerialization)?.Restore(region);
             }
 
             CurrentRegion = Array.Find(Regions, x => x.Identifier.Equals(serialization.CurrentRegion));

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -58,7 +59,7 @@ namespace NetAF.Tests.Serialization.Assets
             character2.Kill();
             CharacterSerialization serialization = CharacterSerialization.FromCharacter(character2);
 
-            serialization.Restore(character);
+            ((IObjectSerialization<Character>)serialization).Restore(character);
 
             Assert.IsFalse(character.IsAlive);
         }

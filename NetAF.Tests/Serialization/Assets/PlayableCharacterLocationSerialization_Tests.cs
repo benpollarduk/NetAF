@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -44,7 +45,7 @@ namespace NetAF.Tests.Serialization.Assets
             PlayableCharacterLocation location2 = new(string.Empty, string.Empty, string.Empty);
             PlayableCharacterLocationSerialization serialization = PlayableCharacterLocationSerialization.FromPlayableCharacterLocation(location);
 
-            serialization.Restore(location2);
+            ((IObjectSerialization<PlayableCharacterLocation>)serialization).Restore(location2);
 
             Assert.AreEqual("a", location2.PlayerIdentifier);
             Assert.AreEqual("b", location2.RegionIdentifier);

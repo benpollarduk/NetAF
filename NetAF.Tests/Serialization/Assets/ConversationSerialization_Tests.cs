@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Conversations;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -48,7 +49,7 @@ namespace NetAF.Tests.Serialization.Assets
             Conversation conversation2 = new();
             ConversationSerialization serialization = ConversationSerialization.FromConversation(conversation2);
 
-            serialization.Restore(conversation);
+            ((IObjectSerialization<Conversation>)serialization).Restore(conversation);
 
             Assert.IsNull(conversation.CurrentParagraph);
         }
@@ -62,7 +63,7 @@ namespace NetAF.Tests.Serialization.Assets
             conversation2.Next(null);
             ConversationSerialization serialization = ConversationSerialization.FromConversation(conversation2);
 
-            serialization.Restore(conversation);
+            ((IObjectSerialization<Conversation>)serialization).Restore(conversation);
 
             Assert.AreEqual(conversation.Paragraphs[1], conversation.CurrentParagraph);
         }

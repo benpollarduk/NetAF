@@ -59,7 +59,7 @@ namespace NetAF.Serialization
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="game">The asset to restore.</param>
-        public void Restore(Game game)
+        void IObjectSerialization<Game>.Restore(Game game)
         {
             ((IRestoreFromObjectSerialization<GameSerialization>)game).RestoreFrom(this);
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Characters;
 using NetAF.Conversations;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -36,7 +37,7 @@ namespace NetAF.Tests.Serialization.Assets
             character2.Conversation.Next(null);
             NonPlayableCharacterSerialization serialization = NonPlayableCharacterSerialization.FromNonPlayableCharacter(character2);
 
-            serialization.Restore(character);
+            ((IObjectSerialization<NonPlayableCharacter>)serialization).Restore(character);
 
             Assert.IsNotNull(character.Conversation.CurrentParagraph);
         }
