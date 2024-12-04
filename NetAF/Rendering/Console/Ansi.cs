@@ -31,14 +31,14 @@ namespace NetAF.Rendering.Console
         /// <summary>
         /// Determine if color is suppressed. If the NO_COLOR environment variable is present and set to anything other than '0' or 'false' this will return true.
         /// </summary>
-        /// <returns>True if the NO_COLOR environment variable is present and set to anything other than '0' or 'false', else false.</returns>
+        /// <returns>True if the NO_COLOR environment variable is present and set to anything other than an empty string, else false.</returns>
         public static bool IsColorSuppressed()
         {
             var value = Environment.GetEnvironmentVariable(NO_COLOR)?.ToLower() ?? string.Empty;
 
             return value switch
             {
-                "" or "0" or "false" => false,
+                "" => false,
                 _ => true,
             };
         }
