@@ -18,23 +18,23 @@ namespace NetAF.Tests.Rendering.Console
         }
 
         [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetTo0_WhenIsColorSuppressed_ThenReturnFalse()
+        public void GivenNoColorEnvironmentVariableSetTo0_WhenIsColorSuppressed_ThenReturnTrue()
         {
             Environment.SetEnvironmentVariable(Ansi.NO_COLOR, "0");
 
             var result = Ansi.IsColorSuppressed();
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void GivenNoColorEnvironmentVariableSetToFalse_WhenIsColorSuppressed_ThenReturnFalse()
+        public void GivenNoColorEnvironmentVariableSetToFalse_WhenIsColorSuppressed_ThenReturnTrue()
         {
             Environment.SetEnvironmentVariable(Ansi.NO_COLOR, "False");
 
             var result = Ansi.IsColorSuppressed();
 
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
