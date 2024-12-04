@@ -102,7 +102,7 @@ The [NetAF.Imaging](https://github.com/benpollarduk/NetAF.Imaging) extension pac
 
 #### NO_COLOR
 NetAF supports the [NO_COLOR](https://no-color.org/) standard through the NO_COLOR environment variable. To disable color in console output
-add the NO_COLOR environment variable and assign it a non-zero value. This will disable color output on the console.
+add the NO_COLOR environment variable and assign it a non-empty value. This will disable color output on the console.
 
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
