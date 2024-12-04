@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Attributes;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
+using System.Collections.Generic;
 
 namespace NetAF.Tests.Serialization.Assets
 {
@@ -63,7 +65,7 @@ namespace NetAF.Tests.Serialization.Assets
             Assertions.NoExceptionThrown(() =>
             {
                 AttributeAndValueSerialization value = new();
-                value.Restore(new System.Collections.Generic.KeyValuePair<Attribute, int>());
+                ((IObjectSerialization<KeyValuePair<Attribute, int>>)value).Restore(new KeyValuePair<Attribute, int>());
             });
         }
     }

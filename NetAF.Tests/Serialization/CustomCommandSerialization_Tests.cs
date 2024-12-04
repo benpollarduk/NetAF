@@ -35,7 +35,7 @@ namespace NetAF.Tests.Serialization
 
             CustomCommandSerialization serialization = CustomCommandSerialization.FromCustomCommand(command1);
 
-            serialization.Restore(command2);
+            ((IObjectSerialization<CustomCommand>)serialization).Restore(command2);
 
             Assert.IsTrue(command2.IsPlayerVisible);
         }

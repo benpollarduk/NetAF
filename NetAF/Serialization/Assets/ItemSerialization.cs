@@ -34,7 +34,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="item">The item to restore.</param>
-        public void Restore(Item item)
+        void IObjectSerialization<Item>.Restore(Item item)
         {
             ((IRestoreFromObjectSerialization<ItemSerialization>)item).RestoreFrom(this);
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Locations;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -51,7 +52,7 @@ namespace NetAF.Tests.Serialization.Assets
             overworld2.Move(overworld2.Regions[1]);
             OverworldSerialization serialization = OverworldSerialization.FromOverworld(overworld2);
 
-            serialization.Restore(overworld);
+            ((IObjectSerialization<Overworld>)serialization).Restore(overworld);
 
             Assert.AreEqual("TARGET", overworld.CurrentRegion.Identifier.Name);
         }

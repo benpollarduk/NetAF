@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Locations;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -102,7 +103,7 @@ namespace NetAF.Tests.Serialization.Assets
             room2.MovedInto(Direction.North);
             RoomSerialization serialization = RoomSerialization.FromRoom(room2);
 
-            serialization.Restore(room);
+            ((IObjectSerialization<Room>)serialization).Restore(room);
 
             Assert.IsTrue(room.HasBeenVisited);
         }

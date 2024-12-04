@@ -51,7 +51,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="location">The attribute to restore.</param>
-        public void Restore(PlayableCharacterLocation location)
+        void IObjectSerialization<PlayableCharacterLocation>.Restore(PlayableCharacterLocation location)
         {
             ((IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>)location).RestoreFrom(this);
         }

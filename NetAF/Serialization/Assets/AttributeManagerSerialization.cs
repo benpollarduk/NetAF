@@ -46,7 +46,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="attributeManager">The attribute manager to restore.</param>
-        public void Restore(AttributeManager attributeManager)
+        void IObjectSerialization<AttributeManager>.Restore(AttributeManager attributeManager)
         {
             ((IRestoreFromObjectSerialization<AttributeManagerSerialization>)attributeManager).RestoreFrom(this);
         }

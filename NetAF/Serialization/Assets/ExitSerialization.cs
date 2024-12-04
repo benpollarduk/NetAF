@@ -44,7 +44,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="exit">The exit to restore.</param>
-        public void Restore(Exit exit)
+        void IObjectSerialization<Exit>.Restore(Exit exit)
         {
             ((IRestoreFromObjectSerialization<ExitSerialization>)exit).RestoreFrom(this);
         }

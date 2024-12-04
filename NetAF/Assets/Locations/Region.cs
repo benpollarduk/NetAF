@@ -369,7 +369,7 @@ namespace NetAF.Assets.Locations
             foreach (var room in rooms)
             {
                 var roomSerialization = Array.Find(serialization.Rooms, x => room.Identifier.Equals(x.Identifier));
-                roomSerialization?.Restore(room);
+                ((IObjectSerialization<Room>)roomSerialization)?.Restore(room);
             }
 
             CurrentRoom = Array.Find(rooms, x => x.Identifier.Equals(serialization.CurrentRoom));

@@ -495,7 +495,7 @@ namespace NetAF.Logic
             Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
 
             // restore overworld
-            serialization.Overworld.Restore(Overworld);
+            ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);
 
             // restore player locations
             inactivePlayerLocations.Clear();

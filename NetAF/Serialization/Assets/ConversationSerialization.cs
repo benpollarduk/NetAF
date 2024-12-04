@@ -49,7 +49,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="conversation">The conversation to restore.</param>
-        public void Restore(Conversation conversation)
+        void IObjectSerialization<Conversation>.Restore(Conversation conversation)
         {
             ((IRestoreFromObjectSerialization<ConversationSerialization>)conversation).RestoreFrom(this);
         }

@@ -45,7 +45,7 @@ namespace NetAF.Serialization
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="command">The command to restore.</param>
-        public virtual void Restore(CustomCommand command)
+        void IObjectSerialization<CustomCommand>.Restore(CustomCommand command)
         {
             ((IRestoreFromObjectSerialization<CustomCommandSerialization>)command).RestoreFrom(this);
         }

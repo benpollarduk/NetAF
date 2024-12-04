@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Locations;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
@@ -54,7 +55,7 @@ namespace NetAF.Tests.Serialization.Assets
             region2.Move(Direction.North);
             RegionSerialization serialization = RegionSerialization.FromRegion(region2);
 
-            serialization.Restore(region);
+            ((IObjectSerialization<Region>)serialization).Restore(region);
 
             Assert.AreEqual("TARGET", region.CurrentRoom.Identifier.Name);
         }

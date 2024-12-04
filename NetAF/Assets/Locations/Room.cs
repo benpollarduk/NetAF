@@ -529,19 +529,19 @@ namespace NetAF.Assets.Locations
             foreach (var exit in Exits)
             {
                 var exitSerialization = Array.Find(serialization.Exits, x => exit.Identifier.Equals(x.Identifier));
-                exitSerialization?.Restore(exit);
+                ((IObjectSerialization<Exit>)exitSerialization)?.Restore(exit);
             }
 
             foreach (var item in Items)
             {
                 var itemSerialization = Array.Find(serialization.Items, x => item.Identifier.Equals(x.Identifier));
-                itemSerialization?.Restore(item);
+                ((IObjectSerialization<Item>)itemSerialization)?.Restore(item);
             }
 
             foreach (var character in Characters)
             {
                 var characterSerialization = Array.Find(serialization.Characters, x => character.Identifier.Equals(x.Identifier));
-                characterSerialization?.Restore(character);
+                ((IObjectSerialization<NonPlayableCharacter>)characterSerialization)?.Restore(character);
             }
         }
 

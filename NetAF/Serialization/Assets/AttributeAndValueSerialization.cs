@@ -64,7 +64,7 @@ namespace NetAF.Serialization.Assets
         /// Restore an instance from this serialization.
         /// </summary>
         /// <param name="attributeAndValue">The KeyValuePair to restore.</param>
-        public void Restore(KeyValuePair<Attribute, int> attributeAndValue)
+        void IObjectSerialization<KeyValuePair<Attribute, int>>.Restore(KeyValuePair<Attribute, int> attributeAndValue)
         {
             // cannot restore as readonly
         }
