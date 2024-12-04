@@ -9,7 +9,7 @@ using NetAF.Commands.Scene;
 namespace NetAF.Tests.Interpretation
 {
     [TestClass]
-    public class GameCommandInterpreter_Tests
+    public class SceneCommandInterpreter_Tests
     {
         [TestInitialize]
         public void Setup()
@@ -244,6 +244,38 @@ namespace NetAF.Tests.Interpretation
             var result = interpreter.Interpret($"{UseOn.UseCommandHelp.Command} test {UseOn.OnCommandHelp.Command} test", game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenUseOnWhenBothItemsAreTwoWords_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{UseOn.UseCommandHelp.Command} test tube {UseOn.OnCommandHelp.Command} test egg", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetSupportedCommands_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new SceneCommandInterpreter();
+
+            var result = interpreter.SupportedCommands;
+
+            Assert.IsTrue(result.Length > 0);
+        }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetContextualCommandHelp_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.IsTrue(result.Length > 0);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Serialization;
+using System;
 
 namespace NetAF.Commands
 {
@@ -10,7 +11,7 @@ namespace NetAF.Commands
     /// <param name="isPlayerVisible">If this is visible to the player.</param>
     /// <param name="interpretIfNotPlayerVisible">If this command can be interpreted when the IsPlayerVisible is false.</param>
     /// <param name="callback">The callback to invoke when this command is invoked.</param>
-    public class CustomCommand(CommandHelp help, bool isPlayerVisible, bool interpretIfNotPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible, IRestoreFromObjectSerialization<CustomCommandSerialization>
+    public class CustomCommand(CommandHelp help, bool isPlayerVisible, bool interpretIfNotPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible, IRestoreFromObjectSerialization<CustomCommandSerialization>, ICloneable
     {
         #region Properties
 
@@ -68,6 +69,19 @@ namespace NetAF.Commands
         void IRestoreFromObjectSerialization<CustomCommandSerialization>.RestoreFrom(CustomCommandSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
+        }
+
+        #endregion
+
+        #region Implementation of ICloneable
+ 
+        /// <summary>
+        /// Creates a new object that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new object that is a copy of this instance.</returns>
+        public object Clone()
+        {
+            return new CustomCommand(Help, IsPlayerVisible, InterpretIfNotPlayerVisible, Callback) { Arguments = Arguments };
         }
 
         #endregion
