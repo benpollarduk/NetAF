@@ -38,7 +38,7 @@ namespace NetAF.Interpretation
                     if (upperCaseCommand.Length < i + 1 && upperCaseShortcut.Length < i + 1)
                         break;
 
-                    if (upperCaseCommand[i] != upperCaseInput[i] && upperCaseShortcut[i] != upperCaseInput[i])
+                    if (!AreCharactersEqual(upperCaseCommand, upperCaseInput, i) && !AreCharactersEqual(upperCaseShortcut, upperCaseInput, i))
                         break;
                 }
 
@@ -46,6 +46,21 @@ namespace NetAF.Interpretation
             }
 
             return scores;
+        }
+
+        /// <summary>
+        /// Get if a character at a given index is equal in two strings.
+        /// </summary>
+        /// <param name="a">String a.</param>
+        /// <param name="b">String b.</param>
+        /// <param name="index">The index of the character.</param>
+        /// <returns>True if the characters are equal, else false.</returns>
+        private static bool AreCharactersEqual(string a, string b, int index)
+        {
+            if (a.Length - 1 < index || b.Length - 1 < index)
+                return false;
+
+            return a[index] == b[index];
         }
 
         #endregion
