@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using NetAF.Commands;
 using NetAF.Logic;
@@ -15,52 +16,54 @@ namespace NetAF.Interpretation
         #region StaticMethods
 
         /// <summary>
-        /// Score commands against input to find closest match.
+        /// Try and find a command.
         /// </summary>
         /// <param name="input">The input.</param>
-        /// <param name="commands">The commands to score.</param>
-        /// <returns>A dictionary containing the commands and their scores. The higher the score, the closer the match.</returns>
-        private static Dictionary<CustomCommand, int> ScoreCommandsAgainstInput(string input, CustomCommand[] commands)
+        /// <param name="commands">The commands to search.</param>
+        /// <param name="command">The matching command.</param>
+        /// <param name="matchingInput">The input that matched.</param>
+        /// <returns>True if the command could be found, else false.</returns>
+        private static bool TryFindCommand(string input, CustomCommand[] commands, out CustomCommand command, out string matchingInput)
         {
-            Dictionary<CustomCommand, int> scores = [];
-            var upperCaseInput = input.ToUpper();
-
-            foreach (var command in commands) 
+            foreach (var c in commands)
             {
-                var upperCaseCommand = $"{command.Help.Command.ToUpper()} ";
-                var upperCaseShortcut = $"{command.Help.Shortcut.ToUpper()} ";
-                int score = 0;
-
-                for (var i = 0; i < upperCaseInput.Length; i++)
+                if (IsMatch(input, c.Help.Command))
                 {
-                    score = i;
-
-                    if (upperCaseCommand.Length < i + 1 && upperCaseShortcut.Length < i + 1)
-                        break;
-
-                    if (!AreCharactersEqual(upperCaseCommand, upperCaseInput, i) && !AreCharactersEqual(upperCaseShortcut, upperCaseInput, i))
-                        break;
+                    command = c;
+                    matchingInput = c.Help.Command;
+                    return true;
                 }
-
-                scores.Add(command, score);
             }
 
-            return scores;
+            foreach (var c in commands)
+            {
+                if (IsMatch(input, c.Help.Shortcut))
+                {
+                    command = c;
+                    matchingInput = c.Help.Shortcut;
+                    return true;
+                }
+            }
+
+            command = null;
+            matchingInput = string.Empty;
+            return false;
         }
 
         /// <summary>
-        /// Get if a character at a given index is equal in two strings.
+        /// Determine if a command is a match.
         /// </summary>
-        /// <param name="a">String a.</param>
-        /// <param name="b">String b.</param>
-        /// <param name="index">The index of the character.</param>
-        /// <returns>True if the characters are equal, else false.</returns>
-        private static bool AreCharactersEqual(string a, string b, int index)
+        /// <param name="input">The input.</param>
+        /// <param name="command">The command.</param>
+        /// <returns>True if the input matched the command, else false.</returns>
+        private static bool IsMatch(string input, string command)
         {
-            if (a.Length - 1 < index || b.Length - 1 < index)
+            // check that a match is found
+            if (!input.StartsWith(command, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
-            return a[index] == b[index];
+            // also check that it is an entire match or the next character is a space
+            return input.Equals(command, StringComparison.InvariantCultureIgnoreCase) || (input.Length > command.Length && input[command.Length] == ' ');
         }
 
         #endregion
@@ -94,23 +97,17 @@ namespace NetAF.Interpretation
             if (commands.Count == 0)
                 return InterpretationResult.Fail;
 
-            // score all and find highest scoring command
-            var scores = ScoreCommandsAgainstInput(input, [.. commands]);
-            var match = scores.OrderByDescending(x => x.Value).First();
-
-            // no matches
-            if (match.Value == 0)
+            // find command
+            if (!TryFindCommand(input, [..commands], out var command, out var matchingInput))
                 return InterpretationResult.Fail;
 
-            // remove either input or shortcut
-            if (input.StartsWith(match.Key.Help.Command, StringComparison.InvariantCultureIgnoreCase))
-                input = input.Remove(0, match.Key.Help.Command.Length);
-            else if (input.StartsWith(match.Key.Help.Shortcut, StringComparison.InvariantCultureIgnoreCase))
-                input = input.Remove(0, match.Key.Help.Shortcut.Length);
+            // remove the matching part
+            input = input.Remove(0, matchingInput.Length);
 
-            var command = match.Key.Clone() as CustomCommand;
-            command.Arguments = StringUtilities.PreenInput(input).Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            return new InterpretationResult(true, command);
+            // clone the command so that it is a new instance which allows args to be assigned to it
+            var clonedCommand = command.Clone() as CustomCommand;
+            clonedCommand.Arguments = StringUtilities.PreenInput(input).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return new InterpretationResult(true, clonedCommand);
         }
 
         /// <summary>

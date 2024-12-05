@@ -141,5 +141,101 @@ namespace NetAF.Tests.Interpretation
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
+
+        [TestMethod]
+        public void GivenValidCustomCommandWithFullMatchByCommand_WhenInterpret_ThenResultWasInterpretedSuccessfullyIsTrue()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.Interpret("Two", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenValidCustomCommandWithFullMatchByShortcut_WhenInterpret_ThenResultWasInterpretedSuccessfullyIsTrue()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.Interpret("T", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenValidCustomCommandWithFullMatchByCommandWithExtraInput_WhenInterpret_ThenResultWasInterpretedSuccessfullyIsTrue()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.Interpret("Two one", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenValidCustomCommandWithFullMatchByCommandWithExtraInputAndNoSpace_WhenInterpret_ThenResultWasInterpretedSuccessfullyIsFalse()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.Interpret("Twoone", game);
+
+            Assert.IsFalse(result.WasInterpretedSuccessfully);
+        }
     }
 }
