@@ -25,24 +25,22 @@ namespace NetAF.Interpretation
         /// <returns>True if the command could be found, else false.</returns>
         private static bool TryFindCommand(string input, CustomCommand[] commands, out CustomCommand command, out string matchingInput)
         {
-            foreach (var c in commands)
+            var match = Array.Find(commands, x => IsMatch(input, x.Help.Command));
+
+            if (match != null)
             {
-                if (IsMatch(input, c.Help.Command))
-                {
-                    command = c;
-                    matchingInput = c.Help.Command;
-                    return true;
-                }
+                command = match;
+                matchingInput = match.Help.Command;
+                return true;
             }
 
-            foreach (var c in commands)
+            match = Array.Find(commands, x => IsMatch(input, x.Help.Shortcut));
+
+            if (match != null)
             {
-                if (IsMatch(input, c.Help.Shortcut))
-                {
-                    command = c;
-                    matchingInput = c.Help.Shortcut;
-                    return true;
-                }
+                command = match;
+                matchingInput = match.Help.Shortcut;
+                return true;
             }
 
             command = null;
