@@ -270,8 +270,11 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenInterpreter_WhenGetContextualCommandHelp_ThenReturnArrayWithSomeItems()
         {
+            overworld.CurrentRegion.CurrentRoom.AddItem(new Item("a", "b"));
+            overworld.CurrentRegion.CurrentRoom.AddCharacter(new NonPlayableCharacter("a", "b", new NetAF.Conversations.Conversation()));
+            PlayableCharacter player = new(string.Empty, string.Empty, [new Item("a", "b")]);
             var interpreter = new SceneCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.GetContextualCommandHelp(game);
 

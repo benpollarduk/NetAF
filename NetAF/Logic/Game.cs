@@ -417,6 +417,36 @@ namespace NetAF.Logic
             return [.. commands.Distinct()];
         }
 
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        public void RestoreFrom(GameSerialization serialization)
+        {
+            // resolve asset locations
+            AssetArranger.Arrange(this, serialization);
+
+            // restore all inactive player locations
+            foreach (var location in serialization.InactivePlayerLocations)
+                inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
+
+            // restore all players
+            foreach (var player in serialization.Players)
+            {
+                var match = Array.Find(Catalog.Players, x => x.Identifier.Equals(player.Identifier));
+                ((IRestoreFromObjectSerialization<CharacterSerialization>)match)?.RestoreFrom(player);
+            }
+
+            // restore active player
+            Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
+
+            // restore overworld
+            ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);
+
+            // restore player locations
+            inactivePlayerLocations.Clear();
+        }
+
         #endregion
 
         #region StaticMethods
@@ -477,28 +507,7 @@ namespace NetAF.Logic
         /// <param name="serialization">The serialization to restore from.</param>
         void IRestoreFromObjectSerialization<GameSerialization>.RestoreFrom(GameSerialization serialization)
         {
-            // resolve asset locations
-            AssetArranger.Arrange(this, serialization);
-
-            // restore all inactive player locations
-            foreach (var location in serialization.InactivePlayerLocations)
-                inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
-
-            // restore all players
-            foreach (var player in serialization.Players)
-            {
-                var match = Array.Find(Catalog.Players, x => x.Identifier.Equals(player.Identifier));
-                ((IRestoreFromObjectSerialization<CharacterSerialization>)match)?.RestoreFrom(player);
-            }
-
-            // restore active player
-            Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
-
-            // restore overworld
-            ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);
-
-            // restore player locations
-            inactivePlayerLocations.Clear();
+            this.RestoreFrom(serialization);
         }
 
         #endregion
