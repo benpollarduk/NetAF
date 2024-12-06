@@ -124,6 +124,50 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
+        public void GivenUp_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Move.UpCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenUpShort_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Move.UpCommandHelp.Shortcut, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenDown_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Move.DownCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenDownShort_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Move.DownCommandHelp.Shortcut, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
         public void GivenExamine_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
