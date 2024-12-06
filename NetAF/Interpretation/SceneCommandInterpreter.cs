@@ -318,10 +318,10 @@ namespace NetAF.Interpretation
 
             if (noun.CaseInsensitiveContains(onPadded))
             {
-                itemName = noun.Substring(0, noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase));
+                itemName = noun[..noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase)];
                 noun = noun.Replace(itemName, string.Empty);
                 var onIndex = noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase);
-                var targetName = noun.Substring(onIndex + onPadded.Length);
+                var targetName = noun[(onIndex + onPadded.Length)..];
 
                 if (targetName.InsensitiveEquals(Me) || targetName.EqualsExaminable(game.Player))
                     target = game.Player;

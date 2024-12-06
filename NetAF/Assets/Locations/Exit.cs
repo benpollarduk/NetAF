@@ -61,7 +61,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The completed Description.</returns>
         private IDescription GenerateDescription()
         {
-            return new ConditionalDescription($"The exit {Direction.ToString().ToLower()} is locked.", $"The exit {Direction.ToString().ToLower()} is unlocked.", () => IsLocked);
+            return new ConditionalDescription($"{Identifier.Name} is locked.", $"{Identifier.Name} is unlocked.", () => IsLocked);
         }
 
         /// <summary>
