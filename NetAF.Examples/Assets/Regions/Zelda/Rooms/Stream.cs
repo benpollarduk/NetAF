@@ -25,7 +25,7 @@ namespace NetAF.Examples.Assets.Regions.Zelda.Rooms
             Room room = null;
             ConditionalDescription description = new ("A small stream flows east to west in front of you. The water is clear, and looks good enough to drink. On the bank is a small bush. To the south is the Kokiri forest", 
                                                       "A small stream flows east to west in front of you. The water is clear, and looks good enough to drink. On the bank is a stump where the bush was. To the south is the Kokiri forest.", 
-                                                      () => room.ContainsItem(Bush.Name));
+                                                      () => room.FindItem(Bush.Name, out _));
 
             room = new(new Identifier(Name), description, [new Exit(Direction.South)]);
 

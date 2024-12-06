@@ -117,18 +117,6 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenHasItem_WhenContainsItemByName_ThenTrue()
-        {
-            var room = new Room(string.Empty, string.Empty);
-            var item = new Item("A", string.Empty);
-            room.AddItem(item);
-
-            var result = room.ContainsItem("A");
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
         public void GivenDoesNotHaveCharacter_WhenContainsCharacter_ThenFalse()
         {
             var room = new Room(string.Empty, string.Empty);
@@ -147,18 +135,6 @@ namespace NetAF.Tests.Assets.Locations
             room.AddCharacter(character);
 
             var result = room.ContainsCharacter(character);
-
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void GivenHasCharacter_WhenContainsCharacterByName_ThenTrue()
-        {
-            var room = new Room(string.Empty, string.Empty);
-            var character = new NonPlayableCharacter("A", string.Empty);
-            room.AddCharacter(character);
-
-            var result = room.ContainsCharacter("A");
 
             Assert.IsTrue(result);
         }

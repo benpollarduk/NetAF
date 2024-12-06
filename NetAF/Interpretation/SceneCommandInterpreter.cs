@@ -357,7 +357,7 @@ namespace NetAF.Interpretation
         /// <param name="text">The string to parse.</param>
         /// <param name="direction">The direction.</param>
         /// <returns>The result of the parse.</returns>
-        private static bool TryParseToDirection(string text, out Direction direction)
+        public static bool TryParseToDirection(string text, out Direction direction)
         {
             if (Move.NorthCommandHelp.Equals(text))
             {
@@ -398,7 +398,6 @@ namespace NetAF.Interpretation
             direction = Direction.East;
             return false;
         }
-
 
         #endregion
 

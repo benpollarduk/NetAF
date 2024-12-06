@@ -58,7 +58,7 @@ namespace NetAF.Commands.Scene
         /// <param name="target">The target that expired.</param>
         private static void TargetExpires(Game game, IInteractWithItem target)
         {
-            if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(examinable.Identifier.Name))
+            if (target is IExaminable examinable && game.Overworld.CurrentRegion.CurrentRoom.FindInteractionTarget(examinable.Identifier.Name, out _))
                 game.Overworld.CurrentRegion.CurrentRoom.RemoveInteractionTarget(target);
 
             if (target is Item item)

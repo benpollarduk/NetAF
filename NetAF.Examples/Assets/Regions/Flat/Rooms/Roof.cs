@@ -24,7 +24,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
             Room room = null;
             ConditionalDescription description = new("The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof, and a coffee mug sits to the side, indicating someone has been here recently. The window behind you south leads back into the bathroom.",
                                                      "The roof is small and gravely, and it hurts your shoe-less feet to stand on it. There is a large skylight in the center of the roof. The window behind you south leads back into the bathroom.",
-                                                     () => room.ContainsItem(CoffeeMug.Name));
+                                                     () => room.FindItem(CoffeeMug.Name, out _));
 
             room = new(new Identifier(Name), description, [new Exit(Direction.South)]);
 

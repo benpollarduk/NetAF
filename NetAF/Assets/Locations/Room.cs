@@ -4,6 +4,7 @@ using System.Linq;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Extensions;
+using NetAF.Interpretation;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using NetAF.Utilities;
@@ -276,34 +277,15 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
-        /// Get if this Room contains an item. This will not include items whose ExaminableObject.IsPlayerVisible property is set to false.
-        /// </summary>
-        /// <param name="item">The item to check for.</param>
-        /// <returns>True if the item is in this room, else false.</returns>
-        public bool ContainsItem(Item item)
-        {
-            return Items.Contains(item);
-        }
-
-        /// <summary>
         /// Get if this Room contains an item.
         /// </summary>
-        /// <param name="itemName">The item name to check for.</param>
-        /// <param name="includeInvisibleItems">Specify if invisible items should be included.</param>
+        /// <param name="item">The item to check for.</param>
+        /// <param name="includeInvisibleItems">Specify if invisible exits should be included.</param>
         /// <returns>True if the item is in this room, else false.</returns>
-        public bool ContainsItem(string itemName, bool includeInvisibleItems = false)
+        public bool ContainsItem(Item item, bool includeInvisibleItems = false)
         {
-            return Array.Exists(Items, item => itemName.EqualsExaminable(item) && (includeInvisibleItems || item.IsPlayerVisible));
-        }
-
-        /// <summary>
-        /// Get if this Room contains an interaction target.
-        /// </summary>
-        /// <param name="targetName">The name of the target to check for.</param>
-        /// <returns>True if the target is in this room, else false.</returns>
-        public bool ContainsInteractionTarget(string targetName)
-        {
-            return Array.Exists(Items, i => targetName.EqualsExaminable(i) || Array.Exists(Characters, targetName.EqualsExaminable));
+            
+            return Array.Exists(Items, i => i == item && (includeInvisibleItems || i.IsPlayerVisible));
         }
 
         /// <summary>
@@ -347,23 +329,38 @@ namespace NetAF.Assets.Locations
         public bool FindInteractionTarget(string targetName, out IInteractWithItem target)
         {
             var items = Items.Where(targetName.EqualsExaminable).ToArray();
-            var nPCS = Characters.Where(targetName.EqualsExaminable).ToArray();
-            var exits = Exits.Where(targetName.EqualsExaminable).ToArray();
-            List<IInteractWithItem> interactions = [];
 
             if (items.Length > 0)
-                interactions.AddRange(items);
+            {
+                target = items[0];
+                return true;
+            }
+
+            var nPCS = Characters.Where(targetName.EqualsExaminable).ToArray();
 
             if (nPCS.Length > 0)
-                interactions.AddRange(nPCS);
+            {
+                target = nPCS[0];
+                return true;
+            }
+
+            var exits = Exits.Where(targetName.EqualsExaminable).ToArray();
 
             if (exits.Length > 0)
-                interactions.AddRange(exits);
-
-            if (interactions.Count > 0)
             {
-                target = interactions[0];
+                target = exits[0];
                 return true;
+            }
+
+            if (SceneCommandInterpreter.TryParseToDirection(targetName, out var direction))
+            {
+                exits = Exits.Where(x => x.Direction == direction).ToArray();
+
+                if (exits.Length > 0)
+                {
+                    target = exits[0];
+                    return true;
+                }
             }
 
             target = null;
@@ -379,17 +376,6 @@ namespace NetAF.Assets.Locations
         public bool ContainsCharacter(NonPlayableCharacter character, bool includeInvisibleCharacters = false)
         {
             return Characters.Contains(character) && (includeInvisibleCharacters || character.IsPlayerVisible);
-        }
-
-        /// <summary>
-        /// Get if this Room contains a character.
-        /// </summary>
-        /// <param name="characterName">The character name to check for.</param>
-        /// <param name="includeInvisibleCharacters">Specify if invisible characters should be included.</param>
-        /// <returns>True if the item is in this room, else false.</returns>
-        public bool ContainsCharacter(string characterName, bool includeInvisibleCharacters = false)
-        {
-            return Array.Exists(Characters, character => characterName.EqualsExaminable(character) && (includeInvisibleCharacters || character.IsPlayerVisible));
         }
 
         /// <summary>

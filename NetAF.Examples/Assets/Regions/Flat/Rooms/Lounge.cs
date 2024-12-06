@@ -27,7 +27,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
 
             ConditionalDescription description = new("You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. There is what appears to be a lead of some sort poking out from underneath the sofa. The kitchen is to the north.",
                                                      "You're in a large sitting room. Theres a huge map hanging on the eastern wall. On the southern wall there is a canvas. Theres a large coffee table in the center of the room. Beth is sat on a green sofa watching the TV. The kitchen is to the north.",
-                                                     () => room.ContainsItem(Lead.Name));
+                                                     () => room.FindItem(Lead.Name, out _));
 
             room = new(new Identifier(Name), description, [new Exit(Direction.North)], interaction: item =>
             {
@@ -35,7 +35,7 @@ namespace NetAF.Examples.Assets.Regions.Flat.Rooms
                 {
                     if (CoffeeMug.Name.EqualsIdentifier(item.Identifier))
                     {
-                        if (room.ContainsCharacter(Beth.Name))
+                        if (room.FindCharacter(Beth.Name, out _))
                             return new(InteractionResult.ItemExpires, item, "Beth takes the cup of coffee and smiles. Brownie points to you!");
 
                         return new(InteractionResult.NoChange, item, "As no one is about you decide to drink the coffee yourself. Your nose wasn't lying, it is bitter but delicious.");

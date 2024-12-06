@@ -41,7 +41,7 @@ namespace NetAF.Examples.Assets.Regions.Flat
 
                 if (Guitar.Name.EqualsIdentifier(item.Identifier))
                 {
-                    if (spareBedroom.ContainsItem(Lead.Name))
+                    if (spareBedroom.FindItem(Lead.Name, out _))
                     {
                         easternHallway[Direction.East].Unlock();
 

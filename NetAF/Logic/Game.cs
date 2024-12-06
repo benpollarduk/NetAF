@@ -379,9 +379,6 @@ namespace NetAF.Logic
             if (name.EqualsExaminable(Overworld.CurrentRegion.CurrentRoom))
                 return Overworld.CurrentRegion.CurrentRoom;
 
-            if (!Overworld.CurrentRegion.CurrentRoom.ContainsInteractionTarget(name))
-                return null;
-
             Overworld.CurrentRegion.CurrentRoom.FindInteractionTarget(name, out var target);
             return target;
         }
