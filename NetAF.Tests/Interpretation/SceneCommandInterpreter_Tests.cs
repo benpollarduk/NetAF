@@ -16,7 +16,7 @@ namespace NetAF.Tests.Interpretation
         {
             overworld = new Overworld(Identifier.Empty, Description.Empty);
             var region = new Region(Identifier.Empty, Description.Empty);
-            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West), new Exit(Direction.Up), new Exit(Direction.Down)]), 0, 0, 0);
             region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
             overworld.AddRegion(region);
             region.Enter();
