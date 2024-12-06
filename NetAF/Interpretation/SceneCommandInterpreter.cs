@@ -20,24 +20,24 @@ namespace NetAF.Interpretation
         #region Constants
 
         /// <summary>
-        /// Get the me command.
+        /// Get the player identifier.
         /// </summary>
-        public const string Me = "Me";
+        internal const string Me = "Me";
 
         /// <summary>
-        /// Get the room command.
+        /// Get the room identifier.
         /// </summary>
-        public const string Room = "Room";
+        internal const string Room = "Room";
 
         /// <summary>
-        /// Get the region command.
+        /// Get the region identifier.
         /// </summary>
-        public const string Region = "Region";
+        internal const string Region = "Region";
 
         /// <summary>
-        /// Get the overworld command.
+        /// Get the overworld identifier.
         /// </summary>
-        public const string Overworld = "Overworld";
+        internal const string Overworld = "Overworld";
 
         #endregion
 
@@ -357,7 +357,7 @@ namespace NetAF.Interpretation
         /// <param name="text">The string to parse.</param>
         /// <param name="direction">The direction.</param>
         /// <returns>The result of the parse.</returns>
-        public static bool TryParseToDirection(string text, out Direction direction)
+        internal static bool TryParseToDirection(string text, out Direction direction)
         {
             if (Move.NorthCommandHelp.Equals(text))
             {
