@@ -145,6 +145,51 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void Given2Point1UnitApart_WhenDistanceBetweenPoints_Then1()
         {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0))
+            ];
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.DistanceBetweenRooms(roomPositions[0].Room, roomPositions[1].Room);
+
+            Assert.AreEqual(1, (int)result);
+        }
+
+        [TestMethod]
+        public void GivenANull_WhenDistanceBetweenPoints_Then0()
+        {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0))
+            ];
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.DistanceBetweenRooms(null, roomPositions[1].Room);
+
+            Assert.AreEqual(0, (int)result);
+        }
+
+        [TestMethod]
+        public void GivenBNull_WhenDistanceBetweenPoints_Then0()
+        {
+            List<RoomPosition> roomPositions =
+            [
+                new(new(string.Empty, string.Empty), new Point3D(0, 0, 0)),
+                new(new(string.Empty, string.Empty), new Point3D(0, 1, 0))
+            ];
+            var matrix = new Matrix([.. roomPositions]);
+
+            var result = matrix.DistanceBetweenRooms(roomPositions[0].Room, null);
+
+            Assert.AreEqual(0, (int)result);
+        }
+
+        [TestMethod]
+        public void Given2Point1UnitApart_WhenDistanceBetweenRooms_Then1()
+        {
             Point3D a = new(0, 0, 0);
             Point3D b = new(1, 0, 0);
 
@@ -154,7 +199,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenVisitedRoomOn1And1VisitedRoomOn3_When_ThenReturnContaining1And3()
+        public void GivenVisitedRoomOn1And1VisitedRoomOn3_WhenFindAllZWithVisitedRooms_ThenReturnContaining1And3()
         {
             List<RoomPosition> roomPositions =
             [
