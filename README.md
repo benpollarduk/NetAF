@@ -190,6 +190,11 @@ and has been designed with the aim of showcasing the various features.
 
 Set the **NetAF.Examples** project as the start up project and then build and run to start the application.
 
+## Projects
+Below are some projects that use NetAF:
+
+* [Trouble Aboard the SS Hammerhead](https://benpollarduk.github.io/SSHammerhead-docs/)
+
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
 
