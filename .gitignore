@@ -45,7 +45,7 @@ Generated\ Files/
 *.VisualState.xml
 TestResult.xml
 
-### DocFx ###
+# DocFx
 /docs/docfx/.cache
 /docs/docfx/_site/
 /docs/docfx/api/
