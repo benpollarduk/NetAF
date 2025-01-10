@@ -33,7 +33,7 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "You must specify a character.");
 
             if (!game.Player.CanTakeAndDropItems)
-                return new(ReactionResult.Error, "The player cannot take items.");
+                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot take items.");
 
             if (item == null)
                 return new(ReactionResult.Error, "You must specify what to take.");

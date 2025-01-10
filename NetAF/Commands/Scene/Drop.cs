@@ -33,13 +33,13 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "You must specify a character.");
 
             if (!game.Player.CanTakeAndDropItems)
-                return new(ReactionResult.Error, "The player cannot drop items.");
+                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot drop items.");
 
             if (item == null)
                 return new(ReactionResult.Error, "You must specify what to drop.");
 
             if (!game.Player.HasItem(item))
-                return new(ReactionResult.Error, "You don't have that item.");
+                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} does not have that item.");
 
             game.Overworld.CurrentRegion.CurrentRoom.AddItem(item);
             game.Player.RemoveItem(item);
