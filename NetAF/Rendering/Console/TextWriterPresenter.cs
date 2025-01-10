@@ -8,12 +8,6 @@ namespace NetAF.Rendering.Console
     /// <param name="writer">The writer.</param>
     public sealed class TextWriterPresenter(TextWriter writer) : IFramePresenter
     {
-        #region Fields
-
-        private readonly TextWriter writer = writer;
-
-        #endregion
-
         #region Overrides of Object
 
         /// <summary>
