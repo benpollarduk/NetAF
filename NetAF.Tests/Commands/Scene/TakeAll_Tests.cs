@@ -12,6 +12,42 @@ namespace NetAF.Tests.Commands.Scene
     public class TakeAll_Tests
     {
         [TestMethod]
+        public void GivenNoCharacter_WhenInvoke_ThenError()
+        {
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new TakeAll();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenCannotTakeOrDropItems_WhenInvoke_ThenError()
+        {
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var character = new PlayableCharacter(Identifier.Empty, Description.Empty, false, false);
+            var item = new Item(new Identifier("A"), Description.Empty, true);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new TakeAll();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenNoItem_WhenInvoke_ThenError()
         {
             var room = new Room(Identifier.Empty, Description.Empty);
