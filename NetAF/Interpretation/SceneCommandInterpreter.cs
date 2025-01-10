@@ -477,10 +477,10 @@ namespace NetAF.Interpretation
 
             commands.Add(Examine.CommandHelp);
 
-            if (game.Player.Items.Any())
+            if (game.Player.Items.Any() && game.Player.CanTakeAndDropItems)
                 commands.Add(Drop.CommandHelp);
 
-            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any())
+            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() && game.Player.CanTakeAndDropItems)
             {
                 commands.Add(Take.CommandHelp);
                 commands.Add(TakeAll.CommandHelp);

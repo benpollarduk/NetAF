@@ -32,6 +32,9 @@ namespace NetAF.Commands.Scene
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify a character.");
 
+            if (!game.Player.CanTakeAndDropItems)
+                return new(ReactionResult.Error, "The player cannot take items.");
+
             if (game.Overworld.CurrentRegion.CurrentRoom == null)
                 return new(ReactionResult.Error, "Not in a room.");
 
