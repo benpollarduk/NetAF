@@ -1,5 +1,7 @@
 ﻿using NetAF.Rendering.Console;
 using NetAF.Rendering.Console.FrameBuilders;
+using System;
+using System.Collections.Generic;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -17,17 +19,21 @@ namespace NetAF.Rendering.FrameBuilders
             {
                 var gridLayoutBuilder = new GridStringBuilder();
 
-                return new(
-                    new ConsoleTitleFrameBuilder(gridLayoutBuilder),
-                    new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleRoomMapBuilder(gridLayoutBuilder)),
-                    new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
-                    new ConsoleCommandListFrameBuilder(gridLayoutBuilder),
-                    new ConsoleHelpFrameBuilder(gridLayoutBuilder),
-                    new ConsoleCompletionFrameBuilder(gridLayoutBuilder),
-                    new ConsoleGameOverFrameBuilder(gridLayoutBuilder),
-                    new ConsoleAboutFrameBuilder(gridLayoutBuilder),
-                    new ConsoleReactionFrameBuilder(gridLayoutBuilder),
-                    new ConsoleConversationFrameBuilder(gridLayoutBuilder));
+                Dictionary<Type, IFrameBuilder> frameBuilders = new()
+                {
+                    { typeof(ITitleFrameBuilder), new ConsoleTitleFrameBuilder(gridLayoutBuilder) },
+                    { typeof(ISceneFrameBuilder), new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleRoomMapBuilder(gridLayoutBuilder)) },
+                    { typeof(IRegionMapFrameBuilder), new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)) },
+                    { typeof(ICommandListFrameBuilder), new ConsoleCommandListFrameBuilder(gridLayoutBuilder) },
+                    { typeof(IHelpFrameBuilder), new ConsoleHelpFrameBuilder(gridLayoutBuilder) },
+                    { typeof(ICompletionFrameBuilder), new ConsoleCompletionFrameBuilder(gridLayoutBuilder) },
+                    { typeof(IGameOverFrameBuilder), new ConsoleGameOverFrameBuilder(gridLayoutBuilder) },
+                    { typeof(IAboutFrameBuilder), new ConsoleAboutFrameBuilder(gridLayoutBuilder) },
+                    { typeof(IReactionFrameBuilder), new ConsoleReactionFrameBuilder(gridLayoutBuilder) },
+                    { typeof(IConversationFrameBuilder), new ConsoleConversationFrameBuilder(gridLayoutBuilder) }
+                };
+
+                return new(frameBuilders);
             }
         }
     }

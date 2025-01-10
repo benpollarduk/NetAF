@@ -5,7 +5,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build title frames.
     /// </summary>
-    public interface ITitleFrameBuilder
+    public interface ITitleFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

@@ -2,6 +2,7 @@
 using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
+using NetAF.Rendering.FrameBuilders;
 using System.Collections.Generic;
 
 namespace NetAF.Logic.Modes
@@ -47,7 +48,7 @@ namespace NetAF.Logic.Modes
             commands.AddRange(Interpreter.GetContextualCommandHelp(game));
             commands.AddRange(game.Configuration.Interpreter.GetContextualCommandHelp(game));
 
-            var frame = game.Configuration.FrameBuilders.SceneFrameBuilder.Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, DisplayCommandList ? [.. commands] : null, KeyType, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, DisplayCommandList ? [.. commands] : null, KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

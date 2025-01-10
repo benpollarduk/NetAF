@@ -5,7 +5,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build reaction frames.
     /// </summary>
-    public interface IReactionFrameBuilder
+    public interface IReactionFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

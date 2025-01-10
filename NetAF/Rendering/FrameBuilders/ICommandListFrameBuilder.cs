@@ -6,7 +6,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build command list frames.
     /// </summary>
-    public interface ICommandListFrameBuilder
+    public interface ICommandListFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

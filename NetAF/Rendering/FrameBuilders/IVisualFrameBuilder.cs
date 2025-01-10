@@ -6,7 +6,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build visual frames.
     /// </summary>
-    public interface IVisualFrameBuilder
+    public interface IVisualFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

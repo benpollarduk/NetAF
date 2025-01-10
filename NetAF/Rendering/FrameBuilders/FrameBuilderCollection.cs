@@ -1,71 +1,28 @@
-﻿namespace NetAF.Rendering.FrameBuilders
+﻿using System;
+using System.Collections.Generic;
+
+namespace NetAF.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a collection of all of the frame builders required to run a game.
     /// </summary>
-    /// <param name="titleFrameBuilder">The builder to use for building title frames.</param>
-    /// <param name="sceneFrameBuilder">The builder to use for building scene frames.</param>
-    /// <param name="regionMapFrameBuilder">The builder to use for building region map frames.</param>
-    /// <param name="commandListFrameBuilder">The builder to use for building command list frames.</param>
-    /// <param name="helpFrameBuilder">The builder to use for building help frames.</param>
-    /// <param name="completionFrameBuilder">The builder to use for building completion frames.</param>
-    /// <param name="gameOverFrameBuilder">The builder to use for building game over frames.</param>
-    /// <param name="aboutFrameBuilder">The builder to use for building about frames.</param>
-    /// <param name="reactionFrameBuilder">The builder to use for building reaction frames.</param>
-    /// <param name="conversationFrameBuilder">The builder to use for building conversation frames.</param>
-    public class FrameBuilderCollection(ITitleFrameBuilder titleFrameBuilder, ISceneFrameBuilder sceneFrameBuilder, IRegionMapFrameBuilder regionMapFrameBuilder, ICommandListFrameBuilder commandListFrameBuilder, IHelpFrameBuilder helpFrameBuilder, ICompletionFrameBuilder completionFrameBuilder, IGameOverFrameBuilder gameOverFrameBuilder, IAboutFrameBuilder aboutFrameBuilder, IReactionFrameBuilder reactionFrameBuilder, IConversationFrameBuilder conversationFrameBuilder)
-    {
-        #region Properties
+    /// <param name="frameBuilders">A dictionary that specifies which instance of frame builder should be returned for which type.</param>
+    public class FrameBuilderCollection(Dictionary<Type, IFrameBuilder> frameBuilders)
+    { 
+        #region Methods
 
         /// <summary>
-        /// Get the builder to use for title frames.
+        /// Get a frame builder for a specified type.
         /// </summary>
-        public ITitleFrameBuilder TitleFrameBuilder { get; } = titleFrameBuilder;
+        /// <typeparam name="T">The type of frame builder.</typeparam>
+        /// <returns>The frame builder.</returns>
+        public T GetFrameBuilder<T>()
+        {
+            if (frameBuilders?.ContainsKey(typeof(T)) ?? false)
+                return (T)frameBuilders[typeof(T)];
 
-        /// <summary>
-        /// Get the builder to use for scene frames.
-        /// </summary>
-        public ISceneFrameBuilder SceneFrameBuilder { get; } = sceneFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for region map frames.
-        /// </summary>
-        public IRegionMapFrameBuilder RegionMapFrameBuilder { get; } = regionMapFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for command list frames.
-        /// </summary>
-        public ICommandListFrameBuilder CommandListFrameBuilder { get; } = commandListFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for help frames.
-        /// </summary>
-        public IHelpFrameBuilder HelpFrameBuilder { get; } = helpFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for completion frames.
-        /// </summary>
-        public ICompletionFrameBuilder CompletionFrameBuilder { get; } = completionFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for game over frames.
-        /// </summary>
-        public IGameOverFrameBuilder GameOverFrameBuilder { get; } = gameOverFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for about frames.
-        /// </summary>
-        public IAboutFrameBuilder AboutFrameBuilder { get; } = aboutFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for reaction frames.
-        /// </summary>
-        public IReactionFrameBuilder ReactionModeFrameBuilder { get; } = reactionFrameBuilder;
-
-        /// <summary>
-        /// Get the builder to use for conversation frames.
-        /// </summary>
-        public IConversationFrameBuilder ConversationFrameBuilder { get; } = conversationFrameBuilder;
+            return default;
+        }
 
         #endregion
     }

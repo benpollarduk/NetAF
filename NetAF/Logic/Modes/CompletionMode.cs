@@ -1,4 +1,5 @@
 ﻿using NetAF.Interpretation;
+using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
 {
@@ -27,7 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.CompletionFrameBuilder.Build(title, message, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ICompletionFrameBuilder>().Build(title, message, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

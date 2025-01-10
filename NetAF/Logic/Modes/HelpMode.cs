@@ -1,5 +1,6 @@
 ﻿using NetAF.Commands;
 using NetAF.Interpretation;
+using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
 {
@@ -27,7 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.HelpFrameBuilder.Build("Help", command, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IHelpFrameBuilder>().Build("Help", command, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
