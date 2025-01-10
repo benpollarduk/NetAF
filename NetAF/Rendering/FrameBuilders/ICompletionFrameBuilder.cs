@@ -5,7 +5,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build completion frames.
     /// </summary>
-    public interface ICompletionFrameBuilder
+    public interface ICompletionFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

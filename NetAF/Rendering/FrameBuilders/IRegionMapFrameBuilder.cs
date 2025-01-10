@@ -7,7 +7,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build region map frames.
     /// </summary>
-    public interface IRegionMapFrameBuilder
+    public interface IRegionMapFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

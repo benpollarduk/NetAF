@@ -17,7 +17,8 @@ namespace NetAF.Rendering.FrameBuilders
             {
                 var gridLayoutBuilder = new GridStringBuilder();
 
-                return new(
+                IFrameBuilder[] frameBuilders =
+                [
                     new ConsoleTitleFrameBuilder(gridLayoutBuilder),
                     new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleRoomMapBuilder(gridLayoutBuilder)),
                     new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
@@ -27,7 +28,10 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleGameOverFrameBuilder(gridLayoutBuilder),
                     new ConsoleAboutFrameBuilder(gridLayoutBuilder),
                     new ConsoleReactionFrameBuilder(gridLayoutBuilder),
-                    new ConsoleConversationFrameBuilder(gridLayoutBuilder));
+                    new ConsoleConversationFrameBuilder(gridLayoutBuilder)
+                ];
+
+                return new(frameBuilders);
             }
         }
     }

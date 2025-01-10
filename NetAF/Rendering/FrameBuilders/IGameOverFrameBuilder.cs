@@ -5,7 +5,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build game over frames.
     /// </summary>
-    public interface IGameOverFrameBuilder
+    public interface IGameOverFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.

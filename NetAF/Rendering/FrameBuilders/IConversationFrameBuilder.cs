@@ -7,7 +7,7 @@ namespace NetAF.Rendering.FrameBuilders
     /// <summary>
     /// Represents any object that can build conversation frames.
     /// </summary>
-    public interface IConversationFrameBuilder
+    public interface IConversationFrameBuilder : IFrameBuilder
     {
         /// <summary>
         /// Build a frame.
