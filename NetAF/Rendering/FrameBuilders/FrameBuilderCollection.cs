@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace NetAF.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a collection of all of the frame builders required to run a game.
     /// </summary>
-    /// <param name="frameBuilders">A dictionary that specifies which instance of frame builder should be returned for which type.</param>
-    public class FrameBuilderCollection(Dictionary<Type, IFrameBuilder> frameBuilders)
+    /// <param name="frameBuilders">The frame builders.</param>
+    public class FrameBuilderCollection(params IFrameBuilder[] frameBuilders)
     { 
         #region Methods
 
@@ -18,10 +17,8 @@ namespace NetAF.Rendering.FrameBuilders
         /// <returns>The frame builder.</returns>
         public T GetFrameBuilder<T>()
         {
-            if (frameBuilders?.ContainsKey(typeof(T)) ?? false)
-                return (T)frameBuilders[typeof(T)];
-
-            return default;
+            var match = Array.Find(frameBuilders, x => x is T);
+            return match != null ? (T)match : default;
         }
 
         #endregion
