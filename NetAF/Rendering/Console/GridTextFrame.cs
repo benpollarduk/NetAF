@@ -93,7 +93,7 @@ namespace NetAF.Rendering.Console
                             presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
                         }
 
-                        presenter.Write(c);
+                        presenter.Write(c.ToString());
                     }
                     else
                     {
@@ -102,7 +102,7 @@ namespace NetAF.Rendering.Console
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Write(builder.LineTerminator);
+                    presenter.Write(builder.LineTerminator.ToString());
             }
 
             presenter.Write(Ansi.ANSI_SHOW_CURSOR);

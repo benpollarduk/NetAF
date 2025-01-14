@@ -24,15 +24,6 @@ namespace NetAF.Rendering.Console
         #region Implementation of IFramePresenter
 
         /// <summary>
-        /// Write a character.
-        /// </summary>
-        /// <param name="value">The character to write.</param>
-        public void Write(char value)
-        {
-            writer.Write(value);
-        }
-
-        /// <summary>
         /// Write a string.
         /// </summary>
         /// <param name="value">The string to write.</param>

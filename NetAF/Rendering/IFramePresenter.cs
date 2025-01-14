@@ -6,11 +6,6 @@
     public interface IFramePresenter
     {
         /// <summary>
-        /// Write a character.
-        /// </summary>
-        /// <param name="value">The character to write.</param>
-        void Write(char value);
-        /// <summary>
         /// Write a string.
         /// </summary>
         /// <param name="value">The string to write.</param>
