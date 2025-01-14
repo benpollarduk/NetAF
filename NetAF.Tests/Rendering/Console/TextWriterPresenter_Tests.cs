@@ -9,18 +9,6 @@ namespace NetAF.Tests.Rendering.Console
     public class TextWriterPresenter_Tests
     {
         [TestMethod]
-        public void GivenCharacter_WhenWrite_ThenCharacterIsWritten()
-        {
-            var textWriter = new StringWriter();
-            var character = 'C';
-            var presenter = new TextWriterPresenter(textWriter);
-
-            presenter.Write(character);
-
-            Assert.AreEqual(character, presenter.ToString().First());
-        }
-
-        [TestMethod]
         public void GivenString_WhenWrite_ThenStringIsWritten()
         {
             var textWriter = new StringWriter();
