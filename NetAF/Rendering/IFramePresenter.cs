@@ -1,7 +1,7 @@
 ﻿namespace NetAF.Rendering
 {
     /// <summary>
-    /// Represents an object that can render a frame.
+    /// Represents an object that can present a frame.
     /// </summary>
     public interface IFramePresenter
     {
