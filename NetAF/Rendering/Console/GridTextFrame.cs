@@ -10,7 +10,7 @@ namespace NetAF.Rendering.Console
     /// <param name="cursorLeft">The cursor left position.</param>
     /// <param name="cursorTop">The cursor top position.</param>
     /// <param name="backgroundColor">The background color.</param>
-    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IFrame
+    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IConsoleFrame
     {
         #region Properties
 
@@ -46,7 +46,7 @@ namespace NetAF.Rendering.Console
 
         #endregion
 
-        #region Implementation of IFrame
+        #region Implementation of IConsoleFrame
 
         /// <summary>
         /// Get the cursor left position.
@@ -62,6 +62,10 @@ namespace NetAF.Rendering.Console
         /// Get or set if the cursor should be shown.
         /// </summary>
         public bool ShowCursor { get; set; } = true;
+
+        #endregion
+
+        #region Implementation of IFrame
 
         /// <summary>
         /// Render this frame on a presenter.

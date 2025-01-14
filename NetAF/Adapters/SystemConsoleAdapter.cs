@@ -54,8 +54,11 @@ namespace NetAF.Adapters
 
             frame.Render(presenter);
 
-            System.Console.CursorVisible = frame.ShowCursor;
-            System.Console.SetCursorPosition(frame.CursorLeft, frame.CursorTop);
+            if (frame is IConsoleFrame consoleFrame)
+            {
+                System.Console.CursorVisible = consoleFrame.ShowCursor;
+                System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
+            }
         }
 
         /// <summary>
