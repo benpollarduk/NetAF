@@ -18,7 +18,7 @@ namespace NetAF.Tests
                                                             new GlobalCommandInterpreter(),
                                                             new CustomCommandInterpreter());
 
-        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Default;
+        public FrameBuilderCollection FrameBuilders { get; set; } = ConsoleFrameBuilderCollections.Default;
         public IIOAdapter Adapter { get; private set; } = adapter;
     }
 }

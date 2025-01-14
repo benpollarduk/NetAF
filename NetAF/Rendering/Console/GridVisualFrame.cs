@@ -52,7 +52,7 @@
             {
                 var foregroundColor = GetForegroundColor(x, y, suppressColor);
                 UpdateForegroundColor(presenter, x, y, foregroundColor, ref lastForeground);
-                presenter.Write(c);
+                presenter.Write(c.ToString());
             }
             else
             {
@@ -162,7 +162,7 @@
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Write(builder.LineTerminator);
+                    presenter.Write(builder.LineTerminator.ToString());
             }
         }
 

@@ -1,15 +1,10 @@
 ﻿namespace NetAF.Rendering
 {
     /// <summary>
-    /// Represents an object that can render a frame.
+    /// Represents an object that can present a frame.
     /// </summary>
     public interface IFramePresenter
     {
-        /// <summary>
-        /// Write a character.
-        /// </summary>
-        /// <param name="value">The character to write.</param>
-        void Write(char value);
         /// <summary>
         /// Write a string.
         /// </summary>

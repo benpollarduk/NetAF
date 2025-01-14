@@ -4,9 +4,9 @@ using NetAF.Rendering.Console.FrameBuilders;
 namespace NetAF.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides a container from frame builder collections.
+    /// Provides a container for console frame builder collections.
     /// </summary>
-    public static class FrameBuilderCollections
+    public static class ConsoleFrameBuilderCollections
     {
         /// <summary>
         /// Get the default frame builder collection.
