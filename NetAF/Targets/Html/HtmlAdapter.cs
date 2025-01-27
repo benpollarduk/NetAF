@@ -56,6 +56,17 @@ namespace NetAF.Targets.Html
             return input;
         }
 
+        /// <summary>
+        /// Wait for acknowledgment.
+        /// </summary>
+        /// <param name="timeout">The timeout, in milliseconds.</param>
+        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
+        public bool WaitForAcknowledge(int timeout)
+        {
+            gate.Reset();
+            return gate.WaitOne(timeout);
+        }
+
         #endregion
 
         #region Implementation of IIOAdapter
@@ -84,8 +95,7 @@ namespace NetAF.Targets.Html
         /// <returns>True if the acknowledgment was received correctly, else false.</returns>
         public bool WaitForAcknowledge()
         {
-            gate.Reset();
-            return gate.WaitOne(Timeout.Infinite);
+            return WaitForAcknowledge(Timeout.Infinite);
         }
 
         /// <summary>
