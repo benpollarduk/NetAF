@@ -1,34 +1,24 @@
-﻿using NetAF.Assets;
-using NetAF.Interpretation;
-using NetAF.Logic;
+﻿using NetAF.Interpretation;
 using NetAF.Logic.Configuration;
+using NetAF.Logic;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Assets;
 
-namespace NetAF.Targets.Console
+namespace NetAF.Targets.Html
 {
     /// <summary>
-    /// Represents a configuration for a console game.
+    /// Represents a configuration for a Html game.
     /// </summary>
-    /// <param name="displaySize">The display size.</param>
-    /// <param name="exitMode">The exit mode.</param>
     /// <param name="adapter">The I/O adapter.</param>
-    public sealed class ConsoleGameConfiguration(Size displaySize, ExitMode exitMode, IIOAdapter adapter) : IGameConfiguration
+    /// <param name="exitMode">The exit mode.</param>
+    public sealed class HtmlGameConfiguration(HtmlAdapter adapter, ExitMode exitMode) : IGameConfiguration
     {
-        #region StaticProperties
-
-        /// <summary>
-        /// Get the default game configuration.
-        /// </summary>
-        public static IGameConfiguration Default => new ConsoleGameConfiguration(new Size(80, 50), ExitMode.ReturnToTitleScreen, new ConsoleAdapter());
-
-        #endregion
-
         #region Implementation of IGameConfiguration
 
         /// <summary>
         /// Get the display size.
         /// </summary>
-        public Size DisplaySize { get; private set; } = displaySize;
+        public Size DisplaySize { get; private set; } = new(80, 50);
 
         /// <summary>
         /// Get the exit mode.
@@ -43,7 +33,7 @@ namespace NetAF.Targets.Console
         /// <summary>
         /// Get or set the collection of frame builders to use to render the game.
         /// </summary>
-        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Console;
+        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Html;
 
         /// <summary>
         /// Get the I/O adapter.

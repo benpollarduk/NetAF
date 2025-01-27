@@ -9,7 +9,7 @@ namespace NetAF.Targets.Console
     /// <summary>
     /// Provides an adapter for the System.Console.
     /// </summary>
-    public sealed class SystemConsoleAdapter : IIOAdapter
+    public sealed class ConsoleAdapter : IIOAdapter
     {
         #region StaticMethods
 
