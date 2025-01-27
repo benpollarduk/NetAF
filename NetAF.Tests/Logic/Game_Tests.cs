@@ -7,9 +7,9 @@ using NetAF.Logic;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic.Modes;
-using NetAF.Logic.Configuration;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
+using NetAF.Targets.Console;
 
 namespace NetAF.Tests.Logic
 {

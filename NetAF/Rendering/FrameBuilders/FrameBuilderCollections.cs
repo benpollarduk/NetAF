@@ -1,7 +1,7 @@
-﻿using NetAF.Rendering.Console;
-using NetAF.Rendering.Console.FrameBuilders;
-using NetAF.Rendering.Html.FrameBuilders;
-using NetAF.Rendering.Html;
+﻿using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Html.Rendering;
+using NetAF.Targets.Html.Rendering.FrameBuilders;
 
 namespace NetAF.Rendering.FrameBuilders
 {

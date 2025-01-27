@@ -1,8 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Rendering;
-using NetAF.Rendering.Console;
-using NetAF.Rendering.Console.FrameBuilders;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Utilities;
 
 namespace NetAF.Examples.Assets.Regions.Everglades.Visuals

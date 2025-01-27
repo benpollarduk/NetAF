@@ -1,5 +1,4 @@
-﻿using NetAF.Adapters;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
 

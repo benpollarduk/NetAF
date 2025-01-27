@@ -1,5 +1,5 @@
 ﻿using NetAF.Assets;
-using NetAF.Rendering.Console;
+using NetAF.Targets.Console.Rendering;
 
 namespace NetAF.Rendering.FrameBuilders
 {

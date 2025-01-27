@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using NetAF.Adapters;
 using NetAF.Logic;
 using NetAF.Rendering;
 

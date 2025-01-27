@@ -1,6 +1,6 @@
 ﻿using System;
 using NetAF.Assets;
-using NetAF.Rendering.Console;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Utilities;
 
 namespace NetAF.Extensions

@@ -45,9 +45,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Targets\Console\" />
-    <Folder Include="Targets\Html\" />
-  </ItemGroup>
-
 </Project>
