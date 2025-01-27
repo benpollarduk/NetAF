@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.Console;
 using System.IO;
-using System.Linq;
 
 namespace NetAF.Tests.Rendering.Console
 {
