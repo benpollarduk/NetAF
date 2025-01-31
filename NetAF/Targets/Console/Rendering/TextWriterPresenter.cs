@@ -25,12 +25,12 @@ namespace NetAF.Targets.Console.Rendering
         #region Implementation of IFramePresenter
 
         /// <summary>
-        /// Write a string.
+        /// Present a frame.
         /// </summary>
-        /// <param name="value">The string to write.</param>
-        public void Write(string value)
+        /// <param name="frame">The frame to write, as a string.</param>
+        public void Present(string frame)
         {
-            writer.Write(value);
+            writer.Write(frame);
         }
 
         #endregion

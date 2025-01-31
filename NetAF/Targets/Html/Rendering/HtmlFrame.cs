@@ -56,7 +56,7 @@ namespace NetAF.Targets.Html.Rendering
         /// <param name="presenter">The presenter.</param>
         public void Render(IFramePresenter presenter)
         {
-            presenter.Write(ToString());
+            presenter.Present(ToString());
         }
 
         #endregion

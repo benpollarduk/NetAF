@@ -77,9 +77,9 @@ namespace NetAF.Targets.Console.Rendering
             var suppressColor = Ansi.IsColorSuppressed();
 
             if (!suppressColor)
-                presenter.Write(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
+                presenter.Present(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
 
-            presenter.Write(Ansi.ANSI_HIDE_CURSOR);
+            presenter.Present(Ansi.ANSI_HIDE_CURSOR);
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -91,22 +91,22 @@ namespace NetAF.Targets.Console.Rendering
                     {
                         if (!suppressColor)
                         {
-                            presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
+                            presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
                         }
 
-                        presenter.Write(c.ToString());
+                        presenter.Present(c.ToString());
                     }
                     else
                     {
-                        presenter.Write(" ");
+                        presenter.Present(" ");
                     }
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Write(builder.LineTerminator.ToString());
+                    presenter.Present(builder.LineTerminator.ToString());
             }
 
-            presenter.Write(Ansi.ANSI_SHOW_CURSOR);
+            presenter.Present(Ansi.ANSI_SHOW_CURSOR);
         }
 
         #endregion

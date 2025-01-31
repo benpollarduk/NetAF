@@ -6,9 +6,9 @@
     public interface IFramePresenter
     {
         /// <summary>
-        /// Write a string.
+        /// Present a frame.
         /// </summary>
-        /// <param name="value">The string to write.</param>
-        void Write(string value);
+        /// <param name="frame">The frame to write, as a string.</param>
+        void Present(string frame);
     }
 }

@@ -8,13 +8,13 @@ namespace NetAF.Tests.Targets.Console.Rendering
     public class TextWriterPresenter_Tests
     {
         [TestMethod]
-        public void GivenString_WhenWrite_ThenStringIsWritten()
+        public void GivenString_WhenPresent_ThenStringIsWritten()
         {
             var textWriter = new StringWriter();
             var str = "TEST";
             var presenter = new TextWriterPresenter(textWriter);
 
-            presenter.Write(str);
+            presenter.Present(str);
 
             Assert.AreEqual(str, presenter.ToString());
         }

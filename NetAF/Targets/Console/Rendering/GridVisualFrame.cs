@@ -54,11 +54,11 @@ namespace NetAF.Targets.Console.Rendering
             {
                 var foregroundColor = GetForegroundColor(x, y, suppressColor);
                 UpdateForegroundColor(presenter, x, y, foregroundColor, ref lastForeground);
-                presenter.Write(c.ToString());
+                presenter.Present(c.ToString());
             }
             else
             {
-                presenter.Write(" ");
+                presenter.Present(" ");
             }
         }
 
@@ -79,7 +79,7 @@ namespace NetAF.Targets.Console.Rendering
             if (RequiresColorChange(x, y, lastBackgroundColor, backgroundColor))
             {
                 lastBackgroundColor = backgroundColor;
-                presenter.Write(Ansi.GetAnsiBackgroundEscapeSequence(backgroundColor));
+                presenter.Present(Ansi.GetAnsiBackgroundEscapeSequence(backgroundColor));
             }
         }
 
@@ -96,7 +96,7 @@ namespace NetAF.Targets.Console.Rendering
             if (RequiresColorChange(x, y, lastForegroundColor, foregroundColor))
             {
                 lastForegroundColor = foregroundColor;
-                presenter.Write(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
+                presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
             }
         }
 
@@ -151,7 +151,7 @@ namespace NetAF.Targets.Console.Rendering
         {
             var suppressColor = Ansi.IsColorSuppressed();
 
-            presenter.Write(Ansi.ANSI_HIDE_CURSOR);
+            presenter.Present(Ansi.ANSI_HIDE_CURSOR);
 
             AnsiColor lastBackground = AnsiColor.Black;
             AnsiColor lastForeground = AnsiColor.White;
@@ -164,7 +164,7 @@ namespace NetAF.Targets.Console.Rendering
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Write(builder.LineTerminator.ToString());
+                    presenter.Present(builder.LineTerminator.ToString());
             }
         }
 
