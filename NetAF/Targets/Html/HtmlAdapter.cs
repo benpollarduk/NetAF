@@ -17,6 +17,15 @@ namespace NetAF.Targets.Html
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Get the game.
+        /// </summary>
+        public Game Game { get; private set; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -77,6 +86,7 @@ namespace NetAF.Targets.Html
         /// <param name="game">The game to set up for.</param>
         public void Setup(Game game)
         {
+            Game = game;
             ClearInput();
         }
 

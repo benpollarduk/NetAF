@@ -50,14 +50,14 @@ namespace NetAF.Rendering.FrameBuilders
                 IFrameBuilder[] frameBuilders =
                 [
                     new HtmlTitleFrameBuilder(htmlBuilder),
-                    new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleRoomMapBuilder(gridLayoutBuilder)),
+                    new HtmlSceneFrameBuilder(htmlBuilder),
                     new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
                     new ConsoleCommandListFrameBuilder(gridLayoutBuilder),
                     new ConsoleHelpFrameBuilder(gridLayoutBuilder),
                     new ConsoleCompletionFrameBuilder(gridLayoutBuilder),
                     new ConsoleGameOverFrameBuilder(gridLayoutBuilder),
                     new ConsoleAboutFrameBuilder(gridLayoutBuilder),
-                    new ConsoleReactionFrameBuilder(gridLayoutBuilder),
+                    new HtmlReactionFrameBuilder(htmlBuilder),
                     new ConsoleConversationFrameBuilder(gridLayoutBuilder)
                 ];
 
