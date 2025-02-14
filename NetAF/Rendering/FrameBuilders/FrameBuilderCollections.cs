@@ -44,14 +44,13 @@ namespace NetAF.Rendering.FrameBuilders
         {
             get
             {
-                var gridLayoutBuilder = new GridStringBuilder();
                 var htmlBuilder = new HtmlBuilder();
 
                 IFrameBuilder[] frameBuilders =
                 [
                     new HtmlTitleFrameBuilder(htmlBuilder),
-                    new HtmlSceneFrameBuilder(htmlBuilder),
-                    new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
+                    new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder)),
+                    new HtmlRegionMapFrameBuilder(htmlBuilder, new HtmlRegionMapBuilder(htmlBuilder)),
                     new HtmlCommandListFrameBuilder(htmlBuilder),
                     new HtmlHelpFrameBuilder(htmlBuilder),
                     new HtmlCompletionFrameBuilder(htmlBuilder),

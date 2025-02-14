@@ -17,6 +17,6 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="startPosition">The position to start building at.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        void BuildRoomMap( Room room, ViewPoint viewPoint, KeyType key, Point2D startPosition, out int endX, out int endY);
+        void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key, Point2D startPosition, out int endX, out int endY);
     }
 }

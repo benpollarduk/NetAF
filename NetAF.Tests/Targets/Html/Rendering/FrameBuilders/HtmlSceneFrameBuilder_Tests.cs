@@ -35,7 +35,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder);
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder);
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -97,7 +97,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder);
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -128,7 +128,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder);
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);

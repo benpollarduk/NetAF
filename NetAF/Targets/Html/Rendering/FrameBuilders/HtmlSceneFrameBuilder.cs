@@ -14,7 +14,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// Provides a builder of scene frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlSceneFrameBuilder(HtmlBuilder builder) : ISceneFrameBuilder
+    /// <param name="roomMapBuilder">A builder to use for room maps.</param>
+    public sealed class HtmlSceneFrameBuilder(HtmlBuilder builder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
         #region Properties
 
@@ -69,6 +70,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             if (player.Attributes.Count > 0)
                 builder.P(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));
+
+            roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
 
             if (contextualCommands?.Any() ?? false)
             {
