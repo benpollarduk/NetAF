@@ -4,7 +4,6 @@ using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
-using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -12,7 +11,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// Provides a room map builder.
     /// </summary>
     /// <param name="gridStringBuilder">The grid string builder.</param>
-    public sealed class ConsoleRoomMapBuilder(GridStringBuilder gridStringBuilder) : IRoomMapBuilder
+    public sealed class ConsoleRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
     {
         #region Properties
 
@@ -364,6 +363,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #endregion
 
         #region Implementation of IRoomMapBuilder
+
+        /// <summary>
+        /// Build a map for a room.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="viewPoint">The viewpoint from the room.</param>
+        /// <param name="key">The key type.</param>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key)
+        {
+            BuildRoomMap(room, viewPoint, key, new Point2D(0, 0), out _, out _);
+        }
+
+        #endregion
+
+        #region Implementation of IConsoleRoomMapBuilder
 
         /// <summary>
         /// Build a map for a room.
