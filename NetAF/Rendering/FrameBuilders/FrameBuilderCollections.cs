@@ -52,13 +52,13 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlTitleFrameBuilder(htmlBuilder),
                     new HtmlSceneFrameBuilder(htmlBuilder),
                     new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
-                    new ConsoleCommandListFrameBuilder(gridLayoutBuilder),
-                    new ConsoleHelpFrameBuilder(gridLayoutBuilder),
-                    new ConsoleCompletionFrameBuilder(gridLayoutBuilder),
-                    new ConsoleGameOverFrameBuilder(gridLayoutBuilder),
-                    new ConsoleAboutFrameBuilder(gridLayoutBuilder),
+                    new HtmlCommandListFrameBuilder(htmlBuilder),
+                    new HtmlHelpFrameBuilder(htmlBuilder),
+                    new HtmlCompletionFrameBuilder(htmlBuilder),
+                    new HtmlGameOverFrameBuilder(htmlBuilder),
+                    new HtmlAboutFrameBuilder(htmlBuilder),
                     new HtmlReactionFrameBuilder(htmlBuilder),
-                    new ConsoleConversationFrameBuilder(gridLayoutBuilder)
+                    new HtmlConversationFrameBuilder(htmlBuilder)
                 ];
 
                 return new(frameBuilders);

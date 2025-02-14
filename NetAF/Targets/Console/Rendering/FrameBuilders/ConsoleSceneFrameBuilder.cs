@@ -45,11 +45,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public AnsiColor CommandsColor { get; set; } = AnsiColor.BrightBlack;
 
         /// <summary>
-        /// Get or set if messages should be displayed in isolation.
-        /// </summary>
-        public bool DisplayMessagesInIsolation { get; set; } = true;
-
-        /// <summary>
         /// Get or set the command title.
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
