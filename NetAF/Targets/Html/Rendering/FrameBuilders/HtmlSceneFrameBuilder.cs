@@ -71,6 +71,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             if (player.Attributes.Count > 0)
                 builder.P(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));
 
+            builder.Br();
+
             roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
 
             if (contextualCommands?.Any() ?? false)
