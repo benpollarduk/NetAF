@@ -2,7 +2,6 @@
 using NetAF.Rendering;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Assets;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 
@@ -35,7 +34,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var stringBuilder = new HtmlBuilder();
                 var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
             });
         }
 
@@ -63,7 +62,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var stringBuilder = new HtmlBuilder();
                 var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic);
             });
         }
 
@@ -82,7 +81,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var stringBuilder = new HtmlBuilder();
                 var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full);
             });
         }
 
@@ -110,7 +109,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var stringBuilder = new HtmlBuilder();
                 var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
             });
         }
     }

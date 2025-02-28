@@ -41,14 +41,14 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <returns>The frame.</returns>
         public IFrame Build(Region region, Point3D focusPosition, CommandHelp[] contextualCommands, Size size)
         {
-            var availableWidth = size.Width - 4;
             var matrix = region.ToMatrix();
             var room = matrix[focusPosition.X, focusPosition.Y, focusPosition.Z];
             var title = $"{region.Identifier.Name} - {room?.Identifier.Name}";
-           
+
+            builder.Clear();
             builder.H1(title);
 
-            int commandSpace = 0;
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition);
 
             if (contextualCommands?.Any() ?? false)
             {
@@ -60,10 +60,6 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                     builder.P($"{contextualCommand.DisplayCommand} - {contextualCommand.Description.EnsureFinishedSentence()}");
                 }
             }
-
-            var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
-
-            RegionMapBuilder?.BuildRegionMap(region, new Point2D(0,0), focusPosition, mapSize);
 
             return new HtmlFrame(builder);
         }

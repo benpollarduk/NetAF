@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using System.Text;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -72,12 +73,51 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// Build a map of a region.
         /// </summary>
         /// <param name="region">The region.</param>
-        /// <param name="startPosition">The position to start building at.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point2D startPosition, Point3D focusPosition, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition)
         {
+            // for now, cheat and use the ansi builder then convert to HTML
 
+            // create an ansi grid string builder just for this map, and resize to ample room for the map which has an unknown
+            // width and an unknown height
+            Size size = new(100, 20);
+            GridStringBuilder ansiGridStringBuilder = new();
+            ansiGridStringBuilder.Resize(size);
+
+            var ansiRegionBuilder = new ConsoleRegionMapBuilder(ansiGridStringBuilder)
+            {
+                LockedExit = LockedExit,
+                UnLockedExit = UnLockedExit,
+                EmptySpace = EmptySpace,
+                VerticalBoundary = VerticalBoundary,
+                HorizontalBoundary = HorizontalBoundary,
+                LowerLevel = LowerLevel,
+                Player = Player,
+                Focus = Focus,
+                CurrentFloorIndicator = CurrentFloorIndicator
+            };
+
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), size);
+
+            StringBuilder stringBuilder = new();
+
+            for (var row = 0; row < size.Height; row++)
+            {
+                for (var column = 0; column < size.Width; column++)
+                {
+                    var character = ansiGridStringBuilder.GetCharacter(column, row);
+
+                    if (character == 0)
+                        character = ' ';
+
+                    stringBuilder.Append(character);
+                }
+
+                stringBuilder.Append("<br>");
+            }
+
+            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
+            builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{stringBuilder}</pre>");
         }
 
         #endregion

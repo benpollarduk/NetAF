@@ -111,7 +111,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var startMapPosition = new Point2D(leftMargin, mapStartY);
             var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
 
-            RegionMapBuilder?.BuildRegionMap(region, startMapPosition, focusPosition, mapSize);
+            if (RegionMapBuilder is IConsoleRegionMapBuilder consoleRegionMapBuilder)
+                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, startMapPosition, mapSize);
+            else
+                RegionMapBuilder?.BuildRegionMap(region, focusPosition);
 
             gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
             gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);

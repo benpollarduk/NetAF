@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
-using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -11,7 +10,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// Provides a builder for region maps.
     /// </summary>
     /// <param name="gridStringBuilder">The grid string builder.</param>
-    public sealed class ConsoleRegionMapBuilder(GridStringBuilder gridStringBuilder) : IRegionMapBuilder
+    public sealed class ConsoleRegionMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRegionMapBuilder
     {
         #region Properties
 
@@ -274,10 +273,24 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Build a map of a region.
         /// </summary>
         /// <param name="region">The region.</param>
-        /// <param name="startPosition">The position to start building at.</param>
         /// <param name="focusPosition">The position to focus on.</param>
+        public void BuildRegionMap(Region region, Point3D focusPosition)
+        {
+            BuildRegionMap(region, focusPosition, new(0, 0), new(int.MaxValue, int.MaxValue));
+        }
+
+        #endregion
+
+        #region Implementation of IConsoleRegionMapBuilder
+
+        /// <summary>
+        /// Build a map of a region.
+        /// </summary>
+        /// <param name="region">The region.</param>
+        /// <param name="focusPosition">The position to focus on.</param>
+        /// <param name="startPosition">The position to start building at.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point2D startPosition, Point3D focusPosition, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, Point2D startPosition, Size maxSize)
         {
             var matrix = region.ToMatrix();
             var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);
