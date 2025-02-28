@@ -1,6 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -75,7 +77,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
         public void BuildRegionMap(Region region, Point2D startPosition, Point3D focusPosition, Size maxSize)
         {
-            
+
         }
 
         #endregion
