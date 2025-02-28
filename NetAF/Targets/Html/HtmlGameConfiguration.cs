@@ -7,7 +7,7 @@ using NetAF.Assets;
 namespace NetAF.Targets.Html
 {
     /// <summary>
-    /// Represents a configuration for a Html game.
+    /// Represents a configuration for a HTML game.
     /// </summary>
     /// <param name="adapter">The I/O adapter.</param>
     /// <param name="exitMode">The exit mode.</param>
