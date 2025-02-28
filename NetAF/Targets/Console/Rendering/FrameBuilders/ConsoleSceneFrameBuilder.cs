@@ -101,7 +101,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
 
             if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
-                consoleRoomMapBuilder?.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
+                consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
             else
                 roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType);
 
