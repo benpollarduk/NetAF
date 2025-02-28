@@ -23,9 +23,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-         repository: benpollarduk/NetAF
-         token: ${{ secrets.PAT }}
 
     - name: Setup environment
       uses: actions/setup-dotnet@v3
