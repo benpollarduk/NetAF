@@ -3,7 +3,6 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
-using System.Text;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -99,25 +98,10 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), size);
 
-            StringBuilder stringBuilder = new();
-
-            for (var row = 0; row < size.Height; row++)
-            {
-                for (var column = 0; column < size.Width; column++)
-                {
-                    var character = ansiGridStringBuilder.GetCharacter(column, row);
-
-                    if (character == 0)
-                        character = ' ';
-
-                    stringBuilder.Append(character);
-                }
-
-                stringBuilder.Append("<br>");
-            }
+            var regionAsString = HtmlHelper.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
 
             // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
-            builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{stringBuilder}</pre>");
+            builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{regionAsString}</pre>");
         }
 
         #endregion
