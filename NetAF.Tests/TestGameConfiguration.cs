@@ -1,5 +1,4 @@
-﻿using NetAF.Adapters;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using NetAF.Logic.Configuration;
@@ -18,7 +17,7 @@ namespace NetAF.Tests
                                                             new GlobalCommandInterpreter(),
                                                             new CustomCommandInterpreter());
 
-        public FrameBuilderCollection FrameBuilders { get; set; } = ConsoleFrameBuilderCollections.Default;
+        public FrameBuilderCollection FrameBuilders { get; set; } = FrameBuilderCollections.Console;
         public IIOAdapter Adapter { get; private set; } = adapter;
     }
 }

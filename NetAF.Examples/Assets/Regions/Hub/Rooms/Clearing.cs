@@ -49,7 +49,7 @@ namespace NetAF.Examples.Assets.Regions.Hub.Rooms
                         new("No thanks, keep things as they are.", new Jump(4))
                     ]
                 },
-                new("Arrk! Color it is.", g => g.Configuration.FrameBuilders = ConsoleFrameBuilderCollections.Default, new ToName("ModeQuestion")),
+                new("Arrk! Color it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Console, new ToName("ModeQuestion")),
                 new("Eeek, simple be fine too! Shame it's been deleted. Maybe it will be implemented again one day! Eeek!", new ToName("ModeQuestion")),
                 new("Squarrk! Legacy, looks old. Shame it's been deleted. Maybe it will be implemented again one day! Arrk!", new ToName("ModeQuestion")),
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))

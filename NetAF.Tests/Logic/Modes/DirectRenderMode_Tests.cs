@@ -4,7 +4,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Logic.Modes;
-using NetAF.Rendering.Console;
+using NetAF.Targets.Console.Rendering;
 
 namespace NetAF.Tests.Logic.Modes
 {

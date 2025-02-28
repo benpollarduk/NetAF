@@ -106,15 +106,15 @@ All game assets support customisable attributes. This provides the possibility t
 
 ### Rendering
 NetAF provides frames for rendering the various game screens. These are fully extensible and customisable. These include:
-   * Scene frame.
-   * Help frame.
-   * Map frame.
-   * Title frame.
-   * Completion frame.
-   * Game over frame.
-   * Transition frame.
-   * Conversation frame.
-   * Visual frame.
+   * **Scene frame** - for displaying scenes in the game.
+   * **Help frame** - for displaying in-game help for a specific command.
+   * **Map frame** - for displaying the map.
+   * **Title frame** - for displaying the title screen.
+   * **Completion frame** - for displaying game complete.
+   * **Game over frame** - for displaying game over.
+   * **Conversation frame** - for displaying a conversation.
+   * **Visual frame** - for displaying a visual.
+   * **Command list frame** - for displaying a list of commands.
 
 #### Visuals
 Although NetAF is primarily focused on text and interactive fiction, there are times where adding a visual can enrich the game.
@@ -136,6 +136,9 @@ Maps display visited rooms, exits, player position, if an item is in a room, low
 
 ### Persistence
 Game state can be serialized allowing progress to be saved to file and restored later.
+
+### Targets
+NetAF targets both the console and web, but custom targets can be also be added. The examples in this repo focus on the console, but a Blazor example targeting web is available at [https://github.com/benpollarduk/NetAF.Blazor](https://github.com/benpollarduk/NetAF.Blazor).
 
 ## Getting Started
 
