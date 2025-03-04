@@ -6,7 +6,7 @@ namespace NetAF.Targets.Html.Rendering
     /// <summary>
     /// Provides helper functions for Html
     /// </summary>
-    internal class HtmlHelper
+    internal static class HtmlHelper
     {
         #region StaticMethods
 
