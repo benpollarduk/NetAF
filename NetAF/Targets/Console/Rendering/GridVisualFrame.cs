@@ -6,7 +6,7 @@ namespace NetAF.Targets.Console.Rendering
     /// Provides a grid based frame for displaying a visual.
     /// </summary>
     /// <param name="builder">The builder that creates the frame.</param>
-    public sealed class GridVisualFrame(GridVisualBuilder builder) : IFrame
+    public sealed class GridVisualFrame(GridVisualBuilder builder) : IConsoleFrame
     {
         #region Methods
 
