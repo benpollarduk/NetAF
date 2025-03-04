@@ -11,7 +11,7 @@ namespace NetAF.Targets.Html
     /// </summary>
     /// <param name="adapter">The I/O adapter.</param>
     /// <param name="exitMode">The exit mode.</param>
-    public sealed class HtmlGameConfiguration(HtmlAdapter adapter, ExitMode exitMode) : IGameConfiguration
+    public sealed class HtmlGameConfiguration(IIOAdapter adapter, ExitMode exitMode) : IGameConfiguration
     {
         #region Implementation of IGameConfiguration
 
