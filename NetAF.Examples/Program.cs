@@ -13,6 +13,8 @@ using NetAF.Examples.Assets.Regions.Zelda;
 using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Logic.Configuration;
+using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console;
 
 namespace NetAF.Examples
@@ -113,7 +115,7 @@ namespace NetAF.Examples
                 }
 
                 var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
-                var creator = Game.Create(new("NetAF Demo", about, "NetAF"), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), ConsoleGameConfiguration.Default);
+                var creator = Game.Create(new("NetAF Demo", about, "NetAF"), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
                 Game.Execute(creator);
             }

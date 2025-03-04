@@ -178,7 +178,7 @@ var gameCreator = Game.Create(
     "Dave awakes to find himself in a cavern...",
     AssetGenerator.Retained(overworldMaker.Make(), player),
     GameEndConditions.NoEnd,
-    ConsoleGameConfiguration.Default);
+    new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
 // begin the execution of the game
 Game.Execute(gameCreator);
