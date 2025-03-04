@@ -35,9 +35,7 @@ namespace NetAF.Targets.Console.Rendering
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
-                {
                     stringBuilder.Append(builder.GetCharacter(x, y));
-                }
 
                 stringBuilder.Append(StringUtilities.Newline);
             }
@@ -90,9 +88,7 @@ namespace NetAF.Targets.Console.Rendering
                     if (cell.Character != 0)
                     {
                         if (!suppressColor)
-                        {
                             presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
-                        }
 
                         presenter.Present(cell.Character.ToString());
                     }

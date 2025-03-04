@@ -15,7 +15,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// Provides a builder of conversation frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ConsoleConversationFrameBuilder(GridStringBuilder gridStringBuilder) : IConversationFrameBuilder
+    /// <param name="renderPrompt">Specify if the prompt should be rendered.</param>
+    public sealed class ConsoleConversationFrameBuilder(GridStringBuilder gridStringBuilder, bool renderPrompt = true) : IConversationFrameBuilder
     {
         #region Properties
 
@@ -167,8 +168,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 }
             }
 
-            gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
-            gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
+            if (renderPrompt)
+            {
+                gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
+                gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
+            }
 
             return new GridTextFrame(gridStringBuilder, leftMargin + 2, availableHeight, BackgroundColor) { ShowCursor = true };
         }

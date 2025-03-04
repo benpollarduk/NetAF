@@ -13,7 +13,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="regionMapBuilder">A builder for region maps.</param>
-    public sealed class ConsoleRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder) : IRegionMapFrameBuilder
+    /// <param name="renderPrompt">Specify if the prompt should be rendered.</param>
+    public sealed class ConsoleRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, IRegionMapBuilder regionMapBuilder, bool renderPrompt = true) : IRegionMapFrameBuilder
     {
         #region Properties
 
@@ -85,8 +86,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (contextualCommands?.Any() ?? false)
             {
                 const int requiredSpaceForDivider = 2;
-                const int requiredSpaceForPrompt = 3;
                 const int requiredSpaceForCommandHeader = 3;
+                int requiredSpaceForPrompt = renderPrompt ? 3 : 1;
                 commandSpace = requiredSpaceForCommandHeader + requiredSpaceForPrompt + requiredSpaceForDivider + contextualCommands.Length;
                 var requiredYToFitAllCommands = size.Height - commandSpace;
 
@@ -116,8 +117,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             else
                 RegionMapBuilder?.BuildRegionMap(region, focusPosition);
 
-            gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
-            gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
+            if (renderPrompt)
+            {
+                gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
+                gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
+            }
 
             return new GridTextFrame(gridStringBuilder, 4, availableHeight, BackgroundColor) { ShowCursor = true };
         }

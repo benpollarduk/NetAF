@@ -159,9 +159,7 @@ namespace NetAF.Targets.Console.Rendering
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
-                {
                     RenderCharacter(presenter, x, y, suppressColor, ref lastForeground, ref lastBackground);
-                }
 
                 if (y < builder.DisplaySize.Height - 1)
                     presenter.Present(builder.LineTerminator.ToString());
