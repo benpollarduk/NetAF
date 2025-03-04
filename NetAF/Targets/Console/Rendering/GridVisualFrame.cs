@@ -169,5 +169,20 @@ namespace NetAF.Targets.Console.Rendering
         }
 
         #endregion
+
+        #region Implementation of IAnsiGridFrame
+
+        /// <summary>
+        /// Get a cell from the grid.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <returns>The ANSI cell.</returns>
+        public AnsiCell GetCell(int x, int y)
+        {
+            return new AnsiCell(builder.GetCharacter(x, y), GetForegroundColor(x, y, false), GetBackgroundColor(x, y, false));
+        }
+
+        #endregion
     }
 }

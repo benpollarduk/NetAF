@@ -42,5 +42,20 @@ namespace NetAF.Tests.Targets.Console.Rendering
 
             Assert.IsTrue(result.Any(x => x != 0));
         }
+
+        [TestMethod]
+        public void Given1x1Grid_WhenGetCell_ThenReturnExpected()
+        {
+            var gridStringBuilder = new GridStringBuilder();
+            gridStringBuilder.Resize(new(1, 1));
+            gridStringBuilder.SetCell(0, 0, 'c', AnsiColor.Red);
+            var frame = new GridTextFrame(gridStringBuilder, 0, 0, AnsiColor.Blue);
+
+            var result = frame.GetCell(0, 0);
+
+            Assert.AreEqual('c', result.Character);
+            Assert.AreEqual(AnsiColor.Red, result.Foreground);
+            Assert.AreEqual(AnsiColor.Blue, result.Background);
+        }
     }
 }

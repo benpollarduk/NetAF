@@ -1,11 +1,9 @@
-﻿using NetAF.Rendering;
-
-namespace NetAF.Targets.Console.Rendering
+﻿namespace NetAF.Targets.Console.Rendering
 {
     /// <summary>
     /// Represents any object that is a frame that can display a command based interface.
     /// </summary>
-    public interface IConsoleFrame : IFrame
+    public interface IConsoleFrame : IAnsiGridFrame
     {
         /// <summary>
         /// Get the cursor left position.

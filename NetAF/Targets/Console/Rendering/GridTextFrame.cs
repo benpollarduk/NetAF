@@ -85,16 +85,16 @@ namespace NetAF.Targets.Console.Rendering
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
                 {
-                    var c = builder.GetCharacter(x, y);
+                    var cell = GetCell(x, y);
 
-                    if (c != 0)
+                    if (cell.Character != 0)
                     {
                         if (!suppressColor)
                         {
-                            presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(builder.GetCellColor(x, y)));
+                            presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
                         }
 
-                        presenter.Present(c.ToString());
+                        presenter.Present(cell.Character.ToString());
                     }
                     else
                     {
@@ -107,6 +107,21 @@ namespace NetAF.Targets.Console.Rendering
             }
 
             presenter.Present(Ansi.ANSI_SHOW_CURSOR);
+        }
+
+        #endregion
+
+        #region Implementation of IAnsiGridFrame
+
+        /// <summary>
+        /// Get a cell from the grid.
+        /// </summary>
+        /// <param name="x">The x position of the cell.</param>
+        /// <param name="y">The y position of the cell.</param>
+        /// <returns>The ANSI cell.</returns>
+        public AnsiCell GetCell(int x, int y)
+        {
+            return new AnsiCell(builder.GetCharacter(x, y), builder.GetCellColor(x, y), BackgroundColor);
         }
 
         #endregion
