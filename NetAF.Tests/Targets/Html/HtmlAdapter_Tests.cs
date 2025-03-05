@@ -63,7 +63,7 @@ namespace NetAF.Tests.Targets.Html
 
 
         [TestMethod]
-        public void GivenIConsoleFrame_WhenRender_ThenRendered()
+        public void GivenFrame_WhenRender_ThenRendered()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
