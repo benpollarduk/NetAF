@@ -3,22 +3,22 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
-using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Html;
 using NetAF.Utilities;
-using System.IO;
 using System.Threading;
+using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering;
+using System.IO;
 
 namespace NetAF.Tests.Targets.Html
 {
     [TestClass]
-    public class HtmlAdapter_Tests
+    public class ConsoleToHtmlAdapter_Tests
     {
         [TestMethod]
         public void GivenTest_WhenWaitForInput_ThenReturnTest()
         {
-            HtmlAdapter adapter = new(null);
+            ConsoleToHtmlAdapter adapter = new(null);
 
             var thread = new Thread(() =>
             {
@@ -36,7 +36,7 @@ namespace NetAF.Tests.Targets.Html
         [TestMethod]
         public void GivenAcknowledge_WhenWaitForAcknowledge_ThenReturnTrue()
         {
-            HtmlAdapter adapter = new(null);
+            ConsoleToHtmlAdapter adapter = new(null);
 
             var thread = new Thread(() =>
             {
@@ -54,13 +54,12 @@ namespace NetAF.Tests.Targets.Html
         [TestMethod]
         public void GivenTimeout_WhenWaitForAcknowledge_ThenReturnFalse()
         {
-            HtmlAdapter adapter = new(null);
+            ConsoleToHtmlAdapter adapter = new(null);
 
             var result = adapter.WaitForAcknowledge(1);
 
             Assert.IsFalse(result);
         }
-
 
         [TestMethod]
         public void GivenIConsoleFrame_WhenRender_ThenRendered()
@@ -75,7 +74,7 @@ namespace NetAF.Tests.Targets.Html
             var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
             MemoryStream stream = new();
             TextWriterPresenter presenter = new(new StreamWriter(stream));
-            HtmlAdapter adapter = new(presenter);
+            ConsoleToHtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);

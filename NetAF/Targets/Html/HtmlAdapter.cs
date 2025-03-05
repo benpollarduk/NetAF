@@ -7,8 +7,7 @@ namespace NetAF.Targets.Html
     /// <summary>
     /// Provides an adapter for HTML.
     /// </summary>
-    /// <param name="presenter">The presenter to use for presenting frames.</param>
-    public sealed class HtmlAdapter(IFramePresenter presenter) : IIOAdapter
+    public class HtmlAdapter : IIOAdapter
     {
         #region Fields
 
@@ -23,6 +22,24 @@ namespace NetAF.Targets.Html
         /// Get the game.
         /// </summary>
         public Game Game { get; private set; }
+
+        /// <summary>
+        /// Get the presenter.
+        /// </summary>
+        protected IFramePresenter Presenter { get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the HtmlAdapter class.
+        /// </summary>
+        /// <param name="presenter">The presenter to use for presenting frames.</param>
+        public HtmlAdapter(IFramePresenter presenter)
+        {
+            Presenter = presenter;
+        }
 
         #endregion
 
@@ -94,9 +111,9 @@ namespace NetAF.Targets.Html
         /// Render a frame.
         /// </summary>
         /// <param name="frame">The frame to render.</param>
-        public void RenderFrame(IFrame frame)
+        public virtual void RenderFrame(IFrame frame)
         {
-            frame.Render(presenter);
+            frame.Render(Presenter);
         }
 
         /// <summary>

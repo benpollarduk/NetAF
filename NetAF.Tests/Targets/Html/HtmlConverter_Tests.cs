@@ -5,7 +5,7 @@ using NetAF.Targets.Html.Rendering;
 namespace NetAF.Tests.Targets.Html
 {
     [TestClass]
-    public class HtmlHelper_Tests
+    public class HtmlConverter_Tests
     {
         [TestMethod]
         public void GivenEmptyCharacters_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
@@ -13,7 +13,7 @@ namespace NetAF.Tests.Targets.Html
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
 
-            var result = HtmlHelper.ConvertGridStringBuilderToHtmlString(builder);
+            var result = HtmlConverter.ConvertGridStringBuilderToHtmlString(builder);
 
             Assert.AreEqual("     <br>", result);
         }
@@ -24,7 +24,7 @@ namespace NetAF.Tests.Targets.Html
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
 
-            var result = HtmlHelper.ConvertGridStringBuilderToHtmlString(builder, false);
+            var result = HtmlConverter.ConvertGridStringBuilderToHtmlString(builder, false);
 
             Assert.AreEqual("\0\0\0\0\0<br>", result);
         }

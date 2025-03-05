@@ -4,9 +4,9 @@ using System.Text;
 namespace NetAF.Targets.Html.Rendering
 {
     /// <summary>
-    /// Provides helper functions for Html
+    /// Provides converter functions for HTML.
     /// </summary>
-    internal static class HtmlHelper
+    internal static class HtmlConverter
     {
         #region StaticMethods
 
