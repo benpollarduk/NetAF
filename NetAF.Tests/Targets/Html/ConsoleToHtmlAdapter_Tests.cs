@@ -8,7 +8,6 @@ using NetAF.Utilities;
 using System.Threading;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
-using System.IO;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
 
@@ -74,14 +73,13 @@ namespace NetAF.Tests.Targets.Html
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             GridStringBuilder gridStringBuilder = new();
             var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
-            MemoryStream stream = new();
-            TextWriterPresenter presenter = new(new StreamWriter(stream));
+            TestPresenter presenter = new();
             ConsoleToHtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
 
-            Assert.IsTrue(stream.Length > 0);
+            Assert.IsTrue(!string.IsNullOrEmpty(presenter.ToString()));
         }
 
         [TestMethod]
@@ -95,14 +93,13 @@ namespace NetAF.Tests.Targets.Html
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             HtmlBuilder htmlBuilder = new();
             var frame = new HtmlReactionFrameBuilder(htmlBuilder).Build("A", "B", false, new(80, 50));
-            MemoryStream stream = new();
-            TextWriterPresenter presenter = new(new StreamWriter(stream));
+            TestPresenter presenter = new();
             ConsoleToHtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
 
-            Assert.IsTrue(stream.Length > 0);
+            Assert.IsTrue(!string.IsNullOrEmpty(presenter.ToString()));
         }
     }
 }
