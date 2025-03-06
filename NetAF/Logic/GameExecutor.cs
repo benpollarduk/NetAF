@@ -132,7 +132,7 @@ namespace NetAF.Logic
         /// </summary>
         /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
         /// <param name="mode">The mode to execute the game in.</param>
-        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Auto) 
+        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Automatic) 
         {
             if (game != null)
                 throw new GameExecutionException("Cannot execute a game when one is already being executed.");
@@ -145,7 +145,7 @@ namespace NetAF.Logic
                 case GameExecutionMode.Manual:
                     ExecuteManual(creator);
                     break;
-                case GameExecutionMode.Auto:
+                case GameExecutionMode.Automatic:
                     ExecuteAuto(creator);
                     break;
                 case GameExecutionMode.AutoBackground:
