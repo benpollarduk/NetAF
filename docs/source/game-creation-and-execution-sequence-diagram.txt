@@ -1,13 +1,15 @@
-title Game Creation
+title Game Creation and Execution
 
-participant Console
-participant Game (static)
+participant Target
+participant GameExecutor
 participant GameCreationCallback
 participant Game
 
-Console->Game (static):Create
-Game (static)->Console:Instance of GameCreationCallback
-Console->Game (static):Execute
-Game (static)->GameCreationCallback:Invoke
-GameCreationCallback->Game (static):Insance of Game
-Game (static)->Game:Execute
+Target->GameExecutor: Execute
+GameExecutor->GameCreationCallback:Invoke
+GameCreationCallback->GameExecutor:Game
+GameExecutor->Game:Start
+Target->GameExecutor: Update
+GameExecutor->Game:Update
+Target->GameExecutor: Cancel
+GameExecutor->Game:End
