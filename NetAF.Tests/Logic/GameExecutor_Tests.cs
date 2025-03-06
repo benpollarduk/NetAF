@@ -134,5 +134,30 @@ namespace NetAF.Tests.Logic
                 GameExecutor.Execute(game, GameExecutionMode.Manual);
             });
         }
+
+        [TestMethod]
+        public void GivenAGameIsExecuting_WhenGetIsExecuting_ThenTrue()
+        {
+            GameExecutor.Cancel();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var startTime = Environment.TickCount;
+            EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
+
+            GameExecutor.Execute(game, GameExecutionMode.Manual);
+
+            Assert.IsTrue(GameExecutor.IsExecuting);
+        }
+
+        [TestMethod]
+        public void GivenNoGameIsExecuting_WhenGetIsExecuting_ThenFalse()
+        {
+            GameExecutor.Cancel();
+
+            Assert.IsFalse(GameExecutor.IsExecuting);
+        }
     }
 }

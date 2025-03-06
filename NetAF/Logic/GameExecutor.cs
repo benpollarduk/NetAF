@@ -18,6 +18,15 @@ namespace NetAF.Logic
 
         #endregion
 
+        #region StaticProperties
+
+        /// <summary>
+        /// Get if a game is currently executing.
+        /// </summary>
+        public static bool IsExecuting => game != null;
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
