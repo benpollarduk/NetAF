@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
@@ -310,68 +308,6 @@ namespace NetAF.Tests.Logic
             var result = game.FindInteractionTarget("ABC");
 
             Assert.IsNull(result);
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithNoConsoleAccess_WhenExecute_ThenIOExceptionThrown()
-        {
-            Assert.ThrowsException<IOException>(() =>
-            {
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
-
-                Game.Execute(game);
-            });
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndCompletionConditionReached_WhenExecute_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(_ => new EndCheckResult(true, string.Empty, string.Empty), GameEndConditions.NotEnded), TestGameConfiguration.Default).Invoke();
-
-                game.Execute();
-            });
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndGameOverConditionReached_WhenExecute_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, _ => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
-
-                game.Execute();
-            });
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccess_WhenExecute_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var startTime = Environment.TickCount;
-                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication)).Invoke();
-
-                game.Execute();
-            });
         }
 
         [TestMethod]

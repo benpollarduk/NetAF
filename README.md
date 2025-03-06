@@ -181,7 +181,7 @@ var gameCreator = Game.Create(
     new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
 // begin the execution of the game
-Game.Execute(gameCreator);
+GameExecutor.Execute(gameCreator);
 ```
 
 ### Tutorial
