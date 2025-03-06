@@ -136,6 +136,44 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
+        public void GivenAutomaticExecution_WhenUpdate_ThenGameExecutionExceptionThrown()
+        {
+            Assert.ThrowsException<GameExecutionException>(() =>
+            {
+                GameExecutor.Cancel();
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new("Room", string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var startTime = Environment.TickCount;
+                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
+
+                GameExecutor.Execute(game, GameExecutionMode.Automatic);
+                GameExecutor.Update();
+            });
+        }
+
+        [TestMethod]
+        public void GivenManualExecution_WhenUpdate_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                GameExecutor.Cancel();
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new("Room", string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var startTime = Environment.TickCount;
+                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
+
+                GameExecutor.Execute(game, GameExecutionMode.Manual);
+                GameExecutor.Update();
+            });
+        }
+
+        [TestMethod]
         public void GivenAGameIsExecuting_WhenGetIsExecuting_ThenTrue()
         {
             GameExecutor.Cancel();
