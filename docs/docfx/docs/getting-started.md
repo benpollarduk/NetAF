@@ -149,10 +149,10 @@ This requires some breaking down. The **Game** class has a **Create** method tha
 * **GameConfiguration** - a configuration for the game, including display size, error prefix and other elements.
 
 ### Executing the game
-The game is executed simply by calling the static **Execute** method on **Game** and passing in the game creation callback.
+The game is executed simply by calling the static **Execute** method on **GameExecutor** and passing in the game creation callback.
 
 ```csharp
-Game.Execute(gameCreator);
+GameExecutor.Execute(gameCreator);
 ```
 
 ### Bringing it all together
@@ -216,7 +216,7 @@ namespace NetAF.GettingStarted
                 new GameEndConditions(IsGameComplete, IsGameOver),
                 new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
-            Game.Execute(gameCreator);
+            GameExecutor.Execute(gameCreator);
         }
     }
 }

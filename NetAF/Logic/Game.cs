@@ -26,7 +26,7 @@ namespace NetAF.Logic
         #region Fields
 
         private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
-        private GameState state;
+        private IGameMode endMode;
 
         #endregion
 
@@ -71,6 +71,11 @@ namespace NetAF.Logic
         /// Get the mode.
         /// </summary>
         public IGameMode Mode { get; private set; }
+
+        /// <summary>
+        /// Get the game state.
+        /// </summary>
+        internal GameState State { get; private set; }
 
         #endregion
 
@@ -119,20 +124,24 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Execute the game.
+        /// Start the game. If the game is already running a GameExecutionException will be thrown.
         /// </summary>
-        internal void Execute()
+        /// <exception cref="GameExecutionException"/>
+        internal void Start()
         {
             // if the game is in an active state don't re-execute
-            switch (state)
+            switch (State)
             {
                 case GameState.Active:
                 case GameState.Finishing:
-                    return;
+                    throw new GameExecutionException($"Cannot start the game when state is {State}.");
             }
 
             // game is active
-            state = GameState.Active;
+            State = GameState.Active;
+
+            // reset end mode
+            endMode = null;
 
             // setup the adapter for this game
             Configuration.Adapter.Setup(this);
@@ -140,51 +149,55 @@ namespace NetAF.Logic
             // change mode to show the title screen
             ChangeMode(new TitleMode());
 
-            // hold end mode
-            IGameMode endMode;
+            // render
+            Mode.Render(this);
+        }
 
-            do
+        /// <summary>
+        /// Update to the next frame of the game. If the game is not running or has finished then a GameExecutionException will be thrown.
+        /// </summary>
+        /// <param name="input">Any input that should be passed to the game.</param>
+        /// <exception cref="GameExecutionException"/>
+        internal void Update(string input = "")
+        {
+            switch (State)
             {
-                // always render the current mode
-                Mode.Render(this);
+                case GameState.Active:
 
-                // get the input
-                var input = GetInput();
+                    // process the input
+                    var reaction = ProcessInput(input);
 
-                // process the input
-                var reaction = ProcessInput(input);
+                    // handle the reaction
+                    HandleReaction(reaction);
 
-                // handle the reaction
-                HandleReaction(reaction);
+                    // check if the game has ended, and if so end
+                    if (CheckForGameEnd(EndConditions, out endMode))
+                        End();
 
-                // check if the game has ended
-                if (CheckForGameEnd(EndConditions, out endMode))
-                {
-                    // end the game
-                    End();
-
-                    // render the last mode
+                    // render
                     Mode.Render(this);
 
-                    // wait for acknowledge before exiting
-                    GetInput();
-                }
+                    break;
+                case GameState.Finishing:
+
+                    // if an end mode specified
+                    if (endMode != null)
+                    {
+                        // set and render the end mode
+                        ChangeMode(endMode);
+                        Mode.Render(this);
+                        endMode = null;
+                    }
+                    else
+                    {
+                        // finished execution
+                        State = GameState.Finished;
+                    }
+
+                    break;
+                default:
+                    throw new GameExecutionException($"Cannot move to next when state is {State}.");
             }
-            while (state != GameState.Finishing);
-
-            // if an end mode specified
-            if (endMode != null)
-            {
-                // set and render the end mode
-                ChangeMode(endMode);
-                Mode.Render(this);
-
-                // wait for acknowledge
-                GetInput();
-            }
-
-            // finished execution
-            state = GameState.Finished;
         }
 
         /// <summary>
@@ -282,37 +295,6 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Get input from the user.
-        /// </summary>
-        /// <returns>The user input.</returns>
-        private string GetInput()
-        {
-            // input is handled based on the current modes type
-            switch (Mode.Type)
-            {
-                case GameModeType.Information:
-
-                    // wait for acknowledge
-                    while (!Configuration.Adapter.WaitForAcknowledge())
-                    {
-                        // something other was entered, render again
-                        Mode.Render(this);
-                    }
-
-                    // acknowledge complete
-                    return string.Empty;
-
-                case GameModeType.Interactive:
-
-                    // get and return user input
-                    return Configuration.Adapter.WaitForInput();
-
-                default:
-                    throw new NotImplementedException($"No handling for case {Mode.Type}.");
-            }
-        }
-
-        /// <summary>
         /// Process input.
         /// </summary>
         /// <param name="input">The input to process.</param>
@@ -357,7 +339,7 @@ namespace NetAF.Logic
         /// </summary>
         public void End()
         {
-            state = GameState.Finishing;
+            State = GameState.Finishing;
         }
 
         /// <summary>
@@ -468,32 +450,6 @@ namespace NetAF.Logic
             };
         }
 
-        /// <summary>
-        /// Execute a game.
-        /// </summary>
-        /// <param name="creator">The creator to use to create the game.</param>
-        public static void Execute(GameCreationCallback creator)
-        {
-            var run = true;
-
-            while (run)
-            {
-                var game = creator.Invoke();
-                game.Execute();
-
-                switch (game.Configuration.ExitMode)
-                {
-                    case ExitMode.ExitApplication:
-                        run = false;
-                        break;
-                    case ExitMode.ReturnToTitleScreen:
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
-
         #endregion
 
         #region Implementation of IRestoreFromObjectSerialization<GameSerialization>
@@ -504,7 +460,7 @@ namespace NetAF.Logic
         /// <param name="serialization">The serialization to restore from.</param>
         void IRestoreFromObjectSerialization<GameSerialization>.RestoreFrom(GameSerialization serialization)
         {
-            this.RestoreFrom(serialization);
+            RestoreFrom(serialization);
         }
 
         #endregion

@@ -27,5 +27,7 @@ items:
   href: visuals.md
 - name: Persistence
   href: persistence.md
+- name: Execution
+  href: execution.md
 - name: Architecture
   href: architecture.md
