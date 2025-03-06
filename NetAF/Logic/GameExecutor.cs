@@ -101,17 +101,12 @@ namespace NetAF.Logic
                 if (game.State != GameState.Finished)
                     continue;
 
-                switch (game.Configuration.ExitMode)
+                run = game.Configuration.ExitMode switch
                 {
-                    case ExitMode.ExitApplication:
-                        run = false;
-                        break;
-                    case ExitMode.ReturnToTitleScreen:
-                        run = !wasCancelled;
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                    ExitMode.ExitApplication => false,
+                    ExitMode.ReturnToTitleScreen => !wasCancelled,
+                    _ => throw new NotImplementedException(),
+                };
             }
 
             game = null;
@@ -148,7 +143,7 @@ namespace NetAF.Logic
                 case GameExecutionMode.Automatic:
                     ExecuteAuto(creator);
                     break;
-                case GameExecutionMode.AutoBackground:
+                case GameExecutionMode.BackgroundAutomatic:
                     Task.Run(() => ExecuteAuto(creator));
                     break;
                 default:
