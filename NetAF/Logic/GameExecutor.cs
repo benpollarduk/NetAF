@@ -15,6 +15,7 @@ namespace NetAF.Logic
         private static Game game;
         private static GameCreationCallback creator;
         private static bool wasCancelled = false;
+        private static GameExecutionMode? executingMode;
 
         #endregion
 
@@ -70,6 +71,9 @@ namespace NetAF.Logic
             if (game == null)
                 throw new GameExecutionException("Cannot update a game when one is not being executed.");
 
+            if (executingMode != GameExecutionMode.Manual)
+                throw new GameExecutionException($"Cannot update a game when execution mode is {(executingMode != null ? executingMode : "null")}.");
+
             game.Update(input);
 
             if (game.State != GameState.Finished)
@@ -78,6 +82,7 @@ namespace NetAF.Logic
             switch (game.Configuration.ExitMode)
             {
                 case ExitMode.ExitApplication:
+                    Reset();
                     break;
                 case ExitMode.ReturnToTitleScreen:
                     if (!wasCancelled)
@@ -118,7 +123,7 @@ namespace NetAF.Logic
                 };
             }
 
-            game = null;
+            Reset();
         }
 
         /// <summary>
@@ -143,6 +148,7 @@ namespace NetAF.Logic
 
             wasCancelled = false;
             GameExecutor.creator = creator;
+            executingMode = mode;
 
             switch (mode)
             {
@@ -167,8 +173,17 @@ namespace NetAF.Logic
         {
             wasCancelled = true;
             game?.End();
+            Reset();
+        }
+
+        /// <summary>
+        /// Reset.
+        /// </summary>
+        private static void Reset()
+        {
             game = null;
             creator = null;
+            executingMode = null;
         }
 
         #endregion
