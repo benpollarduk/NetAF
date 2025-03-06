@@ -11,7 +11,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         {
             var result = FrameBuilderCollections.Console;
 
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         {
             var result = FrameBuilderCollections.Html;
 
-            Assert.IsNull(result);
+            Assert.IsNotNull(result);
         }
     }
 }
