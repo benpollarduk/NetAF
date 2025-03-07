@@ -4,6 +4,7 @@ using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
@@ -203,13 +204,13 @@ namespace NetAF.Interpretation
             }
 
             // check exits to room by name
-            foreach (var exit in game.Overworld.CurrentRegion.CurrentRoom.Exits)
+            var matchingExit = game.Overworld.CurrentRegion.CurrentRoom.Exits.FirstOrDefault(x => noun.EqualsExaminable(x));
+
+            // if a match found
+            if (matchingExit != null)
             {
-                if (noun.EqualsExaminable(exit))
-                {
-                    command = new Examine(exit);
-                    return true;
-                }
+                command = new Examine(matchingExit);
+                return true;
             }
 
             // check room examination
