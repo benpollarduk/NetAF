@@ -16,13 +16,15 @@ namespace NetAF.Tests.Interpretation
         {
             overworld = new Overworld(Identifier.Empty, Description.Empty);
             var region = new Region(Identifier.Empty, Description.Empty);
-            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West), new Exit(Direction.Up), new Exit(Direction.Down)]), 0, 0, 0);
-            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North, false, new Identifier(northExitName)), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West), new Exit(Direction.Up), new Exit(Direction.Down)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 1, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]), 1, 0, 0);
             overworld.AddRegion(region);
             region.Enter();
         }
 
         private Overworld overworld;
+        private static string northExitName = "North_Name";
 
         [TestMethod]
         public void GivenEmptyString_WhenInterpret_ThenReturnFalse()
@@ -174,6 +176,40 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Examine.CommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExamineExitByDirection_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + Move.NorthCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExamineExitByDirectionWhenMissing_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Move(Direction.East);
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + Move.UpCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExamineExitByName_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " " + northExitName, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

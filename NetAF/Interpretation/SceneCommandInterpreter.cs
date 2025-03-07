@@ -202,6 +202,16 @@ namespace NetAF.Interpretation
                 return true;
             }
 
+            // check exits to room by name
+            foreach (var exit in game.Overworld.CurrentRegion.CurrentRoom.Exits)
+            {
+                if (noun.EqualsExaminable(exit))
+                {
+                    command = new Examine(exit);
+                    return true;
+                }
+            }
+
             // check room examination
             if (Room.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Overworld.CurrentRegion.CurrentRoom))
             {

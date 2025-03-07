@@ -13,6 +13,28 @@ namespace NetAF.Rendering.FrameBuilders
     public static class SceneHelper
     {
         /// <summary>
+        /// Get a description of a direction.
+        /// </summary>
+        /// <param name="currentRoom">The current room.</param>
+        /// <param name="roomInDirection">The room in the specified direction.</param>
+        /// <param name="direction">The direction.</param>
+        /// <returns>A description of the room.</returns>
+        private static string GetDescriptionOfDirection(Room currentRoom, Room roomInDirection, Direction direction)
+        {
+            if (!currentRoom[direction].IsLocked)
+                return $"the {roomInDirection.Identifier.Name}";
+
+            var exitIdentifier = currentRoom[direction].Identifier;
+            var exitHasExplicitlySetName = !exitIdentifier.Equals(direction.ToString());
+            var lockedExitString = "a locked exit";
+
+            if (exitHasExplicitlySetName)
+                lockedExitString += $" ({exitIdentifier.Name})";
+
+            return lockedExitString;
+        }
+
+        /// <summary>
         /// Create a view point string.
         /// </summary>
         /// <param name="room">The room.</param>
@@ -29,7 +51,7 @@ namespace NetAF.Rendering.FrameBuilders
                 if (roomInDirection == null)
                     continue;
 
-                var roomDescription = room[direction].IsLocked ? "a locked exit" : $"the {roomInDirection.Identifier.Name}";
+                var description = GetDescriptionOfDirection(room, roomInDirection, direction);
 
                 if (view.Length == 0)
                 {
@@ -39,13 +61,13 @@ namespace NetAF.Rendering.FrameBuilders
                         case Direction.East:
                         case Direction.South:
                         case Direction.West:
-                            view.Append($"To the {direction.ToString().ToLower()} is {roomDescription}, ");
+                            view.Append($"To the {direction.ToString().ToLower()} is {description}, ");
                             break;
                         case Direction.Up:
-                            view.Append($"Above is {roomDescription}, ");
+                            view.Append($"Above is {description}, ");
                             break;
                         case Direction.Down:
-                            view.Append($"Below is {roomDescription}, ");
+                            view.Append($"Below is {description}, ");
                             break;
                         default:
                             throw new NotImplementedException($"No implementation for {direction}.");
@@ -59,13 +81,13 @@ namespace NetAF.Rendering.FrameBuilders
                         case Direction.East:
                         case Direction.South:
                         case Direction.West:
-                            view.Append($"{direction.ToString().ToLower()} is {roomDescription}, ");
+                            view.Append($"{direction.ToString().ToLower()} is {description}, ");
                             break;
                         case Direction.Up:
-                            view.Append($"above is {roomDescription}, ");
+                            view.Append($"above is {description}, ");
                             break;
                         case Direction.Down:
-                            view.Append($"below is {roomDescription}, ");
+                            view.Append($"below is {description}, ");
                             break;
                         default:
                             throw new NotImplementedException($"No implementation for {direction}.");

@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {
@@ -38,6 +39,22 @@ namespace NetAF.Tests.Rendering.FrameBuilders
             var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
 
             Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithAViewAndANamedLockedExit_WhenCreateViewpointAsString_ThenStringReturnsExitName()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty, [new Exit(Direction.East, true, new Identifier("TEST_EXIT"))]);
+            regionMaker[0, 0, 0] = room;
+            regionMaker[1, 0, 0] = new Room("Test", "Test", [new Exit(Direction.West)]);
+            var region = regionMaker.Make();
+            region.Enter();
+            var viewPoint = ViewPoint.Create(region);
+
+            var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
+
+            Assert.IsTrue(result.Contains("TEST_EXIT", System.StringComparison.InvariantCultureIgnoreCase));
         }
 
         [TestMethod]
