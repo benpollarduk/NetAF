@@ -13,7 +13,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Help", "View detailed help for a command");
+        public static CommandHelp CommandHelp { get; } = new("Help", "View detailed help for a command", shortcut: "H", displayAs: "Help __", instructions: $"Display help for a specific command. Use {CommandList.CommandHelp.Command} to view a list of commands.");
 
         #endregion
 

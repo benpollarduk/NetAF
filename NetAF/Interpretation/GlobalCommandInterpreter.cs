@@ -56,7 +56,7 @@ namespace NetAF.Interpretation
             if (Help.CommandHelp.Equals(verb))
             {
                 if (string.IsNullOrEmpty(noun))
-                    return new(true, new Help(null));
+                    return new(true, new Help(Help.CommandHelp));
 
                 var commands = game.GetContextualCommands();
                 var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
