@@ -8,6 +8,7 @@ using NetAF.Targets.Console;
 using NetAF.Utilities;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace NetAF.Tests.Logic
 {
@@ -147,9 +148,9 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var startTime = Environment.TickCount;
                 EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ReturnToTitleScreen));
 
-                GameExecutor.Execute(game, GameExecutionMode.Automatic);
+                Task.Run(() => GameExecutor.Execute(game, GameExecutionMode.Automatic));
                 GameExecutor.Update();
             });
         }
