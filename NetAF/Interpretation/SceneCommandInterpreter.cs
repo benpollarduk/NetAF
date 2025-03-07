@@ -4,7 +4,6 @@ using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
-using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;

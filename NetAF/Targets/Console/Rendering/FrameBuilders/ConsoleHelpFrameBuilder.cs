@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -64,18 +65,25 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             lastY += 3;
 
-            gridStringBuilder.DrawWrapped($"Command: {commandHelp.Command}", leftMargin, lastY, availableWidth, CommandColor, out _, out lastY);
+            if (commandHelp != null)
+            {
+                gridStringBuilder.DrawWrapped($"Command: {commandHelp.Command}", leftMargin, lastY, availableWidth, CommandColor, out _, out lastY);
 
-            if (!string.IsNullOrEmpty(commandHelp.Shortcut))
-                gridStringBuilder.DrawWrapped($"Shortcut: {commandHelp.Shortcut}", leftMargin, lastY + 2, availableWidth, CommandColor, out _, out lastY);
+                if (!string.IsNullOrEmpty(commandHelp.Shortcut))
+                    gridStringBuilder.DrawWrapped($"Shortcut: {commandHelp.Shortcut}", leftMargin, lastY + 2, availableWidth, CommandColor, out _, out lastY);
 
-            gridStringBuilder.DrawWrapped($"Description: {commandHelp.Description.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped($"Description: {commandHelp.Description.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
-            if (!string.IsNullOrEmpty(commandHelp.Instructions))
-                gridStringBuilder.DrawWrapped($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+                if (!string.IsNullOrEmpty(commandHelp.Instructions))
+                    gridStringBuilder.DrawWrapped($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
-            if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
-                gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out _);
+                if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
+                    gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out _);
+            }
+            else
+            {
+                gridStringBuilder.DrawWrapped($"'{Help.CommandHelp.Command}' can be used to display help for a command. To display a list of valid commands use the '{CommandList.CommandHelp.Command}' command.", leftMargin, lastY, availableWidth, CommandDescriptionColor, out _, out _);
+            }
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

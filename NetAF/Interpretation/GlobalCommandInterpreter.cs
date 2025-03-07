@@ -1,5 +1,6 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Global;
+using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Utilities;
@@ -55,13 +56,15 @@ namespace NetAF.Interpretation
             if (Help.CommandHelp.Equals(verb))
             {
                 if (string.IsNullOrEmpty(noun))
-                    return InterpretationResult.Fail;
+                    return new(true, new Help(null));
 
                 var commands = game.GetContextualCommands();
                 var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
-                
+
                 if (command != null)
                     return new(true, new Help(command));
+                else
+                    return new(true, new Unactionable($"'{noun}' is not a command."));
             }
 
             if (CommandList.CommandHelp.Equals(verb))

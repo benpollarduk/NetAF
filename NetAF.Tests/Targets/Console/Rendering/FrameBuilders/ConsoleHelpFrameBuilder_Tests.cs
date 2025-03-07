@@ -31,5 +31,17 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2", "Test 3."), new Size(80, 50));
             });
         }
+
+        [TestMethod]
+        public void GivenNoCommand_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
+
+                builder.Build("Test", null, new Size(80, 50));
+            });
+        }
     }
 }

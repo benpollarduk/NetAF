@@ -93,25 +93,25 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenHelpWithNoCommand_WhenInterpret_ThenReturnFalse()
+        public void GivenHelpWithNoCommand_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(NetAF.Commands.Global.Help.CommandHelp.Command, game);
 
-            Assert.IsFalse(result.WasInterpretedSuccessfully);
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]
-        public void GivenHelpWithUnknownCommand_WhenInterpret_ThenReturnFalse()
+        public void GivenHelpWithUnknownCommand_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret($"{NetAF.Commands.Global.Help.CommandHelp.Command} ABC", game);
 
-            Assert.IsFalse(result.WasInterpretedSuccessfully);
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]

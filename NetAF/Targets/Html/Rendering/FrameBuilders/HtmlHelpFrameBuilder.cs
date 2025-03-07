@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -28,18 +29,25 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             builder.H1(title);
             builder.Br();
 
-            builder.P($"Command: {commandHelp.Command}");
+            if (commandHelp != null)
+            {
+                builder.P($"Command: {commandHelp.Command}");
 
-            if (!string.IsNullOrEmpty(commandHelp.Shortcut))
-                builder.P($"Shortcut: {commandHelp.Shortcut}");
+                if (!string.IsNullOrEmpty(commandHelp.Shortcut))
+                    builder.P($"Shortcut: {commandHelp.Shortcut}");
 
-            builder.P($"Description: {commandHelp.Description.EnsureFinishedSentence()}");
+                builder.P($"Description: {commandHelp.Description.EnsureFinishedSentence()}");
 
-            if (!string.IsNullOrEmpty(commandHelp.Instructions))
-                builder.P($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}");
+                if (!string.IsNullOrEmpty(commandHelp.Instructions))
+                    builder.P($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}");
 
-            if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
-                builder.P($"Example: {commandHelp.DisplayAs}");
+                if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
+                    builder.P($"Example: {commandHelp.DisplayAs}");
+            }
+            else
+            {
+                builder.P($"'{Help.CommandHelp.Command}' can be used to display help for a command. To display a list of valid commands use the '{CommandList.CommandHelp.Command}' command.");
+            }
 
             return new HtmlFrame(builder);
         }
