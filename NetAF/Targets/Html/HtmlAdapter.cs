@@ -77,7 +77,7 @@ namespace NetAF.Targets.Html
         /// <returns>The input.</returns>
         private string ReadAndClearInput()
         {
-            var input = lastReceivedInput;
+            var input = lastReceivedInput.Clone().ToString();
             ClearInput();
             return input;
         }
