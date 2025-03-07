@@ -98,7 +98,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), size);
 
-            var regionAsString = HtmlConverter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
+            var regionAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
 
             // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
             builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{regionAsString}</pre>");

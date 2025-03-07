@@ -98,7 +98,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
 
-            var roomAsString = HtmlConverter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
+            var roomAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
 
             // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
             builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{roomAsString}</pre>");
