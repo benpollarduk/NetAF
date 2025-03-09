@@ -14,6 +14,10 @@
         /// </summary>
         Active,
         /// <summary>
+        /// End condition met.
+        /// </summary>
+        EndConditionMet,
+        /// <summary>
         /// Finishing.
         /// </summary>
         Finishing,

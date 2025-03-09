@@ -12,7 +12,7 @@ namespace NetAF.Tests.Logic
     public class GameExecutor_Tests
     {
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndCompletionConditionReached_WhenExecute_ThenNoExceptionThrown()
+        public void GivenSimpleGameAndCompletionConditionReached_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndGameOverConditionReached_WhenExecute_ThenNoExceptionThrown()
+        public void GivenSimpleGameAndGameOverConditionReached_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccess_WhenExecute_ThenNoExceptionThrown()
+        public void GivenSimpleGame_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -74,6 +74,72 @@ namespace NetAF.Tests.Logic
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
 
             GameExecutor.Execute(game);
+            var result = GameExecutor.Update();
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenGameWhenEndConditionMetAndFinishModeIsFinish_WhenUpdate_ThenCompletedTrue()
+        {
+            GameExecutor.CancelExecution();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+
+            GameExecutor.Execute(game);
+            // update until finished
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+
+            var result = GameExecutor.Update();
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenGameWhenEndConditionMetAndFinishModeIsReturnToTitleScreen_WhenUpdate_ThenCompletedTrue()
+        {
+            GameExecutor.CancelExecution();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.ReturnToTitleScreen));
+
+            GameExecutor.Execute(game);
+            // update until finished
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+            GameExecutor.Update();
+
+            var result = GameExecutor.Update();
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenCanceled_WhenUpdate_ThenCompletedTrue()
+        {
+            GameExecutor.CancelExecution();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.ReturnToTitleScreen));
+
+            GameExecutor.Execute(game);
+            GameExecutor.CancelExecution();
             var result = GameExecutor.Update();
 
             Assert.IsTrue(result.Completed);

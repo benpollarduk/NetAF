@@ -158,7 +158,7 @@ namespace NetAF.Logic
 
                         // check if the game has ended, and if so end
                         if (CheckForGameEnd(EndConditions, out endMode))
-                            State = GameState.Finishing;
+                            State = GameState.EndConditionMet;
 
                         // providing the game hasn't finished render
                         if (State != GameState.Finished)
@@ -166,21 +166,21 @@ namespace NetAF.Logic
 
                         return new(true);
 
+                    case GameState.EndConditionMet:
+
+                        // set and render the end mode
+                        ChangeMode(endMode);
+                        Mode.Render(this);
+
+                        // finishing
+                        State = GameState.Finishing;
+
+                        return new(true);
+
                     case GameState.Finishing:
 
-                        // if an end mode specified
-                        if (endMode != null)
-                        {
-                            // set and render the end mode
-                            ChangeMode(endMode);
-                            Mode.Render(this);
-                            endMode = null;
-                        }
-                        else
-                        {
-                            // finished execution
-                            State = GameState.Finished;
-                        }
+                        // finished execution
+                        State = GameState.Finished;
 
                         return new(true);
 
