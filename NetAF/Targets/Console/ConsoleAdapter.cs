@@ -2,7 +2,6 @@
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Utilities;
 
 namespace NetAF.Targets.Console
 {
@@ -11,20 +10,6 @@ namespace NetAF.Targets.Console
     /// </summary>
     public sealed class ConsoleAdapter : IIOAdapter
     {
-        #region StaticMethods
-
-        /// <summary>
-        /// Wait for a key press.
-        /// </summary>
-        /// <param name="key">The ASCII code of the key to wait for.</param>
-        /// <returns>True if the key pressed returned the same ASCII character as the key property, else false.</returns>
-        private static bool WaitForKeyPress(char key)
-        {
-            return System.Console.ReadKey().KeyChar == key;
-        }
-
-        #endregion
-
         #region Fields
 
         private readonly TextWriterPresenter presenter = new(System.Console.Out);
@@ -59,24 +44,6 @@ namespace NetAF.Targets.Console
                 System.Console.CursorVisible = consoleFrame.ShowCursor;
                 System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
             }
-        }
-
-        /// <summary>
-        /// Wait for acknowledgment.
-        /// </summary>
-        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
-        public bool WaitForAcknowledge()
-        {
-            return WaitForKeyPress(StringUtilities.CR);
-        }
-
-        /// <summary>
-        /// Wait for input.
-        /// </summary>
-        /// <returns>The input.</returns>
-        public string WaitForInput()
-        {
-            return System.Console.In.ReadLine();
         }
 
         #endregion

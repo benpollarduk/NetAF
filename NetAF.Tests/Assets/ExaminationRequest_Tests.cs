@@ -20,7 +20,7 @@ namespace NetAF.Tests.Assets
             overworld.AddRegion(region);
             var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default);
 
-            var result = new ExaminationRequest(player, gameCreator());
+            var result = new ExaminationRequest(player, gameCreator.Invoke());
 
             Assert.AreEqual(player, result.Scene.Examiner);
         }
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Assets
             region.Enter();
             var gameCreator = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default);
 
-            var result = new ExaminationRequest(player, gameCreator());
+            var result = new ExaminationRequest(player, gameCreator.Invoke());
 
             Assert.AreEqual(room, result.Scene.Room);
         }

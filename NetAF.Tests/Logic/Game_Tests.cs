@@ -8,7 +8,6 @@ using NetAF.Logic.Modes;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Targets.Console;
-using NetAF.Logic.Configuration;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Tests.Logic
@@ -439,6 +438,86 @@ namespace NetAF.Tests.Logic
             var result = game.GetInactivePlayerLocations();
 
             Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGameWhichHasNotBeenStarted_WhenUpdate_ThenStateIsActive()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, [new Exit(Direction.North)]);
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, [new Exit(Direction.South)]);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            // inactive->active
+            game.Update();
+
+            var result = game.State;
+
+            Assert.AreEqual(GameState.Active, result);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGameWhichHasCompleted_WhenUpdate_ThenStateIsEndConditionMet()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, [new Exit(Direction.North)]);
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, [new Exit(Direction.South)]);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
+            // inactive->active
+            game.Update();
+            // active->finishing
+            game.Update();
+
+            var result = game.State;
+
+            Assert.AreEqual(GameState.EndConditionMet, result);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGameWhichIsHasEndConditionMett_WhenUpdate_ThenStateIsFinishing()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, [new Exit(Direction.North)]);
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, [new Exit(Direction.South)]);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
+            // inactive->active
+            game.Update();
+            // active->finishing
+            game.Update();
+            // end condition met->finishing
+            game.Update();
+
+            var result = game.State;
+
+            Assert.AreEqual(GameState.Finishing, result);
+        }
+
+        [TestMethod]
+        public void GivenSimpleGameWhichIsFinishing_WhenUpdate_ThenStateIsFinished()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = new Room("Room A", string.Empty, [new Exit(Direction.North)]);
+            regionMaker[0, 1, 0] = new Room("Room B", string.Empty, [new Exit(Direction.South)]);
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player1 = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
+            // inactive->active
+            game.Update();
+            // active->finishing
+            game.Update();
+            // end condition met->finishing
+            game.Update();
+            // finishing->finished
+            game.Update();
+
+            var result = game.State;
+
+            Assert.AreEqual(GameState.Finished, result);
         }
     }
 }

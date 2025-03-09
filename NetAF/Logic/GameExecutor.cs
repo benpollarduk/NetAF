@@ -1,7 +1,4 @@
 ﻿using NetAF.Logic.Callbacks;
-using NetAF.Logic.Modes;
-using System;
-using System.Threading.Tasks;
 
 namespace NetAF.Logic
 {
@@ -13,9 +10,9 @@ namespace NetAF.Logic
         #region StaticFields
 
         private static Game game;
-        private static GameCreationCallback creator;
+        private static GameCreator creator;
         private static bool wasCancelled = false;
-        private static GameExecutionMode? executingMode;
+        private static IGameExecutionAutomationController controller;
 
         #endregion
 
@@ -24,156 +21,104 @@ namespace NetAF.Logic
         /// <summary>
         /// Get if a game is currently executing.
         /// </summary>
-        public static bool IsExecuting => game != null;
+        public static bool IsExecuting => game != null && !wasCancelled;
 
         #endregion
 
         #region StaticMethods
 
         /// <summary>
-        /// Get input from the user.
-        /// </summary>
-        /// <returns>The user input.</returns>
-        private static string GetInput()
-        {
-            // input is handled based on the current modes type
-            switch (game.Mode.Type)
-            {
-                case GameModeType.Information:
-
-                    // wait for acknowledge
-                    while (!game.Configuration.Adapter.WaitForAcknowledge())
-                    {
-                        // something other was entered, render again
-                        game.Mode.Render(game);
-                    }
-
-                    // acknowledge complete
-                    return string.Empty;
-
-                case GameModeType.Interactive:
-
-                    // get and return user input
-                    return game.Configuration.Adapter.WaitForInput();
-
-                default:
-                    throw new NotImplementedException($"No handling for case {game.Mode.Type}.");
-            }
-        }
-
-        /// <summary>
         /// Update to the next frame of the game.
         /// </summary>
         /// <param name="input">Any input that should be passed to the game.</param>
-        /// <exception cref="GameExecutionException"/>
-        public static void Update(string input = "")
+        /// <returns>The result of the action.</returns>
+        public static UpdateResult Update(string input = "")
         {
             if (game == null)
-                throw new GameExecutionException("Cannot update a game when one is not being executed.");
+                return new(false, "Cannot update a game when one is not being executed.");
 
-            if (executingMode != GameExecutionMode.Manual)
-                throw new GameExecutionException($"Cannot update a game when execution mode is {(executingMode != null ? executingMode : "null")}.");
+            var result = game.Update(input);
 
-            game.Update(input);
+            if (!result.Completed)
+                return result;
+
+            if (wasCancelled)
+            {
+                Reset();
+                return new(true);
+            }
 
             if (game.State != GameState.Finished)
-                return;
+                return result;
 
-            switch (game.Configuration.ExitMode)
+            switch (game.Configuration.FinishMode)
             {
-                case ExitMode.ExitApplication:
+                case FinishModes.Finish:
+
                     Reset();
-                    break;
-                case ExitMode.ReturnToTitleScreen:
-                    if (!wasCancelled)
-                        ExecuteManual(creator);
-                    break;
+                    return new(true);
+
+                case FinishModes.ReturnToTitleScreen:
+
+                    Begin();
+                    return new(true);
+
                 default:
-                    throw new NotImplementedException();
+
+                    return new(false, $"No implementation for {game.Configuration.FinishMode}.");
             }
-        }
-
-        /// <summary>
-        /// Execute a game in auto mode.
-        /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
-        private static void ExecuteAuto(GameCreationCallback creator)
-        {
-            var run = true;
-
-            while (run)
-            {
-                game = creator.Invoke();
-                game.Start();
-
-                while (game.State != GameState.Finished)
-                {
-                    var input = GetInput();
-                    game.Update(input);
-                }
-
-                if (game.State != GameState.Finished)
-                    continue;
-
-                run = game.Configuration.ExitMode switch
-                {
-                    ExitMode.ExitApplication => false,
-                    ExitMode.ReturnToTitleScreen => !wasCancelled,
-                    _ => throw new NotImplementedException(),
-                };
-            }
-
-            Reset();
-        }
-
-        /// <summary>
-        /// Execute a game in manual mode.
-        /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
-        private static void ExecuteManual(GameCreationCallback creator)
-        {
-            game = creator.Invoke();
-            game.Start();
         }
 
         /// <summary>
         /// Execute a game.
         /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
-        /// <param name="mode">The mode to execute the game in.</param>
-        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Automatic) 
+        /// <param name="creator">The GameCreator used to create instances of the game.</param>
+        /// <param name="controller">An optional controller to manage game automation.</param>
+        public static void Execute(GameCreator creator, IGameExecutionAutomationController controller = null) 
         {
-            if (game != null)
-                throw new GameExecutionException("Cannot execute a game when one is already being executed.");
+            CancelExecution();
+            Reset();
 
-            wasCancelled = false;
             GameExecutor.creator = creator;
-            executingMode = mode;
+            GameExecutor.controller = controller;
 
-            switch (mode)
-            {
-                case GameExecutionMode.Manual:
-                    ExecuteManual(creator);
-                    break;
-                case GameExecutionMode.Automatic:
-                    ExecuteAuto(creator);
-                    break;
-                case GameExecutionMode.BackgroundAutomatic:
-                    Task.Run(() => ExecuteAuto(creator));
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+            Begin();
+        }
+
+        /// <summary>
+        /// Restart an executing game.
+        /// </summary>
+        public static void Restart()
+        {
+            CancelExecution();
+            Begin();
+        }
+
+        /// <summary>
+        /// Begin execution of the game.
+        /// </summary>
+        private static void Begin()
+        {
+            wasCancelled = false;
+
+            if (creator == null)
+                return;
+
+            game = creator.Invoke();
+            Update();
+
+            if (controller != null)
+                controller.BeginAsync(game).Wait();
         }
 
         /// <summary>
         /// Cancel execution of any executing game.
         /// </summary>
-        public static void Cancel()
+        public static void CancelExecution()
         {
             wasCancelled = true;
             game?.End();
-            Reset();
+            controller?.CancelAsync();
         }
 
         /// <summary>
@@ -183,7 +128,7 @@ namespace NetAF.Logic
         {
             game = null;
             creator = null;
-            executingMode = null;
+            controller = null;
         }
 
         #endregion

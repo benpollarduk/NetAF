@@ -1,4 +1,6 @@
-﻿namespace NetAF.Commands.Global
+﻿using NetAF.Logic;
+
+namespace NetAF.Commands.Global
 {
     /// <summary>
     /// Represents the New command.
@@ -26,7 +28,8 @@
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.End();
+            GameExecutor.Restart();
+
             return new(ReactionResult.Silent, "New game.");
         }
 

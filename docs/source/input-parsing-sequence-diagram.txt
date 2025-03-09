@@ -1,14 +1,16 @@
 title Input Parsing
 
+participant Target
+participant GameExecutor
 participant Game
-participant IOAdapter
 participant Interpreter
 participant Command
 participant GameMode
 participant FrameBuilder
+participant IOAdapter
 
-Game->IOAdapter: GetInput
-IOAdapter->Game: Input
+Target->GameExecutor: Update
+GameExecutor->Game: Update
 Game->Interpreter: Interpret
 Interpreter->Command: Create
 Command->Interpreter: Command
