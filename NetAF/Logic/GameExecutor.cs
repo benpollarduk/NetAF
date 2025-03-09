@@ -1,6 +1,7 @@
 ﻿using NetAF.Logic.Callbacks;
 using NetAF.Logic.Modes;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace NetAF.Logic
@@ -15,7 +16,6 @@ namespace NetAF.Logic
         private static Game game;
         private static GameCreationCallback creator;
         private static bool wasCancelled = false;
-        private static GameExecutionMode? executingMode;
 
         #endregion
 
@@ -29,6 +29,18 @@ namespace NetAF.Logic
         #endregion
 
         #region StaticMethods
+
+        private static void Old()
+        {
+            while (game.State != GameState.Finished)
+            {
+                var input = GetInput();
+                var result = game.Update(input);
+
+                if (!result.Completed)
+                    break;
+            }
+        }
 
         /// <summary>
         /// Get input from the user.
@@ -72,9 +84,6 @@ namespace NetAF.Logic
             if (game == null)
                 return new(false, "Cannot update a game when one is not being executed.");
 
-            if (executingMode != GameExecutionMode.Step)
-                return new(false, $"Cannot update a game when execution mode is {(executingMode != null ? executingMode : "null")}.");
-
             var result = game.Update(input);
 
             if (!result.Completed)
@@ -93,7 +102,7 @@ namespace NetAF.Logic
                 case ExitMode.ReturnToTitleScreen:
 
                     if (!wasCancelled)
-                        ExecuteManual(creator);
+                        Begin(creator);
                     else
                         Reset();
 
@@ -106,92 +115,29 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Execute a game in auto mode.
-        /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
-        private static void ExecuteAuto(GameCreationCallback creator)
-        {
-            var run = true;
-
-            while (run)
-            {
-                game = creator.Invoke();
-                var result = game.Update();
-
-                if (!result.Completed)
-                    break;
-
-                while (game.State != GameState.Finished)
-                {
-                    var input = GetInput();
-                    result = game.Update(input);
-
-                    if (!result.Completed)
-                        break;
-                }
-
-                if (game.State != GameState.Finished)
-                    continue;
-
-                if (wasCancelled)
-                    break;
-
-                run = game.Configuration.ExitMode switch
-                {
-                    ExitMode.ExitApplication => false,
-                    ExitMode.ReturnToTitleScreen => !wasCancelled,
-                    _ => throw new NotImplementedException(),
-                };
-            }
-
-            Reset();
-        }
-
-        /// <summary>
-        /// Execute a game in manual mode.
-        /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
-        private static void ExecuteManual(GameCreationCallback creator)
-        {
-            game = creator.Invoke();
-            Update();
-        }
-
-        /// <summary>
         /// Execute a game.
         /// </summary>
         /// <param name="creator">The GameCreationCallback used to create instances of the game. If a game is already being executed a GameExecutionException will be thrown.</param>
-        /// <param name="mode">The mode to execute the game in.</param>
         /// <exception cref="GameExecutionException"/>
-        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Auto) 
+        public static void Execute(GameCreationCallback creator) 
         {
             if (game != null)
                 throw new GameExecutionException("Cannot execute a game when one is already being executed.");
 
             wasCancelled = false;
             GameExecutor.creator = creator;
-            executingMode = mode;
 
-            switch (mode)
-            {
-                case GameExecutionMode.Step:
+            Begin(creator);
+        }
 
-                    ExecuteManual(creator);
-                    break;
-
-                case GameExecutionMode.Auto:
-
-                    ExecuteAuto(creator);
-                    break;
-
-                case GameExecutionMode.AutoAsync:
-
-                    Task.Run(() => ExecuteAuto(creator));
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
+        /// <summary>
+        /// Begin execution of the game.
+        /// </summary>
+        /// <param name="creator">The GameCreationCallback used to create instances of the game. If a game is already being executed a GameExecutionException will be thrown.</param>
+        private static void Begin(GameCreationCallback creator)
+        {
+            game = creator.Invoke();
+            Update();
         }
 
         /// <summary>
@@ -210,7 +156,6 @@ namespace NetAF.Logic
         {
             game = null;
             creator = null;
-            executingMode = null;
         }
 
         #endregion

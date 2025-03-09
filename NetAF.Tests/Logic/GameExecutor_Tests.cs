@@ -13,7 +13,7 @@ namespace NetAF.Tests.Logic
     public class GameExecutor_Tests
     {
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndCompletionConditionReached_WhenExecuteStep_ThenNoExceptionThrown()
+        public void GivenSimpleGameWithMockConsoleAccessAndCompletionConditionReached_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -24,12 +24,12 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(_ => new EndCheckResult(true, string.Empty, string.Empty), GameEndConditions.NotEnded), TestGameConfiguration.Default);
 
-                GameExecutor.Execute(game, GameExecutionMode.Step);
+                GameExecutor.Execute(game);
             });
         }
 
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccessAndGameOverConditionReached_WhenExecuteStep_ThenNoExceptionThrown()
+        public void GivenSimpleGameWithMockConsoleAccessAndGameOverConditionReached_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -40,12 +40,12 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(GameEndConditions.NotEnded, _ => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default);
 
-                GameExecutor.Execute(game, GameExecutionMode.Step);
+                GameExecutor.Execute(game);
             });
         }
 
         [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccess_WhenExecuteStep_ThenNoExceptionThrown()
+        public void GivenSimpleGameWithMockConsoleAccess_WhenExecute_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -58,43 +58,7 @@ namespace NetAF.Tests.Logic
                 EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
 
-                GameExecutor.Execute(game, GameExecutionMode.Step);
-            });
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccess_WhenExecuteAuto_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                GameExecutor.CancelExecution();
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var startTime = Environment.TickCount;
-                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
-
-                GameExecutor.Execute(game, GameExecutionMode.Auto);
-            });
-        }
-
-        [TestMethod]
-        public void GivenSimpleGameWithMockConsoleAccess_WhenExecuteAutoAsync_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                GameExecutor.CancelExecution();
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new("Room", string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var startTime = Environment.TickCount;
-                EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
-
-                GameExecutor.Execute(game, GameExecutionMode.AutoAsync);
+                GameExecutor.Execute(game);
             });
         }
 
@@ -112,31 +76,13 @@ namespace NetAF.Tests.Logic
                 EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
 
-                GameExecutor.Execute(game, GameExecutionMode.Step);
-                GameExecutor.Execute(game, GameExecutionMode.Step);
+                GameExecutor.Execute(game);
+                GameExecutor.Execute(game);
             });
         }
 
         [TestMethod]
-        public void GivenAutoExecution_WhenUpdate_ThenCompletedFalse()
-        {
-            GameExecutor.CancelExecution();
-            RegionMaker regionMaker = new(string.Empty, string.Empty);
-            Room room = new("Room", string.Empty);
-            regionMaker[0, 0, 0] = room;
-            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var startTime = Environment.TickCount;
-            EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ReturnToTitleScreen));
-
-            Task.Run(() => GameExecutor.Execute(game, GameExecutionMode.Auto));
-            var result = GameExecutor.Update();
-
-            Assert.IsFalse(result.Completed);
-        }
-
-        [TestMethod]
-        public void GivenStepExecution_WhenUpdate_ThenCompletedTrue()
+        public void GivenGame_WhenUpdate_ThenCompletedTrue()
         {
             GameExecutor.CancelExecution();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
@@ -147,7 +93,7 @@ namespace NetAF.Tests.Logic
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
 
-            GameExecutor.Execute(game, GameExecutionMode.Step);
+            GameExecutor.Execute(game);
             var result = GameExecutor.Update();
 
             Assert.IsTrue(result.Completed);
@@ -165,7 +111,7 @@ namespace NetAF.Tests.Logic
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), ExitMode.ExitApplication));
 
-            GameExecutor.Execute(game, GameExecutionMode.Step);
+            GameExecutor.Execute(game);
 
             Assert.IsTrue(GameExecutor.IsExecuting);
         }

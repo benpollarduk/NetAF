@@ -23,6 +23,24 @@ namespace NetAF.Targets.Console
             return System.Console.ReadKey().KeyChar == key;
         }
 
+        /// <summary>
+        /// Wait for acknowledgment.
+        /// </summary>
+        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
+        public static bool WaitForAcknowledge()
+        {
+            return WaitForKeyPress(StringUtilities.CR);
+        }
+
+        /// <summary>
+        /// Wait for input.
+        /// </summary>
+        /// <returns>The input.</returns>
+        public static string WaitForInput()
+        {
+            return System.Console.In.ReadLine();
+        }
+
         #endregion
 
         #region Fields
@@ -59,24 +77,6 @@ namespace NetAF.Targets.Console
                 System.Console.CursorVisible = consoleFrame.ShowCursor;
                 System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
             }
-        }
-
-        /// <summary>
-        /// Wait for acknowledgment.
-        /// </summary>
-        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
-        public bool WaitForAcknowledge()
-        {
-            return WaitForKeyPress(StringUtilities.CR);
-        }
-
-        /// <summary>
-        /// Wait for input.
-        /// </summary>
-        /// <returns>The input.</returns>
-        public string WaitForInput()
-        {
-            return System.Console.In.ReadLine();
         }
 
         #endregion
