@@ -25,6 +25,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Logic\Configuration\**" />
+    <EmbeddedResource Remove="Logic\Configuration\**" />
+    <None Remove="Logic\Configuration\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>NetAF.Tests</_Parameter1>
     </AssemblyAttribute>
@@ -43,10 +49,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Logic\Configuration\" />
   </ItemGroup>
 
 </Project>

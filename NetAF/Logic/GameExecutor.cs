@@ -1,6 +1,4 @@
 ﻿using NetAF.Logic.Callbacks;
-using NetAF.Logic.Modes;
-using System;
 
 namespace NetAF.Logic
 {
@@ -14,6 +12,7 @@ namespace NetAF.Logic
         private static Game game;
         private static GameCreationCallback creator;
         private static bool wasCancelled = false;
+        private static IGameExecutionAutomationController controller;
 
         #endregion
 
@@ -22,55 +21,11 @@ namespace NetAF.Logic
         /// <summary>
         /// Get if a game is currently executing.
         /// </summary>
-        public static bool IsExecuting => game != null;
+        public static bool IsExecuting => game != null && !wasCancelled;
 
         #endregion
 
         #region StaticMethods
-
-        private static void Old()
-        {
-            while (game.State != GameState.Finished)
-            {
-                var input = GetInput();
-                var result = game.Update(input);
-
-                if (!result.Completed)
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Get input from the user.
-        /// </summary>
-        /// <returns>The user input.</returns>
-        private static string GetInput()
-        {
-            // input is handled based on the current modes type
-            switch (game.Mode.Type)
-            {
-                case GameModeType.Information:
-
-                    // wait for acknowledge
-                    while (!game.Configuration.Adapter.WaitForAcknowledge())
-                    {
-                        // something other was entered, render again
-                        game.Mode.Render(game);
-                    }
-
-                    // acknowledge complete
-                    return string.Empty;
-
-                case GameModeType.Interactive:
-
-                    // get and return user input
-                    return game.Configuration.Adapter.WaitForInput();
-
-                default:
-
-                    throw new NotImplementedException($"No handling for case {game.Mode.Type}.");
-            }
-        }
 
         /// <summary>
         /// Update to the next frame of the game.
@@ -86,56 +41,74 @@ namespace NetAF.Logic
 
             if (!result.Completed)
                 return result;
-            
+
+            if (wasCancelled)
+            {
+                Reset();
+                return new(true);
+            }
+
             if (game.State != GameState.Finished)
                 return result;
 
-            switch (game.Configuration.ExitMode)
+            switch (game.Configuration.FinishMode)
             {
-                case ExitMode.ExitApplication:
+                case FinishModes.Finish:
 
                     Reset();
                     return new(true);
 
-                case ExitMode.ReturnToTitleScreen:
+                case FinishModes.ReturnToTitleScreen:
 
-                    if (!wasCancelled)
-                        Begin(creator);
-                    else
-                        Reset();
-
+                    Begin();
                     return new(true);
 
                 default:
 
-                    return new(false, $"No implementation for {game.Configuration.ExitMode}.");
+                    return new(false, $"No implementation for {game.Configuration.FinishMode}.");
             }
         }
 
         /// <summary>
         /// Execute a game.
         /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game. If a game is already being executed a GameExecutionException will be thrown.</param>
-        /// <exception cref="GameExecutionException"/>
-        public static void Execute(GameCreationCallback creator) 
+        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
+        /// <param name="controller">An optional controller to manage game automation.</param>
+        public static void Execute(GameCreationCallback creator, IGameExecutionAutomationController controller = null) 
         {
-            if (game != null)
-                throw new GameExecutionException("Cannot execute a game when one is already being executed.");
+            CancelExecution();
+            Reset();
 
-            wasCancelled = false;
             GameExecutor.creator = creator;
+            GameExecutor.controller = controller;
 
-            Begin(creator);
+            Begin();
+        }
+
+        /// <summary>
+        /// Restart an executing game.
+        /// </summary>
+        public static void Restart()
+        {
+            CancelExecution();
+            Begin();
         }
 
         /// <summary>
         /// Begin execution of the game.
         /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game. If a game is already being executed a GameExecutionException will be thrown.</param>
-        private static void Begin(GameCreationCallback creator)
+        private static void Begin()
         {
+            wasCancelled = false;
+
+            if (creator == null)
+                return;
+
             game = creator.Invoke();
             Update();
+
+            if (controller != null)
+                controller.Begin(game);
         }
 
         /// <summary>
@@ -145,6 +118,7 @@ namespace NetAF.Logic
         {
             wasCancelled = true;
             game?.End();
+            controller?.Cancel();
         }
 
         /// <summary>
@@ -154,6 +128,7 @@ namespace NetAF.Logic
         {
             game = null;
             creator = null;
+            controller = null;
         }
 
         #endregion

@@ -10,8 +10,8 @@ namespace NetAF.Logic
     /// <param name="adapter">The I/O adapter.</param>
     /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
     /// <param name="displaySize">The display size.</param>
-    /// <param name="exitMode">The exit mode.</param>
-    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, ExitMode exitMode = ExitMode.ReturnToTitleScreen)
+    /// <param name="finishMode">The finish mode.</param>
+    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
     {
         #region Properties
 
@@ -21,9 +21,9 @@ namespace NetAF.Logic
         public Size DisplaySize { get; private set; } = displaySize;
 
         /// <summary>
-        /// Get the exit mode.
+        /// Get the finish mode.
         /// </summary>
-        public ExitMode ExitMode { get; private set; } = exitMode;
+        public FinishModes FinishMode { get; private set; } = finishMode;
 
         /// <summary>
         /// Get or set the interpreter used for interpreting input.

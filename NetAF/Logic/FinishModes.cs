@@ -1,14 +1,14 @@
 ﻿namespace NetAF.Logic
 {
     /// <summary>
-    /// Enumeration of exit modes.
+    /// Enumeration of game finish modes.
     /// </summary>
-    public enum ExitMode
+    public enum FinishModes
     {
         /// <summary>
-        /// Exit the application.
+        /// Finish.
         /// </summary>
-        ExitApplication = 0,
+        Finish = 0,
         /// <summary>
         /// Return to the title screen.
         /// </summary>
