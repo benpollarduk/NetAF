@@ -94,9 +94,6 @@ namespace NetAF.Tests.Logic
             // update until finished
             GameExecutor.Update();
             GameExecutor.Update();
-            GameExecutor.Update();
-            GameExecutor.Update();
-            GameExecutor.Update();
 
             var result = GameExecutor.Update();
 
@@ -119,8 +116,6 @@ namespace NetAF.Tests.Logic
             GameExecutor.Update();
             GameExecutor.Update();
             GameExecutor.Update();
-            GameExecutor.Update();
-            GameExecutor.Update();
 
             var result = GameExecutor.Update();
 
@@ -128,7 +123,7 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
-        public void GivenCanceled_WhenUpdate_ThenCompletedTrue()
+        public void GivenCanceled_WhenUpdate_ThenCompletedFalse()
         {
             GameExecutor.CancelExecution();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
@@ -142,7 +137,7 @@ namespace NetAF.Tests.Logic
             GameExecutor.CancelExecution();
             var result = GameExecutor.Update();
 
-            Assert.IsTrue(result.Completed);
+            Assert.IsFalse(result.Completed);
         }
 
         [TestMethod]
