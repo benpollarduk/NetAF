@@ -144,17 +144,17 @@ namespace NetAF.Targets.Console
         #region Implementation of IGameExecutionAutomationController
 
         /// <summary>
-        /// Begin execution of a game.
+        /// Begin execution of a game, asynchronously.
         /// </summary>
-        /// <param name="game">The game.</param>
-        public void Begin(Game game)
+        /// <returns>The task.</returns>
+        public async Task BeginAsync(Game game)
         {
             tokenSource?.Dispose();
             tokenSource = new CancellationTokenSource();
 
             while (game.State != GameState.Finished && !tokenSource.Token.IsCancellationRequested)
             {
-                var input = GetInputAsync(game, tokenSource.Token).Result;
+                var input = await GetInputAsync(game, tokenSource.Token);
                 var result = GameExecutor.Update(input);
 
                 if (!result.Completed)
@@ -163,11 +163,12 @@ namespace NetAF.Targets.Console
         }
 
         /// <summary>
-        /// Cancel execution.
+        /// Cancel execution, asynchronously.
         /// </summary>
-        public void Cancel()
+        /// <returns>The task.</returns>
+        public async Task CancelAsync()
         {
-            tokenSource.Cancel();
+            await tokenSource.CancelAsync();
         }
 
         #endregion

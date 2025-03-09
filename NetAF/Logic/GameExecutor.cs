@@ -108,7 +108,7 @@ namespace NetAF.Logic
             Update();
 
             if (controller != null)
-                controller.Begin(game);
+                controller.BeginAsync(game).Wait();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace NetAF.Logic
         {
             wasCancelled = true;
             game?.End();
-            controller?.Cancel();
+            controller?.CancelAsync();
         }
 
         /// <summary>

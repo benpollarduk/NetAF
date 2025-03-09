@@ -4,8 +4,6 @@ using NetAF.Logic;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Console;
-using System.Threading;
-using System.Reflection;
 
 namespace NetAF.Tests.Logic
 {
@@ -26,9 +24,8 @@ namespace NetAF.Tests.Logic
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player1), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Update();
 
-                controller.Begin(game);
-
-                controller.Cancel();
+                _ = controller.BeginAsync(game);
+                controller.CancelAsync().Wait();
             });
         }
     }
