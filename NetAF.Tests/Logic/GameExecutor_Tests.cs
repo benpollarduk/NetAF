@@ -164,5 +164,34 @@ namespace NetAF.Tests.Logic
 
             Assert.IsFalse(GameExecutor.IsExecuting);
         }
+
+        [TestMethod]
+        public void GivenNoGame_WhenCancel_ThenCompletedFalse()
+        {
+            GameExecutor.CancelExecution();
+            var result = GameExecutor.Update();
+
+            Assert.IsFalse(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenExecutingGame_WhenCancelledThroughInput_ThenCompletedTrue()
+        {
+            GameExecutor.CancelExecution();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var startTime = Environment.TickCount;
+            EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            GameExecutor.Execute(game);
+            // enter game, otherwise would be on title screen
+            GameExecutor.Update();
+
+            var result = GameExecutor.Update(NetAF.Commands.Global.Exit.CommandHelp.Command);
+
+            Assert.IsTrue(result.Completed);
+        }
     }
 }

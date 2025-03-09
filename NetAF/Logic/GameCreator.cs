@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the call used for Game creation.
     /// </summary>
-    public class GameCreator
+    public sealed class GameCreator
     {
         #region Fields
 
