@@ -57,6 +57,7 @@ namespace NetAF.Logic
                     return game.Configuration.Adapter.WaitForInput();
 
                 default:
+
                     throw new NotImplementedException($"No handling for case {game.Mode.Type}.");
             }
         }
@@ -65,31 +66,42 @@ namespace NetAF.Logic
         /// Update to the next frame of the game.
         /// </summary>
         /// <param name="input">Any input that should be passed to the game.</param>
-        /// <exception cref="GameExecutionException"/>
-        public static void Update(string input = "")
+        /// <returns>The result of the action.</returns>
+        public static UpdateResult Update(string input = "")
         {
             if (game == null)
-                throw new GameExecutionException("Cannot update a game when one is not being executed.");
+                return new(false, "Cannot update a game when one is not being executed.");
 
-            if (executingMode != GameExecutionMode.Manual)
-                throw new GameExecutionException($"Cannot update a game when execution mode is {(executingMode != null ? executingMode : "null")}.");
+            if (executingMode != GameExecutionMode.Step)
+                return new(false, $"Cannot update a game when execution mode is {(executingMode != null ? executingMode : "null")}.");
 
-            game.Update(input);
+            var result = game.Update(input);
 
+            if (!result.Completed)
+                return result;
+            
             if (game.State != GameState.Finished)
-                return;
+                return result;
 
             switch (game.Configuration.ExitMode)
             {
                 case ExitMode.ExitApplication:
+
                     Reset();
-                    break;
+                    return new(true);
+
                 case ExitMode.ReturnToTitleScreen:
+
                     if (!wasCancelled)
                         ExecuteManual(creator);
-                    break;
+                    else
+                        Reset();
+
+                    return new(true);
+
                 default:
-                    throw new NotImplementedException();
+
+                    return new(false, $"No implementation for {game.Configuration.ExitMode}.");
             }
         }
 
@@ -104,16 +116,25 @@ namespace NetAF.Logic
             while (run)
             {
                 game = creator.Invoke();
-                game.Start();
+                var result = game.Update();
+
+                if (!result.Completed)
+                    break;
 
                 while (game.State != GameState.Finished)
                 {
                     var input = GetInput();
-                    game.Update(input);
+                    result = game.Update(input);
+
+                    if (!result.Completed)
+                        break;
                 }
 
                 if (game.State != GameState.Finished)
                     continue;
+
+                if (wasCancelled)
+                    break;
 
                 run = game.Configuration.ExitMode switch
                 {
@@ -133,15 +154,16 @@ namespace NetAF.Logic
         private static void ExecuteManual(GameCreationCallback creator)
         {
             game = creator.Invoke();
-            game.Start();
+            Update();
         }
 
         /// <summary>
         /// Execute a game.
         /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
+        /// <param name="creator">The GameCreationCallback used to create instances of the game. If a game is already being executed a GameExecutionException will be thrown.</param>
         /// <param name="mode">The mode to execute the game in.</param>
-        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Automatic) 
+        /// <exception cref="GameExecutionException"/>
+        public static void Execute(GameCreationCallback creator, GameExecutionMode mode = GameExecutionMode.Auto) 
         {
             if (game != null)
                 throw new GameExecutionException("Cannot execute a game when one is already being executed.");
@@ -152,15 +174,21 @@ namespace NetAF.Logic
 
             switch (mode)
             {
-                case GameExecutionMode.Manual:
+                case GameExecutionMode.Step:
+
                     ExecuteManual(creator);
                     break;
-                case GameExecutionMode.Automatic:
+
+                case GameExecutionMode.Auto:
+
                     ExecuteAuto(creator);
                     break;
-                case GameExecutionMode.BackgroundAutomatic:
+
+                case GameExecutionMode.AutoAsync:
+
                     Task.Run(() => ExecuteAuto(creator));
                     break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -169,11 +197,10 @@ namespace NetAF.Logic
         /// <summary>
         /// Cancel execution of any executing game.
         /// </summary>
-        public static void Cancel()
+        public static void CancelExecution()
         {
             wasCancelled = true;
             game?.End();
-            Reset();
         }
 
         /// <summary>

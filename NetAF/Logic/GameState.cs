@@ -3,7 +3,7 @@
     /// <summary>
     /// Enumeration of game states.
     /// </summary>
-    public enum GameState
+    internal enum GameState
     {
         /// <summary>
         /// Not started.

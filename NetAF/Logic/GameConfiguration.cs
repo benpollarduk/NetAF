@@ -2,7 +2,7 @@
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
 
-namespace NetAF.Logic.Configuration
+namespace NetAF.Logic
 {
     /// <summary>
     /// Represents a configuration for a console game.
@@ -11,9 +11,9 @@ namespace NetAF.Logic.Configuration
     /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
     /// <param name="displaySize">The display size.</param>
     /// <param name="exitMode">The exit mode.</param>
-    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, ExitMode exitMode = ExitMode.ReturnToTitleScreen) : IGameConfiguration
+    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, ExitMode exitMode = ExitMode.ReturnToTitleScreen)
     {
-        #region Implementation of IGameConfiguration
+        #region Properties
 
         /// <summary>
         /// Get the display size.

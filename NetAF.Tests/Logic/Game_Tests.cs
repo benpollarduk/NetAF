@@ -8,7 +8,6 @@ using NetAF.Logic.Modes;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Targets.Console;
-using NetAF.Logic.Configuration;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Tests.Logic

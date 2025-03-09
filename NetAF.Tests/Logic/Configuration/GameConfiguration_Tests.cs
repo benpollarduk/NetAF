@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic.Configuration;
+using NetAF.Logic;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console;
 using System.Diagnostics;

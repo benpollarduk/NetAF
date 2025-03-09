@@ -13,7 +13,6 @@ using NetAF.Examples.Assets.Regions.Zelda;
 using NetAF.Examples.Assets.Regions.Zelda.Rooms;
 using NetAF.Extensions;
 using NetAF.Logic;
-using NetAF.Logic.Configuration;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console;
 
