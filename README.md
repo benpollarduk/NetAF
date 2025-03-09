@@ -167,7 +167,7 @@ RegionMaker regionMaker = new("Mountain", "An imposing volcano just East of town
 // create overworld maker. the overworld maker simplifies creating in game overworlds. an overworld contains a series or regions
 OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
 
-// create the callback for generating new instances of the game
+// create the class used for for generating new instances of the game
 // - information about the game
 // - an introduction to the game, displayed at the star
 // - asset generation for the overworld and the player
@@ -180,8 +180,8 @@ var gameCreator = Game.Create(
     GameEndConditions.NoEnd,
     new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
-// begin the execution of the game
-GameExecutor.Execute(gameCreator);
+// begin the execution of the game using a ConsoleExecutionController to handle the console side of the games execution
+GameExecutor.Execute(gameCreator, new ConsoleExecutionController());
 ```
 
 ### Tutorial

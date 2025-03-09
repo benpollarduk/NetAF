@@ -130,7 +130,7 @@ private static EndCheckResult IsGameOver(Game game)
 ### Creating the game
 The game now has all the required assets and logic it just needs some boilerplate to tie everything together before it is ready to play.
 
-A **GameCreationCallback** is required to instantiate an instance of a **Game**. This is so that new instances of the **Game** can be created as required.
+A **GameCreator** is required to instantiate an instance of a **Game**. This is so that new instances of the **Game** can be created as and when required.
 
 ```csharp
 var gameCreator = Game.Create(
@@ -149,10 +149,16 @@ This requires some breaking down. The **Game** class has a **Create** method tha
 * **GameConfiguration** - a configuration for the game, including display size, error prefix and other elements.
 
 ### Executing the game
-The game is executed simply by calling the static **Execute** method on **GameExecutor** and passing in the game creation callback.
+The game is executed simply by calling the static **Execute** method on **GameExecutor** and passing in the game creator. Because this game is running on the console the **ConsoleExecutionController** class can be used to handle the quirks of executing the game on the console. In most cases no execution controller is required.
 
 ```csharp
-GameExecutor.Execute(gameCreator);
+GameExecutor.Execute(gameCreator, new ConsoleExecutionController());
+```
+
+If the game was executing on a differen target, for example in a WPF application or a Blazor web app all that is required to update the game is to call **GameExecutor.Update** with any input that should be passed to the game.
+
+```csharp
+GameExecutor.Update("Input to the game can be passed in like this.");
 ```
 
 ### Bringing it all together
@@ -216,7 +222,7 @@ namespace NetAF.GettingStarted
                 new GameEndConditions(IsGameComplete, IsGameOver),
                 new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
 
-            GameExecutor.Execute(gameCreator);
+            GameExecutor.Execute(gameCreator, new ConsoleExecutionController());
         }
     }
 }
