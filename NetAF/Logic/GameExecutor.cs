@@ -10,7 +10,7 @@ namespace NetAF.Logic
         #region StaticFields
 
         private static Game game;
-        private static GameCreationCallback creator;
+        private static GameCreator creator;
         private static bool wasCancelled = false;
         private static IGameExecutionAutomationController controller;
 
@@ -72,9 +72,9 @@ namespace NetAF.Logic
         /// <summary>
         /// Execute a game.
         /// </summary>
-        /// <param name="creator">The GameCreationCallback used to create instances of the game.</param>
+        /// <param name="creator">The GameCreator used to create instances of the game.</param>
         /// <param name="controller">An optional controller to manage game automation.</param>
-        public static void Execute(GameCreationCallback creator, IGameExecutionAutomationController controller = null) 
+        public static void Execute(GameCreator creator, IGameExecutionAutomationController controller = null) 
         {
             CancelExecution();
             Reset();

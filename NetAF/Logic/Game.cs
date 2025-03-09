@@ -434,15 +434,15 @@ namespace NetAF.Logic
         /// <param name="conditions">The game conditions.</param>
         /// <param name="configuration">The configuration for the game.</param>
         /// <param name="setup">A setup function to run on the created game after it has been created.</param>
-        /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
+        /// <returns>A GameCreator that will create instances of the game.</returns>
+        public static GameCreator Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
         {
-            return () =>
+            return new(() =>
             {
                 var game = new Game(info, introduction, assetGenerator.GetPlayer(), assetGenerator.GetOverworld(), conditions, configuration);
                 setup?.Invoke(game);
                 return game;
-            };
+            });
         }
 
         #endregion
