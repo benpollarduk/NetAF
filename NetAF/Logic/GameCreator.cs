@@ -1,4 +1,6 @@
-﻿namespace NetAF.Logic.Callbacks
+﻿using NetAF.Logic.Callbacks;
+
+namespace NetAF.Logic
 {
     /// <summary>
     /// Represents the call used for Game creation.

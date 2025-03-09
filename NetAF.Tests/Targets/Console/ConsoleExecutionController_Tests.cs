@@ -5,7 +5,7 @@ using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Console;
 
-namespace NetAF.Tests.Logic
+namespace NetAF.Tests.Targets.Console
 {
     [TestClass]
     public class ConsoleExecutionController_Tests

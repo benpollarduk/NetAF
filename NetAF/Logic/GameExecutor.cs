@@ -1,6 +1,4 @@
-﻿using NetAF.Logic.Callbacks;
-
-namespace NetAF.Logic
+﻿namespace NetAF.Logic
 {
     /// <summary>
     /// Handles the execution of a Game.
