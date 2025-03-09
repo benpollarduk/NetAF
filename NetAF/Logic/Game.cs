@@ -10,7 +10,6 @@ using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logic.Arrangement;
 using NetAF.Logic.Callbacks;
-using NetAF.Logic.Configuration;
 using NetAF.Logic.Modes;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -55,7 +54,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the configuration.
         /// </summary>
-        public IGameConfiguration Configuration { get; private set; }
+        public GameConfiguration Configuration { get; private set; }
 
         /// <summary>
         /// Get the end conditions.
@@ -90,7 +89,7 @@ namespace NetAF.Logic
         /// <param name="overworld">The games overworld.</param>
         /// <param name="endConditions">The games end conditions.</param>
         /// <param name="configuration">The configuration to use for this game.</param>
-        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, IGameConfiguration configuration)
+        private Game(GameInfo info, string introduction, PlayableCharacter player, Overworld overworld, GameEndConditions endConditions, GameConfiguration configuration)
         {
             Info = info;
             Introduction = introduction;
@@ -124,79 +123,75 @@ namespace NetAF.Logic
         }
 
         /// <summary>
-        /// Start the game. If the game is already running a GameExecutionException will be thrown.
-        /// </summary>
-        /// <exception cref="GameExecutionException"/>
-        internal void Start()
-        {
-            // if the game is in an active state don't re-execute
-            switch (State)
-            {
-                case GameState.Active:
-                case GameState.Finishing:
-                    throw new GameExecutionException($"Cannot start the game when state is {State}.");
-            }
-
-            // game is active
-            State = GameState.Active;
-
-            // reset end mode
-            endMode = null;
-
-            // setup the adapter for this game
-            Configuration.Adapter.Setup(this);
-
-            // change mode to show the title screen
-            ChangeMode(new TitleMode());
-
-            // render
-            Mode.Render(this);
-        }
-
-        /// <summary>
-        /// Update to the next frame of the game. If the game is not running or has finished then a GameExecutionException will be thrown.
+        /// Update to the next frame of the game.
         /// </summary>
         /// <param name="input">Any input that should be passed to the game.</param>
-        /// <exception cref="GameExecutionException"/>
-        internal void Update(string input = "")
+        /// <returns>The result of the action.</returns>
+        internal UpdateResult Update(string input = "")
         {
-            switch (State)
+            try
             {
-                case GameState.Active:
+                switch (State)
+                {
+                    case GameState.NotStarted:
 
-                    // process the input
-                    var reaction = ProcessInput(input);
+                        State = GameState.Active;
+                        endMode = null;
 
-                    // handle the reaction
-                    HandleReaction(reaction);
+                        // setup the adapter for this game
+                        Configuration.Adapter.Setup(this);
 
-                    // check if the game has ended, and if so end
-                    if (CheckForGameEnd(EndConditions, out endMode))
-                        End();
+                        // change mode to show the title screen
+                        ChangeMode(new TitleMode());
 
-                    // render
-                    Mode.Render(this);
+                        Mode.Render(this);
 
-                    break;
-                case GameState.Finishing:
+                        return new(true);
 
-                    // if an end mode specified
-                    if (endMode != null)
-                    {
+                    case GameState.Active:
+
+                        // process the input
+                        var reaction = ProcessInput(input);
+
+                        // handle the reaction
+                        HandleReaction(reaction);
+
+                        // check if the game has ended, and if so end
+                        if (CheckForGameEnd(EndConditions, out endMode))
+                            State = GameState.EndConditionMet;
+
+                        // providing the game hasn't finished render
+                        if (State != GameState.Finished)
+                            Mode.Render(this);
+
+                        return new(true);
+
+                    case GameState.EndConditionMet:
+
                         // set and render the end mode
                         ChangeMode(endMode);
                         Mode.Render(this);
-                        endMode = null;
-                    }
-                    else
-                    {
+
+                        // finishing
+                        State = GameState.Finishing;
+
+                        return new(true);
+
+                    case GameState.Finishing:
+
                         // finished execution
                         State = GameState.Finished;
-                    }
 
-                    break;
-                default:
-                    throw new GameExecutionException($"Cannot move to next when state is {State}.");
+                        return new(true);
+
+                    default:
+
+                        return new(false, $"Cannot move to next when state is {State}.");
+                }
+            }
+            catch (Exception e)
+            {
+                return new(false, $"Exception caught during update: {e.Message}");
             }
         }
 
@@ -337,9 +332,9 @@ namespace NetAF.Logic
         /// <summary>
         /// End the game.
         /// </summary>
-        public void End()
+        internal void End()
         {
-            State = GameState.Finishing;
+            State = GameState.Finished;
         }
 
         /// <summary>
@@ -439,15 +434,15 @@ namespace NetAF.Logic
         /// <param name="conditions">The game conditions.</param>
         /// <param name="configuration">The configuration for the game.</param>
         /// <param name="setup">A setup function to run on the created game after it has been created.</param>
-        /// <returns>A new GameCreationHelper that will create a GameCreator with the parameters specified.</returns>
-        public static GameCreationCallback Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, IGameConfiguration configuration, GameSetupCallback setup = null)
+        /// <returns>A GameCreator that will create instances of the game.</returns>
+        public static GameCreator Create(GameInfo info, string introduction, AssetGenerator assetGenerator, GameEndConditions conditions, GameConfiguration configuration, GameSetupCallback setup = null)
         {
-            return () =>
+            return new(() =>
             {
                 var game = new Game(info, introduction, assetGenerator.GetPlayer(), assetGenerator.GetOverworld(), conditions, configuration);
                 setup?.Invoke(game);
                 return game;
-            };
+            });
         }
 
         #endregion

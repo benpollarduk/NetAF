@@ -3,7 +3,7 @@
     /// <summary>
     /// Enumeration of game states.
     /// </summary>
-    public enum GameState
+    internal enum GameState
     {
         /// <summary>
         /// Not started.
@@ -13,6 +13,10 @@
         /// Active.
         /// </summary>
         Active,
+        /// <summary>
+        /// End condition met.
+        /// </summary>
+        EndConditionMet,
         /// <summary>
         /// Finishing.
         /// </summary>
