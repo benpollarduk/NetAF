@@ -1,8 +1,6 @@
 ﻿using NetAF.Logic.Callbacks;
 using NetAF.Logic.Modes;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace NetAF.Logic
 {

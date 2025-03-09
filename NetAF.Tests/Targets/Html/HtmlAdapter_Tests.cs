@@ -5,7 +5,6 @@ using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Targets.Html;
 using NetAF.Utilities;
-using System.Threading;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;

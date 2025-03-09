@@ -5,7 +5,6 @@ using NetAF.Logic;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using System;
-using System.Threading.Tasks;
 
 namespace NetAF.Tests.Logic
 {
