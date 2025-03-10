@@ -1,10 +1,11 @@
 # Frame Builders
 
 ## Overview
-In NetAF output is handled using the **FrameBuilders**. A FrameBuilder is essentially a class that builds a **Frame** that can render a specific state in the game. This **Frame** can then be rendered on a **TextWriter** by calling its **Render** method. Think of the **FrameBuilder** as the instructions that build the output display and the **Frame** as the output itself.
+In NetAF output is handled using the **FrameBuilders**. A FrameBuilder is essentially a class that builds a **Frame** that can render a specific state in the game. This **Frame** can then be rendered on a target by calling its **Render** method. Think of the **FrameBuilder** as the builder of the output and the **Frame** as the output itself.
 
 There are a few types of **FrameBuilder**, each responsible for rendering a specific game state.
-* **SceneFrameBuilder** is responsible for building frames that render the scenes in a game.
+* **SceneFrameBuilder** is responsible for building frames that render the reactions to input in a game.
+* **ReactionFrameBuilder** is responsible for building frames that render the scenes in a game.
 * **TitleFrameBuilder** is responsible for building the title screen frame.
 * **RegionMapFrameBuilder** is responsible for building a frame that displays a map of a Region.
 * **TransitionFrameBuilder** is responsible for building frames that display transitions.
