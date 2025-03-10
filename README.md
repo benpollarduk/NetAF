@@ -196,7 +196,7 @@ Set the **NetAF.Examples** project as the start up project and then build and ru
 ## Projects
 Below are some projects that use NetAF:
 
-* [Trouble Aboard the SS Hammerhead](https://benpollarduk.github.io/SSHammerhead-docs/) - A text adventure written in NetAF. The source is available [here](https://github.com/benpollarduk/SSHammerhead). Can also be played in the [browser](https://benpollarduk.github.io/SSHammerhead/).
+* [Trouble Aboard the SS Hammerhead](https://benpollarduk.github.io/SSHammerhead-docs/) - A text adventure written in NetAF. The source is available [here](https://github.com/benpollarduk/SSHammerhead). Although not optimised yet, *TASSHH* can be played in the [browser](https://benpollarduk.github.io/SSHammerhead/).
   
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
