@@ -131,7 +131,9 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [];
+            Prompt[] playerPrompts = [.. game?.Player?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
+            Prompt[] roomPrompts = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
+            return [.. playerPrompts, .. roomPrompts];
         }
 
         #endregion
