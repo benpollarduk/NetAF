@@ -7,6 +7,7 @@ using NetAF.Commands;
 using NetAF.Assets;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using System.Text;
 
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
@@ -139,6 +140,34 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 };
 
                 builder.Build(room, ViewPoint.Create(region), player, commands, KeyType.Full, new Size(80, 50));
+            });
+        }
+
+        [TestMethod]
+        public void GivenDescriptionOfRoomThatWillNotFit_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                Size size = new(10, 10);
+                StringBuilder description = new();
+
+                for (var i = 0; i < size.Width * size.Height; i++)
+                    description.Append('A');
+
+                var room = new Room("Test", description.ToString(), [new Exit(Direction.Up), new Exit(Direction.Down), new Exit(Direction.North), new Exit(Direction.East), new Exit(Direction.South), new Exit(Direction.West)]);
+
+                var regionMaker = new RegionMaker(string.Empty, string.Empty)
+                {
+                    [0, 0, 0] = new(string.Empty, string.Empty),
+                };
+
+                var region = regionMaker.Make(1, 1, 0);
+                region.Enter();
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var player = new PlayableCharacter(string.Empty, string.Empty);
+
+                builder.Build(room, ViewPoint.Create(region), player, null, KeyType.Full, size);
             });
         }
     }

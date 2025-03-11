@@ -97,6 +97,7 @@ namespace NetAF.Utilities
         public static string CutLineFromParagraph(ref string paragraph, int maxWidth)
         {
             StringBuilder chunk = new();
+            var originalParagraph = paragraph;
 
             while (chunk.Length < maxWidth)
             {
@@ -104,6 +105,14 @@ namespace NetAF.Utilities
 
                 if (string.IsNullOrEmpty(word))
                     break;
+
+                // maybe the input was one solid line and nothing could be cut out...
+                if (chunk.Length == 0 && word == originalParagraph && originalParagraph.Length >= maxWidth)
+                {
+                    chunk.Append(originalParagraph.AsSpan(0, maxWidth));
+                    paragraph = originalParagraph.Remove(0, maxWidth);
+                    break;
+                }
 
                 if (chunk.Length + word.Length > maxWidth)
                 {

@@ -104,5 +104,71 @@ namespace NetAF.Tests.Commands.Scene
 
             Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
+
+        [TestMethod]
+        public void Given1Item_WhenInvoke_ThenInformWithExpectedDescription()
+        {
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var item = new Item(new Identifier("A"), Description.Empty, true);
+            room.AddItem(item);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new TakeAll();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual("Took A.", result.Description);
+        }
+
+        [TestMethod]
+        public void Given2Items_WhenInvoke_ThenInformWithExpectedDescription()
+        {
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var item = new Item(new Identifier("A"), Description.Empty, true);
+            room.AddItem(item);
+            var item2 = new Item(new Identifier("B"), Description.Empty, true);
+            room.AddItem(item2);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new TakeAll();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual("Took A and B.", result.Description);
+        }
+
+        [TestMethod]
+        public void Given3Items_WhenInvoke_ThenInformWithExpectedDescription()
+        {
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var character = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var item = new Item(new Identifier("A"), Description.Empty, true);
+            room.AddItem(item);
+            var item2 = new Item(new Identifier("B"), Description.Empty, true);
+            room.AddItem(item2);
+            var item3 = new Item(new Identifier("C"), Description.Empty, true);
+            room.AddItem(item3);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new TakeAll();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual("Took A, B and C.", result.Description);
+        }
     }
 }

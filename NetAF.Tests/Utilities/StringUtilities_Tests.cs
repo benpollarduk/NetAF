@@ -202,5 +202,15 @@ namespace NetAF.Tests.Utilities
             Assert.AreEqual("ABC", verb);
             Assert.AreEqual("XYZ", noun);
         }
+
+        [TestMethod]
+        public void GivenStringWithNoSpacesThatExceedsLength_WhenCutLineFromParagraph_TheStringCutAtLength()
+        {
+            var longLine = "ABCEDFGHIJKLMNOPQRSTUVWXYZ";
+            var result = StringUtilities.CutLineFromParagraph(ref longLine, 10);
+
+            Assert.AreEqual("ABCEDFGHIJ", result);
+            Assert.AreEqual("KLMNOPQRSTUVWXYZ", longLine);
+        }
     }
 }

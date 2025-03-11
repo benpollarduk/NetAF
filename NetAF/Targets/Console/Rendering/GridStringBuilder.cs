@@ -50,6 +50,20 @@ namespace NetAF.Targets.Console.Rendering
         #region Methods
 
         /// <summary>
+        /// Get if an x and y location is within the bounds of the DisplaySize.
+        /// </summary>
+        /// <param name="x">The x location.</param>
+        /// <param name="y">The y location.</param>
+        /// <returns>True if within bounds, else false.</returns>
+        private bool IsWithinBounds(int x, int y)
+        {
+            if (x < 0 || x >= DisplaySize.Width || y < 0 || y >= DisplaySize.Height)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Resize this builder.
         /// </summary>
         /// <param name="displaySize">The new size.</param>
@@ -99,6 +113,9 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="color">The color of the character.</param>
         public void SetCell(int x, int y, char character, AnsiColor color)
         {
+            if (!IsWithinBounds(x, y))
+                return;
+
             buffer[x, y] = character;
             colors[x, y] = color;
         }
@@ -158,6 +175,9 @@ namespace NetAF.Targets.Console.Rendering
 
                 if (value.Trim().Length > 0)
                     endY++;
+
+                if (endY >= DisplaySize.Height - 1)
+                    break;
             }
         }
 
