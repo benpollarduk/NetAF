@@ -80,7 +80,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             // display the scene
 
-            gridStringBuilder.DrawWrapped(room.Description.GetDescription().EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
+            var description = room.Description.GetDescription().EnsureFinishedSentence();
+            gridStringBuilder.DrawWrapped(description, leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
 
             var extendedDescription = string.Empty;
 

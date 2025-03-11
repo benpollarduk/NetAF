@@ -400,6 +400,9 @@ namespace NetAF.Logic
             // resolve asset locations
             AssetArranger.Arrange(this, serialization);
 
+            // restore player locations
+            inactivePlayerLocations.Clear();
+
             // restore all inactive player locations
             foreach (var location in serialization.InactivePlayerLocations)
                 inactivePlayerLocations.Add(PlayableCharacterLocation.FromSerialization(location));
@@ -416,9 +419,6 @@ namespace NetAF.Logic
 
             // restore overworld
             ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);
-
-            // restore player locations
-            inactivePlayerLocations.Clear();
         }
 
         #endregion

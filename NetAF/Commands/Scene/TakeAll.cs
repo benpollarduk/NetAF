@@ -40,23 +40,26 @@ namespace NetAF.Commands.Scene
 
             StringBuilder builder = new();
 
-            foreach (var item in game.Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsTakeable && x.IsPlayerVisible))
+            var items = game.Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsTakeable && x.IsPlayerVisible).ToArray();
+
+            for (var i = 0; i < items.Length; i++)
             {
+                var item = items[i];
                 game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
                 game.Player.AddItem(item);
 
-                builder.Append($"{item.Identifier.Name}, ");
+                if (i < items.Length - 2)
+                    builder.Append($"{item.Identifier.Name}, ");
+                else if (i < items.Length - 1)
+                    builder.Append($"{item.Identifier.Name} and ");
+                else
+                    builder.Append($"{item.Identifier.Name}");
             }
 
             if (builder.Length > 0)
-            {
-                builder.Remove(builder.Length - 2, 2);
                 return new(ReactionResult.Inform, $"Took {builder}.");
-            }
             else
-            {
                 return new(ReactionResult.Error, "Nothing to take.");
-            }
         }
 
         #endregion
