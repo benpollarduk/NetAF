@@ -1,4 +1,4 @@
-﻿namespace NetAF.Commands.Prompts
+﻿namespace NetAF.Commands
 {
     /// <summary>
     /// Represents a prompt.

@@ -1,5 +1,4 @@
-﻿using NetAF.Commands.Prompts;
-using NetAF.Logic;
+﻿using NetAF.Logic;
 
 namespace NetAF.Commands.Global
 {

@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets.Characters;
-using NetAF.Commands.Prompts;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using System.Linq;

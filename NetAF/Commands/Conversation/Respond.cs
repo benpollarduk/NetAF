@@ -1,5 +1,4 @@
-﻿using NetAF.Commands.Prompts;
-using NetAF.Conversations;
+﻿using NetAF.Conversations;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 

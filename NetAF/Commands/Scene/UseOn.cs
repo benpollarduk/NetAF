@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Commands.Prompts;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene

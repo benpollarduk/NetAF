@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets.Locations;
-using NetAF.Commands.Prompts;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene

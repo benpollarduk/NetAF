@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Commands.Prompts;
 using NetAF.Logic;
 using NetAF.Serialization;
 using System;

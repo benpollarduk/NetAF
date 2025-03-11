@@ -1,5 +1,4 @@
-﻿using NetAF.Commands.Prompts;
-using NetAF.Logic;
+﻿using NetAF.Logic;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Frame
