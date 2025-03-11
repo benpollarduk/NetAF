@@ -45,11 +45,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         public AnsiColor PromptsColor { get; set; } = NetAFPalette.NetAFYellow;
 
-        /// <summary>
-        /// Get or set if prompts should be shown.
-        /// </summary>
-        public bool ShowPrompts { get; set; } = true;
-
         #endregion
 
         #region Implementation of IHelpFrameBuilder
@@ -91,7 +86,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
-                if (ShowPrompts && prompts != null && prompts.Length > 0)
+                if (prompts != null && prompts.Length == 0)
                 {
                     StringBuilder promptBuilder = new();
 

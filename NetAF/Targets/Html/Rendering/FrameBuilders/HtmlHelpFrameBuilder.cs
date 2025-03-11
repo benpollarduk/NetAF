@@ -13,15 +13,6 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// <param name="builder">A builder to use for the text layout.</param>
     public sealed class HtmlHelpFrameBuilder(HtmlBuilder builder) : IHelpFrameBuilder
     {
-        #region Properties
-
-        /// <summary>
-        /// Get or set if prompts should be shown.
-        /// </summary>
-        public bool ShowPrompts { get; set; } = true;
-
-        #endregion
-
         #region Implementation of IHelpFrameBuilder
 
         /// <summary>
@@ -54,7 +45,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     builder.P($"Example: {commandHelp.DisplayAs}");
 
-                if (ShowPrompts && prompts != null && prompts.Length > 0)
+                if (prompts != null && prompts.Length > 0)
                 {
                     StringBuilder promptBuilder = new();
 
