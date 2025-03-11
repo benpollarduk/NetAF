@@ -1,4 +1,5 @@
-﻿using NetAF.Logic;
+﻿using NetAF.Commands.Prompts;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Global
@@ -31,6 +32,16 @@ namespace NetAF.Commands.Global
 
             game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
             return new(ReactionResult.GameModeChanged, string.Empty);
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

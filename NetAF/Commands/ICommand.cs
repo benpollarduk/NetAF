@@ -1,4 +1,7 @@
-﻿namespace NetAF.Commands
+﻿using NetAF.Commands.Prompts;
+using NetAF.Logic;
+
+namespace NetAF.Commands
 {
     /// <summary>
     /// Represents a command.
@@ -10,6 +13,12 @@
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        Reaction Invoke(Logic.Game game);
+        Reaction Invoke(Game game);
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        Prompt[] GetPrompts(Game game);
     }
 }

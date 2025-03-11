@@ -1,4 +1,7 @@
 ﻿using NetAF.Assets;
+using NetAF.Commands.Prompts;
+using NetAF.Logic;
+using System.Linq;
 
 namespace NetAF.Commands.Scene
 {
@@ -24,12 +27,22 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (examinable == null)
                 return new(ReactionResult.Error, "Nothing to examine.");
 
             return new(ReactionResult.Inform, examinable.Examine(new ExaminationScene(game)).Description);
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [..game.GetAllPlayerVisibleExaminables().Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
         }
 
         #endregion

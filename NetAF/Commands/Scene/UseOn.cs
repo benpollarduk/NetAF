@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
+using NetAF.Commands.Prompts;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -121,6 +122,16 @@ namespace NetAF.Commands.Scene
             }
 
             return new(ReactionResult.Inform, interaction.Description);
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

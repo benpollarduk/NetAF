@@ -1,4 +1,6 @@
 ﻿using NetAF.Assets;
+using NetAF.Commands.Prompts;
+using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
 {
@@ -24,7 +26,7 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
@@ -48,6 +50,16 @@ namespace NetAF.Commands.Scene
             game.Player.AddItem(item);
 
             return new(ReactionResult.Inform, $"Took {item.Identifier.Name}");
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

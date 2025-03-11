@@ -1,4 +1,5 @@
-﻿using NetAF.Logic;
+﻿using NetAF.Commands.Prompts;
+using NetAF.Logic;
 
 namespace NetAF.Commands.Global
 {
@@ -30,6 +31,16 @@ namespace NetAF.Commands.Global
 
             GameExecutor.CancelExecution();
             return new(ReactionResult.Silent, "Exiting...");
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion
