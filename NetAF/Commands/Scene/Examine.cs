@@ -42,7 +42,7 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [..game.GetAllPlayerVisibleExaminables().Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
+            return [..game?.GetAllPlayerVisibleExaminables()?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
         }
 
         #endregion

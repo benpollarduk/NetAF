@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Commands.Prompts;
 using NetAF.Logic;
+using System.Linq;
 
 namespace NetAF.Commands.Scene
 {
@@ -59,7 +60,7 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [];
+            return [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsTakeable).Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
         }
 
         #endregion
