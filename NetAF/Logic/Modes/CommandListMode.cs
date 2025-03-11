@@ -1,6 +1,7 @@
 ﻿using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
+using System.Linq;
 
 namespace NetAF.Logic.Modes
 {
@@ -28,7 +29,8 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ICommandListFrameBuilder>().Build("Commands", string.Empty, commands, game.Configuration.DisplaySize);
+            var orderedCommands = commands.OrderBy(x => x.Command).ToArray();
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ICommandListFrameBuilder>().Build("Commands", string.Empty, orderedCommands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
