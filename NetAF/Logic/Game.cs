@@ -5,6 +5,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
@@ -389,6 +390,43 @@ namespace NetAF.Logic
             ];
 
             return [.. commands.Distinct()];
+        }
+
+        ///
+        /// Get all prompts for a command.
+        /// </summary>
+        /// <param name="command">The command to get the prompts for.</param>
+        /// <returns>An array of prompts.</returns>
+        public Prompt[] GetPromptsForCommand(CommandHelp command)
+        {
+            return GetPromptsForCommand(command.Command);
+        }
+
+        /// <summary>
+        /// Get all prompts for a command.
+        /// </summary>
+        /// <param name="command">The command to get the prompts for.</param>
+        /// <returns>An array of prompts.</returns>
+        public Prompt[] GetPromptsForCommand(string command)
+        {
+            if (!Help.CommandHelp.Command.InsensitiveEquals(command))
+            {
+                var result = Configuration?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
+
+                if (result.WasInterpretedSuccessfully)
+                    return result.Command.GetPrompts(this);
+
+                result = Mode?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
+
+                if (result.WasInterpretedSuccessfully)
+                    return result.Command.GetPrompts(this);
+
+                return [];
+            }
+            else
+            {
+                return new Help(null, null).GetPrompts(this);
+            }
         }
 
         /// <summary>

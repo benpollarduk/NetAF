@@ -30,38 +30,6 @@ namespace NetAF.Interpretation
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Get all prompts for a command.
-        /// </summary>
-        /// <param name="command">The command to get the prompts for.</param>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>An array of prompts.</returns>
-        private Prompt[] GetPrompts(string command, Game game)
-        {
-            if (!Help.CommandHelp.Command.InsensitiveEquals(command))
-            {
-                var result = game?.Configuration?.Interpreter?.Interpret(command, game) ?? InterpretationResult.Fail;
-
-                if (result.WasInterpretedSuccessfully)
-                    return result.Command.GetPrompts(game);
-
-                result = game?.Mode?.Interpreter?.Interpret(command, game) ?? InterpretationResult.Fail;
-
-                if (result.WasInterpretedSuccessfully)
-                    return result.Command.GetPrompts(game);
-
-                return [];
-            }
-            else
-            {
-                return new Help(null, null).GetPrompts(game);
-            }   
-        }
-
-        #endregion
-
         #region Implementation of IInterpreter
 
         /// <summary>
@@ -87,7 +55,7 @@ namespace NetAF.Interpretation
 
             if (Help.CommandHelp.Equals(verb))
             {
-                var prompts = GetPrompts(noun, game);
+                var prompts = game.GetPromptsForCommand(noun);
 
                 if (string.IsNullOrEmpty(noun))
                     return new(true, new Help(Help.CommandHelp, prompts));
