@@ -3,6 +3,7 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Text;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -12,6 +13,15 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// <param name="builder">A builder to use for the text layout.</param>
     public sealed class HtmlHelpFrameBuilder(HtmlBuilder builder) : IHelpFrameBuilder
     {
+        #region Properties
+
+        /// <summary>
+        /// Get or set if prompts should be shown.
+        /// </summary>
+        public bool ShowPrompts { get; set; } = true;
+
+        #endregion
+
         #region Implementation of IHelpFrameBuilder
 
         /// <summary>
@@ -19,9 +29,10 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="commandHelp">The command help.</param>
+        /// <param name="prompts">The prompts to display for the command.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(string title, CommandHelp commandHelp, Size size)
+        public IFrame Build(string title, CommandHelp commandHelp, Prompt[] prompts, Size size)
         {
             builder.Clear();
 
@@ -42,6 +53,19 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     builder.P($"Example: {commandHelp.DisplayAs}");
+
+                if (ShowPrompts && prompts != null && prompts.Length > 0)
+                {
+                    StringBuilder promptBuilder = new();
+
+                    foreach (var prompt in prompts)
+                        promptBuilder.Append($"'{prompt.Entry}' ");
+
+                    var promptString = promptBuilder.ToString();
+
+                    if (!string.IsNullOrEmpty(promptString))
+                        builder.P($"Prompts: {promptString}");
+                }
             }
 
             return new HtmlFrame(builder);

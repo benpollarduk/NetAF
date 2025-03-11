@@ -8,7 +8,8 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for help.
     /// </summary>
     /// <param name="command">The command to display.</param>
-    public sealed class HelpMode(CommandHelp command) : IGameMode
+    /// <param name="prompts">The prompts to display for the command.</param>
+    public sealed class HelpMode(CommandHelp command, Prompt[] prompts) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -28,7 +29,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IHelpFrameBuilder>().Build("Help", command, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IHelpFrameBuilder>().Build("Help", command, prompts, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

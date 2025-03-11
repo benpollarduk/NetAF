@@ -1,5 +1,6 @@
 ﻿using NetAF.Logic;
 using NetAF.Logic.Modes;
+using System.Linq;
 
 namespace NetAF.Commands.Global
 {
@@ -7,7 +8,8 @@ namespace NetAF.Commands.Global
     /// Represents the Help command.
     /// </summary>
     /// <param name="command">The command to display help for.</param>
-    public sealed class Help(CommandHelp command) : ICommand
+    /// <param name="prompts">The prompts to display for the command.</param>
+    public sealed class Help(CommandHelp command, Prompt[] prompts) : ICommand
     {
         #region StaticProperties
 
@@ -30,7 +32,7 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new HelpMode(command));
+            game.ChangeMode(new HelpMode(command, prompts));
             return new(ReactionResult.GameModeChanged, string.Empty);
         }
 
@@ -41,7 +43,11 @@ namespace NetAF.Commands.Global
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [];
+            if (game == null)
+                return [];
+
+            var commands = game.GetContextualCommands();
+            return [..commands.Select(x => new Prompt(x.Command))];
         }
 
         #endregion

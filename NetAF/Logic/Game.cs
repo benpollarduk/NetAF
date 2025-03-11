@@ -366,12 +366,12 @@ namespace NetAF.Logic
         /// <returns>An array of all examinables that are currently visible to the player.</returns>
         public IExaminable[] GetAllPlayerVisibleExaminables()
         {
-            var examinables = new List<IExaminable> { Player, Overworld, Overworld.CurrentRegion, Overworld.CurrentRegion.CurrentRoom };
-            examinables.AddRange(Player.Items.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Characters.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Exits.Where(x => x.IsPlayerVisible));
-            return [.. examinables];
+            var examinables = new List<IExaminable> { Player, Overworld, Overworld?.CurrentRegion, Overworld?.CurrentRegion?.CurrentRoom };
+            examinables.AddRange(Player?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Characters?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Exits?.Where(x => x.IsPlayerVisible) ?? []);
+            return [.. examinables.Where(x => x != null)];
         }
 
         /// <summary>

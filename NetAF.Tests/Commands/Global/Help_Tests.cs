@@ -16,7 +16,7 @@ namespace NetAF.Tests.Commands.Global
         [TestMethod]
         public void GivenNullGame_WhenInvoke_ThenError()
         {
-            var command = new Help(End.CommandHelp);
+            var command = new Help(End.CommandHelp, null);
 
             var result = command.Invoke(null);
 
@@ -36,7 +36,7 @@ namespace NetAF.Tests.Commands.Global
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.ChangeMode(new AboutMode());
-            var command = new Help(End.CommandHelp);
+            var command = new Help(End.CommandHelp, null);
 
             var result = command.Invoke(game);
 
@@ -44,18 +44,18 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenGame_WhenGetPrompts_ThenEmptyArray()
+        public void GivenGame_WhenGetPrompts_ThenArrayWithSomeElements()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new Help(null);
+            var command = new Help(null, null);
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.IsTrue(result.Length > 0);
         }
     }
 }
