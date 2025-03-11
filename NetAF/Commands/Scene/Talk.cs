@@ -1,5 +1,7 @@
 ﻿using NetAF.Assets.Characters;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
+using System.Linq;
 
 namespace NetAF.Commands.Scene
 {
@@ -30,7 +32,7 @@ namespace NetAF.Commands.Scene
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
@@ -52,6 +54,16 @@ namespace NetAF.Commands.Scene
 
             game.ChangeMode(new ConversationMode(converser));
             return new(ReactionResult.Silent, "Engaged in conversation.");
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Characters?.Where(x => x.Conversation != null).Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
         }
 
         #endregion

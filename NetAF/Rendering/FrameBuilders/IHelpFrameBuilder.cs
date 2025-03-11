@@ -13,8 +13,9 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="commandHelp">The command help.</param>
+        /// <param name="prompts">The prompts to display for the command.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        IFrame Build(string title, CommandHelp commandHelp, Size size);
+        IFrame Build(string title, CommandHelp commandHelp, Prompt[] prompts, Size size);
     }
 }

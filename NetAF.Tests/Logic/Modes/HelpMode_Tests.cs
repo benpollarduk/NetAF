@@ -21,7 +21,7 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-                var mode = new HelpMode(End.CommandHelp);
+                var mode = new HelpMode(End.CommandHelp, []);
 
                 mode.Render(game);
             });

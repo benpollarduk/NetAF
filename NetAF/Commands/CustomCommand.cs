@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets;
+using NetAF.Logic;
 using NetAF.Serialization;
 using System;
 
@@ -44,9 +45,19 @@ namespace NetAF.Commands
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             return Callback.Invoke(game, Arguments);
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public virtual Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

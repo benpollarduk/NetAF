@@ -5,6 +5,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
@@ -366,12 +367,12 @@ namespace NetAF.Logic
         /// <returns>An array of all examinables that are currently visible to the player.</returns>
         public IExaminable[] GetAllPlayerVisibleExaminables()
         {
-            var examinables = new List<IExaminable> { Player, Overworld, Overworld.CurrentRegion, Overworld.CurrentRegion.CurrentRoom };
-            examinables.AddRange(Player.Items.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Characters.Where(x => x.IsPlayerVisible));
-            examinables.AddRange(Overworld.CurrentRegion.CurrentRoom.Exits.Where(x => x.IsPlayerVisible));
-            return [.. examinables];
+            var examinables = new List<IExaminable> { Player, Overworld, Overworld?.CurrentRegion, Overworld?.CurrentRegion?.CurrentRoom };
+            examinables.AddRange(Player?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Characters?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Exits?.Where(x => x.IsPlayerVisible) ?? []);
+            return [.. examinables.Where(x => x != null)];
         }
 
         /// <summary>
@@ -389,6 +390,43 @@ namespace NetAF.Logic
             ];
 
             return [.. commands.Distinct()];
+        }
+
+        ///
+        /// Get all prompts for a command.
+        /// </summary>
+        /// <param name="command">The command to get the prompts for.</param>
+        /// <returns>An array of prompts.</returns>
+        public Prompt[] GetPromptsForCommand(CommandHelp command)
+        {
+            return GetPromptsForCommand(command.Command);
+        }
+
+        /// <summary>
+        /// Get all prompts for a command.
+        /// </summary>
+        /// <param name="command">The command to get the prompts for.</param>
+        /// <returns>An array of prompts.</returns>
+        public Prompt[] GetPromptsForCommand(string command)
+        {
+            if (!Help.CommandHelp.Command.InsensitiveEquals(command))
+            {
+                var result = Configuration?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
+
+                if (result.WasInterpretedSuccessfully)
+                    return result.Command.GetPrompts(this);
+
+                result = Mode?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
+
+                if (result.WasInterpretedSuccessfully)
+                    return result.Command.GetPrompts(this);
+
+                return [];
+            }
+            else
+            {
+                return new Help(null, null).GetPrompts(this);
+            }
         }
 
         /// <summary>

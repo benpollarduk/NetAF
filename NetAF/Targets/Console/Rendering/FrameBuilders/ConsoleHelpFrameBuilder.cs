@@ -3,6 +3,7 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Text;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -39,6 +40,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         public AnsiColor CommandDescriptionColor { get; set; } = NetAFPalette.NetAFYellow;
 
+        /// <summary>
+        /// Get or set the prompts color.
+        /// </summary>
+        public AnsiColor PromptsColor { get; set; } = NetAFPalette.NetAFYellow;
+
         #endregion
 
         #region Implementation of IHelpFrameBuilder
@@ -48,9 +54,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="commandHelp">The command help.</param>
+        /// <param name="prompts">The prompts to display for the command.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(string title, CommandHelp commandHelp, Size size)
+        public IFrame Build(string title, CommandHelp commandHelp, Prompt[] prompts, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -77,7 +84,17 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     gridStringBuilder.DrawWrapped($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
-                    gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out _);
+                    gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+
+                StringBuilder promptBuilder = new();
+
+                foreach (var prompt in prompts ?? [])
+                    promptBuilder.Append($"'{prompt.Entry}' ");
+
+                var promptString = promptBuilder.ToString();
+
+                if (!string.IsNullOrEmpty(promptString))
+                    gridStringBuilder.DrawWrapped($"Prompts: {promptString}", leftMargin, lastY + 2, availableWidth, PromptsColor, out _, out _);
             }
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };

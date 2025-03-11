@@ -5,6 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.Scene;
 using NetAF.Commands;
+using NetAF.Utilities;
+using System;
+using NetAF.Extensions;
 
 namespace NetAF.Tests.Commands.Scene
 {
@@ -90,6 +93,24 @@ namespace NetAF.Tests.Commands.Scene
             var result = command.Invoke(game);
 
             Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenGameWherePlayerHasItem_WhenGetPrompts_ThenArrayContainingItem()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Player.AddItem(new("ITEM", string.Empty, true));
+            var command = new Drop(null);
+
+            var prompts = command.GetPrompts(game);
+            var itemResult = Array.Find(prompts, x => x.Entry.InsensitiveEquals("ITEM"));
+
+            Assert.IsNotNull(itemResult);
         }
     }
 }

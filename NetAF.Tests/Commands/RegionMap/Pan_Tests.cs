@@ -197,5 +197,20 @@ namespace NetAF.Tests.Commands.RegionMap
             Assert.AreEqual(0, result.Y);
             Assert.AreEqual(0, result.Z);
         }
+
+        [TestMethod]
+        public void GivenGame_WhenGetPrompts_ThenEmptyArray()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Pan(Direction.East);
+
+            var result = command.GetPrompts(game);
+
+            Assert.AreEqual([], result);
+        }
     }
 }

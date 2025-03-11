@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands.Scene;
 using NetAF.Commands;
+using NetAF.Utilities;
+using System;
 
 namespace NetAF.Tests.Commands.Scene
 {
@@ -250,6 +252,27 @@ namespace NetAF.Tests.Commands.Scene
             var result = player.IsAlive;
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenGameWherePlayerHasItemAndRoomHasItem_WhenGetPrompts_ThenArrayContainingItem()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Player.AddItem(new("PLAYERITEM", string.Empty, true));
+            game.Overworld.CurrentRegion.CurrentRoom.AddItem(new("ROOMITEM", string.Empty, true));
+            var command = new UseOn(null, null);
+
+            var prompts = command.GetPrompts(game);
+            var playerItemResult = Array.Find(prompts, x => x.Entry.InsensitiveEquals("PLAYERITEM"));
+            var roomItemResult = Array.Find(prompts, x => x.Entry.InsensitiveEquals("ROOMITEM"));
+
+            Assert.IsNotNull(playerItemResult);
+            Assert.IsNotNull(roomItemResult);
         }
     }
 }

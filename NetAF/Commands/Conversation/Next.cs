@@ -1,4 +1,5 @@
-﻿using NetAF.Logic.Modes;
+﻿using NetAF.Logic;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Conversation
 {
@@ -14,7 +15,7 @@ namespace NetAF.Commands.Conversation
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        public Reaction Invoke(Logic.Game game)
+        public Reaction Invoke(Game game)
         {
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
@@ -28,6 +29,16 @@ namespace NetAF.Commands.Conversation
                 return new(ReactionResult.Error, "No conversation.");
 
             return mode.Converser.Conversation.Next(game);
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

@@ -16,7 +16,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
-                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), new Size(80, 50));
+                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), null, new Size(80, 50));
             });
         }
 
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
-                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2", "Test 3.", "Test 4.", "Test 5."), new Size(80, 50));
+                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2", "Test 3.", "Test 4.", "Test 5."), [], new Size(80, 50));
             });
         }
 
@@ -40,7 +40,19 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
 
-                builder.Build("Test", null, new Size(80, 50));
+                builder.Build("Test", null, [], new Size(80, 50));
+            });
+        }
+
+        [TestMethod]
+        public void GivenDefaultsWithPrompts_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleHelpFrameBuilder(gridStringBuilder);
+
+                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), [new("Prompt")], new Size(80, 50));
             });
         }
     }
