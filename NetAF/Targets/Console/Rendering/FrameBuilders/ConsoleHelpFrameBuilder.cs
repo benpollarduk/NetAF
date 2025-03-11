@@ -86,18 +86,15 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
 
-                if (prompts != null && prompts.Length == 0)
-                {
-                    StringBuilder promptBuilder = new();
+                StringBuilder promptBuilder = new();
 
-                    foreach (var prompt in prompts)
-                        promptBuilder.Append($"'{prompt.Entry}' ");
+                foreach (var prompt in prompts ?? [])
+                    promptBuilder.Append($"'{prompt.Entry}' ");
 
-                    var promptString = promptBuilder.ToString();
+                var promptString = promptBuilder.ToString();
 
-                    if (!string.IsNullOrEmpty(promptString))
-                        gridStringBuilder.DrawWrapped($"Prompts: {promptString}", leftMargin, lastY + 2, availableWidth, PromptsColor, out _, out _);
-                }
+                if (!string.IsNullOrEmpty(promptString))
+                    gridStringBuilder.DrawWrapped($"Prompts: {promptString}", leftMargin, lastY + 2, availableWidth, PromptsColor, out _, out _);
             }
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };

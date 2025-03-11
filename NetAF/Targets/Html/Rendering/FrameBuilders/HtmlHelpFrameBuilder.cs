@@ -45,18 +45,15 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     builder.P($"Example: {commandHelp.DisplayAs}");
 
-                if (prompts != null && prompts.Length > 0)
-                {
-                    StringBuilder promptBuilder = new();
+                StringBuilder promptBuilder = new();
 
-                    foreach (var prompt in prompts)
-                        promptBuilder.Append($"'{prompt.Entry}' ");
+                foreach (var prompt in prompts ?? [])
+                    promptBuilder.Append($"'{prompt.Entry}' ");
 
-                    var promptString = promptBuilder.ToString();
+                var promptString = promptBuilder.ToString();
 
-                    if (!string.IsNullOrEmpty(promptString))
-                        builder.P($"Prompts: {promptString}");
-                }
+                if (!string.IsNullOrEmpty(promptString))
+                    builder.P($"Prompts: {promptString}");
             }
 
             return new HtmlFrame(builder);
