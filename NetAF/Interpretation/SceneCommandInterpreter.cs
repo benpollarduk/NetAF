@@ -351,9 +351,15 @@ namespace NetAF.Interpretation
                 target = game.Overworld.CurrentRegion.CurrentRoom;
             }
 
+            if (string.IsNullOrEmpty(itemName))
+            {
+                command = new UseOn(null, target);
+                return true;
+            }
+            
             if (!game.Player.FindItem(itemName, out var item) && !game.Overworld.CurrentRegion.CurrentRoom.FindItem(itemName, out item))
             {
-                command = new Unactionable("You don't have that item.");
+                command = new Unactionable($"You don't have {itemName}.");
                 return true;
             }
 

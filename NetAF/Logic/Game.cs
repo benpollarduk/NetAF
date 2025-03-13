@@ -426,7 +426,7 @@ namespace NetAF.Logic
         /// <returns>An array of prompts.</returns>
         public Prompt[] GetPromptsForCommand(string command)
         {
-            if (!Help.CommandHelp.Command.InsensitiveEquals(command))
+            if (!Help.CommandHelp.Command.InsensitiveEquals(command) && !Help.CommandHelp.Shortcut.InsensitiveEquals(command))
             {
                 var result = Configuration?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
 

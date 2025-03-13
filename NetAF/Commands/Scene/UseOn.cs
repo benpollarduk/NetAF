@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Extensions;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -131,19 +130,19 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            Prompt[] playerPrompts = [.. game?.Player?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
-            Prompt[] roomPrompts = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
-            Prompt[] items = [.. playerPrompts, .. roomPrompts];
+            Item[] playerItems = [.. game?.Player?.Items ?? []];
+            Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items ?? []];
+            Item[] allItems = [.. playerItems, .. roomItems];
 
             List<Prompt> all = [];
-            all.AddRange(items);
+            all.AddRange(allItems.Select(x => new Prompt(x.Identifier.Name)));
 
             // now add all 'ons'
-            var targets = game?.GetAllInteractionTargets() ?? [];
+            var targets = game?.GetAllInteractionTargets()?.Cast<IExaminable>() ?? [];
 
-            foreach (var i in items)
-                foreach (var t in targets.Cast<IExaminable>().Where(x => !x.Identifier.Name.InsensitiveEquals(i.Entry)))
-                    all.Add(new($"{i.Entry} {OnCommandHelp.Command} {t.Identifier.Name}"));
+            foreach (var i in allItems.Where(x => x.IsPlayerVisible && x.IsTakeable))
+                foreach (var t in targets.Where(x => !x.Identifier.Equals(i.Identifier)))
+                    all.Add(new($"{i.Identifier.Name} {OnCommandHelp.Command} {t.Identifier.Name}"));
 
             return [.. all];
         }

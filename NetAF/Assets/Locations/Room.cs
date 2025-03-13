@@ -327,9 +327,9 @@ namespace NetAF.Assets.Locations
         public IInteractWithItem[] GetAllInteractionTargets()
         {
             var all = new List<IInteractWithItem>();
-            all.AddRange(Items);
-            all.AddRange(Characters);
-            all.AddRange(Exits);
+            all.AddRange(Items?.Where(x => x.IsPlayerVisible) ?? []);
+            all.AddRange(Characters?.Where(x => x.IsPlayerVisible) ?? []);
+            all.AddRange(Exits?.Where(x => x.IsPlayerVisible) ?? []);
             return [.. all];
         }
 
