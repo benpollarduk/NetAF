@@ -38,7 +38,7 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var noun);
+            StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var _);
 
             if (Exit.CommandHelp.Equals(verb))
                 return new(true, new Exit());
