@@ -29,17 +29,6 @@ namespace NetAF.Tests.Commands
         }
 
         [TestMethod]
-        public void GivenACommandHelp_WhenEqualityCheckedWithUnequalDescriptionCommandHelp_ThenReturnFalse()
-        {
-            CommandHelp first = new("A", "B");
-            CommandHelp second = new("A", "A");
-
-            var result = first.Equals(second);
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
         public void GivenACommandHelp_WhenEqualityWithStringMatchingCommand_ThenReturnTrue()
         {
             CommandHelp command = new("A", string.Empty);
@@ -60,7 +49,7 @@ namespace NetAF.Tests.Commands
         }
 
         [TestMethod]
-        public void GivenACommandHelp_WhenEqualityWithStringThatDoesntMatch_ThenReturnFalse()
+        public void GivenACommandHelp_WhenEqualityWithStringThatDoesNotMatch_ThenReturnFalse()
         {
             CommandHelp command = new("A", string.Empty, "B");
 

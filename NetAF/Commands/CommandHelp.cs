@@ -57,7 +57,7 @@ namespace NetAF.Commands
         /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
         public bool Equals(CommandHelp other)
         {
-            return Command == other?.Command && Description == other?.Description;
+            return Command.InsensitiveEquals(other?.Command);
         }
 
         #endregion

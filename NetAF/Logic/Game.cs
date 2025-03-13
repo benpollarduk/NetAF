@@ -400,16 +400,14 @@ namespace NetAF.Logic
         {
             List<CommandHelp> commands = 
             [
-                .. Configuration.Interpreter.SupportedCommands,
                 .. Configuration.Interpreter.GetContextualCommandHelp(this),
-                .. Mode?.Interpreter?.SupportedCommands ?? [],
                 .. Mode?.Interpreter?.GetContextualCommandHelp(this) ?? [],
             ];
 
             return [.. commands.Distinct()];
         }
 
-        ///
+        /// <summary>
         /// Get all prompts for a command.
         /// </summary>
         /// <param name="command">The command to get the prompts for.</param>

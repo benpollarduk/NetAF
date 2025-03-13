@@ -88,7 +88,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return [];
+            return DefaultSupportedCommands;
         }
 
         #endregion
