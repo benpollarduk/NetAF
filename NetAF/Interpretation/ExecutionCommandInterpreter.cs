@@ -1,17 +1,14 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Global;
-using NetAF.Commands.Scene;
-using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Utilities;
-using System;
 
 namespace NetAF.Interpretation
 {
     /// <summary>
-    /// Provides an object that can be used for interpreting global commands.
+    /// Provides an object that can be used for interpreting execution commands.
     /// </summary>
-    public sealed class GlobalCommandInterpreter : IInterpreter
+    public sealed class ExecutionCommandInterpreter : IInterpreter
     {
         #region StaticProperties
 
@@ -20,10 +17,8 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            About.CommandHelp,
-            Map.CommandHelp,
-            Help.CommandHelp,
-            CommandList.CommandHelp
+            Exit.CommandHelp,
+            New.CommandHelp,
         ];
 
         #endregion
@@ -45,30 +40,11 @@ namespace NetAF.Interpretation
         {
             StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var noun);
 
-            if (About.CommandHelp.Equals(verb))
-                return new(true, new About());
+            if (Exit.CommandHelp.Equals(verb))
+                return new(true, new Exit());
 
-            if (Help.CommandHelp.Equals(verb))
-            {
-                var prompts = game.GetPromptsForCommand(noun);
-
-                if (string.IsNullOrEmpty(noun))
-                    return new(true, new Help(Help.CommandHelp, prompts));
-
-                var commands = game.GetContextualCommands();
-                var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
-
-                if (command != null)
-                    return new(true, new Help(command, prompts));
-                else
-                    return new(true, new Unactionable($"'{noun}' is not a command."));
-            }
-
-            if (CommandList.CommandHelp.Equals(verb))
-                return new(true, new CommandList());
-
-            if (Map.CommandHelp.Equals(verb))
-                return new(true, new Map());
+            if (New.CommandHelp.Equals(verb))
+                return new(true, new New());
 
             return InterpretationResult.Fail;
         }

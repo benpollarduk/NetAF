@@ -16,12 +16,12 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp TalkCommandHelp { get; } = new("Talk", "Talk to a character", "L", displayAs: $"Talk/L to __");
+        public static CommandHelp TalkCommandHelp { get; } = new("Talk", "Talk to a character", CommandCategory.Conversation, "L", displayAs: $"Talk/L to __");
 
         /// <summary>
         /// Get the command help for to.
         /// </summary>
-        public static CommandHelp ToCommandHelp { get; } = new("To", "The character to talk to");
+        public static CommandHelp ToCommandHelp { get; } = new("To", "The character to talk to", CommandCategory.Conversation);
 
         #endregion
 

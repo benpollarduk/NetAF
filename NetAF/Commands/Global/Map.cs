@@ -13,7 +13,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Map", "View map of the current region");
+        public static CommandHelp CommandHelp { get; } = new("Map", "View the map of the current region", CommandCategory.Global);
 
         #endregion
 

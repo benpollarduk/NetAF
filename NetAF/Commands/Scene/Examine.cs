@@ -15,7 +15,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Examine", "Examine something", "X", displayAs: "Examine/X __", instructions: "Examine any examinable object. This includes characters, exits, items, rooms and regions.");
+        public static CommandHelp CommandHelp { get; } = new("Examine", "Examine something", CommandCategory.Scene, "X", displayAs: "Examine/X __", instructions: "Examine any examinable object. This includes characters, exits, items, rooms and regions.");
 
         #endregion
 

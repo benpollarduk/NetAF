@@ -12,7 +12,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Exit", "Exit the game");
+        public static CommandHelp CommandHelp { get; } = new("Exit", "Exit the game", CommandCategory.Execution);
 
         #endregion
 

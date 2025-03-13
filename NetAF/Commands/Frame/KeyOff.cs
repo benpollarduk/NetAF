@@ -14,7 +14,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("KeyOff", "Turn the key off");
+        public static CommandHelp CommandHelp { get; } = new("KeyOff", "Turn the key off", CommandCategory.Frame);
 
         #endregion
 

@@ -13,7 +13,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("End", "End the current mode");
+        public static CommandHelp CommandHelp { get; } = new("End", "End the current mode", CommandCategory.Global);
 
         #endregion
 

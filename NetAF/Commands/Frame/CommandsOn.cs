@@ -13,7 +13,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("CommandsOn", "Turn commands on");
+        public static CommandHelp CommandHelp { get; } = new("CommandsOn", "Turn commands on", CommandCategory.Frame);
 
         #endregion
 

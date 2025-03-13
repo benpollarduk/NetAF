@@ -12,7 +12,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("New", "Start a new game");
+        public static CommandHelp CommandHelp { get; } = new("New", "Start a new game", CommandCategory.Execution);
 
         #endregion
 

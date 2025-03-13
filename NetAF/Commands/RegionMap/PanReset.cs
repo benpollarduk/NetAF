@@ -13,7 +13,7 @@ namespace NetAF.Commands.RegionMap
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Reset", "Reset pan", "Z", displayAs: "Reset/Z");
+        public static CommandHelp CommandHelp { get; } = new("Reset", "Reset pan", CommandCategory.RegionMap, "Z", displayAs: "Reset/Z");
 
         #endregion
 

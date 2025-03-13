@@ -13,7 +13,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Commands", "View a list of commands");
+        public static CommandHelp CommandHelp { get; } = new("Commands", "View a list of commands", CommandCategory.Information);
 
         #endregion
 

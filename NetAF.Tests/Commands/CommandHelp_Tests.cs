@@ -41,7 +41,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void GivenACommandHelp_WhenEqualityWithStringMatchingShortcut_ThenReturnTrue()
         {
-            CommandHelp command = new(string.Empty, string.Empty, "A");
+            CommandHelp command = new(string.Empty, string.Empty, CommandCategory.Uncategorized, "A");
 
             var result = command.Equals("A");
 
@@ -51,7 +51,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void GivenACommandHelp_WhenEqualityWithStringThatDoesNotMatch_ThenReturnFalse()
         {
-            CommandHelp command = new("A", string.Empty, "B");
+            CommandHelp command = new("A", string.Empty, CommandCategory.Uncategorized, "B");
 
             var result = command.Equals("C");
 
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void GivenACommandHelp_WhenEqualityWithStringThatIsEmpty_ThenReturnFalse()
         {
-            CommandHelp command = new("A", string.Empty, string.Empty);
+            CommandHelp command = new("A", "A", CommandCategory.Uncategorized, string.Empty);
 
             var result = command.Equals(string.Empty);
 

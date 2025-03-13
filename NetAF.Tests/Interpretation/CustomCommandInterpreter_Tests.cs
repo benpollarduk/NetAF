@@ -172,7 +172,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands =
             [
-                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                new CustomCommand(new("Two", string.Empty, CommandCategory.Uncategorized, "T"), true, true, (_, _) =>
                 {
                     return new(ReactionResult.Error, string.Empty);
                 })
@@ -196,7 +196,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands =
             [
-                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                new CustomCommand(new("Two", string.Empty, CommandCategory.Uncategorized, "T"), true, true, (_, _) =>
                 {
                     return new(ReactionResult.Error, string.Empty);
                 })
@@ -220,7 +220,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands =
             [
-                new CustomCommand(new("Two", string.Empty, "T"), true, true, (_, _) =>
+                new CustomCommand(new("Two", string.Empty, CommandCategory.Uncategorized, "T"), true, true, (_, _) =>
                 {
                     return new(ReactionResult.Error, string.Empty);
                 })

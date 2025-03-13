@@ -79,11 +79,11 @@ namespace NetAF.Interpretation
                 for (var i = 0; i < mode.Converser.Conversation.CurrentParagraph.Responses.Length; i++)
                 {
                     var response = mode.Converser.Conversation.CurrentParagraph.Responses[i];
-                    commands.Add(new CommandHelp((i + 1).ToString(), response.Line.EnsureFinishedSentence().ToSpeech()));
+                    commands.Add(new CommandHelp((i + 1).ToString(), response.Line.EnsureFinishedSentence().ToSpeech(), CommandCategory.Conversation));
                 }
             }
 
-            commands.Add(new CommandHelp(End.CommandHelp.Command, "End the conversation"));
+            commands.Add(new CommandHelp(End.CommandHelp.Command, "End the conversation", CommandCategory.Conversation));
 
             return [.. commands];
         }

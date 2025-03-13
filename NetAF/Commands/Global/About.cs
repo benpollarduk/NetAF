@@ -13,7 +13,7 @@ namespace NetAF.Commands.Global
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("About", "View information about the games creator");
+        public static CommandHelp CommandHelp { get; } = new("About", "View information about the games creator", CommandCategory.Information);
 
         #endregion
 
