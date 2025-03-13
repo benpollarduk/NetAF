@@ -59,8 +59,7 @@ namespace NetAF.Interpretation
             Take.CommandHelp,
             TakeAll.CommandHelp,
             Talk.TalkCommandHelp,
-            UseOn.UseCommandHelp,
-            UseOn.OnCommandHelp
+            UseOn.UseCommandHelp
         ];
 
         #endregion
@@ -506,10 +505,7 @@ namespace NetAF.Interpretation
                 commands.Add(Talk.TalkCommandHelp);
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
-            {
                 commands.Add(UseOn.UseCommandHelp);
-                commands.Add(UseOn.OnCommandHelp);
-            }
 
             return [.. commands];
         }
