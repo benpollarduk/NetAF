@@ -59,7 +59,7 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsTakeable).Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
+            return [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsTakeable && x.IsPlayerVisible).Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
         }
 
         #endregion

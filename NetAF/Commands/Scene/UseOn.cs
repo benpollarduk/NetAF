@@ -130,8 +130,8 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            Item[] playerItems = [.. game?.Player?.Items ?? []];
-            Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items ?? []];
+            Item[] playerItems = [.. game?.Player?.Items?.Where(x => x.IsPlayerVisible) ?? []];
+            Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []];
             Item[] allItems = [.. playerItems, .. roomItems];
 
             List<Prompt> all = [];
