@@ -339,6 +339,23 @@ namespace NetAF.Logic
         }
 
         /// <summary>
+        /// Get all interaction targets for this game.
+        /// </summary>
+        /// <returns>An array containing all interaction targets.</returns>
+        public IInteractWithItem[] GetAllInteractionTargets()
+        {
+            var all = new List<IInteractWithItem>
+            {
+                Player,
+                Overworld.CurrentRegion?.CurrentRoom
+            };
+
+            all.AddRange(Overworld.CurrentRegion?.CurrentRoom?.GetAllInteractionTargets() ?? []);
+            
+            return [.. all.Where(x => x != null)];
+        }
+
+        /// <summary>
         /// Find an interaction target within the current scope for this Game.
         /// </summary>
         /// <param name="name">The targets name.</param>

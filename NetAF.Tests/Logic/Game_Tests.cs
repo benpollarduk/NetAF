@@ -9,6 +9,7 @@ using NetAF.Commands;
 using NetAF.Commands.Scene;
 using NetAF.Targets.Console;
 using NetAF.Rendering.FrameBuilders;
+using System.Linq;
 
 namespace NetAF.Tests.Logic
 {
@@ -548,6 +549,27 @@ namespace NetAF.Tests.Logic
             var result = game.GetPromptsForCommand(Examine.CommandHelp);
 
             Assert.IsTrue(result.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given1Character1Item1Exit_WhenGetAllInteractionTargets_TheArrayWith1Character1Item1ExitAndPlayerAndRoom()
+        {
+            var room = new Room(string.Empty, "A room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = game.GetAllInteractionTargets();
+
+            Assert.IsTrue(result.Contains(room.Items[0]));
+            Assert.IsTrue(result.Contains(room.Exits[0]));
+            Assert.IsTrue(result.Contains(room.Characters[0]));
+            Assert.IsTrue(result.Contains(player));
+            Assert.IsTrue(result.Contains(room));
         }
     }
 }

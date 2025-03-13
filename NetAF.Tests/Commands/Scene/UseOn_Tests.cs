@@ -257,11 +257,11 @@ namespace NetAF.Tests.Commands.Scene
         [TestMethod]
         public void GivenGameWherePlayerHasItemAndRoomHasItem_WhenGetPrompts_ThenArrayContainingItem()
         {
-            RegionMaker regionMaker = new(string.Empty, string.Empty);
-            Room room = new(string.Empty, string.Empty);
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Room room = new("ROOM", string.Empty);
             regionMaker[0, 0, 0] = room;
-            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            OverworldMaker overworldMaker = new("OVERWORLD", string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
             game.Player.AddItem(new("PLAYERITEM", string.Empty, true));
             game.Overworld.CurrentRegion.CurrentRoom.AddItem(new("ROOMITEM", string.Empty, true));

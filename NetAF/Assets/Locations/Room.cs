@@ -321,6 +321,19 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
+        /// Get all interaction targets for this room.
+        /// </summary>
+        /// <returns>An array containing all interaction targets.</returns>
+        public IInteractWithItem[] GetAllInteractionTargets()
+        {
+            var all = new List<IInteractWithItem>();
+            all.AddRange(Items);
+            all.AddRange(Characters);
+            all.AddRange(Exits);
+            return [.. all];
+        }
+
+        /// <summary>
         /// Find an interaction target.
         /// </summary>
         /// <param name="targetName">The targets name.</param>
