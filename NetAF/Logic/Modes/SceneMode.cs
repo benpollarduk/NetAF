@@ -44,11 +44,8 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            List<CommandHelp> commands = [];
-            commands.AddRange(Interpreter.GetContextualCommandHelp(game));
-            commands.AddRange(game.Configuration.Interpreter.GetContextualCommandHelp(game));
-
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, DisplayCommandList ? [.. commands] : null, KeyType, game.Configuration.DisplaySize);
+            var commands = Interpreter.GetContextualCommandHelp(game);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, DisplayCommandList ? commands : null, KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
