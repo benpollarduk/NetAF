@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
+using NetAF.Extensions;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -132,7 +133,19 @@ namespace NetAF.Commands.Scene
         {
             Prompt[] playerPrompts = [.. game?.Player?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
             Prompt[] roomPrompts = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Select(x => x.Identifier.Name).Select(x => new Prompt(x))];
-            return [.. playerPrompts, .. roomPrompts];
+            Prompt[] items = [.. playerPrompts, .. roomPrompts];
+
+            List<Prompt> all = [];
+            all.AddRange(items);
+
+            // now add all 'ons'
+            var targets = game?.GetAllInteractionTargets() ?? [];
+
+            foreach (var i in items)
+                foreach (var t in targets.Cast<IExaminable>().Where(x => !x.Identifier.Name.InsensitiveEquals(i.Entry)))
+                    all.Add(new($"{i.Entry} {OnCommandHelp.Command} {t.Identifier.Name}"));
+
+            return [.. all];
         }
 
         #endregion

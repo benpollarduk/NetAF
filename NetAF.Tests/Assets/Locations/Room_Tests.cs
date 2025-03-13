@@ -2,6 +2,7 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -258,6 +259,19 @@ namespace NetAF.Tests.Assets.Locations
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
             Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given1Character1Item1Exit_WhenGetAllInteractionTargets_TheArrayWith1Character1Item1Exit()
+        {
+            var room = new Room(string.Empty, "A room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+
+            var result = room.GetAllInteractionTargets();
+
+            Assert.IsTrue(result.Contains(room.Items[0]));
+            Assert.IsTrue(result.Contains(room.Exits[0]));
+            Assert.IsTrue(result.Contains(room.Characters[0]));
         }
     }
 }
