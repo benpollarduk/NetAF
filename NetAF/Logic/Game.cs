@@ -351,7 +351,8 @@ namespace NetAF.Logic
             };
 
             all.AddRange(Overworld.CurrentRegion?.CurrentRoom?.GetAllInteractionTargets() ?? []);
-            
+            all.AddRange(Player?.Items?.Where(x => x is IInteractWithItem) ?? []);
+
             return [.. all.Where(x => x != null)];
         }
 
