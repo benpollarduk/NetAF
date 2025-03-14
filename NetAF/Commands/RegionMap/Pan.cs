@@ -16,32 +16,32 @@ namespace NetAF.Commands.RegionMap
         /// <summary>
         /// Get the command help for north.
         /// </summary>
-        public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", CommandCategory.Scene, "N", displayAs: "North/N");
+        public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", CommandCategory.RegionMap, "N", displayAs: "North/N");
 
         /// <summary>
         /// Get the command help for south.
         /// </summary>
-        public static CommandHelp SouthCommandHelp { get; } = new("South", "Pan south", CommandCategory.Scene, "S", displayAs: "South/S");
+        public static CommandHelp SouthCommandHelp { get; } = new("South", "Pan south", CommandCategory.RegionMap, "S", displayAs: "South/S");
 
         /// <summary>
         /// Get the command help for east.
         /// </summary>
-        public static CommandHelp EastCommandHelp { get; } = new("East", "Pan east", CommandCategory.Scene, "E", displayAs: "East/E");
+        public static CommandHelp EastCommandHelp { get; } = new("East", "Pan east", CommandCategory.RegionMap, "E", displayAs: "East/E");
 
         /// <summary>
         /// Get the command help for west.
         /// </summary>
-        public static CommandHelp WestCommandHelp { get; } = new("West", "Pan west", CommandCategory.Scene, "W", displayAs: "West/W");
+        public static CommandHelp WestCommandHelp { get; } = new("West", "Pan west", CommandCategory.RegionMap, "W", displayAs: "West/W");
 
         /// <summary>
         /// Get the command help for up.
         /// </summary>
-        public static CommandHelp UpCommandHelp { get; } = new("Up", "Pan up", CommandCategory.Scene, "U", displayAs: "Up/U");
+        public static CommandHelp UpCommandHelp { get; } = new("Up", "Pan up", CommandCategory.RegionMap, "U", displayAs: "Up/U");
 
         /// <summary>
         /// Get the command help for down.
         /// </summary>
-        public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", CommandCategory.Scene, "D", displayAs: "Down/D");
+        public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", CommandCategory.RegionMap, "D", displayAs: "Down/D");
 
         #endregion
 
