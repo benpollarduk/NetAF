@@ -140,7 +140,7 @@ namespace NetAF.Commands.Scene
             // now add all 'ons'
             var targets = game?.GetAllInteractionTargets()?.Cast<IExaminable>() ?? [];
 
-            foreach (var i in allItems.Where(x => x.IsPlayerVisible && x.IsTakeable))
+            foreach (var i in allItems)
                 foreach (var t in targets.Where(x => !x.Identifier.Equals(i.Identifier)))
                     all.Add(new($"{i.Identifier.Name} {OnCommandHelp.Command} {t.Identifier.Name}"));
 
