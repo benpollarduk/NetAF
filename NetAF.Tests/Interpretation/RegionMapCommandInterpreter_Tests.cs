@@ -26,7 +26,7 @@ namespace NetAF.Tests.Interpretation
         private Overworld overworld;
 
         [TestMethod]
-        public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturn8Commands()
+        public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturn7Commands()
         {
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
@@ -52,7 +52,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.AreEqual(8, result.Length);
+            Assert.AreEqual(7, result.Length);
         }
 
         [TestMethod]

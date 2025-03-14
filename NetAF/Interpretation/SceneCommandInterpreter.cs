@@ -492,19 +492,19 @@ namespace NetAF.Interpretation
 
             commands.Add(Examine.CommandHelp);
 
-            if (game.Player.Items.Any() && game.Player.CanTakeAndDropItems)
+            if (game.Player.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
                 commands.Add(Drop.CommandHelp);
 
-            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() && game.Player.CanTakeAndDropItems)
+            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
             {
                 commands.Add(Take.CommandHelp);
                 commands.Add(TakeAll.CommandHelp);
             }
 
-            if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any())
+            if (game.Player.CanConverse && game.Overworld.CurrentRegion.CurrentRoom.Characters.Any(x => x.IsPlayerVisible))
                 commands.Add(Talk.TalkCommandHelp);
 
-            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any() || game.Player.Items.Any())
+            if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any(x => x.IsPlayerVisible) || game.Player.Items.Any(x => x.IsPlayerVisible))
                 commands.Add(UseOn.UseCommandHelp);
 
             return [.. commands];

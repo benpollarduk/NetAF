@@ -3,8 +3,10 @@ using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Utilities;
 using System;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -80,7 +82,17 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return DefaultSupportedCommands;
+            List<CommandHelp> commands = [];
+
+            if (game.Mode is SceneMode)
+            {
+                commands.Add(About.CommandHelp);
+                commands.Add(Map.CommandHelp);
+                commands.Add(Help.CommandHelp);
+                commands.Add(CommandList.CommandHelp);
+            }
+
+            return [.. commands];
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace NetAF.Tests.Logic
     public class Game_Tests
     {
         [TestMethod]
-        public void GivenEmptyRoom_WhenGetContextualCommands_ThenNotNullOrEmpty()
+        public void GivenEmptyRoomNotInSceneMode_WhenGetContextualCommands_ThenEmpty()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -25,6 +25,22 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
+
+            var result = game.GetContextualCommands();
+
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenEmptyRoomInSceneMode_WhenGetContextualCommands_ThenNotNullOrEmpty()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new SceneMode());
 
             var result = game.GetContextualCommands();
 

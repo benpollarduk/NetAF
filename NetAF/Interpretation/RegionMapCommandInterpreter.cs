@@ -103,7 +103,7 @@ namespace NetAF.Interpretation
                 if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Down)))
                     commands.Add(Pan.DownCommandHelp);
 
-                if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom)))
+                if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position))
                     commands.Add(PanReset.CommandHelp);
 
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map", CommandCategory.RegionMap));

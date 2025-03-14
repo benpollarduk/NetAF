@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using NetAF.Commands;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Utilities;
 
 namespace NetAF.Interpretation
@@ -115,6 +116,9 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
+            if (game.Mode is not SceneMode)
+                return [];
+
             List<CommandHelp> help = [];
 
             foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null)) 

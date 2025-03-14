@@ -1,7 +1,9 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Utilities;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -56,7 +58,15 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return DefaultSupportedCommands;
+            List<CommandHelp> commands = [];
+
+            if (game.Mode is SceneMode)
+            {
+                commands.Add(Exit.CommandHelp);
+                commands.Add(New.CommandHelp);
+            }
+
+            return [.. commands];
         }
 
         #endregion

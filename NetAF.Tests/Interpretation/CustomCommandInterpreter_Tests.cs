@@ -5,6 +5,7 @@ using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Logic.Modes;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -29,7 +30,7 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenNoCustomCommands_WhenGetContextualCommands_ThenReturn1CommandHelp()
+        public void Given1CustomCommandNotInSceneMode_WhenGetContextualCommands_ThenReturn0CommandHelp()
         {
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
@@ -40,6 +41,25 @@ namespace NetAF.Tests.Interpretation
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void Given1CustomCommandInSceneMode_WhenGetContextualCommands_ThenReturn1CommandHelp()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new SceneMode());
 
             var result = interpreter.GetContextualCommandHelp(game);
 

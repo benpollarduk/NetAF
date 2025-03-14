@@ -33,7 +33,7 @@ namespace NetAF.Commands.RegionMap
             {
                 var currentPosition = game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom);
 
-                if (!regionMapMode.FocusPosition.Equals(currentPosition))
+                if (!regionMapMode.FocusPosition.Equals(currentPosition.Position))
                 {
                     regionMapMode.FocusPosition = RegionMapMode.Player;
                     return new(ReactionResult.Silent, "Reset pan.");

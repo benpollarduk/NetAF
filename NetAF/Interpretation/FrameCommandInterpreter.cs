@@ -1,6 +1,9 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Frame;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
+using NetAF.Rendering;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -61,7 +64,24 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return DefaultSupportedCommands;
+            List<CommandHelp> commands = [];
+
+            if (game.Mode is SceneMode)
+            {
+                if (!SceneMode.DisplayCommandList)
+                    commands.Add(CommandsOn.CommandHelp);
+
+                if (SceneMode.DisplayCommandList)
+                    commands.Add(CommandsOff.CommandHelp);
+
+                if (SceneMode.KeyType == KeyType.None)
+                    commands.Add(KeyOn.CommandHelp);
+
+                if (SceneMode.KeyType != KeyType.None)
+                    commands.Add(KeyOff.CommandHelp);
+            }
+
+            return [..commands];
         }
 
         #endregion

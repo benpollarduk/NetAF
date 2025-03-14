@@ -44,13 +44,30 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenGame_WhenGetPrompts_ThenArrayWithSomeElements()
+        public void GivenGameNotInSceneMode_WhenGetPrompts_ThenArrayWithNoElements()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Help(null, null);
+
+            var result = command.GetPrompts(game);
+
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenGameInSceneMode_WhenGetPrompts_ThenArrayWithSomeElements()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new SceneMode());
             var command = new Help(null, null);
 
             var result = command.GetPrompts(game);
