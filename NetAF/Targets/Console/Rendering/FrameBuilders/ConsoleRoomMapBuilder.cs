@@ -23,7 +23,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <summary>
         /// Get or set the character used for representing there is an item or a character in the room.
         /// </summary>
-        public char ItemOrCharacterInRoom { get; set; } = '?';
+        public char ItemOrCharacterInRoom { get; set; } = '!';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
