@@ -1,7 +1,5 @@
-﻿using NetAF.Logic;
-using NetAF.Utilities;
+﻿using NetAF.Utilities;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace NetAF.Targets.Html.Rendering
 {
