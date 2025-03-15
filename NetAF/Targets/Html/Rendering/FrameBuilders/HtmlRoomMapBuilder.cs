@@ -54,6 +54,11 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         public int KeyPadding { get; set; } = 6;
 
+        /// <summary>
+        /// Get or set the maximum size.
+        /// </summary>
+        public Size MaxSize { get; set; } = new Size(80, 40);
+
         #endregion
 
         #region Implementation of IRoomMapBuilder
@@ -78,11 +83,9 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             // for now, cheat and use the ansi builder then convert to HTML
 
-            // create an ansi grid string builder just for this map, and resize to ample room for the map which has an unknown
-            // width (because of the key) and a known height of 7 rows
-            Size size = new(100, 7);
+            // create an ansi grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(size);
+            ansiGridStringBuilder.Resize(MaxSize);
 
             var ansiRoomBuilder = new ConsoleRoomMapBuilder(ansiGridStringBuilder)
             {

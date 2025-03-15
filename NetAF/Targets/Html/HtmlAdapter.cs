@@ -31,6 +31,7 @@ namespace NetAF.Targets.Html
         /// <returns>A HTML string representing the contents of the GridStringBuilder.</returns>
         public static string ConvertGridStringBuilderToHtmlString(GridStringBuilder builder, bool padEmptyCharacters = true)
         {
+            StringBuilder lineBuilder = new();
             StringBuilder stringBuilder = new();
 
             for (var row = 0; row < builder.DisplaySize.Height; row++)
@@ -42,9 +43,13 @@ namespace NetAF.Targets.Html
                     if (padEmptyCharacters && character == 0)
                         character = ' ';
 
-                    stringBuilder.Append(character);
+                    lineBuilder.Append(character);
                 }
 
+                var line = lineBuilder.ToString();
+                line = line.TrimEnd();
+                lineBuilder.Clear();
+                stringBuilder.Append(line);
                 stringBuilder.Append("<br>");
             }
 

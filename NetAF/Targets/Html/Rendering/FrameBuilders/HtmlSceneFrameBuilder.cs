@@ -66,7 +66,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             builder.P(extendedDescription.EnsureFinishedSentence());
 
             if (player.Items.Any())
-                builder.P("You have: " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()));
+                builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
 
             if (player.Attributes.Count > 0)
                 builder.P(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));

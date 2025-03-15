@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NetAF.Targets.Html.Rendering
 {
@@ -105,7 +106,8 @@ namespace NetAF.Targets.Html.Rendering
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return builder.ToString();
+            var frame = builder.ToString();
+            return Regex.Replace(frame, @"\r\n|\n", "<br>");
         }
 
         #endregion

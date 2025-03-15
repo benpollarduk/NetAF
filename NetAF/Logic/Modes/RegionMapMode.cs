@@ -57,7 +57,7 @@ namespace NetAF.Logic.Modes
 
             FocusPosition = GetSnappedLocation(region, FocusPosition);
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Interpreter?.GetContextualCommandHelp(game) ?? [], game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, SceneMode.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

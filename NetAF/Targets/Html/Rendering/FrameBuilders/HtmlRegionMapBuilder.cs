@@ -64,6 +64,11 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         public bool ShowLowerFloors { get; set; } = true;
 
+        /// <summary>
+        /// Get or set the maximum size.
+        /// </summary>
+        public Size MaxSize { get; set; } = new Size(80, 40);
+
         #endregion
 
         #region Implementation of IRegionMapBuilder
@@ -77,11 +82,9 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             // for now, cheat and use the ansi builder then convert to HTML
 
-            // create an ansi grid string builder just for this map, and resize to ample room for the map which has an unknown
-            // width and an unknown height
-            Size size = new(100, 20);
+            // create an ansi grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(size);
+            ansiGridStringBuilder.Resize(MaxSize);
 
             var ansiRegionBuilder = new ConsoleRegionMapBuilder(ansiGridStringBuilder)
             {
@@ -96,7 +99,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 CurrentFloorIndicator = CurrentFloorIndicator
             };
 
-            ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), size);
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), MaxSize);
 
             var regionAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
 

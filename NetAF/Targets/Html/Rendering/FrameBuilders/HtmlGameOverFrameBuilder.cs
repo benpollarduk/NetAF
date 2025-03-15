@@ -24,7 +24,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
-            builder.P(message);
+            builder.H1(message);
 
             builder.P(reason.EnsureFinishedSentence());
 

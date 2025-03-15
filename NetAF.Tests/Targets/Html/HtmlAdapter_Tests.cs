@@ -56,14 +56,15 @@ namespace NetAF.Tests.Targets.Html
         }
 
         [TestMethod]
-        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharactersExceptLast_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
+            builder.SetCell(4, 0, 'a', AnsiColor.White);
 
             var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder);
 
-            Assert.AreEqual("     <br>", result);
+            Assert.AreEqual("    a<br>", result);
         }
 
         [TestMethod]
