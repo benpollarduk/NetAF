@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using NetAF.Logic;
+using NetAF.Utilities;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NetAF.Targets.Html.Rendering
@@ -107,7 +109,10 @@ namespace NetAF.Targets.Html.Rendering
         public override string ToString()
         {
             var frame = builder.ToString();
-            return Regex.Replace(frame, @"\r\n|\n", "<br>");
+            frame = frame.Replace(StringUtilities.Newline.ToString(), "<br>");
+            frame = frame.Replace(StringUtilities.LF.ToString(), "<br>");
+            frame = frame.Replace(StringUtilities.CR.ToString(), "<br>");
+            return frame;
         }
 
         #endregion
