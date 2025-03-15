@@ -308,7 +308,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var lockedExitString = $"{LockedExit} = Locked Exit";
             var notVisitedExitString = "N/E/S/W/U/D = Unvisited";
             var visitedExitString = "n/e/s/w/u/d = Visited";
-            var itemsString = $"{ItemOrCharacterInRoom} = Item(s) or Character(s) in Room";
+            var itemsString = $"{ItemOrCharacterInRoom} = Check";
 
             switch (key)
             {

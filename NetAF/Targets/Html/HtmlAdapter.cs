@@ -24,6 +24,16 @@ namespace NetAF.Targets.Html
         #region StaticMethods
 
         /// <summary>
+        /// Convert an ANSI color to a hexadecimal representation.
+        /// </summary>
+        /// <param name="color">The color.</param>
+        /// <returns>The hexadecimal representation.</returns>
+        private static string AnsiColorToHex(AnsiColor color)
+        {
+            return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+        }
+
+        /// <summary>
         /// Convert the contents of a GridStringBuilder to HTML.
         /// </summary>
         /// <param name="builder">The GridStringBuilder to convert.</param>
@@ -57,6 +67,36 @@ namespace NetAF.Targets.Html
         }
 
         /// <summary>
+        /// Convert the contents of a GridVisualBuilder to HTML.
+        /// </summary>
+        /// <param name="builder">The GridVisualBuilder to convert.</param>
+        /// <returns>A HTML string representing the contents of the GridVisualBuilder.</returns>
+        public static string ConvertGridVisualBuilderToHtmlString(GridVisualBuilder builder)
+        {
+            StringBuilder stringBuilder = new();
+
+            for (var row = 0; row < builder.DisplaySize.Height; row++)
+            {
+                for (var column = 0; column < builder.DisplaySize.Width; column++)
+                {
+                    var background = builder.GetCellBackgroundColor(column, row);
+                    var foreground = builder.GetCellForegroundColor(column, row);
+                    var character = builder.GetCharacter(column, row);
+                    AnsiCell cell = new(character == 0 ? ' ' : character, foreground, background);
+                    
+                    var span = $"<span style=\"background-color: {AnsiColorToHex(cell.Background)}; color: {AnsiColorToHex(cell.Foreground)}; display: inline-block; line-height: 1;\">{character}</span>";
+                    stringBuilder.Append(span);
+                }
+
+                if (row < builder.DisplaySize.Height - 1)
+                    stringBuilder.Append("<br>");
+            }
+
+            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
+            return $"<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\">{stringBuilder}</pre>";
+        }
+
+        /// <summary>
         /// Convert an instance of IConsoleFrame to a HTML string.
         /// </summary>
         /// <param name="frame">The frame to convert.</param>
@@ -66,18 +106,13 @@ namespace NetAF.Targets.Html
         {
             StringBuilder stringBuilder = new();
 
-            static string toHex(AnsiColor color)
-            {
-                return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
-            }
-
             for (var row = 0; row < size.Height; row++)
             {
                 for (var column = 0; column < size.Width; column++)
                 {
                     var cell = frame.GetCell(column, row);
                     var character = cell.Character == 0 ? ' ' : cell.Character;
-                    var span = $"<span style=\"background-color: {toHex(cell.Background)}; color: {toHex(cell.Foreground)}; display: inline-block; line-height: 1;\">{character}</span>";
+                    var span = $"<span style=\"background-color: {AnsiColorToHex(cell.Background)}; color: {AnsiColorToHex(cell.Foreground)}; display: inline-block; line-height: 1;\">{character}</span>";
                     stringBuilder.Append(span);
                 }
 

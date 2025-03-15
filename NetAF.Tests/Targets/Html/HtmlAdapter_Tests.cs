@@ -77,5 +77,25 @@ namespace NetAF.Tests.Targets.Html
 
             Assert.AreEqual("\0\0\0\0\0<br>", result);
         }
+
+        [TestMethod]
+        public void GivenA3x3Grid_WhenConvertGridVisualBuilderToHtmlString_ThenReturnHtml()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            builder.SetCell(0, 0, 'a', AnsiColor.White);
+            builder.SetCell(1, 0, 'b', AnsiColor.White);
+            builder.SetCell(2, 0, 'c', AnsiColor.White);
+            builder.SetCell(0, 1, 'd', AnsiColor.White);
+            builder.SetCell(1, 1, 'e', AnsiColor.White);
+            builder.SetCell(2, 1, 'f', AnsiColor.White);
+            builder.SetCell(0, 2, 'g', AnsiColor.White);
+            builder.SetCell(1, 2, 'h', AnsiColor.White);
+            builder.SetCell(2, 2, 'i', AnsiColor.White);
+
+            var result = HtmlAdapter.ConvertGridVisualBuilderToHtmlString(builder);
+
+            Assert.AreEqual("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\"><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">a</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">b</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">c</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">d</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">e</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">f</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">g</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">h</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">i</span></pre>", result);
+        }
     }
 }
