@@ -69,8 +69,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         {
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawBoundary(BorderColor);
-
             const int leftMargin = 2;
             var availableWidth = size.Width - 4;
             var availableHeight = size.Height - 2;
@@ -122,6 +120,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, BorderColor);
                 gridStringBuilder.DrawWrapped(">", leftMargin, availableHeight, availableWidth, InputColor, out _, out _);
             }
+
+            gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridTextFrame(gridStringBuilder, 4, availableHeight, BackgroundColor) { ShowCursor = true };
         }

@@ -48,8 +48,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         {
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawBoundary(BorderColor);
-
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
@@ -58,6 +56,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
             gridStringBuilder.DrawWrapped(description.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out _);
+
+            gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

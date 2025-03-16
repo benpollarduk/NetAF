@@ -50,8 +50,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         {
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawBoundary(BorderColor);
-
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
@@ -72,6 +70,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             finalBuilder.Overlay(0, 0, gridStringBuilder);
             finalBuilder.Overlay(xOffset, yOffset, gridVisualBuilder);
+
+            gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridVisualFrame(finalBuilder) { ShowCursor = false };
         }

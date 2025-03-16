@@ -61,8 +61,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         {
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawBoundary(BorderColor);
-
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
@@ -96,6 +94,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(promptString))
                     gridStringBuilder.DrawWrapped($"Prompts: {promptString}", leftMargin, lastY + 2, availableWidth, PromptsColor, out _, out _);
             }
+
+            gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }

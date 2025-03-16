@@ -61,8 +61,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         {
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawBoundary(BorderColor);
-
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
             var padding = (commandHelp.Any() ? commandHelp.Max(x => x.DisplayCommand.Length) : 0) + 1;
@@ -91,6 +89,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     gridStringBuilder.DrawWrapped(command.DisplayCommand, leftMargin, lastY + 1, availableWidth, CommandColor, out _, out lastY);
                 }
             }
+
+            gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
         }
