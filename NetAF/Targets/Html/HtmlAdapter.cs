@@ -82,7 +82,8 @@ namespace NetAF.Targets.Html
                     var background = builder.GetCellBackgroundColor(column, row);
                     var foreground = builder.GetCellForegroundColor(column, row);
                     var character = builder.GetCharacter(column, row);
-                    var span = $"<span style=\"background-color: {AnsiColorToHex(background)}; color: {AnsiColorToHex(foreground)}; display: inline-block; line-height: 1;\">{(character == 0 ? ' ' : character)}</span>";
+                    character = character == 0 ? ' ' : character;
+                    var span = $"<span style=\"background-color: {AnsiColorToHex(background)}; color: {AnsiColorToHex(foreground)}; display: inline-block; line-height: 1;\">{character}</span>";
                     stringBuilder.Append(span);
                 }
 
