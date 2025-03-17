@@ -41,6 +41,9 @@ jobs:
         $content -replace '<Version>0.0.0</Version>', "<Version>${newVersion}</Version>" | Set-Content -Path $filePath
       shell: pwsh
 
+    - name: Build
+      run: dotnet build -c Release
+
     - name: Publish Blazor app
       run: |
         cd NetAF.Example.Blazor
