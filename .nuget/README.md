@@ -112,6 +112,9 @@ Maps display visited rooms, exits, player position, if an item is in a room, low
 ### Persistence
 Game state can be serialized allowing progress to be saved to file and restored later.
 
+### Targets
+NetAF natively targets both the console and web and other targets can be added as needed. Included in the repo are both Console and Blazor examples.
+
 ## Getting Started
 
 ### Clone the repo/pull NuGet
