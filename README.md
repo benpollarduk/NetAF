@@ -19,7 +19,7 @@ A lightweight .NET 8 library for building text based adventures.
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://benpollarduk.github.io/NetAF-docs/)
 
 
-[![Try Now](https://img.shields.io/badge/Play-Now-brightgreen?style=for-the-badge)](https://benpollarduk.github.io/netaf/)
+[![Try Now](https://img.shields.io/badge/Try-Now-brightgreen?style=for-the-badge)](https://benpollarduk.github.io/netaf/)
 
 </div>
 
