@@ -160,10 +160,10 @@ Game.Execute(gameCreator);
 The quickest way to start getting to grips with NetAF is to take a look at the [Getting Started](https://benpollarduk.github.io/NetAF-docs/docs/getting-started.html) page.
 
 ### Example game
-An example game is provided in the [NetAF.Examples](https://github.com/benpollarduk/adventure-framework/tree/main/NetAF.Examples) directory 
+An example game is provided in the [NetAF.Example](https://github.com/benpollarduk/adventure-framework/tree/main/NetAF.Example) directory 
 and has been designed with the aim of showcasing the various features.
 
-Set the **NetAF.Examples** project as the start up project and then build and run to start the application.
+Set either the **NetAF.Example.Console** or **NetAF.Example.Blazor** project as the start up project and then build and run to start the application.
 
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
