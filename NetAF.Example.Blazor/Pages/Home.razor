@@ -1,0 +1,76 @@
+﻿@page "/"
+@using NetAF.Assets
+@using NetAF.Logic.Modes
+@using NetAF.Rendering.FrameBuilders
+@using NetAF.Example.Blazor.Components
+@using System.Reflection
+
+<PageTitle>NetAF Example</PageTitle>
+
+<div style="@(modeSelected ? "display: none;" : "")">
+    <h1>NetAF Example</h1>
+
+    <div style="font-size: 8px; color: #FFFFFF60">
+        <p>Version: @version</p>
+    </div>
+
+    <div>
+        <p>Console emulation runs using frames created for display in the console. Run in this mode for a retro look and feel. Works well on a desktop but may not scale well on a mobile device.</p>
+        <button class="btn btn-primary" @onclick="RunConsoleEmu">Run console emulation</button>
+    </div>
+
+    <br/>
+
+    <div>
+        <p>HTML runs using frames created for displaying in HTML. Run this mode for a mode modern, browser based experience. Suits mobile devices better.</p>
+        <button class="btn btn-primary" @onclick="RunHtml">Run HTML</button>
+    </div>
+
+    <br />
+</div>
+
+<div style="@(!modeSelected ? "display: none;" : "")">
+    <GameComponent @ref="gameComponent" />
+</div>
+
+@code {
+    private bool modeSelected = false;
+    private string version = string.Empty;
+    private GameComponent? gameComponent;
+
+    protected override void OnInitialized()
+    {
+        var v = Assembly.GetExecutingAssembly()?.GetName()?.Version;
+        version = v != null ? $"{v.Major}.{v.Minor}.{v.Build}" : "unknown";
+    }
+
+    private void RunConsoleEmu()
+    {
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation, new(80, 48));
+    }
+
+    private void RunHtml()
+    {
+        SceneMode.DisplayCommandList = false;
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html, new(50, 30));
+    }
+
+    private void SetupComponents(HtmlAdapter htmlAdapter)
+    {
+        gameComponent?.SetAdapter(htmlAdapter);
+    }
+
+    private void BeginGame(FrameBuilderCollection frameBuilders, Size size)
+    {
+        if (GameExecutor.IsExecuting)
+            GameExecutor.CancelExecution();
+
+        var htmlAdapter = new HtmlAdapter(gameComponent);
+        SetupComponents(htmlAdapter);
+
+        GameConfiguration configuration = new(htmlAdapter, frameBuilders, size);
+        GameExecutor.Execute(NetAF.Example.ExampleGame.Create(configuration));
+
+        modeSelected = true;
+    }
+}
