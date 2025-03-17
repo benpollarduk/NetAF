@@ -138,7 +138,7 @@ Maps display visited rooms, exits, player position, if an item is in a room, low
 Game state can be serialized allowing progress to be saved to file and restored later.
 
 ### Targets
-NetAF targets both the console and web, but custom targets can be also be added. The examples in this repo focus on the console, but a Blazor example targeting web is available at [https://github.com/benpollarduk/NetAF.Blazor](https://github.com/benpollarduk/NetAF.Blazor).
+NetAF natively targets both the console and web and other targets can be added as needed. Included in the repo are both Console and Blazor examples.
 
 ## Getting Started
 
