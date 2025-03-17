@@ -1,0 +1,14 @@
+﻿.btn-prompt {
+    background: darkorchid;
+}
+
+.btn-cancel {
+    background: red;
+}
+
+.command-button-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
