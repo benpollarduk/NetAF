@@ -99,6 +99,132 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #region Methods
 
         /// <summary>
+        /// Draw the north exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawNorth(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.North))
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y, LockedExit, LockedExitColor);
+                builder.SetCell(topLeft.X + 2, topLeft.Y, LockedExit, LockedExitColor);
+                builder.SetCell(topLeft.X + 3, topLeft.Y, LockedExit, LockedExitColor);
+            }
+            else if (room.HasUnlockedExitInDirection(Direction.North))
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y, UnLockedExit, color);
+                builder.SetCell(topLeft.X + 2, topLeft.Y, UnLockedExit, color);
+                builder.SetCell(topLeft.X + 3, topLeft.Y, UnLockedExit, color);
+            }
+            else
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y, HorizontalBoundary, color);
+                builder.SetCell(topLeft.X + 2, topLeft.Y, HorizontalBoundary, color);
+                builder.SetCell(topLeft.X + 3, topLeft.Y, HorizontalBoundary, color);
+            }
+        }
+
+        /// <summary>
+        /// Draw the west exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawWest(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.West))
+                builder.SetCell(topLeft.X, topLeft.Y + 1, LockedExit, LockedExitColor);
+            else if (room.HasUnlockedExitInDirection(Direction.West))
+                builder.SetCell(topLeft.X, topLeft.Y + 1, UnLockedExit, color);
+            else
+                builder.SetCell(topLeft.X, topLeft.Y + 1, VerticalBoundary, color);
+        }
+
+        /// <summary>
+        /// Draw the east exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawEast(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.East))
+                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, LockedExit, LockedExitColor);
+            else if (room.HasUnlockedExitInDirection(Direction.East))
+                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, UnLockedExit, color);
+            else
+                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, VerticalBoundary, color);
+        }
+
+        /// <summary>
+        /// Draw the south exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawSouth(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.South))
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, LockedExit, LockedExitColor);
+                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, LockedExit, LockedExitColor);
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, LockedExit, LockedExitColor);
+            }
+            else if (room.HasUnlockedExitInDirection(Direction.South))
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, UnLockedExit, color);
+                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, UnLockedExit, color);
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, UnLockedExit, color);
+            }
+            else
+            {
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, HorizontalBoundary, color);
+                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, HorizontalBoundary, color);
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, HorizontalBoundary, color);
+            }
+        }
+
+        /// <summary>
+        /// Draw the up exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawUp(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.Up))
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, LockedExit, LockedExitColor);
+            else if (room.HasUnlockedExitInDirection(Direction.Up))
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, '^', color);
+            else
+                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, EmptySpace, color);
+        }
+
+        /// <summary>
+        /// Draw the down exit.
+        /// </summary>
+        /// <param name="builder">The builder to draw with</param>
+        /// <param name="room">The room.</param>
+        /// <param name="topLeft">The top left cell of the room.</param>
+        /// <param name="color">The color</param>
+        private void DrawDown(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        {
+            if (room.HasLockedExitInDirection(Direction.Down))
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, LockedExit, LockedExitColor);
+            else if (room.HasUnlockedExitInDirection(Direction.Down))
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, 'v', color);
+            else
+                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, EmptySpace, color);
+        }
+
+        /// <summary>
         /// Draw a room on the current floor.
         /// </summary>
         /// <param name="room">The room to draw.</param>
@@ -120,42 +246,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             else if (room.HasBeenVisited)
                 color = VisitedBoundaryColor;
 
-            gridStringBuilder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
-
-            if (room.HasLockedExitInDirection(Direction.North))
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y, LockedExit, LockedExitColor);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y, LockedExit, LockedExitColor);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y, LockedExit, LockedExitColor);
-            }
-            else if (room.HasUnlockedExitInDirection(Direction.North))
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y, UnLockedExit, color);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y, UnLockedExit, color);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y, UnLockedExit, color);
-            }
-            else
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y, HorizontalBoundary, color);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y, HorizontalBoundary, color);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y, HorizontalBoundary, color);
-            }
-
-            gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y, VerticalBoundary, color);
-
-            if (room.HasLockedExitInDirection(Direction.West))
-                gridStringBuilder.SetCell(topLeft.X, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.West))
-                gridStringBuilder.SetCell(topLeft.X, topLeft.Y + 1, UnLockedExit, color);
-            else
-                gridStringBuilder.SetCell(topLeft.X, topLeft.Y + 1, VerticalBoundary, color);
-
-            if (room.HasLockedExitInDirection(Direction.Up))
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.Up))
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, '^', color);
-            else
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 1, EmptySpace, color);
+            DrawNorth(gridStringBuilder, room, topLeft, color);
+            DrawWest(gridStringBuilder, room, topLeft, color);
+            DrawUp(gridStringBuilder, room, topLeft, color);
+            DrawDown(gridStringBuilder, room, topLeft, color);
+            DrawEast(gridStringBuilder, room, topLeft, color);
+            DrawSouth(gridStringBuilder, room, topLeft, color);
 
             if (isPlayerRoom)
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Player, PlayerColor);
@@ -164,41 +260,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             else
                 gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, EmptySpace, color);
 
-            if (room.HasLockedExitInDirection(Direction.Down))
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.Down))
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, 'v', color);
-            else
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 1, EmptySpace, color);
-
-            if (room.HasLockedExitInDirection(Direction.East))
-                gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.East))
-                gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y + 1, UnLockedExit, color);
-            else
-                gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y + 1, VerticalBoundary, color);
-
+            gridStringBuilder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
+            gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y, VerticalBoundary, color);
             gridStringBuilder.SetCell(topLeft.X, topLeft.Y + 2, VerticalBoundary, color);
-
-            if (room.HasLockedExitInDirection(Direction.South))
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 2, LockedExit, LockedExitColor);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 2, LockedExit, LockedExitColor);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 2, LockedExit, LockedExitColor);
-            }
-            else if (room.HasUnlockedExitInDirection(Direction.South))
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 2, UnLockedExit, color);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 2, UnLockedExit, color);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 2, UnLockedExit, color);
-            }
-            else
-            {
-                gridStringBuilder.SetCell(topLeft.X + 1, topLeft.Y + 2, HorizontalBoundary, color);
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 2, HorizontalBoundary, color);
-                gridStringBuilder.SetCell(topLeft.X + 3, topLeft.Y + 2, HorizontalBoundary, color);
-            }
-
             gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y + 2, VerticalBoundary, color);
         }
 

@@ -414,6 +414,36 @@ namespace NetAF.Interpretation
             return false;
         }
 
+        /// <summary>
+        /// Get all movement contextual commands.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <returns>The contextual help.</returns>
+        private static CommandHelp[] GetMovementContextualCommands(Game game)
+        {
+            List<CommandHelp> commands = [];
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
+                commands.Add(Move.NorthCommandHelp);
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
+                commands.Add(Move.EastCommandHelp);
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
+                commands.Add(Move.SouthCommandHelp);
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
+                commands.Add(Move.WestCommandHelp);
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
+                commands.Add(Move.UpCommandHelp);
+
+            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
+                commands.Add(Move.DownCommandHelp);
+
+            return [.. commands];
+        }
+
         #endregion
 
         #region Implementation of IInterpreter
@@ -471,25 +501,7 @@ namespace NetAF.Interpretation
                 return [];
 
             List<CommandHelp> commands = [];
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(Move.NorthCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(Move.EastCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(Move.SouthCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(Move.WestCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(Move.UpCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(Move.DownCommandHelp);
-
+            commands.AddRange(GetMovementContextualCommands(game));
             commands.Add(Examine.CommandHelp);
 
             if (game.Player.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
