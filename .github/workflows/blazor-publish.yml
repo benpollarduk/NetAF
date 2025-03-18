@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -51,11 +51,11 @@ jobs:
       shell: bash
 
     - name: Create temporary directory for Blazor app
-      run: mkdir "${{ runner.temp }}/blazor"
+      run: mkdir "${{ runner.temp }}\blazor"
 
     - name: Checkout existing Blazor app
       run: |
-        cd "${{ runner.temp }}/blazor"
+        cd "${{ runner.temp }}\blazor"
         git init
         git remote add origin https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF.git
         git fetch origin blazor-publish
@@ -63,7 +63,7 @@ jobs:
 
     - name: Delete existing Blazor files and directories
       run: |
-        $directory = "${{ runner.temp }}/blazor"
+        $directory = "${{ runner.temp }}\blazor"
         Get-ChildItem -Path $directory -Force -Recurse | Where-Object {
             $_.FullName -notmatch "\\\.git($|\\)"
         } | Remove-Item -Force -Recurse
@@ -71,18 +71,19 @@ jobs:
 
     - name: Copy Blazor files
       run: |
-        cp -r "${{ github.workspace }}/NetAF.Example.Blazor/dist/wwwroot/." "${{ runner.temp }}/blazor/"
+        cd "${{ runner.temp }}\blazor"
+        cp -r ${{ github.workspace }}\NetAF.Example.Blazor\dist\wwwroot\* . -Force
       
     - name: Update the base in index.html
       run: |
-        cd "${{ runner.temp }}/blazor"
+        cd "${{ runner.temp }}\blazor"
         $filePath = "index.html"
         (Get-Content $filePath) -replace '<base href="" />', '<base href="/NetAF/" />' | Set-Content -Path $filePath
       shell: pwsh
 
     - name: Commit and push changes to blazor-publish
       run: |
-        cd "${{ runner.temp }}/blazor"
+        cd "${{ runner.temp }}\blazor"
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
