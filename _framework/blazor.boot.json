@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "NetAF.Example.Blazor",
   "resources": {
-    "hash": "sha256-HZEoIyTJ/rfMwrNdsNy+EK+faFTnaggIwUYbbCR2o38=",
+    "hash": "sha256-UGTkisBbL8SFaiJ8pcspLDXQvV3I/xxgBUWp1fOGFTM=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-xNQsYHtL1vcbrVTHDZAwJM4WovpoyjsrM2C6FQ8cW1w="
     },
@@ -32,9 +32,10 @@
       "Microsoft.Extensions.Primitives.wasm": "sha256-Bi1hyBMWneH/ByWbqT/pNe0B7I/NQFklzD2g3Whdqlk=",
       "Microsoft.JSInterop.wasm": "sha256-KIgVt3TlKw/iYsoGw4v0lRA2K2oDX+1qSpvYJpfDYdg=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-xC6FbckADc+AndgC+vkBI5npfPvZD+RhR4Q97X2DhjQ=",
-      "NetAF.Example.Blazor.wasm": "sha256-64HxS1w6Pnava1pJ72DXa3IgKd3U67Dp82qO95IH+7Q=",
-      "NetAF.Example.wasm": "sha256-RE/64SgYKtbj/AJLUaB1Uxtx2XGmLruWc/B8K5V+wWQ=",
-      "NetAF.wasm": "sha256-wJmNyVaHiCmMv+DqgYIKYPpwkM4FWAlK7nRGxxQsTEg=",
+      "NetAF.Blazor.wasm": "sha256-Bs6zc5GBU6dzd4gSYK/tOBRLy7oXGtiAv0yKKnJRSVg=",
+      "NetAF.Example.Blazor.wasm": "sha256-766WF1i6GFSoOUOnX6x92Mdb2fH40qpV/u2WDuYVOVs=",
+      "NetAF.Example.wasm": "sha256-tDvJ6Xyqj84xehKdkK1dhBXfcWFc6I0sE7X7IrCbenE=",
+      "NetAF.wasm": "sha256-jQ7v32ZTe2vxbSPVD7LJN87pJnvnNVNS868AmaBmqEM=",
       "System.Collections.Concurrent.wasm": "sha256-i8Qcpy8lD6DHMcZStYhM2EylF1oh/DGQqJEVN2YD0is=",
       "System.Collections.wasm": "sha256-fIXESuLoFVn+kEWuEFIqs1CWiyLy99N1Qq5s+uHDTEM=",
       "System.ComponentModel.wasm": "sha256-T0OM75VQcELFeKofeuo3QISKtC4NO3w/cdk2oAxfpQk=",
@@ -43,7 +44,7 @@
       "System.Memory.wasm": "sha256-BhJbl5scjLrzwAyagHTlBX1WtRdLZXqbCqZS6eSz7+I=",
       "System.Net.Http.wasm": "sha256-ifeOGYDYLKHcCKSC7i6e5PwMqfkimp2KTtwgIDi8bkk=",
       "System.Net.Primitives.wasm": "sha256-eU8BbimXIbjW6z7UHyH8uTk15ZiQNV2z5+BaUeZAloo=",
-      "System.Private.CoreLib.wasm": "sha256-oL4REACkCEaulgeY6NkCqjNAK0xBZtAcrPe4wAh95MA=",
+      "System.Private.CoreLib.wasm": "sha256-z6Uo4F17kL6avnXEB+UUMuaKQGsJTXRyWrQj5S3EILw=",
       "System.Private.Uri.wasm": "sha256-FM/xVqaDK2qQF2zyphr1Q+ajtwsB4P6m50KfFfwMEuM=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-jcSTUxVr64ErHdYlBOqooftC1NPc7A7L3LfyplKZA34=",
       "System.Runtime.InteropServices.wasm": "sha256-sVGb2r0YaYYRJXjtlcar4um+jGQZoMjD/zvtRzkIPSg=",
