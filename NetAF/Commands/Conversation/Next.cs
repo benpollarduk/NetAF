@@ -8,6 +8,20 @@ namespace NetAF.Commands.Conversation
     /// </summary>
     public sealed class Next : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        public static CommandHelp CommandHelp { get; } = new("Next", "Continue the conversation", CommandCategory.Conversation);
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        internal static CommandHelp SilentCommandHelp { get; } = new(string.Empty, "Continue the conversation", CommandCategory.Conversation);
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>

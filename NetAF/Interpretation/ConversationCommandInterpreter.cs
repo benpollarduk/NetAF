@@ -20,6 +20,7 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
+            Next.CommandHelp,
             End.CommandHelp
         ];
 
@@ -48,7 +49,7 @@ namespace NetAF.Interpretation
             if (End.CommandHelp.Equals(input))
                 return new(true, new End());
 
-            if (string.IsNullOrEmpty(input.Trim()))
+            if (Next.CommandHelp.Equals(input) || Next.SilentCommandHelp.Equals(input.Trim()))
                 return new(true, new Next());
 
             if (!int.TryParse(input, out var index))
@@ -81,6 +82,10 @@ namespace NetAF.Interpretation
                     var response = mode.Converser.Conversation.CurrentParagraph.Responses[i];
                     commands.Add(new CommandHelp((i + 1).ToString(), response.Line.EnsureFinishedSentence().ToSpeech(), CommandCategory.Conversation));
                 }
+            }
+            else
+            {
+                commands.Add(Next.CommandHelp);
             }
 
             commands.Add(new CommandHelp(End.CommandHelp.Command, "End the conversation", CommandCategory.Conversation));
