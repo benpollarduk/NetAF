@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -71,8 +71,7 @@ jobs:
 
     - name: Copy Blazor files
       run: |
-        cd "${{ runner.temp }}\blazor"
-        cp -r ${{ github.workspace }}\NetAF.Example.Blazor\dist\wwwroot\* . -Force
+        cp -r "${{ github.workspace }}/NetAF.Example.Blazor/dist/wwwroot/." "${{ runner.temp }}/blazor/"
       
     - name: Update the base in index.html
       run: |
