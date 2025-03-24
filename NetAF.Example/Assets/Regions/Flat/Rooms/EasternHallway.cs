@@ -21,7 +21,7 @@ namespace NetAF.Example.Assets.Regions.Flat.Rooms
         /// <returns>The asset.</returns>
         public Room Instantiate()
         {
-            var room = new Room(Name, Description, [new Exit(Direction.East, true), new Exit(Direction.West)]);
+            var room = new Room(Name, Description, [new Exit(Direction.East, true), new Exit(Direction.West), new Exit(Direction.South)]);
 
             room.AddItem(new Telephone().Instantiate());
 
