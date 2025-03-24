@@ -1,5 +1,4 @@
 ﻿using NetAF.Logic;
-using NetAF.Logic.Modes;
 using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
@@ -30,7 +29,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            SceneMode.KeyType = KeyType.None;
+            FrameProperties.KeyType = KeyType.None;
             return new(ReactionResult.Inform, "Key has been turned off.");
         }
 

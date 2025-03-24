@@ -169,7 +169,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual("Took A, B and C.", result.Description);
+            Assert.AreEqual("Dropped A, B and C.", result.Description);
         }
 
         [TestMethod]

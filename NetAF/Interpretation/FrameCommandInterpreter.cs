@@ -68,16 +68,16 @@ namespace NetAF.Interpretation
 
             if (game.Mode is SceneMode)
             {
-                if (!SceneMode.DisplayCommandList)
+                if (!FrameProperties.DisplayCommandList)
                     commands.Add(CommandsOn.CommandHelp);
 
-                if (SceneMode.DisplayCommandList)
+                if (FrameProperties.DisplayCommandList)
                     commands.Add(CommandsOff.CommandHelp);
 
-                if (SceneMode.KeyType == KeyType.None)
+                if (FrameProperties.KeyType == KeyType.None)
                     commands.Add(KeyOn.CommandHelp);
 
-                if (SceneMode.KeyType != KeyType.None)
+                if (FrameProperties.KeyType != KeyType.None)
                     commands.Add(KeyOff.CommandHelp);
             }
 

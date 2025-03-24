@@ -1,5 +1,5 @@
 ﻿using NetAF.Logic;
-using NetAF.Logic.Modes;
+using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
 {
@@ -29,7 +29,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            SceneMode.DisplayCommandList = true;
+            FrameProperties.DisplayCommandList = true;
             return new(ReactionResult.Inform, "Commands have been turned on.");
         }
 

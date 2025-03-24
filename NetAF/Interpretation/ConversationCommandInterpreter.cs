@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NetAF.Commands;
 using NetAF.Commands.Conversation;
 using NetAF.Commands.Global;
@@ -52,11 +53,16 @@ namespace NetAF.Interpretation
             if (Next.CommandHelp.Equals(input) || Next.SilentCommandHelp.Equals(input.Trim()))
                 return new(true, new Next());
 
-            if (!int.TryParse(input, out var index))
+            var responsesAsCommands = GetContextualCommandHelp(game);
+            var responseCommand = Array.Find(responsesAsCommands ?? [], x => x.Command.InsensitiveEquals(input) || x.Shortcut.InsensitiveEquals(input));
+
+            if (responseCommand == null)
                 return InterpretationResult.Fail;
-            
-            if (index > 0 && index <= mode.Converser.Conversation?.CurrentParagraph?.Responses?.Length)
-                return new(true, new Respond(mode.Converser.Conversation.CurrentParagraph.Responses[index - 1]));
+
+            var response = Array.Find(mode.Converser.Conversation?.CurrentParagraph?.Responses ?? [], x => x.Line.InsensitiveEquals(responseCommand.Command));
+
+            if (response != null)
+                return new(true, new Respond(response));
 
             return InterpretationResult.Fail;
         }
@@ -80,7 +86,7 @@ namespace NetAF.Interpretation
                 for (var i = 0; i < mode.Converser.Conversation.CurrentParagraph.Responses.Length; i++)
                 {
                     var response = mode.Converser.Conversation.CurrentParagraph.Responses[i];
-                    commands.Add(new CommandHelp((i + 1).ToString(), response.Line.EnsureFinishedSentence().ToSpeech(), CommandCategory.Conversation));
+                    commands.Add(new CommandHelp(response.Line, response.Line.EnsureFinishedSentence().ToSpeech(), CommandCategory.Conversation, (i + 1).ToString(), displayAs: (i + 1).ToString()));
                 }
             }
             else
