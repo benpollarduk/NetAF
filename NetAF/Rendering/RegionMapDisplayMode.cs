@@ -1,9 +1,9 @@
 ﻿namespace NetAF.Rendering
 {
     /// <summary>
-    /// Enumeration of region map modes.
+    /// Enumeration of region map display modes.
     /// </summary>
-    public enum RegionMapMode
+    public enum RegionMapDisplayMode
     {
         /// <summary>
         /// Shows rooms at a detailed level.
