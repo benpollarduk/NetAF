@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Interpretation;
+using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
@@ -49,7 +50,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IConversationFrameBuilder>().Build($"Conversation with {Converser.Identifier.Name}", Converser, Interpreter.GetContextualCommandHelp(game), game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IConversationFrameBuilder>().Build($"Conversation with {Converser.Identifier.Name}", Converser, FrameProperties.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

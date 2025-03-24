@@ -1,11 +1,10 @@
 ﻿using NetAF.Logic;
-using NetAF.Logic.Modes;
 using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
 {
     /// <summary>
-    /// Represents the KeyOff command.
+    /// Represents the Key Off command.
     /// </summary>
     public sealed class KeyOff : ICommand
     {
@@ -14,7 +13,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("KeyOff", "Turn the key off", CommandCategory.Frame);
+        public static CommandHelp CommandHelp { get; } = new("Key Off", "Turn the key off", CommandCategory.Frame);
 
         #endregion
 
@@ -30,7 +29,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            SceneMode.KeyType = KeyType.None;
+            FrameProperties.KeyType = KeyType.None;
             return new(ReactionResult.Inform, "Key has been turned off.");
         }
 

@@ -5,16 +5,16 @@ using System.Text;
 namespace NetAF.Commands.Scene
 {
     /// <summary>
-    /// Represents the Take All command.
+    /// Represents the Drop All command.
     /// </summary>
-    public sealed class TakeAll : ICommand
+    public sealed class DropAll : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Take All", "Take all items in the current room", CommandCategory.Scene);
+        public static CommandHelp CommandHelp { get; } = new("Drop All", "Drop all items", CommandCategory.Scene);
 
         #endregion
 
@@ -34,20 +34,20 @@ namespace NetAF.Commands.Scene
                 return new(ReactionResult.Error, "You must specify a character.");
 
             if (!game.Player.CanTakeAndDropItems)
-                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot take items.");
+                return new(ReactionResult.Error, $"{game.Player.Identifier.Name} cannot drop items.");
 
             if (game.Overworld.CurrentRegion.CurrentRoom == null)
                 return new(ReactionResult.Error, "Not in a room.");
 
             StringBuilder builder = new();
 
-            var items = game.Overworld.CurrentRegion.CurrentRoom.Items.Where(x => x.IsTakeable && x.IsPlayerVisible).ToArray();
+            var items = game.Player.Items.Where(x => x.IsPlayerVisible && x.IsTakeable).ToArray();
 
             for (var i = 0; i < items.Length; i++)
             {
                 var item = items[i];
-                game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
-                game.Player.AddItem(item);
+                game.Player.RemoveItem(item);
+                game.Overworld.CurrentRegion.CurrentRoom.AddItem(item);
 
                 if (i < items.Length - 2)
                     builder.Append($"{item.Identifier.Name}, ");
@@ -58,9 +58,9 @@ namespace NetAF.Commands.Scene
             }
 
             if (builder.Length > 0)
-                return new(ReactionResult.Inform, $"Took {builder}.");
+                return new(ReactionResult.Inform, $"Dropped {builder}.");
             else
-                return new(ReactionResult.Error, "Nothing to take.");
+                return new(ReactionResult.Error, "Nothing to drop.");
         }
 
         /// <summary>

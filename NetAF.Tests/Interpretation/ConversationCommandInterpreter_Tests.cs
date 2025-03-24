@@ -142,5 +142,53 @@ namespace NetAF.Tests.Interpretation
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
+
+        [TestMethod]
+        public void GivenActiveConverser1CustomCommandAndResponse1ByCommand_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new ConversationCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var conversation = new Conversation(
+                new Paragraph("Test")
+                {
+                    Responses =
+                    [
+                        new Response("First")
+                    ]
+                }
+            );
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
+            npc.Conversation.Next(game);
+
+            game.ChangeMode(new ConversationMode(npc));
+
+            var result = interpreter.Interpret("First", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenActiveConverser1CustomCommandAndResponse1ByShortcut_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new ConversationCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var conversation = new Conversation(
+                new Paragraph("Test")
+                {
+                    Responses =
+                    [
+                        new Response("First")
+                    ]
+                }
+            );
+            var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
+            npc.Conversation.Next(game);
+
+            game.ChangeMode(new ConversationMode(npc));
+
+            var result = interpreter.Interpret("1", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
     }
 }

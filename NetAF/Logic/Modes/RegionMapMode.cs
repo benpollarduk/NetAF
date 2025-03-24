@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Interpretation;
+using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace NetAF.Logic.Modes
 
             FocusPosition = GetSnappedLocation(region, FocusPosition);
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, SceneMode.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, FrameProperties.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

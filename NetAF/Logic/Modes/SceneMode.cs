@@ -16,16 +16,6 @@ namespace NetAF.Logic.Modes
         #region StaticProperties
 
         /// <summary>
-        /// Get or set if the command list is displayed.
-        /// </summary>
-        public static bool DisplayCommandList { get; set; } = true;
-
-        /// <summary>
-        /// Get or set the type of key to use on the map.
-        /// </summary>
-        public static KeyType KeyType { get; set; } = KeyType.Dynamic;
-
-        /// <summary>
         /// Get or set the command categories to display.
         /// </summary>
         public static CommandCategory[] CommandCategories { get; set; } = [CommandCategory.Scene, CommandCategory.Custom, CommandCategory.Global, CommandCategory.Uncategorized, CommandCategory.Movement];
@@ -55,7 +45,7 @@ namespace NetAF.Logic.Modes
             commands.AddRange(game.Configuration.Interpreter.GetContextualCommandHelp(game));
             var filteredCommands = commands.Where(x => CommandCategories.Contains(x.Category)).ToArray();
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, DisplayCommandList ? filteredCommands : null, KeyType, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, FrameProperties.DisplayCommandList ? filteredCommands : null, FrameProperties.KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

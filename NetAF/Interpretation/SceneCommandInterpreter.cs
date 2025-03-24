@@ -55,6 +55,7 @@ namespace NetAF.Interpretation
             Move.UpCommandHelp,
             Move.DownCommandHelp,
             Drop.CommandHelp,
+            DropAll.CommandHelp,
             Examine.CommandHelp,
             Take.CommandHelp,
             TakeAll.CommandHelp,
@@ -81,6 +82,11 @@ namespace NetAF.Interpretation
             {
                 command = null;
                 return false;
+            }
+            else if (DropAll.CommandHelp.Equals($"{verb} {noun}"))
+            {
+                command = new DropAll();
+                return true;
             }
 
             game.Player.FindItem(noun, out var item);
@@ -505,7 +511,10 @@ namespace NetAF.Interpretation
             commands.Add(Examine.CommandHelp);
 
             if (game.Player.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
+            {
                 commands.Add(Drop.CommandHelp);
+                commands.Add(DropAll.CommandHelp);
+            }
 
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
             {

@@ -1,10 +1,10 @@
 ﻿using NetAF.Logic;
-using NetAF.Logic.Modes;
+using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
 {
     /// <summary>
-    /// Represents the CommandsOn command.
+    /// Represents the Commands On command.
     /// </summary>
     public sealed class CommandsOn : ICommand
     {
@@ -13,7 +13,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("CommandsOn", "Turn commands on", CommandCategory.Frame);
+        public static CommandHelp CommandHelp { get; } = new("Commands On", "Turn commands on", CommandCategory.Frame);
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace NetAF.Commands.Frame
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            SceneMode.DisplayCommandList = true;
+            FrameProperties.DisplayCommandList = true;
             return new(ReactionResult.Inform, "Commands have been turned on.");
         }
 
