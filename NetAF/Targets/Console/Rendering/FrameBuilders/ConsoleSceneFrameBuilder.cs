@@ -132,10 +132,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 var roomExamination = Room.DefaultRoomExamination.Invoke(new ExaminationRequest(room, new ExaminationScene(player, room)));
                 extendedDescription = extendedDescription.AddSentence(roomExamination.Description.EnsureFinishedSentence());
             }
-            else
-            {
-                extendedDescription = extendedDescription.AddSentence("There are no items in this area.");
-            }
 
             extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
 
