@@ -117,17 +117,17 @@ Displays a screen containing information about the game.
 about
 ```
 
-### CommandsOn / CommandsOff
+### Commands On / Commands Off
 Toggles the display of the contextual commands on the screen on and off.
 
 ```
-commandson
+commands on
 ```
 
 Or
 
 ```
-commandsoff
+commands off
 ```
 
 ### Exit
@@ -151,17 +151,17 @@ Displays a help screen for a specific command.
 help examine
 ```
 
-### KeyOn / KeyOff
+### Key On / Key Off
 Toggles the display of the map key on and off.
 
 ```
-keyon
+key on
 ```
 
 Or
 
 ```
-keyoff
+key off
 ```
 
 ### Map

@@ -4,7 +4,7 @@ using NetAF.Logic.Modes;
 namespace NetAF.Commands.Frame
 {
     /// <summary>
-    /// Represents the CommandsOff command.
+    /// Represents the Commands Off command.
     /// </summary>
     public sealed class CommandsOff : ICommand
     {
@@ -13,7 +13,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("CommandsOff", "Turn commands off", CommandCategory.Frame);
+        public static CommandHelp CommandHelp { get; } = new("Commands Off", "Turn commands off", CommandCategory.Frame);
 
         #endregion
 

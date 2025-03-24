@@ -5,7 +5,7 @@ using NetAF.Rendering;
 namespace NetAF.Commands.Frame
 {
     /// <summary>
-    /// Represents the KeyOff command.
+    /// Represents the Key Off command.
     /// </summary>
     public sealed class KeyOff : ICommand
     {
@@ -14,7 +14,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("KeyOff", "Turn the key off", CommandCategory.Frame);
+        public static CommandHelp CommandHelp { get; } = new("Key Off", "Turn the key off", CommandCategory.Frame);
 
         #endregion
 
