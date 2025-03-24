@@ -2,7 +2,6 @@
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Conversations;
-using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using System;
@@ -65,7 +64,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 builder.H4(CommandTitle);
 
                 foreach (var contextualCommand in contextualCommands)
-                    builder.P($"{contextualCommand.DisplayCommand} - {contextualCommand.Description.EnsureFinishedSentence()}");
+                    builder.P($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
             }
 
             return new HtmlFrame(builder);
