@@ -1,5 +1,5 @@
 ﻿using NetAF.Commands;
-using NetAF.Commands.Global;
+using NetAF.Commands.Execution;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Utilities;

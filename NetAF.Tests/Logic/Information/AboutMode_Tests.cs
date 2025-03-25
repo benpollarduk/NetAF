@@ -5,7 +5,7 @@ using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Logic.Modes;
 
-namespace NetAF.Tests.Logic.Modes
+namespace NetAF.Tests.Logic.Information
 {
     [TestClass]
     public class AboutMode_Tests

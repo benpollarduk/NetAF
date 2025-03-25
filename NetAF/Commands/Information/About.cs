@@ -1,7 +1,7 @@
 ﻿using NetAF.Logic;
 using NetAF.Logic.Modes;
 
-namespace NetAF.Commands.Global
+namespace NetAF.Commands.Information
 {
     /// <summary>
     /// Represents the About command.

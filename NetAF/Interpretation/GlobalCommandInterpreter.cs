@@ -1,5 +1,6 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Global;
+using NetAF.Commands.Information;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Logic;

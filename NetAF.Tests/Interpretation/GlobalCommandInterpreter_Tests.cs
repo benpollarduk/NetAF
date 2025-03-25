@@ -5,6 +5,7 @@ using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic.Modes;
+using NetAF.Commands.Information;
 
 namespace NetAF.Tests.Interpretation
 {
@@ -41,7 +42,7 @@ namespace NetAF.Tests.Interpretation
             var interpreter = new GlobalCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(NetAF.Commands.Global.About.CommandHelp.Command, game);
+            var result = interpreter.Interpret(About.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

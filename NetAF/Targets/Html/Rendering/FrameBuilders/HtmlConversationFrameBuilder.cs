@@ -5,7 +5,6 @@ using NetAF.Conversations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using System;
-using System.Linq;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -21,6 +20,27 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// Get or set the command title.
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Append commands.
+        /// </summary>
+        /// <param name="builder">The HTML builder.</param>
+        /// <param name="commandTitle">The title for the command section.</param>
+        /// <param name="commands">The commands.</param>
+        private static void AppendCommands(HtmlBuilder builder, string commandTitle, CommandHelp[] commands)
+        {
+            if ((commands?.Length ?? 0) == 0)
+                return;
+
+            builder.H4(commandTitle);
+
+            foreach (var contextualCommand in commands)
+                builder.P($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
+        }
 
         #endregion
 
@@ -41,31 +61,37 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(title))
                 builder.H1(title);
 
+            Participant? lastParticipant = null;
+
             if (converser?.Conversation?.Log != null)
             {
                 foreach (var log in converser.Conversation.Log)
                 {
-                    switch (log.Participant)
+                    if (lastParticipant != log.Participant)
                     {
-                        case Participant.Player:
-                            builder.P("You: " + log.Line);
-                            break;
-                        case Participant.Other:
-                            builder.P($"{converser.Identifier.Name}: " + log.Line);
-                            break;
-                        default:
-                            throw new NotImplementedException();
+                        if (lastParticipant != null)
+                            builder.Br();
+
+                        switch (log.Participant)
+                        {
+                            case Participant.Player:
+                                builder.H3("You");
+                                break;
+                            case Participant.Other:
+                                builder.H3(converser.Identifier.Name);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+
+                        lastParticipant = log.Participant;
                     }
+
+                    builder.P(log.Line);
                 }
             }
 
-            if (contextualCommands?.Any() ?? false)
-            {
-                builder.H4(CommandTitle);
-
-                foreach (var contextualCommand in contextualCommands)
-                    builder.P($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
-            }
+            AppendCommands(builder, CommandTitle, contextualCommands);
 
             return new HtmlFrame(builder);
         }

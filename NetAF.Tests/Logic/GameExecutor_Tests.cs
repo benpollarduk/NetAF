@@ -189,7 +189,7 @@ namespace NetAF.Tests.Logic
             // enter game, otherwise would be on title screen
             GameExecutor.Update();
 
-            var result = GameExecutor.Update(NetAF.Commands.Global.Exit.CommandHelp.Command);
+            var result = GameExecutor.Update(NetAF.Commands.Execution.Exit.CommandHelp.Command);
 
             Assert.IsTrue(result.Completed);
         }

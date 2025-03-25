@@ -1,20 +1,19 @@
-﻿using NetAF.Commands.Global;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Locations;
 using NetAF.Utilities;
+using NetAF.Commands.Execution;
 
-namespace NetAF.Tests.Commands.Global
+namespace NetAF.Tests.Commands.Execution
 {
     [TestClass]
-    public class New_Tests
+    public class Exit_Tests
     {
         [TestMethod]
         public void GivenNullGame_WhenInvoke_ThenError()
         {
-            var command = new New();
+            var command = new Exit();
 
             var result = command.Invoke(null);
 
@@ -25,7 +24,7 @@ namespace NetAF.Tests.Commands.Global
         public void GivenValidGame_WhenInvoke_ThenSilent()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
-            var command = new New();
+            var command = new Exit();
 
             var result = command.Invoke(game);
 
@@ -36,11 +35,11 @@ namespace NetAF.Tests.Commands.Global
         public void GivenGame_WhenGetPrompts_ThenEmptyArray()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
-            Room room = new(string.Empty, string.Empty);
+            NetAF.Assets.Locations.Room room = new(string.Empty, string.Empty);
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new New();
+            var command = new Exit();
 
             var result = command.GetPrompts(game);
 

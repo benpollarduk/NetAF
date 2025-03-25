@@ -1,12 +1,11 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Commands.Global;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Exit = NetAF.Assets.Locations.Exit;
 using NetAF.Logic;
 using NetAF.Commands;
 using NetAF.Utilities;
+using NetAF.Commands.Information;
 
 namespace NetAF.Tests.Commands.Global
 {

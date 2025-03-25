@@ -1,18 +1,18 @@
 ﻿using NetAF.Logic;
 
-namespace NetAF.Commands.Global
+namespace NetAF.Commands.Execution
 {
     /// <summary>
-    /// Represents the New command.
+    /// Represents the Exit command.
     /// </summary>
-    public sealed class New : ICommand
+    public sealed class Exit : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("New", "Start a new game", CommandCategory.Execution);
+        public static CommandHelp CommandHelp { get; } = new("Exit", "Exit the game", CommandCategory.Execution);
 
         #endregion
 
@@ -28,9 +28,8 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            GameExecutor.Restart();
-
-            return new(ReactionResult.Silent, "New game.");
+            GameExecutor.CancelExecution();
+            return new(ReactionResult.Silent, "Exiting...");
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Conversations;
-using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
