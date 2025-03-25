@@ -125,5 +125,27 @@ namespace NetAF.Tests.Interpretation
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetSupportedCommands_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+
+            var result = interpreter.SupportedCommands;
+
+            Assert.IsTrue(result.Length > 0);
+        }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetContextualCommandHelp_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new SceneMode());
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.IsTrue(result.Length > 0);
+        }
     }
 }

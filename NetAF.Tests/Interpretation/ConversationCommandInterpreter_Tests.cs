@@ -190,5 +190,15 @@ namespace NetAF.Tests.Interpretation
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetSupportedCommands_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new ConversationCommandInterpreter();
+
+            var result = interpreter.SupportedCommands;
+
+            Assert.IsTrue(result.Length > 0);
+        }
     }
 }

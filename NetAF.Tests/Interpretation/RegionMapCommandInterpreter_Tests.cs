@@ -26,6 +26,16 @@ namespace NetAF.Tests.Interpretation
         private Overworld overworld;
 
         [TestMethod]
+        public void GivenInterpreter_WhenGetSupportedCommands_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new RegionMapCommandInterpreter();
+
+            var result = interpreter.SupportedCommands;
+
+            Assert.IsTrue(result.Length > 0);
+        }
+
+        [TestMethod]
         public void GivenCanPanAnyDirection_WhenGetContextualCommands_ThenReturn7Commands()
         {
             var interpreter = new RegionMapCommandInterpreter();

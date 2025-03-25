@@ -257,5 +257,54 @@ namespace NetAF.Tests.Interpretation
 
             Assert.IsFalse(result.WasInterpretedSuccessfully);
         }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetSupportedCommands_ThenReturnArrayWithNoItems()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty, CommandCategory.Uncategorized, "T"), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+
+            var result = interpreter.SupportedCommands;
+
+            Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
+        public void GivenInterpreter_WhenGetContextualCommandHelp_ThenReturnArrayWithSomeItems()
+        {
+            var interpreter = new CustomCommandInterpreter();
+            CustomCommand[] commands =
+            [
+                new CustomCommand(new("Two", string.Empty, CommandCategory.Uncategorized, "T"), true, true, (_, _) =>
+                {
+                    return new(ReactionResult.Error, string.Empty);
+                })
+            ];
+            var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
+            var region = new Region(Identifier.Empty, Description.Empty);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
+            region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
+            overworld.AddRegion(region);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new SceneMode());
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.IsTrue(result.Length > 0);
+        }
     }
 }

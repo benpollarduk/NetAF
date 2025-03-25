@@ -72,7 +72,7 @@ namespace NetAF.Interpretation
         /// <summary>
         /// Get an array of all supported commands.
         /// </summary>
-        public CommandHelp[] SupportedCommands { get; } = null;
+        public CommandHelp[] SupportedCommands { get; } = [];
 
         /// <summary>
         /// Interpret a string.
