@@ -62,9 +62,22 @@ namespace NetAF.Tests.Targets.Html
             builder.Resize(new(5, 1));
             builder.SetCell(4, 0, 'a', AnsiColor.White);
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder);
+            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, false, false);
 
-            Assert.AreEqual("    a<br>", result);
+            Assert.AreEqual("    a", result);
+        }
+
+        [TestMethod]
+        public void GivenEmptyCharactersExceptLastOverTwoLines_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(5, 2));
+            builder.SetCell(4, 0, 'a', AnsiColor.White);
+            builder.SetCell(4, 1, 'a', AnsiColor.White);
+
+            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, false, false);
+
+            Assert.AreEqual("    a<br>    a", result);
         }
 
         [TestMethod]
@@ -73,9 +86,32 @@ namespace NetAF.Tests.Targets.Html
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, false);
+            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, false, false, false);
 
-            Assert.AreEqual("\0\0\0\0\0<br>", result);
+            Assert.AreEqual("\0\0\0\0\0", result);
+        }
+
+
+        [TestMethod]
+        public void GivenEmptyCharactersOver2Rows_WhenConvertGridStringBuilderToHtmlStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(5, 2));
+
+            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, false, false, false);
+
+            Assert.AreEqual("\0\0\0\0\0<br>\0\0\0\0\0", result);
+        }
+
+        [TestMethod]
+        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToHtmlStringUsingMonospace_ThenReturnCorrectlyFormattedOutput()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(5,1));
+
+            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, true, true);
+
+            Assert.IsTrue(result.StartsWith("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;"));
         }
 
         [TestMethod]

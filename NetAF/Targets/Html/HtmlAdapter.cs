@@ -34,36 +34,47 @@ namespace NetAF.Targets.Html
         }
 
         /// <summary>
+        /// Wrap an HTML string in HTML that ensures that it uses an aligned monospace font.
+        /// </summary>
+        /// <param name="html">The HTML to wrap.</param>
+        /// <returns>The wrapped HTML.</returns>
+        private static string ToAlignedMonospace(string html)
+        {
+            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
+            return $"<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\">{html}</pre>";
+        }
+
+        /// <summary>
         /// Convert the contents of a GridStringBuilder to HTML.
         /// </summary>
         /// <param name="builder">The GridStringBuilder to convert.</param>
         /// <param name="padEmptyCharacters">Specify if empty characters should be padded with a space.</param>
+        /// <param name="retainFontColors">Specify if font colors should be retained.</param>
+        /// <param name="useMonospace">Specify if the HTML should be rendered in a monospace font to retain horizontal cell spacing.</param>
         /// <returns>A HTML string representing the contents of the GridStringBuilder.</returns>
-        public static string ConvertGridStringBuilderToHtmlString(GridStringBuilder builder, bool padEmptyCharacters = true)
+        public static string ConvertGridStringBuilderToHtmlString(GridStringBuilder builder, bool padEmptyCharacters = true, bool retainFontColors = true, bool useMonospace = true)
         {
-            StringBuilder lineBuilder = new();
             StringBuilder stringBuilder = new();
 
             for (var row = 0; row < builder.DisplaySize.Height; row++)
             {
                 for (var column = 0; column < builder.DisplaySize.Width; column++)
                 {
+                    var foreground = builder.GetCellColor(column, row);
                     var character = builder.GetCharacter(column, row);
+                    character = character == 0 && padEmptyCharacters ? ' ' : character;
 
-                    if (padEmptyCharacters && character == 0)
-                        character = ' ';
-
-                    lineBuilder.Append(character);
+                    if (retainFontColors)
+                        stringBuilder.Append($"<span style=\"color: {AnsiColorToHex(foreground)}; display: inline-block; line-height: 1;\">{character}</span>");
+                    else
+                        stringBuilder.Append(character);
                 }
 
-                var line = lineBuilder.ToString();
-                line = line.TrimEnd();
-                lineBuilder.Clear();
-                stringBuilder.Append(line);
-                stringBuilder.Append("<br>");
+                if (row < builder.DisplaySize.Height - 1)
+                    stringBuilder.Append("<br>");
             }
 
-            return stringBuilder.ToString();
+            return useMonospace ? ToAlignedMonospace(stringBuilder.ToString()) : stringBuilder.ToString();
         }
 
         /// <summary>
@@ -91,8 +102,7 @@ namespace NetAF.Targets.Html
                     stringBuilder.Append("<br>");
             }
 
-            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
-            return $"<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\">{stringBuilder}</pre>";
+            return ToAlignedMonospace(stringBuilder.ToString());
         }
 
         /// <summary>
@@ -119,8 +129,7 @@ namespace NetAF.Targets.Html
                     stringBuilder.Append("<br>");
             }
 
-            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
-            return $"<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\">{stringBuilder}</pre>";
+            return ToAlignedMonospace(stringBuilder.ToString());
         }
 
         #endregion
