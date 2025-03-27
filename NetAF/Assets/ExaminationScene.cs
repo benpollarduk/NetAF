@@ -40,7 +40,7 @@ namespace NetAF.Assets
         /// Initializes a new instance of the ExaminationScene class.
         /// </summary>
         /// <param name="game">The executing game.</param>
-        public ExaminationScene(Game game) : this(game.Player, game.Overworld?.CurrentRegion?.CurrentRoom)
+        public ExaminationScene(Game game) : this(game?.Player, game?.Overworld?.CurrentRegion?.CurrentRoom)
         {
         }
 

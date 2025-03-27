@@ -60,5 +60,53 @@ namespace NetAF.Tests.Assets.Characters
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void GivenNoItems_WhenExamine_ThenANonEmptyDescription()
+        {
+            var pc = new PlayableCharacter("A", "A");
+
+            var result = pc.Examine(new ExaminationScene(null));
+
+            Assert.AreNotEqual(string.Empty, result.Description);
+        }
+
+        [TestMethod]
+        public void GivenSingleInvisibleItem_WhenExamine_ThenANonEmptyDescription()
+        {
+            var pc = new PlayableCharacter("A", "A");
+            var item = new Item("B", "B") { IsPlayerVisible = false };
+            pc.AddItem(item);
+
+            var result = pc.Examine(new ExaminationScene(null));
+
+            Assert.AreNotEqual(string.Empty, result.Description);
+        }
+
+        [TestMethod]
+        public void GivenSingleItem_WhenExamine_ThenANonEmptyDescription()
+        {
+            var pc = new PlayableCharacter("A", "A");
+            var item = new Item("B", "B");
+            pc.AddItem(item);
+
+            var result = pc.Examine(new ExaminationScene(null));
+
+            Assert.AreNotEqual(string.Empty, result.Description);
+        }
+
+        [TestMethod]
+        public void GivenMultipleItems_WhenExamine_ThenANonEmptyDescription()
+        {
+            var pc = new PlayableCharacter("A", "A");
+            var item1 = new Item("B", "B");
+            var item2 = new Item("C", "C");
+            pc.AddItem(item1);
+            pc.AddItem(item2);
+
+            var result = pc.Examine(new ExaminationScene(null));
+
+            Assert.AreNotEqual(string.Empty, result.Description);
+        }
     }
 }
