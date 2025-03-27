@@ -316,7 +316,7 @@ namespace NetAF.Assets.Locations
             if (request.Examinable is not Region region)
                 return DefaultExamination(request);
 
-            return new(region.Identifier + ": " + region.Description.GetDescription());
+            return new(region.Description.GetDescription());
         }
 
         /// <summary>

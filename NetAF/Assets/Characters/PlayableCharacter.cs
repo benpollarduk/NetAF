@@ -1,4 +1,8 @@
 ﻿using NetAF.Commands;
+using NetAF.Extensions;
+using NetAF.Utilities;
+using System;
+using System.Linq;
 
 namespace NetAF.Assets.Characters
 {
@@ -7,6 +11,15 @@ namespace NetAF.Assets.Characters
     /// </summary>
     public sealed class PlayableCharacter : Character
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default examination for a PlayableCharacter.
+        /// </summary>
+        public static ExaminationCallback DefaultPlayableCharacterExamination => ExamineThis;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -84,7 +97,37 @@ namespace NetAF.Assets.Characters
             Items = items ?? [];
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
-            Examination = examination ?? DefaultExamination;
+            Examination = examination ?? DefaultPlayableCharacterExamination;
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Examine this Room.
+        /// </summary>
+        /// <param name="request">The examination request.</param>
+        /// <returns>The examination.</returns>
+        private static Examination ExamineThis(ExaminationRequest request)
+        {
+            var defaultExamination = DefaultExamination(request);
+
+            if (request.Examinable is not PlayableCharacter playableCharacter)
+                return defaultExamination;
+
+            if (!Array.Exists(playableCharacter.Items, i => i.IsPlayerVisible))
+                return defaultExamination;
+
+            if (playableCharacter.Items.Count(i => i.IsPlayerVisible) == 1)
+            {
+                Item singularItem = playableCharacter.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
+                return new($"{defaultExamination.Description}{StringUtilities.Newline}{StringUtilities.Newline}You have {singularItem.Identifier.Name.GetObjectifier().StartWithLower()} {singularItem.Identifier}".EnsureFinishedSentence());
+            }
+
+            var items = playableCharacter.Items.Cast<IExaminable>().ToArray();
+            var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
+            return new($"{defaultExamination.Description}{StringUtilities.Newline}{StringUtilities.Newline}You have {sentence.StartWithLower()}".EnsureFinishedSentence());
         }
 
         #endregion

@@ -96,7 +96,7 @@ namespace NetAF.Assets.Characters
 
         #endregion
 
-        #region IInteractWithItem Members
+        #region Implementation of IInteractWithItem
 
         /// <summary>
         /// Interact with an item.
