@@ -3,7 +3,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Targets.Html;
+using NetAF.Targets.Text;
 using NetAF.Utilities;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
@@ -27,7 +27,7 @@ namespace NetAF.Tests.Targets.Text
             HtmlBuilder htmlBuilder = new();
             var frame = new HtmlReactionFrameBuilder(htmlBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
-            HtmlAdapter adapter = new(presenter);
+            TextAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Targets.Text
             GridStringBuilder gridStringBuilder = new();
             var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
-            HtmlAdapter adapter = new(presenter);
+            TextAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
