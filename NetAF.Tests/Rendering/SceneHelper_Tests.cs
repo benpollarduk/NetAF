@@ -1,9 +1,9 @@
 ﻿using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
+using NetAF.Rendering;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {
@@ -32,6 +32,38 @@ namespace NetAF.Tests.Rendering.FrameBuilders
             var room = new Room(string.Empty, string.Empty, [new Exit(Direction.East)]);
             regionMaker[0, 0, 0] = room;
             regionMaker[1, 0, 0] = new Room("Test", "Test", [new Exit(Direction.West)]);
+            var region = regionMaker.Make();
+            region.Enter();
+            var viewPoint = ViewPoint.Create(region);
+
+            var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithAViewUp_WhenCreateViewpointAsString_ThenNonEmptyString()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty, [new Exit(Direction.Up)]);
+            regionMaker[0, 0, 0] = room;
+            regionMaker[0, 0, 1] = new Room("Test", "Test", [new Exit(Direction.Down)]);
+            var region = regionMaker.Make();
+            region.Enter();
+            var viewPoint = ViewPoint.Create(region);
+
+            var result = SceneHelper.CreateViewpointAsString(room, viewPoint);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithAViewDown_WhenCreateViewpointAsString_ThenNonEmptyString()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty, [new Exit(Direction.Down)]);
+            regionMaker[0, 0, 1] = room;
+            regionMaker[0, 0, 0] = new Room("Test", "Test", [new Exit(Direction.Up)]);
             var region = regionMaker.Make();
             region.Enter();
             var viewPoint = ViewPoint.Create(region);

@@ -130,69 +130,62 @@ namespace NetAF.Logic
         /// <returns>The result of the action.</returns>
         internal UpdateResult Update(string input = "")
         {
-            try
+            switch (State)
             {
-                switch (State)
-                {
-                    case GameState.NotStarted:
+                case GameState.NotStarted:
 
-                        State = GameState.Active;
-                        endMode = null;
+                    State = GameState.Active;
+                    endMode = null;
 
-                        // setup the adapter for this game
-                        Configuration.Adapter.Setup(this);
+                    // setup the adapter for this game
+                    Configuration.Adapter.Setup(this);
 
-                        // change mode to show the title screen
-                        ChangeMode(new TitleMode());
+                    // change mode to show the title screen
+                    ChangeMode(new TitleMode());
 
+                    Mode.Render(this);
+
+                    return new(true);
+
+                case GameState.Active:
+
+                    // process the input
+                    var reaction = ProcessInput(input);
+
+                    // handle the reaction
+                    HandleReaction(reaction);
+
+                    // check if the game has ended, and if so end
+                    if (CheckForGameEnd(EndConditions, out endMode))
+                        State = GameState.EndConditionMet;
+
+                    // providing the game hasn't finished render
+                    if (State != GameState.Finished)
                         Mode.Render(this);
 
-                        return new(true);
+                    return new(true);
 
-                    case GameState.Active:
+                case GameState.EndConditionMet:
 
-                        // process the input
-                        var reaction = ProcessInput(input);
+                    // set and render the end mode
+                    ChangeMode(endMode);
+                    Mode.Render(this);
 
-                        // handle the reaction
-                        HandleReaction(reaction);
+                    // finishing
+                    State = GameState.Finishing;
 
-                        // check if the game has ended, and if so end
-                        if (CheckForGameEnd(EndConditions, out endMode))
-                            State = GameState.EndConditionMet;
+                    return new(true);
 
-                        // providing the game hasn't finished render
-                        if (State != GameState.Finished)
-                            Mode.Render(this);
+                case GameState.Finishing:
 
-                        return new(true);
+                    // finished execution
+                    State = GameState.Finished;
 
-                    case GameState.EndConditionMet:
+                    return new(true);
 
-                        // set and render the end mode
-                        ChangeMode(endMode);
-                        Mode.Render(this);
+                default:
 
-                        // finishing
-                        State = GameState.Finishing;
-
-                        return new(true);
-
-                    case GameState.Finishing:
-
-                        // finished execution
-                        State = GameState.Finished;
-
-                        return new(true);
-
-                    default:
-
-                        return new(false, $"Cannot move to next when state is {State}.");
-                }
-            }
-            catch (Exception e)
-            {
-                return new(false, $"Exception caught during update: {e.Message}");
+                    return new(false, $"Cannot move to next when state is {State}.");
             }
         }
 

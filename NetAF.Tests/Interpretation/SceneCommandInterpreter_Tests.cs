@@ -259,11 +259,69 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
+        public void GivenExamineUnknown_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " A", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExaminePlayerItem_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Player.AddItem(new Item("A", string.Empty));
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " A", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExamineRoomItem_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.CurrentRoom.AddItem(new Item("A", string.Empty));
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " A", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenExamineRoomCharacter_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.CurrentRoom.AddCharacter(new NonPlayableCharacter("A", string.Empty));
+
+            var result = interpreter.Interpret(Examine.CommandHelp.Command + " A", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
         public void GivenTake_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new SceneCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             overworld.CurrentRegion.CurrentRoom.AddItem(new(Identifier.Empty, Description.Empty, true));
+
+            var result = interpreter.Interpret(Take.CommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenTakeWithMadeUpItem_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
             var result = interpreter.Interpret(Take.CommandHelp.Command, game);
 
@@ -327,6 +385,31 @@ namespace NetAF.Tests.Interpretation
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
+
+        [TestMethod]
+        public void GivenTalkWhenOnlyOneCharacter_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            overworld.CurrentRegion.CurrentRoom.AddCharacter(new(Identifier.Empty, Description.Empty));
+
+            var result = interpreter.Interpret(Talk.TalkCommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenTalkToNamedCharacter_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new SceneCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            overworld.CurrentRegion.CurrentRoom.AddCharacter(new("A", string.Empty));
+
+            var result = interpreter.Interpret($"{Talk.TalkCommandHelp.Command} {Talk.ToCommandHelp.Command} A", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
         [TestMethod]
         public void GivenUse_WhenInterpret_ThenReturnTrue()
         {
@@ -373,9 +456,9 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenInterpreter_WhenGetContextualCommandHelp_ThenReturnArrayWithSomeItems()
         {
-            overworld.CurrentRegion.CurrentRoom.AddItem(new Item("a", "b"));
+            overworld.CurrentRegion.CurrentRoom.AddItem(new Item("a", "b", isTakeable: true));
             overworld.CurrentRegion.CurrentRoom.AddCharacter(new NonPlayableCharacter("a", "b", new NetAF.Conversations.Conversation()));
-            PlayableCharacter player = new(string.Empty, string.Empty, [new Item("a", "b")]);
+            PlayableCharacter player = new(string.Empty, string.Empty, [new Item("a", "b", isTakeable: true)]);
             var interpreter = new SceneCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 

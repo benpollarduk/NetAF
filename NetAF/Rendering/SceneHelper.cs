@@ -5,7 +5,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Extensions;
 
-namespace NetAF.Rendering.FrameBuilders
+namespace NetAF.Rendering
 {
     /// <summary>
     /// Provides helper functionality for scenes.

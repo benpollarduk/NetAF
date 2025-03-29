@@ -187,13 +187,6 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
         {
-            if (string.IsNullOrEmpty(noun))
-            {
-                // default to current room
-                command = new Examine(game.Overworld.CurrentRegion.CurrentRoom);
-                return true;
-            }
-
             // check exits to room
             if (TryParseToDirection(noun, out var direction))
             {
