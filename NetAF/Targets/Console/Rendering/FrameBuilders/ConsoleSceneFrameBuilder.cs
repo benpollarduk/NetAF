@@ -125,20 +125,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var description = room.Description.GetDescription().EnsureFinishedSentence();
             gridStringBuilder.DrawWrapped(description, leftMargin, lastY + 3, availableWidth, TextColor, out _, out lastY);
 
-            var extendedDescription = string.Empty;
-
-            if (room.Items.Length != 0)
-            {
-                var roomExamination = Room.DefaultRoomExamination.Invoke(new ExaminationRequest(room, new ExaminationScene(player, room)));
-                extendedDescription = extendedDescription.AddSentence(roomExamination.Description.EnsureFinishedSentence());
-            }
-
-            extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
-
             if (viewPoint.Any)
-                extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint));
-
-            gridStringBuilder.DrawWrapped(extendedDescription, leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(SceneHelper.CreateViewpointAsString(room, viewPoint), leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
 
             if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
                 consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
@@ -149,7 +137,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
 
             if (player.Attributes.Count > 0)
-                gridStringBuilder.DrawWrapped(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out _);
 
             if (contextualCommands?.Any() ?? false)
                 AddCommands(gridStringBuilder, contextualCommands, new Size(availableWidth, size.Height), leftMargin);

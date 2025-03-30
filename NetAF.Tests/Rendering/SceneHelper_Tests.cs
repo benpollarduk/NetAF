@@ -119,34 +119,67 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         }
 
         [TestMethod]
-        public void GivenRoomWithNoNPCs_WhenCreateNPCString_ThenEmptyString()
+        public void GivenRoomWithNoNPCs_WhenCreateCharactersString_ThenEmptyString()
         {
             var room = new Room(string.Empty, string.Empty);
 
-            var result = SceneHelper.CreateNPCString(room);
+            var result = SceneHelper.CreateCharactersString(room);
 
             Assert.AreEqual(string.Empty, result);
         }
 
         [TestMethod]
-        public void GivenRoomWithASingleNPC_WhenCreateNPCString_ThenNonEmptyString()
+        public void GivenRoomWithASingleNPC_WhenCreateCharactersString_ThenNonEmptyString()
         {
             var room = new Room(string.Empty, string.Empty);
             room.AddCharacter(new NonPlayableCharacter("Test", "Test"));
 
-            var result = SceneHelper.CreateNPCString(room);
+            var result = SceneHelper.CreateCharactersString(room);
 
             Assert.AreNotEqual(string.Empty, result);
         }
 
         [TestMethod]
-        public void GivenRoomWithTwoNPCs_WhenCreateNPCString_ThenNonEmptyString()
+        public void GivenRoomWithTwoNPCs_WhenCreateCharactersString_ThenNonEmptyString()
         {
             var room = new Room(string.Empty, string.Empty);
             room.AddCharacter(new NonPlayableCharacter("Test", "Test"));
             room.AddCharacter(new NonPlayableCharacter("Test2", "Test"));
 
-            var result = SceneHelper.CreateNPCString(room);
+            var result = SceneHelper.CreateCharactersString(room);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithNoItems_WhenCreateItemsString_ThenEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+
+            var result = SceneHelper.CreateItemsString(room);
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithASingleItem_WhenCreateItemsString_ThenNonEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+            room.AddItem(new Item("Test", "Test"));
+
+            var result = SceneHelper.CreateItemsString(room);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithTwoItems_WhenCreateItemsString_ThenNonEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+            room.AddItem(new Item("Test", "Test"));
+            room.AddItem(new Item("Test2", "Test"));
+
+            var result = SceneHelper.CreateItemsString(room);
 
             Assert.AreNotEqual(string.Empty, result);
         }

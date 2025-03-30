@@ -26,7 +26,7 @@ namespace NetAF.Extensions
             if (str.EndsWith(','))
                 value.Remove(value.Length - 1, 1);
 
-            value.Append(".");
+            value.Append('.');
         }
 
         #endregion

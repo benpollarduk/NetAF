@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NetAF.Assets;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Utilities;
@@ -116,7 +117,9 @@ namespace NetAF.Extensions
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            if (value.EndsWith('.') || value.EndsWith('!') || value.EndsWith('?'))
+            char[] exclusions = ['.', '!', '?', ':', ';', StringUtilities.LF, StringUtilities.CR];
+
+            if (exclusions.Contains(value[^1]))
                 return value;
 
             if (value.EndsWith(','))

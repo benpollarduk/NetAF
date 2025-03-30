@@ -6,9 +6,9 @@ using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Interpretation;
+using NetAF.Rendering;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
-using NetAF.Utilities;
 
 namespace NetAF.Assets.Locations
 {
@@ -463,40 +463,15 @@ namespace NetAF.Assets.Locations
                 return new($"{room.Identifier.Name} is empty.");
 
             StringBuilder examinationBuilder = new();
-            
-            switch (visibleItems)
-            {
-                case 0:
-                    break;
-                case 1:
-                    Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
-                    examinationBuilder.AppendLine($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
-                    break;
-                default:
-                    var items = room.Items.Cast<IExaminable>().ToArray();
-                    var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
-                    var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
-                    examinationBuilder.AppendLine($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
-                    break;
-            }
+
+            if (visibleItems > 0)
+                examinationBuilder.AppendLine(SceneHelper.CreateItemsString(room));
 
             if (visibleItems > 0 && visibleCharacters > 0)
-                examinationBuilder.Append(StringUtilities.Newline);
+                examinationBuilder.AppendLine();
 
-            switch (visibleCharacters)
-            {
-                case 0:
-                    break;
-                case 1:
-                    Character singularCharacter = room.Characters.Where(i => i.IsPlayerVisible).ToArray()[0];
-                    examinationBuilder.AppendLine($"{singularCharacter.Identifier.Name} is here.");
-                    break;
-                default:
-                    var characters = room.Characters.Cast<IExaminable>().ToArray();
-                    var sentence = StringUtilities.ConstructExaminablesAsSentence(characters);
-                    examinationBuilder.AppendLine($"{sentence} are here.");
-                    break;
-            }
+            if (visibleCharacters > 0)
+                examinationBuilder.AppendLine(SceneHelper.CreateCharactersString(room));
 
             return new(examinationBuilder.ToString());
         }

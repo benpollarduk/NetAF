@@ -48,18 +48,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             var extendedDescription = string.Empty;
 
-            if (room.Items.Length != 0)
-            {
-                var roomExamination = Room.DefaultRoomExamination.Invoke(new ExaminationRequest(room, new ExaminationScene(player, room)));
-                extendedDescription = extendedDescription.AddSentence(roomExamination.Description.EnsureFinishedSentence());
-            }
-
-            extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateNPCString(room));
-
             if (viewPoint.Any)
-                extendedDescription = extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint));
-
-            builder.P(extendedDescription.EnsureFinishedSentence());
+                builder.P(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
 
             if (player.Items.Any())
                 builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());

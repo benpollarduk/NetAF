@@ -121,6 +121,38 @@ namespace NetAF.Tests.Extensions
         }
 
         [TestMethod]
+        public void GivenASemiColon_WhenEnsureFinishedSentence_ThenAExclamation()
+        {
+            var result = "A;".EnsureFinishedSentence();
+
+            Assert.AreEqual("A;", result);
+        }
+
+        [TestMethod]
+        public void GivenAColon_WhenEnsureFinishedSentence_ThenAExclamation()
+        {
+            var result = "A:".EnsureFinishedSentence();
+
+            Assert.AreEqual("A:", result);
+        }
+
+        [TestMethod]
+        public void GivenACR_WhenEnsureFinishedSentence_ThenAExclamation()
+        {
+            var result = $"A{StringUtilities.CR}".EnsureFinishedSentence();
+
+            Assert.AreEqual($"A{StringUtilities.CR}", result);
+        }
+
+        [TestMethod]
+        public void GivenALF_WhenEnsureFinishedSentence_ThenAExclamation()
+        {
+            var result = $"A{StringUtilities.LF}".EnsureFinishedSentence();
+
+            Assert.AreEqual($"A{StringUtilities.LF}", result);
+        }
+
+        [TestMethod]
         public void GivenAComma_WhenEnsureFinishedSentence_ThenAStop()
         {
             var result = "A,".EnsureFinishedSentence();

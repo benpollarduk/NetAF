@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Extensions;
+using NetAF.Utilities;
 
 namespace NetAF.Rendering
 {
@@ -101,11 +103,11 @@ namespace NetAF.Rendering
         }
 
         /// <summary>
-        /// Create a description of the NPC's as a string.
+        /// Create a description of the characters as a string.
         /// </summary>
         /// <param name="room">The room.</param>
         /// <returns>The characters, as a string.</returns>
-        public static string CreateNPCString(Room room)
+        public static string CreateCharactersString(Room room)
         {
             var characters = room.Characters.Where(c => c.IsPlayerVisible && c.IsAlive).ToArray<Character>();
 
@@ -130,9 +132,33 @@ namespace NetAF.Rendering
             builder.Append(sentenceSoFar.Substring(sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal) + 2));
             builder.Append(" are in the ");
             builder.Append(room.Identifier);
-            builder.Append(".");
+            builder.Append('.');
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Create a description of the items as a string.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <returns>The items, as a string.</returns>
+        public static string CreateItemsString(Room room)
+        {
+            var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
+
+            switch (visibleItems)
+            {
+                case 0:
+                    return string.Empty;
+                case 1:
+                    Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
+                    return $"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}";
+                default:
+                    var items = room.Items.Cast<IExaminable>().ToArray();
+                    var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
+                    var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
+                    return $"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}";
+            }
         }
     }
 }
