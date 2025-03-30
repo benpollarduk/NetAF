@@ -152,12 +152,12 @@ namespace NetAF.Rendering
                     return string.Empty;
                 case 1:
                     Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
-                    return $"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}";
+                    return $"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}.";
                 default:
                     var items = room.Items.Cast<IExaminable>().ToArray();
                     var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
                     var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
-                    return $"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}";
+                    return $"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower().EnsureFinishedSentence()}";
             }
         }
     }
