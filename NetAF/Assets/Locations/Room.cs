@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -455,19 +456,49 @@ namespace NetAF.Assets.Locations
             if (request.Examinable is not Room room)
                 return DefaultExamination(request);
 
-            if (!Array.Exists(room.Items, i => i.IsPlayerVisible))
-                return new("There is nothing to examine.");
+            var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
+            var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
 
-            if (room.Items.Count(i => i.IsPlayerVisible) == 1)
+            if (visibleItems == 0 && visibleCharacters == 0)
+                return new($"{room.Identifier.Name} is empty.");
+
+            StringBuilder examinationBuilder = new();
+            
+            switch (visibleItems)
             {
-                Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
-                return new($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
+                case 0:
+                    break;
+                case 1:
+                    Item singularItem = room.Items.Where(i => i.IsPlayerVisible).ToArray()[0];
+                    examinationBuilder.AppendLine($"There {(singularItem.Identifier.Name.IsPlural() ? "are" : "is")} {singularItem.Identifier.Name.GetObjectifier()} {singularItem.Identifier}");
+                    break;
+                default:
+                    var items = room.Items.Cast<IExaminable>().ToArray();
+                    var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
+                    var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
+                    examinationBuilder.AppendLine($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
+                    break;
             }
 
-            var items = room.Items.Cast<IExaminable>().ToArray();
-            var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
-            var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
-            return new($"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower()}");
+            if (visibleItems > 0 && visibleCharacters > 0)
+                examinationBuilder.Append(StringUtilities.Newline);
+
+            switch (visibleCharacters)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Character singularCharacter = room.Characters.Where(i => i.IsPlayerVisible).ToArray()[0];
+                    examinationBuilder.AppendLine($"{singularCharacter.Identifier.Name} is here.");
+                    break;
+                default:
+                    var characters = room.Characters.Cast<IExaminable>().ToArray();
+                    var sentence = StringUtilities.ConstructExaminablesAsSentence(characters);
+                    examinationBuilder.AppendLine($"{sentence} are here.");
+                    break;
+            }
+
+            return new(examinationBuilder.ToString());
         }
 
         #endregion

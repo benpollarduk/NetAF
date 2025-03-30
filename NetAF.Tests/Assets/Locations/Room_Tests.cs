@@ -232,7 +232,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenNoItems_WhenExamine_ThenReturnNonEmptyString()
+        public void GivenNoItemsOrCharacters_WhenExamine_ThenReturnNonEmptyString()
         {
             var room = new Room(string.Empty, "A room");
 
@@ -255,6 +255,42 @@ namespace NetAF.Tests.Assets.Locations
         public void Given2Items_WhenExamine_ThenReturnNonEmptyString()
         {
             var room = new Room(string.Empty, "A room", items: [new Item("a", "b"), new Item("c", "d")]);
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+
+        [TestMethod]
+        public void Given1Character_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room");
+            room.AddCharacter(new("a", string.Empty));
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given2Characters_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room");
+            room.AddCharacter(new("a", string.Empty));
+            room.AddCharacter(new("b", string.Empty));
+
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+
+            Assert.IsTrue(result.Description.Length > 0);
+        }
+
+        [TestMethod]
+        public void Given2ItemsAnd2Characters_WhenExamine_ThenReturnNonEmptyString()
+        {
+            var room = new Room(string.Empty, "A room", items: [new Item("a", "b"), new Item("c", "d")]);
+            room.AddCharacter(new("a", string.Empty));
+            room.AddCharacter(new("b", string.Empty));
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
