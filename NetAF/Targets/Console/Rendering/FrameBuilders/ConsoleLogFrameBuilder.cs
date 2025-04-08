@@ -59,8 +59,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
-            if (entries == null)
-                entries = [];
+            entries ??= [];
 
             var padding = (entries.Length != 0 ? entries.Max(x => x.Content.Length) : 0) + 1;
 

@@ -24,8 +24,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <returns>The frame.</returns>
         public IFrame Build(string title, string description, LogEntry[] entries, Size size)
         {
-            if (entries == null)
-                entries = [];
+            entries ??= [];
 
             builder.Clear();
 
@@ -39,7 +38,13 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             {
                 for (var i = 0; i < entries.Length; i++)
                 {
+                    if (entries[i].HasExpired)
+                        builder.Raw("<s>");
+
                     builder.P($"-{entries[i].Content.EnsureFinishedSentence()}");
+
+                    if (entries[i].HasExpired)
+                        builder.Raw("</s>");
 
                     if (i < entries.Length - 1)
                         builder.Br();

@@ -348,3 +348,7 @@ healthchecksdb
 
 # webservices directory
 Webservices/
+
+# Allow log directories that are part of source
+!NetAF/Log/*
+!NetAF.Tests/Log/*
