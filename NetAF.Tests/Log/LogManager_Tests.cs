@@ -76,7 +76,6 @@ namespace NetAF.Tests.Log
             Assert.AreEqual(1, result);
         }
 
-
         [TestMethod]
         public void GivenOneEntry_WhenExpire_ThenOneEntry()
         {
