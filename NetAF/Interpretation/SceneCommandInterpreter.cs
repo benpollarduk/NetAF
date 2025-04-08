@@ -327,7 +327,7 @@ namespace NetAF.Interpretation
             if (noun.CaseInsensitiveContains(onPadded))
             {
                 itemName = noun[..noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase)];
-                noun = noun.Replace(itemName, string.Empty);
+                noun = noun[itemName.Length..];
                 var onIndex = noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase);
                 var targetName = noun[(onIndex + onPadded.Length)..];
 
