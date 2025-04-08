@@ -42,7 +42,11 @@ namespace NetAF.Log
         /// <param name="entry">The entry to add.</param>
         public void Add(LogEntry entry)
         {
-            Remove(entry.Name);
+            var hit = Array.Find([..entries], x => x.Name.InsensitiveEquals(name));
+
+            if (hit != null)
+                return;
+                
             entries.Add(entry);
         }
 
