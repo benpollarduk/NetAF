@@ -33,7 +33,8 @@ namespace NetAF.Example.Blazor
                     new HtmlGameOverFrameBuilder(htmlBuilder),
                     new HtmlAboutFrameBuilder(htmlBuilder),
                     new HtmlReactionFrameBuilder(htmlBuilder),
-                    new HtmlConversationFrameBuilder(htmlBuilder));
+                    new HtmlConversationFrameBuilder(htmlBuilder),
+                    new HtmlInformationFrameBuilder(htmlBuilder));
             }
         }
     }

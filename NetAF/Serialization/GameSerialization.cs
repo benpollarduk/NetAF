@@ -31,6 +31,11 @@ namespace NetAF.Serialization
         /// </summary>
         public PlayableCharacterLocationSerialization[] InactivePlayerLocations { get; set; }
 
+        /// <summary>
+        /// Get or set the information manager serialization.
+        /// </summary>
+        public InformationManagerSerialization InformationManager { get; set; }
+
         #endregion
 
         #region StaticMethods
@@ -47,7 +52,8 @@ namespace NetAF.Serialization
                 ActivePlayerIdentifier = game?.Player?.Identifier?.IdentifiableName,
                 Players = game?.Catalog?.Players?.Select(CharacterSerialization.FromCharacter).ToArray() ?? [],
                 Overworld = OverworldSerialization.FromOverworld(game?.Overworld),
-                InactivePlayerLocations = game?.GetInactivePlayerLocations().Select(PlayableCharacterLocationSerialization.FromPlayableCharacterLocation).ToArray() ?? []
+                InactivePlayerLocations = game?.GetInactivePlayerLocations().Select(PlayableCharacterLocationSerialization.FromPlayableCharacterLocation).ToArray() ?? [],
+                InformationManager = InformationManagerSerialization.FromInformationManager(game?.InformationManager)
             };
         }
 

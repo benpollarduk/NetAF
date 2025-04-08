@@ -24,6 +24,7 @@ namespace NetAF.Interpretation
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
             About.CommandHelp,
+            Info.CommandHelp,
             Map.CommandHelp,
             Help.CommandHelp,
             CommandList.CommandHelp
@@ -50,6 +51,9 @@ namespace NetAF.Interpretation
 
             if (About.CommandHelp.Equals(verb))
                 return new(true, new About());
+
+            if (Info.CommandHelp.Equals(verb))
+                return new(true, new Info());
 
             if (Help.CommandHelp.Equals(verb))
             {
@@ -88,6 +92,7 @@ namespace NetAF.Interpretation
             if (game.Mode is SceneMode)
             {
                 commands.Add(About.CommandHelp);
+                commands.Add(Info.CommandHelp);
                 commands.Add(Map.CommandHelp);
                 commands.Add(Help.CommandHelp);
                 commands.Add(CommandList.CommandHelp);

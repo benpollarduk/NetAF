@@ -9,7 +9,7 @@ using System.Linq;
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for region map.
+    /// Provides a display mode for the region map.
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
     public sealed class RegionMapMode(Point3D focusPosition) : IGameMode
