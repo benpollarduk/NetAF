@@ -144,7 +144,7 @@ Displays a list of all available commands.
 commands
 ```
 
-### Info
+### Log
 Displays any gathered information.
 
 ```

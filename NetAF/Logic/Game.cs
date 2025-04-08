@@ -8,8 +8,8 @@ using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
-using NetAF.Information;
 using NetAF.Interpretation;
+using NetAF.Log;
 using NetAF.Logic.Arrangement;
 using NetAF.Logic.Callbacks;
 using NetAF.Logic.Modes;
@@ -79,9 +79,9 @@ namespace NetAF.Logic
         internal GameState State { get; private set; }
 
         /// <summary>
-        /// Get the information manager.
+        /// Get the log manager.
         /// </summary>
-        public InformationManager InformationManager { get; private set; } = new InformationManager();
+        public LogManager LogManager { get; private set; } = new LogManager();
 
         #endregion
 
@@ -470,8 +470,8 @@ namespace NetAF.Logic
             // restore active player
             Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
 
-            // restore information manager
-            InformationManager = InformationManager.FromSerialization(serialization.InformationManager);
+            // restore log manager
+            LogManager = LogManager.FromSerialization(serialization.LogManager);
 
             // restore overworld
             ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);

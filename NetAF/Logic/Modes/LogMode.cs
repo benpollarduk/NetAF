@@ -1,14 +1,14 @@
-﻿using NetAF.Information;
-using NetAF.Interpretation;
+﻿using NetAF.Interpretation;
+using NetAF.Log;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for acquired information.
+    /// Provides a display mode for the log.
     /// </summary>
-    /// <param name="informationManager">The information manager.</param>
-    public sealed class InformationMode(InformationManager informationManager) : IGameMode
+    /// <param name="logManager">The log manager.</param>
+    public sealed class LogMode(LogManager logManager) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -28,7 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IInformationFrameBuilder>().Build("Information", string.Empty, informationManager?.GetAll(), game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ILogFrameBuilder>().Build("Log", string.Empty, logManager?.GetAll(), game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

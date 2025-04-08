@@ -1,40 +1,40 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Information;
+using NetAF.Log;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Tests.Serialization.Assets
 {
     [TestClass]
-    public class InformationEntry_Tests
+    public class LogEntry_Tests
     {
         [TestMethod]
-        public void GivenNameA_WhenFromInformationEntry_ThenNameIsA()
+        public void GivenNameA_WhenFromLogEntry_ThenNameIsA()
         {
-            InformationEntry entry = new("A", string.Empty);
+            LogEntry entry = new("A", string.Empty);
 
-            InformationEntrySerialization result = InformationEntrySerialization.FromInformationEntry(entry);
+            LogEntrySerialization result = LogEntrySerialization.FromLogEntry(entry);
 
             Assert.AreEqual("A", result.Name);
         }
 
         [TestMethod]
-        public void GivenContentA_WhenFromInformationEntry_ThenContentIsA()
+        public void GivenContentA_WhenFromLogEntry_ThenContentIsA()
         {
-            InformationEntry entry = new(string.Empty, "A");
+            LogEntry entry = new(string.Empty, "A");
 
-            InformationEntrySerialization result = InformationEntrySerialization.FromInformationEntry(entry);
+            LogEntrySerialization result = LogEntrySerialization.FromLogEntry(entry);
 
             Assert.AreEqual("A", result.Content);
         }
 
         [TestMethod]
-        public void GivenHasExpired_WhenFromInformationEntry_ThenHasExpired()
+        public void GivenHasExpired_WhenFromLogEntry_ThenHasExpired()
         {
-            InformationEntry entry = new(string.Empty, string.Empty);
+            LogEntry entry = new(string.Empty, string.Empty);
             entry.Expire();
 
-            InformationEntrySerialization result = InformationEntrySerialization.FromInformationEntry(entry);
+            LogEntrySerialization result = LogEntrySerialization.FromLogEntry(entry);
 
             Assert.IsTrue(result.HasExpired);
         }
@@ -42,12 +42,12 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenHasExpired_WhenRestoreFromNotExpired_ThenHasExpiredIsFalse()
         {
-            InformationEntry entry = new(string.Empty, string.Empty);
-            InformationEntry entry2 = new(string.Empty, string.Empty);
+            LogEntry entry = new(string.Empty, string.Empty);
+            LogEntry entry2 = new(string.Empty, string.Empty);
             entry2.Expire();
-            InformationEntrySerialization serialization = InformationEntrySerialization.FromInformationEntry(entry);
+            LogEntrySerialization serialization = LogEntrySerialization.FromLogEntry(entry);
 
-            ((IObjectSerialization<InformationEntry>)serialization).Restore(entry2);
+            ((IObjectSerialization<LogEntry>)serialization).Restore(entry2);
 
             Assert.IsFalse(entry.HasExpired);
         }

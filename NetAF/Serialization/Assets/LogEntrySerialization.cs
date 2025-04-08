@@ -1,11 +1,11 @@
-﻿using NetAF.Information;
+﻿using NetAF.Log;
 
 namespace NetAF.Serialization.Assets
 {
     /// <summary>
-    /// Represents a serialization of an InformationEntry.
+    /// Represents a serialization of a LogEntry.
     /// </summary>
-    public sealed class InformationEntrySerialization : IObjectSerialization<InformationEntry>
+    public sealed class LogEntrySerialization : IObjectSerialization<LogEntry>
     {
         #region Properties
 
@@ -29,17 +29,17 @@ namespace NetAF.Serialization.Assets
         #region StaticMethods
 
         /// <summary>
-        /// Create a new serialization from a InformationEntry.
+        /// Create a new serialization from a LogEntry.
         /// </summary>
-        /// <param name="informationEntry">The InformationEntry to create the serialization from.</param>
+        /// <param name="LogEntry">The LogEntry to create the serialization from.</param>
         /// <returns>The serialization.</returns>
-        public static InformationEntrySerialization FromInformationEntry(InformationEntry informationEntry)
+        public static LogEntrySerialization FromLogEntry(LogEntry LogEntry)
         {
             return new()
             {
-                Name = informationEntry.Name,
-                Content = informationEntry.Content,
-                HasExpired = informationEntry.HasExpired
+                Name = LogEntry.Name,
+                Content = LogEntry.Content,
+                HasExpired = LogEntry.HasExpired
             };
         }
 
@@ -50,10 +50,10 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Restore an instance from this serialization.
         /// </summary>
-        /// <param name="informationEntry">The InformationEntry to restore.</param>
-        void IObjectSerialization<InformationEntry>.Restore(InformationEntry informationEntry)
+        /// <param name="LogEntry">The LogEntry to restore.</param>
+        void IObjectSerialization<LogEntry>.Restore(LogEntry LogEntry)
         {
-            ((IRestoreFromObjectSerialization<InformationEntrySerialization>)informationEntry).RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<LogEntrySerialization>)LogEntry).RestoreFrom(this);
         }
 
         #endregion

@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 using NetAF.Assets;
 using NetAF.Extensions;
-using NetAF.Information;
+using NetAF.Log;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides a builder of information frames.
+    /// Provides a builder of log frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    public sealed class ConsoleInformationFrameBuilder(GridStringBuilder gridStringBuilder) : IInformationFrameBuilder
+    public sealed class ConsoleLogFrameBuilder(GridStringBuilder gridStringBuilder) : ILogFrameBuilder
     {
         #region Properties
 
@@ -42,7 +42,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #endregion
 
-        #region Implementation of IInformationFrameBuilder
+        #region Implementation of ILogFrameBuilder
 
         /// <summary>
         /// Build a frame.
@@ -52,7 +52,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="entries">The entries.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(string title, string description, InformationEntry[] entries, Size size)
+        public IFrame Build(string title, string description, LogEntry[] entries, Size size)
         {
             gridStringBuilder.Resize(size);
 

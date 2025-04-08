@@ -6,7 +6,7 @@ using NetAF.Targets.Console.Rendering.FrameBuilders;
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
     [TestClass]
-    public class ConsoleInformationFrameBuilder_Tests
+    public class ConsoleLogFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaultsWith0Entries_WhenBuild_ThenNoException()
@@ -14,7 +14,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleInformationFrameBuilder(gridStringBuilder);
+                var builder = new ConsoleLogFrameBuilder(gridStringBuilder);
 
                 builder.Build(string.Empty, string.Empty, [], new Size(80, 50));
             });
@@ -26,7 +26,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleInformationFrameBuilder(gridStringBuilder);
+                var builder = new ConsoleLogFrameBuilder(gridStringBuilder);
 
                 builder.Build(string.Empty, string.Empty, [new("A", "B")], new Size(80, 50));
             });

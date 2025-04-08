@@ -31,7 +31,7 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleAboutFrameBuilder(gridLayoutBuilder),
                     new ConsoleReactionFrameBuilder(gridLayoutBuilder),
                     new ConsoleConversationFrameBuilder(gridLayoutBuilder),
-                    new ConsoleInformationFrameBuilder(gridLayoutBuilder)
+                    new ConsoleLogFrameBuilder(gridLayoutBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -59,7 +59,7 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlAboutFrameBuilder(htmlBuilder),
                     new HtmlReactionFrameBuilder(htmlBuilder),
                     new HtmlConversationFrameBuilder(htmlBuilder),
-                    new HtmlInformationFrameBuilder(htmlBuilder)
+                    new HtmlLogFrameBuilder(htmlBuilder)
                 ];
 
                 return new(frameBuilders);
