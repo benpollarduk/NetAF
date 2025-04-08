@@ -61,8 +61,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             entries ??= [];
 
-            var padding = (entries.Length != 0 ? entries.Max(x => x.Content.Length) : 0) + 1;
-
             gridStringBuilder.DrawWrapped(title, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
 
