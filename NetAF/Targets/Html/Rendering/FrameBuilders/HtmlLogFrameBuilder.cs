@@ -41,7 +41,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                     if (entries[i].HasExpired)
                         builder.Raw("<s>");
 
-                    builder.P($"-{entries[i].Content.EnsureFinishedSentence()}");
+                    builder.P($"{entries[i].Content.EnsureFinishedSentence()}");
 
                     if (entries[i].HasExpired)
                         builder.Raw("</s>");
