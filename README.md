@@ -88,6 +88,7 @@ NetAF also provides global commands to help with game flow and option management
   * **About** - display version information.
   * **Exit** - exit the game.
   * **Help X** - display the help screen for a command, where X is the command.
+  * **Log** - display any gathered information.
   * **Commands** - display the command list.
   * **Commands On / Commands Off** - toggle commands on/off.
   * **Key On / Key Off** - turn the Key on/off.
@@ -118,6 +119,7 @@ NetAF provides frames for rendering the various game screens. These are fully ex
    * **Conversation frame** - for displaying a conversation.
    * **Visual frame** - for displaying a visual.
    * **Command list frame** - for displaying a list of commands.
+   * **Log frame** - for displaying any gathered information.
 
 #### Visuals
 Although NetAF is primarily focused on text and interactive fiction, there are times where adding a visual can enrich the game.

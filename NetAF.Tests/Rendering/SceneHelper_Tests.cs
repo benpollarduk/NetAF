@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Rendering;
 
-namespace NetAF.Tests.Rendering.FrameBuilders
+namespace NetAF.Tests.Rendering
 {
     [TestClass]
     public class SceneHelper_Tests
