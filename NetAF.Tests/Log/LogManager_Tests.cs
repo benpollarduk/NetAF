@@ -76,6 +76,31 @@ namespace NetAF.Tests.Log
             Assert.AreEqual(1, result);
         }
 
+
+        [TestMethod]
+        public void GivenOneEntry_WhenExpire_ThenOneEntry()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+            manager.Expire("A");
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void GivenOneEntry_WhenExpireNonExisting_ThenOneEntry()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+            manager.Expire("C");
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
+
         [TestMethod]
         public void GivenOneEntry_WhenClear_ThenNoEntries()
         {

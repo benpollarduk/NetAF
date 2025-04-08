@@ -1,7 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
+using NetAF.Log;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Html.Rendering.FrameBuilders;
+using NetAF.Targets.Html.Rendering;
 
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
@@ -21,14 +24,16 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         }
 
         [TestMethod]
-        public void GivenDefaultsWith1Entry_WhenBuild_ThenNoException()
+        public void GivenDefaultsWith2Entries_WhenBuild_ThenNoException()
         {
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
                 var builder = new ConsoleLogFrameBuilder(gridStringBuilder);
+                LogEntry[] entries = [new("A", "B"), new("C", "D")];
+                entries[0].Expire();
 
-                builder.Build(string.Empty, string.Empty, [new("A", "B")], new Size(80, 50));
+                builder.Build("C", "D", entries, new Size(80, 50));
             });
         }
     }
