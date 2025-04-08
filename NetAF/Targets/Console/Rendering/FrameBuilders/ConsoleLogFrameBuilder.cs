@@ -40,6 +40,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         public AnsiColor EntryColor { get; set; } = NetAFPalette.NetAFYellow;
 
+        /// <summary>
+        /// Get or set the expired entry color.
+        /// </summary>
+        public AnsiColor ExpiredEntryColor { get; set; } = AnsiColor.BrightBlack;
+
         #endregion
 
         #region Implementation of ILogFrameBuilder
@@ -76,7 +81,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     if (lastY >= size.Height - 1)
                         break;
 
-                    gridStringBuilder.DrawWrapped(entry.Content.EnsureFinishedSentence(), leftMargin, lastY + 1, availableWidth, EntryColor, out _, out lastY);
+                    gridStringBuilder.DrawWrapped(entry.Content.EnsureFinishedSentence(), leftMargin, lastY + 1, availableWidth, entry.HasExpired ? ExpiredEntryColor : EntryColor, out _, out lastY);
                     lastY++;
                 }
             }
