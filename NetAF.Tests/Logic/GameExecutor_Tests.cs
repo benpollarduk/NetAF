@@ -166,6 +166,31 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
+        public void GivenNoGameIsExecuting_WhenGetExecutingGame_ThenNull()
+        {
+            GameExecutor.CancelExecution();
+
+            Assert.IsNull(GameExecutor.ExecutingGame);
+        }
+
+        [TestMethod]
+        public void GivenAGameIsExecuting_WhenGetExecutingGame_ThenNotNull()
+        {
+            GameExecutor.CancelExecution();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new("Room", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var startTime = Environment.TickCount;
+            EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+
+            GameExecutor.Execute(game);
+
+            Assert.IsNotNull(GameExecutor.ExecutingGame);
+        }
+
+        [TestMethod]
         public void GivenNoGame_WhenCancel_ThenCompletedFalse()
         {
             GameExecutor.CancelExecution();

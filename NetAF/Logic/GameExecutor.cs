@@ -21,6 +21,11 @@
         /// </summary>
         public static bool IsExecuting => game != null && !wasCancelled;
 
+        /// <summary>
+        /// Get the game that is currently executing.
+        /// </summary>
+        public static Game ExecutingGame => IsExecuting ? game : null;
+
         #endregion
 
         #region StaticMethods
