@@ -29,6 +29,16 @@ namespace NetAF.Log
         #region Methods
 
         /// <summary>
+        /// Find an entry by its name.
+        /// </summary>
+        /// <param name="name">The name of the entry.</param>
+        /// <returns>The entry, if found. Else null.</returns>
+        private LogEntry Find(string name)
+        {
+            return Array.Find([.. entries], x => x.Name.InsensitiveEquals(name));
+        }
+
+        /// <summary>
         /// Clear all entries.
         /// </summary>
         public void Clear()
@@ -39,15 +49,23 @@ namespace NetAF.Log
         /// <summary>
         /// Add a new entry.
         /// </summary>
+        /// <param name="name">The name of the entry to add.</param>
+        /// <param name="content">The content of the entry to add.</param>
+        public void Add(string name, string content)
+        {
+            Add(new(name, content));
+        }
+
+        /// <summary>
+        /// Add a new entry.
+        /// </summary>
         /// <param name="entry">The entry to add.</param>
         public void Add(LogEntry entry)
         {
-            var hit = Array.Find([..entries], x => x.Name.InsensitiveEquals(entry.Name));
+            var hit = Find(entry.Name);
 
-            if (hit != null)
-                return;
-                
-            entries.Add(entry);
+            if (hit == null)
+                entries.Add(entry);
         }
 
         /// <summary>
@@ -56,12 +74,10 @@ namespace NetAF.Log
         /// <param name="name">The name of the entry to remove.</param>
         public void Remove(string name)
         {
-            var hit = Array.Find([..entries], x => x.Name.InsensitiveEquals(name));
+            var hit = Find(name);
 
-            if (hit == null)
-                return;
-
-            entries.Remove(hit);
+            if (hit!= null)
+                entries.Remove(hit);
         }
 
         /// <summary>
@@ -70,12 +86,29 @@ namespace NetAF.Log
         /// <param name="name">The name of the entry to expire.</param>
         public void Expire(string name)
         {
-            var hit = Array.Find([.. entries], x => x.Name.InsensitiveEquals(name));
+            var hit = Find(name);
+            hit?.Expire();
+        }
 
-            if (hit == null)
-                return;
+        /// <summary>
+        /// Get is an entry is present.
+        /// </summary>
+        /// <param name="name">The name of the entry to check.</param>
+        /// <returns>True if an entry with the same name is present.</returns>
+        public bool ContainsEntry(string name)
+        {
+            return Find(name) != null;
+        }
 
-            hit.Expire();
+        /// <summary>
+        /// Get is an entry has expired.
+        /// </summary>
+        /// <param name="name">The name of the entry to check.</param>
+        /// <returns>True if an entry with the same name is present and has expired, else false.</returns>
+        public bool HasExpired(string name)
+        {
+            var hit = Find(name);
+            return hit?.HasExpired ?? false;
         }
 
         /// <summary>

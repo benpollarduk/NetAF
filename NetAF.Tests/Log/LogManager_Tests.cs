@@ -18,6 +18,17 @@ namespace NetAF.Tests.Log
         }
 
         [TestMethod]
+        public void GivenNoEntries_WhenAddWithNameAndContent_ThenOneEntry()
+        {
+            var manager = new LogManager();
+            manager.Add("A", "B");
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         public void GivenNoEntries_WhenAdd_ThenOneEntry()
         {
             var manager = new LogManager();
@@ -122,6 +133,61 @@ namespace NetAF.Tests.Log
             var result = LogManager.FromSerialization(serialization);
 
             Assert.AreEqual(1, result.Count);
+        }
+
+        [TestMethod]
+        public void GivenOneEntryWithMatch_WhenContainsEntry_ThenTrue()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+
+            var result = manager.ContainsEntry("A");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenOneEntryWithNoMatch_WhenContainsEntry_ThenFalse()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+
+            var result = manager.ContainsEntry("C");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenOneEntryThatHasExpired_WhenHasExpired_ThenTrue()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+            manager.Expire("A");
+
+            var result = manager.HasExpired("A");
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenOneEntryThatHasNotExpired_WhenHasExpired_ThenFalse()
+        {
+            var manager = new LogManager();
+            manager.Add(new("A", "B"));
+
+            var result = manager.HasExpired("A");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenNoEntries_WhenHasExpired_ThenFalse()
+        {
+            var manager = new LogManager();
+
+            var result = manager.HasExpired("A");
+
+            Assert.IsFalse(result);
         }
     }
 }
