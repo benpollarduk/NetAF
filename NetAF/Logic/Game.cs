@@ -9,7 +9,8 @@ using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
-using NetAF.Log;
+using NetAF.Logging.History;
+using NetAF.Logging.Notes;
 using NetAF.Logic.Arrangement;
 using NetAF.Logic.Callbacks;
 using NetAF.Logic.Modes;
@@ -79,9 +80,14 @@ namespace NetAF.Logic
         internal GameState State { get; private set; }
 
         /// <summary>
-        /// Get the log manager.
+        /// Get the note manager.
         /// </summary>
-        public LogManager LogManager { get; private set; } = new LogManager();
+        public NoteManager NoteManager { get; private set; } = new NoteManager();
+
+        /// <summary>
+        /// Get the history manager.
+        /// </summary>
+        public HistoryManager HistoryManager { get; private set; } = new HistoryManager();
 
         #endregion
 
@@ -204,6 +210,9 @@ namespace NetAF.Logic
             // 1. check if needed to display the reaction
             if (reaction.Result == ReactionResult.Error || reaction.Result == ReactionResult.Inform)
             {
+                // log
+                HistoryManager.Add(reaction.Description, reaction.Description);
+
                 // display the reaction
                 ChangeMode(new ReactionMode(Overworld.CurrentRegion?.CurrentRoom?.Identifier.Name, reaction));
                 return;
@@ -217,9 +226,18 @@ namespace NetAF.Logic
 
                 // if the reaction wasn't silent then show reaction, else revert back to scene mode
                 if (regionEnterReaction.Result != ReactionResult.Silent)
+                {
+                    // log the introduction
+                    HistoryManager.Add(reaction.Description, reaction.Description);
+
+                    // change mode to display the reaction
                     ChangeMode(new ReactionMode(string.Empty, regionEnterReaction));
+                }
                 else
+                {
+                    // revert to scene
                     ChangeMode(new SceneMode());
+                }
 
                 return;
             }
@@ -470,8 +488,8 @@ namespace NetAF.Logic
             // restore active player
             Player = Array.Find(Catalog.Players, x => x.Identifier.Equals(serialization.ActivePlayerIdentifier));
 
-            // restore log manager
-            LogManager = LogManager.FromSerialization(serialization.LogManager);
+            // restore note manager
+            NoteManager = NoteManager.FromSerialization(serialization.NoteManager);
 
             // restore overworld
             ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);

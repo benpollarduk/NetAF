@@ -1,18 +1,19 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
-using NetAF.Log;
+using NetAF.Logging.History;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Linq;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides a builder of log frames.
+    /// Provides a builder of history frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlLogFrameBuilder(HtmlBuilder builder) : ILogFrameBuilder
+    public sealed class HtmlHistoryFrameBuilder(HtmlBuilder builder) : IHistoryFrameBuilder
     {
-        #region Implementation of ILogFrameBuilder
+        #region Implementation of IHistoryFrameBuilder
 
         /// <summary>
         /// Build a frame.
@@ -22,9 +23,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <param name="entries">The entries.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(string title, string description, LogEntry[] entries, Size size)
+        public IFrame Build(string title, string description, HistoryEntry[] entries, Size size)
         {
             entries ??= [];
+
+            // sort entries, newest first
+            entries = [.. entries.OrderByDescending(x => x.CreationTime)];
 
             builder.Clear();
 
@@ -38,13 +42,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             {
                 for (var i = 0; i < entries.Length; i++)
                 {
-                    if (entries[i].HasExpired)
-                        builder.Raw("<s>");
-
                     builder.P($"{entries[i].Content.EnsureFinishedSentence()}");
-
-                    if (entries[i].HasExpired)
-                        builder.Raw("</s>");
 
                     if (i < entries.Length - 1)
                         builder.Br();

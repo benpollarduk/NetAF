@@ -1,11 +1,11 @@
-﻿using NetAF.Log;
+﻿using NetAF.Logging.Notes;
 
 namespace NetAF.Serialization.Assets
 {
     /// <summary>
-    /// Represents a serialization of a LogEntry.
+    /// Represents a serialization of a NoteEntry.
     /// </summary>
-    public sealed class LogEntrySerialization : IObjectSerialization<LogEntry>
+    public sealed class NoteEntrySerialization : IObjectSerialization<NoteEntry>
     {
         #region Properties
 
@@ -29,17 +29,17 @@ namespace NetAF.Serialization.Assets
         #region StaticMethods
 
         /// <summary>
-        /// Create a new serialization from a LogEntry.
+        /// Create a new serialization from a NoteEntry.
         /// </summary>
-        /// <param name="LogEntry">The LogEntry to create the serialization from.</param>
+        /// <param name="noteEntry">The NoteEntry to create the serialization from.</param>
         /// <returns>The serialization.</returns>
-        public static LogEntrySerialization FromLogEntry(LogEntry LogEntry)
+        public static NoteEntrySerialization FromNoteEntry(NoteEntry noteEntry)
         {
             return new()
             {
-                Name = LogEntry.Name,
-                Content = LogEntry.Content,
-                HasExpired = LogEntry.HasExpired
+                Name = noteEntry.Name,
+                Content = noteEntry.Content,
+                HasExpired = noteEntry.HasExpired
             };
         }
 
@@ -50,10 +50,10 @@ namespace NetAF.Serialization.Assets
         /// <summary>
         /// Restore an instance from this serialization.
         /// </summary>
-        /// <param name="LogEntry">The LogEntry to restore.</param>
-        void IObjectSerialization<LogEntry>.Restore(LogEntry LogEntry)
+        /// <param name="noteEntry">The NoteEntry to restore.</param>
+        void IObjectSerialization<NoteEntry>.Restore(NoteEntry noteEntry)
         {
-            ((IRestoreFromObjectSerialization<LogEntrySerialization>)LogEntry).RestoreFrom(this);
+            ((IRestoreFromObjectSerialization<NoteEntrySerialization>)noteEntry).RestoreFrom(this);
         }
 
         #endregion

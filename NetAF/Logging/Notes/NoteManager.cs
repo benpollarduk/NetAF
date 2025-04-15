@@ -4,16 +4,16 @@ using NetAF.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace NetAF.Log
+namespace NetAF.Logging.Notes
 {
     /// <summary>
-    /// Provides a manager for logs.
+    /// Provides a manager for in-game notes.
     /// </summary>
-    public class LogManager : IRestoreFromObjectSerialization<LogManagerSerialization>
+    public class NoteManager : IRestoreFromObjectSerialization<NoteManagerSerialization>
     {
         #region Fields
 
-        private readonly List<LogEntry> entries = [];
+        private readonly List<NoteEntry> entries = [];
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace NetAF.Log
         /// </summary>
         /// <param name="name">The name of the entry.</param>
         /// <returns>The entry, if found. Else null.</returns>
-        private LogEntry Find(string name)
+        private NoteEntry Find(string name)
         {
             return Array.Find([.. entries], x => x.Name.InsensitiveEquals(name));
         }
@@ -60,7 +60,7 @@ namespace NetAF.Log
         /// Add a new entry.
         /// </summary>
         /// <param name="entry">The entry to add.</param>
-        public void Add(LogEntry entry)
+        public void Add(NoteEntry entry)
         {
             var hit = Find(entry.Name);
 
@@ -76,7 +76,7 @@ namespace NetAF.Log
         {
             var hit = Find(name);
 
-            if (hit!= null)
+            if (hit != null)
                 entries.Remove(hit);
         }
 
@@ -115,25 +115,25 @@ namespace NetAF.Log
         /// Get all entries.
         /// </summary>
         /// <returns>An array of all entries.</returns>
-        public LogEntry[] GetAll()
+        public NoteEntry[] GetAll()
         {
             return [.. entries];
         }
 
         #endregion
 
-        #region Implementation of IRestoreFromObjectSerialization<LogManagerSerialization>
+        #region Implementation of IRestoreFromObjectSerialization<NoteManagerSerialization>
 
         /// <summary>
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        void IRestoreFromObjectSerialization<LogManagerSerialization>.RestoreFrom(LogManagerSerialization serialization)
+        void IRestoreFromObjectSerialization<NoteManagerSerialization>.RestoreFrom(NoteManagerSerialization serialization)
         {
             entries.Clear();
 
             foreach (var entry in serialization.Entries)
-                Add(LogEntry.FromSerialization(entry));
+                Add(NoteEntry.FromSerialization(entry));
         }
 
         #endregion
@@ -141,14 +141,14 @@ namespace NetAF.Log
         #region StaticMethods
 
         /// <summary>
-        /// Create a new instance of LogManager from a serialization.
+        /// Create a new instance of NoteManager from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization.</param>
-        /// <returns>The log manager.</returns>
-        public static LogManager FromSerialization(LogManagerSerialization serialization)
+        /// <returns>The note manager.</returns>
+        public static NoteManager FromSerialization(NoteManagerSerialization serialization)
         {
-            LogManager manager = new();
-            ((IRestoreFromObjectSerialization<LogManagerSerialization>)manager).RestoreFrom(serialization);
+            NoteManager manager = new();
+            ((IRestoreFromObjectSerialization<NoteManagerSerialization>)manager).RestoreFrom(serialization);
             return manager;
         }
 

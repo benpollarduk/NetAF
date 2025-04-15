@@ -1,20 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Log;
+using NetAF.Logging.Notes;
 using NetAF.Serialization.Assets;
 
-namespace NetAF.Tests.Log
+namespace NetAF.Tests.Logging.Notes
 {
     [TestClass]
-    public class LogEntry_Tests
+    public class NoteEntry_Tests
     {
         [TestMethod]
         public void GivenSerialization_WhenFromSerialization_ThenRestoredCorrectly()
         {
-            LogEntry entry = new("a", "b");
+            NoteEntry entry = new("a", "b");
             entry.Expire();
-            LogEntrySerialization serialization = LogEntrySerialization.FromLogEntry(entry);
+            NoteEntrySerialization serialization = NoteEntrySerialization.FromNoteEntry(entry);
 
-            var result = LogEntry.FromSerialization(serialization);
+            var result = NoteEntry.FromSerialization(serialization);
 
             Assert.AreEqual("a", result.Name);
             Assert.AreEqual("b", result.Content);
