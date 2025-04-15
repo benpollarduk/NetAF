@@ -21,8 +21,8 @@ items:
   href: commands.md
 - name: Frame Builders
   href: frame-builders.md
-- name: Log
-  href: log.md
+- name: Notes
+  href: notes.md
 - name: End Conditions
   href: end-conditions.md
 - name: Visuals
