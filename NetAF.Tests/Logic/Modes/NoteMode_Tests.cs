@@ -8,7 +8,7 @@ using NetAF.Logic.Modes;
 namespace NetAF.Tests.Logic.Modes
 {
     [TestClass]
-    public class LogMode_Tests
+    public class NoteMode_Tests
     {
         [TestMethod]
         public void GivenNew_WhenRender_ThenNoExceptionThrown()
@@ -20,8 +20,8 @@ namespace NetAF.Tests.Logic.Modes
                 regionMaker[0, 0, 0] = room;
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-                game.LogManager.Add(new("A", "B"));
-                var mode = new LogMode(game.LogManager);
+                game.NoteManager.Add(new("A", "B"));
+                var mode = new NoteMode(game.NoteManager);
 
                 mode.Render(game);
             });

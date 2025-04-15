@@ -1,18 +1,18 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
-using NetAF.Log;
+using NetAF.Logging.Notes;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides a builder of log frames.
+    /// Provides a builder of note frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlLogFrameBuilder(HtmlBuilder builder) : ILogFrameBuilder
+    public sealed class HtmlNoteFrameBuilder(HtmlBuilder builder) : INoteFrameBuilder
     {
-        #region Implementation of ILogFrameBuilder
+        #region Implementation of INoteFrameBuilder
 
         /// <summary>
         /// Build a frame.
@@ -22,7 +22,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <param name="entries">The entries.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(string title, string description, LogEntry[] entries, Size size)
+        public IFrame Build(string title, string description, NoteEntry[] entries, Size size)
         {
             entries ??= [];
 

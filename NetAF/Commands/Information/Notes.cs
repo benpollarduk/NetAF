@@ -4,16 +4,16 @@ using NetAF.Logic.Modes;
 namespace NetAF.Commands.Information
 {
     /// <summary>
-    /// Represents the Log command.
+    /// Represents the Notes command.
     /// </summary>
-    public sealed class Log : ICommand
+    public sealed class Notes : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Log", "View all logged information", CommandCategory.Global);
+        public static CommandHelp CommandHelp { get; } = new("Notes", "View all in-game notes", CommandCategory.Global);
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace NetAF.Commands.Information
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new LogMode(game.LogManager));
+            game.ChangeMode(new NoteMode(game.NoteManager));
             return new(ReactionResult.GameModeChanged, string.Empty);
         }
 

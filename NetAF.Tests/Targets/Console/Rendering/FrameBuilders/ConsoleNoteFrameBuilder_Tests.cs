@@ -1,15 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
-using NetAF.Log;
+using NetAF.Logging.Notes;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
-using NetAF.Targets.Html.Rendering.FrameBuilders;
-using NetAF.Targets.Html.Rendering;
 
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
     [TestClass]
-    public class ConsoleLogFrameBuilder_Tests
+    public class ConsoleNoteFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaultsWith0Entries_WhenBuild_ThenNoException()
@@ -17,7 +15,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleLogFrameBuilder(gridStringBuilder);
+                var builder = new ConsoleNoteFrameBuilder(gridStringBuilder);
 
                 builder.Build(string.Empty, string.Empty, [], new Size(80, 50));
             });
@@ -29,8 +27,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleLogFrameBuilder(gridStringBuilder);
-                LogEntry[] entries = [new("A", "B"), new("C", "D")];
+                var builder = new ConsoleNoteFrameBuilder(gridStringBuilder);
+                NoteEntry[] entries = [new("A", "B"), new("C", "D")];
                 entries[0].Expire();
 
                 builder.Build("C", "D", entries, new Size(80, 50));

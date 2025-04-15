@@ -1,14 +1,14 @@
 ﻿using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
-namespace NetAF.Log
+namespace NetAF.Logging.Notes
 {
     /// <summary>
-    /// Provides a log entry.
+    /// Provides a note log entry.
     /// </summary>
     /// <param name="name">The name of the entry.</param>
     /// <param name="content">The content of the entry.</param>
-    public class LogEntry(string name, string content) : IRestoreFromObjectSerialization<LogEntrySerialization>
+    public class NoteEntry(string name, string content) : IRestoreFromObjectSerialization<NoteEntrySerialization>
     {
         #region Properties
 
@@ -44,26 +44,26 @@ namespace NetAF.Log
         #region StaticMethods
 
         /// <summary>
-        /// Create a new instance of LogEntry from a serialization.
+        /// Create a new instance of NoteEntry from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization.</param>
         /// <returns>The log entry.</returns>
-        public static LogEntry FromSerialization(LogEntrySerialization serialization)
+        public static NoteEntry FromSerialization(NoteEntrySerialization serialization)
         {
-            LogEntry entry = new(string.Empty, string.Empty);
-            ((IRestoreFromObjectSerialization<LogEntrySerialization>)entry).RestoreFrom(serialization);
+            NoteEntry entry = new(string.Empty, string.Empty);
+            ((IRestoreFromObjectSerialization<NoteEntrySerialization>)entry).RestoreFrom(serialization);
             return entry;
         }
 
         #endregion
 
-        #region Implementation of IRestoreFromObjectSerialization<LogEntrySerialization>
+        #region Implementation of IRestoreFromObjectSerialization<NoteEntrySerialization>
 
         /// <summary>
         /// Restore this object from a serialization.
         /// </summary>
         /// <param name="serialization">The serialization to restore from.</param>
-        void IRestoreFromObjectSerialization<LogEntrySerialization>.RestoreFrom(LogEntrySerialization serialization)
+        void IRestoreFromObjectSerialization<NoteEntrySerialization>.RestoreFrom(NoteEntrySerialization serialization)
         {
             Name = serialization.Name;
             Content = serialization.Content;

@@ -1,16 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Log;
+using NetAF.Logging.Notes;
 using NetAF.Serialization.Assets;
 
-namespace NetAF.Tests.Log
+namespace NetAF.Tests.Logging.Notes
 {
     [TestClass]
-    public class LogManager_Tests
+    public class NoteManager_Tests
     {
         [TestMethod]
         public void GivenNoEntries_WhenGetAll_ThenEmptyArray()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
 
             var results = manager.GetAll();
 
@@ -20,7 +20,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenNoEntries_WhenAddWithNameAndContent_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add("A", "B");
 
             var result = manager.Count;
@@ -31,7 +31,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenNoEntries_WhenAdd_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
 
             var result = manager.Count;
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenAddDuplicate_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Add(new("A", "B"));
 
@@ -54,8 +54,8 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenAddNonDuplicate_ThenTwoEntries()
         {
-            var manager = new LogManager();
-            manager.Add(new("A", "B"    ));
+            var manager = new NoteManager();
+            manager.Add(new("A", "B"));
             manager.Add(new("C", "D"));
 
             var result = manager.Count;
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenRemove_ThenNoEntries()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Remove("A");
 
@@ -78,7 +78,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenRemoveNonExisting_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Remove("C");
 
@@ -90,7 +90,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenExpire_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Expire("A");
 
@@ -102,7 +102,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenExpireNonExisting_ThenOneEntry()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Expire("C");
 
@@ -114,7 +114,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntry_WhenClear_ThenNoEntries()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Clear();
 
@@ -126,11 +126,11 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenSerialization_WhenFromSerialization_ThenRestoredCorrectly()
         {
-            LogManager manager = new();
+            NoteManager manager = new();
             manager.Add(new("a", "b"));
-            LogManagerSerialization serialization = LogManagerSerialization.FromLogManager(manager);
+            NoteManagerSerialization serialization = NoteManagerSerialization.FromNoteManager(manager);
 
-            var result = LogManager.FromSerialization(serialization);
+            var result = NoteManager.FromSerialization(serialization);
 
             Assert.AreEqual(1, result.Count);
         }
@@ -138,7 +138,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntryWithMatch_WhenContainsEntry_ThenTrue()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
 
             var result = manager.ContainsEntry("A");
@@ -149,7 +149,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntryWithNoMatch_WhenContainsEntry_ThenFalse()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
 
             var result = manager.ContainsEntry("C");
@@ -160,7 +160,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntryThatHasExpired_WhenHasExpired_ThenTrue()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
             manager.Expire("A");
 
@@ -172,7 +172,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenOneEntryThatHasNotExpired_WhenHasExpired_ThenFalse()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
             manager.Add(new("A", "B"));
 
             var result = manager.HasExpired("A");
@@ -183,7 +183,7 @@ namespace NetAF.Tests.Log
         [TestMethod]
         public void GivenNoEntries_WhenHasExpired_ThenFalse()
         {
-            var manager = new LogManager();
+            var manager = new NoteManager();
 
             var result = manager.HasExpired("A");
 

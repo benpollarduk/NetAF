@@ -32,9 +32,9 @@ namespace NetAF.Serialization
         public PlayableCharacterLocationSerialization[] InactivePlayerLocations { get; set; }
 
         /// <summary>
-        /// Get or set the log manager serialization.
+        /// Get or set the note manager serialization.
         /// </summary>
-        public LogManagerSerialization LogManager { get; set; }
+        public NoteManagerSerialization NoteManager { get; set; }
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace NetAF.Serialization
                 Players = game?.Catalog?.Players?.Select(CharacterSerialization.FromCharacter).ToArray() ?? [],
                 Overworld = OverworldSerialization.FromOverworld(game?.Overworld),
                 InactivePlayerLocations = game?.GetInactivePlayerLocations().Select(PlayableCharacterLocationSerialization.FromPlayableCharacterLocation).ToArray() ?? [],
-                LogManager = LogManagerSerialization.FromLogManager(game?.LogManager)
+                NoteManager = NoteManagerSerialization.FromNoteManager(game?.NoteManager)
             };
         }
 
