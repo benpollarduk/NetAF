@@ -3,6 +3,7 @@ using NetAF.Extensions;
 using NetAF.Logging.History;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Linq;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
