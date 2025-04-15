@@ -34,7 +34,8 @@ namespace NetAF.Example.Blazor
                     new HtmlAboutFrameBuilder(htmlBuilder),
                     new HtmlReactionFrameBuilder(htmlBuilder),
                     new HtmlConversationFrameBuilder(htmlBuilder),
-                    new HtmlNoteFrameBuilder(htmlBuilder));
+                    new HtmlNoteFrameBuilder(htmlBuilder),
+                    new HtmlHistoryFrameBuilder(htmlBuilder));
             }
         }
     }
