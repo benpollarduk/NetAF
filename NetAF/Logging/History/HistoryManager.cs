@@ -51,6 +51,15 @@ namespace NetAF.Logging.History
             entries.Add(entry);
         }
 
+        /// <summary>
+        /// Get all entries.
+        /// </summary>
+        /// <returns>An array of all entries.</returns>
+        public HistoryEntry[] GetAll()
+        {
+            return [.. entries];
+        }
+
         #endregion
     }
 }

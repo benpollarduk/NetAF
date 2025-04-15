@@ -25,6 +25,7 @@ namespace NetAF.Interpretation
         [
             About.CommandHelp,
             Notes.CommandHelp,
+            History.CommandHelp,
             Map.CommandHelp,
             Help.CommandHelp,
             CommandList.CommandHelp
@@ -54,6 +55,9 @@ namespace NetAF.Interpretation
 
             if (Notes.CommandHelp.Equals(verb))
                 return new(true, new Notes());
+
+            if (History.CommandHelp.Equals(verb))
+                return new(true, new History());
 
             if (Help.CommandHelp.Equals(verb))
             {
@@ -93,6 +97,7 @@ namespace NetAF.Interpretation
             {
                 commands.Add(About.CommandHelp);
                 commands.Add(Notes.CommandHelp);
+                commands.Add(History.CommandHelp);
                 commands.Add(Map.CommandHelp);
                 commands.Add(Help.CommandHelp);
                 commands.Add(CommandList.CommandHelp);

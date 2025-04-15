@@ -59,6 +59,17 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
+        public void GivenHistory_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new GlobalCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret(History.CommandHelp.Command, game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
         public void GivenHelpWithCommand_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new GlobalCommandInterpreter();
