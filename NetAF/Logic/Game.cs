@@ -217,7 +217,7 @@ namespace NetAF.Logic
 
                 // if the reaction wasn't silent then show reaction, else revert back to scene mode
                 if (regionEnterReaction.Result != ReactionResult.Silent)
-                    ChangeMode(new ReactionMode(Overworld.CurrentRegion.CurrentRoom.Identifier.Name, regionEnterReaction));
+                    ChangeMode(new ReactionMode(string.Empty, regionEnterReaction));
                 else
                     ChangeMode(new SceneMode());
 

@@ -25,8 +25,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
-            builder.H1(title);
-            builder.Br();
+            if (!string.IsNullOrEmpty(title))
+            {
+                builder.H1(title);
+                builder.Br();
+            }
+
             builder.P(message.EnsureFinishedSentence());
 
             return new HtmlFrame(builder);
