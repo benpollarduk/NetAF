@@ -144,11 +144,18 @@ Displays a list of all available commands.
 commands
 ```
 
-### Log
-Displays any gathered information.
+### Notes
+Displays any gathered in-game notes.
 
 ```
-info
+notes
+```
+
+### History
+Displays all in-game history.
+
+```
+history
 ```
 
 ### Help
