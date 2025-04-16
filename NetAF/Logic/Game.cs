@@ -214,7 +214,7 @@ namespace NetAF.Logic
                 HistoryManager.Add(reaction.Description, reaction.Description);
 
                 // display the reaction
-                ChangeMode(new ReactionMode(Overworld.CurrentRegion?.CurrentRoom?.Identifier.Name, reaction));
+                ChangeMode(new ReactionMode(string.Empty, reaction));
                 return;
             }
             
