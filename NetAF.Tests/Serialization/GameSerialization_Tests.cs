@@ -148,6 +148,7 @@ namespace NetAF.Tests.Serialization
 
             RegionMaker regionMaker2 = new("REGION", string.Empty);
             PlayableCharacter player2 = new("PLAYER", string.Empty, [new Item("ITEM", string.Empty)]);
+            PlayableCharacter player3 = new("PLAYER-3", string.Empty, [new Item("ITEM", string.Empty)]);
             NonPlayableCharacter npc2 = new("NPC", string.Empty);
             Room roomA2 = new("ROOM A", string.Empty);
             Room roomB2 = new("ROOM B", string.Empty);
@@ -159,6 +160,7 @@ namespace NetAF.Tests.Serialization
 
             roomA2.RemoveCharacter(npc2);
             roomB2.AddCharacter(npc2);
+            game2.ChangePlayer(player3);
 
             GameSerialization serialization = GameSerialization.FromGame(game2);
 

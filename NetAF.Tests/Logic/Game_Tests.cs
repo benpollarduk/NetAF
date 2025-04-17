@@ -587,5 +587,82 @@ namespace NetAF.Tests.Logic
             Assert.IsTrue(result.Contains(player));
             Assert.IsTrue(result.Contains(room));
         }
+
+        [TestMethod]
+        public void GivenInputToCauseError_WhenUpdate_ThenHistoryManagerHasEntry()
+        {
+            var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Update();
+            game.Update();
+            game.Update("AHJSHDJGFJ");
+
+            var result = game.HistoryManager.Count;
+
+            Assert.AreNotEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GivenInputForModeSpecificInterpreter_WhenUpdate_ThenCompletedIsTrue()
+        {
+            var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Update();
+            game.Update();
+
+            var result = game.Update(Move.NorthCommandHelp.Command);
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenEmptyString_WhenUpdate_ThenCompletedIsTrue()
+        {
+            var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Update();
+            game.Update();
+
+            var result = game.Update(string.Empty);
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
+        public void GivenNonsenseString_WhenUpdate_ThenCompletedIsTrue()
+        {
+            var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Update();
+            game.Update();
+
+            var result = game.Update("QWERTY");
+
+            Assert.IsTrue(result.Completed);
+        }
     }
 }

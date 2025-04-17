@@ -287,7 +287,8 @@ namespace NetAF.Logic
             if (Player == player)
                 return;
 
-            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld.CurrentRegion.Identifier.IdentifiableName, Overworld.CurrentRegion.CurrentRoom.Identifier.IdentifiableName));
+            Room currentRoom = Overworld.CurrentRegion.CurrentRoom ?? Overworld.CurrentRegion.ToMatrix().ToRooms()[0];
+            inactivePlayerLocations.Add(new(Player.Identifier.IdentifiableName, Overworld.CurrentRegion.Identifier.IdentifiableName, currentRoom.Identifier.IdentifiableName));
 
             var previous = Array.Find(inactivePlayerLocations.ToArray(), x => player.Identifier.Equals(x.PlayerIdentifier));
 
