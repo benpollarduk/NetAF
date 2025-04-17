@@ -61,5 +61,18 @@ namespace NetAF.Tests.Logging.History
 
             Assert.AreEqual(0, result);
         }
+
+        [TestMethod]
+        public void GivenLimitOf1AndOneExistingEntry_WhenAdd_ThenOnlyNewEntry()
+        {
+            var manager = new HistoryManager { MaxEntries = 1 };
+            manager.Add(new("A", "B"));
+            manager.Add(new("C", "D"));
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+            Assert.AreEqual("C", manager.GetAll()[0].Name);
+        }
     }
 }

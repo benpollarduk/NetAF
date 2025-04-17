@@ -7,6 +7,15 @@ namespace NetAF.Logging.History
     /// </summary>
     public class HistoryManager
     {
+        #region Constants
+
+        /// <summary>
+        /// Get a value representing no limit.
+        /// </summary>
+        public const int NoLimit = -1;
+
+        #endregion
+
         #region Fields
 
         private readonly List<HistoryEntry> entries = [];
@@ -14,6 +23,11 @@ namespace NetAF.Logging.History
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Get or set the maximum number of entries to be displayed. For unlimited use HistoryManager.NoLimit.
+        /// </summary>
+        public int MaxEntries { get; set; } = NoLimit;
 
         /// <summary>
         /// Get the number of entries.
@@ -48,6 +62,9 @@ namespace NetAF.Logging.History
         /// <param name="entry">The entry to add.</param>
         public void Add(HistoryEntry entry)
         {
+            if (MaxEntries >= 0 && entries.Count == MaxEntries)
+                entries.RemoveAt(0);
+
             entries.Add(entry);
         }
 

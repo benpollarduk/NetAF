@@ -13,21 +13,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// <param name="builder">A builder to use for the text layout.</param>
     public sealed class HtmlHistoryFrameBuilder(HtmlBuilder builder) : IHistoryFrameBuilder
     {
-        #region Constants
-
-        /// <summary>
-        /// Get a value representing no limit.
-        /// </summary>
-        public const int NoLimit = -1;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        /// Get or set the maximum number of entries to be displayed. For unlimited use HtmlHistoryFrameBuilder.NoLimit.
+        /// Get or set the maximum number of entries to be displayed. For unlimited use HistoryManager.NoLimit.
         /// </summary>
-        public int MaxEntries { get; set; } = NoLimit;
+        public int MaxEntries { get; set; } = HistoryManager.NoLimit;
 
         #endregion
 
