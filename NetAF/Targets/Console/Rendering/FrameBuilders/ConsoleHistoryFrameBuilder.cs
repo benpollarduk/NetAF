@@ -13,7 +13,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     public sealed class ConsoleHistoryFrameBuilder(GridStringBuilder gridStringBuilder) : IHistoryFrameBuilder
     {
+        #region Constants
+
+        /// <summary>
+        /// Get a value representing no limit.
+        /// </summary>
+        public const int NoLimit = -1;
+
+        #endregion
+
         #region Properties
+
+        /// <summary>
+        /// Get or set the maximum number of entries to be displayed. For unlimited use ConsoleHistoryFrameBuilder.NoLimit.
+        /// </summary>
+        public int MaxEntries { get; set; } = NoLimit;
 
         /// <summary>
         /// Get or set the background color.
@@ -63,6 +77,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             // sort entries, newest first
             entries = [.. entries.OrderByDescending(x => x.CreationTime)];
+
+            if (MaxEntries >= 0)
+                entries = [.. entries.Take(MaxEntries)];
 
             gridStringBuilder.DrawWrapped(title, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
             gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, title.Length, TitleColor);
