@@ -4,14 +4,15 @@ using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
+using System.Text;
 
-namespace NetAF.Targets.Html.Rendering.FrameBuilders
+namespace NetAF.Targets.Text.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a builder of about frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlAboutFrameBuilder(HtmlBuilder builder) : IAboutFrameBuilder
+    public sealed class TextAboutFrameBuilder(StringBuilder builder) : IAboutFrameBuilder
     {
         #region Implementation of IAboutFrameBuilder
 
@@ -26,17 +27,17 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
-            builder.H1(title);
-            builder.Br();
-            builder.P(game.Info.Name);
-            builder.P(game.Info.Description.EnsureFinishedSentence());
+            builder.AppendLine(title);
+            builder.AppendLine();
+            builder.AppendLine(game.Info.Name);
+            builder.AppendLine(game.Info.Description.EnsureFinishedSentence());
 
             if (!string.IsNullOrEmpty(game.Info.Author))
-                builder.P($"Created by: {game.Info.Author}.");
+                builder.AppendLine($"Created by: {game.Info.Author}.");
             else
-                builder.P(Info.AboutNetAF);
+                builder.AppendLine(Info.AboutNetAF);
 
-            return new HtmlFrame(builder);
+            return new TextFrame(builder);
         }
 
         #endregion

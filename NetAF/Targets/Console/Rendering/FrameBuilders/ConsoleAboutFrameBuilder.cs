@@ -3,6 +3,7 @@ using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Utilities;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -73,7 +74,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(game.Info.Author))
                 gridStringBuilder.DrawWrapped($"Created by: {game.Info.Author}.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
             else
-                gridStringBuilder.DrawWrapped("NetAF by Ben Pollard 2011 - 2025.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
+                gridStringBuilder.DrawWrapped(Info.AboutNetAF, leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 

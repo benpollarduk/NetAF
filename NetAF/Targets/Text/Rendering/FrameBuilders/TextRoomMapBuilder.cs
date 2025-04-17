@@ -4,14 +4,16 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Html;
+using System.Text;
 
-namespace NetAF.Targets.Html.Rendering.FrameBuilders
+namespace NetAF.Targets.Text.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a room map builder.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlRoomMapBuilder(HtmlBuilder builder) : IRoomMapBuilder
+    public sealed class TextRoomMapBuilder(StringBuilder builder) : IRoomMapBuilder
     {
         #region Properties
 
@@ -82,7 +84,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 * *-| S |-*
                 */
 
-            // for now, cheat and use the ANSI builder then convert to HTML
+            // for now, cheat and use the ANSI builder then convert to string
 
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
@@ -103,9 +105,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
 
             var roomAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
-
-            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
-            builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{roomAsString}</pre>");
+            builder.AppendLine(roomAsString);
         }
 
         #endregion

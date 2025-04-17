@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Items;
 using NetAF.Example.Assets.Regions.Everglades.Items;
 using NetAF.Extensions;
+using NetAF.Logic;
 using NetAF.Utilities;
 
 namespace NetAF.Example.Assets.Regions.Everglades.Rooms
@@ -12,6 +13,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
         #region Constants
 
         private const string Name = "Inner Cave";
+        private const string BlowNoteKey = "BLOW";
 
         #endregion
 
@@ -26,10 +28,18 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
             Room room = null;
 
             var description = new ConditionalDescription("With the bats gone there is daylight to the north. To the west is the cave entrance", "As you enter the inner cave the screeching gets louder, and in the gloom you can make out what looks like a million sets of eyes looking back at you. Bats! You can just make out a few rays of light coming from the north, but the bats are blocking your way.", () => !room[Direction.North].IsLocked);
-            room = new Room(new(Name), description, [new Exit(Direction.West), new Exit(Direction.North, true)], interaction: item =>
+
+            ExaminationCallback examination = r =>
+            {
+                GameExecutor.ExecutingGame?.NoteManager.Add(BlowNoteKey, "Perhaps a noise could scare the bats.");
+                return ExaminableObject.DefaultExamination.Invoke(r);
+            };
+
+            room = new Room(new(Name), description, [new Exit(Direction.West), new Exit(Direction.North, true)], examination: examination, interaction: item =>
             {
                 if (item != null && ConchShell.Name.EqualsExaminable(item))
                 {
+                    GameExecutor.ExecutingGame?.NoteManager.Expire(BlowNoteKey);
                     room[Direction.North].Unlock();
                     return new(InteractionResult.ItemExpires, item, "You blow into the Conch Shell. The Conch Shell howls, the  bats leave! Conch shell crumbles to pieces.");
                 }
