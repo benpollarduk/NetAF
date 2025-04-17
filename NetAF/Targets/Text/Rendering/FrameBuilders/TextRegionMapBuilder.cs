@@ -3,7 +3,6 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
-using NetAF.Targets.Html;
 using System.Text;
 
 namespace NetAF.Targets.Text.Rendering.FrameBuilders
@@ -103,7 +102,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), MaxSize);
 
-            var regionAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
+            var regionAsString = TextAdapter.ConvertGridStringBuilderToString(ansiGridStringBuilder);
             builder.AppendLine(regionAsString);
         }
 

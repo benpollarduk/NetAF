@@ -4,7 +4,6 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
-using NetAF.Targets.Html;
 using System.Text;
 
 namespace NetAF.Targets.Text.Rendering.FrameBuilders
@@ -104,7 +103,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
 
-            var roomAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
+            var roomAsString = TextAdapter.ConvertGridStringBuilderToString(ansiGridStringBuilder);
             builder.AppendLine(roomAsString);
         }
 
