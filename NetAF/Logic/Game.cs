@@ -214,7 +214,7 @@ namespace NetAF.Logic
                 HistoryManager.Add(reaction.Description, reaction.Description);
 
                 // display the reaction
-                ChangeMode(new ReactionMode(string.Empty, reaction));
+                ChangeMode(new ReactionMode(reaction));
                 return;
             }
             
@@ -231,7 +231,7 @@ namespace NetAF.Logic
                     HistoryManager.Add(reaction.Description, reaction.Description);
 
                     // change mode to display the reaction
-                    ChangeMode(new ReactionMode(string.Empty, regionEnterReaction));
+                    ChangeMode(new ReactionMode(regionEnterReaction));
                 }
                 else
                 {
