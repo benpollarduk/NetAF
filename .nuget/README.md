@@ -7,7 +7,7 @@ NetAF is a simple, lightweight library for building text based adventures.
 At its core NetAF provides simple classes for developing and controlling the flow of games.
 
 ### Environments
-Environments are broken down in to three elements - Overworld, Region and Room. An Overworld contains one or more Regions. A Region contains one or more Rooms. 
+Environments are broken down into three elements - Overworld, Region and Room. An Overworld contains one or more Regions. A Region contains one or more Rooms. 
 A Room can contain up to six exits (north, south, east, west, up and down).
 
 ```
