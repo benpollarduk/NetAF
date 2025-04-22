@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @using NetAF.Assets
 @using NetAF.Blazor.Components
 @using NetAF.Logic.Modes
@@ -46,13 +46,13 @@
 
     private void RunConsoleEmu()
     {
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation);
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation, new(80, 48));
     }
 
     private void RunHtml()
     {
         FrameProperties.DisplayCommandList = false;
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html);
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html, new(50, 30));
     }
 
     private void SetupComponents(HtmlAdapter htmlAdapter)
@@ -60,7 +60,7 @@
         gameComponent?.SetAdapter(htmlAdapter);
     }
 
-    private void BeginGame(FrameBuilderCollection frameBuilders)
+    private void BeginGame(FrameBuilderCollection frameBuilders, Size size)
     {
         if (GameExecutor.IsExecuting)
             GameExecutor.CancelExecution();
@@ -68,7 +68,7 @@
         var htmlAdapter = new HtmlAdapter(gameComponent);
         SetupComponents(htmlAdapter);
 
-        GameConfiguration configuration = new(htmlAdapter, frameBuilders, new(80, 48));
+        GameConfiguration configuration = new(htmlAdapter, frameBuilders, size);
         GameExecutor.Execute(NetAF.Example.ExampleGame.Create(configuration));
 
         modeSelected = true;
