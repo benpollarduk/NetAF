@@ -46,13 +46,13 @@
 
     private void RunConsoleEmu()
     {
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation, new(80, 48));
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation);
     }
 
     private void RunHtml()
     {
         FrameProperties.DisplayCommandList = false;
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html, new(50, 30));
+        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html);
     }
 
     private void SetupComponents(HtmlAdapter htmlAdapter)
@@ -60,7 +60,7 @@
         gameComponent?.SetAdapter(htmlAdapter);
     }
 
-    private void BeginGame(FrameBuilderCollection frameBuilders, Size size)
+    private void BeginGame(FrameBuilderCollection frameBuilders)
     {
         if (GameExecutor.IsExecuting)
             GameExecutor.CancelExecution();
@@ -68,7 +68,7 @@
         var htmlAdapter = new HtmlAdapter(gameComponent);
         SetupComponents(htmlAdapter);
 
-        GameConfiguration configuration = new(htmlAdapter, frameBuilders, size);
+        GameConfiguration configuration = new(htmlAdapter, frameBuilders, new(80, 48));
         GameExecutor.Execute(NetAF.Example.ExampleGame.Create(configuration));
 
         modeSelected = true;

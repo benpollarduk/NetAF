@@ -142,7 +142,7 @@ namespace NetAF.Targets.Html
         internal static string Convert(TextFrame frame)
         {
             var builder = new HtmlBuilder();
-            builder.P(frame.ToString());
+            builder.P(ToAlignedMonospace(frame.ToString()));
             var htmlFrame = new HtmlFrame(builder);
             return htmlFrame.ToString();
         }
