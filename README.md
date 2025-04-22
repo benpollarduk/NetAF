@@ -49,7 +49,7 @@ Overworld
 Rooms contain exits. Exits can be locked to block progress through the game.
 
 ```csharp
-Room room = new("Test Room", "A test room.", [new Exit(Direction.North)]);
+var room = new Room("Test Room", "A test room.", [new Exit(Direction.North)]);
 ```
 
 ### Items
@@ -57,14 +57,14 @@ Items add richness to a game. Items support interaction with the player, rooms, 
 For example, using item A on item B may cause item B to morph into item C.
 
 ```csharp
-Item sword = new("Sword", "The heroes sword.");
+var sword = new Item("Sword", "The heroes sword.");
 ```
 
 ### Playable Character
 Each NetAF game has a single playable character. The game is played through the view point of the playable character.
 
 ```csharp
-PlayableCharacter player = new("Dave", "The hero of the story.");
+var player = new PlayableCharacter("Dave", "The hero of the story.");
 ```
 
 ### Non-playable Characters
@@ -72,7 +72,7 @@ Non-playable characters (NPC's) can be added to rooms and can help drive the nar
 and interact with items.
 
 ```csharp
-NonPlayableCharacter npc = new("Gary", "The antagonist of the story.");
+var npc = new NonPlayableCharacter("Gary", "The antagonist of the story.");
 ```
   
 ### Commands
@@ -162,33 +162,33 @@ dotnet add package NetAF
 ### Hello World
 ```csharp
 // create the player. this is the character the user plays as
-PlayableCharacter player = new("Dave", "A young boy on a quest to find the meaning of life.");
+var player = new PlayableCharacter("Dave", "A young boy on a quest to find the meaning of life.");
 
 // create region maker. the region maker simplifies creating in game regions. a region contains a series of rooms
-RegionMaker regionMaker = new("Mountain", "An imposing volcano just East of town.")
+var regionMaker = new RegionMaker("Mountain", "An imposing volcano just East of town.")
 {
     // add a room to the region at position x 0, y 0, z 0
-    [0, 0, 0] = new("Cavern", "A dark cavern set in to the base of the mountain.")
+    [0, 0, 0] = new Room("Cavern", "A dark cavern set in to the base of the mountain.")
 };
 
 // create overworld maker. the overworld maker simplifies creating in game overworlds. an overworld contains a series or regions
-OverworldMaker overworldMaker = new("Daves World", "An ancient kingdom.", regionMaker);
+var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
 
-// create the class used for for generating new instances of the game
+// create the callback for generating new instances of the game
 // - information about the game
 // - an introduction to the game, displayed at the star
 // - asset generation for the overworld and the player
 // - the conditions that end the game
 // - the configuration for the game
 var gameCreator = Game.Create(
-    new("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
+    new GameInfo("The Life of Dave", "A very low budget adventure.", "Ben Pollard"),
     "Dave awakes to find himself in a cavern...",
     AssetGenerator.Retained(overworldMaker.Make(), player),
     GameEndConditions.NoEnd,
-    new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50)));
+    ConsoleGameConfiguration.Default);
 
-// begin the execution of the game using a ConsoleExecutionController to handle the console side of the games execution
-GameExecutor.Execute(gameCreator, new ConsoleExecutionController());
+// begin the execution of the game
+Game.Execute(gameCreator);
 ```
 
 ### Tutorial
