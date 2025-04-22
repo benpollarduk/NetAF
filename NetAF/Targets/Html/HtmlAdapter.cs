@@ -2,6 +2,8 @@
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Html.Rendering;
+using NetAF.Targets.Text.Rendering;
 using System.Text;
 
 namespace NetAF.Targets.Html
@@ -132,6 +134,19 @@ namespace NetAF.Targets.Html
             return ToAlignedMonospace(stringBuilder.ToString());
         }
 
+        /// <summary>
+        /// Convert an instance of TextFrame to a HTML string.
+        /// </summary>
+        /// <param name="frame">The frame to convert.</param>
+        /// <returns>The converted string.</returns>
+        internal static string Convert(TextFrame frame)
+        {
+            var builder = new HtmlBuilder();
+            builder.P(ToAlignedMonospace(frame.ToString()));
+            var htmlFrame = new HtmlFrame(builder);
+            return htmlFrame.ToString();
+        }
+
         #endregion
 
         #region Implementation of IIOAdapter
@@ -151,9 +166,11 @@ namespace NetAF.Targets.Html
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            // convert the console frame to an HTML frame if possible
+            // convert the frames if possible
             if (frame is IConsoleFrame ansiFrame)
                 presenter.Present(Convert(ansiFrame, Game.Configuration.DisplaySize));
+            else if (frame is TextFrame textFrame)
+                presenter.Present(Convert(textFrame));
             else
                 frame.Render(presenter);
         }

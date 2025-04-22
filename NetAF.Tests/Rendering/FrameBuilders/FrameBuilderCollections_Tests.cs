@@ -21,5 +21,13 @@ namespace NetAF.Tests.Rendering.FrameBuilders
 
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void GivenGetText_ThenPopulatedCollectionReturned()
+        {
+            var result = FrameBuilderCollections.Text;
+
+            Assert.IsNotNull(result);
+        }
     }
 }

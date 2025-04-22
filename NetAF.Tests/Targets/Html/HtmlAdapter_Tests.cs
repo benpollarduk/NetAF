@@ -9,6 +9,9 @@ using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Text.Rendering;
+using System.Text;
+using NetAF.Targets.Text.Rendering.FrameBuilders;
 
 namespace NetAF.Tests.Targets.Html
 {
@@ -46,6 +49,26 @@ namespace NetAF.Tests.Targets.Html
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             GridStringBuilder gridStringBuilder = new();
             var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
+            TestPresenter presenter = new();
+            HtmlAdapter adapter = new(presenter);
+            adapter.Setup(game);
+
+            adapter.RenderFrame(frame);
+
+            Assert.IsTrue(!string.IsNullOrEmpty(presenter.ToString()));
+        }
+
+        [TestMethod]
+        public void GivenTextFrame_WhenRender_ThenRendered()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Item item = new(string.Empty, string.Empty) { IsPlayerVisible = false };
+            Room room = new(string.Empty, string.Empty, null, [item]);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            StringBuilder stringBuilder = new();
+            var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
@@ -132,6 +155,19 @@ namespace NetAF.Tests.Targets.Html
             var result = HtmlAdapter.ConvertGridVisualBuilderToHtmlString(builder);
 
             Assert.AreEqual("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\"><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">a</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">b</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">c</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">d</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">e</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">f</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">g</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">h</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">i</span></pre>", result);
+        }
+
+        [TestMethod]
+        public void GivenTextFrame_WhenConvert_ThenReturnValidHtml()
+        {
+            var builder = new StringBuilder();
+            builder.Append("Test");
+            var textFrame = new TextFrame(builder);
+
+            var result = HtmlAdapter.Convert(textFrame);
+
+            Assert.AreEqual('<', result[0]);
+            Assert.AreEqual('>', result[^1]);
         }
     }
 }

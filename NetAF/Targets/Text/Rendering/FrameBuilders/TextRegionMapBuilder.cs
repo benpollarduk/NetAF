@@ -3,14 +3,15 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using System.Text;
 
-namespace NetAF.Targets.Html.Rendering.FrameBuilders
+namespace NetAF.Targets.Text.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a builder for region maps.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlRegionMapBuilder(HtmlBuilder builder) : IRegionMapBuilder
+    public sealed class TextRegionMapBuilder(StringBuilder builder) : IRegionMapBuilder
     {
         #region Properties
 
@@ -80,7 +81,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// <param name="focusPosition">The position to focus on.</param>
         public void BuildRegionMap(Region region, Point3D focusPosition)
         {
-            // for now, cheat and use the ANSI builder then convert to HTML
+            // for now, cheat and use the ANSI builder then convert to string
 
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
@@ -101,10 +102,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             ansiRegionBuilder.BuildRegionMap(region, focusPosition, new(0, 0), MaxSize);
 
-            var regionAsString = HtmlAdapter.ConvertGridStringBuilderToHtmlString(ansiGridStringBuilder);
-
-            // append as raw HTML using styling to specify monospace for correct horizontal alignment and pre to preserve whitespace
-            builder.Raw($"<pre style=\"font-family: 'Courier New', Courier, monospace;\">{regionAsString}</pre>");
+            var regionAsString = TextAdapter.ConvertGridStringBuilderToString(ansiGridStringBuilder);
+            builder.AppendLine(regionAsString);
         }
 
         #endregion

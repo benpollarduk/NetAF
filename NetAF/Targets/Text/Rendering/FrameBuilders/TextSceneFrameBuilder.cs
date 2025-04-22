@@ -7,15 +7,16 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using System.Linq;
+using System.Text;
 
-namespace NetAF.Targets.Html.Rendering.FrameBuilders
+namespace NetAF.Targets.Text.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a builder of scene frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
     /// <param name="roomMapBuilder">A builder to use for room maps.</param>
-    public sealed class HtmlSceneFrameBuilder(HtmlBuilder builder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
+    public sealed class TextSceneFrameBuilder(StringBuilder builder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
         #region Properties
 
@@ -42,34 +43,36 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
-            builder.H1(room.Identifier.Name);
-            builder.Br();
-            builder.P(room.Description.GetDescription().EnsureFinishedSentence());
+            builder.AppendLine(room.Identifier.Name);
+            builder.AppendLine();
+            builder.AppendLine(room.Description.GetDescription().EnsureFinishedSentence());
 
             var extendedDescription = string.Empty;
 
             if (viewPoint.Any)
-                builder.P(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
+                builder.AppendLine(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
 
             if (player.Items.Length != 0)
-                builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
+                builder.AppendLine("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
 
             if (player.Attributes.Count > 0)
-                builder.P(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));
+                builder.AppendLine(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));
 
-            builder.Br();
+            builder.AppendLine();
 
             roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
 
+            builder.AppendLine();
+
             if (contextualCommands?.Any() ?? false)
             {
-                builder.H4(CommandTitle);
+                builder.AppendLine(CommandTitle);
 
                 foreach (var command in contextualCommands)
-                    builder.P($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
+                    builder.AppendLine($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
             }
 
-            return new HtmlFrame(builder);
+            return new TextFrame(builder);
         }
 
         #endregion

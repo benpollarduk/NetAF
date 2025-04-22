@@ -226,6 +226,87 @@ namespace NetAF.Targets.Console.Rendering
                 SetCell(x + i, y, underline, color);
         }
 
+        /// <summary>
+        /// Find the used width of this GridStringBuilder.
+        /// </summary>
+        /// <returns>The used width.</returns>
+        private int FindUsedWidth()
+        {
+            var width = DisplaySize.Width;
+
+            for (var column = DisplaySize.Width - 1; column >= 0; column--)
+            {
+                width = column + 1;
+                var used = false;
+
+                for (var row = 0; row < DisplaySize.Height; row++)
+                {
+                    if (GetCharacter(column, row) != 0)
+                    {
+                        used = true;
+                        break;
+                    }
+                }
+
+                if (used)
+                    break;
+            }
+
+            return width;
+        }
+
+        /// <summary>
+        /// Find the used height of this GridStringBuilder.
+        /// </summary>
+        /// <returns>The used height.</returns>
+        private int FindUsedHeight()
+        {
+            var height = DisplaySize.Height;
+
+            for (var row = DisplaySize.Height - 1; row >= 0; row--)
+            {
+                height = row + 1;
+                var used = false;
+
+                for (var column = 0; column < DisplaySize.Width; column++)
+                {
+                    if (GetCharacter(column, row) != 0)
+                    {
+                        used = true;
+                        break;
+                    }
+                }
+
+                if (used)
+                    break;
+            }
+
+            return height;
+        }
+
+        /// <summary>
+        /// Crop this GridStringBuilder so that a duplicate is returned that is sized to only take up the used required width and height.
+        /// </summary>
+        /// <param name="cropWidth">Specify if the width should be cropped.</param>
+        /// <param name="cropHeight">Specify if the height should be cropped.</param>
+        /// <returns>A duplicate, cropped, GridStringBuilder.</returns>
+        public GridStringBuilder ToCropped(bool cropWidth = true, bool cropHeight = true)
+        {
+            // determine width and height
+            var width = cropWidth ? FindUsedWidth() : DisplaySize.Width;
+            var height = cropHeight ? FindUsedHeight() : DisplaySize.Height;
+
+            // create duplicate 
+            GridStringBuilder duplicate = new();
+            duplicate.Resize(new(width, height));
+
+            for (var row = 0; row < height; row++)
+                for (var column = 0; column < width; column++)
+                    duplicate.SetCell(column, row, GetCharacter(column, row), GetCellColor(column, row));
+
+            return duplicate;
+        }
+
         #endregion
 
         #region StaticMethods

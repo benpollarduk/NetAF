@@ -24,6 +24,32 @@ namespace NetAF.Targets.Text
         #region StaticMethods
 
         /// <summary>
+        /// Convert the contents of a GridStringBuilder to a string.
+        /// </summary>
+        /// <param name="builder">The GridStringBuilder to convert.</param>
+        /// <param name="padEmptyCharacters">Specify if empty characters should be padded with a space.</param>
+        /// <returns>A string representing the contents of the GridStringBuilder.</returns>
+        public static string ConvertGridStringBuilderToString(GridStringBuilder builder, bool padEmptyCharacters = true)
+        {
+            StringBuilder stringBuilder = new();
+
+            for (var row = 0; row < builder.DisplaySize.Height; row++)
+            {
+                for (var column = 0; column < builder.DisplaySize.Width; column++)
+                {
+                    var character = builder.GetCharacter(column, row);
+                    character = character == 0 && padEmptyCharacters ? ' ' : character;
+                    stringBuilder.Append(character);
+                }
+
+                if (row < builder.DisplaySize.Height - 1)
+                    stringBuilder.AppendLine();
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
         /// Convert an instance of IConsoleFrame to a string.
         /// </summary>
         /// <param name="frame">The frame to convert.</param>

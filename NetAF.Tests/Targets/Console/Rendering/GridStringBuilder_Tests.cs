@@ -111,5 +111,47 @@ namespace NetAF.Tests.Targets.Console.Rendering
 
             Assert.AreEqual(2, result);
         }
+
+        [TestMethod]
+        public void GivenX4Y9IsLastUsedSpaceAndCroppingWidthAndHeight_WhenToCropped_ThenWidthIs5HeightIs10()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(50, 50));
+
+            builder.SetCell(4, 9, 'A', AnsiColor.Yellow);
+
+            var result = builder.ToCropped(true, true);
+
+            Assert.AreEqual(5, result.DisplaySize.Width);
+            Assert.AreEqual(10, result.DisplaySize.Height);
+        }
+
+        [TestMethod]
+        public void GivenX4Y9IsLastUsedSpaceAndCroppingWidth_WhenToCropped_ThenWidthIs5HeightIs50()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(50, 50));
+
+            builder.SetCell(4, 9, 'A', AnsiColor.Yellow);
+
+            var result = builder.ToCropped(true, false);
+
+            Assert.AreEqual(5, result.DisplaySize.Width);
+            Assert.AreEqual(50, result.DisplaySize.Height);
+        }
+
+        [TestMethod]
+        public void GivenX4Y9IsLastUsedSpaceAndCroppingHeight_WhenToCropped_ThenWidthIs50HeightIs10()
+        {
+            var builder = new GridStringBuilder();
+            builder.Resize(new(50, 50));
+
+            builder.SetCell(4, 9, 'A', AnsiColor.Yellow);
+
+            var result = builder.ToCropped(false, true);
+
+            Assert.AreEqual(50, result.DisplaySize.Width);
+            Assert.AreEqual(10, result.DisplaySize.Height);
+        }
     }
 }
