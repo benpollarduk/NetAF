@@ -4,7 +4,6 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
-using System.Linq;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -50,7 +49,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             RegionMapBuilder?.BuildRegionMap(region, focusPosition);
 
-            if (contextualCommands?.Any() ?? false)
+            if (contextualCommands != null && contextualCommands.Length > 0)
             {
                 builder.H4(CommandTitle);
 

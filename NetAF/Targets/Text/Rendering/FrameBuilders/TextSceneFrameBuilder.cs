@@ -64,7 +64,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             builder.AppendLine();
 
-            if (contextualCommands?.Any() ?? false)
+            if (contextualCommands != null && contextualCommands.Length > 0)
             {
                 builder.AppendLine(CommandTitle);
 

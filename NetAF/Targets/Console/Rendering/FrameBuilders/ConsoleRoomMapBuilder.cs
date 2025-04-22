@@ -324,7 +324,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                         keyLines.Add(visitedExitString, VisitedExitColor);
 
                     if (room.EnteredFrom.HasValue)
-                        keyLines.Add($"{room.EnteredFrom.Value.ToString().ToLower().Substring(0, 1)} = Entrance", VisitedExitColor);
+                        keyLines.Add($"{room.EnteredFrom.Value.ToString().ToLower()[..1]} = Entrance", VisitedExitColor);
 
                     if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
                         keyLines.Add(itemsString, ItemOrCharacterColor);
@@ -349,7 +349,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             endX = startPosition.X + 8;
             endY = startPosition.Y;
 
-            if (!keyLines.Any())
+            if (keyLines.Keys.Count == 0)
                 return;
 
             var startKeyX = endX + KeyPadding;
