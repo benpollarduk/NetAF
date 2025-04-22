@@ -52,7 +52,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             if (viewPoint.Any)
                 builder.AppendLine(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
 
-            if (player.Items.Any())
+            if (player.Items.Length != 0)
                 builder.AppendLine("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
 
             if (player.Attributes.Count > 0)
@@ -61,6 +61,8 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             builder.AppendLine();
 
             roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+
+            builder.AppendLine();
 
             if (contextualCommands?.Any() ?? false)
             {

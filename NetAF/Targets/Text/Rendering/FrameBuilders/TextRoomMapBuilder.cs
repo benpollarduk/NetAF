@@ -103,7 +103,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
 
-            var roomAsString = TextAdapter.ConvertGridStringBuilderToString(ansiGridStringBuilder);
+            var roomAsString = TextAdapter.ConvertGridStringBuilderToString(ansiGridStringBuilder.ToCropped());
             builder.AppendLine(roomAsString);
         }
 
