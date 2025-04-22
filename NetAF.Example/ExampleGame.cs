@@ -5,7 +5,6 @@ using NetAF.Example.Assets.Regions.Hub.Rooms;
 using NetAF.Example.Assets.Regions.Zelda.Rooms;
 using NetAF.Logic;
 using NetAF.Extensions;
-using NetAF.Utilities;
 using NetAF.Commands.Persistence;
 using NetAF.Example.Assets.Player;
 using NetAF.Example.Assets.Regions.Everglades;
@@ -109,7 +108,7 @@ namespace NetAF.Example
             }
 
             var about = "This is a short demo of NetAF made up from test chunks of games that were build to test different features during development.";
-            return Game.Create(new("NetAF Demo", about, Info.AboutNetAF), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), configuration);
+            return Game.Create(new("NetAF Demo", about, "By Ben Pollard 2011 - 2025."), about, AssetGenerator.Custom(overworldCreator, new Player().Instantiate), new GameEndConditions(DetermineIfGameHasCompleted, DetermineIfGameOver), configuration);
         }
     }
 }
