@@ -62,6 +62,9 @@ namespace NetAF.Logging.History
         /// <param name="entry">The entry to add.</param>
         public void Add(HistoryEntry entry)
         {
+            if (string.IsNullOrEmpty(entry.Content))
+                return;
+
             if (MaxEntries >= 0 && entries.Count == MaxEntries)
                 entries.RemoveAt(0);
 

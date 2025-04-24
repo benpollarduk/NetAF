@@ -74,5 +74,16 @@ namespace NetAF.Tests.Logging.History
             Assert.AreEqual(1, result);
             Assert.AreEqual("C", manager.GetAll()[0].Name);
         }
+
+        [TestMethod]
+        public void GivenEmptyEntry_WhenAdd_ThenNoEntryAdded()
+        {
+            var manager = new HistoryManager();
+            manager.Add(new(string.Empty, string.Empty));
+
+            var result = manager.Count;
+
+            Assert.AreEqual(0, result);
+        }
     }
 }

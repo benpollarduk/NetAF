@@ -64,6 +64,17 @@ namespace NetAF.Tests.Logging.Notes
         }
 
         [TestMethod]
+        public void GivenEmptyEntry_WhenAdd_ThenNoEntryAdded()
+        {
+            var manager = new NoteManager();
+            manager.Add(new(string.Empty, string.Empty));
+
+            var result = manager.Count;
+
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
         public void GivenOneEntry_WhenRemove_ThenNoEntries()
         {
             var manager = new NoteManager();

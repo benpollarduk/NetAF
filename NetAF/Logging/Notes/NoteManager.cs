@@ -62,6 +62,9 @@ namespace NetAF.Logging.Notes
         /// <param name="entry">The entry to add.</param>
         public void Add(NoteEntry entry)
         {
+            if (string.IsNullOrEmpty(entry.Content))
+                return;
+
             var hit = Find(entry.Name);
 
             if (hit == null)
