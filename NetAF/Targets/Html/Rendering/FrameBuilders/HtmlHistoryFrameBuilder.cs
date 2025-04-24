@@ -3,6 +3,7 @@ using NetAF.Extensions;
 using NetAF.Logging.History;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
@@ -52,13 +53,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             if (entries.Length > 0)
             {
-                for (var i = 0; i < entries.Length; i++)
-                {
-                    builder.P($"{entries[i].Content.EnsureFinishedSentence()}");
+                List<string> history = [];
 
-                    if (i < entries.Length - 1)
-                        builder.Br();
-                }
+                foreach (var entry in entries)
+                    history.Add($"{entry.Content.EnsureFinishedSentence()}");
+
+                builder.Ul([.. history]);
             }
             else
             {

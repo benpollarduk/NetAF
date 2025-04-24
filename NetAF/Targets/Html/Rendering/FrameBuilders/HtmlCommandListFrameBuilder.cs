@@ -3,6 +3,7 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System.Collections.Generic;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -32,17 +33,21 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(description))
                 builder.P(description);
 
+            List<string> commandsInList = [];
+
             foreach (var command in commandHelp)
             {
                 if (!string.IsNullOrEmpty(command.DisplayCommand) && !string.IsNullOrEmpty(command.Description))
                 {
-                    builder.P($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
+                    commandsInList.Add($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
                 }
                 else if (!string.IsNullOrEmpty(command.DisplayCommand) && string.IsNullOrEmpty(command.Description))
                 {
-                    builder.P(command.DisplayCommand);
+                    commandsInList.Add(command.DisplayCommand);
                 }
             }
+
+            builder.Ul([.. commandsInList]);
 
             return new HtmlFrame(builder);
         }
