@@ -14,12 +14,9 @@ namespace NetAF.Targets.Html
     /// <param name="presenter">The presenter to use for presenting frames.</param>
     public sealed class HtmlAdapter(IFramePresenter presenter) : IIOAdapter
     {
-        #region Properties
+        #region Fields
 
-        /// <summary>
-        /// Get the game.
-        /// </summary>
-        public Game Game { get; private set; }
+        private Size displaySize;
 
         #endregion
 
@@ -157,7 +154,7 @@ namespace NetAF.Targets.Html
         /// <param name="game">The game to set up for.</param>
         public void Setup(Game game)
         {
-            Game = game;
+            displaySize = game.Configuration.DisplaySize;
         }
 
         /// <summary>
@@ -168,7 +165,7 @@ namespace NetAF.Targets.Html
         {
             // convert the frames if possible
             if (frame is IConsoleFrame ansiFrame)
-                presenter.Present(Convert(ansiFrame, Game.Configuration.DisplaySize));
+                presenter.Present(Convert(ansiFrame, displaySize));
             else if (frame is TextFrame textFrame)
                 presenter.Present(Convert(textFrame));
             else

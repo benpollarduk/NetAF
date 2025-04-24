@@ -94,5 +94,27 @@ namespace NetAF.Tests.Targets.Html.Rendering
 
             Assert.AreEqual(string.Empty, result);
         }
+
+        [TestMethod]
+        public void Given3ListItems_WhenOl_Then3ItemsCreated()
+        {
+            var builder = new HtmlBuilder();
+
+            builder.Ol("A", "B", "C");
+            var result = builder.ToString();
+
+            Assert.AreEqual("<ol><li>A</li><li>B</li><li>C</li></ol>", result);
+        }
+
+        [TestMethod]
+        public void Given3ListItems_WhenUl_Then3ItemsCreated()
+        {
+            var builder = new HtmlBuilder();
+
+            builder.Ul("A", "B", "C");
+            var result = builder.ToString();
+
+            Assert.AreEqual("<ul><li>A</li><li>B</li><li>C</li></ul>", result);
+        }
     }
 }

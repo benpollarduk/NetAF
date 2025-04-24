@@ -5,12 +5,12 @@ using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using System;
 
-namespace NetAF.Targets.Hosted.Rendering.FrameBuilders
+namespace NetAF.Targets.General.FrameBuilders
 {
     /// <summary>
     /// Provides a builder for region maps.
     /// </summary>
-    public abstract class HostedRegionMapBuilder : IRegionMapBuilder
+    public abstract class GeneralRegionMapBuilder : IRegionMapBuilder
     {
         #region Properties
 

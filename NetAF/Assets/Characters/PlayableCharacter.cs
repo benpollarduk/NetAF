@@ -112,7 +112,7 @@ namespace NetAF.Assets.Characters
         private static Examination ExamineThis(ExaminationRequest request)
         {
             var defaultExamination = DefaultExamination(request);
-
+            
             if (request.Examinable is not PlayableCharacter playableCharacter)
                 return defaultExamination;
 
@@ -127,7 +127,7 @@ namespace NetAF.Assets.Characters
 
             var items = playableCharacter.Items.Cast<IExaminable>().ToArray();
             var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
-            return new($"{defaultExamination.Description}{StringUtilities.Newline}{StringUtilities.Newline}You have {sentence.StartWithLower()}".EnsureFinishedSentence());
+            return new($"{defaultExamination.Description}{StringUtilities.Newline}{StringUtilities.Newline}You have {sentence.StartWithLower().EnsureFinishedSentence()}".EnsureFinishedSentence());
         }
 
         #endregion

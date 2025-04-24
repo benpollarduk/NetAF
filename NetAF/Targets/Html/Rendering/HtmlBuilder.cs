@@ -70,6 +70,34 @@ namespace NetAF.Targets.Html.Rendering
         }
 
         /// <summary>
+        /// Append an unordered list of items.
+        /// </summary>
+        /// <param name="items">The items to add to the unordered list.</param>
+        public void Ul(params string[] items)
+        {
+            builder.Append("<ul>");
+
+            foreach (string item in items)
+                builder.Append($"<li>{item}</li>");
+
+            builder.Append("</ul>");
+        }
+
+        /// <summary>
+        /// Append an ordered list of items.
+        /// </summary>
+        /// <param name="items">The items to add to the ordered list.</param>
+        public void Ol(params string[] items)
+        {
+            builder.Append("<ol>");
+
+            foreach (string item in items)
+                builder.Append($"<li>{item}</li>");
+
+            builder.Append("</ol>");
+        }
+
+        /// <summary>
         /// Append raw content.
         /// </summary>
         /// <param name="content">The content to append.</param>

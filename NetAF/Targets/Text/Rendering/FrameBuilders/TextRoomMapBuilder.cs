@@ -1,5 +1,5 @@
 ﻿using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Hosted.Rendering.FrameBuilders;
+using NetAF.Targets.General.FrameBuilders;
 using System.Text;
 
 namespace NetAF.Targets.Text.Rendering.FrameBuilders
@@ -8,7 +8,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     /// Provides a room map builder.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class TextRoomMapBuilder(StringBuilder builder) : HostedRoomMapBuilder
+    public sealed class TextRoomMapBuilder(StringBuilder builder) : GeneralRoomMapBuilder
     {
         #region Overrides of HostedRoomMapBuilder
 

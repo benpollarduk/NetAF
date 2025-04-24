@@ -1,5 +1,5 @@
 ﻿using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Hosted.Rendering.FrameBuilders;
+using NetAF.Targets.General.FrameBuilders;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -7,7 +7,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// Provides a builder for region maps.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlRegionMapBuilder(HtmlBuilder builder) : HostedRegionMapBuilder
+    public sealed class HtmlRegionMapBuilder(HtmlBuilder builder) : GeneralRegionMapBuilder
     {
         #region Overrides of HostedRegionMapBuilder
 

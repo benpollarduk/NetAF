@@ -6,12 +6,12 @@ using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using System;
 
-namespace NetAF.Targets.Hosted.Rendering.FrameBuilders
+namespace NetAF.Targets.General.FrameBuilders
 {
     /// <summary>
     /// Provides a room map builder.
     /// </summary>
-    public abstract class HostedRoomMapBuilder : IRoomMapBuilder
+    public abstract class GeneralRoomMapBuilder : IRoomMapBuilder
     {
         #region Properties
 

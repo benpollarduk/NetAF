@@ -136,9 +136,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (player.Items.Length != 0)
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
 
-            if (player.Attributes.Count > 0)
-                gridStringBuilder.DrawWrapped(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()), leftMargin, lastY + 2, availableWidth, TextColor, out _, out _);
-
             if (contextualCommands != null && contextualCommands.Length > 0)
                 AddCommands(gridStringBuilder, contextualCommands, new Size(availableWidth, size.Height), leftMargin);
             

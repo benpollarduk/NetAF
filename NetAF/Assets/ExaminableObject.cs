@@ -31,7 +31,7 @@ namespace NetAF.Assets
             EnsureAtleastABasicDescription(request, ref description);
 
             if (request.Examinable.Attributes.Count > 0)
-                description.Append($"\n\n{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
+                description.Append($"{StringUtilities.Newline}{StringUtilities.Newline}{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
 
             return new(description.ToString());
         };

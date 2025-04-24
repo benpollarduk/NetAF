@@ -54,9 +54,6 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             if (player.Items.Length != 0)
                 builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
 
-            if (player.Attributes.Count > 0)
-                builder.P(StringUtilities.ConstructAttributesAsString(player.Attributes.GetAsDictionary()));
-
             builder.Br();
 
             roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
