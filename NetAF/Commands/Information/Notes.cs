@@ -13,7 +13,7 @@ namespace NetAF.Commands.Information
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Notes", "View all in-game notes", CommandCategory.Global);
+        public static CommandHelp CommandHelp { get; } = new("Notes", "View in-game notes", CommandCategory.Global);
 
         #endregion
 
