@@ -211,23 +211,25 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
         private static bool TryConvertMatrixPositionToGridLayoutPosition(Matrix matrix, MatrixConversionParameters parameters, out int gridLeft, out int gridTop)
         {
-            // set position of room, Y is inverted
-            gridLeft = parameters.GridStartPosition.X + (parameters.RoomPosition.X * parameters.RoomSize.Width);
-            gridTop = parameters.GridStartPosition.Y + ((matrix.Height - 1) * parameters.RoomSize.Height) - (parameters.RoomPosition.Y * parameters.RoomSize.Height);
+            // calculate room left in grid
+            var tranlatedX = matrix.Width - parameters.RoomPosition.X;
+            var tranlatedFocusX = matrix.Width - parameters.FocusPosition.X;
+            var roomLeft = (tranlatedX - tranlatedFocusX) * parameters.RoomSize.Width;
 
-            // check if map will overflow area
-            if (matrix.Width * parameters.RoomSize.Width > parameters.AvailableSize.Width || matrix.Height * parameters.RoomSize.Height > parameters.AvailableSize.Height)
-            {
-                // centralise on the focus position
-                gridLeft += (parameters.AvailableSize.Width / 2) - (parameters.FocusPosition.X * parameters.RoomSize.Width) + (parameters.RoomSize.Width / 2);
-                gridTop += (parameters.AvailableSize.Height / 2) + ((parameters.FocusPosition.Y - matrix.Height) * parameters.RoomSize.Height) - (parameters.RoomSize.Height / 2);
-            }
-            else
-            {
-                // centralise on area
-                gridLeft += (int)Math.Floor((parameters.AvailableSize.Width / 2d) - (matrix.Width / 2d) * parameters.RoomSize.Width);
-                gridTop += (int)Math.Floor((parameters.AvailableSize.Height / 2d) - (matrix.Height / 2d) * parameters.RoomSize.Height);
-            }
+            // calculate centralised left
+            var centralAreaX = (parameters.AvailableSize.Width / 2d) - parameters.RoomSize.Width;
+            var roomCentralisationX = parameters.RoomSize.Width * 0.5d;
+            gridLeft = (int)Math.Floor(centralAreaX - roomLeft + roomCentralisationX);
+            gridLeft += parameters.GridStartPosition.X;
+
+            // calculate room top in grid
+            var roomTop = (parameters.RoomPosition.Y - parameters.FocusPosition.Y) * parameters.RoomSize.Height;
+
+            // calculate centralised top
+            var centralAreaY = (parameters.AvailableSize.Height / 2d) - parameters.RoomSize.Height / 2d;
+            var roomCentralisationY = parameters.RoomSize.Height * 0d;
+            gridTop = (int)Math.Floor(centralAreaY - roomTop + roomCentralisationY);
+            gridTop += parameters.GridStartPosition.Y;
 
             return gridLeft >= parameters.GridStartPosition.X &&
                    gridLeft + parameters.RoomSize.Width - 1 < parameters.AvailableSize.Width &&
@@ -314,7 +316,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
                 foreach (var position in lowerLevelRooms)
                 {
-                    if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
+                    var roomOnFocusFloorAtXY = matrix[position.Position.X, position.Position.Y, focusFloor];
+                    var hasVisibleRoomAtXYOnFocusFloor = roomOnFocusFloorAtXY != null && (roomOnFocusFloorAtXY.HasBeenVisited || region.IsVisibleWithoutDiscovery);
+
+                    if (!hasVisibleRoomAtXYOnFocusFloor && TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
                         DrawLowerLevelRoom(new Point2D(left, top), roomSize);
                 }
             }
