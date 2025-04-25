@@ -2,19 +2,19 @@
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
 
-namespace NetAF.Commands.Global
+namespace NetAF.Commands.Frame
 {
     /// <summary>
-    /// Represents the Map command.
+    /// Represents the Zoom Out command.
     /// </summary>
-    public sealed class Map : ICommand
+    public sealed class ZoomOut : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Map", "View the map of the current region", CommandCategory.Global);
+        public static CommandHelp CommandHelp { get; } = new("Zoom Out", "Zoom out to show a less detailed map", CommandCategory.RegionMap);
 
         #endregion
 
@@ -30,8 +30,12 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, FrameProperties.MapDetail));
-            return new(ReactionResult.GameModeChanged, string.Empty);
+            FrameProperties.MapDetail = RegionMapDetail.Basic;
+            
+            if (game.Mode is RegionMapMode mapMode)
+                mapMode.Detail = RegionMapDetail.Basic;
+
+            return new(ReactionResult.Silent, "Zoomed out.");
         }
 
         /// <summary>

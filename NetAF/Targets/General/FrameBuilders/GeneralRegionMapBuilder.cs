@@ -92,7 +92,7 @@ namespace NetAF.Targets.General.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.
+        /// <param name="detail">The level of detail to use.</param>
         public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail)
         {
             // for now, cheat and use the ANSI builder then convert to string

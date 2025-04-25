@@ -12,7 +12,7 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for the region map.
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
-    /// <param name="detail">The level of detail to use.
+    /// <param name="detail">The level of detail to use.</param>
     public sealed class RegionMapMode(Point3D focusPosition, RegionMapDetail detail) : IGameMode
     {
         #region StaticProperties

@@ -78,6 +78,11 @@ namespace NetAF.Targets.General.FrameBuilders
         #region Implementation of IRoomMapBuilder
 
         /// <summary>
+        /// Get the rendered size of the room, excluding any keys.
+        /// </summary>
+        public Size RenderedSize => new(9, 7);
+
+        /// <summary>
         /// Build a map for a room.
         /// </summary>
         /// <param name="room">The room.</param>

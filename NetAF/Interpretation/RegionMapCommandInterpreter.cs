@@ -1,9 +1,11 @@
 ﻿using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Frame;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
+using NetAF.Rendering;
 using System.Collections.Generic;
 
 namespace NetAF.Interpretation
@@ -27,6 +29,8 @@ namespace NetAF.Interpretation
             Pan.UpCommandHelp,
             Pan.DownCommandHelp,
             PanReset.CommandHelp,
+            ZoomIn.CommandHelp,
+            ZoomOut.CommandHelp,
             End.CommandHelp,
         ];
 
@@ -68,6 +72,12 @@ namespace NetAF.Interpretation
             if (PanReset.CommandHelp.Equals(input))
                 return new(true, new PanReset());
 
+            if (ZoomIn.CommandHelp.Equals(input))
+                return new(true, new ZoomIn());
+
+            if (ZoomOut.CommandHelp.Equals(input))
+                return new(true, new ZoomOut());
+
             if (End.CommandHelp.Equals(input))
                 return new(true, new End());
 
@@ -105,6 +115,12 @@ namespace NetAF.Interpretation
 
                 if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position))
                     commands.Add(PanReset.CommandHelp);
+
+                if (regionMapMode.Detail != RegionMapDetail.Detailed)
+                    commands.Add(ZoomIn.CommandHelp);
+
+                if (regionMapMode.Detail != RegionMapDetail.Basic)
+                    commands.Add(ZoomOut.CommandHelp);
 
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map", CommandCategory.RegionMap));
             }

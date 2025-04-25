@@ -100,178 +100,42 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #region Methods
 
         /// <summary>
-        /// Draw the north exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawNorth(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.North))
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y, LockedExit, LockedExitColor);
-                builder.SetCell(topLeft.X + 2, topLeft.Y, LockedExit, LockedExitColor);
-                builder.SetCell(topLeft.X + 3, topLeft.Y, LockedExit, LockedExitColor);
-            }
-            else if (room.HasUnlockedExitInDirection(Direction.North))
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y, UnLockedExit, color);
-                builder.SetCell(topLeft.X + 2, topLeft.Y, UnLockedExit, color);
-                builder.SetCell(topLeft.X + 3, topLeft.Y, UnLockedExit, color);
-            }
-            else
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y, HorizontalBoundary, color);
-                builder.SetCell(topLeft.X + 2, topLeft.Y, HorizontalBoundary, color);
-                builder.SetCell(topLeft.X + 3, topLeft.Y, HorizontalBoundary, color);
-            }
-        }
-
-        /// <summary>
-        /// Draw the west exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawWest(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.West))
-                builder.SetCell(topLeft.X, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.West))
-                builder.SetCell(topLeft.X, topLeft.Y + 1, UnLockedExit, color);
-            else
-                builder.SetCell(topLeft.X, topLeft.Y + 1, VerticalBoundary, color);
-        }
-
-        /// <summary>
-        /// Draw the east exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawEast(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.East))
-                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.East))
-                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, UnLockedExit, color);
-            else
-                builder.SetCell(topLeft.X + 4, topLeft.Y + 1, VerticalBoundary, color);
-        }
-
-        /// <summary>
-        /// Draw the south exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawSouth(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.South))
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, LockedExit, LockedExitColor);
-                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, LockedExit, LockedExitColor);
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, LockedExit, LockedExitColor);
-            }
-            else if (room.HasUnlockedExitInDirection(Direction.South))
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, UnLockedExit, color);
-                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, UnLockedExit, color);
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, UnLockedExit, color);
-            }
-            else
-            {
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 2, HorizontalBoundary, color);
-                builder.SetCell(topLeft.X + 2, topLeft.Y + 2, HorizontalBoundary, color);
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 2, HorizontalBoundary, color);
-            }
-        }
-
-        /// <summary>
-        /// Draw the up exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawUp(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.Up))
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.Up))
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, '^', color);
-            else
-                builder.SetCell(topLeft.X + 1, topLeft.Y + 1, EmptySpace, color);
-        }
-
-        /// <summary>
-        /// Draw the down exit.
-        /// </summary>
-        /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
-        /// <param name="topLeft">The top left cell of the room.</param>
-        /// <param name="color">The color</param>
-        private void DrawDown(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
-        {
-            if (room.HasLockedExitInDirection(Direction.Down))
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, LockedExit, LockedExitColor);
-            else if (room.HasUnlockedExitInDirection(Direction.Down))
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, 'v', color);
-            else
-                builder.SetCell(topLeft.X + 3, topLeft.Y + 1, EmptySpace, color);
-        }
-
-        /// <summary>
         /// Draw a room on the current floor.
         /// </summary>
         /// <param name="room">The room to draw.</param>
         /// <param name="topLeft">The top left of the room.</param>
+        /// <param name="view">The view from the room.</param>
+        /// <param name="detail">The level of detail to use.</param>
         /// <param name="isPlayerRoom">True if this is the player room.</param>
         /// <param name="isFocusRoom">True if this is the focus room.</param>
-        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, bool isPlayerRoom, bool isFocusRoom)
+        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, ViewPoint view, RegionMapDetail detail, bool isPlayerRoom, bool isFocusRoom)
         {
-            /*
-             * |   |
-             *  ^Ov|
-             * |---|
-             */
+            // get the configured builder
+            var builder = GetConfiguredRoomMapBuilder(detail, room.HasBeenVisited || isPlayerRoom, isFocusRoom); 
 
-            AnsiColor color = UnvisitedBoundaryColor;
+            // draw room
+            builder.BuildRoomMap(room, view, KeyType.None, topLeft, out _, out _);
 
-            if (isFocusRoom)
-                color = FocusedBoundaryColor;
-            else if (room.HasBeenVisited)
-                color = VisitedBoundaryColor;
+            if (!isPlayerRoom && !isFocusRoom)
+                return;
 
-            DrawNorth(gridStringBuilder, room, topLeft, color);
-            DrawWest(gridStringBuilder, room, topLeft, color);
-            DrawUp(gridStringBuilder, room, topLeft, color);
-            DrawDown(gridStringBuilder, room, topLeft, color);
-            DrawEast(gridStringBuilder, room, topLeft, color);
-            DrawSouth(gridStringBuilder, room, topLeft, color);
+            var roomSize = builder.RenderedSize;
+            var markerLocationX = topLeft.X + (roomSize.Width / 2);
+            var markerLocationY = topLeft.Y + (roomSize.Height / 2);
 
+            // draw player or focus in room
             if (isPlayerRoom)
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Player, PlayerColor);
-            else if (isFocusRoom)
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, Focus, FocusedBoundaryColor);
+                gridStringBuilder.SetCell(markerLocationX, markerLocationY, Player, PlayerColor);
             else
-                gridStringBuilder.SetCell(topLeft.X + 2, topLeft.Y + 1, EmptySpace, color);
-
-            gridStringBuilder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
-            gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y, VerticalBoundary, color);
-            gridStringBuilder.SetCell(topLeft.X, topLeft.Y + 2, VerticalBoundary, color);
-            gridStringBuilder.SetCell(topLeft.X + 4, topLeft.Y + 2, VerticalBoundary, color);
+                gridStringBuilder.SetCell(markerLocationX, markerLocationY, Focus, FocusedBoundaryColor);
         }
 
         /// <summary>
         /// Draw a room on a lower level.
         /// </summary>
         /// <param name="topLeft">The top left of the room.</param>
-        private void DrawLowerLevelRoom(Point2D topLeft)
+        /// <param name="roomSize">The size of the room.</param>
+        private void DrawLowerLevelRoom(Point2D topLeft, Size roomSize)
         {
             /*
              * .....
@@ -280,11 +144,58 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
              *
              */
 
-            for (var y = 0; y < 3; y++)
-                for (var x = 0; x < 5; x++)
+            for (var y = 0; y < roomSize.Height; y++)
+                for (var x = 0; x < roomSize.Width; x++)
                     gridStringBuilder.SetCell(topLeft.X + x, topLeft.Y + y, LowerLevel, LowerLevelColor);
-
         }
+
+        /// <summary>
+        /// Get the room map builder.
+        /// </summary>
+        /// <param name="detail">The detail level to use.</param>
+        /// <param name="hasBeenVisited">If the room to be drawn has been visited.</param>
+        /// <param name="isFocusRoom">If the room to be drawn is the focused room.</param>
+        /// <returns>The configured room map builder.</returns>
+        private IConsoleRoomMapBuilder GetConfiguredRoomMapBuilder(RegionMapDetail detail, bool hasBeenVisited, bool isFocusRoom)
+        {
+            AnsiColor boundaryColor = UnvisitedBoundaryColor;
+
+            if (isFocusRoom)
+                boundaryColor = FocusedBoundaryColor;
+            else if (hasBeenVisited)
+                boundaryColor = VisitedBoundaryColor;
+
+            switch (detail)
+            {
+                case RegionMapDetail.Detailed:
+                    var detailedBuilder = new ConsoleRoomMapBuilder(gridStringBuilder)
+                    {
+                        BoundaryColor = boundaryColor,
+                        DisplayDirections = false
+                    };
+                    return detailedBuilder;
+                default:
+                    var undetatiledBuilder = new ConsoleBasicRoomMapBuilder(gridStringBuilder)
+                    {
+                        BoundaryColor = boundaryColor
+                    };
+                    return undetatiledBuilder;
+            }
+        }
+
+        #endregion
+
+        #region Records
+
+        /// <summary>
+        /// Provides parameters for matrix conversion.
+        /// </summary>
+        /// <param name="GridStartPosition">The position to start building at.</param>
+        /// <param name="AvailableSize">The available size, in the grid.</param>
+        /// <param name="RoomPosition">The position of the room, in the matrix.</param>
+        /// <param name="RoomSize">The size of the room.</param>
+        /// <param name="FocusPosition">The focus position, in the matrix.</param>
+        private sealed record MatrixConversionParameters(Point2D GridStartPosition, Size AvailableSize, Point2D RoomPosition, Size RoomSize, Point2D FocusPosition);
 
         #endregion
 
@@ -293,41 +204,35 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <summary>
         /// Try and convert a position in a matrix to a grid layout position.
         /// </summary>
-        /// <param name="gridStartPosition">The position to start building at.</param>
-        /// <param name="availableSize">The available size, in the grid.</param>
         /// <param name="matrix">The matrix.</param>
-        /// <param name="roomPosition">The position of the room, in the matrix.</param>
-        /// <param name="focusPosition">The focus position, in the matrix.</param>
+        /// <param name="parameters">The matrix conversion parameters.</param>
         /// <param name="gridLeft">The left position to begin rendering the room at, in the grid.</param>
         /// <param name="gridTop">The top position to begin rendering the room at, in the grid.</param>
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
-        private static bool TryConvertMatrixPositionToGridLayoutPosition(Point2D gridStartPosition, Size availableSize, Matrix matrix, Point2D roomPosition, Point2D focusPosition, out int gridLeft, out int gridTop)
+        private static bool TryConvertMatrixPositionToGridLayoutPosition(Matrix matrix, MatrixConversionParameters parameters, out int gridLeft, out int gridTop)
         {
-            const int roomWidth = 9;
-            const int roomHeight = 7;
-
             // set position of room, Y is inverted
-            gridLeft = gridStartPosition.X + roomPosition.X * roomWidth;
-            gridTop = gridStartPosition.Y + (matrix.Height - 1) * roomHeight - roomPosition.Y * roomHeight;
+            gridLeft = parameters.GridStartPosition.X + parameters.RoomPosition.X * parameters.RoomSize.Width;
+            gridTop = parameters.GridStartPosition.Y + (matrix.Height - 1) * parameters.RoomSize.Height - parameters.RoomPosition.Y * parameters.RoomSize.Height;
 
-            // check if map will fit
-            if (matrix.Width * roomWidth > availableSize.Width || matrix.Height * roomHeight > availableSize.Height)
+            // check if map will overflow area
+            if (matrix.Width * parameters.RoomSize.Width > parameters.AvailableSize.Width || matrix.Height * parameters.RoomSize.Height > parameters.AvailableSize.Height)
             {
                 // centralise on the focus position
-                gridLeft += availableSize.Width / 2 - focusPosition.X * roomWidth + roomWidth / 2;
-                gridTop += availableSize.Height / 2 + (focusPosition.Y - matrix.Height) * roomHeight - roomHeight / 2;
+                gridLeft += parameters.AvailableSize.Width / 2 - parameters.FocusPosition.X * parameters.RoomSize.Width + parameters.RoomSize.Width / 2;
+                gridTop += parameters.AvailableSize.Height / 2 + (parameters.FocusPosition.Y - matrix.Height) * parameters.RoomSize.Height - parameters.RoomSize.Height / 2;
             }
             else
             {
                 // centralise on area
-                gridLeft += (int)Math.Floor(availableSize.Width / 2d - matrix.Width / 2d * roomWidth);
-                gridTop += (int)Math.Floor(availableSize.Height / 2d - matrix.Height / 2d * roomHeight);
+                gridLeft += (int)Math.Floor(parameters.AvailableSize.Width / 2d - matrix.Width / 2d * parameters.RoomSize.Width);
+                gridTop += (int)Math.Floor(parameters.AvailableSize.Height / 2d - matrix.Height / 2d * parameters.RoomSize.Height);
             }
 
-            return gridLeft >= gridStartPosition.X &&
-                   gridLeft + roomWidth - 1 < availableSize.Width &&
-                   gridTop >= gridStartPosition.Y &&
-                   gridTop + roomHeight - 1 < availableSize.Height;
+            return gridLeft >= parameters.GridStartPosition.X &&
+                   gridLeft + parameters.RoomSize.Width - 1 < parameters.AvailableSize.Width &&
+                   gridTop >= parameters.GridStartPosition.Y &&
+                   gridTop + parameters.RoomSize.Height - 1 < parameters.AvailableSize.Height;
         }
 
         #endregion
@@ -339,7 +244,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.
+        /// <param name="detail">The level of detail to use.</param>
         public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail)
         {
             BuildRegionMap(region, focusPosition, detail, new(0, 0), new(int.MaxValue, int.MaxValue));
@@ -354,7 +259,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.
+        /// <param name="detail">The level of detail to use.</param>
         /// <param name="startPosition">The position to start building at.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
         public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Point2D startPosition, Size maxSize)
@@ -396,6 +301,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 maxAvailableWidth -= indicatorLength;
             }
 
+            // determine the room size
+            var roomSize = GetConfiguredRoomMapBuilder(detail, false, false).RenderedSize;
+
             // firstly draw lower levels
             if (ShowLowerFloors)
             {
@@ -406,8 +314,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
                 foreach (var position in lowerLevelRooms)
                 {
-                    if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, new Point2D(position.Position.X, position.Position.Y), new Point2D(focusPosition.X, focusPosition.Y), out var left, out var top))
-                        DrawLowerLevelRoom(new Point2D(left, top));
+                    if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
+                        DrawLowerLevelRoom(new Point2D(left, top), roomSize);
                 }
             }
 
@@ -419,8 +327,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             foreach (var position in focusLevelRooms)
             {
-                if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, new Point2D(position.Position.X, position.Position.Y), new Point2D(focusPosition.X, focusPosition.Y), out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, region, new Point2D(left, top), position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
+                if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
+                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), detail, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
             }
         }
 

@@ -35,7 +35,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.
+        /// <param name="detail">The level of detail to use.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
