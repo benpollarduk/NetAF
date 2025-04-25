@@ -122,34 +122,6 @@ namespace NetAF.Interpretation
             return InterpretationResult.Fail;
         }
 
-        private CommandHelp[] GetPanContextualCommands(Game game, RegionMapMode regionMapMode)
-        {
-            List<CommandHelp> commands = [];
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.North)))
-                commands.Add(Pan.NorthCommandHelp);
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.South)))
-                commands.Add(Pan.SouthCommandHelp);
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.East)))
-                commands.Add(Pan.EastCommandHelp);
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.West)))
-                commands.Add(Pan.WestCommandHelp);
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Up)))
-                commands.Add(Pan.UpCommandHelp);
-
-            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Down)))
-                commands.Add(Pan.DownCommandHelp);
-
-            if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position))
-                commands.Add(PanReset.CommandHelp);
-
-            return [.. commands];
-        }
-
         /// <summary>
         /// Get contextual command help for a game, based on its current state.
         /// </summary>

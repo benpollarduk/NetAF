@@ -14,7 +14,7 @@ namespace NetAF.Commands.Frame
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Zoom In", "Zoom in to show a more detailed map", CommandCategory.RegionMap, shortcut: "I");
+        public static CommandHelp CommandHelp { get; } = new("Zoom In", "Zoom in to show a more detailed map", CommandCategory.RegionMap, shortcut: "I", displayAs: "Zoom In/I");
 
         #endregion
 
