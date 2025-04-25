@@ -32,6 +32,44 @@ namespace NetAF.Interpretation
 
         #endregion
 
+        #region StaticMethods
+
+        /// <summary>
+        /// Get available pan contextual controls.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="regionMapMode">The region map mode.</param>
+        /// <returns>An array of available pan contextual controls.</returns>
+        private static CommandHelp[] GetPanContextualCommands(Game game, RegionMapMode regionMapMode)
+        {
+            List<CommandHelp> commands = [];
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.North)))
+                commands.Add(Pan.NorthCommandHelp);
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.South)))
+                commands.Add(Pan.SouthCommandHelp);
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.East)))
+                commands.Add(Pan.EastCommandHelp);
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.West)))
+                commands.Add(Pan.WestCommandHelp);
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Up)))
+                commands.Add(Pan.UpCommandHelp);
+
+            if (RegionMapMode.CanPanToPosition(game.Overworld.CurrentRegion, Pan.GetPanPosition(regionMapMode.FocusPosition, Direction.Down)))
+                commands.Add(Pan.DownCommandHelp);
+
+            if (!regionMapMode.FocusPosition.Equals(game.Overworld.CurrentRegion.GetPositionOfRoom(game.Overworld.CurrentRegion.CurrentRoom).Position))
+                commands.Add(PanReset.CommandHelp);
+
+            return [.. commands];
+        }
+
+        #endregion
+
         #region Implementation of IInterpreter
 
         /// <summary>
