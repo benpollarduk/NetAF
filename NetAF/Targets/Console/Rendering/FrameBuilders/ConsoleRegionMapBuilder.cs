@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Locations;
+using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -302,8 +303,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <returns>True if the matrix position could be converted to a grid position and fit in the available space.</returns>
         private static bool TryConvertMatrixPositionToGridLayoutPosition(Point2D gridStartPosition, Size availableSize, Matrix matrix, Point2D roomPosition, Point2D focusPosition, out int gridLeft, out int gridTop)
         {
-            const int roomWidth = 5;
-            const int roomHeight = 3;
+            const int roomWidth = 9;
+            const int roomHeight = 7;
 
             // set position of room, Y is inverted
             gridLeft = gridStartPosition.X + roomPosition.X * roomWidth;
@@ -338,9 +339,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition)
+        /// <param name="detail">The level of detail to use.
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail)
         {
-            BuildRegionMap(region, focusPosition, new(0, 0), new(int.MaxValue, int.MaxValue));
+            BuildRegionMap(region, focusPosition, detail, new(0, 0), new(int.MaxValue, int.MaxValue));
         }
 
         #endregion
@@ -352,9 +354,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
+        /// <param name="detail">The level of detail to use.
         /// <param name="startPosition">The position to start building at.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, Point2D startPosition, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Point2D startPosition, Size maxSize)
         {
             var matrix = region.ToMatrix();
             var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);
@@ -417,7 +420,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             foreach (var position in focusLevelRooms)
             {
                 if (TryConvertMatrixPositionToGridLayoutPosition(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), matrix, new Point2D(position.Position.X, position.Position.Y), new Point2D(focusPosition.X, focusPosition.Y), out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
+                    DrawCurrentFloorRoom(position.Room, region, new Point2D(left, top), position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
             }
         }
 
