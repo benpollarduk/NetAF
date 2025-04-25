@@ -77,7 +77,7 @@ namespace NetAF.Tests.Commands.Persistence
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }

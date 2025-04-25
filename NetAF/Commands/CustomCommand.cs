@@ -1,7 +1,10 @@
 ﻿using NetAF.Assets;
+using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Serialization;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Commands
 {
@@ -14,6 +17,12 @@ namespace NetAF.Commands
     /// <param name="callback">The callback to invoke when this command is invoked.</param>
     public class CustomCommand(CommandHelp help, bool isPlayerVisible, bool interpretIfNotPlayerVisible, CustomCommandCallback callback) : ICommand, IPlayerVisible, IRestoreFromObjectSerialization<CustomCommandSerialization>, ICloneable
     {
+        #region Fields
+
+        private List<Prompt> prompts = [];
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -38,6 +47,29 @@ namespace NetAF.Commands
 
         #endregion
 
+        #region Methods
+
+        /// <summary>
+        /// Add a prompt.
+        /// </summary>
+        /// <param name="prompt">The prompt to add.</param>
+        public void AddPrompt(Prompt prompt)
+        {
+            if (prompts.All(x => !x.Entry.InsensitiveEquals(prompt.Entry)))
+                prompts.Add(prompt);
+        }
+
+        /// <summary>
+        /// Remove a prompt.
+        /// </summary>
+        /// <param name="prompt">The prompt to remove.</param>
+        public void RemovePrompt(Prompt prompt)
+        {
+            prompts.RemoveAll(x => x.Entry.InsensitiveEquals(prompt.Entry));
+        }
+
+        #endregion
+
         #region Implementation of ICommand
 
         /// <summary>
@@ -57,7 +89,7 @@ namespace NetAF.Commands
         /// <returns>And array of prompts.</returns>
         public virtual Prompt[] GetPrompts(Game game)
         {
-            return [];
+            return [.. prompts];
         }
 
         #endregion
@@ -80,6 +112,7 @@ namespace NetAF.Commands
         void IRestoreFromObjectSerialization<CustomCommandSerialization>.RestoreFrom(CustomCommandSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
+            prompts = [.. serialization.Prompts.Select(x => new Prompt(x))];
         }
 
         #endregion
@@ -92,7 +125,9 @@ namespace NetAF.Commands
         /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
-            return new CustomCommand(Help, IsPlayerVisible, InterpretIfNotPlayerVisible, Callback) { Arguments = Arguments };
+            Prompt[] clonedPrompts = [];
+            prompts.CopyTo(clonedPrompts);
+            return new CustomCommand(Help, IsPlayerVisible, InterpretIfNotPlayerVisible, Callback) { Arguments = Arguments, prompts = [.. clonedPrompts] };
         }
 
         #endregion

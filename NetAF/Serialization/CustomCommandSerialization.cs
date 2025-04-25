@@ -1,4 +1,5 @@
 ﻿using NetAF.Commands;
+using System.Linq;
 
 namespace NetAF.Serialization
 {
@@ -19,6 +20,11 @@ namespace NetAF.Serialization
         /// </summary>
         public bool IsPlayerVisible { get; set; }
 
+        /// <summary>
+        /// Get or set the prompts.
+        /// </summary>
+        public string[] Prompts { get; set; } = [];
+
         #endregion
 
         #region StaticMethods
@@ -33,7 +39,8 @@ namespace NetAF.Serialization
             return new()
             {
                 CommandName = customCommand?.Help?.Command,
-                IsPlayerVisible = customCommand?.IsPlayerVisible ?? false
+                IsPlayerVisible = customCommand?.IsPlayerVisible ?? false,
+                Prompts = customCommand?.GetPrompts(null).Select(x => x.Entry).ToArray() ?? []
             };
         }
 

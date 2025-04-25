@@ -28,16 +28,42 @@ namespace NetAF.Tests.Serialization
         }
 
         [TestMethod]
+        public void GivenAPrompt_WhenFromCustomCommand_ThenPromptIsSet()
+        {
+            CustomCommand command = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
+            command.AddPrompt(new("A"));
+
+            CustomCommandSerialization result = CustomCommandSerialization.FromCustomCommand(command);
+
+            Assert.AreEqual("A", result.Prompts[0]);
+        }
+
+        [TestMethod]
         public void GivenACustomCommand_WhenRestoreFrom_ThenIsPlayerVisibleSetCorrectly()
         {
             CustomCommand command1 = new(new CommandHelp("A", string.Empty), true, true, (_, _) => Reaction.Inform);
             CustomCommand command2 = new(new CommandHelp("A", string.Empty), false, true, (_, _) => Reaction.Inform);
 
             CustomCommandSerialization serialization = CustomCommandSerialization.FromCustomCommand(command1);
-
             ((IObjectSerialization<CustomCommand>)serialization).Restore(command2);
 
             Assert.IsTrue(command2.IsPlayerVisible);
+        }
+
+        [TestMethod]
+        public void GivenACustomCommand_WhenRestoreFrom_ThenPromptsSetCorrectly()
+        {
+            CustomCommand command1 = new(new CommandHelp("A", string.Empty), false, true, (_, _) => Reaction.Inform);
+            command1.AddPrompt(new("A"));
+            CustomCommand command2 = new(new CommandHelp("A", string.Empty), false, true, (_, _) => Reaction.Inform);
+            
+            CustomCommandSerialization serialization = CustomCommandSerialization.FromCustomCommand(command1);
+            ((IObjectSerialization<CustomCommand>)serialization).Restore(command2);
+
+            var result = command2.GetPrompts(null);
+
+            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual("A", result[0].Entry);
         }
     }
 }
