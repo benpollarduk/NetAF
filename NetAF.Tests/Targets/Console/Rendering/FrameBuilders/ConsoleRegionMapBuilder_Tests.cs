@@ -3,6 +3,7 @@ using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Rendering;
 
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
@@ -22,7 +23,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 region.Enter();
                 stringBuilder.Resize(new Size(80, 50));
 
-                builder.BuildRegionMap(region, new Point3D(0, 0, 0), new(0, 0), new(80, 60));
+                builder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapDetail.Basic, new(0, 0), new(80, 60));
             });
         }
     }

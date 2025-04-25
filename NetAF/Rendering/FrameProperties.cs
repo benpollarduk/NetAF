@@ -14,5 +14,10 @@
         /// Get or set the type of key to use on the map.
         /// </summary>
         public static KeyType KeyType { get; set; } = KeyType.Dynamic;
+
+        /// <summary>
+        /// Get or set the detail to use on the map.
+        /// </summary>
+        public static RegionMapDetail MapDetail { get; set; } = RegionMapDetail.Basic;
     }
 }

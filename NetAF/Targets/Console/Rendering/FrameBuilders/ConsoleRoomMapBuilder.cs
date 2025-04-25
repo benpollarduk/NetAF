@@ -80,6 +80,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         public AnsiColor UnvisitedExitColor { get; set; } = NetAFPalette.NetAFGreen;
 
+        /// <summary>
+        /// Get or set if directions are displayed.
+        /// </summary>
+        public bool DisplayDirections { get; set; } = true;
+
         #endregion
 
         #region Methods
@@ -105,10 +110,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y, VerticalExitBorder, BoundaryColor);
 
-                if (viewPoint[Direction.North]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'n', VisitedExitColor);
-                else
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'N', UnvisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.North]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'n', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y, 'N', UnvisitedExitColor);
+                }
 
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y, VerticalExitBorder, BoundaryColor);
             }
@@ -146,10 +154,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 6, VerticalExitBorder, BoundaryColor);
 
-                if (viewPoint[Direction.South]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 's', VisitedExitColor);
-                else
-                    gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 'S', UnvisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.South]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 's', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 6, 'S', UnvisitedExitColor);
+                }
 
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 6, VerticalExitBorder, BoundaryColor);
             }
@@ -186,10 +197,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 2, HorizontalExitBorder, BoundaryColor);
 
-                if (viewPoint[Direction.East]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'e', VisitedExitColor);
-                else
-                    gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'E', UnvisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.East]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'e', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 3, 'E', UnvisitedExitColor);
+                }
 
                 gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 4, HorizontalExitBorder, BoundaryColor);
             }
@@ -223,10 +237,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 2, HorizontalExitBorder, BoundaryColor);
 
-                if (viewPoint[Direction.West]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'w', VisitedExitColor);
-                else
-                    gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'W', UnvisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.West]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'w', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 3, 'W', UnvisitedExitColor);
+                }
 
                 gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 4, HorizontalExitBorder, BoundaryColor);
             }
@@ -252,7 +269,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, LockedExit, LockedExitColor);
             }
-            else if (room.HasUnlockedExitInDirection(Direction.Up))
+            else if (room.HasUnlockedExitInDirection(Direction.Up) && DisplayDirections)
             {
                 if (viewPoint[Direction.Up]?.HasBeenVisited ?? false)
                     gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'u', VisitedExitColor);
@@ -273,7 +290,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, LockedExit, LockedExitColor);
             }
-            else if (room.HasUnlockedExitInDirection(Direction.Down))
+            else if (room.HasUnlockedExitInDirection(Direction.Down) && DisplayDirections)
             {
                 if (viewPoint[Direction.Down]?.HasBeenVisited ?? false)
                     gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'd', VisitedExitColor);
@@ -363,6 +380,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #endregion
 
         #region Implementation of IRoomMapBuilder
+
+        /// <summary>
+        /// Get the rendered size of the room, excluding any keys.
+        /// </summary>
+        public Size RenderedSize => new(9, 7);
 
         /// <summary>
         /// Build a map for a room.

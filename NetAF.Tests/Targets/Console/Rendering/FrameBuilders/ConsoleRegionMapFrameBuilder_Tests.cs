@@ -5,6 +5,7 @@ using NetAF.Logic.Modes;
 using NetAF.Commands.RegionMap;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
+using NetAF.Rendering;
 
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
@@ -21,7 +22,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
             region.Enter();
 
-            var result = builder.Build(region, RegionMapMode.Player, [], new Size(80, 50));
+            var result = builder.Build(region, RegionMapMode.Player, RegionMapDetail.Basic, [], new Size(80, 50));
 
             Assert.IsNotNull(result);
         }
@@ -37,7 +38,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
             region.Enter();
 
-            var result = builder.Build(region, RegionMapMode.Player, [], new Size(80, 50));
+            var result = builder.Build(region, RegionMapMode.Player, RegionMapDetail.Basic, [], new Size(80, 50));
 
             Assert.IsNotNull(result);
         }
@@ -54,7 +55,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             region.SetStartRoom(0, 0, 1);
             region.Enter();
 
-            var result = builder.Build(region, RegionMapMode.Player, [Pan.UpCommandHelp], new Size(80, 50));
+            var result = builder.Build(region, RegionMapMode.Player, RegionMapDetail.Basic, [Pan.UpCommandHelp], new Size(80, 50));
 
             Assert.IsNotNull(result);
         }

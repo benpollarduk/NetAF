@@ -12,7 +12,8 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for the region map.
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
-    public sealed class RegionMapMode(Point3D focusPosition) : IGameMode
+    /// <param name="detail">The level of detail to use.</param>
+    public sealed class RegionMapMode(Point3D focusPosition, RegionMapDetail detail) : IGameMode
     {
         #region StaticProperties
 
@@ -29,6 +30,11 @@ namespace NetAF.Logic.Modes
         /// Get or set the position to focus on. To use the player position use RegionMapMode.Player.
         /// </summary>
         public Point3D FocusPosition { get; set; } = focusPosition;
+
+        /// <summary>
+        /// Get or set the level of detail to use.
+        /// </summary>
+        public RegionMapDetail Detail { get; set; } = detail;
 
         #endregion
 
@@ -58,7 +64,7 @@ namespace NetAF.Logic.Modes
 
             FocusPosition = GetSnappedLocation(region, FocusPosition);
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, FrameProperties.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Detail, FrameProperties.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

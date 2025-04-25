@@ -62,10 +62,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
+        /// <param name="detail">The level of detail to use.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(Region region, Point3D focusPosition, CommandHelp[] contextualCommands, Size size)
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapDetail detail, CommandHelp[] contextualCommands, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -111,9 +112,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
 
             if (RegionMapBuilder is IConsoleRegionMapBuilder consoleRegionMapBuilder)
-                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, startMapPosition, mapSize);
+                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, detail, startMapPosition, mapSize);
             else
-                RegionMapBuilder?.BuildRegionMap(region, focusPosition);
+                RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
 
             if (renderPrompt)
             {
