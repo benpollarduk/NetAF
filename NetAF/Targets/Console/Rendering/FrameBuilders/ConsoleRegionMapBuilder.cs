@@ -212,21 +212,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         private static bool TryConvertMatrixPositionToGridLayoutPosition(Matrix matrix, MatrixConversionParameters parameters, out int gridLeft, out int gridTop)
         {
             // set position of room, Y is inverted
-            gridLeft = parameters.GridStartPosition.X + parameters.RoomPosition.X * parameters.RoomSize.Width;
-            gridTop = parameters.GridStartPosition.Y + (matrix.Height - 1) * parameters.RoomSize.Height - parameters.RoomPosition.Y * parameters.RoomSize.Height;
+            gridLeft = parameters.GridStartPosition.X + (parameters.RoomPosition.X * parameters.RoomSize.Width);
+            gridTop = parameters.GridStartPosition.Y + ((matrix.Height - 1) * parameters.RoomSize.Height) - (parameters.RoomPosition.Y * parameters.RoomSize.Height);
 
             // check if map will overflow area
             if (matrix.Width * parameters.RoomSize.Width > parameters.AvailableSize.Width || matrix.Height * parameters.RoomSize.Height > parameters.AvailableSize.Height)
             {
                 // centralise on the focus position
-                gridLeft += parameters.AvailableSize.Width / 2 - parameters.FocusPosition.X * parameters.RoomSize.Width + parameters.RoomSize.Width / 2;
-                gridTop += parameters.AvailableSize.Height / 2 + (parameters.FocusPosition.Y - matrix.Height) * parameters.RoomSize.Height - parameters.RoomSize.Height / 2;
+                gridLeft += (parameters.AvailableSize.Width / 2) - (parameters.FocusPosition.X * parameters.RoomSize.Width) + (parameters.RoomSize.Width / 2);
+                gridTop += (parameters.AvailableSize.Height / 2) + ((parameters.FocusPosition.Y - matrix.Height) * parameters.RoomSize.Height) - (parameters.RoomSize.Height / 2);
             }
             else
             {
                 // centralise on area
-                gridLeft += (int)Math.Floor(parameters.AvailableSize.Width / 2d - matrix.Width / 2d * parameters.RoomSize.Width);
-                gridTop += (int)Math.Floor(parameters.AvailableSize.Height / 2d - matrix.Height / 2d * parameters.RoomSize.Height);
+                gridLeft += (int)Math.Floor((parameters.AvailableSize.Width / 2d) - (matrix.Width / 2d) * parameters.RoomSize.Width);
+                gridTop += (int)Math.Floor((parameters.AvailableSize.Height / 2d) - (matrix.Height / 2d) * parameters.RoomSize.Height);
             }
 
             return gridLeft >= parameters.GridStartPosition.X &&
