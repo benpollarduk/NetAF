@@ -37,10 +37,11 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
+        /// <param name="detail">The level of detail to use.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(Region region, Point3D focusPosition, CommandHelp[] contextualCommands, Size size)
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapDetail detail, CommandHelp[] contextualCommands, Size size)
         {
             var matrix = region.ToMatrix();
             var room = matrix[focusPosition.X, focusPosition.Y, focusPosition.Z];
@@ -49,7 +50,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             builder.Clear();
             builder.AppendLine(title);
 
-            RegionMapBuilder?.BuildRegionMap(region, focusPosition);
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
 
             if (contextualCommands?.Any() ?? false)
             {

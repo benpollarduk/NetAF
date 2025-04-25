@@ -10,6 +10,7 @@ using NetAF.Commands.Scene;
 using NetAF.Targets.Console;
 using NetAF.Rendering.FrameBuilders;
 using System.Linq;
+using NetAF.Rendering;
 
 namespace NetAF.Tests.Logic
 {
@@ -246,7 +247,7 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-                game.ChangeMode(new RegionMapMode(RegionMapMode.Player));
+                game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic));
             });
         }
 

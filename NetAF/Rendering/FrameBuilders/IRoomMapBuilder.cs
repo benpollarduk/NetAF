@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Locations;
+﻿using NetAF.Assets;
+using NetAF.Assets.Locations;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -7,6 +8,10 @@ namespace NetAF.Rendering.FrameBuilders
     /// </summary>
     public interface IRoomMapBuilder
     {
+        /// <summary>
+        /// Get the rendered size of the room, excluding any keys.
+        /// </summary>
+        Size RenderedSize { get; }
         /// <summary>
         /// Build a map for a room.
         /// </summary>
