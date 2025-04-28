@@ -32,7 +32,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             builder.P(game.Info.Description.EnsureFinishedSentence());
 
             if (!string.IsNullOrEmpty(game.Info.Author))
-                builder.P($"Created by: {game.Info.Author}.");
+                builder.P($"Created by: {game.Info.Author}".EnsureFinishedSentence());
             else
                 builder.P(Info.AboutNetAF);
 

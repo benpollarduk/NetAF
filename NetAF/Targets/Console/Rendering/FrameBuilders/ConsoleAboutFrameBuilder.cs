@@ -72,7 +72,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             gridStringBuilder.DrawWrapped(game.Info.Description.EnsureFinishedSentence(), leftMargin, lastY + 2, availableWidth, DescriptionColor, out _, out lastY);
 
             if (!string.IsNullOrEmpty(game.Info.Author))
-                gridStringBuilder.DrawWrapped($"Created by: {game.Info.Author}.", leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
+                gridStringBuilder.DrawWrapped($"Created by: {game.Info.Author}".EnsureFinishedSentence(), leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
             else
                 gridStringBuilder.DrawWrapped(Info.AboutNetAF, leftMargin, lastY + 2, availableWidth, AuthorColor, out _, out _);
 
