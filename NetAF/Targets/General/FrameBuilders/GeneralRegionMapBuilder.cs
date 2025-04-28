@@ -88,6 +88,16 @@ namespace NetAF.Targets.General.FrameBuilders
         #region Implementation of IRegionMapBuilder
 
         /// <summary>
+        /// Get if this frame builder supports panning.
+        /// </summary>
+        public bool SupportsPan => true;
+
+        /// <summary>
+        /// Get if this frame builder supports zooming.
+        /// </summary>
+        public bool SupportsZoom => true;
+
+        /// <summary>
         /// Build a map of a region.
         /// </summary>
         /// <param name="region">The region.</param>

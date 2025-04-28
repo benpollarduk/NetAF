@@ -10,6 +10,14 @@ namespace NetAF.Rendering.FrameBuilders
     public interface IRegionMapFrameBuilder : IFrameBuilder
     {
         /// <summary>
+        /// Get if this frame builder supports panning.
+        /// </summary>
+        bool SupportsPan { get; }
+        /// <summary>
+        /// Get if this frame builder supports zooming.
+        /// </summary>
+        bool SupportsZoom { get; }
+        /// <summary>
         /// Build a frame.
         /// </summary>
         /// <param name="region">The region.</param>

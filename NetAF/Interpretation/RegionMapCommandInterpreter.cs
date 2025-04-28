@@ -6,6 +6,7 @@ using NetAF.Commands.RegionMap;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Rendering.FrameBuilders;
 using System.Collections.Generic;
 
 namespace NetAF.Interpretation
@@ -72,6 +73,84 @@ namespace NetAF.Interpretation
             return [.. commands];
         }
 
+        /// <summary>
+        /// Try and interpret a pan command.
+        /// </summary>
+        /// <param name="input">The string to interpret.</param>
+        /// <param name="result">The result of the interpretation.</param>
+        /// <returns>True if the interpretation was successful.</returns>
+        private static bool TryInterpretPan(string input, out InterpretationResult result)
+        {
+            if (Pan.NorthCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.North));
+                return true;
+            }
+
+            if (Pan.SouthCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.South));
+                return true;
+            }
+
+            if (Pan.EastCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.East));
+                return true;
+            }
+
+            if (Pan.WestCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.West));
+                return true;
+            }
+
+            if (Pan.UpCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.Up));
+                return true;
+            }
+
+            if (Pan.DownCommandHelp.Equals(input))
+            {
+                result = new(true, new Pan(Direction.Down));
+                return true;
+            }
+
+            if (PanReset.CommandHelp.Equals(input))
+            {
+                result = new(true, new PanReset());
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Try and interpret a zoom command.
+        /// </summary>
+        /// <param name="input">The string to interpret.</param>
+        /// <param name="result">The result of the interpretation.</param>
+        /// <returns>True if the interpretation was successful.</returns>
+        private static bool TryInterpretZoom(string input, out InterpretationResult result)
+        {
+            if (ZoomIn.CommandHelp.Equals(input))
+            {
+                result = new(true, new ZoomIn());
+                return true;
+            }
+
+            if (ZoomOut.CommandHelp.Equals(input))
+            {
+                result = new(true, new ZoomOut());
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
         #endregion
 
         #region Implementation of IInterpreter
@@ -89,32 +168,13 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (Pan.NorthCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.North));
+            var builder = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>();
 
-            if (Pan.SouthCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.South));
+            if (builder.SupportsPan && TryInterpretPan(input, out var panResult))
+                return panResult;
 
-            if (Pan.EastCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.East));
-
-            if (Pan.WestCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.West));
-
-            if (Pan.UpCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.Up));
-
-            if (Pan.DownCommandHelp.Equals(input))
-                return new(true, new Pan(Direction.Down));
-
-            if (PanReset.CommandHelp.Equals(input))
-                return new(true, new PanReset());
-
-            if (ZoomIn.CommandHelp.Equals(input))
-                return new(true, new ZoomIn());
-
-            if (ZoomOut.CommandHelp.Equals(input))
-                return new(true, new ZoomOut());
+            if (builder.SupportsZoom && TryInterpretZoom(input, out var zoomResult))
+                return zoomResult;
 
             if (End.CommandHelp.Equals(input))
                 return new(true, new End());
@@ -133,13 +193,21 @@ namespace NetAF.Interpretation
 
             if (game.Mode is RegionMapMode regionMapMode)
             {
-               commands.AddRange(GetPanContextualCommands(game, regionMapMode));
+                var builder = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>();
 
-                if (regionMapMode.Detail != RegionMapDetail.Detailed)
-                    commands.Add(ZoomIn.CommandHelp);
+                if (builder.SupportsPan)
+                {
+                    commands.AddRange(GetPanContextualCommands(game, regionMapMode));
+                }
 
-                if (regionMapMode.Detail != RegionMapDetail.Basic)
-                    commands.Add(ZoomOut.CommandHelp);
+                if (builder.SupportsZoom)
+                {
+                    if (regionMapMode.Detail != RegionMapDetail.Detailed)
+                        commands.Add(ZoomIn.CommandHelp);
+
+                    if (regionMapMode.Detail != RegionMapDetail.Basic)
+                        commands.Add(ZoomOut.CommandHelp);
+                }
 
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map", CommandCategory.RegionMap));
             }
