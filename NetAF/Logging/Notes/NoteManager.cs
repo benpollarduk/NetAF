@@ -68,7 +68,18 @@ namespace NetAF.Logging.Notes
             var hit = Find(entry.Name);
 
             if (hit == null)
+            {
                 entries.Add(entry);
+            }
+            else if (hit.HasExpired)
+            {
+                // the entry was marked as expired before it was added, need to remove the old one and add a new
+                // but expired entry now
+                Remove(hit.Name);
+                var duplicate = new NoteEntry(hit.Name, hit.Content);
+                duplicate.Expire();
+                Add(duplicate);
+            }   
         }
 
         /// <summary>
@@ -90,7 +101,15 @@ namespace NetAF.Logging.Notes
         public void Expire(string name)
         {
             var hit = Find(name);
-            hit?.Expire();
+
+            if (hit == null)
+            {
+                // it's ok to expire a note that hasn't yet been added, just need to add one as a placeholder
+                hit = new NoteEntry(name, name);
+                Add(hit);
+            }
+
+            hit.Expire();
         }
 
         /// <summary>

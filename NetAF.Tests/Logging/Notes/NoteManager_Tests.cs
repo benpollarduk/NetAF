@@ -111,7 +111,7 @@ namespace NetAF.Tests.Logging.Notes
         }
 
         [TestMethod]
-        public void GivenOneEntry_WhenExpireNonExisting_ThenOneEntry()
+        public void GivenOneEntry_WhenExpireNonExisting_ThenTwoEntries()
         {
             var manager = new NoteManager();
             manager.Add(new("A", "B"));
@@ -119,7 +119,7 @@ namespace NetAF.Tests.Logging.Notes
 
             var result = manager.Count;
 
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]
@@ -199,6 +199,29 @@ namespace NetAF.Tests.Logging.Notes
             var result = manager.HasExpired("A");
 
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExpireAnEntryThatHasNotBeenAdded_WhenGetCount_ThenEntryAddedAndCountIs1()
+        {
+            var manager = new NoteManager();
+            manager.Expire("ABC");
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void GivenAddingAnAlreadyExpiredEntry_WhenHasExpired_ThenReturnTrue()
+        {
+            var manager = new NoteManager();
+            manager.Expire("ABC");
+            manager.Add(new("ABC", "DEF"));
+
+            var result = manager.HasExpired("ABC");
+
+            Assert.IsTrue(result);
         }
     }
 }
