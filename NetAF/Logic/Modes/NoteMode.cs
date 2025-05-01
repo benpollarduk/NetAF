@@ -1,6 +1,7 @@
 ﻿using NetAF.Interpretation;
 using NetAF.Logging.Notes;
 using NetAF.Rendering.FrameBuilders;
+using System.Linq;
 
 namespace NetAF.Logic.Modes
 {
