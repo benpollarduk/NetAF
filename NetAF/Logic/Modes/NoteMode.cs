@@ -28,7 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INoteFrameBuilder>().Build("Notes", string.Empty, noteManager?.GetAll(), game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INoteFrameBuilder>().Build("Notes", string.Empty, noteManager?.GetAll().Where(x => !string.IsNullOrEmpty(x.Content)).ToArray(), game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
