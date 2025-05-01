@@ -75,7 +75,7 @@ namespace NetAF.Logging.Notes
             {
                 // the entry was marked as expired before it was added, need to remove the old one and add a new
                 // but expired entry now
-                entries.Remove(hit)
+                entries.Remove(hit);
                 var duplicate = new NoteEntry(hit.Name, hit.Content);
                 duplicate.Expire();
                 entries.Add(duplicate);
