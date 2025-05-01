@@ -106,7 +106,7 @@ namespace NetAF.Logging.Notes
             {
                 // it's ok to expire a note that hasn't yet been added, just need to add one as a placeholder
                 hit = new NoteEntry(name, string.Empty);
-                entries.Add(entry);
+                entries.Add(hit);
             }
 
             hit.Expire();
