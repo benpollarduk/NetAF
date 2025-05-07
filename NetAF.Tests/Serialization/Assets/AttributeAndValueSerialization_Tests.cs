@@ -12,7 +12,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenNameIsA_WhenFromAttribute_ThenNameIsA()
         {
-            Attribute attribute = new("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10, true);
 
             AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
@@ -22,7 +22,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenDescriptionIsB_WhenFromAttribute_ThenDescriptionIsB()
         {
-            Attribute attribute = new("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10, true);
 
             AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
@@ -32,7 +32,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenMinimumIs5_WhenFromAttribute_ThenMinimumIs5()
         {
-            Attribute attribute = new("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10, true);
 
             AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Serialization.Assets
         [TestMethod]
         public void GivenAttributeWhenMaximumIs10_WhenFromAttribute_ThenMaximumIs10()
         {
-            Attribute attribute = new("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10, true);
 
             AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
 
@@ -50,9 +50,19 @@ namespace NetAF.Tests.Serialization.Assets
         }
 
         [TestMethod]
+        public void GivenAttributeWhenNotPlayerVisible_WhenFromAttribute_ThenIsPlayerVisibleIsFalse()
+        {
+            Attribute attribute = new("A", "B", 5, 10, false);
+
+            AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 0));
+
+            Assert.IsFalse(result.IsPlayerVisible);
+        }
+
+        [TestMethod]
         public void GivenAttributeWhenValueIs3_WhenFromAttribute_ThenValueIs3()
         {
-            Attribute attribute = new("A", "B", 5, 10);
+            Attribute attribute = new("A", "B", 5, 10, true);
 
             AttributeAndValueSerialization result = AttributeAndValueSerialization.FromAttributeAndValue(new(attribute, 3));
 

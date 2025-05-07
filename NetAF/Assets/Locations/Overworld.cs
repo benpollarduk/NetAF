@@ -125,7 +125,10 @@ namespace NetAF.Assets.Locations
             if (!Regions.Contains(region))
                 return false;
 
+            CurrentRegion?.Exit();
             CurrentRegion = region;
+            CurrentRegion?.Enter();
+
             return true;
         }
 

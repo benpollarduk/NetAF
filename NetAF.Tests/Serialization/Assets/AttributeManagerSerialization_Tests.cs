@@ -13,7 +13,7 @@ namespace NetAF.Tests.Serialization.Assets
         public void Given1Attributes_WhenFromAttributeManager_ThenValuesHas1Element()
         {
             AttributeManager attributeManager = new();
-            attributeManager.Add(new Attribute("A", "B", 5, 10), 0);
+            attributeManager.Add(new Attribute("A", "B", 5, 10, true), 0);
 
             var result = AttributeManagerSerialization.FromAttributeManager(attributeManager);
 
@@ -25,7 +25,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             AttributeManager attributeManager1 = new();
             AttributeManager attributeManager2 = new();
-            attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
+            attributeManager2.Add(new Attribute("a", "b", 1, 10, true), 5);
             var serialization = AttributeManagerSerialization.FromAttributeManager(attributeManager2);
 
             ((IObjectSerialization<AttributeManager>)serialization).Restore(attributeManager1);
@@ -38,7 +38,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             AttributeManager attributeManager1 = new();
             AttributeManager attributeManager2 = new();
-            attributeManager2.Add(new Attribute("a", "b", 1, 10), 5);
+            attributeManager2.Add(new Attribute("a", "b", 1, 10, true), 5);
             var serialization = AttributeManagerSerialization.FromAttributeManager(attributeManager2);
 
             ((IObjectSerialization<AttributeManager>)serialization).Restore(attributeManager1);

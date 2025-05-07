@@ -7,7 +7,8 @@
     /// <param name="description">Specify the description of the attribute.</param>
     /// <param name="minimum">Specify the minimum limit of the attribute.</param>
     /// <param name="maximum">Specify the maximum limit of the attribute.</param>
-    public class Attribute(string name, string description, int minimum, int maximum)
+    /// <param name="isPlayerVisible">Set if this is visible to the player.</param>
+    public sealed class Attribute(string name, string description, int minimum, int maximum, bool isPlayerVisible) : IPlayerVisible
     {
         #region Properties
 
@@ -30,6 +31,15 @@
         /// Get the maximum limit of the attribute.
         /// </summary>
         public int Maximum { get; private set; } = maximum;
+
+        #endregion
+
+        #region Implementation of IPlayerVisible
+
+        /// <summary>
+        /// Get or set if this is visible to the player.
+        /// </summary>
+        public bool IsPlayerVisible { get; set; } = isPlayerVisible;
 
         #endregion
     }
