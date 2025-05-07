@@ -119,6 +119,14 @@ namespace NetAF.Assets.Locations
         }
 
         /// <summary>
+        /// Exit this region.
+        /// </summary>
+        internal void Exit()
+        {
+            CurrentRoom?.MovedOutOf(null);
+        }
+
+        /// <summary>
         /// Get the position of a room.
         /// </summary>
         /// <param name="room">The room.</param>
@@ -216,6 +224,7 @@ namespace NetAF.Assets.Locations
             if (adjoiningRoom == null)
                 return false;
 
+            CurrentRoom?.MovedOutOf(direction);
             adjoiningRoom.MovedInto(direction.Inverse());
             CurrentRoom = adjoiningRoom;
 

@@ -309,5 +309,27 @@ namespace NetAF.Tests.Assets.Locations
             Assert.IsTrue(result.Contains(room.Exits[0]));
             Assert.IsTrue(result.Contains(room.Characters[0]));
         }
+
+        [TestMethod]
+        public void GivenEnterCallback_WhenMovedInto_ThenCallbackInvoked()
+        {
+            var invoked = false;
+            var room = new Room(string.Empty, "A room", enterCallback: new RoomTransitionCallback((r, d) => invoked = true));
+
+            room.MovedInto();
+
+            Assert.IsTrue(invoked);
+        }
+
+        [TestMethod]
+        public void GivenExitCallback_WhenMovedOutOf_ThenCallbackInvoked()
+        {
+            var invoked = false;
+            var room = new Room(string.Empty, "A room", exitCallback: new RoomTransitionCallback((r, d) => invoked = true));
+
+            room.MovedOutOf();
+
+            Assert.IsTrue(invoked);
+        }
     }
 }
