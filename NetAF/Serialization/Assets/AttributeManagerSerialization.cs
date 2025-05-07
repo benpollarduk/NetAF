@@ -34,7 +34,7 @@ namespace NetAF.Serialization.Assets
 
             return new()
             {
-                Values = values?.Select(AttributeAndValueSerialization.FromAttributeAndValue).ToList() ?? []
+                Values = values.Select(AttributeAndValueSerialization.FromAttributeAndValue).ToList()
             };
         }
 
