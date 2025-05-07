@@ -36,10 +36,7 @@
         /// <returns>The description.</returns>
         public string GetDescription()
         {
-            if (condition != null)
-                return condition.Condition?.Invoke() ?? false ? condition.Description : falseDescription;
-
-            return falseDescription;
+            return condition?.Condition?.Invoke() ?? false ? condition.Description : falseDescription;
         }
 
         #endregion
