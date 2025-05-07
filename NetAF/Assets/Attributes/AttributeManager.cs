@@ -27,6 +27,11 @@ namespace NetAF.Assets.Attributes
         /// </summary>
         public int Count => attributes.Count;
 
+        /// <summary>
+        /// Get if there are any player visible attributes.
+        /// </summary>
+        public bool HasPlayerVisibleAttributes => attributes.Keys.Any(x => x.IsPlayerVisible);
+
         #endregion
 
         #region Methods
@@ -42,7 +47,7 @@ namespace NetAF.Assets.Attributes
             if (attribute != null)
                 return;
 
-            attribute = new(name, string.Empty, int.MinValue, int.MaxValue);
+            attribute = new(name, string.Empty, int.MinValue, int.MaxValue, true);
             attributes.Add(attribute, 0);
         }
 
@@ -249,7 +254,7 @@ namespace NetAF.Assets.Attributes
 
             foreach (var keyValuePair in serialization.Values)
             {
-                var attribute = new Attribute(keyValuePair.Name, keyValuePair.Description, keyValuePair.Minimum, keyValuePair.Maximum);
+                var attribute = new Attribute(keyValuePair.Name, keyValuePair.Description, keyValuePair.Minimum, keyValuePair.Maximum, keyValuePair.IsPlayerVisible);
                 Add(attribute, keyValuePair.Value);
             }    
         }

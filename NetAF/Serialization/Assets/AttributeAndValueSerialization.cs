@@ -31,6 +31,11 @@ namespace NetAF.Serialization.Assets
         public int Maximum { get; set; }
 
         /// <summary>
+        /// Get or set if this is visible to the player.
+        /// </summary>
+        public bool IsPlayerVisible { get; set; }
+
+        /// <summary>
         /// Get or set the value.
         /// </summary>
         public int Value { get; set; }
@@ -52,6 +57,7 @@ namespace NetAF.Serialization.Assets
                 Description = attributeAndValue.Key.Description,
                 Minimum = attributeAndValue.Key.Minimum,
                 Maximum = attributeAndValue.Key.Maximum,
+                IsPlayerVisible = attributeAndValue.Key.IsPlayerVisible,
                 Value = attributeAndValue.Value
             };
         }

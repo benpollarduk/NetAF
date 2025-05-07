@@ -154,7 +154,7 @@ namespace NetAF.Tests.Utilities
         {
             Dictionary<Attribute, int> attributes = new()
             {
-                { new Attribute("Test", string.Empty, 0, 100), 1 }
+                { new Attribute("Test", string.Empty, 0, 100, true), 1 }
             };
 
             var result = StringUtilities.ConstructAttributesAsString(attributes);
@@ -167,8 +167,8 @@ namespace NetAF.Tests.Utilities
         {
             Dictionary<Attribute, int> attributes = new()
             {
-                { new Attribute("Test", string.Empty, 0, 100), 1 },
-                { new Attribute("Test2", string.Empty, 0, 100), 1 }
+                { new Attribute("Test", string.Empty, 0, 100, true), 1 },
+                { new Attribute("Test2", string.Empty, 0, 100, true), 1 }
             };
 
             var result = StringUtilities.ConstructAttributesAsString(attributes);
