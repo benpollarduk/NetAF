@@ -38,3 +38,25 @@ var conditionalDescription = new ConditionalDescription(trueString, falseString,
 // create the item with the conditional description
 var sword = new Item(new Identifier("Sword"), conditionalDescription);
 ```
+
+For more complicated scenarios the **MultiConditionalDescription** can be used to return a description for multiple different conditions.
+
+```csharp
+// the player, just for demo purposes
+var player = new PlayableCharacter("Ben", "A man.");
+
+// the description to use when no condition is true
+var fallbackString = "No condition is true.";
+
+// the first described condition when
+var firstCondition = new DescribedCondition(() => player.Name == "Ben", "Condition 1 is true.");
+
+// the second described condition when
+var secondCondition = new DescribedCondition(() => player.Name == "Dave", "Condition 2 is true.");
+
+// the multi conditional description itself
+var multiConditionalDescription = new MultiConditionalDescription(fallbackString, firstCondition, secondCondition);
+
+// create the item with the conditional description
+var passport = new Item(new Identifier("Passport"), multiConditionalDescription);
+```
