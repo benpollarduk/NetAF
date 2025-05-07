@@ -70,6 +70,16 @@ namespace NetAF.Assets.Locations
         /// </summary>
         public IDescription Introduction { get; private set; }
 
+        /// <summary>
+        /// Get the callback to invoke when this room is entered.
+        /// </summary>
+        public RoomTransitionCallback EnterCallback { get; private set; }
+
+        /// <summary>
+        /// Get the callback to invoke when this room is exited.
+        /// </summary>
+        public RoomTransitionCallback ExitCallback { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -84,7 +94,9 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), Assets.Description.Empty, exits, items, commands, interaction, examination)
+        /// <param name="enterCallback">The callback to invoke when this room is entered.</param>
+        /// <param name="exitCallback">The callback to invoke when this room is exited.</param>
+        public Room(string identifier, string description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null, RoomTransitionCallback enterCallback = null, RoomTransitionCallback exitCallback = null) : this(new Identifier(identifier), new Description(description), Assets.Description.Empty, exits, items, commands, interaction, examination, enterCallback, exitCallback)
         {
         }
 
@@ -98,22 +110,9 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Room(Identifier identifier, IDescription description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(identifier, description, Assets.Description.Empty, exits, items, commands, interaction, examination)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the Room class.
-        /// </summary>
-        /// <param name="identifier">This rooms identifier.</param>
-        /// <param name="description">This rooms description.</param>
-        /// <param name="introduction">An introduction to this room.</param>
-        /// <param name="exits">The exits from this room.</param>
-        /// <param name="items">The items in this room.</param>
-        /// <param name="commands">This objects commands.</param>
-        /// <param name="interaction">The interaction.</param>
-        /// <param name="examination">The examination.</param>
-        public Room(string identifier, string description, string introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null) : this(new Identifier(identifier), new Description(description), new Description(introduction), exits, items, commands, interaction, examination)
+        /// <param name="enterCallback">The callback to invoke when this room is entered.</param>
+        /// <param name="exitCallback">The callback to invoke when this room is exited.</param>
+        public Room(Identifier identifier, IDescription description, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null, RoomTransitionCallback enterCallback = null, RoomTransitionCallback exitCallback = null) : this(identifier, description, Assets.Description.Empty, exits, items, commands, interaction, examination, enterCallback, exitCallback)
         {
         }
 
@@ -128,7 +127,26 @@ namespace NetAF.Assets.Locations
         /// <param name="commands">This objects commands.</param>
         /// <param name="interaction">The interaction.</param>
         /// <param name="examination">The examination.</param>
-        public Room(Identifier identifier, IDescription description, IDescription introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null)
+        /// <param name="enterCallback">The callback to invoke when this room is entered.</param>
+        /// <param name="exitCallback">The callback to invoke when this room is exited.</param>
+        public Room(string identifier, string description, string introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null, RoomTransitionCallback enterCallback = null, RoomTransitionCallback exitCallback = null) : this(new Identifier(identifier), new Description(description), new Description(introduction), exits, items, commands, interaction, examination, enterCallback, exitCallback)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Room class.
+        /// </summary>
+        /// <param name="identifier">This rooms identifier.</param>
+        /// <param name="description">This rooms description.</param>
+        /// <param name="introduction">An introduction to this room.</param>
+        /// <param name="exits">The exits from this room.</param>
+        /// <param name="items">The items in this room.</param>
+        /// <param name="commands">This objects commands.</param>
+        /// <param name="interaction">The interaction.</param>
+        /// <param name="examination">The examination.</param>
+        /// <param name="enterCallback">The callback to invoke when this room is entered.</param>
+        /// <param name="exitCallback">The callback to invoke when this room is exited.</param>
+        public Room(Identifier identifier, IDescription description, IDescription introduction, Exit[] exits = null, Item[] items = null, CustomCommand[] commands = null, InteractionCallback interaction = null, ExaminationCallback examination = null, RoomTransitionCallback enterCallback = null, RoomTransitionCallback exitCallback = null)
         {
             Identifier = identifier;
             Description = description;
@@ -138,6 +156,8 @@ namespace NetAF.Assets.Locations
             Commands = commands ?? [];
             Interaction = interaction ?? (i => new(InteractionResult.NoChange, i));
             Examination = examination ?? DefaultRoomExamination;
+            EnterCallback = enterCallback;
+            ExitCallback = exitCallback;
         }
 
         #endregion
@@ -430,16 +450,26 @@ namespace NetAF.Assets.Locations
         public void MovedInto()
         {
             HasBeenVisited = true;
+            EnterCallback?.Invoke(this, EnteredFrom);
         }
 
         /// <summary>
         /// Handle movement into this room.
         /// </summary>
-        /// <param name="fromDirection">The direction movement into this room.</param>
-        public void MovedInto(Direction fromDirection)
+        /// <param name="direction">The direction of movement into this room.</param>
+        public void MovedInto(Direction direction)
         {
-            EnteredFrom = fromDirection;
+            EnteredFrom = direction;
             MovedInto();
+        }
+
+        /// <summary>
+        /// Handle movement out of this room.
+        /// </summary>
+        /// <param name="direction">The direction of movement out of this room.</param>
+        public void MovedOutOf(Direction? direction = null)
+        {
+            ExitCallback?.Invoke(this, direction);
         }
 
         #endregion
