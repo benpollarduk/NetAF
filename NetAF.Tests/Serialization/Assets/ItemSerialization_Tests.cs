@@ -14,7 +14,7 @@ namespace NetAF.Tests.Serialization.Assets
         {
             Item item = new(string.Empty, string.Empty);
             Item item2 = new(string.Empty, string.Empty);
-            item2.Attributes.Add(new Attribute(string.Empty, string.Empty, 0, 1), 1);
+            item2.Attributes.Add(new Attribute(string.Empty, string.Empty, 0, 1, true), 1);
             ItemSerialization serialization = ItemSerialization.FromItem(item2);
 
             ((IObjectSerialization<Item>)serialization).Restore(item);

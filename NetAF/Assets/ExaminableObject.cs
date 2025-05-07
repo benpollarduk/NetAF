@@ -30,8 +30,8 @@ namespace NetAF.Assets
             AddCommandsToDescription(request, ref description);
             EnsureAtleastABasicDescription(request, ref description);
 
-            if (request.Examinable.Attributes.Count > 0)
-                description.Append($"{StringUtilities.Newline}{StringUtilities.Newline}{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary())}");
+            if (request.Examinable.Attributes.HasPlayerVisibleAttributes)
+                description.Append($"{StringUtilities.Newline}{StringUtilities.Newline}{StringUtilities.ConstructAttributesAsString(request.Examinable.Attributes.GetAsDictionary().Where(x => x.Key.IsPlayerVisible).ToDictionary())}");
 
             return new(description.ToString());
         };
