@@ -188,6 +188,29 @@ namespace NetAF.Assets.Attributes
         }
 
         /// <summary>
+        /// Set the value of an attribute.
+        /// </summary>
+        /// <param name="attributeName">The name of the attribute.</param>
+        /// <param name="value">The value.</param>
+        public void Set(string attributeName, int value)
+        {
+            EnsureAttributeExists(attributeName);
+            var attribute = attributes.Keys.First(x => x.Name.InsensitiveEquals(attributeName));
+            attributes[attribute] = CapValue(value, attribute.Minimum, attribute.Maximum);
+        }
+
+        /// <summary>
+        /// Set the value of an attribute.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <param name="value">The value.</param>
+        public void Set(Attribute attribute, int value)
+        {
+            attribute = GetMatch(attribute);
+            attributes[attribute] = CapValue(value, attribute.Minimum, attribute.Maximum);
+        }
+
+        /// <summary>
         /// Remove an attribute.
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>

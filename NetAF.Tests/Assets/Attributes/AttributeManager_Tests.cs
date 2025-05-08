@@ -111,6 +111,29 @@ namespace NetAF.Tests.Assets.Attributes
         }
 
         [TestMethod]
+        public void GivenNoAttributes_WhenSet_ThenOneAttribute()
+        {
+            AttributeManager manager = new();
+            manager.Set("test", 0);
+
+            var result = manager.GetAttributes();
+
+            Assert.AreEqual(1, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenMatchingAttribute_WhenSet_ThenAttributeEqualsNewValue()
+        {
+            AttributeManager manager = new();
+            manager.Set("test", 0);
+            manager.Set("test", 15);
+
+            var result = manager.GetValue("test");
+
+            Assert.AreEqual(15, result);
+        }
+
+        [TestMethod]
         public void GivenNoAttributes_WhenSubtract_Then1Attribute()
         {
             AttributeManager manager = new();
