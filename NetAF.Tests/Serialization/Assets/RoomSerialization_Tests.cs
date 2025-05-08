@@ -22,7 +22,7 @@ namespace NetAF.Tests.Serialization.Assets
         public void GivenHasBeenVisitedIsTrue_WhenFromRoom_ThenHasBeenVisitedIsTrue()
         {
             Room room = new(string.Empty, string.Empty);
-            room.MovedInto(Direction.North);
+            room.MovedInto(null, Direction.North);
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
@@ -100,7 +100,7 @@ namespace NetAF.Tests.Serialization.Assets
             Room room2 = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
             room.AddItem(new(string.Empty, string.Empty));
             room.AddCharacter(new(string.Empty, string.Empty));
-            room2.MovedInto(Direction.North);
+            room2.MovedInto(null, Direction.North);
             RoomSerialization serialization = RoomSerialization.FromRoom(room2);
 
             ((IObjectSerialization<Room>)serialization).Restore(room);

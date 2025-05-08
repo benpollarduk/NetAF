@@ -20,7 +20,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenVisited_WhenGetHasBeenVisited_ThenTrue()
         {
             var room = new Room(string.Empty, string.Empty);
-            room.MovedInto();
+            room.MovedInto(null);
 
             Assert.IsTrue(room.HasBeenVisited);
         }
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenVisitedFromNorth_WhenGetHasBeenVisited_ThenEnteredFromIsNorth()
         {
             var room = new Room(string.Empty, string.Empty);
-            room.MovedInto(Direction.North);
+            room.MovedInto(null, Direction.North);
 
             Assert.AreEqual(Direction.North, room.EnteredFrom);
         }
@@ -314,9 +314,10 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenEnterCallback_WhenMovedInto_ThenCallbackInvoked()
         {
             var invoked = false;
-            var room = new Room(string.Empty, "A room", enterCallback: new RoomTransitionCallback((r, d) => invoked = true));
+            var room = new Room(string.Empty, "A room", enterCallback: new RoomTransitionCallback(t => invoked = true));
+            var adjoiningRoom = new Room(string.Empty, string.Empty);
 
-            room.MovedInto();
+            room.MovedInto(adjoiningRoom, Direction.North);
 
             Assert.IsTrue(invoked);
         }
@@ -325,9 +326,10 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenExitCallback_WhenMovedOutOf_ThenCallbackInvoked()
         {
             var invoked = false;
-            var room = new Room(string.Empty, "A room", exitCallback: new RoomTransitionCallback((r, d) => invoked = true));
+            var room = new Room(string.Empty, "A room", exitCallback: new RoomTransitionCallback(t => invoked = true));
+            var adjoiningRoom = new Room(string.Empty, string.Empty);
 
-            room.MovedOutOf();
+            room.MovedOutOf(adjoiningRoom, Direction.North);
 
             Assert.IsTrue(invoked);
         }

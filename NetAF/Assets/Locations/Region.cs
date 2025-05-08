@@ -109,7 +109,7 @@ namespace NetAF.Assets.Locations
                 return new Reaction(ReactionResult.Error, "CurrentRoom is null.");
 
             var wasVisited = CurrentRoom.HasBeenVisited;
-            CurrentRoom.MovedInto();
+            CurrentRoom.MovedInto(null);
             var introduction = CurrentRoom.Introduction.GetDescription();
 
             if (wasVisited || string.IsNullOrEmpty(introduction))
@@ -224,8 +224,8 @@ namespace NetAF.Assets.Locations
             if (adjoiningRoom == null)
                 return false;
 
-            CurrentRoom?.MovedOutOf(direction);
-            adjoiningRoom.MovedInto(direction.Inverse());
+            CurrentRoom?.MovedOutOf(adjoiningRoom, direction);
+            adjoiningRoom.MovedInto(CurrentRoom, direction.Inverse());
             CurrentRoom = adjoiningRoom;
 
             return true;
@@ -306,7 +306,7 @@ namespace NetAF.Assets.Locations
                 return false;
 
             CurrentRoom = roomPosition.Room;
-            CurrentRoom.MovedInto();
+            CurrentRoom.MovedInto(null);
 
             return true;
         }

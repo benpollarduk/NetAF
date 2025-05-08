@@ -447,29 +447,43 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Handle movement into this room.
         /// </summary>
-        public void MovedInto()
-        {
-            HasBeenVisited = true;
-            EnterCallback?.Invoke(this, EnteredFrom);
-        }
-
-        /// <summary>
-        /// Handle movement into this room.
-        /// </summary>
+        /// <param name="adjoiningRoom">The adjoining room.</param>
         /// <param name="direction">The direction of movement into this room.</param>
-        public void MovedInto(Direction direction)
+        internal void MovedInto(Room adjoiningRoom, Direction? direction = null)
         {
             EnteredFrom = direction;
-            MovedInto();
+            HasBeenVisited = true;
+
+            EnterCallback?.Invoke(GetTransition(adjoiningRoom, direction));
         }
 
         /// <summary>
         /// Handle movement out of this room.
         /// </summary>
+        /// <param name="adjoiningRoom">The adjoining room.</param>
         /// <param name="direction">The direction of movement out of this room.</param>
-        public void MovedOutOf(Direction? direction = null)
+        internal void MovedOutOf(Room adjoiningRoom, Direction? direction = null)
         {
-            ExitCallback?.Invoke(this, direction);
+            ExitCallback?.Invoke(GetTransition(adjoiningRoom, direction));
+        }
+
+        /// <summary>
+        /// Get a transition between this room and an adjoining room.
+        /// </summary>
+        /// <param name="adjoiningRoom">The adjoining room.</param>
+        /// <param name="direction">The direction of movement out of this room.</param>
+        private RoomTransition GetTransition(Room adjoiningRoom, Direction? direction = null)
+        {
+            Exit inExit = null;
+            Exit outExit = null;
+
+            if (direction.HasValue)
+            {
+                FindExit(direction.Value, true, out inExit);
+                adjoiningRoom?.FindExit(direction.Value.Inverse(), true, out outExit);
+            }
+
+            return new RoomTransition(this, adjoiningRoom, inExit, outExit, EnteredFrom);
         }
 
         #endregion
