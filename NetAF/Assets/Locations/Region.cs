@@ -109,7 +109,12 @@ namespace NetAF.Assets.Locations
                 return new Reaction(ReactionResult.Error, "CurrentRoom is null.");
 
             var wasVisited = CurrentRoom.HasBeenVisited;
-            CurrentRoom.MovedInto(null);
+            
+            var reaction = CurrentRoom.MovedInto(this, null);
+
+            if (!reaction.ContinueWithTransition)
+                return reaction.Reaction;
+
             var introduction = CurrentRoom.Introduction.GetDescription();
 
             if (wasVisited || string.IsNullOrEmpty(introduction))
@@ -121,9 +126,10 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Exit this region.
         /// </summary>
-        internal void Exit()
+        /// <returns>The reaction.</returns>
+        internal Reaction Exit()
         {
-            CurrentRoom?.MovedOutOf(null);
+            return CurrentRoom?.MovedOutOf(this, null).Reaction ?? Reaction.Silent;
         }
 
         /// <summary>
@@ -213,22 +219,28 @@ namespace NetAF.Assets.Locations
         /// Move in a direction.
         /// </summary>
         /// <param name="direction">The direction to move in.</param>
-        /// <returns>True if the move was successful, else false.</returns>
-        public bool Move(Direction direction)
+        /// <returns>The reaction.</returns>
+        public Reaction Move(Direction direction)
         {
             if (!CurrentRoom.CanMove(direction)) 
-                return false;
+                return new Reaction(ReactionResult.Error, $"Could not move {direction}.");
 
             var adjoiningRoom = GetAdjoiningRoom(direction);
 
             if (adjoiningRoom == null)
-                return false;
+                return new Reaction(ReactionResult.Error, $"No adjoining room {direction}.");
 
-            CurrentRoom?.MovedOutOf(adjoiningRoom, direction);
-            adjoiningRoom.MovedInto(CurrentRoom, direction.Inverse());
-            CurrentRoom = adjoiningRoom;
+            var reaction = CurrentRoom?.MovedOutOf(this, adjoiningRoom, direction) ?? RoomTransitionReaction.Silent;
 
-            return true;
+            if (reaction.ContinueWithTransition)
+            {
+                reaction = adjoiningRoom.MovedInto(this, CurrentRoom, direction.Inverse());
+                
+                if (reaction.ContinueWithTransition)
+                    CurrentRoom = adjoiningRoom;
+            }
+
+            return reaction.Reaction;
         }
 
         /// <summary>
@@ -297,18 +309,18 @@ namespace NetAF.Assets.Locations
         /// Jump to a room.
         /// </summary>
         /// <param name="location">The location of the room.</param>
-        /// <returns>True if the room could be jumped to, else false.</returns>
-        public bool JumpToRoom(Point3D location)
+        /// <returns>The reaction.</returns>
+        public Reaction JumpToRoom(Point3D location)
         {
             var roomPosition = roomPositions.Find(r => r.IsAtPosition(location));
 
             if (roomPosition == null)
-                return false;
+                return new Reaction(ReactionResult.Error, "Could not jump to location.");
 
             CurrentRoom = roomPosition.Room;
-            CurrentRoom.MovedInto(null);
+            var reaction = CurrentRoom.MovedInto(this, null);
 
-            return true;
+            return reaction.Reaction;
         }
 
         #endregion
