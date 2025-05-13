@@ -162,6 +162,48 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
+        public void GivenCanMoveButEnterCallbackPreventsMove_WhenMove_ThenCurrentRoomDoesNotChange()
+        {
+            static RoomTransitionReaction movedInto(RoomTransition _)
+            {
+                return new RoomTransitionReaction(Reaction.Silent, false);
+            }
+
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)], enterCallback: movedInto);
+
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
+
+            var result = region.Move(Direction.East);
+
+            Assert.AreEqual(room1, region.CurrentRoom);
+        }
+
+        [TestMethod]
+        public void GivenCanMoveButExitCallbackPreventsMove_WhenMove_ThenCurrentRoomDoesNotChange()
+        {
+            static RoomTransitionReaction movedOutOf(RoomTransition _)
+            {
+                return new RoomTransitionReaction(Reaction.Silent, false);
+            }
+
+            var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)], exitCallback: movedOutOf);
+            var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
+
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
+
+            var result = region.Move(Direction.East);
+
+            Assert.AreEqual(room1, region.CurrentRoom);
+        }
+
+        [TestMethod]
         public void GivenCantMove_WhenMove_ThenError()
         {
             var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
