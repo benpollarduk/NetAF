@@ -86,8 +86,8 @@ namespace NetAF.Example
 
                         var result = g.Overworld.CurrentRegion.JumpToRoom(new Point3D(x, y, z));
 
-                        if (!result)
-                            return new(ReactionResult.Error, $"Failed to jump to {x} {y} {z}.");
+                        if (result.Result == ReactionResult.Error)
+                            return result;
 
                         return new(ReactionResult.Inform, $"Jumped to {x} {y} {z}.");
                     }),

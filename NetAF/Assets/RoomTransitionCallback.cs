@@ -4,5 +4,6 @@
     /// Represents the callback for handling transitioning between rooms.
     /// </summary>
     /// <param name="transition">The transition.</param>
-    public delegate void RoomTransitionCallback(RoomTransition transition);
+    /// <returns>The reaction to the transition.</returns>
+    public delegate RoomTransitionReaction RoomTransitionCallback(RoomTransition transition);
 }

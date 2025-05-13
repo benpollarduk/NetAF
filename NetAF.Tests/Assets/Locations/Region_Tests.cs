@@ -146,7 +146,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenCanMove_WhenMove_ThenTrue()
+        public void GivenCanMove_WhenMove_ThenSilent()
         {
             var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
             var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
@@ -158,11 +158,11 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.Move(Direction.East);
 
-            Assert.IsTrue(result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
 
         [TestMethod]
-        public void GivenCantMove_WhenMove_ThenFalse()
+        public void GivenCantMove_WhenMove_ThenError()
         {
             var room1 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.East)]);
             var room2 = new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.West)]);
@@ -174,7 +174,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.Move(Direction.West);
 
-            Assert.IsFalse(result);
+            Assert.AreEqual(ReactionResult.Error, result.Result);
         }
 
         [TestMethod]
@@ -410,7 +410,7 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenInvalidCoordinates_WhenJumpToRoom_ThenReturnFalse()
+        public void GivenInvalidCoordinates_WhenJumpToRoom_ThenReturnError()
         {
             var region = new Region(string.Empty, string.Empty);
             var room = new Room("a", string.Empty);
@@ -419,11 +419,11 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.JumpToRoom(new Point3D(0, 100, 0));
 
-            Assert.IsFalse(result);
+            Assert.AreEqual(ReactionResult.Error, result.Result);
         }
 
         [TestMethod]
-        public void GivenValidCoordinates_WhenJumpToRoom_ThenReturnTrue()
+        public void GivenValidCoordinates_WhenJumpToRoom_ThenReturnSilent()
         {
             var region = new Region(string.Empty, string.Empty);
             var room1 = new Room(string.Empty, string.Empty);
@@ -434,7 +434,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.JumpToRoom(new Point3D(1, 0, 0));
 
-            Assert.IsTrue(result);
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
 
         [TestMethod]

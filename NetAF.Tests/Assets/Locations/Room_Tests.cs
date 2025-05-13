@@ -20,7 +20,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenVisited_WhenGetHasBeenVisited_ThenTrue()
         {
             var room = new Room(string.Empty, string.Empty);
-            room.MovedInto(null);
+            room.MovedInto(null, null);
 
             Assert.IsTrue(room.HasBeenVisited);
         }
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenVisitedFromNorth_WhenGetHasBeenVisited_ThenEnteredFromIsNorth()
         {
             var room = new Room(string.Empty, string.Empty);
-            room.MovedInto(null, Direction.North);
+            room.MovedInto(null, null, Direction.North);
 
             Assert.AreEqual(Direction.North, room.EnteredFrom);
         }
@@ -314,10 +314,15 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenEnterCallback_WhenMovedInto_ThenCallbackInvoked()
         {
             var invoked = false;
-            var room = new Room(string.Empty, "A room", enterCallback: new RoomTransitionCallback(t => invoked = true));
+            var room = new Room(string.Empty, "A room", enterCallback: new RoomTransitionCallback(t =>
+            {
+                invoked = true;
+                return RoomTransitionReaction.Silent;
+            }));
+
             var adjoiningRoom = new Room(string.Empty, string.Empty);
 
-            room.MovedInto(adjoiningRoom, Direction.North);
+            room.MovedInto(null, adjoiningRoom, Direction.North);
 
             Assert.IsTrue(invoked);
         }
@@ -326,10 +331,14 @@ namespace NetAF.Tests.Assets.Locations
         public void GivenExitCallback_WhenMovedOutOf_ThenCallbackInvoked()
         {
             var invoked = false;
-            var room = new Room(string.Empty, "A room", exitCallback: new RoomTransitionCallback(t => invoked = true));
+            var room = new Room(string.Empty, "A room", exitCallback: new RoomTransitionCallback(t => 
+            {
+                invoked = true;
+                return RoomTransitionReaction.Silent;
+            }));
             var adjoiningRoom = new Room(string.Empty, string.Empty);
 
-            room.MovedOutOf(adjoiningRoom, Direction.North);
+            room.MovedOutOf(null, adjoiningRoom, Direction.North);
 
             Assert.IsTrue(invoked);
         }

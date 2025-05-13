@@ -59,17 +59,23 @@ namespace NetAF.Commands.Scene
             var targetRoom = region.GetAdjoiningRoom(direction);
             var movingToPreviouslyUnvisitedRoom = targetRoom != null && !targetRoom.HasBeenVisited;
 
-            if (region.Move(direction))
+            var reaction = region.Move(direction);
+
+            switch (reaction.Result)
             {
-                var introduction = targetRoom?.Introduction?.GetDescription() ?? string.Empty;
+                case ReactionResult.Silent:
 
-                if (movingToPreviouslyUnvisitedRoom && !string.IsNullOrEmpty(introduction))
-                    return new(ReactionResult.Inform, introduction);
+                    var introduction = targetRoom?.Introduction?.GetDescription() ?? string.Empty;
 
-                return new(ReactionResult.Silent, $"Moved {direction}.");
+                    if (movingToPreviouslyUnvisitedRoom && !string.IsNullOrEmpty(introduction))
+                        return new(ReactionResult.Inform, introduction);
+
+                    return new(ReactionResult.Silent, $"Moved {direction}.");
+
+                default:
+
+                    return reaction;
             }
-
-            return new(ReactionResult.Error, $"Could not move {direction}.");
         }
 
         /// <summary>

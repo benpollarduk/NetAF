@@ -447,32 +447,37 @@ namespace NetAF.Assets.Locations
         /// <summary>
         /// Handle movement into this room.
         /// </summary>
+        /// <param name="region">The region the transition happened within.</param>
         /// <param name="adjoiningRoom">The adjoining room.</param>
         /// <param name="direction">The direction of movement into this room.</param>
-        internal void MovedInto(Room adjoiningRoom, Direction? direction = null)
+        /// <returns>The reaction to the transition.</returns>
+        internal RoomTransitionReaction MovedInto(Region region, Room adjoiningRoom, Direction? direction = null)
         {
             EnteredFrom = direction;
             HasBeenVisited = true;
 
-            EnterCallback?.Invoke(GetTransition(adjoiningRoom, direction));
+            return EnterCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
         }
 
         /// <summary>
         /// Handle movement out of this room.
         /// </summary>
+        /// <param name="region">The region the transition happened within.</param>
         /// <param name="adjoiningRoom">The adjoining room.</param>
         /// <param name="direction">The direction of movement out of this room.</param>
-        internal void MovedOutOf(Room adjoiningRoom, Direction? direction = null)
+        /// <returns>The reaction to the transition.</returns>
+        internal RoomTransitionReaction MovedOutOf(Region region, Room adjoiningRoom, Direction? direction = null)
         {
-            ExitCallback?.Invoke(GetTransition(adjoiningRoom, direction));
+            return ExitCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
         }
 
         /// <summary>
         /// Get a transition between this room and an adjoining room.
         /// </summary>
+        /// <param name="region">The region the transition happened within.</param>
         /// <param name="adjoiningRoom">The adjoining room.</param>
         /// <param name="direction">The direction of movement out of this room.</param>
-        private RoomTransition GetTransition(Room adjoiningRoom, Direction? direction = null)
+        private RoomTransition GetTransition(Region region, Room adjoiningRoom, Direction? direction = null)
         {
             Exit inExit = null;
             Exit outExit = null;
@@ -483,7 +488,7 @@ namespace NetAF.Assets.Locations
                 adjoiningRoom?.FindExit(direction.Value.Inverse(), true, out outExit);
             }
 
-            return new RoomTransition(this, adjoiningRoom, inExit, outExit, EnteredFrom);
+            return new RoomTransition(region, this, adjoiningRoom, inExit, outExit, EnteredFrom);
         }
 
         #endregion
