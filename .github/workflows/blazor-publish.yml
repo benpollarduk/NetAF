@@ -2,6 +2,8 @@ name: blazor-publish
 
 on:
   workflow_dispatch:
+    branches:
+      - main
     inputs:
       ver:
         description: 'The version number, should be specified as a semantic version e.g: X.Y.Z'
@@ -18,6 +20,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
+
+    - name: Restrict to owner
+      if: github.actor != 'benpollarduk'
+      run: |
+        echo "Access denied for user ${{ github.actor }}"
+        exit 1
+    
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
