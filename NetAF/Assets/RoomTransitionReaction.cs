@@ -14,12 +14,12 @@ namespace NetAF.Assets
         /// <summary>
         /// Provides a default value for Inform.
         /// </summary>
-        internal static RoomTransitionReaction Inform { get; } = new(Reaction.Inform, true);
+        public static RoomTransitionReaction Inform { get; } = new(Reaction.Inform, true);
 
         /// <summary>
         /// Provides a default value for Silent.
         /// </summary>
-        internal static RoomTransitionReaction Silent { get; } = new(Reaction.Silent, true);
+        public static RoomTransitionReaction Silent { get; } = new(Reaction.Silent, true);
 
         #endregion
 

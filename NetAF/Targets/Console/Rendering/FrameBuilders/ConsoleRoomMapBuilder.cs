@@ -269,12 +269,19 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, LockedExit, LockedExitColor);
             }
-            else if (room.HasUnlockedExitInDirection(Direction.Up) && DisplayDirections)
+            else if (room.HasUnlockedExitInDirection(Direction.Up))
             {
-                if (viewPoint[Direction.Up]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'u', VisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.Up]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'u', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'U', UnvisitedExitColor);
+                }
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, 'U', UnvisitedExitColor);
+                {
+                    gridStringBuilder.SetCell(startPosition.X + 2, startPosition.Y + 2, '^', BoundaryColor);
+                }
             }
         }
 
@@ -290,12 +297,19 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, LockedExit, LockedExitColor);
             }
-            else if (room.HasUnlockedExitInDirection(Direction.Down) && DisplayDirections)
+            else if (room.HasUnlockedExitInDirection(Direction.Down))
             {
-                if (viewPoint[Direction.Down]?.HasBeenVisited ?? false)
-                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'd', VisitedExitColor);
+                if (DisplayDirections)
+                {
+                    if (viewPoint[Direction.Down]?.HasBeenVisited ?? false)
+                        gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'd', VisitedExitColor);
+                    else
+                        gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'D', UnvisitedExitColor);
+                }
                 else
-                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'D', UnvisitedExitColor);
+                {
+                    gridStringBuilder.SetCell(startPosition.X + 6, startPosition.Y + 2, 'v', BoundaryColor);
+                }
             }
         }
 

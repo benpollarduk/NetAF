@@ -278,30 +278,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var maxAvailableWidth = maxSize.Width;
             var x = startPosition.X;
             var y = startPosition.Y;
-
-            if (multiLevel)
-            {
-                // draw floor indicators
-
-                for (var floor = matrix.Depth - 1; floor >= 0; floor--)
-                {
-                    var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Position.Z == floor).ToArray();
-
-                    // only draw levels indicators where a region is visible without discovery or a room on the floor has been visited
-                    if (!region.IsVisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
-                        continue;
-
-                    var isFocusFloor = floor == focusFloor;
-
-                    if (floor == playerFloor)
-                        gridStringBuilder.DrawWrapped($"{CurrentFloorIndicator} L{floor}", x, ++y, maxAvailableWidth, VisitedBoundaryColor, out _, out _);
-                    else
-                        gridStringBuilder.DrawWrapped($"L{floor}", x + 2, ++y, maxAvailableWidth, isFocusFloor ? FocusedBoundaryColor : LowerLevelColor, out _, out _);
-                }
-
-                x += indicatorLength;
-                maxAvailableWidth -= indicatorLength;
-            }
+            var levelIndicatorX = x;
+            var levelIndicatorY = y;
 
             // determine the room size
             var roomSize = GetConfiguredRoomMapBuilder(detail, false, false).RenderedSize;
@@ -334,6 +312,27 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
                     DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), detail, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
+            }
+
+            if (!multiLevel)
+                return;
+
+            // draw floor indicators
+
+            for (var floor = matrix.Depth - 1; floor >= 0; floor--)
+            {
+                var roomsOnThisFloor = rooms.Where(r => region.GetPositionOfRoom(r).Position.Z == floor).ToArray();
+
+                // only draw levels indicators where a region is visible without discovery or a room on the floor has been visited
+                if (!region.IsVisibleWithoutDiscovery && !Array.Exists(roomsOnThisFloor, r => r.HasBeenVisited))
+                    continue;
+
+                var isFocusFloor = floor == focusFloor;
+
+                if (floor == playerFloor)
+                    gridStringBuilder.DrawWrapped($"{CurrentFloorIndicator} L{floor}", levelIndicatorX, ++levelIndicatorY, maxAvailableWidth, VisitedBoundaryColor, out _, out _);
+                else
+                    gridStringBuilder.DrawWrapped($"L{floor}", levelIndicatorX + 2, ++levelIndicatorY, maxAvailableWidth, isFocusFloor ? FocusedBoundaryColor : LowerLevelColor, out _, out _);
             }
         }
 
