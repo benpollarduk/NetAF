@@ -12,11 +12,6 @@ namespace NetAF.Assets
         #region StaticProperties
 
         /// <summary>
-        /// Provides a default value for Inform.
-        /// </summary>
-        public static RoomTransitionReaction Inform { get; } = new(Reaction.Inform, true);
-
-        /// <summary>
         /// Provides a default value for Silent.
         /// </summary>
         public static RoomTransitionReaction Silent { get; } = new(Reaction.Silent, true);
