@@ -1,8 +1,8 @@
-﻿# PlayableCharacter
+I'm﻿# PlayableCharacter
 
 ## Overview
 
-A PlayableCharacter represents the character that the player plays as throughout the game. Each game has only a single PlayableCharacter.
+A PlayableCharacter represents the character that the player plays as throughout the game. Each game has one or more instances of PlayableCharacter.
 
 ## Use
 
