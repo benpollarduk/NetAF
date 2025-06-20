@@ -61,7 +61,7 @@ var sword = new Item("Sword", "The heroes sword.");
 ```
 
 ### Playable Character
-Each NetAF game has a single playable character. The game is played through the view point of the playable character.
+Each NetAF game has at least one playable character. The game is played through the view point of a playable character.
 
 ```csharp
 var player = new PlayableCharacter("Dave", "The hero of the story.");
