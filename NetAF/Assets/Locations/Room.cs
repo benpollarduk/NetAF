@@ -488,7 +488,7 @@ namespace NetAF.Assets.Locations
                 adjoiningRoom?.FindExit(direction.Value.Inverse(), true, out outExit);
             }
 
-            return new RoomTransition(region, this, adjoiningRoom, inExit, outExit, EnteredFrom);
+            return new RoomTransition(region, this, adjoiningRoom, inExit, outExit, direction);
         }
 
         #endregion
