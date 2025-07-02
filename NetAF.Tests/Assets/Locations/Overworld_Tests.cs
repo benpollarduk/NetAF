@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Characters;
 using NetAF.Assets;
+using NetAF.Commands;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -53,26 +54,28 @@ namespace NetAF.Tests.Assets.Locations
         }
 
         [TestMethod]
-        public void GivenRegionPresent_WhenMoveRegion_ThenReturnTrue()
+        public void GivenRegionPresent_WhenMoveRegion_ThenReturnNonErrorReaction()
         {
             var overworld = new Overworld(string.Empty, string.Empty);
             var region = new Region("abc", string.Empty);
             overworld.AddRegion(region);
+            region.AddRoom(new Room("", ""), 0, 0, 0);
 
             var result = overworld.Move(region);
 
-            Assert.IsTrue(result);
+            Assert.AreNotEqual(ReactionResult.Error, result.Result);
         }
 
         [TestMethod]
-        public void GivenRegionIsNotPresent_WhenMoveRegion_ThenReturnFalse()
+        public void GivenRegionIsNotPresent_WhenMoveRegion_ThenReturnErrorReaction()
         {
             var overworld = new Overworld(string.Empty, string.Empty);
             var region = new Region("abc", string.Empty);
+            region.AddRoom(new Room("", ""), 0, 0, 0);
 
             var result = overworld.Move(region);
 
-            Assert.IsFalse(result);
+            Assert.AreEqual(ReactionResult.Error, result.Result);
         }
 
         [TestMethod]

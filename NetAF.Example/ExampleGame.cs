@@ -44,10 +44,10 @@ namespace NetAF.Example
                 [
                     new CustomCommand(new CommandHelp($"Warp {otherRegion.Identifier.Name}", $"Use the {otherRegion.Identifier.Name} Sphere to warp to the {otherRegion.Identifier.Name}."), true, true, (g, _) =>
                     {
-                        var move = overworld?.Move(otherRegion) ?? false;
+                        Reaction reaction = overworld?.Move(otherRegion) ?? new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
 
-                        if (!move)
-                            return new Reaction(ReactionResult.Error, $"Could not move to {otherRegion.Identifier.Name}.");
+                        if (reaction.Result == ReactionResult.Error)
+                            return reaction;
 
                         return new Reaction(ReactionResult.Inform, $"You peer inside the sphere and feel faint. When the sensation passes you open you eyes and have been transported to the {otherRegion.Identifier.Name}.");
                     })

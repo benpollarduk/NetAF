@@ -119,17 +119,19 @@ namespace NetAF.Assets.Locations
         /// Move to a region.
         /// </summary>
         /// <param name="region">The region to move to.</param>
-        /// <returns>True if the region could be moved to, else false.</returns>
-        public bool Move(Region region)
+        /// <returns>The reaction.</returns>
+        public Reaction Move(Region region)
         {
             if (!Regions.Contains(region))
-                return false;
+                return new Reaction(ReactionResult.Error, $"Could not move to {region.Identifier.Name}.");
 
-            CurrentRegion?.Exit();
+            Reaction reaction = CurrentRegion?.Exit() ?? Reaction.Silent;
+
+            if (reaction.Result == ReactionResult.Error)
+                return reaction;
+
             CurrentRegion = region;
-            CurrentRegion?.Enter();
-
-            return true;
+            return CurrentRegion?.Enter() ?? Reaction.Silent;
         }
 
         #endregion
