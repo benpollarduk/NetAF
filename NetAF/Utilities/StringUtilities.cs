@@ -209,6 +209,27 @@ namespace NetAF.Utilities
             }
         }
 
+        /// <summary>
+        /// Concatenate a collection of strings.
+        /// </summary>
+        /// <param name="values">The collection of strings.</param>
+        /// <param name="delimiter">An optional delimiter to used between each string.</param>
+        /// <returns>The concatenated string.</returns>
+        public static string Concatenate(string[] values, string delimiter = "")
+        {
+            StringBuilder builder = new();
+
+            for (var i = 0; i < values.Length; i++)
+            {
+                builder.Append(values[i]);
+
+                if (i < values.Length - 1)
+                    builder.Append(delimiter);
+            }
+
+            return builder.ToString();
+        }
+
         #endregion
     }
 }

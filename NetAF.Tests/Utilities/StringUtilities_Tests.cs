@@ -186,7 +186,7 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenABC_WhenSplitTextToVerbAndNoun_TheNounABCVerbEmpty()
+        public void GivenABC_WhenSplitTextToVerbAndNoun_ThenNounABCVerbEmpty()
         {
             StringUtilities.SplitTextToVerbAndNoun("ABC", out var verb, out var noun);
 
@@ -195,7 +195,7 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenABCSpaceXYZ_WhenSplitTextToVerbAndNoun_TheNounABCVerbXYZ()
+        public void GivenABCSpaceXYZ_WhenSplitTextToVerbAndNoun_ThenNounABCVerbXYZ()
         {
             StringUtilities.SplitTextToVerbAndNoun("ABC XYZ", out var verb, out var noun);
 
@@ -204,13 +204,33 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenStringWithNoSpacesThatExceedsLength_WhenCutLineFromParagraph_TheStringCutAtLength()
+        public void GivenStringWithNoSpacesThatExceedsLength_WhenCutLineFromParagraph_ThenStringCutAtLength()
         {
             var longLine = "ABCEDFGHIJKLMNOPQRSTUVWXYZ";
             var result = StringUtilities.CutLineFromParagraph(ref longLine, 10);
 
             Assert.AreEqual("ABCEDFGHIJ", result);
             Assert.AreEqual("KLMNOPQRSTUVWXYZ", longLine);
+        }
+
+        [TestMethod]
+        public void GivenAAndBWithNoDelimiter_WhenConcatenate_ThenAB()
+        {
+            string[] values = ["A", "B"];
+            var delimiter = string.Empty;
+            var result = StringUtilities.Concatenate(values, delimiter);
+
+            Assert.AreEqual("AB", result);
+        }
+
+        [TestMethod]
+        public void GivenAAndBWithSpaceDelimiter_WhenConcatenate_ThenASpaceB()
+        {
+            string[] values = ["A", "B"];
+            var delimiter = " ";
+            var result = StringUtilities.Concatenate(values, delimiter);
+
+            Assert.AreEqual("A B", result);
         }
     }
 }
