@@ -17,6 +17,7 @@ using NetAF.Logic.Modes;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using NetAF.Utilities;
+using NetAF.Variables;
 
 namespace NetAF.Logic
 {
@@ -88,6 +89,11 @@ namespace NetAF.Logic
         /// Get the history manager.
         /// </summary>
         public HistoryManager HistoryManager { get; private set; } = new HistoryManager();
+
+        /// <summary>
+        /// Get the variable manager.
+        /// </summary>
+        public VariableManager VariableManager { get; private set; } = new VariableManager();
 
         #endregion
 
@@ -491,6 +497,9 @@ namespace NetAF.Logic
 
             // restore note manager
             NoteManager = NoteManager.FromSerialization(serialization.NoteManager);
+
+            // restore variable manager
+            VariableManager = VariableManager.FromSerialization(serialization.VariableManager);
 
             // restore overworld
             ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);

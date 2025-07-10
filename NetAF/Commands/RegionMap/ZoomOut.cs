@@ -2,7 +2,7 @@
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
 
-namespace NetAF.Commands.Frame
+namespace NetAF.Commands.RegionMap
 {
     /// <summary>
     /// Represents the Zoom Out command.

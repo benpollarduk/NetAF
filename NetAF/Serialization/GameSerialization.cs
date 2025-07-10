@@ -36,6 +36,11 @@ namespace NetAF.Serialization
         /// </summary>
         public NoteManagerSerialization NoteManager { get; set; }
 
+        /// <summary>
+        /// Get or set the variable manager serialization.
+        /// </summary>
+        public VariableManagerSerialization VariableManager { get; set; }
+
         #endregion
 
         #region StaticMethods
@@ -53,7 +58,8 @@ namespace NetAF.Serialization
                 Players = game?.Catalog?.Players?.Select(CharacterSerialization.FromCharacter).ToArray() ?? [],
                 Overworld = OverworldSerialization.FromOverworld(game?.Overworld),
                 InactivePlayerLocations = game?.GetInactivePlayerLocations().Select(PlayableCharacterLocationSerialization.FromPlayableCharacterLocation).ToArray() ?? [],
-                NoteManager = NoteManagerSerialization.FromNoteManager(game?.NoteManager)
+                NoteManager = NoteManagerSerialization.FromNoteManager(game?.NoteManager),
+                VariableManager = VariableManagerSerialization.FromVariableManager(game?.VariableManager)
             };
         }
 

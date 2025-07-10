@@ -45,7 +45,7 @@ namespace NetAF.Serialization.Assets
 
         #endregion
 
-        #region Implementation of IObjectSerialization<Exit>
+        #region Implementation of IObjectSerialization<NoteEntry>
 
         /// <summary>
         /// Restore an instance from this serialization.

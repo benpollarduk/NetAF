@@ -144,22 +144,6 @@ namespace NetAF.Logging.Notes
 
         #endregion
 
-        #region Implementation of IRestoreFromObjectSerialization<NoteManagerSerialization>
-
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
-        void IRestoreFromObjectSerialization<NoteManagerSerialization>.RestoreFrom(NoteManagerSerialization serialization)
-        {
-            entries.Clear();
-
-            foreach (var entry in serialization.Entries)
-                Add(NoteEntry.FromSerialization(entry));
-        }
-
-        #endregion
-
         #region StaticMethods
 
         /// <summary>
@@ -172,6 +156,22 @@ namespace NetAF.Logging.Notes
             NoteManager manager = new();
             ((IRestoreFromObjectSerialization<NoteManagerSerialization>)manager).RestoreFrom(serialization);
             return manager;
+        }
+
+        #endregion
+
+        #region Implementation of IRestoreFromObjectSerialization<NoteManagerSerialization>
+
+        /// <summary>
+        /// Restore this object from a serialization.
+        /// </summary>
+        /// <param name="serialization">The serialization to restore from.</param>
+        void IRestoreFromObjectSerialization<NoteManagerSerialization>.RestoreFrom(NoteManagerSerialization serialization)
+        {
+            entries.Clear();
+
+            foreach (var entry in serialization.Entries)
+                Add(NoteEntry.FromSerialization(entry));
         }
 
         #endregion

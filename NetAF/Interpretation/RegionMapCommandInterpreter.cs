@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets.Locations;
 using NetAF.Commands;
-using NetAF.Commands.Frame;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
