@@ -170,6 +170,9 @@ namespace NetAF.Logging.Notes
         {
             entries.Clear();
 
+            if (serialization == null)
+                return;
+
             foreach (var entry in serialization.Entries)
                 Add(NoteEntry.FromSerialization(entry));
         }
