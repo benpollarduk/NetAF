@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "0WYa3xPz",
+  "version": "0NmlvUM7",
   "assets": [
     {
       "hash": "sha256-8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U=",
@@ -74,15 +74,15 @@ self.assetsManifest = {
       "url": "_framework/NetAF.Blazor.wasm"
     },
     {
-      "hash": "sha256-zqX6+viSZ7w33t7SMKOaDfFIUx3wey8K5flJLzwZhB8=",
+      "hash": "sha256-2Eo4qfzN6cQUBVVUWJqLYcjo3Zg7EsQnCeVSpBdVq+E=",
       "url": "_framework/NetAF.Example.Blazor.wasm"
     },
     {
-      "hash": "sha256-CfznlrDG3wP+iWK8jZgF9ys5jf2f9xBeoXG6JDV5Y/Y=",
+      "hash": "sha256-TrTcmawNPbAxadEuwzWaC1EDXG/c5QXruquYK7vuf0g=",
       "url": "_framework/NetAF.Example.wasm"
     },
     {
-      "hash": "sha256-vtobxLXWZUFRAk5DNMREOLWfhexK6mLuNo0bLkWHT/I=",
+      "hash": "sha256-cJYEQf7ljBVAUrrQuY9AL1tbCM79JoIaBeBNuN7E0Tk=",
       "url": "_framework/NetAF.wasm"
     },
     {
@@ -150,7 +150,7 @@ self.assetsManifest = {
       "url": "_framework/System.Text.RegularExpressions.wasm"
     },
     {
-      "hash": "sha256-NGCpA7s0IRAt+CQ0pp2f6qvYQCJQZxq/AGlUbTziaQg=",
+      "hash": "sha256-Oy4FVXzPk8olumVCZ64wzcwWhp2123pNdzDFBfBdQgQ=",
       "url": "_framework/blazor.boot.json"
     },
     {
