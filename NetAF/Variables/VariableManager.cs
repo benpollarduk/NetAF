@@ -139,6 +139,9 @@ namespace NetAF.Variables
         {
             variables.Clear();
 
+            if (serialization == null)
+                return;
+
             foreach (var entry in serialization.Variables)
                 Add(Variable.FromSerialization(entry));
         }
