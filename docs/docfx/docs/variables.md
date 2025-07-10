@@ -1,7 +1,7 @@
 # Variables
 
 ## Overview
-The **VariableManager** can be used to storing any variables that change the course of the adventure.
+The **VariableManager** can be used to store variables or informative about progress that in tern can change the course of the adventure.
 
 ## Adding a variable
 To add a new variable use the **Add** method on the games **VariableManager**.
