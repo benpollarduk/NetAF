@@ -5,6 +5,7 @@ using NetAF.Commands;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
+using NetAF.Commands.RegionMap;
 
 namespace NetAF.Tests.Commands.Frame
 {

@@ -23,6 +23,8 @@ items:
   href: frame-builders.md
 - name: Notes
   href: notes.md
+- name: Variables
+  href: variables.md
 - name: End Conditions
   href: end-conditions.md
 - name: Visuals
