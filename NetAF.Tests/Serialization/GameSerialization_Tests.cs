@@ -76,6 +76,32 @@ namespace NetAF.Tests.Serialization
         }
 
         [TestMethod]
+        public void GivenAGame_WhenRestoreFromSerializedAndThereWereVariables_ThenVariablesArePresentInRestoredGame()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Item item = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room = new("ROOM", string.Empty, null, [item]);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            RegionMaker regionMaker2 = new("REGION", string.Empty);
+            Item item2 = new("ITEM", string.Empty) { IsPlayerVisible = false };
+            Room room2 = new("ROOM", string.Empty, null, [item2]);
+            regionMaker2[0, 0, 0] = room2;
+            OverworldMaker overworldMaker2 = new(string.Empty, string.Empty, regionMaker2);
+            var game2 = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker2.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game2.VariableManager.Add("a", "b");
+            game2.VariableManager.Add("b", "c");
+
+            GameSerialization serialization = GameSerialization.FromGame(game2);
+
+            ((IObjectSerialization<Game>)serialization).Restore(game);
+
+            Assert.AreEqual(2, game.VariableManager.Count);
+        }
+
+        [TestMethod]
         public void GivenAGame_WhenRestoreFromSerializedAndPlayerTookAnItemFromARoom_ThenPlayerHasItemInRestoredGame()
         {
             RegionMaker regionMaker = new("REGION", string.Empty);
