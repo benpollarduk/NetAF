@@ -3,7 +3,7 @@
 ## Overview
 The **NoteManager** can be used to storing any useful information that the player acquires throughout the adventure.
 
-This can then be viewed with the *Notes* command.
+These can then be viewed with the *Notes* command.
 
 ## Adding a note
 To add a new entry use the **Add** method on the games **NoteManager**.
