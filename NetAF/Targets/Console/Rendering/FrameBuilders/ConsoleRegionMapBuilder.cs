@@ -170,14 +170,22 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 case RegionMapDetail.Detailed:
                     var detailedBuilder = new ConsoleRoomMapBuilder(gridStringBuilder)
                     {
+                        DisplayDirections = false,
                         BoundaryColor = boundaryColor,
-                        DisplayDirections = false
+                        LockedExit = LockedExit,
+                        VerticalBoundary = VerticalBoundary,
+                        HorizontalBoundary = HorizontalBoundary,
+                        LockedExitColor = LockedExitColor
                     };
                     return detailedBuilder;
                 default:
                     var undetatiledBuilder = new ConsoleBasicRoomMapBuilder(gridStringBuilder)
                     {
-                        BoundaryColor = boundaryColor
+                        BoundaryColor = boundaryColor,
+                        LockedExit = LockedExit,
+                        VerticalBoundary = VerticalBoundary,
+                        HorizontalBoundary = HorizontalBoundary,
+                        LockedExitColor = LockedExitColor
                     };
                     return undetatiledBuilder;
             }
