@@ -214,7 +214,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 4, VerticalBoundary, BoundaryColor);
             }
 
-            gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 5, VerticalExitBorder, BoundaryColor);
+            gridStringBuilder.SetCell(startPosition.X + 8, startPosition.Y + 5, VerticalBoundary, BoundaryColor);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 4, VerticalBoundary, BoundaryColor);
             }
 
-            gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 5, VerticalExitBorder, BoundaryColor);
+            gridStringBuilder.SetCell(startPosition.X, startPosition.Y + 5, VerticalBoundary, BoundaryColor);
         }
 
         /// <summary>
