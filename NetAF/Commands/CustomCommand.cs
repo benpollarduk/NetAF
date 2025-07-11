@@ -92,6 +92,14 @@ namespace NetAF.Commands
             return [.. prompts];
         }
 
+        /// <summary>
+        /// Clear all prompts for this command.
+        /// </summary>
+        public void ClearPrompts()
+        {
+            prompts.Clear();
+        }
+
         #endregion
 
         #region Implementation of IPlayerVisible

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands;
+using System.Linq;
 
 namespace NetAF.Tests.Commands
 {
@@ -49,6 +50,18 @@ namespace NetAF.Tests.Commands
             var result = command.GetPrompts(null);
 
             Assert.AreEqual(1, result.Length);
+        }
+
+        [TestMethod]
+        public void Given1Prompt_WhenClearPrompts_ThenReturnEmptyArray()
+        {
+            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            command.AddPrompt(new("A"));
+
+            command.ClearPrompts();
+            var prompts = command.GetPrompts(null);
+
+            Assert.AreEqual(0, prompts.Length);
         }
     }
 }
