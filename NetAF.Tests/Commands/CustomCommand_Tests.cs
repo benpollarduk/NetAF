@@ -62,5 +62,16 @@ namespace NetAF.Tests.Commands
 
             Assert.AreEqual(0, prompts.Length);
         }
+
+        [TestMethod]
+        public void Given1Prompt_WhenClone_ThenPromptsAreCloned()
+        {
+            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            command.AddPrompt(new("A"));
+
+            var result = command.Clone() as CustomCommand;
+
+            Assert.AreEqual(1, result.GetPrompts(null).Length);
+        }
     }
 }

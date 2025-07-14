@@ -133,7 +133,7 @@ namespace NetAF.Commands
         /// <returns>A new object that is a copy of this instance.</returns>
         public object Clone()
         {
-            Prompt[] clonedPrompts = [];
+            Prompt[] clonedPrompts = new Prompt[prompts.Count];
             prompts.CopyTo(clonedPrompts);
             return new CustomCommand(Help, IsPlayerVisible, InterpretIfNotPlayerVisible, Callback) { Arguments = Arguments, prompts = [.. clonedPrompts] };
         }
