@@ -1,5 +1,4 @@
-﻿using NetAF.Commands.Frame;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
 using NetAF.Commands;
 using NetAF.Assets.Characters;

@@ -156,5 +156,43 @@ namespace NetAF.Tests.Variables
 
             Assert.AreEqual("C", v1.Value);
         }
+
+        [TestMethod]
+        public void GivenVariable_WhenGet_ThenReturnCorrectValue()
+        {
+            var manager = new VariableManager();
+            Variable v1 = new("A", "B");
+            manager.Add(v1);
+
+            var result = manager.Get("A");
+
+            Assert.AreEqual("B", result);
+        }
+
+
+        [TestMethod]
+        public void GivenVariable_WhenGetThroughIndexer_ThenReturnCorrectValue()
+        {
+            var manager = new VariableManager();
+            Variable v1 = new("A", "B");
+            manager.Add(v1);
+
+            var result = manager["A"];
+
+            Assert.AreEqual("B", result);
+        }
+
+        [TestMethod]
+        public void GivenVariable_WhenSetThroughIndexer_ThenSetCorrectly()
+        {
+            var manager = new VariableManager();
+            Variable v1 = new("A", "B");
+            manager.Add(v1);
+
+            manager["A"] = "C";
+            var result = manager["A"];
+
+            Assert.AreEqual("C", result);
+        }
     }
 }

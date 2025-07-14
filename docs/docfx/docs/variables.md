@@ -20,18 +20,30 @@ game.VariableManager.Remove("value 1");
 ```
 
 ## Finding a variable
-To find a value use the **Find** method on the games **VariableManager**.
+To find a value use the **Get** method on the games **VariableManager**.
 
 ```csharp
-var variable = game.VariableManager.Find("value 1");
+var variable = game.VariableManager.Get("value 1");
+```
+
+or a shorter version:
+
+```csharp
+var value = game.VariableManager["value 1"];
 ```
 
 ## Updating a variable
-To update a value use the **Find** method on the games **VariableManager**.
+To update a value use the **Get** method on the games **VariableManager**.
 
 ```csharp
-var variable = game.VariableManager.Find("value 1");
+var variable = game.VariableManager.Get("value 1");
 variable.Value = "new value";
+```
+
+or a shorter version:
+
+```csharp
+game.VariableManager["value 1"] = "new value";
 ```
 
 ## Getting a reference to Game

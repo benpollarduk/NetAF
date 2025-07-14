@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands;
-using System.Linq;
 
 namespace NetAF.Tests.Commands
 {

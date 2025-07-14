@@ -24,6 +24,17 @@ namespace NetAF.Variables
         /// </summary>
         public int Count => variables.Count;
 
+        /// <summary>
+        /// Get or set the value of a variable.
+        /// </summary>
+        /// <param name="name">The name of  the variable.</param>
+        /// <returns>The value of the variable.</returns>
+        public string this[string name]
+        {
+            get { return Get(name); }
+            set { Add(name, value); }
+        }
+
         #endregion
 
         #region Methods
@@ -109,6 +120,16 @@ namespace NetAF.Variables
         public bool ContainsVariable(string name)
         {
             return Find(name) != null;
+        }
+
+        /// <summary>
+        /// Get the value of a variable.
+        /// </summary>
+        /// <param name="name">The name of  the variable.</param>
+        /// <returns>The value of the variable.</returns>
+        public string Get(string name)
+        {
+            return Find(name)?.Value ?? string.Empty;
         }
 
         #endregion
