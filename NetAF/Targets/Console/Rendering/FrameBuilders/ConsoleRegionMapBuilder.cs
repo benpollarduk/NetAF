@@ -299,12 +299,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 if (region.IsVisibleWithoutDiscovery)
                     lowerLevelRooms.AddRange(unvisitedRoomPositions.Where(r => r.Position.Z < focusFloor));
 
-                foreach (var position in lowerLevelRooms)
+                foreach (var position in lowerLevelRooms.Select(x => x.Position))
                 {
-                    var roomOnFocusFloorAtXY = matrix[position.Position.X, position.Position.Y, focusFloor];
+                    var roomOnFocusFloorAtXY = matrix[position.X, position.Y, focusFloor];
                     var hasVisibleRoomAtXYOnFocusFloor = roomOnFocusFloorAtXY != null && (roomOnFocusFloorAtXY.HasBeenVisited || region.IsVisibleWithoutDiscovery);
 
-                    if (!hasVisibleRoomAtXYOnFocusFloor && TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
+                    if (!hasVisibleRoomAtXYOnFocusFloor && TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.X, position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
                         DrawLowerLevelRoom(new Point2D(left, top), roomSize);
                 }
             }

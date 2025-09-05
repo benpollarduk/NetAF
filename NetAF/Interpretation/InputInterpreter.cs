@@ -23,11 +23,8 @@ namespace NetAF.Interpretation
             {
                 var l = new List<CommandHelp>();
 
-                foreach (var commands in interpreters.Select(i => i.SupportedCommands))
-                {
-                    if (commands != null)
-                        l.AddRange(commands);
-                }
+                foreach (var commands in interpreters.Select(i => i.SupportedCommands).Where(x => x != null))
+                    l.AddRange(commands);
 
                 return [.. l];
             }
