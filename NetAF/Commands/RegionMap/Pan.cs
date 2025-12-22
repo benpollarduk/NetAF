@@ -14,11 +14,6 @@ namespace NetAF.Commands.RegionMap
         #region StaticProperties
 
         /// <summary>
-        /// Get the general command help.
-        /// </summary>
-        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Pan", CommandCategory.RegionMap);
-
-        /// <summary>
         /// Get the command help for north.
         /// </summary>
         public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", CommandCategory.RegionMap, "N", displayAs: "North/N");
@@ -47,6 +42,11 @@ namespace NetAF.Commands.RegionMap
         /// Get the command help for down.
         /// </summary>
         public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", CommandCategory.RegionMap, "D", displayAs: "Down/D");
+
+        /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Pan", CommandCategory.RegionMap);
 
         #endregion
 

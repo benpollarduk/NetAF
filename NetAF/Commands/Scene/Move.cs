@@ -12,11 +12,6 @@ namespace NetAF.Commands.Scene
         #region StaticProperties
 
         /// <summary>
-        /// Get the general command help.
-        /// </summary>
-        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Move", CommandCategory.Movement);
-
-        /// <summary>
         /// Get the command help for north.
         /// </summary>
         public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", CommandCategory.Movement, "N", displayAs: "North/N");
@@ -45,6 +40,11 @@ namespace NetAF.Commands.Scene
         /// Get the command help for down.
         /// </summary>
         public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", CommandCategory.Movement, "D", displayAs: "Down/D");
+
+        /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Move", CommandCategory.Movement);
 
         #endregion
 
