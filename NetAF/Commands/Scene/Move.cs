@@ -12,6 +12,11 @@ namespace NetAF.Commands.Scene
         #region StaticProperties
 
         /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Move", CommandCategory.Movement);
+
+        /// <summary>
         /// Get the command help for north.
         /// </summary>
         public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", CommandCategory.Movement, "N", displayAs: "North/N");
@@ -44,6 +49,11 @@ namespace NetAF.Commands.Scene
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => GeneralCommandHelp;
 
         /// <summary>
         /// Invoke the command.

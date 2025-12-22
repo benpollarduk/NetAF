@@ -7,28 +7,33 @@ namespace NetAF.Commands.Persistence
     /// <summary>
     /// Represents the Load command.
     /// </summary>
-    public sealed class Load : CustomCommand
+    /// <param name="path">The path to load.</param>
+    public sealed class Load(string path) : ICommand
     {
-        #region Constructors
+        #region StaticProperties
 
         /// <summary>
-        /// Initializes a new instance of the Load class.
+        /// Get the command help.
         /// </summary>
-        public Load() : base(new CommandHelp("Load", "Load the game state from a file.", CommandCategory.Persistence, instructions: "When loading the path should be specified as an absolute path."), true, true, LoadGameFromFile) { }
+        public static CommandHelp CommandHelp { get; } = new("Load", "Load the game state from a file.", CommandCategory.Persistence, instructions: "When loading the path should be specified as an absolute path.");
 
         #endregion
 
-        #region StaticMethods
+        #region Implementation of ICommand
 
         /// <summary>
-        /// Load the game from a file.
+        /// Get the help for this command.
         /// </summary>
-        /// <param name="game">The game to load.</param>
-        /// <param name="args">The arguments. The file path must be the first element in the array.</param>
+        public CommandHelp Help => CommandHelp;
+
+        /// <summary>
+        /// Invoke the command.
+        /// </summary>
+        /// <param name="game">The game to invoke the command on.</param>
         /// <returns>The reaction.</returns>
-        private static Reaction LoadGameFromFile(Game game, string[] args)
+        public Reaction Invoke(Game game)
         {
-            var result = JsonSave.FromFile(args[0], out var restorePoint, out var message);
+            var result = JsonSave.FromFile(path, out var restorePoint, out var message);
 
             if (!result)
                 return new(ReactionResult.Error, $"Failed to load: {message}");
@@ -36,6 +41,16 @@ namespace NetAF.Commands.Persistence
             ((IObjectSerialization<Game>)restorePoint.Game).Restore(game);
 
             return new(ReactionResult.Inform, $"Loaded.");
+        }
+
+        /// <summary>
+        /// Get all prompts for this command.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of prompts.</returns>
+        public Prompt[] GetPrompts(Game game)
+        {
+            return [];
         }
 
         #endregion

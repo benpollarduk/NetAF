@@ -7,6 +7,15 @@ namespace NetAF.Commands.Scene
     /// </summary>
     public sealed class Unactionable : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new(string.Empty, "Unactionable", CommandCategory.Uncategorized);
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -37,6 +46,11 @@ namespace NetAF.Commands.Scene
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => GeneralCommandHelp;
 
         /// <summary>
         /// Invoke the command.

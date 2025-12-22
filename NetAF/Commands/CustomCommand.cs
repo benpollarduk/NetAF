@@ -36,11 +36,6 @@ namespace NetAF.Commands
         public string[] Arguments { get; set; }
 
         /// <summary>
-        /// Get the help for this command.
-        /// </summary>
-        public CommandHelp Help { get; } = help;
-
-        /// <summary>
         /// Get if this command can be interpreted when the IsPlayerVisible is false.
         /// </summary>
         public bool InterpretIfNotPlayerVisible { get; set; } = interpretIfNotPlayerVisible;
@@ -71,6 +66,11 @@ namespace NetAF.Commands
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help { get; } = help;
 
         /// <summary>
         /// Invoke the command.

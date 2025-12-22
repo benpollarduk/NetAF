@@ -64,13 +64,13 @@ namespace NetAF.Interpretation
                 var prompts = game.GetPromptsForCommand(noun);
 
                 if (string.IsNullOrEmpty(noun))
-                    return new(true, new Help(Help.CommandHelp, prompts));
+                    return new(true, new GeneralHelp(GeneralHelp.CommandHelp, prompts));
 
                 var commands = game.GetContextualCommands();
                 var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
 
                 if (command != null)
-                    return new(true, new Help(command, prompts));
+                    return new(true, new GeneralHelp(command, prompts));
                 else
                     return new(true, new Unactionable($"'{noun}' is not a command."));
             }

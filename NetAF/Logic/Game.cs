@@ -401,7 +401,7 @@ namespace NetAF.Logic
         /// <returns>An array of prompts.</returns>
         public Prompt[] GetPromptsForCommand(string command)
         {
-            if (!Help.CommandHelp.Command.InsensitiveEquals(command) && !Help.CommandHelp.Shortcut.InsensitiveEquals(command))
+            if (!GeneralHelp.CommandHelp.Command.InsensitiveEquals(command) && !GeneralHelp.CommandHelp.Shortcut.InsensitiveEquals(command))
             {
                 var result = Configuration?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
 
@@ -417,7 +417,7 @@ namespace NetAF.Logic
             }
             else
             {
-                return new Help(null, null).GetPrompts(this);
+                return new GeneralHelp(null, null).GetPrompts(this);
             }
         }
 

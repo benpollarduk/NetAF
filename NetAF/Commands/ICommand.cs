@@ -8,6 +8,10 @@ namespace NetAF.Commands
     public interface ICommand
     {
         /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        CommandHelp Help { get; }
+        /// <summary>
         /// Invoke the command.
         /// </summary>
         /// <param name="game">The game to invoke the command on.</param>

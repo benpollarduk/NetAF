@@ -14,6 +14,11 @@ namespace NetAF.Commands.RegionMap
         #region StaticProperties
 
         /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Pan", CommandCategory.RegionMap);
+
+        /// <summary>
         /// Get the command help for north.
         /// </summary>
         public static CommandHelp NorthCommandHelp { get; } = new("North", "Pan north", CommandCategory.RegionMap, "N", displayAs: "North/N");
@@ -77,6 +82,11 @@ namespace NetAF.Commands.RegionMap
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => GeneralCommandHelp;
 
         /// <summary>
         /// Invoke the command.
