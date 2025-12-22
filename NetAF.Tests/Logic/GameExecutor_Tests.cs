@@ -55,7 +55,7 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var startTime = Environment.TickCount;
                 EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
 
                 GameExecutor.Execute(game);
             });
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var startTime = Environment.TickCount;
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
 
             GameExecutor.Execute(game);
             var result = GameExecutor.Update();
@@ -88,7 +88,7 @@ namespace NetAF.Tests.Logic
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
 
             GameExecutor.Execute(game);
             // update until finished
@@ -109,7 +109,7 @@ namespace NetAF.Tests.Logic
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.ReturnToTitleScreen));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.ReturnToTitleScreen));
 
             GameExecutor.Execute(game);
             // update until finished
@@ -131,7 +131,7 @@ namespace NetAF.Tests.Logic
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             EndCheckResult callback(Game _) => new(true, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.ReturnToTitleScreen));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.ReturnToTitleScreen));
 
             GameExecutor.Execute(game);
             GameExecutor.CancelExecution();
@@ -150,7 +150,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var startTime = Environment.TickCount;
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
 
             GameExecutor.Execute(game);
 
@@ -183,7 +183,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var startTime = Environment.TickCount;
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
 
             GameExecutor.Execute(game);
 
@@ -209,7 +209,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var startTime = Environment.TickCount;
             EndCheckResult callback(Game _) => new(Environment.TickCount - startTime > 1000, string.Empty, string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), FinishModes.Finish));
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), new GameEndConditions(callback, GameEndConditions.NotEnded), new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new(80, 50), finishMode: FinishModes.Finish));
             GameExecutor.Execute(game);
             // enter game, otherwise would be on title screen
             GameExecutor.Update();

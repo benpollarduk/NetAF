@@ -10,8 +10,9 @@ namespace NetAF.Logic
     /// <param name="adapter">The I/O adapter.</param>
     /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
     /// <param name="displaySize">The display size.</param>
+    /// <param name="startMode">The start mode.</param>
     /// <param name="finishMode">The finish mode.</param>
-    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
+    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, StartModes startMode = StartModes.TitleScreen, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
     {
         #region Properties
 
@@ -19,6 +20,11 @@ namespace NetAF.Logic
         /// Get the display size.
         /// </summary>
         public Size DisplaySize { get; private set; } = displaySize;
+
+        /// <summary>
+        /// Get the start mode.
+        /// </summary>
+        public StartModes StartMode { get; private set; } = startMode;
 
         /// <summary>
         /// Get the finish mode.

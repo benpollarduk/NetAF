@@ -6,6 +6,6 @@ namespace NetAF.Tests
 {
     internal static class TestGameConfiguration
     {
-        public static GameConfiguration Default => new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), FinishModes.ReturnToTitleScreen);
+        public static GameConfiguration Default => new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), StartModes.TitleScreen, FinishModes.ReturnToTitleScreen);
     }
 }
