@@ -5,11 +5,11 @@ using System.Linq;
 namespace NetAF.Commands.Global
 {
     /// <summary>
-    /// Represents the Help command.
+    /// Represents the GeneralHelp command.
     /// </summary>
     /// <param name="command">The command to display help for.</param>
     /// <param name="prompts">The prompts to display for the command.</param>
-    public sealed class Help(CommandHelp command, Prompt[] prompts) : ICommand
+    public sealed class GeneralHelp(CommandHelp command, Prompt[] prompts) : ICommand
     {
         #region StaticProperties
 
@@ -21,6 +21,11 @@ namespace NetAF.Commands.Global
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => CommandHelp;
 
         /// <summary>
         /// Invoke the command.

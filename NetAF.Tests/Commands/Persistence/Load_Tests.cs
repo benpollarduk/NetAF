@@ -27,11 +27,7 @@ namespace NetAF.Tests.Commands.Persistence
             var path = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
             var save = RestorePoint.Create("Test", game);
             JsonSave.ToFile(path, save, out _);
-
-            var command = new Load()
-            {
-                Arguments = [path]
-            };
+            var command = new Load(path);
 
             var result = command.Invoke(game);
 
@@ -53,11 +49,7 @@ namespace NetAF.Tests.Commands.Persistence
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var path = Path.Combine("abc");
-
-            var command = new Load
-            {
-                Arguments = [path]
-            };
+            var command = new Load(path);
 
             var result = command.Invoke(game);
 
@@ -77,7 +69,7 @@ namespace NetAF.Tests.Commands.Persistence
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new Load();
+            var command = new Load(string.Empty);
 
             var result = command.GetPrompts(game);
 

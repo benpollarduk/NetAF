@@ -10,7 +10,21 @@ namespace NetAF.Commands.Conversation
     /// <param name="response">The response.</param>
     public sealed class Respond(Response response) : ICommand
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the command help.
+        /// </summary>
+        private static CommandHelp SilentCommandHelp { get; } = new(string.Empty, "Respond to the conversation", CommandCategory.Conversation);
+
+        #endregion
+
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => SilentCommandHelp;
 
         /// <summary>
         /// Invoke the command.

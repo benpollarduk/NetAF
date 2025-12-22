@@ -41,12 +41,20 @@
         public static IInterpreter RegionMapCommandInterpreter { get; } = new RegionMapCommandInterpreter();
 
         /// <summary>
+        /// Get the persistence command interpreter.
+        /// </summary>
+        public static IInterpreter PersistenceCommandInterpreter { get; } = new PersistenceCommandInterpreter();
+
+        /// <summary>
         /// Get the default interpreters.
         /// </summary>
-        public static IInterpreter Default { get; } = new InputInterpreter(
+        public static IInterpreter Default { get; } = new InputInterpreter
+        (
             FrameCommandInterpreter,
             GlobalCommandInterpreter,
             ExecutionCommandInterpreter,
-            CustomCommandInterpreter);
+            PersistenceCommandInterpreter,
+            CustomCommandInterpreter
+        );
     }
 }

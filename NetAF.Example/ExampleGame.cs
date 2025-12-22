@@ -62,11 +62,11 @@ namespace NetAF.Example
             static Overworld overworldCreator()
             {
                 var regions = new List<Region>
-                    {
-                        new Everglades().Instantiate(),
-                        new Flat().Instantiate(),
-                        new Zelda().Instantiate()
-                    };
+                {
+                    new Everglades().Instantiate(),
+                    new Flat().Instantiate(),
+                    new Zelda().Instantiate()
+                };
 
                 CustomCommand[] commands =
                 [
@@ -90,9 +90,7 @@ namespace NetAF.Example
                             return result;
 
                         return new(ReactionResult.Inform, $"Jumped to {x} {y} {z}.");
-                    }),
-                    new Save(),
-                    new Load()
+                    })
                 ];
 
                 var overworld = new Overworld("Demo", "A demo of NetAF.", commands);

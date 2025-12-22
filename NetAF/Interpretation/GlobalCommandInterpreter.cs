@@ -27,7 +27,7 @@ namespace NetAF.Interpretation
             Notes.CommandHelp,
             History.CommandHelp,
             Map.CommandHelp,
-            Help.CommandHelp,
+            GeneralHelp.CommandHelp,
             CommandList.CommandHelp
         ];
 
@@ -59,18 +59,18 @@ namespace NetAF.Interpretation
             if (History.CommandHelp.Equals(verb))
                 return new(true, new History());
 
-            if (Help.CommandHelp.Equals(verb))
+            if (GeneralHelp.CommandHelp.Equals(verb))
             {
                 var prompts = game.GetPromptsForCommand(noun);
 
                 if (string.IsNullOrEmpty(noun))
-                    return new(true, new Help(Help.CommandHelp, prompts));
+                    return new(true, new GeneralHelp(GeneralHelp.CommandHelp, prompts));
 
                 var commands = game.GetContextualCommands();
                 var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
 
                 if (command != null)
-                    return new(true, new Help(command, prompts));
+                    return new(true, new GeneralHelp(command, prompts));
                 else
                     return new(true, new Unactionable($"'{noun}' is not a command."));
             }
@@ -99,7 +99,7 @@ namespace NetAF.Interpretation
                 commands.Add(Notes.CommandHelp);
                 commands.Add(History.CommandHelp);
                 commands.Add(Map.CommandHelp);
-                commands.Add(Help.CommandHelp);
+                commands.Add(GeneralHelp.CommandHelp);
                 commands.Add(CommandList.CommandHelp);
             }
 

@@ -43,6 +43,11 @@ namespace NetAF.Commands.RegionMap
         /// </summary>
         public static CommandHelp DownCommandHelp { get; } = new("Down", "Pan down", CommandCategory.RegionMap, "D", displayAs: "Down/D");
 
+        /// <summary>
+        /// Get the general command help.
+        /// </summary>
+        private static CommandHelp GeneralCommandHelp { get; } = new($"{NorthCommandHelp.Command}/{SouthCommandHelp.Command}/{EastCommandHelp.Command}/{WestCommandHelp.Command}", "Pan", CommandCategory.RegionMap);
+
         #endregion
 
         #region StaticMethods
@@ -77,6 +82,11 @@ namespace NetAF.Commands.RegionMap
         #endregion
 
         #region Implementation of ICommand
+
+        /// <summary>
+        /// Get the help for this command.
+        /// </summary>
+        public CommandHelp Help => GeneralCommandHelp;
 
         /// <summary>
         /// Invoke the command.

@@ -11,12 +11,12 @@ using NetAF.Utilities;
 namespace NetAF.Tests.Commands.Global
 {
     [TestClass]
-    public class Help_Tests
+    public class GeneralHelp_Tests
     {
         [TestMethod]
         public void GivenNullGame_WhenInvoke_ThenError()
         {
-            var command = new Help(End.CommandHelp, null);
+            var command = new GeneralHelp(End.CommandHelp, null);
 
             var result = command.Invoke(null);
 
@@ -36,7 +36,7 @@ namespace NetAF.Tests.Commands.Global
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, character), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.ChangeMode(new AboutMode());
-            var command = new Help(End.CommandHelp, null);
+            var command = new GeneralHelp(End.CommandHelp, null);
 
             var result = command.Invoke(game);
 
@@ -51,7 +51,7 @@ namespace NetAF.Tests.Commands.Global
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new Help(null, null);
+            var command = new GeneralHelp(null, null);
 
             var result = command.GetPrompts(game);
 
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Commands.Global
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
             game.ChangeMode(new SceneMode());
-            var command = new Help(null, null);
+            var command = new GeneralHelp(null, null);
 
             var result = command.GetPrompts(game);
 
