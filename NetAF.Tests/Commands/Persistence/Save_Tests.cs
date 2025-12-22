@@ -23,14 +23,10 @@ namespace NetAF.Tests.Commands.Persistence
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var path = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
-
-            var command = new Save()
-            {
-                Arguments = [path]
-            };
+            var command = new Save(path);
 
             var result = command.Invoke(game);
-
+            
             var fileExists = File.Exists(path);
 
             if (fileExists)
@@ -49,11 +45,7 @@ namespace NetAF.Tests.Commands.Persistence
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var path = Path.Combine("abc");
-
-            var command = new Save
-            {
-                Arguments = [path]
-            };
+            var command = new Save(path);
 
             var result = command.Invoke(game);
 
@@ -73,7 +65,7 @@ namespace NetAF.Tests.Commands.Persistence
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new Save();
+            var command = new Save(string.Empty);
 
             var result = command.GetPrompts(game);
 
