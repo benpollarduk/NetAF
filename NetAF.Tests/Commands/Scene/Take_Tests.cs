@@ -15,6 +15,16 @@ namespace NetAF.Tests.Commands.Scene
     public class Take_Tests
     {
         [TestMethod]
+        public void GivenNoGame_WhenInvoke_ThenError()
+        {
+            var command = new Take(null);
+
+            var result = command.Invoke(null);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenNoCharacter_WhenInvoke_ThenError()
         {
             var room = new Room(Identifier.Empty, Description.Empty);

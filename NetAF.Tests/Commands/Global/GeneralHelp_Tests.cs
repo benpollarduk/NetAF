@@ -7,6 +7,7 @@ using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Commands;
 using NetAF.Utilities;
+using NetAF.Interpretation;
 
 namespace NetAF.Tests.Commands.Global
 {
@@ -67,7 +68,7 @@ namespace NetAF.Tests.Commands.Global
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
             var command = new GeneralHelp(null, null);
 
             var result = command.GetPrompts(game);

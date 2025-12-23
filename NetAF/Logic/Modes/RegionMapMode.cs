@@ -13,7 +13,8 @@ namespace NetAF.Logic.Modes
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
     /// <param name="detail">The level of detail to use.</param>
-    public sealed class RegionMapMode(Point3D focusPosition, RegionMapDetail detail) : IGameMode
+    /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
+    public sealed class RegionMapMode(Point3D focusPosition, RegionMapDetail detail, IInterpreter interpreter) : IGameMode
     {
         #region StaticProperties
 
@@ -43,7 +44,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = new RegionMapCommandInterpreter();
+        public IInterpreter Interpreter { get; } = interpreter;
 
         /// <summary>
         /// Get the type of mode this provides.

@@ -35,7 +35,8 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, FrameProperties.MapDetail));
+            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(RegionMapMode));
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, FrameProperties.MapDetail, interpreter));
             return new(ReactionResult.GameModeChanged, string.Empty);
         }
 

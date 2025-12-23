@@ -1,16 +1,17 @@
-﻿using NetAF.Assets;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Logic;
-using NetAF.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic.Modes;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
-using NetAF.Targets.Console;
-using NetAF.Rendering.FrameBuilders;
-using System.Linq;
+using NetAF.Interpretation;
+using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Targets.Console;
+using NetAF.Utilities;
+using System.Linq;
 
 namespace NetAF.Tests.Logic
 {
@@ -41,7 +42,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = game.GetContextualCommands();
 
@@ -247,7 +248,7 @@ namespace NetAF.Tests.Logic
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-                game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic));
+                game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()));
             });
         }
 
@@ -546,7 +547,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             PlayableCharacter player = new("A", string.Empty);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = game.GetPromptsForCommand(Examine.CommandHelp.Command);
 
@@ -561,7 +562,7 @@ namespace NetAF.Tests.Logic
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             PlayableCharacter player = new("A", string.Empty);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), new GameEndConditions(g => new EndCheckResult(true, string.Empty, string.Empty), g => new EndCheckResult(true, string.Empty, string.Empty)), TestGameConfiguration.Default).Invoke();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = game.GetPromptsForCommand(Examine.CommandHelp);
 

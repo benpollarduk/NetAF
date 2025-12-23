@@ -57,7 +57,8 @@ namespace NetAF.Commands.Scene
             // begin conversation
             converser.Conversation?.Next(game);
 
-            game.ChangeMode(new ConversationMode(converser));
+            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(ConversationMode));
+            game.ChangeMode(new ConversationMode(converser, interpreter));
             return new(ReactionResult.Silent, "Engaged in conversation.");
         }
 

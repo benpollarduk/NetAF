@@ -15,6 +15,16 @@ namespace NetAF.Tests.Commands.Scene
     public class UseOn_Tests
     {
         [TestMethod]
+        public void GivenNoGame_WhenInvoke_ThenError()
+        {
+            var command = new UseOn(null, null);
+
+            var result = command.Invoke(null);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenNoItem_WhenInvoke_ThenError()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();

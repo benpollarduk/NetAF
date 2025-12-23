@@ -16,7 +16,7 @@ namespace NetAF.Tests.Commands.Scene
     public class Talk_Tests
     {
         [TestMethod]
-        public void GivenNoTarget_WhenInvoke_ThenError()
+        public void GivenNoGame_WhenInvoke_ThenError()
         {
             var command = new Talk(null);
 
@@ -40,6 +40,17 @@ namespace NetAF.Tests.Commands.Scene
         public void GivenPlayerThatCannotConverse_WhenInvoke_ThenError()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter(string.Empty, string.Empty, false)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Talk(null);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenNoTarget_WhenInvoke_ThenError()
+        {
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Talk(null);
 
             var result = command.Invoke(game);

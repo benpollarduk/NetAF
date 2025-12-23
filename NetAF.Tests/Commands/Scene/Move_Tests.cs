@@ -13,6 +13,16 @@ namespace NetAF.Tests.Commands.Scene
     public class Move_Tests
     {
         [TestMethod]
+        public void GivenNoGame_WhenInvoke_ThenError()
+        {
+            var command = new Move(Direction.North);
+
+            var result = command.Invoke(null);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenCantMove_WhenInvoke_ThenError()
         {
             var region = new Region(Identifier.Empty, Description.Empty);

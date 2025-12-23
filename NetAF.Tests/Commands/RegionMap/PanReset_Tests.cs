@@ -1,13 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic;
-using NetAF.Commands.RegionMap;
-using NetAF.Logic.Modes;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Utilities;
-using NetAF.Assets;
 using NetAF.Commands;
+using NetAF.Commands.RegionMap;
+using NetAF.Interpretation;
+using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Commands.RegionMap
 {
@@ -45,7 +46,7 @@ namespace NetAF.Tests.Commands.RegionMap
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
             var command = new PanReset();
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic));
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()));
 
             var result = command.Invoke(game);
 
@@ -64,7 +65,7 @@ namespace NetAF.Tests.Commands.RegionMap
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.JumpToRoom(new Point3D(0, 0, 1));
             var command = new PanReset();
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic));
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()));
 
             var result = command.Invoke(game);
 

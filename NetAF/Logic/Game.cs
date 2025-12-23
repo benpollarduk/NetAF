@@ -194,7 +194,7 @@ namespace NetAF.Logic
                 else
                 {
                     // revert to scene
-                    ChangeMode(new SceneMode());
+                    ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
                 }
 
                 return;
@@ -204,7 +204,7 @@ namespace NetAF.Logic
             if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
             {
                 // revert back to scene mode as the 
-                ChangeMode(new SceneMode());
+                ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
             }
         }
 

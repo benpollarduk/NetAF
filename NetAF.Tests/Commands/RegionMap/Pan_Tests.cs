@@ -1,13 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic;
-using NetAF.Commands.RegionMap;
-using NetAF.Logic.Modes;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Utilities;
 using NetAF.Commands;
+using NetAF.Commands.RegionMap;
+using NetAF.Interpretation;
+using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Commands.RegionMap
 {
@@ -50,7 +51,7 @@ namespace NetAF.Tests.Commands.RegionMap
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
             var command = new Pan(Direction.West);
-            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic));
+            game.ChangeMode(new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()));
 
             var result = command.Invoke(game);
 
@@ -71,7 +72,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.North);
             game.Overworld.CurrentRegion.Move(Direction.South);
             var command = new Pan(Direction.North);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(0, 0, 0) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(0, 0, 0) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);
@@ -93,7 +94,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.South);
             game.Overworld.CurrentRegion.Move(Direction.North);
             var command = new Pan(Direction.South);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(0, 1, 0) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(0, 1, 0) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);
@@ -115,7 +116,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.East);
             game.Overworld.CurrentRegion.Move(Direction.West);
             var command = new Pan(Direction.East);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(0, 0, 0) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(0, 0, 0) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);
@@ -137,7 +138,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.West);
             game.Overworld.CurrentRegion.Move(Direction.East);
             var command = new Pan(Direction.West);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(1, 0, 0) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(1, 0, 0) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);
@@ -159,7 +160,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.Up);
             game.Overworld.CurrentRegion.Move(Direction.Down);
             var command = new Pan(Direction.Up);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(0, 0, 0) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(0, 0, 0) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);
@@ -181,7 +182,7 @@ namespace NetAF.Tests.Commands.RegionMap
             game.Overworld.CurrentRegion.Move(Direction.Down);
             game.Overworld.CurrentRegion.Move(Direction.Up);
             var command = new Pan(Direction.Down);
-            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic) { FocusPosition = new Point3D(0, 0, 1) };
+            var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Basic, new RegionMapCommandInterpreter()) { FocusPosition = new Point3D(0, 0, 1) };
             game.ChangeMode(mode);
 
             var result = command.Invoke(game);

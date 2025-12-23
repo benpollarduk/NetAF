@@ -9,8 +9,9 @@ namespace NetAF.Logic.Modes
 {
     /// <summary>
     /// Provides a display mode for a scene.
+    /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
     /// </summary>
-    public sealed class SceneMode : IGameMode
+    public sealed class SceneMode(IInterpreter interpreter) : IGameMode
     {
         #region StaticProperties
 
@@ -26,15 +27,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = new InputInterpreter
-        (
-            new FrameCommandInterpreter(),
-            new GlobalCommandInterpreter(),
-            new ExecutionCommandInterpreter(),
-            new PersistenceCommandInterpreter(),
-            new CustomCommandInterpreter(),
-            new SceneCommandInterpreter()
-        );
+        public IInterpreter Interpreter { get; } = interpreter;
 
         /// <summary>
         /// Get the type of mode this provides.
@@ -47,7 +40,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var filteredCommands = Interpreter.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray();
+            var filteredCommands = Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray() ?? [];
             var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, FrameProperties.DisplayCommandList ? filteredCommands : null, FrameProperties.KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }

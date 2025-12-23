@@ -8,27 +8,16 @@ namespace NetAF.Logic.Modes
     /// <summary>
     /// Provides a display mode for conversation.
     /// </summary>
-    public sealed class ConversationMode : IGameMode
+    /// <param name="converser">The IConverser the conversation is being held with.</param>
+    /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
+    public sealed class ConversationMode(IConverser converser, IInterpreter interpreter) : IGameMode
     {
         #region Properties
 
         /// <summary>
         /// Get the converser.
         /// </summary>
-        public IConverser Converser { get; }
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the ConversationMode class.
-        /// </summary>
-        /// <param name="converser">The IConverser the conversation is being held with.</param>
-        public ConversationMode(IConverser converser)
-        {
-            Converser = converser;
-        }
+        public IConverser Converser { get; } = converser;
 
         #endregion
 
@@ -37,7 +26,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = new ConversationCommandInterpreter();
+        public IInterpreter Interpreter { get; } = interpreter;
 
         /// <summary>
         /// Get the type of mode this provides.

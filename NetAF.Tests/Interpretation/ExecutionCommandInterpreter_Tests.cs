@@ -72,7 +72,7 @@ namespace NetAF.Tests.Interpretation
         {
             var interpreter = new ExecutionCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 

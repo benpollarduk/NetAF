@@ -1,12 +1,13 @@
-﻿using NetAF.Assets.Characters;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Conversations.Instructions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Interpretation;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
-using NetAF.Assets.Locations;
 using NetAF.Utilities;
-using NetAF.Commands;
 
 namespace NetAF.Tests.Conversations
 {
@@ -23,7 +24,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = npc.Conversation.CurrentParagraph;
 
@@ -70,7 +71,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = npc.Conversation.Next(game);
 
@@ -87,7 +88,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var startParagraph = npc.Conversation.CurrentParagraph;
             npc.Conversation.Next(game);
@@ -106,7 +107,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), null, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty), new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             npc.Conversation.Next(game);
             var result = npc.Conversation.CurrentParagraph;
@@ -124,7 +125,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = npc.Conversation.Respond(null, game);
 
@@ -141,7 +142,7 @@ namespace NetAF.Tests.Conversations
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = npc.Conversation.Respond(new Response(string.Empty), game);
 
@@ -160,7 +161,7 @@ namespace NetAF.Tests.Conversations
             var paragraph = new Paragraph(string.Empty, new Repeat()) {  Responses = [response] };
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(paragraph));
             npc.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = npc.Conversation.Respond(response, game);
 
