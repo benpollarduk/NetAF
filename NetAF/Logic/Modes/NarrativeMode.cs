@@ -1,14 +1,14 @@
 ﻿using NetAF.Interpretation;
+using NetAF.Narratives;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for game over.
+    /// Provides a display mode for narrative.
     /// </summary>
-    /// <param name="title">The title.</param>
-    /// <param name="message">The message.</param>
-    public sealed class GameOverMode(string title, string message) : IGameMode
+    /// <param name="narrative">The narrative.</param>
+    public sealed class NarrativeMode(Narrative narrative) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -20,7 +20,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the type of mode this provides.
         /// </summary>
-        public GameModeType Type { get; } = GameModeType.SingleFrameInformation;
+        public GameModeType Type { get; } = GameModeType.MultipleFrameInformation;
 
         /// <summary>
         /// Render the current state of a game.
@@ -28,8 +28,15 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IGameOverFrameBuilder>().Build(title, message, game.Configuration.DisplaySize);
+            narrative.Next();
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(narrative, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
+
+            if (!narrative.IsComplete)
+                return;
+
+            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(SceneMode));
+            game.ChangeMode(new SceneMode(interpreter));
         }
 
         #endregion

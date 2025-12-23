@@ -122,6 +122,7 @@ NetAF provides frames for rendering the various game screens. These are fully ex
    * **Command list frame** - for displaying a list of commands.
    * **Note frame** - for displaying any in-game notes.
    * **History frame** - for displaying in-game history.
+   * **Narrative frame** - for displaying a section of narrative.
 
 #### Visuals
 Although NetAF is primarily focused on text and interactive fiction, there are times where adding a visual can enrich the game.

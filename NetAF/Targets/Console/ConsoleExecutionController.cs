@@ -116,7 +116,8 @@ namespace NetAF.Targets.Console
             // input is handled based on the current modes type
             switch (game.Mode.Type)
             {
-                case GameModeType.Information:
+                case GameModeType.SingleFrameInformation:
+                case GameModeType.MultipleFrameInformation:
 
                     // wait for acknowledge
                     while (!await WaitForAcknowledgeAsync(token))
