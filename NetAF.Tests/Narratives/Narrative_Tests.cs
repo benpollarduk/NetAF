@@ -9,7 +9,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenNull_WhenIsComplete_ThenReturnTrue()
         {
-            var narrative = new Narrative(null);
+            var narrative = new Narrative(string.Empty, null);
 
             var result = narrative.IsComplete;
 
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenOneSection_WhenIsComplete_ThenReturnTrue()
         {
-            var narrative = new Narrative([new Section([string.Empty])]);
+            var narrative = new Narrative(string.Empty, [new Section([string.Empty])]);
 
             var result = narrative.IsComplete;
 
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenTwoSections_WhenIsComplete_ThenReturnFalse()
         {
-            var narrative = new Narrative([new Section([string.Empty]), new Section([string.Empty])]);
+            var narrative = new Narrative(string.Empty, [new Section([string.Empty]), new Section([string.Empty])]);
 
             var result = narrative.IsComplete;
 
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenOneSectionAndNextCalled_WhenIsComplete_ThenReturnTrue()
         {
-            var narrative = new Narrative([new Section([string.Empty])]);
+            var narrative = new Narrative(string.Empty, [new Section([string.Empty])]);
             narrative.Next();
 
             var result = narrative.IsComplete;
@@ -50,7 +50,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenFirstSectionIsABC_WhenNext_ThenReturnABC()
         {
-            var narrative = new Narrative([new Section(["ABC"])]);
+            var narrative = new Narrative(string.Empty, [new Section(["ABC"])]);
 
             var result = narrative.Next();
 
@@ -60,7 +60,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenFirstSectionIsABCSecondIsDEF_WhenAllUntilCurrent_ThenReturnABC()
         {
-            var narrative = new Narrative([new Section(["ABC"]), new Section(["DEF"])]);
+            var narrative = new Narrative(string.Empty, [new Section(["ABC"]), new Section(["DEF"])]);
 
             var result = narrative.AllUntilCurrent();
 
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Narratives
         [TestMethod]
         public void GivenFirstSectionIsABCSecondIsDEFAndNextCalled_WhenAllUntilCurrent_ThenReturnDEF()
         {
-            var narrative = new Narrative([new Section(["ABC"]), new Section(["DEF"])]);
+            var narrative = new Narrative(string.Empty, [new Section(["ABC"]), new Section(["DEF"])]);
             narrative.Next();
 
             var result = narrative.AllUntilCurrent();

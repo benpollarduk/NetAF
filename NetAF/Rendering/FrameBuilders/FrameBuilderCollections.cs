@@ -34,7 +34,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleReactionFrameBuilder(gridLayoutBuilder),
                     new ConsoleConversationFrameBuilder(gridLayoutBuilder),
                     new ConsoleNoteFrameBuilder(gridLayoutBuilder),
-                    new ConsoleHistoryFrameBuilder(gridLayoutBuilder)
+                    new ConsoleHistoryFrameBuilder(gridLayoutBuilder),
+                    new ConsoleNarrativeFrameBuilder(gridLayoutBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -63,7 +64,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlReactionFrameBuilder(htmlBuilder),
                     new HtmlConversationFrameBuilder(htmlBuilder),
                     new HtmlNoteFrameBuilder(htmlBuilder),
-                    new HtmlHistoryFrameBuilder(htmlBuilder)
+                    new HtmlHistoryFrameBuilder(htmlBuilder),
+                    new HtmlNarrativeFrameBuilder(htmlBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -92,7 +94,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextReactionFrameBuilder(stringBuilder),
                     new TextConversationFrameBuilder(stringBuilder),
                     new TextNoteFrameBuilder(stringBuilder),
-                    new TextHistoryFrameBuilder(stringBuilder)
+                    new TextHistoryFrameBuilder(stringBuilder),
+                    new TextNarrativeFrameBuilder(stringBuilder)
                 ];
 
                 return new(frameBuilders);

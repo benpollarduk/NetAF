@@ -3,8 +3,9 @@
     /// <summary>
     /// Provides a narrative built up from sections.
     /// </summary>
+    /// <param name="title">A title for the narrative.</param>
     /// <param name="sections">The sections that make up the narrative.</param>
-    public class Narrative(Section[] sections)
+    public class Narrative(string title, Section[] sections)
     {
         #region Fields
 
@@ -13,6 +14,11 @@
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Get the title for this narrative.
+        /// </summary>
+        public string Title => title;
 
         /// <summary>
         /// Get if the narrative is complete.

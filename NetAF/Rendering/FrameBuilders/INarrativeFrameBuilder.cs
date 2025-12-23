@@ -11,10 +11,9 @@ namespace NetAF.Rendering.FrameBuilders
         /// <summary>
         /// Build a frame.
         /// </summary>
-        /// <param name="title">The title.</param>
         /// <param name="narrative">The narrative.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        IFrame Build(string title, Narrative narrative, Size size);
+        IFrame Build(Narrative narrative, Size size);
     }
 }
