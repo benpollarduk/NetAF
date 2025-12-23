@@ -1,9 +1,5 @@
-﻿using NetAF.Assets.Characters;
-using NetAF.Interpretation;
-using NetAF.Logic;
+﻿using NetAF.Interpretation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Assets.Locations;
-using NetAF.Assets;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Tests.Interpretation
