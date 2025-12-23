@@ -17,13 +17,13 @@ namespace NetAF.Tests.Narratives
         }
 
         [TestMethod]
-        public void GivenOneElement_WhenIsComplete_ThenReturnTrue()
+        public void GivenOneElement_WhenIsComplete_ThenReturnFalse()
         {
             var section = new Section([string.Empty]);
 
             var result = section.IsComplete;
 
-            Assert.IsTrue(result);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
@@ -69,9 +69,10 @@ namespace NetAF.Tests.Narratives
         }
 
         [TestMethod]
-        public void GivenFirstElementIsABCSecondIsDEFAndNextCalled_WhenAllUntilCurrent_ThenReturnABCAndDEF()
+        public void GivenFirstElementIsABCSecondIsDEFAndNextCalledTwice_WhenAllUntilCurrent_ThenReturnABCAndDEF()
         {
             var section = new Section(["ABC", "DEF"]);
+            section.Next();
             section.Next();
 
             var result = section.AllUntilCurrent();

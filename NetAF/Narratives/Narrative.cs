@@ -9,7 +9,7 @@
     {
         #region Fields
 
-        private int index;
+        private int index = -1;
 
         #endregion
 
@@ -40,23 +40,15 @@
         /// <returns>The next element</returns>
         public string Next()
         {
-            var entry = Current();
-
-            sections?[index].Next();
+            if (index < 0)
+                index = 0;
 
             if ((sections?[index].IsComplete ?? false) && index < sections.Length - 1)
                 index++;
 
-            return entry;
-        }
+            var entry = sections?[index].Next() ?? string.Empty;
 
-        /// <summary>
-        /// Get the current element.
-        /// </summary>
-        /// <returns>The current element.</returns>
-        public string Current()
-        {
-            return sections?[index].Current() ?? string.Empty;
+            return entry;
         }
 
         /// <summary>
@@ -65,6 +57,9 @@
         /// <returns>All elements in the current section up to and including the current element.</returns>
         public string[] AllUntilCurrent()
         {
+            if (index < 0)
+                Next();
+
             return sections?[index].AllUntilCurrent() ?? [string.Empty];
         }
 

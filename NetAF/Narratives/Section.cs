@@ -8,7 +8,7 @@
     {
         #region Fields
 
-        private int index;
+        private int index = -1;
 
         #endregion
 
@@ -27,21 +27,12 @@
         /// <returns>The next entry.</returns>
         public string Next()
         {
-            var entry = Current();
-
             if (index < (elements?.Length - 1 ?? 0))
                 index++;
 
-            return entry;
-        }
+            var entry = elements?[index] ?? string.Empty;
 
-        /// <summary>
-        /// Get the current entry.
-        /// </summary>
-        /// <returns>The current entry.</returns>
-        public string Current()
-        {
-            return elements?[index] ?? string.Empty;
+            return entry;
         }
 
         /// <summary>
@@ -50,6 +41,9 @@
         /// <returns>All entries up to and including the current entry.</returns>
         public string[] AllUntilCurrent()
         {
+            if (index < 0)
+                Next();
+
             var current = new string[index + 1];
 
             for (var i = 0; i <= index; i++)

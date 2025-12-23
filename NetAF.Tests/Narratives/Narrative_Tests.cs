@@ -17,13 +17,13 @@ namespace NetAF.Tests.Narratives
         }
 
         [TestMethod]
-        public void GivenOneSection_WhenIsComplete_ThenReturnTrue()
+        public void GivenOneSection_WhenIsComplete_ThenReturnFalse()
         {
             var narrative = new Narrative(string.Empty, [new Section([string.Empty])]);
 
             var result = narrative.IsComplete;
 
-            Assert.IsTrue(result);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
@@ -37,9 +37,10 @@ namespace NetAF.Tests.Narratives
         }
 
         [TestMethod]
-        public void GivenOneSectionAndNextCalled_WhenIsComplete_ThenReturnTrue()
+        public void GivenOneSectionAndNextCalledTwice_WhenIsComplete_ThenReturnTrue()
         {
             var narrative = new Narrative(string.Empty, [new Section([string.Empty])]);
+            narrative.Next();
             narrative.Next();
 
             var result = narrative.IsComplete;
@@ -69,9 +70,10 @@ namespace NetAF.Tests.Narratives
         }
 
         [TestMethod]
-        public void GivenFirstSectionIsABCSecondIsDEFAndNextCalled_WhenAllUntilCurrent_ThenReturnDEF()
+        public void GivenFirstSectionIsABCSecondIsDEFAndNextCalledTwice_WhenAllUntilCurrent_ThenReturnDEF()
         {
             var narrative = new Narrative(string.Empty, [new Section(["ABC"]), new Section(["DEF"])]);
+            narrative.Next();
             narrative.Next();
 
             var result = narrative.AllUntilCurrent();

@@ -28,6 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
+            narrative.Next();
             var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(narrative, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
 
