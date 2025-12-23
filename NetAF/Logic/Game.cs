@@ -200,8 +200,8 @@ namespace NetAF.Logic
                 return;
             }
 
-            // 3. check if command didn't change the mode and the current mode type is information, essentially the mode has expired
-            if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.Information)
+            // 3. check if command didn't change the mode and the current mode type is single frame information, essentially the mode has expired
+            if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.SingleFrameInformation)
             {
                 // revert back to scene mode as the 
                 ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
@@ -273,8 +273,8 @@ namespace NetAF.Logic
         /// <returns>The reaction to the input.</returns>
         private Reaction ProcessInput(string input)
         {
-            // if just an information mode no additional processing needed
-            if (Mode.Type == GameModeType.Information)
+            // if just a single frame information mode no additional processing needed
+            if (Mode.Type == GameModeType.SingleFrameInformation)
                 return new Reaction(ReactionResult.Silent, string.Empty);
 
             // preen input to help with processing

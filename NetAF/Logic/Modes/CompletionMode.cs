@@ -20,7 +20,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the type of mode this provides.
         /// </summary>
-        public GameModeType Type { get; } = GameModeType.Information;
+        public GameModeType Type { get; } = GameModeType.SingleFrameInformation;
 
         /// <summary>
         /// Render the current state of a game.

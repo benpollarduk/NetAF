@@ -6,11 +6,15 @@
     public enum GameModeType
     {
         /// <summary>
-        /// An information mode.
+        /// A mode that provides information over a single frame.
         /// </summary>
-        Information,
+        SingleFrameInformation,
         /// <summary>
-        /// An interactive mode.
+        /// A mode that provides information over multiple frames.
+        /// </summary>
+        MultipleFrameInformation,
+        /// <summary>
+        /// A mode that provides interactive content.
         /// </summary>
         Interactive
     }
