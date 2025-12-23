@@ -7,6 +7,7 @@ using NetAF.Logic.Modes;
 using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Commands;
+using NetAF.Interpretation;
 
 namespace NetAF.Tests.Commands.Conversation
 {
@@ -43,7 +44,7 @@ namespace NetAF.Tests.Commands.Conversation
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
-            game.ChangeMode(new ConversationMode(converser));
+            game.ChangeMode(new ConversationMode(converser, new ConversationCommandInterpreter()));
             var command = new Next();
 
             var result = command.Invoke(game);

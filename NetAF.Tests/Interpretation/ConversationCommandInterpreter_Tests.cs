@@ -43,7 +43,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, new(new Paragraph("Test")));
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -67,7 +67,7 @@ namespace NetAF.Tests.Interpretation
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
             npc.Conversation.Next(game);
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -92,7 +92,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph("Test")));
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret(NetAF.Commands.Global.End.CommandHelp.Command, game);
 
@@ -106,7 +106,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, new Conversation(new Paragraph("Test")));
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret(string.Empty, game);
 
@@ -121,7 +121,7 @@ namespace NetAF.Tests.Interpretation
             var conversation = new Conversation(new Paragraph("Test"));
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret(Next.CommandHelp.Command, game);
 
@@ -136,7 +136,7 @@ namespace NetAF.Tests.Interpretation
             var conversation = new Conversation(new Paragraph("Test"));
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret(Next.SilentCommandHelp.Command, game);
 
@@ -160,7 +160,7 @@ namespace NetAF.Tests.Interpretation
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
             npc.Conversation.Next(game);
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret("First", game);
 
@@ -184,7 +184,7 @@ namespace NetAF.Tests.Interpretation
             var npc = new NonPlayableCharacter(string.Empty, string.Empty, conversation);
             npc.Conversation.Next(game);
 
-            game.ChangeMode(new ConversationMode(npc));
+            game.ChangeMode(new ConversationMode(npc, new ConversationCommandInterpreter()));
 
             var result = interpreter.Interpret("1", game);
 

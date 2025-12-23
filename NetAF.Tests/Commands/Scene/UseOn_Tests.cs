@@ -15,6 +15,16 @@ namespace NetAF.Tests.Commands.Scene
     public class UseOn_Tests
     {
         [TestMethod]
+        public void GivenNoGame_WhenInvoke_ThenError()
+        {
+            var command = new UseOn(null, null);
+
+            var result = command.Invoke(null);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenNoItem_WhenInvoke_ThenError()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
@@ -221,6 +231,58 @@ namespace NetAF.Tests.Commands.Scene
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
             var command = new UseOn(item, npc);
+            command.Invoke(game);
+
+            var result = npc.HasItem(item);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenItemOnPlayableCharacterItemInteractionCausesTargetExpire_WhenInvoke_ThenPlayableCharacterDoesNotHaveItem()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var target = new Item(Identifier.Empty, Description.Empty, true, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.TargetExpires, i);
+            });
+            var room = new Room(Identifier.Empty, Description.Empty);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            player.AddItem(target);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, target);
+            command.Invoke(game);
+
+            var result = player.HasItem(item);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenItemOnNonPlayableCharacterItemInteractionCausesTargetExpire_WhenInvoke_ThenNonPlayableCharacterDoesNotHaveItem()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var target = new Item(Identifier.Empty, Description.Empty, true, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.TargetExpires, i);
+            });
+            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty);
+            npc.AddItem(target);
+            var room = new Room(Identifier.Empty, Description.Empty);
+            room.AddCharacter(npc);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, target);
             command.Invoke(game);
 
             var result = npc.HasItem(item);

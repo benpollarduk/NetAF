@@ -60,7 +60,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail));
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -91,7 +91,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail));
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 

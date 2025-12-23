@@ -19,22 +19,17 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the display size.
         /// </summary>
-        public Size DisplaySize { get; private set; } = displaySize;
+        public Size DisplaySize => displaySize;
 
         /// <summary>
         /// Get the start mode.
         /// </summary>
-        public StartModes StartMode { get; private set; } = startMode;
+        public StartModes StartMode => startMode;
 
         /// <summary>
         /// Get the finish mode.
         /// </summary>
-        public FinishModes FinishMode { get; private set; } = finishMode;
-
-        /// <summary>
-        /// Get or set the interpreter used for interpreting input.
-        /// </summary>
-        public IInterpreter Interpreter { get; set; } = Interpreters.Default;
+        public FinishModes FinishMode => finishMode;
 
         /// <summary>
         /// Get or set the collection of frame builders to use to render the game.
@@ -44,7 +39,12 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the I/O adapter.
         /// </summary>
-        public IIOAdapter Adapter { get; private set; } = adapter;
+        public IIOAdapter Adapter => adapter;
+
+        /// <summary>
+        /// Get the interpretation provider.
+        /// </summary>
+        public InterpreterProvider InterpreterProvider { get; } = Interpreters.CreateDefaultInterpreterProvider();
 
         #endregion
     }

@@ -1,12 +1,13 @@
-﻿using NetAF.Assets.Characters;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Commands.Conversation;
 using NetAF.Conversations;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Interpretation;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
-using NetAF.Assets.Locations;
 using NetAF.Utilities;
-using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Conversation
 {
@@ -59,7 +60,7 @@ namespace NetAF.Tests.Commands.Conversation
             var conversation = new NetAF.Conversations.Conversation(paragraph);
             var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: conversation);
             converser.Conversation.Next(game);
-            game.ChangeMode(new ConversationMode(converser));
+            game.ChangeMode(new ConversationMode(converser, new ConversationCommandInterpreter()));
             var command = new Respond(response);
 
             var result = command.Invoke(game);

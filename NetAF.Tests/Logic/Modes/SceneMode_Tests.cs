@@ -1,10 +1,11 @@
-﻿using NetAF.Logic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Utilities;
+using NetAF.Interpretation;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Logic.Modes
 {
@@ -24,7 +25,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new SceneMode();
+                var mode = new SceneMode(new SceneCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -43,7 +44,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new SceneMode();
+                var mode = new SceneMode(new SceneCommandInterpreter());
 
                 mode.Render(game);
             });

@@ -34,7 +34,8 @@ namespace NetAF.Commands.Global
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new SceneMode());
+            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(SceneMode));
+            game.ChangeMode(new SceneMode(interpreter));
             return new(ReactionResult.Silent, "Ended.");
         }
 

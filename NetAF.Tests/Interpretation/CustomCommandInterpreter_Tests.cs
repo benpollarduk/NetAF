@@ -59,7 +59,7 @@ namespace NetAF.Tests.Interpretation
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -300,7 +300,7 @@ namespace NetAF.Tests.Interpretation
             overworld.AddRegion(region);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new SceneMode());
+            game.ChangeMode(new SceneMode(new SceneCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 

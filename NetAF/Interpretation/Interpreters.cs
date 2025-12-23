@@ -1,60 +1,54 @@
-﻿namespace NetAF.Interpretation
+﻿using NetAF.Logic.Modes;
+
+namespace NetAF.Interpretation
 {
     /// <summary>
-    /// Provides collections of interpreters.
+    /// Provides default interpreters.
     /// </summary>
-    public static class Interpreters
+    internal static class Interpreters
     {
-        /// <summary>
-        /// Get the frame command interpreter.
-        /// </summary>
-        public static IInterpreter FrameCommandInterpreter { get; } = new FrameCommandInterpreter();
+        #region StaticProperties
 
         /// <summary>
-        /// Get the frame command interpreter.
+        /// Get the default scene interpreter.
         /// </summary>
-        public static IInterpreter GlobalCommandInterpreter { get; } = new GlobalCommandInterpreter();
-
-        /// <summary>
-        /// Get the execution command interpreter.
-        /// </summary>
-        public static IInterpreter ExecutionCommandInterpreter { get; } = new ExecutionCommandInterpreter();
-
-        /// <summary>
-        /// Get the custom command interpreter.
-        /// </summary>
-        public static IInterpreter CustomCommandInterpreter { get; } = new CustomCommandInterpreter();
-
-        /// <summary>
-        /// Get the scene command interpreter.
-        /// </summary>
-        public static IInterpreter SceneInterpreter { get; } = new SceneCommandInterpreter();
-
-        /// <summary>
-        /// Get the conversation command interpreter.
-        /// </summary>
-        public static IInterpreter ConversationInterpreter { get; } = new ConversationCommandInterpreter();
-
-        /// <summary>
-        /// Get the region map command interpreter.
-        /// </summary>
-        public static IInterpreter RegionMapCommandInterpreter { get; } = new RegionMapCommandInterpreter();
-
-        /// <summary>
-        /// Get the persistence command interpreter.
-        /// </summary>
-        public static IInterpreter PersistenceCommandInterpreter { get; } = new PersistenceCommandInterpreter();
-
-        /// <summary>
-        /// Get the default interpreters.
-        /// </summary>
-        public static IInterpreter Default { get; } = new InputInterpreter
+        private static readonly IInterpreter DefaultSceneCommandInterpreter = new InputInterpreter
         (
-            FrameCommandInterpreter,
-            GlobalCommandInterpreter,
-            ExecutionCommandInterpreter,
-            PersistenceCommandInterpreter,
-            CustomCommandInterpreter
+            new FrameCommandInterpreter(),
+            new GlobalCommandInterpreter(),
+            new ExecutionCommandInterpreter(),
+            new PersistenceCommandInterpreter(),
+            new CustomCommandInterpreter(),
+            new SceneCommandInterpreter()
         );
+
+        /// <summary>
+        /// Get the default region map interpreter.
+        /// </summary>
+        private static readonly IInterpreter DefaultRegionMapCommandInterpreter = new RegionMapCommandInterpreter();
+
+        /// <summary>
+        /// Get the default conversation command interpreter.
+        /// </summary>
+        private static readonly IInterpreter DefaultConversationCommandInterpreter = new ConversationCommandInterpreter();
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Create a default interpreter provider.
+        /// </summary>
+        /// <returns>The default interpreter provider.</returns>
+        internal static InterpreterProvider CreateDefaultInterpreterProvider()
+        {
+            var provider = new InterpreterProvider();
+            provider.Register(typeof(SceneMode), DefaultSceneCommandInterpreter);
+            provider.Register(typeof(RegionMapMode), DefaultRegionMapCommandInterpreter);
+            provider.Register(typeof(ConversationMode), DefaultConversationCommandInterpreter);
+            return provider;
+        }
+
+        #endregion
     }
 }

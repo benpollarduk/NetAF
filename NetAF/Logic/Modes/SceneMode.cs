@@ -3,15 +3,15 @@ using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NetAF.Logic.Modes
 {
     /// <summary>
     /// Provides a display mode for a scene.
+    /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
     /// </summary>
-    public sealed class SceneMode : IGameMode
+    public sealed class SceneMode(IInterpreter interpreter) : IGameMode
     {
         #region StaticProperties
 
@@ -27,7 +27,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = Interpreters.SceneInterpreter;
+        public IInterpreter Interpreter { get; } = interpreter;
 
         /// <summary>
         /// Get the type of mode this provides.
@@ -40,11 +40,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            List<CommandHelp> commands = [];
-            commands.AddRange(Interpreter.GetContextualCommandHelp(game));
-            commands.AddRange(game.Configuration.Interpreter.GetContextualCommandHelp(game));
-            var filteredCommands = commands.Where(x => CommandCategories.Contains(x.Category)).ToArray();
-
+            var filteredCommands = Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray() ?? [];
             var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, FrameProperties.DisplayCommandList ? filteredCommands : null, FrameProperties.KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
