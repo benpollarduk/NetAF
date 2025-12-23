@@ -1,4 +1,5 @@
 ﻿using NetAF.Assets;
+using NetAF.Narratives;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -11,9 +12,9 @@ namespace NetAF.Rendering.FrameBuilders
         /// Build a frame.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <param name="description">The description.</param>
+        /// <param name="narrative">The narrative.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        IFrame Build(string title, string description, Size size);
+        IFrame Build(string title, Narrative narrative, Size size);
     }
 }

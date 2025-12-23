@@ -1,4 +1,5 @@
 ﻿using NetAF.Interpretation;
+using NetAF.Narratives;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
@@ -6,7 +7,8 @@ namespace NetAF.Logic.Modes
     /// <summary>
     /// Provides a display mode for narrative.
     /// </summary>
-    public sealed class NarrativeMode : IGameMode
+    /// <param name="narrative">The narrative.</param>
+    public sealed class NarrativeMode(Narrative narrative) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -26,8 +28,14 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(game.Info.Name, game.Introduction, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(game.Info.Name, narrative, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
+
+            if (!narrative.IsComplete)
+                return;
+
+            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(SceneMode));
+            game.ChangeMode(new SceneMode(interpreter));
         }
 
         #endregion
