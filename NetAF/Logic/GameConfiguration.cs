@@ -1,5 +1,4 @@
 ﻿using NetAF.Assets;
-using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic
@@ -30,11 +29,6 @@ namespace NetAF.Logic
         /// Get the finish mode.
         /// </summary>
         public FinishModes FinishMode { get; private set; } = finishMode;
-
-        /// <summary>
-        /// Get or set the interpreter used for interpreting input.
-        /// </summary>
-        public IInterpreter Interpreter { get; set; } = Interpreters.Default;
 
         /// <summary>
         /// Get or set the collection of frame builders to use to render the game.

@@ -280,23 +280,12 @@ namespace NetAF.Logic
             // preen input to help with processing
             input = StringUtilities.PreenInput(input);
 
-            // try global interpreter
-            var interpretation = Configuration.Interpreter.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
+            // try interpretation
+            var interpretation = Mode.Interpreter?.Interpret(input, this) ?? new InterpretationResult(false, new Unactionable("No interpreter."));
 
             // if interpretation was successful then process
             if (interpretation.WasInterpretedSuccessfully)
                 return interpretation.Command.Invoke(this);
-
-            // try mode interpreter
-            if (Mode.Interpreter != null)
-            {
-                // try mode specific interpreter
-                interpretation = Mode.Interpreter.Interpret(input, this);
-
-                // if interpretation was successful then process
-                if (interpretation.WasInterpretedSuccessfully)
-                    return interpretation.Command.Invoke(this);
-            }
 
             // something was entered, but can't be processed
             if (!string.IsNullOrEmpty(input))
@@ -375,12 +364,7 @@ namespace NetAF.Logic
         /// <returns>An array of all commands that are valid in the current context.</returns>
         public CommandHelp[] GetContextualCommands()
         {
-            List<CommandHelp> commands = 
-            [
-                .. Configuration.Interpreter.GetContextualCommandHelp(this),
-                .. Mode?.Interpreter?.GetContextualCommandHelp(this) ?? [],
-            ];
-
+            var commands = Mode?.Interpreter?.GetContextualCommandHelp(this) ?? [];
             return [.. commands.Distinct()];
         }
 
@@ -401,24 +385,15 @@ namespace NetAF.Logic
         /// <returns>An array of prompts.</returns>
         public Prompt[] GetPromptsForCommand(string command)
         {
-            if (!GeneralHelp.CommandHelp.Command.InsensitiveEquals(command) && !GeneralHelp.CommandHelp.Shortcut.InsensitiveEquals(command))
-            {
-                var result = Configuration?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
-
-                if (result.WasInterpretedSuccessfully)
-                    return result.Command.GetPrompts(this);
-
-                result = Mode?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
-
-                if (result.WasInterpretedSuccessfully)
-                    return result.Command.GetPrompts(this);
-
-                return [];
-            }
-            else
-            {
+            if (GeneralHelp.CommandHelp.Command.InsensitiveEquals(command) || GeneralHelp.CommandHelp.Shortcut.InsensitiveEquals(command))
                 return new GeneralHelp(null, null).GetPrompts(this);
-            }
+
+            var result = Mode?.Interpreter?.Interpret(command, this) ?? InterpretationResult.Fail;
+
+            if (result.WasInterpretedSuccessfully)
+                return result.Command.GetPrompts(this);
+
+            return [];
         }
 
         /// <summary>

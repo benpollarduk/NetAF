@@ -43,7 +43,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = Interpreters.RegionMapCommandInterpreter;
+        public IInterpreter Interpreter { get; } = new RegionMapCommandInterpreter();
 
         /// <summary>
         /// Get the type of mode this provides.

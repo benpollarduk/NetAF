@@ -37,7 +37,7 @@ namespace NetAF.Logic.Modes
         /// <summary>
         /// Get the interpreter.
         /// </summary>
-        public IInterpreter Interpreter { get; } = Interpreters.ConversationInterpreter;
+        public IInterpreter Interpreter { get; } = new ConversationCommandInterpreter();
 
         /// <summary>
         /// Get the type of mode this provides.
