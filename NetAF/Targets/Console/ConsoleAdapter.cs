@@ -2,6 +2,7 @@
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
+using System.Runtime.InteropServices;
 
 namespace NetAF.Targets.Console
 {
@@ -25,8 +26,15 @@ namespace NetAF.Targets.Console
         public void Setup(Game game)
         {
             System.Console.Title = game.Info.Name;
+
+            if (game.Configuration.DisplaySize == Size.Dynamic)
+                return;
+
             Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
             System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
         }
 
         /// <summary>
@@ -44,6 +52,15 @@ namespace NetAF.Targets.Console
                 System.Console.CursorVisible = consoleFrame.ShowCursor;
                 System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
             }
+        }
+
+        /// <summary>
+        /// Get the display size for this adapter.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public Size GetDisplaySize()
+        {
+            return new Size(System.Console.WindowWidth, System.Console.WindowHeight);
         }
 
         #endregion

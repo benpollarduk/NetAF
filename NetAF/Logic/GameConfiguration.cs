@@ -19,7 +19,16 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the display size.
         /// </summary>
-        public Size DisplaySize => displaySize;
+        public Size DisplaySize
+        {
+            get
+            {
+                if (displaySize != Size.Dynamic)
+                    return displaySize;
+
+                return Adapter.GetDisplaySize();
+            }
+        }
 
         /// <summary>
         /// Get the start mode.

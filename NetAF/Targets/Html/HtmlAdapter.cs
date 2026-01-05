@@ -163,13 +163,25 @@ namespace NetAF.Targets.Html
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
+            // get render size
+            var renderSize = displaySize != Size.Dynamic ? displaySize : GetDisplaySize();
+
             // convert the frames if possible
             if (frame is IConsoleFrame ansiFrame)
-                presenter.Present(Convert(ansiFrame, displaySize));
+                presenter.Present(Convert(ansiFrame, renderSize));
             else if (frame is TextFrame textFrame)
                 presenter.Present(Convert(textFrame));
             else
                 frame.Render(presenter);
+        }
+
+        /// <summary>
+        /// Get the display size for this adapter.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public Size GetDisplaySize()
+        {
+            return displaySize;
         }
 
         #endregion

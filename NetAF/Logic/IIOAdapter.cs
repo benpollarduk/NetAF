@@ -1,4 +1,5 @@
-﻿using NetAF.Rendering;
+﻿using NetAF.Assets;
+using NetAF.Rendering;
 
 namespace NetAF.Logic
 {
@@ -17,5 +18,10 @@ namespace NetAF.Logic
         /// </summary>
         /// <param name="game">The game to set up for.</param>
         void Setup(Game game);
+        /// <summary>
+        /// Get the display size for this adapter.
+        /// </summary>
+        /// <returns>The size.</returns>
+        Size GetDisplaySize();
     }
 }
