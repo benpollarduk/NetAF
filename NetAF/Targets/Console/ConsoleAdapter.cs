@@ -20,6 +20,11 @@ namespace NetAF.Targets.Console
         #region Implementation of IIOAdapter
 
         /// <summary>
+        /// Get the current size of the output.
+        /// </summary>
+        public Size CurrentOutputSize => presenter.GetPresentableSize();
+
+        /// <summary>
         /// Setup for a game.
         /// </summary>
         /// <param name="game">The game to set up for.</param>
@@ -52,15 +57,6 @@ namespace NetAF.Targets.Console
                 System.Console.CursorVisible = consoleFrame.ShowCursor;
                 System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
             }
-        }
-
-        /// <summary>
-        /// Get the display size for this adapter.
-        /// </summary>
-        /// <returns>The size.</returns>
-        public Size GetDisplaySize()
-        {
-            return new Size(System.Console.WindowWidth, System.Console.WindowHeight);
         }
 
         #endregion

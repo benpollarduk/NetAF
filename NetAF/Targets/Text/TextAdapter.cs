@@ -77,6 +77,11 @@ namespace NetAF.Targets.Text
         #region Implementation of IIOAdapter
 
         /// <summary>
+        /// Get the current size of the output.
+        /// </summary>
+        public Size CurrentOutputSize => presenter.GetPresentableSize();
+
+        /// <summary>
         /// Setup for a game.
         /// </summary>
         /// <param name="game">The game to set up for.</param>
@@ -92,22 +97,13 @@ namespace NetAF.Targets.Text
         public void RenderFrame(IFrame frame)
         {
             // get render size
-            var renderSize = displaySize != Size.Dynamic ? displaySize : GetDisplaySize();
+            var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
 
             // convert the console frame to text frame if possible
             if (frame is IConsoleFrame ansiFrame)
                 presenter.Present(Convert(ansiFrame, renderSize));
             else
                 frame.Render(presenter);
-        }
-
-        /// <summary>
-        /// Get the display size for this adapter.
-        /// </summary>
-        /// <returns>The size.</returns>
-        public Size GetDisplaySize()
-        {
-            return displaySize;
         }
 
         #endregion

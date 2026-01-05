@@ -1,4 +1,5 @@
-﻿using NetAF.Rendering;
+﻿using NetAF.Assets;
+using NetAF.Rendering;
 using System.Text;
 
 namespace NetAF.Tests
@@ -15,6 +16,11 @@ namespace NetAF.Tests
         public override string ToString()
         {
             return builder.ToString();
+        }
+
+        public Size GetPresentableSize()
+        {
+            return new Size(10, 10);
         }
     }
 }

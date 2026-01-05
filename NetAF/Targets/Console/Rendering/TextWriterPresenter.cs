@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using NetAF.Assets;
 using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering
@@ -31,6 +32,15 @@ namespace NetAF.Targets.Console.Rendering
         public void Present(string frame)
         {
             writer.Write(frame);
+        }
+
+        /// <summary>
+        /// Get the size of the presentable area.
+        /// </summary>
+        /// <returns>The size.</returns>
+        public Size GetPresentableSize()
+        {
+            return new Size(System.Console.WindowWidth, System.Console.WindowHeight);
         }
 
         #endregion

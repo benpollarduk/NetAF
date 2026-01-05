@@ -26,7 +26,7 @@ namespace NetAF.Logic
                 if (displaySize != Size.Dynamic)
                     return displaySize;
 
-                return Adapter.GetDisplaySize();
+                return Adapter.CurrentOutputSize;
             }
         }
 
