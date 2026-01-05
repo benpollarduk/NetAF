@@ -13,7 +13,7 @@ namespace NetAF.Targets.Console
     {
         #region Fields
 
-        private readonly TextWriterPresenter presenter = new(System.Console.Out);
+        private readonly ConsoleWriterPresenter presenter = new();
 
         #endregion
 

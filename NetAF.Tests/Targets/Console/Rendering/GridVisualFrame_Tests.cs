@@ -21,7 +21,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             using (var stream = new MemoryStream())
             {
                 using var writer = new StreamWriter(stream);
-                var presenter = new TextWriterPresenter(writer);
+                var presenter = new TextWriterPresenter(writer, new(80, 50));
                 frame.Render(presenter);
                 writer.Flush();
                 data = stream.ToArray();

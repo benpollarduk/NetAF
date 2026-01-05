@@ -12,7 +12,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
         {
             var textWriter = new StringWriter();
             var str = "TEST";
-            var presenter = new TextWriterPresenter(textWriter);
+            var presenter = new TextWriterPresenter(textWriter, new(80, 50));
 
             presenter.Present(str);
 
