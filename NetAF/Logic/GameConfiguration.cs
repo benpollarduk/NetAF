@@ -9,9 +9,9 @@ namespace NetAF.Logic
     /// </summary>
     /// <param name="adapter">The I/O adapter.</param>
     /// <param name="frameBuilders">The collection of frame builders to use to render the game.</param>
-    /// <param name="displaySize">The display size.</param>
-    /// <param name="startMode">The start mode.</param>
-    /// <param name="finishMode">The finish mode.</param>
+    /// <param name="displaySize">The size to render the game. To render using the available space use <see cref="Size.Dynamic"/>.</param>
+    /// <param name="startMode">The mode to use at the start of the game.</param>
+    /// <param name="finishMode">The mode to use at the end of the game.</param>
     public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, StartModes startMode = StartModes.TitleScreen, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
     {
         #region Properties
