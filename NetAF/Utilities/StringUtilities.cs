@@ -50,6 +50,28 @@ namespace NetAF.Utilities
         }
 
         /// <summary>
+        /// Preen output to remove any ambiguity around special characters. Special characters will be substituted to prevent rendering issues.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <returns>The input with all instances of tab replaced with spaces.</returns>
+        public static string PreenOutput(string input)
+        {
+            var dictionary = new Dictionary<char, string>
+            {
+                { (char)0,  string.Empty }, // null
+                { (char)7,  string.Empty }, // bell
+                { (char)8,  string.Empty }, // backspace
+                { (char)9,  "    " },       // horizontal tab
+                { (char)11, "    " },       // vertical tab
+            };
+
+            foreach (var pair in dictionary)
+                input = input.Replace(pair.Key.ToString(), pair.Value);
+
+            return input;
+        }
+
+        /// <summary>
         /// Extract the next word from a string. This will remove the word from the input string.
         /// </summary>
         /// <param name="input">The input string.</param>
@@ -82,7 +104,7 @@ namespace NetAF.Utilities
             }
 
             // trim the word from the input
-            input = input.Remove(0, word.Length);
+            input = input[word.Length..];
 
             // trim spaces and carriage returns from the word
             return word.ToString().Trim(space, CR);
@@ -110,7 +132,7 @@ namespace NetAF.Utilities
                 if (chunk.Length == 0 && word == originalParagraph && originalParagraph.Length >= maxWidth)
                 {
                     chunk.Append(originalParagraph.AsSpan(0, maxWidth));
-                    paragraph = originalParagraph.Remove(0, maxWidth);
+                    paragraph = originalParagraph[maxWidth..];
                     break;
                 }
 
@@ -180,7 +202,7 @@ namespace NetAF.Utilities
             StringBuilder builder = new();
 
             for (var i = 0; i < attributes.Count; i++)
-                builder.Append($"{attributes.Keys.ElementAt(i).Name}: {attributes.Values.ElementAt(i)}{(i < attributes.Count - 1 ? "\t" : string.Empty)}");
+                builder.Append($"{attributes.Keys.ElementAt(i).Name}: {attributes.Values.ElementAt(i)}{(i < attributes.Count - 1 ? ", " : string.Empty)}");
 
             return builder.ToString();
         }
@@ -197,10 +219,10 @@ namespace NetAF.Utilities
             if (text.IndexOf(" ", StringComparison.Ordinal) > -1)
             {
                 // verb all text up to space
-                verb = text.Substring(0, text.IndexOf(" ", StringComparison.Ordinal)).Trim();
+                verb = text[..text.IndexOf(" ", StringComparison.Ordinal)].Trim();
 
                 // noun is all text after space
-                noun = text.Substring(text.IndexOf(" ", StringComparison.Ordinal)).Trim();
+                noun = text[text.IndexOf(" ", StringComparison.Ordinal)..].Trim();
             }
             else
             {

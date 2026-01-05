@@ -132,6 +132,16 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
+        public void GivenABCTab_WhenPreenOutput_ThenABCSpaceSpaceSpaceSpace()
+        {
+            var paragraph = "ABC\t";
+
+            var result = StringUtilities.PreenOutput(paragraph);
+
+            Assert.AreEqual("ABC    ", result);
+        }
+
+        [TestMethod]
         public void GivenNull_WhenConstructAttributesAsString_ThenEmptyString()
         {
             var result = StringUtilities.ConstructAttributesAsString(null);
@@ -163,7 +173,7 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenTwoAttributes_WhenConstructAttributesAsString_ThenTestColon1TabTest2ColonSpace1()
+        public void GivenTwoAttributes_WhenConstructAttributesAsString_ThenTestColon1CommaSpaceTest2ColonSpace1()
         {
             Dictionary<Attribute, int> attributes = new()
             {
@@ -173,7 +183,7 @@ namespace NetAF.Tests.Utilities
 
             var result = StringUtilities.ConstructAttributesAsString(attributes);
 
-            Assert.AreEqual("Test: 1\tTest2: 1", result);
+            Assert.AreEqual("Test: 1, Test2: 1", result);
         }
 
         [TestMethod]
