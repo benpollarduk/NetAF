@@ -175,6 +175,10 @@ var regionMaker = new RegionMaker("Mountain", "An imposing volcano just East of 
 // create overworld maker. the overworld maker simplifies creating in game overworlds. an overworld contains a series or regions
 var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
 
+// create the configuration for running the game. Size.Dynamic will size the game to the console.
+// alternatively a fixed size can be specified and the conole will size to the game
+var configuration = new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, Size.Dynamic)
+
 // create the callback for generating new instances of the game
 // - information about the game
 // - an introduction to the game, displayed at the star
@@ -186,7 +190,7 @@ var gameCreator = Game.Create(
     "Dave awakes to find himself in a cavern...",
     AssetGenerator.Retained(overworldMaker.Make(), player),
     GameEndConditions.NoEnd,
-    ConsoleGameConfiguration.Default);
+    configuration);
 
 // begin the execution of the game
 Game.Execute(gameCreator);
