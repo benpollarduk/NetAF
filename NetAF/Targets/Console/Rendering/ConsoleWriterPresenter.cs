@@ -1,15 +1,12 @@
-﻿using System.IO;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering
 {
     /// <summary>
-    /// Represents a presenter for TextWriter.
+    /// Represents a presenter for the System.Console.
     /// </summary>
-    /// <param name="writer">The writer.</param>
-    /// <param name="presentableSize">The presentable size of the text writer.</param>
-    public sealed class TextWriterPresenter(TextWriter writer, Size presentableSize) : IFramePresenter
+    public sealed class ConsoleWriterPresenter : IFramePresenter
     {
         #region Overrides of Object
 
@@ -19,7 +16,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return writer.ToString();
+            return System.Console.Out.ToString();
         }
 
         #endregion
@@ -32,7 +29,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="frame">The frame to write, as a string.</param>
         public void Present(string frame)
         {
-            writer.Write(frame);
+            System.Console.Out.Write(frame);
         }
 
         /// <summary>
@@ -41,7 +38,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <returns>The size.</returns>
         public Size GetPresentableSize()
         {
-            return presentableSize;
+            return new Size(System.Console.WindowWidth, System.Console.WindowHeight);
         }
 
         #endregion

@@ -101,7 +101,7 @@ namespace NetAF.Interpretation
                 return InterpretationResult.Fail;
 
             // remove the matching part
-            input = input.Remove(0, matchingInput.Length);
+            input = input[matchingInput.Length..];
 
             // clone the command so that it is a new instance which allows args to be assigned to it
             var clonedCommand = command.Clone() as CustomCommand;

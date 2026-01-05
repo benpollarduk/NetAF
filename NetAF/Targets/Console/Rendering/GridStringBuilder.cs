@@ -163,6 +163,8 @@ namespace NetAF.Targets.Console.Rendering
             endX = startX;
             endY = startY;
 
+            value = StringUtilities.PreenOutput(value);
+
             while (value.Length > 0)
             {
                 var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidth - startX);
@@ -194,6 +196,8 @@ namespace NetAF.Targets.Console.Rendering
         {
             endX = 0;
             endY = startY;
+
+            value = StringUtilities.PreenOutput(value);
 
             while (value.Length > 0)
             {

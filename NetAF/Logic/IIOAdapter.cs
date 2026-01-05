@@ -1,12 +1,17 @@
-﻿using NetAF.Rendering;
+﻿using NetAF.Assets;
+using NetAF.Rendering;
 
 namespace NetAF.Logic
 {
     /// <summary>
-    /// Represents any object that provides an adapter for input.
+    /// Represents any object that provides an adapter for input and output.
     /// </summary>
     public interface IIOAdapter
     {
+        /// <summary>
+        /// Get the current size of the output.
+        /// </summary>
+        Size CurrentOutputSize { get; }
         /// <summary>
         /// Render a frame.
         /// </summary>

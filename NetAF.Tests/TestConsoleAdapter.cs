@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Rendering;
 
@@ -9,6 +10,12 @@ namespace NetAF.Tests
     /// </summary>
     internal class TestConsoleAdapter : IIOAdapter
     {
+        #region Fields
+
+        private Size displaySize;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -52,11 +59,17 @@ namespace NetAF.Tests
         #region Implementation of IIOAdapter
 
         /// <summary>
+        /// Get the current size of the output.
+        /// </summary>
+        public Size CurrentOutputSize => displaySize;
+
+        /// <summary>
         /// Setup for a game.
         /// </summary>
         /// <param name="game">The game to set up for.</param>
         public void Setup(Game game)
         {
+            displaySize = game.Configuration.DisplaySize;
         }
 
         /// <summary>
@@ -66,24 +79,6 @@ namespace NetAF.Tests
         public void RenderFrame(IFrame frame)
         {
             Out?.WriteLine(frame?.ToString());
-        }
-
-        /// <summary>
-        /// Wait for acknowledgment.
-        /// </summary>
-        /// <returns>True if the acknowledgment was received correctly, else false.</returns>
-        public bool WaitForAcknowledge()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Wait for input.
-        /// </summary>
-        /// <returns>The input.</returns>
-        public string WaitForInput()
-        {
-            return In?.ReadLine();
         }
 
         #endregion

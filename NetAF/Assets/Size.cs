@@ -3,21 +3,16 @@
     /// <summary>
     /// Represents a size.
     /// </summary>
-    /// <param name="width">The width.</param>
-    /// <param name="height">The height.</param>
-    public readonly struct Size(int width, int height)
+    /// <param name="Width">The width of the size.</param>
+    /// <param name="Height">The height of the size.</param>
+    public record Size(int Width, int Height)
     {
-        #region Properties
+        #region Constants
 
         /// <summary>
-        /// Get the width.
+        /// Get a value representing a dynamic size.
         /// </summary>
-        public int Width { get; } = width;
-
-        /// <summary>
-        /// Get the height.
-        /// </summary>
-        public int Height { get; } = height;
+        public static readonly Size Dynamic = new(0, 0);
 
         #endregion
     }

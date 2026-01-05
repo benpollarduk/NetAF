@@ -157,9 +157,9 @@ namespace NetAF.Interpretation
             }
 
             // determine if a target has been specified
-            if (noun.Length > 3 && Talk.ToCommandHelp.Equals(noun.Substring(0, 2)))
+            if (noun.Length > 3 && Talk.ToCommandHelp.Equals(noun[..2]))
             {
-                noun = noun.Remove(0, 3);
+                noun = noun[3..];
 
                 if (game.Overworld.CurrentRegion.CurrentRoom.FindCharacter(noun, out var nPC))
                 {

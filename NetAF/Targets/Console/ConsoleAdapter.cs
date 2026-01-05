@@ -2,6 +2,7 @@
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
+using System.Runtime.InteropServices;
 
 namespace NetAF.Targets.Console
 {
@@ -12,11 +13,16 @@ namespace NetAF.Targets.Console
     {
         #region Fields
 
-        private readonly TextWriterPresenter presenter = new(System.Console.Out);
+        private readonly ConsoleWriterPresenter presenter = new();
 
         #endregion
 
         #region Implementation of IIOAdapter
+
+        /// <summary>
+        /// Get the current size of the output.
+        /// </summary>
+        public Size CurrentOutputSize => presenter.GetPresentableSize();
 
         /// <summary>
         /// Setup for a game.
@@ -25,8 +31,15 @@ namespace NetAF.Targets.Console
         public void Setup(Game game)
         {
             System.Console.Title = game.Info.Name;
+
+            if (game.Configuration.DisplaySize == Size.Dynamic)
+                return;
+
             Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
             System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
         }
 
         /// <summary>
