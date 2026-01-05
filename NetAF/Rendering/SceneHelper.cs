@@ -99,7 +99,7 @@ namespace NetAF.Rendering
 
             var viewAsString = view.ToString();
 
-            return string.IsNullOrEmpty(viewAsString) ? string.Empty : viewAsString.Remove(viewAsString.Length - 2).EnsureFinishedSentence();
+            return string.IsNullOrEmpty(viewAsString) ? string.Empty : viewAsString[..^2].EnsureFinishedSentence();
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace NetAF.Rendering
             var sentenceSoFar = builder.ToString();
             builder.Clear();
 
-            builder.Append(sentenceSoFar.Substring(0, sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal)));
+            builder.Append(sentenceSoFar[..sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal)]);
             builder.Append(" and ");
-            builder.Append(sentenceSoFar.Substring(sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal) + 2));
+            builder.Append(sentenceSoFar[(sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal) + 2)..]);
             builder.Append(" are in the ");
             builder.Append(room.Identifier);
             builder.Append('.');
@@ -156,7 +156,7 @@ namespace NetAF.Rendering
                 default:
                     var items = room.Items.Cast<IExaminable>().ToArray();
                     var sentence = StringUtilities.ConstructExaminablesAsSentence(items);
-                    var firstItemName = sentence.Substring(0, sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal));
+                    var firstItemName = sentence[..(sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal))];
                     return $"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower().EnsureFinishedSentence()}";
             }
         }

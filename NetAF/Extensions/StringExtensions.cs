@@ -123,7 +123,7 @@ namespace NetAF.Extensions
                 return value;
 
             if (value.EndsWith(','))
-                return value.Substring(0, value.Length - 1) + '.';
+                return value[..^1] + '.';
 
             return value + '.';
         }
@@ -139,7 +139,7 @@ namespace NetAF.Extensions
                 return value;
 
             if (value.EndsWith('.') || value.EndsWith('!') || value.EndsWith('?'))
-                return value.Remove(value.Length - 1);
+                return value[..^1];
 
             return value;
         }
@@ -245,7 +245,7 @@ namespace NetAF.Extensions
             if (value.Length == 1)
                 return value.ToLower();
 
-            return $"{value.Substring(0, 1).ToLower()}{value.Substring(1)}";
+            return $"{value[..1].ToLower()}{value[1..]}";
         }
 
         /// <summary>
