@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
+using NetAF.Logging.Events;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -101,6 +102,8 @@ namespace NetAF.Commands.Scene
 
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify the character that is using this item.");
+
+            EventBus.Publish(new ItemUsed(item, target));
 
             var interaction = target.Interact(item);
 

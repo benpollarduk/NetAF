@@ -126,6 +126,7 @@ namespace NetAF.Assets.Characters
         public void AddItem(Item item)
         {
             Items = Items.Add(item);
+            EventBus.Publish(new ItemReceived(this, item));
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace NetAF.Assets.Characters
         public void RemoveItem(Item item)
         {
             Items = Items.Remove(item);
+            EventBus.Publish(new ItemRemoved(this, item));
         }
 
         #endregion

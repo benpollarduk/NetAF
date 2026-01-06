@@ -1,4 +1,5 @@
-﻿using NetAF.Assets.Characters;
+﻿using NetAF.Assets;
+using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 
 namespace NetAF.Logging.Events
@@ -39,4 +40,25 @@ namespace NetAF.Logging.Events
     /// </summary>
     /// <param name="Region">The region that was exited.</param>
     public record RegionExited(Region Region) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a character received an item.
+    /// </summary>
+    /// <param name="Character">The character that received the item.</param>
+    /// <param name="Item">The item.</param>
+    public record ItemReceived(Character Character, Item Item) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when an item is removed from a character.
+    /// </summary>
+    /// <param name="Character">The character that the item was removed from.</param>
+    /// <param name="Item">The item.</param>
+    public record ItemRemoved(Character Character, Item Item) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when an item is used on a target.
+    /// </summary>
+    /// <param name="Item">The item.</param>
+    /// <param name="Target">The target.</param>
+    public record ItemUsed(Item Item, IInteractWithItem Target) : BaseEvent;
 }
