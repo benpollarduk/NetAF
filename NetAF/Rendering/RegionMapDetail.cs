@@ -6,12 +6,16 @@
     public enum RegionMapDetail
     {
         /// <summary>
-        /// Basic details only.
+        /// Minimal detail.
         /// </summary>
-        Basic,
+        Minimal,
         /// <summary>
-        /// Detailed.
+        /// Normal detail.
         /// </summary>
-        Detailed
+        Normal,
+        /// <summary>
+        /// Maximal detail.
+        /// </summary>
+        Maximal
     }
 }

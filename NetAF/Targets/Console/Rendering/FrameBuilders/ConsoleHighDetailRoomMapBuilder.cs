@@ -8,10 +8,10 @@ using NetAF.Rendering;
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides a room map builder.
+    /// Provides a high detail room map builder.
     /// </summary>
     /// <param name="gridStringBuilder">The grid string builder.</param>
-    public sealed class ConsoleRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
+    public sealed class ConsoleHighDetailRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
     {
         #region Properties
 

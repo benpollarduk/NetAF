@@ -23,7 +23,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 region.Enter();
                 stringBuilder.Resize(new Size(80, 50));
 
-                builder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapDetail.Basic, new(0, 0), new(80, 60));
+                builder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapDetail.Normal, new(0, 0), new(80, 60));
             });
         }
     }

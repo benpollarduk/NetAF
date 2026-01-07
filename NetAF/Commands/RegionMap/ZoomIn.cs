@@ -1,6 +1,7 @@
 ﻿using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using System;
 
 namespace NetAF.Commands.RegionMap
 {
@@ -35,10 +36,16 @@ namespace NetAF.Commands.RegionMap
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            FrameProperties.MapDetail = RegionMapDetail.Detailed;
+            FrameProperties.MapDetail = FrameProperties.MapDetail switch
+            {
+                RegionMapDetail.Minimal => RegionMapDetail.Normal,
+                RegionMapDetail.Normal => RegionMapDetail.Maximal,
+                RegionMapDetail.Maximal => RegionMapDetail.Maximal,
+                _ => throw new NotImplementedException()
+            };
 
             if (game.Mode is RegionMapMode mapMode)
-                mapMode.Detail = RegionMapDetail.Detailed;
+                mapMode.Detail = FrameProperties.MapDetail;
 
             return new(ReactionResult.Silent, "Zoomed in.");
         }
