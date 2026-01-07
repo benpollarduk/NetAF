@@ -1,8 +1,9 @@
-﻿using System;
-using System.Linq;
-using NetAF.Extensions;
+﻿using NetAF.Extensions;
+using NetAF.Logging.Events;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
+using System;
+using System.Linq;
 
 namespace NetAF.Assets.Characters
 {
@@ -43,6 +44,7 @@ namespace NetAF.Assets.Characters
         public virtual void Kill()
         {
             IsAlive = false;
+            EventBus.Publish(new CharacterDied(this));
         }
 
         /// <summary>
@@ -124,6 +126,7 @@ namespace NetAF.Assets.Characters
         public void AddItem(Item item)
         {
             Items = Items.Add(item);
+            EventBus.Publish(new ItemReceived(this, item));
         }
 
         /// <summary>
@@ -133,6 +136,7 @@ namespace NetAF.Assets.Characters
         public void RemoveItem(Item item)
         {
             Items = Items.Remove(item);
+            EventBus.Publish(new ItemRemoved(this, item));
         }
 
         #endregion

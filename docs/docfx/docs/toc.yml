@@ -25,6 +25,8 @@ items:
   href: notes.md
 - name: Variables
   href: variables.md
+- name: Events
+  href: events.md
 - name: End Conditions
   href: end-conditions.md
 - name: Visuals

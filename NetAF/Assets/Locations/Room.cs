@@ -6,6 +6,7 @@ using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Interpretation;
+using NetAF.Logging.Events;
 using NetAF.Rendering;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -305,7 +306,6 @@ namespace NetAF.Assets.Locations
         /// <returns>True if the item is in this room, else false.</returns>
         public bool ContainsItem(Item item, bool includeInvisibleItems = false)
         {
-            
             return Array.Exists(Items, i => i == item && (includeInvisibleItems || i.IsPlayerVisible));
         }
 
@@ -456,7 +456,12 @@ namespace NetAF.Assets.Locations
             EnteredFrom = direction;
             HasBeenVisited = true;
 
-            return EnterCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
+            var result = EnterCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
+
+            if (result.ContinueWithTransition)
+                EventBus.Publish(new RoomEntered(this));
+                
+            return result;
         }
 
         /// <summary>
@@ -468,7 +473,12 @@ namespace NetAF.Assets.Locations
         /// <returns>The reaction to the transition.</returns>
         internal RoomTransitionReaction MovedOutOf(Region region, Room adjoiningRoom, Direction? direction = null)
         {
-            return ExitCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
+            var result = ExitCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
+
+            if (result.ContinueWithTransition)
+                EventBus.Publish(new RoomExited(this));
+
+            return result;
         }
 
         /// <summary>

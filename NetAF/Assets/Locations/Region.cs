@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NetAF.Commands;
+﻿using NetAF.Commands;
 using NetAF.Extensions;
+using NetAF.Logging.Events;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using NetAF.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Assets.Locations
 {
@@ -115,6 +116,8 @@ namespace NetAF.Assets.Locations
             if (!reaction.ContinueWithTransition)
                 return reaction.Reaction;
 
+            EventBus.Publish(new RegionEntered(this));
+
             var introduction = CurrentRoom.Introduction.GetDescription();
 
             if (wasVisited || string.IsNullOrEmpty(introduction))
@@ -129,7 +132,11 @@ namespace NetAF.Assets.Locations
         /// <returns>The reaction.</returns>
         internal Reaction Exit()
         {
-            return CurrentRoom?.MovedOutOf(this, null).Reaction ?? Reaction.Silent;
+            var result = CurrentRoom?.MovedOutOf(this, null).Reaction ?? Reaction.Silent;
+
+            EventBus.Publish(new RegionExited(this));
+
+            return result;
         }
 
         /// <summary>
