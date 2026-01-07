@@ -98,7 +98,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             DrawEast(gridStringBuilder, room, startPosition, BoundaryColor);
 
             gridStringBuilder.SetCell(startPosition.X + 1, startPosition.Y, EmptySpace, BoundaryColor);
-
+            
             endX = startPosition.X;
             endY = startPosition.Y;
         }
