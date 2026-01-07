@@ -22,7 +22,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);
                 region.Enter();
 
-                mapBuilder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapDetail.Basic);
+                mapBuilder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapDetail.Normal);
             });
         }
     }

@@ -5,10 +5,10 @@ using NetAF.Rendering;
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
     /// <summary>
-    /// Provides an basic room map builder.
+    /// Provides a normal detail room map builder.
     /// </summary>
     /// <param name="gridStringBuilder">The grid string builder.</param>
-    public sealed class ConsoleBasicRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
+    public sealed class ConsoleNormalDetailRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
     {
         #region Properties
 
@@ -36,11 +36,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Get or set the character to use for horizontal boundaries.
         /// </summary>
         public char HorizontalBoundary { get; set; } = '-';
-
-        /// <summary>
-        /// Get or set the padding between the key and the map.
-        /// </summary>
-        public int KeyPadding { get; set; } = 6;
 
         /// <summary>
         /// Get or set the room boundary color.

@@ -201,10 +201,10 @@ namespace NetAF.Interpretation
 
                 if (builder.SupportsZoom)
                 {
-                    if (regionMapMode.Detail != RegionMapDetail.Detailed)
+                    if (regionMapMode.Detail != RegionMapDetail.Maximal)
                         commands.Add(ZoomIn.CommandHelp);
 
-                    if (regionMapMode.Detail != RegionMapDetail.Basic)
+                    if (regionMapMode.Detail != RegionMapDetail.Minimal)
                         commands.Add(ZoomOut.CommandHelp);
                 }
 

@@ -106,7 +106,7 @@ namespace NetAF.Targets.General.FrameBuilders
             GridStringBuilder ansiGridStringBuilder = new();
             ansiGridStringBuilder.Resize(MaxSize);
 
-            var ansiRoomBuilder = new ConsoleRoomMapBuilder(ansiGridStringBuilder)
+            var ansiRoomBuilder = new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder)
             {
                 LockedExit = LockedExit,
                 ItemOrCharacterInRoom = ItemOrCharacterInRoom,

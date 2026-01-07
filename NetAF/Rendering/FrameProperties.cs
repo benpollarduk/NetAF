@@ -18,6 +18,6 @@
         /// <summary>
         /// Get or set the detail to use on the map.
         /// </summary>
-        public static RegionMapDetail MapDetail { get; set; } = RegionMapDetail.Basic;
+        public static RegionMapDetail MapDetail { get; set; } = RegionMapDetail.Normal;
     }
 }

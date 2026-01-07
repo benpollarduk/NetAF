@@ -9,7 +9,7 @@ using NetAF.Targets.Console.Rendering;
 namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
 {
     [TestClass]
-    public class ConsoleBasicRoomMapBuilder_Tests
+    public class ConsoleLowDetailRoomMapBuilder_Tests
     {
         [TestMethod]
         public void GivenFullyFeaturedRoom_WhenBuildRoomMap_ThenNoException()
@@ -33,7 +33,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new GridStringBuilder();
-                var mapBuilder = new ConsoleBasicRoomMapBuilder(stringBuilder);
+                var mapBuilder = new ConsoleLowDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(0, 0, 0);
                 region.Enter();
                 var stringBuilder = new GridStringBuilder();
-                var mapBuilder = new ConsoleBasicRoomMapBuilder(stringBuilder);
+                var mapBuilder = new ConsoleNormalDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
                 mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
@@ -82,7 +82,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new GridStringBuilder();
-                var mapBuilder = new ConsoleBasicRoomMapBuilder(stringBuilder);
+                var mapBuilder = new ConsoleLowDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);

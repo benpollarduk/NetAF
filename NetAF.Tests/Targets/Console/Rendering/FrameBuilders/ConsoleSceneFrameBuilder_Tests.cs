@@ -36,7 +36,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -67,7 +67,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -98,7 +98,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -129,7 +129,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -164,7 +164,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleRoomMapBuilder(gridStringBuilder));
+                var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
 
                 builder.Build(room, ViewPoint.Create(region), player, null, KeyType.Full, size);

@@ -167,8 +167,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             switch (detail)
             {
-                case RegionMapDetail.Detailed:
-                    var detailedBuilder = new ConsoleRoomMapBuilder(gridStringBuilder)
+                case RegionMapDetail.Maximal:
+
+                    return new ConsoleHighDetailRoomMapBuilder(gridStringBuilder)
                     {
                         DisplayDirections = false,
                         BoundaryColor = boundaryColor,
@@ -177,9 +178,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                         HorizontalBoundary = HorizontalBoundary,
                         LockedExitColor = LockedExitColor
                     };
-                    return detailedBuilder;
-                default:
-                    var undetatiledBuilder = new ConsoleBasicRoomMapBuilder(gridStringBuilder)
+
+                case RegionMapDetail.Normal:
+
+                    return new ConsoleNormalDetailRoomMapBuilder(gridStringBuilder)
                     {
                         BoundaryColor = boundaryColor,
                         LockedExit = LockedExit,
@@ -187,7 +189,18 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                         HorizontalBoundary = HorizontalBoundary,
                         LockedExitColor = LockedExitColor
                     };
-                    return undetatiledBuilder;
+
+                case RegionMapDetail.Minimal:
+
+                    return new ConsoleLowDetailRoomMapBuilder(gridStringBuilder)
+                    {
+                        BoundaryColor = boundaryColor,
+                        VerticalBoundary = VerticalBoundary
+                    };
+
+                default:
+
+                    throw new NotImplementedException();
             }
         }
 

@@ -37,9 +37,9 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenCanPanAnyDirectionAndZoomedIn_WhenGetContextualCommands_ThenReturn8Commands()
+        public void GivenCanPanAnyDirectionAndZoomedIsMaximal_WhenGetContextualCommands_ThenReturn8Commands()
         {
-            FrameProperties.MapDetail = RegionMapDetail.Detailed;
+            FrameProperties.MapDetail = RegionMapDetail.Maximal;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
@@ -68,9 +68,40 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenCanPanAnyDirectionAndZoomedOut_WhenGetContextualCommands_ThenReturn8Commands()
+        public void GivenCanPanAnyDirectionAndZoomIsNormal_WhenGetContextualCommands_ThenReturn9Commands()
         {
-            FrameProperties.MapDetail = RegionMapDetail.Basic;
+            FrameProperties.MapDetail = RegionMapDetail.Normal;
+            var interpreter = new RegionMapCommandInterpreter();
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
+            Room top = new(string.Empty, string.Empty, [new Exit(Direction.Down)]);
+            Room south = new(string.Empty, string.Empty, [new Exit(Direction.North)]);
+            Room north = new(string.Empty, string.Empty, [new Exit(Direction.South)]);
+            Room west = new(string.Empty, string.Empty, [new Exit(Direction.East)]);
+            Room east = new(string.Empty, string.Empty, [new Exit(Direction.West)]);
+            Room center = new(string.Empty, string.Empty, [new Exit(Direction.North), new Exit(Direction.South), new Exit(Direction.East), new Exit(Direction.West), new Exit(Direction.Up), new Exit(Direction.Down)]);
+            regionMaker[1, 1, 1] = center;
+            regionMaker[0, 1, 1] = west;
+            regionMaker[2, 1, 1] = east;
+            regionMaker[1, 2, 1] = north;
+            regionMaker[1, 0, 1] = south;
+            regionMaker[1, 1, 2] = top;
+            regionMaker[1, 1, 0] = bottom;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
+
+            var result = interpreter.GetContextualCommandHelp(game);
+
+            Assert.AreEqual(9, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenCanPanAnyDirectionAndZoomIsMinimal_WhenGetContextualCommands_ThenReturn8Commands()
+        {
+            FrameProperties.MapDetail = RegionMapDetail.Minimal;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);

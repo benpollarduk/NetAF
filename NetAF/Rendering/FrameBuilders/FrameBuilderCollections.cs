@@ -24,7 +24,7 @@ namespace NetAF.Rendering.FrameBuilders
                 IFrameBuilder[] frameBuilders =
                 [
                     new ConsoleTitleFrameBuilder(gridLayoutBuilder),
-                    new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleRoomMapBuilder(gridLayoutBuilder)),
+                    new ConsoleSceneFrameBuilder(gridLayoutBuilder, new ConsoleHighDetailRoomMapBuilder(gridLayoutBuilder)),
                     new ConsoleRegionMapFrameBuilder(gridLayoutBuilder, new ConsoleRegionMapBuilder(gridLayoutBuilder)),
                     new ConsoleCommandListFrameBuilder(gridLayoutBuilder),
                     new ConsoleHelpFrameBuilder(gridLayoutBuilder),
