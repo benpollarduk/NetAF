@@ -40,7 +40,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="color">The color</param>
         private void DrawWest(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
         {
-            builder.SetCell(topLeft.X, topLeft.Y + 1, VerticalBoundary, color);
+            builder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="color">The color</param>
         private void DrawEast(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
         {
-            builder.SetCell(topLeft.X + 4, topLeft.Y + 1, VerticalBoundary, color);
+            builder.SetCell(topLeft.X + 2, topLeft.Y, VerticalBoundary, color);
         }
 
         #endregion
@@ -99,7 +99,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             gridStringBuilder.SetCell(startPosition.X + 1, startPosition.Y, EmptySpace, BoundaryColor);
 
-            endX = startPosition.X + 2;
+            endX = startPosition.X;
             endY = startPosition.Y;
         }
 
