@@ -1,6 +1,7 @@
-﻿using NetAF.Rendering.FrameBuilders;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
+using System;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
 {
@@ -8,13 +9,23 @@ namespace NetAF.Tests.Rendering.FrameBuilders
     public class FrameBuilderCollection_Tests
     {
         [TestMethod]
-        public void GivenNoMatchingFrameBuilder_WhenGetFrameBuilder_ThenNull()
+        public void GivenNoMatchingFrameBuilder_WhenGetFrameBuilder_ThenInvalidOperationExceptionThrown()
         {
-            var builders = new FrameBuilderCollection();
+            var result = false;
 
-            var result = builders.GetFrameBuilder<IFrameBuilder>();
+            try
+            {
 
-            Assert.IsNull(result);
+                var builders = new FrameBuilderCollection();
+
+                builders.GetFrameBuilder<IFrameBuilder>();
+            }
+            catch (InvalidOperationException)
+            {
+                result = true;
+            }
+
+            Assert.IsTrue(result);
         }
 
         [TestMethod]

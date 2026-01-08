@@ -18,7 +18,11 @@ namespace NetAF.Rendering.FrameBuilders
         public T GetFrameBuilder<T>()
         {
             var match = Array.Find(frameBuilders, x => x is T);
-            return match != null ? (T)match : default;
+
+            if (match == null)
+                throw new InvalidOperationException($"There is no frame builder registered for {typeof(T)}.");
+
+            return (T)match;
         }
 
         #endregion
