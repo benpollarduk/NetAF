@@ -48,37 +48,37 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(input, out var commandString, out var args);
 
-            if (About.CommandHelp.Equals(verb))
+            if (About.CommandHelp.Equals(commandString))
                 return new(true, new About());
 
-            if (Notes.CommandHelp.Equals(verb))
+            if (Notes.CommandHelp.Equals(commandString))
                 return new(true, new Notes());
 
-            if (History.CommandHelp.Equals(verb))
+            if (History.CommandHelp.Equals(commandString))
                 return new(true, new History());
 
-            if (GeneralHelp.CommandHelp.Equals(verb))
+            if (GeneralHelp.CommandHelp.Equals(commandString))
             {
-                var prompts = game.GetPromptsForCommand(noun);
+                var prompts = game.GetPromptsForCommand(args);
 
-                if (string.IsNullOrEmpty(noun))
+                if (string.IsNullOrEmpty(args))
                     return new(true, new GeneralHelp(GeneralHelp.CommandHelp, prompts));
 
                 var commands = game.GetContextualCommands();
-                var command = Array.Find(commands, x => x.Command.InsensitiveEquals(noun) || x.Shortcut.InsensitiveEquals(noun));
+                var command = Array.Find(commands, x => x.Command.InsensitiveEquals(args) || x.Shortcut.InsensitiveEquals(args));
 
                 if (command != null)
                     return new(true, new GeneralHelp(command, prompts));
                 else
-                    return new(true, new Unactionable($"'{noun}' is not a command."));
+                    return new(true, new Unactionable($"'{args}' is not a command."));
             }
 
-            if (CommandList.CommandHelp.Equals(verb))
+            if (CommandList.CommandHelp.Equals(commandString))
                 return new(true, new CommandList());
 
-            if (Map.CommandHelp.Equals(verb))
+            if (Map.CommandHelp.Equals(commandString))
                 return new(true, new Map());
 
             return InterpretationResult.Fail;

@@ -208,26 +208,26 @@ namespace NetAF.Utilities
         }
 
         /// <summary>
-        /// Split text in to a verb and a noun.
+        /// Split text input into a command and arguments.
         /// </summary>
-        /// <param name="text">The text to split.</param>
-        /// <param name="verb">The verb.</param>
-        /// <param name="noun">The noun.</param>
-        public static void SplitTextToVerbAndNoun(string text, out string verb, out string noun)
+        /// <param name="input">The input to split.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="arguments">The arguments.</param>
+        public static void SplitInputToCommandAndArguments(string input, out string command, out string arguments)
         {
             // if there is a space
-            if (text.IndexOf(" ", StringComparison.Ordinal) > -1)
+            if (input.IndexOf(' ') > -1)
             {
-                // verb all text up to space
-                verb = text[..text.IndexOf(" ", StringComparison.Ordinal)].Trim();
+                // command is all text up to space
+                command = input[..input.IndexOf(' ')].Trim();
 
-                // noun is all text after space
-                noun = text[text.IndexOf(" ", StringComparison.Ordinal)..].Trim();
+                // arguments is all text after space
+                arguments = input[input.IndexOf(' ')..].Trim();
             }
             else
             {
-                verb = text;
-                noun = string.Empty;
+                command = input;
+                arguments = string.Empty;
             }
         }
 

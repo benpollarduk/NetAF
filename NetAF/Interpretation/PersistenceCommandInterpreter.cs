@@ -40,13 +40,13 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            StringUtilities.SplitTextToVerbAndNoun(input, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(input, out var commandString, out var args);
 
-            if (Load.CommandHelp.Equals(verb))
-                return new(true, new Load(noun));
+            if (Load.CommandHelp.Equals(commandString))
+                return new(true, new Load(args));
 
-            if (Save.CommandHelp.Equals(verb))
-                return new(true, new Save(noun));
+            if (Save.CommandHelp.Equals(commandString))
+                return new(true, new Save(args));
 
             return InterpretationResult.Fail;
         }

@@ -76,20 +76,20 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseDropCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out string args);
 
-            if (!Drop.CommandHelp.Equals(verb))
+            if (!Drop.CommandHelp.Equals(commandString))
             {
                 command = null;
                 return false;
             }
-            else if (DropAll.CommandHelp.Equals($"{verb} {noun}"))
+            else if (DropAll.CommandHelp.Equals($"{commandString} {args}"))
             {
                 command = new DropAll();
                 return true;
             }
 
-            game.Player.FindItem(noun, out var item);
+            game.Player.FindItem(args, out var item);
             command = new Drop(item);
             return true;
         }
@@ -103,9 +103,9 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTakeCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
 
-            if (!Take.CommandHelp.Equals(verb))
+            if (!Take.CommandHelp.Equals(commandString))
             {
                 command = null;
                 return false;
@@ -114,7 +114,7 @@ namespace NetAF.Interpretation
             Item item;
 
             // it no item specified then find the first takeable one
-            if (string.IsNullOrEmpty(noun))
+            if (string.IsNullOrEmpty(args))
             {
                 item = Array.Find(game.Overworld.CurrentRegion.CurrentRoom.Items, x => x.IsPlayerVisible && x.IsTakeable);
 
@@ -124,12 +124,12 @@ namespace NetAF.Interpretation
                     return true;
                 }
             }
-            else if (TakeAll.CommandHelp.Equals($"{verb} {noun}"))
+            else if (TakeAll.CommandHelp.Equals($"{commandString} {args}"))
             {
                 command = new TakeAll();
                 return true;
             }
-            else if (!game.Overworld.CurrentRegion.CurrentRoom.FindItem(noun, out item))
+            else if (!game.Overworld.CurrentRegion.CurrentRoom.FindItem(args, out item))
             {
                 command = new Unactionable("There is no such item in the room.");
                 return true;
@@ -148,20 +148,20 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTalkCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
 
-            if (!Talk.TalkCommandHelp.Equals(verb))
+            if (!Talk.TalkCommandHelp.Equals(commandString))
             {
                 command = null;
                 return false;
             }
 
             // determine if a target has been specified
-            if (noun.Length > 3 && Talk.ToCommandHelp.Equals(noun[..2]))
+            if (args.Length > 3 && Talk.ToCommandHelp.Equals(args[..2]))
             {
-                noun = noun[3..];
+                args = args[3..];
 
-                if (game.Overworld.CurrentRegion.CurrentRoom.FindCharacter(noun, out var nPC))
+                if (game.Overworld.CurrentRegion.CurrentRoom.FindCharacter(args, out var nPC))
                 {
                     command = new Talk(nPC);
                     return true;
@@ -244,15 +244,15 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseExamineCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
 
-            if (!Examine.CommandHelp.Equals(verb))
+            if (!Examine.CommandHelp.Equals(commandString))
             {
                 command = null;
                 return false;
             }
 
-            if (string.IsNullOrEmpty(noun))
+            if (string.IsNullOrEmpty(args))
             {
                 // default to current room
                 command = new Examine(game.Overworld.CurrentRegion.CurrentRoom);
@@ -260,41 +260,41 @@ namespace NetAF.Interpretation
             }
 
             // try locations
-            if (TryParseExamineCommandLocations(noun, game, out command))
+            if (TryParseExamineCommandLocations(args, game, out command))
                 return true;
 
             // check player items
-            if (game.Player.FindItem(noun, out var item))
+            if (game.Player.FindItem(args, out var item))
             {
                 command = new Examine(item);
                 return true;
             }
 
             // check items in room
-            if (game.Overworld.CurrentRegion.CurrentRoom.FindItem(noun, out item))
+            if (game.Overworld.CurrentRegion.CurrentRoom.FindItem(args, out item))
             {
                 command = new Examine(item);
                 return true;
             }
 
             // check characters in room
-            if (game.Overworld.CurrentRegion.CurrentRoom.FindCharacter(noun, out var character))
+            if (game.Overworld.CurrentRegion.CurrentRoom.FindCharacter(args, out var character))
             {
                 command = new Examine(character);
                 return true;
             }
 
             // check self examination
-            if (Me.InsensitiveEquals(noun) || noun.EqualsExaminable(game.Player))
+            if (Me.InsensitiveEquals(args) || args.EqualsExaminable(game.Player))
             {
                 command = new Examine(game.Player);
                 return true;
             }
 
             // unknown
-            if (!string.IsNullOrEmpty(noun))
+            if (!string.IsNullOrEmpty(args))
             {
-                command = new Unactionable($"Can't examine {noun}.");
+                command = new Unactionable($"Can't examine {args}.");
                 return true;
             }
 
@@ -312,24 +312,24 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseUseOnCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitTextToVerbAndNoun(text, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
 
-            if (!UseOn.UseCommandHelp.Equals(verb))
+            if (!UseOn.UseCommandHelp.Equals(commandString))
             {
                 command = null;
                 return false;
             }
 
             IInteractWithItem target;
-            var itemName = noun;
+            var itemName = args;
             var onPadded = $" {UseOn.OnCommandHelp.Command} ";
 
-            if (noun.CaseInsensitiveContains(onPadded))
+            if (args.CaseInsensitiveContains(onPadded))
             {
-                itemName = noun[..noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase)];
-                noun = noun[itemName.Length..];
-                var onIndex = noun.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase);
-                var targetName = noun[(onIndex + onPadded.Length)..];
+                itemName = args[..args.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase)];
+                args = args[itemName.Length..];
+                var onIndex = args.IndexOf(onPadded, StringComparison.CurrentCultureIgnoreCase);
+                var targetName = args[(onIndex + onPadded.Length)..];
 
                 if (targetName.InsensitiveEquals(Me) || targetName.EqualsExaminable(game.Player))
                     target = game.Player;

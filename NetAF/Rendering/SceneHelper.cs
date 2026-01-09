@@ -127,9 +127,9 @@ namespace NetAF.Rendering
             var sentenceSoFar = builder.ToString();
             builder.Clear();
 
-            builder.Append(sentenceSoFar[..sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal)]);
+            builder.Append(sentenceSoFar[..sentenceSoFar.LastIndexOf(',')]);
             builder.Append(" and ");
-            builder.Append(sentenceSoFar[(sentenceSoFar.LastIndexOf(",", StringComparison.Ordinal) + 2)..]);
+            builder.Append(sentenceSoFar[(sentenceSoFar.LastIndexOf(',') + 2)..]);
             builder.Append(" are in the ");
             builder.Append(room.Identifier);
             builder.Append('.');

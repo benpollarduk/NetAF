@@ -187,30 +187,30 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenEmptyString_WhenSplitTextToVerbAndNoun_ThenReturnEmptyVerbAndNoun()
+        public void GivenEmptyString_WhenSplitInputToCommandAndArguments_ThenReturnEmptyVerbAndNoun()
         {
-            StringUtilities.SplitTextToVerbAndNoun(string.Empty, out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments(string.Empty, out var command, out var args);
 
-            Assert.AreEqual(string.Empty, verb);
-            Assert.AreEqual(string.Empty, noun);
+            Assert.AreEqual(string.Empty, command);
+            Assert.AreEqual(string.Empty, args);
         }
 
         [TestMethod]
-        public void GivenABC_WhenSplitTextToVerbAndNoun_ThenNounABCVerbEmpty()
+        public void GivenABC_WhenSplitInputToCommandAndArguments_ThenNounABCVerbEmpty()
         {
-            StringUtilities.SplitTextToVerbAndNoun("ABC", out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments("ABC", out var command, out var args);
 
-            Assert.AreEqual("ABC", verb);
-            Assert.AreEqual(string.Empty, noun);
+            Assert.AreEqual("ABC", command);
+            Assert.AreEqual(string.Empty, args);
         }
 
         [TestMethod]
-        public void GivenABCSpaceXYZ_WhenSplitTextToVerbAndNoun_ThenNounABCVerbXYZ()
+        public void GivenABCSpaceXYZ_WhenSplitInputToCommandAndArguments_ThenNounABCVerbXYZ()
         {
-            StringUtilities.SplitTextToVerbAndNoun("ABC XYZ", out var verb, out var noun);
+            StringUtilities.SplitInputToCommandAndArguments("ABC XYZ", out var command, out var args);
 
-            Assert.AreEqual("ABC", verb);
-            Assert.AreEqual("XYZ", noun);
+            Assert.AreEqual("ABC", command);
+            Assert.AreEqual("XYZ", args);
         }
 
         [TestMethod]
