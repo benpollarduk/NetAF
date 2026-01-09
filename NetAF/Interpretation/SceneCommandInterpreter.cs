@@ -76,7 +76,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseDropCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out string args);
+            StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out string args);
 
             if (!Drop.CommandHelp.Equals(commandString))
             {
@@ -103,7 +103,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTakeCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
+            StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
             if (!Take.CommandHelp.Equals(commandString))
             {
@@ -148,7 +148,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseTalkCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
+            StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
             if (!Talk.TalkCommandHelp.Equals(commandString))
             {
@@ -244,7 +244,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseExamineCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
+            StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
             if (!Examine.CommandHelp.Equals(commandString))
             {
@@ -312,7 +312,7 @@ namespace NetAF.Interpretation
         /// <returns>True if the input could be parsed, else false.</returns>
         private static bool TryParseUseOnCommand(string text, Game game, out ICommand command)
         {
-            StringUtilities.SplitInputToCommandAndArguments(text, out var commandString, out var args);
+            StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
             if (!UseOn.UseCommandHelp.Equals(commandString))
             {

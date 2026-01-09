@@ -208,12 +208,12 @@ namespace NetAF.Utilities
         }
 
         /// <summary>
-        /// Split text input into a command and arguments.
+        /// Split text input into a command and argument.
         /// </summary>
         /// <param name="input">The input to split.</param>
         /// <param name="command">The command.</param>
-        /// <param name="arguments">The arguments.</param>
-        public static void SplitInputToCommandAndArguments(string input, out string command, out string arguments)
+        /// <param name="argument">The argument.</param>
+        public static void SplitInputToCommandAndArgument(string input, out string command, out string argument)
         {
             // if there is a space
             if (input.IndexOf(' ') > -1)
@@ -221,13 +221,41 @@ namespace NetAF.Utilities
                 // command is all text up to space
                 command = input[..input.IndexOf(' ')].Trim();
 
-                // arguments is all text after space
-                arguments = input[input.IndexOf(' ')..].Trim();
+                // argument is all text after space
+                argument = input[input.IndexOf(' ')..].Trim();
             }
             else
             {
                 command = input;
-                arguments = string.Empty;
+                argument = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Split text input into a command and arguments.
+        /// </summary>
+        /// <param name="input">The input to split.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="arguments>The arguments.</param>
+        public static void SplitInputToCommandAndArguments(string input, out string command, out string[] arguments)
+        {
+            // split to words
+            var words = input.Split(' ');
+
+            if (words.Length == 0)
+            {
+                command = string.Empty;
+                arguments = [];
+            }
+            else if (words.Length == 1)
+            {
+                command = words[0];
+                arguments = [];
+            }
+            else
+            {
+                command = words[0];
+                arguments = [.. words.Skip(1)];
             }
         }
 

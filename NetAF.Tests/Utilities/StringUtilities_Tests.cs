@@ -187,30 +187,67 @@ namespace NetAF.Tests.Utilities
         }
 
         [TestMethod]
-        public void GivenEmptyString_WhenSplitInputToCommandAndArguments_ThenReturnEmptyVerbAndNoun()
+        public void GivenEmptyString_WhenSplitInputToCommandAndArgument_ThenReturnEmptyCommandAndArgs()
         {
-            StringUtilities.SplitInputToCommandAndArguments(string.Empty, out var command, out var args);
+            StringUtilities.SplitInputToCommandAndArgument(string.Empty, out var command, out var args);
 
             Assert.AreEqual(string.Empty, command);
             Assert.AreEqual(string.Empty, args);
         }
 
         [TestMethod]
-        public void GivenABC_WhenSplitInputToCommandAndArguments_ThenNounABCVerbEmpty()
+        public void GivenABC_WhenSplitInputToCommandAndArgument_ThenCommandABCArgsEmpty()
         {
-            StringUtilities.SplitInputToCommandAndArguments("ABC", out var command, out var args);
+            StringUtilities.SplitInputToCommandAndArgument("ABC", out var command, out var args);
 
             Assert.AreEqual("ABC", command);
             Assert.AreEqual(string.Empty, args);
         }
 
         [TestMethod]
-        public void GivenABCSpaceXYZ_WhenSplitInputToCommandAndArguments_ThenNounABCVerbXYZ()
+        public void GivenABCSpaceXYZ_WhenSplitInputToCommandAndArgument_ThenCommandABCArgsXYZ()
+        {
+            StringUtilities.SplitInputToCommandAndArgument("ABC XYZ", out var command, out var args);
+
+            Assert.AreEqual("ABC", command);
+            Assert.AreEqual("XYZ", args);
+        }
+
+        [TestMethod]
+        public void GivenEmptyString_WhenSplitInputToCommandAndArguments_ThenCommandEmptyStringArgsEmpty()
+        {
+            StringUtilities.SplitInputToCommandAndArguments(string.Empty, out var command, out var args);
+
+            Assert.AreEqual(string.Empty, command);
+            Assert.IsEmpty(args);
+        }
+
+        [TestMethod]
+        public void GivenABC_WhenSplitInputToCommandAndArguments_ThenCommandABCArgsEmpty()
+        {
+            StringUtilities.SplitInputToCommandAndArguments("ABC", out var command, out var args);
+
+            Assert.AreEqual("ABC", command);
+            Assert.IsEmpty(args);
+        }
+
+        [TestMethod]
+        public void GivenABCSpaceXYZ_WhenSplitInputToCommandAndArguments_ThenCommandABCArgsXYZ()
         {
             StringUtilities.SplitInputToCommandAndArguments("ABC XYZ", out var command, out var args);
 
             Assert.AreEqual("ABC", command);
-            Assert.AreEqual("XYZ", args);
+            Assert.AreEqual("XYZ", args[0]);
+        }
+
+        [TestMethod]
+        public void GivenABCSpaceXYZSpaceUVW_WhenSplitInputToCommandAndArguments_ThenCommandABCArgsXYZAndUVW()
+        {
+            StringUtilities.SplitInputToCommandAndArguments("ABC XYZ UVW", out var command, out var args);
+
+            Assert.AreEqual("ABC", command);
+            Assert.AreEqual("XYZ", args[0]);
+            Assert.AreEqual("UVW", args[1]);
         }
 
         [TestMethod]
