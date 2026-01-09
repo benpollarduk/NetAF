@@ -4,7 +4,7 @@ using NetAF.Assets.Locations;
 namespace NetAF.Utilities
 {
     /// <summary>
-    /// Provides a class for helping to make Regions.
+    /// Provides a class for helping to make Overworlds.
     /// </summary>
     /// <param name="identifier">An identifier for the region.</param>
     /// <param name="description">A description for the region.</param>
