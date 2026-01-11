@@ -148,7 +148,7 @@ var regionMaker = new RegionMaker("Mountain", "An imposing volcano just East of 
 var overworldMaker = new OverworldMaker("Daves World", "An ancient kingdom.", regionMaker);
 
 // create the configuration for running the game. Size.Dynamic will size the game to the console.
-// alternatively a fixed size can be specified and the conole will size to the game
+// alternatively a fixed size can be specified and the console will size to the game
 var configuration = new GameConfiguration(new ConsoleAdapter(), FrameBuilderCollections.Console, Size.Dynamic)
 
 // create the callback for generating new instances of the game
