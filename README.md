@@ -138,7 +138,7 @@ add the NO_COLOR environment variable and assign it a non-empty value. This will
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
 
-![image](https://github.com/user-attachments/assets/fa649806-32e4-493b-89a2-0a3faceaa489)
+![map](https://github.com/user-attachments/assets/ebbc0925-7252-41d0-9c2d-60e89ecebd1c)
 
 Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more. Maps support panning and switching between vertical levels.
 
