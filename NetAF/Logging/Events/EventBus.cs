@@ -72,7 +72,7 @@ namespace NetAF.Logging.Events
         /// </summary>
         /// <typeparam name="T">The specific type of <see cref="Events"/> to publish.</typeparam>
         /// <param name="eventData">The data to pass when the event is raised.</param>
-        internal static void Publish<T>(T eventData) where T : BaseEvent
+        public static void Publish<T>(T eventData) where T : BaseEvent
         {
             List<Delegate> handlers;
 
