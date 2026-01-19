@@ -236,7 +236,7 @@ namespace NetAF.Utilities
         /// </summary>
         /// <param name="input">The input to split.</param>
         /// <param name="command">The command.</param>
-        /// <param name="arguments>The arguments.</param>
+        /// <param name="arguments">The arguments.</param>
         public static void SplitInputToCommandAndArguments(string input, out string command, out string[] arguments)
         {
             // split to words

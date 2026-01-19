@@ -61,13 +61,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="commands">The commands.</param>
         /// <param name="availableSize">The available size.</param>
         /// <param name="leftMargin">The left margin</param>
-        private void AddCommands(GridStringBuilder builder, CommandHelp[] commands, Size availableSize, int leftMargin)
+        /// <param name="minimumY">The minimum Y position.</param>
+        /// <param name="requiredPromtHeight">The required height for the prompt.</param>
+        private void AddCommands(GridStringBuilder builder, CommandHelp[] commands, Size availableSize, int leftMargin, int minimumY, int requiredPromtHeight)
         {
             const int requiredSpaceForDivider = 2;
-            const int requiredSpaceForCommandHeader = 3;
-            int requiredSpaceForPrompt = renderPrompt ? 3 : 1;
-            var commandSpace = requiredSpaceForCommandHeader + requiredSpaceForPrompt + requiredSpaceForDivider + commands.Length;
+            const int requiredSpaceForCommandHeader = 4;
+            var commandSpace = requiredSpaceForCommandHeader + requiredPromtHeight + requiredSpaceForDivider + commands.Length;
             var requiredYToFitAllCommands = availableSize.Height - commandSpace;
+
+            if (requiredYToFitAllCommands < minimumY)
+                requiredYToFitAllCommands = minimumY;
+
+            // ensure that the command header and at least a single command can fit
+            if (availableSize.Height - requiredPromtHeight - minimumY < requiredSpaceForCommandHeader + 1)
+                return;
 
             builder.DrawHorizontalDivider(requiredYToFitAllCommands, BorderColor);
             builder.DrawWrapped(CommandTitle, leftMargin, requiredYToFitAllCommands + 2, availableSize.Width, CommandsColor, out _, out var lastY);
@@ -85,8 +93,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 builder.DrawWrapped("-", dashStartX, lastY, availableSize.Width, CommandsColor, out _, out lastY);
                 builder.DrawWrapped(contextualCommand.Description.EnsureFinishedSentence(), descriptionStartX, lastY, availableSize.Width, CommandsColor, out _, out lastY);
 
-                // only continue if not run out of space - the 2 is for the border the ...
-                if (index < commands.Length - 1 && lastY + 2 + requiredSpaceForPrompt >= availableSize.Height)
+                // only continue if not run out of space
+                if (index < commands.Length - 1 && lastY + requiredPromtHeight + requiredPromtHeight >= availableSize.Height)
                 {
                     builder.DrawWrapped("...", leftMargin, lastY + 1, availableSize.Width, CommandsColor, out _, out lastY);
                     break;
@@ -137,7 +145,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
 
             if (contextualCommands != null && contextualCommands.Length > 0)
-                AddCommands(gridStringBuilder, contextualCommands, new Size(availableWidth, size.Height), leftMargin);
+                AddCommands(gridStringBuilder, contextualCommands, new Size(availableWidth, size.Height), leftMargin, lastY + 2, renderPrompt ? 3 : 1);
             
             if (renderPrompt)
             {
