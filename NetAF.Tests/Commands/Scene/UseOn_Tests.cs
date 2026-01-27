@@ -119,6 +119,26 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
+        public void GivenTargetIsRoomButAndNoDescriptionReturnedFromInteraction_WhenInvoke_ThenSilent()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var interaction = new InteractionCallback(_ => new Interaction(InteractionResult.NoChange, null, string.Empty));
+            var room = new Room(Identifier.Empty, Description.Empty, interaction: interaction);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, room);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
+        }
+
+        [TestMethod]
         public void GivenItemOnRoomInteractionCausesItemExpire_WhenInvoke_ThenItemRemovedFromRoom()
         {
             var item = new Item(Identifier.Empty, Description.Empty, true);

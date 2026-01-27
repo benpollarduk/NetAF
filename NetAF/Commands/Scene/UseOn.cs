@@ -127,6 +127,9 @@ namespace NetAF.Commands.Scene
                     throw new NotImplementedException();
             }
 
+            if (string.IsNullOrEmpty(interaction.Description))
+                return new(ReactionResult.Silent, string.Empty);
+
             return new(ReactionResult.Inform, interaction.Description);
         }
 
