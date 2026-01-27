@@ -1,7 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Items;
-using NetAF.Example.Assets.Regions.Everglades.Items;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Utilities;
@@ -12,8 +11,8 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
     {
         #region Constants
 
-        private const string Name = "Inner Cave";
-        private const string BlowNoteKey = "BLOW";
+        internal const string Name = "Inner Cave";
+        internal const string BlowNoteKey = "BLOW";
 
         #endregion
 
@@ -37,13 +36,6 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
 
             room = new Room(new(Name), description, [new Exit(Direction.West), new Exit(Direction.North, true)], examination: examination, interaction: item =>
             {
-                if (item != null && ConchShell.Name.EqualsExaminable(item))
-                {
-                    GameExecutor.ExecutingGame?.NoteManager.Expire(BlowNoteKey);
-                    room[Direction.North].Unlock();
-                    return new(InteractionResult.ItemExpires, item, "You blow into the Conch Shell. The Conch Shell howls, the  bats leave! Conch shell crumbles to pieces.");
-                }
-
                 if (item != null && Knife.Name.EqualsExaminable(item))
                     return new(InteractionResult.NoChange, item, "You slash wildly at the bats, but there are too many. Don't aggravate them!");
 
@@ -54,6 +46,6 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
 
         }
 
-#endregion
+        #endregion
     }
 }

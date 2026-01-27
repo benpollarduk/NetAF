@@ -36,7 +36,7 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
-        public void GivenNoTarget_WhenInvoke_ThenError()
+        public void GivenNoTarget_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter("", "")), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var item = new Item(Identifier.Empty, Description.Empty, true);
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Commands.Scene
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Error, result.Result);
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
 
         [TestMethod]

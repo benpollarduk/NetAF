@@ -97,15 +97,14 @@ namespace NetAF.Commands.Scene
             if (item == null)
                 return new(ReactionResult.Error, "You must specify an item.");
 
-            if (target == null)
-                return new(ReactionResult.Error, "You must specify a target.");
-
             if (game.Player == null)
                 return new(ReactionResult.Error, "You must specify the character that is using this item.");
 
             EventBus.Publish(new ItemUsed(item, target));
 
-            var interaction = target.Interact(item);
+            var thingToUse = target ?? item;
+            var thingToUseOn = thingToUse != item ? item : null;
+            var interaction = thingToUse.Interact(thingToUseOn);
 
             switch (interaction.Result)
             {

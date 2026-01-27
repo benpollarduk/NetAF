@@ -320,7 +320,7 @@ namespace NetAF.Interpretation
                 return false;
             }
 
-            IInteractWithItem target;
+            IInteractWithItem target = null;
             var itemName = args;
             var onPadded = $" {UseOn.OnCommandHelp.Command} ";
 
@@ -343,16 +343,6 @@ namespace NetAF.Interpretation
                     command = new Unactionable($"{targetName} is not a valid target.");
                     return true;
                 }
-            }
-            else
-            {
-                target = game.Overworld.CurrentRegion.CurrentRoom;
-            }
-
-            if (string.IsNullOrEmpty(itemName))
-            {
-                command = new UseOn(null, target);
-                return true;
             }
             
             if (!game.Player.FindItem(itemName, out var item) && !game.Overworld.CurrentRegion.CurrentRoom.FindItem(itemName, out item))

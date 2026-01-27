@@ -35,6 +35,17 @@ Item bomb = new("Bomb", "A bomb", commands:
 
 Interactions can be set up between different assets in the game. The **Interaction** contains the result of the interaction, and allows the game to react to the interaction.
 
+Items can be used standalone.
+
+```csharp
+var potion = new Item("Potion", "A generic potion.", true, interaction: item =>
+{
+    return new Interaction(InteractionResult.ItemExpires, item, "You gulp it down, you feel great!");
+});
+```
+
+Or on another Item, Region, Room, Exit, PlayableCharacter or NonPlayableCharacter.
+
 ```csharp
 var dartsBoard = new Item("Darts board", "A darts board.");
 

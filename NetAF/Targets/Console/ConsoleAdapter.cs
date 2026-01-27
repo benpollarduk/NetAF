@@ -2,6 +2,8 @@
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
+using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace NetAF.Targets.Console
@@ -35,11 +37,18 @@ namespace NetAF.Targets.Console
             if (game.Configuration.DisplaySize == Size.Dynamic)
                 return;
 
-            Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
-            System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
-            
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            try
+            {
+                Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
+                System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
