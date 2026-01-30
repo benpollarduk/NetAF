@@ -42,3 +42,6 @@ The following events are supported:
 * **ItemReceived** - occurs when either a *PlayableCharacter* or *NonPlayableCharacter* receives an item.
 * **ItemRemoved** - occurs when an item is removed from either a *PlayableCharacter* or *NonPlayableCharacter*.
 * **ItemUsed** - occurs when an item is used.
+* **GameStarted** - occurs when a game is started.
+* **GameUpdated** - occurs when a game is updated.
+* **GameFinished** - occurs when a game is finished.

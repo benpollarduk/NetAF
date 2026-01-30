@@ -121,6 +121,7 @@
         {
             wasCancelled = true;
             game?.End();
+            game?.Update();
             controller?.CancelAsync();
         }
 

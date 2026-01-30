@@ -9,6 +9,7 @@ using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
 using NetAF.Extensions;
 using NetAF.Interpretation;
+using NetAF.Logging.Events;
 using NetAF.Logging.History;
 using NetAF.Logging.Notes;
 using NetAF.Logic.Arrangement;
@@ -148,15 +149,19 @@ namespace NetAF.Logic
         /// <returns>The result of the action.</returns>
         internal UpdateResult Update(string input = "")
         {
-            return State switch
+            var result = State switch
             {
                 GameState.NotStarted => UpdateWhenNotStarted(this),
                 GameState.Active => UpdateWhenActive(this, input),
                 GameState.EndConditionMet => UpdateWhenEndConditionMet(this),
                 GameState.Finishing => UpdateWhenFinishing(this),
-                GameState.Finished => UpdateWhenFinished(),
+                GameState.Finished => UpdateWhenFinished(this),
                 _ => new(false, $"Cannot move to next when state is {State}."),
             };
+
+            EventBus.Publish(new GameUpdated(this));
+
+            return result;
         }
 
         /// <summary>
@@ -472,6 +477,8 @@ namespace NetAF.Logic
 
             game.Mode.Render(game);
 
+            EventBus.Publish(new GameStarted(game));
+
             return new(true);
         }
 
@@ -533,9 +540,11 @@ namespace NetAF.Logic
         /// <summary>
         /// Perform an update, when the start is GameState.Finished.
         /// </summary>
+        /// <param name="game">The game.</param>
         /// <returns>The update result.</returns>
-        private UpdateResult UpdateWhenFinished()
+        private static UpdateResult UpdateWhenFinished(Game game)
         {
+            EventBus.Publish(new GameFinished(game));
             return new(false, "Cannot update when finished.");
         }
 

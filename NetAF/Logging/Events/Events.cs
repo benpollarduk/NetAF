@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
+using NetAF.Logic;
 
 namespace NetAF.Logging.Events
 {
@@ -61,4 +62,22 @@ namespace NetAF.Logging.Events
     /// <param name="Item">The item.</param>
     /// <param name="Target">The target.</param>
     public record ItemUsed(Item Item, IInteractWithItem Target) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a game is started.
+    /// </summary>
+    /// <param name="Game">The game that was started.</param>
+    public record GameStarted(Game Game) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a game finishes.
+    /// </summary>
+    /// <param name="Game">The game that was finished.</param>
+    public record GameFinished(Game Game) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a game is updated.
+    /// </summary>
+    /// <param name="Game">The game that was updated.</param>
+    public record GameUpdated(Game Game) : BaseEvent;
 }

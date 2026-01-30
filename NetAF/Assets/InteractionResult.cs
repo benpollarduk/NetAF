@@ -24,6 +24,14 @@
         /// <summary>
         /// The player dies.
         /// </summary>
-        PlayerDies
+        PlayerDies,
+        /// <summary>
+        /// The player receives an item.
+        /// </summary>
+        PlayerReceivesItem,
+        /// <summary>
+        /// A non-playable character receives an item.
+        /// </summary>
+        NonPlayableCharacterReceivesItem
     }
 }

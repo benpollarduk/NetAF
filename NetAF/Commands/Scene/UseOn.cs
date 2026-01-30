@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Logging.Events;
 using NetAF.Logic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetAF.Commands.Scene
 {
@@ -75,6 +75,61 @@ namespace NetAF.Commands.Scene
                 character.Kill();
         }
 
+        /// <summary>
+        /// Handle player dies.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        private static void PlayerDies(PlayableCharacter player)
+        {
+            player.Kill();
+        }
+
+        /// <summary>
+        /// Handle the player receiving an item.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="player">The player.</param>
+        /// <param name="item">The item.</param>
+        private static void PlayerReceivesItem(Game game, PlayableCharacter player, Item item)
+        {
+            if (item == null)
+                return;
+
+            if (player == null)
+                return;
+
+            if (game.Overworld.CurrentRegion.CurrentRoom?.ContainsItem(item) ?? false)
+                game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
+
+            foreach (var npc in from NonPlayableCharacter npc in game.Overworld.CurrentRegion.CurrentRoom.Characters ?? [] where npc.HasItem(item) select npc)
+                npc.RemoveItem(item);
+
+            player.AddItem(item);
+        }
+
+        /// <summary>
+        /// Handle a non-playable character receiving an item.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="nonPlayableCharacter">The player.</param>
+        /// <param name="item">The item.</param>
+        private static void NonPlayableCharacterReceivesItem(Game game, NonPlayableCharacter nonPlayableCharacter, Item item)
+        {
+            if (item == null)
+                return;
+
+            if (nonPlayableCharacter == null)
+                return;
+
+            if (game.Overworld.CurrentRegion.CurrentRoom?.ContainsItem(item) ?? false)
+                game.Overworld.CurrentRegion.CurrentRoom.RemoveItem(item);
+
+            if (game.Player.HasItem(item))
+                game.Player.RemoveItem(item);
+
+            nonPlayableCharacter.AddItem(item);
+        }
+
         #endregion
 
         #region Implementation of ICommand
@@ -121,7 +176,13 @@ namespace NetAF.Commands.Scene
                     TargetExpires(game, target);
                     break;
                 case InteractionResult.PlayerDies:
-                    game.Player.Kill();
+                    PlayerDies(game.Player);
+                    break;
+                case InteractionResult.PlayerReceivesItem:
+                    PlayerReceivesItem(game, game.Player, item);
+                    break;
+                case InteractionResult.NonPlayableCharacterReceivesItem:
+                    NonPlayableCharacterReceivesItem(game, target as NonPlayableCharacter, item);
                     break;
                 default:
                     throw new NotImplementedException();

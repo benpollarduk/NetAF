@@ -65,5 +65,25 @@ namespace NetAF.Tests.Assets
 
             Assert.AreEqual("The player dies.", result);
         }
+
+        [TestMethod]
+        public void GivenConstructor_WhenPlayerReceivesItem_ThenGeneratedDescriptionIsCorrect()
+        {
+            Interaction instance = new(InteractionResult.PlayerReceivesItem, null);
+
+            var result = instance.Description;
+
+            Assert.AreEqual("The player receives the item.", result);
+        }
+
+        [TestMethod]
+        public void GivenConstructor_WhenNonPlayableCharacterReceivesItem_ThenGeneratedDescriptionIsCorrect()
+        {
+            Interaction instance = new(InteractionResult.NonPlayableCharacterReceivesItem, null);
+
+            var result = instance.Description;
+
+            Assert.AreEqual("A non-playable character receives the item.", result);
+        }
     }
 }

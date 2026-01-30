@@ -45,6 +45,8 @@ namespace NetAF.Assets
                 InteractionResult.TargetExpires => "The target expires.",
                 InteractionResult.ItemAndTargetExpires => "Both the item and target expires.",
                 InteractionResult.PlayerDies => "The player dies.",
+                InteractionResult.PlayerReceivesItem => "The player receives the item.",
+                InteractionResult.NonPlayableCharacterReceivesItem => "A non-playable character receives the item.",
                 _ => throw new NotImplementedException($"No implementation for ${result}."),
             };
         }

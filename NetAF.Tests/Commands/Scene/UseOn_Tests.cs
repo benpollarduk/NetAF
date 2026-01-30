@@ -337,6 +337,116 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
+        public void GivenItemInRoomInteractionCausesPlayerReceivesItem_WhenInvoke_ThenPlayerHasItemAndRoomDoesNot()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var room = new Room(Identifier.Empty, Description.Empty, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.PlayerReceivesItem, i);
+            });
+            room.AddItem(item);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, room);
+            command.Invoke(game);
+
+            var playableCharacterResult = player.HasItem(item);
+            var roomResult = room.ContainsItem(item);
+
+            Assert.IsTrue(playableCharacterResult);
+            Assert.IsFalse(roomResult);
+        }
+
+        [TestMethod]
+        public void GivenItemOnNonPlayableCharacterInteractionCausesPlayerReceivesItem_WhenInvoke_ThenPlayerHasItemAndNonPlayableCharacterDoesNot()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.PlayerReceivesItem, i);
+            });
+            npc.AddItem(item);
+            var room = new Room(Identifier.Empty, Description.Empty);
+            room.AddCharacter(npc);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, npc);
+            command.Invoke(game);
+
+            var playableCharacterResult = player.HasItem(item);
+            var nonPlayableCharacterResult = npc.HasItem(item);
+
+            Assert.IsTrue(playableCharacterResult);
+            Assert.IsFalse(nonPlayableCharacterResult);
+        }
+
+        [TestMethod]
+        public void GivenItemInRoomInteractionCausesNonPlayableCharacterReceivesItem_WhenInvoke_ThenNonPlayableCharacterHasItemAndRoomDoesNot()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.NonPlayableCharacterReceivesItem, i);
+            });
+            var room = new Room(Identifier.Empty, Description.Empty);
+            room.AddCharacter(npc);
+            room.AddItem(item);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, npc);
+            command.Invoke(game);
+
+            var npcResult = npc.HasItem(item);
+            var roomResult = room.ContainsItem(item);
+
+            Assert.IsTrue(npcResult);
+            Assert.IsFalse(roomResult);
+        }
+
+        [TestMethod]
+        public void GivenItemOnPlayableCharacterInteractionCausesNonPlayableCharacterReceivesItem_WhenInvoke_ThenNonPlayableCharacterHasItemAndPlayerDoesNot()
+        {
+            var item = new Item(Identifier.Empty, Description.Empty, true);
+            var npc = new NonPlayableCharacter(Identifier.Empty, Description.Empty, interaction: (i) =>
+            {
+                return new Interaction(InteractionResult.NonPlayableCharacterReceivesItem, i);
+            });
+            var room = new Room(Identifier.Empty, Description.Empty);
+            room.AddCharacter(npc);
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+            var overworld = new Overworld(string.Empty, string.Empty);
+            overworld.AddRegion(region);
+            var player = new PlayableCharacter(Identifier.Empty, Description.Empty);
+            npc.AddItem(item);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, player), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            var command = new UseOn(item, npc);
+            command.Invoke(game);
+
+            var playableCharacterResult = player.HasItem(item);
+            var nonPlayableCharacterResult = npc.HasItem(item);
+
+            Assert.IsFalse(playableCharacterResult);
+            Assert.IsTrue(nonPlayableCharacterResult);
+        }
+
+        [TestMethod]
         public void GivenGameWherePlayerHasItemAndRoomHasItem_WhenGetPrompts_ThenArrayContainingItem()
         {
             RegionMaker regionMaker = new("REGION", string.Empty);
