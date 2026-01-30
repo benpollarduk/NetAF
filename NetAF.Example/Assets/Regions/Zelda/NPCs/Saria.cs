@@ -59,7 +59,7 @@ namespace NetAF.Example.Assets.Regions.Zelda.NPCs
                 {
                     saria.RemoveItem(key);
                     room.AddItem(key);
-                    return new(InteractionResult.ItemExpires, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
+                    return new(InteractionResult.NonPlayableCharacterReceivesItem, item, $"{saria.Identifier.Name} looks excited! \"Thanks Link, here take the Tail Key!\" Saria put the Tail Key down, awesome!");
                 }
 
                 if (Shield.Name.EqualsIdentifier(item.Identifier))
