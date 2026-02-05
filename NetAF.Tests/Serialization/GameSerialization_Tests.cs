@@ -72,7 +72,7 @@ namespace NetAF.Tests.Serialization
 
             GameSerialization result = GameSerialization.FromGame(game);
 
-            Assert.AreEqual(2, result.InactivePlayerLocations.Length);
+            Assert.HasCount(2, result.InactivePlayerLocations);
         }
 
         [TestMethod]
@@ -125,8 +125,8 @@ namespace NetAF.Tests.Serialization
 
             ((IObjectSerialization<Game>)serialization).Restore(game);
 
-            Assert.AreEqual(1, game.Player.Items.Length);
-            Assert.AreEqual(0, room.Items.Length);
+            Assert.HasCount(1, game.Player.Items);
+            Assert.IsEmpty(room.Items);
         }
 
         [TestMethod]
@@ -154,8 +154,8 @@ namespace NetAF.Tests.Serialization
 
             ((IObjectSerialization<Game>)serialization).Restore(game);
 
-            Assert.AreEqual(0, game.Player.Items.Length);
-            Assert.AreEqual(1, room.Items.Length);
+            Assert.IsEmpty(game.Player.Items);
+            Assert.HasCount(1, room.Items);
         }
 
         [TestMethod]
@@ -192,8 +192,8 @@ namespace NetAF.Tests.Serialization
 
             ((IObjectSerialization<Game>)serialization).Restore(game);
 
-            Assert.AreEqual(0, roomA.Characters.Length);
-            Assert.AreEqual(1, roomB.Characters.Length);
+            Assert.IsEmpty(roomA.Characters);
+            Assert.HasCount(1, roomB.Characters);
         }
     }
 }

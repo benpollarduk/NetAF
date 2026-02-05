@@ -547,7 +547,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -557,7 +557,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = region.Examination(new ExaminationRequest(region, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
     }
 }

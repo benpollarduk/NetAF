@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace NetAF.Targets.Ast.Nodes
+namespace NetAF.Targets.Markup.Ast.Nodes
 {
     /// <summary>
     /// Get a node representing a paragraph in the abstract syntax tree.
     /// </summary>
-    public class ParagraphNode : INode
+    public class ParagraphNode : IBlockNode
     {
         /// <summary>
-        /// Get all inlines in this paragraph.
+        /// Get all inlines in this node.
         /// </summary>
-        public List<INode> Inlines { get; } = [];
+        public List<IInlineNode> Inlines { get; } = [];
     }
 }

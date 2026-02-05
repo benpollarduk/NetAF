@@ -120,7 +120,7 @@ namespace NetAF.Tests.Utilities
 
             var result = regionMaker.GetRoomPositions();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
     }
 }

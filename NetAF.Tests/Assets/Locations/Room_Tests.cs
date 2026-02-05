@@ -40,7 +40,7 @@ namespace NetAF.Tests.Assets.Locations
             var room = new Room(string.Empty, string.Empty);
             room.AddCharacter(new NonPlayableCharacter(string.Empty, string.Empty));
 
-            Assert.AreEqual(1, room.Characters.Length);
+            Assert.HasCount(1, room.Characters);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddCharacter(npc);
             room.RemoveCharacter(npc);
 
-            Assert.AreEqual(0, room.Characters.Length);
+            Assert.IsEmpty(room.Characters);
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddCharacter(new NonPlayableCharacter("A", string.Empty));
             room.RemoveCharacter(new NonPlayableCharacter("B", string.Empty));
 
-            Assert.AreEqual(1, room.Characters.Length);
+            Assert.HasCount(1, room.Characters);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace NetAF.Tests.Assets.Locations
             var room = new Room(string.Empty, string.Empty);
             room.AddItem(new Item(string.Empty, string.Empty));
 
-            Assert.AreEqual(1, room.Items.Length);
+            Assert.HasCount(1, room.Items);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddItem(item);
             room.RemoveItem(item);
 
-            Assert.AreEqual(0, room.Items.Length);
+            Assert.IsEmpty(room.Items);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddItem(new Item("A", string.Empty));
             room.RemoveItem(new Item("B", string.Empty));
 
-            Assert.AreEqual(1, room.Items.Length);
+            Assert.HasCount(1, room.Items);
         }
 
         [TestMethod]
@@ -228,7 +228,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -238,7 +238,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -248,7 +248,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -258,7 +258,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
 
@@ -270,7 +270,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -282,7 +282,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -294,7 +294,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]

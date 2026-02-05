@@ -65,7 +65,7 @@ namespace NetAF.Tests.Narratives
 
             var result = narrative.AllUntilCurrent();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
             Assert.AreEqual("ABC", result[0]);
         }
 
@@ -78,7 +78,7 @@ namespace NetAF.Tests.Narratives
 
             var result = narrative.AllUntilCurrent();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
             Assert.AreEqual("DEF", result[0]);
         }
     }

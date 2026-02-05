@@ -13,7 +13,7 @@ namespace NetAF.Tests.Logging.History
 
             var results = manager.GetAll();
 
-            Assert.IsTrue(results.Length == 0);
+            Assert.IsEmpty(results);
         }
 
         [TestMethod]

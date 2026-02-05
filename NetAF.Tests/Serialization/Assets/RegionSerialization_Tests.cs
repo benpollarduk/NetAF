@@ -27,7 +27,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RegionSerialization result = RegionSerialization.FromRegion(region);
 
-            Assert.AreEqual(0, result.Rooms.Length);
+            Assert.IsEmpty(result.Rooms);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RegionSerialization result = RegionSerialization.FromRegion(region);
 
-            Assert.AreEqual(1, result.Rooms.Length);
+            Assert.HasCount(1, result.Rooms);
         }
 
         [TestMethod]

@@ -1,4 +1,4 @@
-﻿namespace NetAF.Targets.Ast.Nodes
+﻿namespace NetAF.Targets.Markup
 {
     /// <summary>
     /// Enumeration of heading levels.

@@ -42,7 +42,7 @@ namespace NetAF.Tests.Persistence
 
             var result = RestorePoint.Create(string.Empty, game);
 
-            Assert.IsTrue((result.CreationTime - now).TotalMinutes <= 1);
+            Assert.IsLessThanOrEqualTo(1, (result.CreationTime - now).TotalMinutes);
         }
 
         [TestMethod]

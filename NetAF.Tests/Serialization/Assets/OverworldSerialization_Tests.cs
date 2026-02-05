@@ -26,7 +26,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             OverworldSerialization result = OverworldSerialization.FromOverworld(overworld);
 
-            Assert.AreEqual(0, result.Regions.Length);
+            Assert.IsEmpty(result.Regions);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             OverworldSerialization result = OverworldSerialization.FromOverworld(overworld);
 
-            Assert.AreEqual(1, result.Regions.Length);
+            Assert.HasCount(1, result.Regions);
         }
 
         [TestMethod]

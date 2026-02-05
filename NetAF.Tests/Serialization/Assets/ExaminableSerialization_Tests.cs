@@ -58,7 +58,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             ExaminableSerialization result = ExaminableSerialization.FromIExaminable(examinable);
 
-            Assert.AreEqual(1, result.Commands.Length);
+            Assert.HasCount(1, result.Commands);
         }
 
         [TestMethod]

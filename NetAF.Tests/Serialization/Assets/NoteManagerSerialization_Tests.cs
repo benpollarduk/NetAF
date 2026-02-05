@@ -16,7 +16,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             var result = NoteManagerSerialization.FromNoteManager(manager);
 
-            Assert.AreEqual(1, result.Entries.Count);
+            Assert.HasCount(1, result.Entries);
         }
 
         [TestMethod]

@@ -33,7 +33,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.AreEqual(2, result.Length);
+            Assert.HasCount(2, result);
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.AreEqual(2, result.Length);
+            Assert.HasCount(2, result);
         }
 
         [TestMethod]
@@ -198,7 +198,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.SupportedCommands;
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
     }
 }

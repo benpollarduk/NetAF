@@ -1,0 +1,144 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Targets.Markup;
+using NetAF.Targets.Markup.Rendering;
+using System.Drawing;
+
+namespace NetAF.Tests.Targets.Markup.Rendering
+{
+    [TestClass]
+    public class MarkupBuilder_Tests
+    {
+        [TestMethod]
+        public void GivenBlank_WhenH1_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Heading("Test", HeadingLevel.H1);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.Heading} Test", result);
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenH2_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Heading("Test", HeadingLevel.H2);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test", result);
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenH3_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Heading("Test", HeadingLevel.H3);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test", result);
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenH4_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Heading("Test", HeadingLevel.H4);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test", result);
+        }
+
+        [TestMethod]
+        public void GivenTest_WhenText_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test");
+            var result = builder.ToString();
+
+            Assert.AreEqual("Test", result);
+        }
+
+        [TestMethod]
+        public void GivenTest_WhenTextWithBold_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Bold: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
+        public void GivenTest_WhenTextWithItalic_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Italic: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
+        public void GivenTest_WhenTextWithForegroundSet_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Foreground: Color.FromArgb(1, 2, 3)));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
+        public void GivenTest_WhenTextWithBackgroundSet_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Background: Color.FromArgb(1, 2, 3)));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Background}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Background}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenNewline_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Newline();
+            var result = builder.ToString();
+
+            Assert.AreEqual(MarkupSyntax.NewLine.ToString(), result);
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenRaw_ThenNoModification()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Raw("Test");
+            var result = builder.ToString();
+
+            Assert.AreEqual("Test", result);
+        }
+
+        [TestMethod]
+        public void GivenSomeContent_WhenClear_ThenContentCleared()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Raw("Test");
+            builder.Clear();
+            var result = builder.ToString();
+
+            Assert.AreEqual(string.Empty, result);
+        }
+    }
+}

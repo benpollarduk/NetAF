@@ -80,7 +80,7 @@ namespace NetAF.Tests.Targets.Html.Rendering
             builder.Raw("Test");
             var result = builder.ToString();
 
-            Assert.AreEqual(@"Test", result);
+            Assert.AreEqual("Test", result);
         }
 
         [TestMethod]

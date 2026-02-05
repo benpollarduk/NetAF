@@ -41,7 +41,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.SupportedCommands;
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Interpretation
 
             var result = interpreter.GetContextualCommandHelp(game);
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
     }
 }

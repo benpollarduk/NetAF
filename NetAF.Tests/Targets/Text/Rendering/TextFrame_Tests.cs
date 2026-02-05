@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Text.Rendering
 
             var result = Encoding.Default.GetString(data);
 
-            Assert.IsTrue(result.StartsWith("Test"));
+            Assert.StartsWith("Test", result);
         }
     }
 }

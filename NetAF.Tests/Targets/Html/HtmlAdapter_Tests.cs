@@ -134,7 +134,7 @@ namespace NetAF.Tests.Targets.Html
 
             var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, true, true);
 
-            Assert.IsTrue(result.StartsWith("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;"));
+            Assert.StartsWith("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;", result);
         }
 
         [TestMethod]

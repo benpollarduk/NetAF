@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetAF.Targets.Ast.Nodes
+namespace NetAF.Targets.Markup.Ast.Nodes
 {
     /// <summary>
     /// Represents a document in the abstract syntax tree.
@@ -8,8 +8,8 @@ namespace NetAF.Targets.Ast.Nodes
     public class DocumentNode : INode
     {
         /// <summary>
-        /// Get all child nodes.
+        /// Get all blocks.
         /// </summary>
-        public List<INode> Children { get; } = [];
+        public List<IBlockNode> Blocks { get; } = [];
     }
 }

@@ -27,7 +27,7 @@ namespace NetAF.Tests.Persistence.Json
             var expectedMinusDateTime = """{"Game":{"ActivePlayerIdentifier":"","Players":[{"Items":[],"IsAlive":true,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":[]},"Commands":[]}],"Overworld":{"Regions":[{"Rooms":[{"HasBeenVisited":true,"Items":[{"Identifier":"","IsPlayerVisible":false,"AttributeManager":{"Values":[]},"Commands":[]}],"Exits":[],"Characters":[],"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":[]},"Commands":[]}],"CurrentRoom":"","IsVisibleWithoutDiscovery":false,"Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":[]},"Commands":[]}],"CurrentRegion":"","Identifier":"","IsPlayerVisible":true,"AttributeManager":{"Values":[]},"Commands":[]},"InactivePlayerLocations":[],"NoteManager":{"Entries":[]},"VariableManager":{"Variables":[]}},"Name":"Test""";
             var json = JsonSave.ToJson(save);
 
-            Assert.IsTrue(json.StartsWith(expectedMinusDateTime));
+            Assert.StartsWith(expectedMinusDateTime, json);
         }
 
         [TestMethod]

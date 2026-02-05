@@ -105,7 +105,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = matrix.ToRooms();
 
-            Assert.AreEqual(4, result.Length);
+            Assert.HasCount(4, result);
         }
 
         [TestMethod]
@@ -122,7 +122,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = matrix.FindAllRoomsOnZ(0);
 
-            Assert.AreEqual(2, result.Length);
+            Assert.HasCount(2, result);
         }
 
         [TestMethod]
@@ -139,7 +139,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = matrix.FindAllRoomsOnZ(1);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -219,7 +219,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = matrix.FindAllZWithVisitedRooms();
 
-            Assert.AreEqual(2, result.Length);
+            Assert.HasCount(2, result);
             Assert.AreEqual(1, result[0]);
             Assert.AreEqual(3, result[1]);
         }
