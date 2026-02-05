@@ -35,10 +35,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Draw the west exit.
         /// </summary>
         /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
         /// <param name="topLeft">The top left cell of the room.</param>
         /// <param name="color">The color</param>
-        private void DrawWest(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        private void DrawWest(GridStringBuilder builder, Point2D topLeft, AnsiColor color)
         {
             builder.SetCell(topLeft.X, topLeft.Y, VerticalBoundary, color);
         }
@@ -47,10 +46,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Draw the east exit.
         /// </summary>
         /// <param name="builder">The builder to draw with</param>
-        /// <param name="room">The room.</param>
         /// <param name="topLeft">The top left cell of the room.</param>
         /// <param name="color">The color</param>
-        private void DrawEast(GridStringBuilder builder, Room room, Point2D topLeft, AnsiColor color)
+        private void DrawEast(GridStringBuilder builder, Point2D topLeft, AnsiColor color)
         {
             builder.SetCell(topLeft.X + 2, topLeft.Y, VerticalBoundary, color);
         }
@@ -94,8 +92,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
              * [O]
             */
 
-            DrawWest(gridStringBuilder, room, startPosition, BoundaryColor);
-            DrawEast(gridStringBuilder, room, startPosition, BoundaryColor);
+            DrawWest(gridStringBuilder, startPosition, BoundaryColor);
+            DrawEast(gridStringBuilder, startPosition, BoundaryColor);
 
             gridStringBuilder.SetCell(startPosition.X + 1, startPosition.Y, EmptySpace, BoundaryColor);
             
