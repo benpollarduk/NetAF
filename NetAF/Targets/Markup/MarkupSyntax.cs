@@ -48,6 +48,11 @@
         internal const string Italic = "italic";
 
         /// <summary>
+        /// Get the string that denotes strikethrough.
+        /// </summary>
+        internal const string Strikethrough = "strikethrough";
+
+        /// <summary>
         /// Get the string that denotes foreground.
         /// </summary>
         internal const string Background = "foreground";

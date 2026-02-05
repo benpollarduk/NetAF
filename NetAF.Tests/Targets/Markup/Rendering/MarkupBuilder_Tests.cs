@@ -86,6 +86,17 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         }
 
         [TestMethod]
+        public void GivenTest_WhenTextWithStrikethrough_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Strikethrough: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
         public void GivenTest_WhenTextWithForegroundSet_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();

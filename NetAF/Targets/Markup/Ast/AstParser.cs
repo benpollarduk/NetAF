@@ -169,6 +169,9 @@ namespace NetAF.Targets.Markup.Ast
             if (tag.Equals(MarkupSyntax.Italic, StringComparison.InvariantCultureIgnoreCase))
                 return new TextStyle(Italic: true);
 
+            if (tag.Equals(MarkupSyntax.Strikethrough, StringComparison.InvariantCultureIgnoreCase))
+                return new TextStyle(Strikethrough: true);
+
             var foregoundWithDelimiter = MarkupSyntax.Foregound + MarkupSyntax.Delimiter;
             var bakgroundWithDelimiter = MarkupSyntax.Background + MarkupSyntax.Delimiter;
 

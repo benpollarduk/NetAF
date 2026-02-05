@@ -68,6 +68,9 @@ namespace NetAF.Targets.Markup.Rendering
             if (style.Italic)
                 content = Format(MarkupSyntax.Italic, content);
 
+            if (style.Strikethrough)
+                content = Format(MarkupSyntax.Strikethrough, content);
+
             if (style.Foreground != null)
                 content = FormatWithValue(MarkupSyntax.Foregound, ColorTranslator.ToHtml(style.Foreground.Value), content);
 

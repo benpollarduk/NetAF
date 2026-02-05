@@ -29,5 +29,13 @@ namespace NetAF.Tests.Rendering.FrameBuilders
 
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void GivenGetMarkup_ThenPopulatedCollectionReturned()
+        {
+            var result = FrameBuilderCollections.Markup;
+
+            Assert.IsNotNull(result);
+        }
     }
 }
