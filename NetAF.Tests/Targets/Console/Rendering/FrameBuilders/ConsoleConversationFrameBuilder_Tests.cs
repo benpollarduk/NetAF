@@ -60,7 +60,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             var log = ConsoleConversationFrameBuilder.TruncateLog(0, 50, 10, null);
 
-            Assert.AreEqual(0, log.Length);
+            Assert.IsEmpty(log);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             var log = ConsoleConversationFrameBuilder.TruncateLog(0, 50, 10, []);
 
-            Assert.AreEqual(0, log.Length);
+            Assert.IsEmpty(log);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             var log = ConsoleConversationFrameBuilder.TruncateLog(0, 50, 2, [new LogItem(Participant.Other, "")]);
 
-            Assert.AreEqual(1, log.Length);
+            Assert.HasCount(1, log);
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             var log = ConsoleConversationFrameBuilder.TruncateLog(0, 50, 1, [new LogItem(Participant.Other, ""), new LogItem(Participant.Player, "")]);
 
-            Assert.AreEqual(1, log.Length);
+            Assert.HasCount(1, log);
         }
     }
 }

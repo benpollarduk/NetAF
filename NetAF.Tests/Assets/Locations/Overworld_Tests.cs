@@ -50,7 +50,7 @@ namespace NetAF.Tests.Assets.Locations
 
             overworld.RemoveRegion(region);
 
-            Assert.AreEqual(0, overworld.Regions.Length);
+            Assert.IsEmpty(overworld.Regions);
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = overworld.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = overworld.Examination(new ExaminationRequest(overworld, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
 
-            Assert.IsTrue(result.Description.Length > 0);
+            Assert.IsGreaterThan(0, result.Description.Length);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace NetAF.Tests.Extensions
 
             var result = value.Remove(value[0]);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace NetAF.Tests.Extensions
 
             var result = value.Remove(new(string.Empty, string.Empty));
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace NetAF.Tests.Extensions
 
             var result = value.Remove(new(string.Empty, string.Empty));
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
     }
 }

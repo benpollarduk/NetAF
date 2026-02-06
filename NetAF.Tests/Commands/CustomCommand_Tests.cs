@@ -13,7 +13,7 @@ namespace NetAF.Tests.Commands
 
             var result = command.GetPrompts(null);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace NetAF.Tests.Commands
 
             var result = command.GetPrompts(null);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace NetAF.Tests.Commands
 
             var result = command.GetPrompts(null);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace NetAF.Tests.Commands
 
             var result = command.GetPrompts(null);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace NetAF.Tests.Commands
             command.ClearPrompts();
             var prompts = command.GetPrompts(null);
 
-            Assert.AreEqual(0, prompts.Length);
+            Assert.IsEmpty(prompts);
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Commands
 
             var result = command.Clone() as CustomCommand;
 
-            Assert.AreEqual(1, result.GetPrompts(null).Length);
+            Assert.HasCount(1, result.GetPrompts(null));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace NetAF.Tests.Targets.Html.Rendering
 
             var result = System.Text.Encoding.Default.GetString(data);
 
-            Assert.IsTrue(result.StartsWith("<!DOCTYPE html>"));
+            Assert.StartsWith("<!DOCTYPE html>", result);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetContextualCommands();
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Logic
             var result = game.GetContextualCommands();
 
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(4, result.Length);
+            Assert.HasCount(4, result);
         }
 
         [TestMethod]
@@ -93,7 +93,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(5, result.Length);
+            Assert.HasCount(5, result);
         }
 
         [TestMethod]
@@ -109,7 +109,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(4, result.Length);
+            Assert.HasCount(4, result);
         }
 
         [TestMethod]
@@ -125,7 +125,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(5, result.Length);
+            Assert.HasCount(5, result);
         }
 
         [TestMethod]
@@ -141,7 +141,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(4, result.Length);
+            Assert.HasCount(4, result);
         }
 
         [TestMethod]
@@ -158,7 +158,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(5, result.Length);
+            Assert.HasCount(5, result);
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ namespace NetAF.Tests.Logic
             game.Overworld.CurrentRegion.Enter();
             var result = game.GetAllPlayerVisibleExaminables();
 
-            Assert.AreEqual(4, result.Length);
+            Assert.HasCount(4, result);
         }
 
         [TestMethod]
@@ -387,7 +387,7 @@ namespace NetAF.Tests.Logic
             game.ChangePlayer(new("B", string.Empty));
             var result = game.GetInactivePlayerLocations();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -456,7 +456,7 @@ namespace NetAF.Tests.Logic
             game.ChangePlayer(game.Player, false);
             var result = game.GetInactivePlayerLocations();
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -551,7 +551,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetPromptsForCommand(Examine.CommandHelp.Command);
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
 
         [TestMethod]
@@ -566,7 +566,7 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetPromptsForCommand(Examine.CommandHelp);
 
-            Assert.IsTrue(result.Length > 0);
+            Assert.IsNotEmpty(result);
         }
 
         [TestMethod]

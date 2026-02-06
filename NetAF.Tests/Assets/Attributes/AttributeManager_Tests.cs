@@ -13,7 +13,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(2, result.Length);
+            Assert.HasCount(2, result);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -94,7 +94,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -118,7 +118,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -141,7 +141,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAttributes();
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -175,7 +175,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAsDictionary();
 
-            Assert.AreEqual(0, result.Count);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -186,7 +186,7 @@ namespace NetAF.Tests.Assets.Attributes
 
             var result = manager.GetAsDictionary();
 
-            Assert.AreEqual(1, result.Count);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]

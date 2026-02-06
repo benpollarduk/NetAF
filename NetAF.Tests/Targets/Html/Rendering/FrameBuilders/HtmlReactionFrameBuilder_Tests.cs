@@ -19,5 +19,17 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 builder.Build(string.Empty, string.Empty, false, new Size(80, 50));
             });
         }
+
+        [TestMethod]
+        public void GivenNonEmptyFields_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var htmlBuilder = new HtmlBuilder();
+                var builder = new HtmlReactionFrameBuilder(htmlBuilder);
+
+                builder.Build("test", "test", false, new Size(80, 50));
+            });
+        }
     }
 }

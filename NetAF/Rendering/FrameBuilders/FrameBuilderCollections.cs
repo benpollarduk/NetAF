@@ -2,6 +2,8 @@
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
+using NetAF.Targets.Markup.Rendering;
+using NetAF.Targets.Markup.Rendering.FrameBuilders;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
 
@@ -96,6 +98,36 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextNoteFrameBuilder(stringBuilder),
                     new TextHistoryFrameBuilder(stringBuilder),
                     new TextNarrativeFrameBuilder(stringBuilder)
+                ];
+
+                return new(frameBuilders);
+            }
+        }
+
+        /// <summary>
+        /// Get the default markup frame builder collection.
+        /// </summary>
+        public static FrameBuilderCollection Markup
+        {
+            get
+            {
+                var markupBuilder = new MarkupBuilder();
+
+                IFrameBuilder[] frameBuilders =
+                [
+                    new MarkupTitleFrameBuilder(markupBuilder),
+                    new MarkupSceneFrameBuilder(markupBuilder, new MarkupRoomMapBuilder(markupBuilder)),
+                    new MarkupRegionMapFrameBuilder(markupBuilder, new MarkupRegionMapBuilder(markupBuilder)),
+                    new MarkupCommandListFrameBuilder(markupBuilder),
+                    new MarkupHelpFrameBuilder(markupBuilder),
+                    new MarkupCompletionFrameBuilder(markupBuilder),
+                    new MarkupGameOverFrameBuilder(markupBuilder),
+                    new MarkupAboutFrameBuilder(markupBuilder),
+                    new MarkupReactionFrameBuilder(markupBuilder),
+                    new MarkupConversationFrameBuilder(markupBuilder),
+                    new MarkupNoteFrameBuilder(markupBuilder),
+                    new MarkupHistoryFrameBuilder(markupBuilder),
+                    new MarkupNarrativeFrameBuilder(markupBuilder)
                 ];
 
                 return new(frameBuilders);

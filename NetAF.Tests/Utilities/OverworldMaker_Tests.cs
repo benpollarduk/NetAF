@@ -39,7 +39,7 @@ namespace NetAF.Tests.Utilities
 
             var result = maker.Make();
 
-            Assert.AreEqual(1, result.Regions.Length);
+            Assert.HasCount(1, result.Regions);
         }
     }
 }

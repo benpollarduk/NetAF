@@ -36,8 +36,8 @@ namespace NetAF.Tests.Logic.Arrangement
 
             AssetArranger.Arrange(game, serialization);
 
-            Assert.AreEqual(1, game.Player.Items.Length);
-            Assert.AreEqual(0, room.Items.Length);
+            Assert.HasCount(1, game.Player.Items);
+            Assert.IsEmpty(room.Items);
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             AssetArranger.Arrange(game, serialization);
 
-            Assert.AreEqual(0, room.Items.Length);
+            Assert.IsEmpty(room.Items);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace NetAF.Tests.Logic.Arrangement
 
             AssetArranger.Arrange(game, serialization);
 
-            Assert.AreEqual(0, room.Characters.Length);
+            Assert.IsEmpty(room.Characters);
         }
 
         [TestMethod]
@@ -119,8 +119,8 @@ namespace NetAF.Tests.Logic.Arrangement
 
             AssetArranger.Arrange(game, serialization);
 
-            Assert.AreEqual(0, game.Player.Items.Length);
-            Assert.AreEqual(1, room.Items.Length);
+            Assert.IsEmpty(game.Player.Items);
+            Assert.HasCount(1, room.Items);
         }
 
         [TestMethod]
@@ -155,8 +155,8 @@ namespace NetAF.Tests.Logic.Arrangement
 
             AssetArranger.Arrange(game, serialization);
 
-            Assert.AreEqual(0, roomA.Characters.Length);
-            Assert.AreEqual(1, roomB.Characters.Length);
+            Assert.IsEmpty(roomA.Characters);
+            Assert.HasCount(1, roomB.Characters);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             var result = AttributeManagerSerialization.FromAttributeManager(attributeManager);
 
-            Assert.AreEqual(1, result.Values.Count);
+            Assert.HasCount(1, result.Values);
         }
 
         [TestMethod]

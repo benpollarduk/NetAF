@@ -46,12 +46,14 @@ namespace NetAF.Example.Assets.Regions.Hub.Rooms
                         new("Yes please, change to ANSI."),
                         new("Yes please, change to HTML.", new Jump(2)),
                         new("Yes please, change to text.", new Jump(3)),
-                        new("No thanks, keep things as they are.", new Jump(4))
+                        new("Yes please, change to markup.", new Jump(4)),
+                        new("No thanks, keep things as they are.", new Jump(5))
                     ]
                 },
                 new("Arrk! Color it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Console, new ToName("ModeQuestion")),
                 new("Eeek, HTML be fine too!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Html, new ToName("ModeQuestion")),
                 new("Squarrk! text, looks old. Arrk!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Text, new ToName("ModeQuestion")),
+                new("Ohhhh, markup is useful!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Markup, new ToName("ModeQuestion")),
                 new("Fine, suit yourself! Squarrk!", new ToName("ModeQuestion"))
             ]);
 

@@ -38,7 +38,7 @@ namespace NetAF.Tests.Logic
 
             var catalog = AssetCatalog.FromGame(game);
 
-            Assert.AreEqual(1, catalog.Items.Length);
+            Assert.HasCount(1, catalog.Items);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Logic
 
             var catalog = AssetCatalog.FromGame(game);
 
-            Assert.AreEqual(1, catalog.Rooms.Length);
+            Assert.HasCount(1, catalog.Rooms);
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace NetAF.Tests.Logic
 
             var catalog = AssetCatalog.FromGame(game);
 
-            Assert.AreEqual(1, catalog.Characters.Length);
+            Assert.HasCount(1, catalog.Characters);
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace NetAF.Tests.Logic
 
             var catalog = AssetCatalog.FromGame(game);
 
-            Assert.AreEqual(3, catalog.ItemContainers.Length);
+            Assert.HasCount(3, catalog.ItemContainers);
         }
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace NetAF.Tests.Logic
 
             catalog.Register(new Room(string.Empty, string.Empty));
 
-            Assert.AreEqual(2, catalog.Rooms.Length);
+            Assert.HasCount(2, catalog.Rooms);
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace NetAF.Tests.Logic
 
             catalog.Register(new Item(string.Empty, string.Empty));
 
-            Assert.AreEqual(2, catalog.Items.Length);
+            Assert.HasCount(2, catalog.Items);
         }
 
         [TestMethod]
@@ -136,7 +136,7 @@ namespace NetAF.Tests.Logic
 
             catalog.Register(new NonPlayableCharacter(string.Empty, string.Empty));
 
-            Assert.AreEqual(2, catalog.Characters.Length);
+            Assert.HasCount(2, catalog.Characters);
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace NetAF.Tests.Logic
 
             catalog.Register(new CharacterTemplate());
 
-            Assert.AreEqual(2, catalog.Characters.Length);
+            Assert.HasCount(2, catalog.Characters);
         }
 
         [TestMethod]
@@ -170,7 +170,7 @@ namespace NetAF.Tests.Logic
 
             catalog.Register(new PlayerTemplate());
 
-            Assert.AreEqual(2, catalog.Players.Length);
+            Assert.HasCount(2, catalog.Players);
         }
     }
 }

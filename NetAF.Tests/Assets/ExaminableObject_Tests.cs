@@ -14,7 +14,7 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains(i.Description.GetDescription()));
+            Assert.Contains(i.Description.GetDescription(), result.Description);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains(i.Commands[0].Help.Command));
+            Assert.Contains(i.Commands[0].Help.Command, result.Description);
         }
 
         [TestMethod]
@@ -45,8 +45,8 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains(i.Commands[0].Help.Command));
-            Assert.IsTrue(result.Description.Contains(i.Commands[1].Help.Command));
+            Assert.Contains(i.Commands[0].Help.Command, result.Description);
+            Assert.Contains(i.Commands[1].Help.Command, result.Description);
         }
 
         [TestMethod]
@@ -56,7 +56,7 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains("Test"));
+            Assert.Contains("Test", result.Description);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains("Item"));
+            Assert.Contains("Item", result.Description);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace NetAF.Tests.Assets
 
             var result = i.Examine(ExaminationScene.NoScene);
 
-            Assert.IsTrue(result.Description.Contains("Attribute"));
+            Assert.Contains("Attribute", result.Description);
         }
     }
 }

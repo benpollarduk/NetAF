@@ -37,7 +37,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             CharacterSerialization result = CharacterSerialization.FromCharacter(character);
 
-            Assert.AreEqual(0, result.Items.Length);
+            Assert.IsEmpty(result.Items);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             CharacterSerialization result = CharacterSerialization.FromCharacter(character);
 
-            Assert.AreEqual(1, result.Items.Length);
+            Assert.HasCount(1, result.Items);
         }
 
         [TestMethod]

@@ -62,7 +62,7 @@ namespace NetAF.Tests.Serialization
 
             var result = command2.GetPrompts(null);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
             Assert.AreEqual("A", result[0].Entry);
         }
     }

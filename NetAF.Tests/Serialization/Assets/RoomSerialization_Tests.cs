@@ -36,7 +36,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(0, result.Items.Length);
+            Assert.IsEmpty(result.Items);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(1, result.Items.Length);
+            Assert.HasCount(1, result.Items);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(0, result.Characters.Length);
+            Assert.IsEmpty(result.Characters);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(1, result.Characters.Length);
+            Assert.HasCount(1, result.Characters);
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(0, result.Exits.Length);
+            Assert.IsEmpty(result.Exits);
         }
 
         [TestMethod]
@@ -88,7 +88,7 @@ namespace NetAF.Tests.Serialization.Assets
 
             RoomSerialization result = RoomSerialization.FromRoom(room);
 
-            Assert.AreEqual(1, result.Exits.Length);
+            Assert.HasCount(1, result.Exits);
         }
 
         [TestMethod]
