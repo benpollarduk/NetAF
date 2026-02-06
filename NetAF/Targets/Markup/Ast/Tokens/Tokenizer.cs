@@ -20,22 +20,22 @@ namespace NetAF.Targets.Markup.Ast.Tokens
             var i = 0;
 
             // iterate through entire input
-            while (i < input.Length)
+            while (IsNotEnd(input, i))
             {
                 // look for headings (must be at start of line)
-                if ((i == 0 || input[i - 1] == MarkupSyntax.NewLine) && input[i] == MarkupSyntax.Heading)
+                if (IsHeadingStart(input, i))
                 {
                     StringBuilder builder = new();
 
                     // could be multiple #'s
-                    while (i < input.Length && input[i] == MarkupSyntax.Heading)
+                    while (IsNotEnd(input, i) && IsHeading(input, i))
                     {
                         builder.Append(MarkupSyntax.Heading);
                         i++;
                     }
 
                     // skip space
-                    if (i < input.Length && input[i] == MarkupSyntax.Space)
+                    if (IsNotEnd(input, i) && IsSpace(input, i))
                         i++;
 
                     yield return new Token(TokenType.Heading, builder.ToString());
@@ -43,7 +43,7 @@ namespace NetAF.Targets.Markup.Ast.Tokens
                 }
 
                 // tags
-                if (input[i] == MarkupSyntax.OpenTag)
+                if (IsOpenTag(input, i))
                 {
                     int end = input.IndexOf(MarkupSyntax.CloseTag, i);
 
@@ -69,7 +69,7 @@ namespace NetAF.Targets.Markup.Ast.Tokens
                 }
 
                 // new line
-                if (input[i] == MarkupSyntax.NewLine)
+                if (IsNewline(input, i))
                 {
                     yield return new Token(TokenType.NewLine, MarkupSyntax.NewLine.ToString());
                     i++;
@@ -79,11 +79,41 @@ namespace NetAF.Targets.Markup.Ast.Tokens
                 // text
                 int start = i;
 
-                while (i < input.Length && input[i] != MarkupSyntax.OpenTag && input[i] != MarkupSyntax.NewLine)
+                while (IsNotEnd(input, i) && !IsOpenTag(input, i) && !IsNewline(input, i))
                     i++;
 
                 yield return new Token(TokenType.Text, input[start..i]);
             }
+        }
+
+        private static bool IsHeadingStart(string input, int characterIndex)
+        {
+            return (characterIndex == 0 || input[characterIndex - 1] == MarkupSyntax.NewLine) && input[characterIndex] == MarkupSyntax.Heading;
+        }
+
+        private static bool IsOpenTag(string input, int characterIndex)
+        {
+            return input[characterIndex] == MarkupSyntax.OpenTag;
+        }
+
+        private static bool IsNewline(string input, int characterIndex)
+        {
+            return input[characterIndex] == MarkupSyntax.NewLine;
+        }
+
+        private static bool IsSpace(string input, int characterIndex)
+        {
+            return input[characterIndex] == MarkupSyntax.Space;
+        }
+
+        private static bool IsHeading(string input, int characterIndex)
+        {
+            return input[characterIndex] == MarkupSyntax.Heading;
+        }
+
+        private static bool IsNotEnd(string input, int characterIndex)
+        {
+            return characterIndex < input.Length;
         }
 
         #endregion

@@ -113,21 +113,7 @@ namespace NetAF.Targets.Markup.Ast
                     }
                 }
 
-                // remove the first paragraph if it ended up being empty
-                if (documentNode.Blocks.Count != 0 &&
-                    documentNode.Blocks[0] is ParagraphNode first &&
-                    first.Inlines.Count == 0)
-                {
-                    documentNode.Blocks.Remove(first);
-                }
-
-                // remove the last paragraph if it ended up being empty
-                if (documentNode.Blocks.Count != 0 &&
-                    documentNode.Blocks[^1] is ParagraphNode last &&
-                    last.Inlines.Count == 0)
-                {
-                    documentNode.Blocks.Remove(last);
-                }
+                TidyDocumentNode(documentNode);
             }
             catch (Exception ex)
             {
@@ -136,6 +122,25 @@ namespace NetAF.Targets.Markup.Ast
             }
 
             return true;
+        }
+
+        private static void TidyDocumentNode(DocumentNode documentNode)
+        {
+            // remove the first paragraph if it ended up being empty
+            if (documentNode.Blocks.Count != 0 &&
+                documentNode.Blocks[0] is ParagraphNode first &&
+                first.Inlines.Count == 0)
+            {
+                documentNode.Blocks.Remove(first);
+            }
+
+            // remove the last paragraph if it ended up being empty
+            if (documentNode.Blocks.Count != 0 &&
+                documentNode.Blocks[^1] is ParagraphNode last &&
+                last.Inlines.Count == 0)
+            {
+                documentNode.Blocks.Remove(last);
+            }
         }
 
         private static Color? GetColorFromHex(string hex)
