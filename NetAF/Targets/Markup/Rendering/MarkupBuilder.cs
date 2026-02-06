@@ -71,6 +71,9 @@ namespace NetAF.Targets.Markup.Rendering
             if (style.Strikethrough)
                 content = Format(MarkupSyntax.Strikethrough, content);
 
+            if (style.Monospace)
+                content = Format(MarkupSyntax.Monospace, content);
+
             if (style.Foreground != null)
                 content = FormatWithValue(MarkupSyntax.Foregound, ColorTranslator.ToHtml(style.Foreground.Value), content);
 

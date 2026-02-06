@@ -172,6 +172,9 @@ namespace NetAF.Targets.Markup.Ast
             if (tag.Equals(MarkupSyntax.Strikethrough, StringComparison.InvariantCultureIgnoreCase))
                 return new TextStyle(Strikethrough: true);
 
+            if (tag.Equals(MarkupSyntax.Monospace, StringComparison.InvariantCultureIgnoreCase))
+                return new TextStyle(Monospace: true);
+
             var foregoundWithDelimiter = MarkupSyntax.Foregound + MarkupSyntax.Delimiter;
             var bakgroundWithDelimiter = MarkupSyntax.Background + MarkupSyntax.Delimiter;
 

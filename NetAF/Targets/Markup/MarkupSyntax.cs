@@ -53,6 +53,11 @@
         internal const string Strikethrough = "strikethrough";
 
         /// <summary>
+        /// Get the string that denotes monospace.
+        /// </summary>
+        internal const string Monospace = "monospace";
+
+        /// <summary>
         /// Get the string that denotes foreground.
         /// </summary>
         internal const string Background = "foreground";

@@ -97,6 +97,17 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         }
 
         [TestMethod]
+        public void GivenTest_WhenTextWithMonospace_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Monospace: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
         public void GivenTest_WhenTextWithForegroundSet_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();

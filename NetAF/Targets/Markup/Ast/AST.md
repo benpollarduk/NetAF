@@ -15,6 +15,8 @@ The tokens are parsed to AST.
 #, ##, ###, #### - headings 1 - 4.
 [bold][/bold] - all text between the tags is bold.
 [italic][/italic] - all text between the tags is bold.
+[stikethrough][/stikethrough] - all text between the tags uses strikethrough.
+[monospace][/monospace] - all text between the tags should be monospace.
 [foreground:FFFFFF][foreground:FFFFFF] - all text between the tags has a specified foreground color in hex, RRGGBB.
 [background:FFFFFF][background:FFFFFF] - all text between the tags has a specified background color in hex, RRGGBB.
 ```
