@@ -86,7 +86,7 @@ namespace NetAF.Tests.Targets.Markup
 
             var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, true, false, false);
 
-            Assert.AreEqual("    a", result);
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}    a{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace NetAF.Tests.Targets.Markup
 
             var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, true, false, false);
 
-            Assert.AreEqual($"    a{MarkupSyntax.NewLine}    a", result);
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}    a{MarkupSyntax.NewLine}    a{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
@@ -110,9 +110,8 @@ namespace NetAF.Tests.Targets.Markup
 
             var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, false, false, false);
 
-            Assert.AreEqual("\0\0\0\0\0", result);
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}\0\0\0\0\0{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
-
 
         [TestMethod]
         public void GivenEmptyCharactersOver2Rows_WhenConvertGridStringBuilderToMarkupStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
@@ -122,7 +121,7 @@ namespace NetAF.Tests.Targets.Markup
 
             var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, false, false, false);
 
-            Assert.AreEqual($"\0\0\0\0\0{MarkupSyntax.NewLine}\0\0\0\0\0", result);
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}\0\0\0\0\0{MarkupSyntax.NewLine}\0\0\0\0\0{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
