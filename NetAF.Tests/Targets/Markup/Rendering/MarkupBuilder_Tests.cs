@@ -97,6 +97,17 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         }
 
         [TestMethod]
+        public void GivenTest_WhenTextWithUnderline_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Text("Test", new TextStyle(Underline: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
         public void GivenTest_WhenTextWithMonospace_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();

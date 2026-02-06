@@ -166,6 +166,9 @@ namespace NetAF.Targets.Markup.Ast
             if (tag.Equals(MarkupSyntax.Strikethrough, StringComparison.InvariantCultureIgnoreCase))
                 return new TextStyle(Strikethrough: true);
 
+            if (tag.Equals(MarkupSyntax.Underline, StringComparison.InvariantCultureIgnoreCase))
+                return new TextStyle(Underline: true);
+
             if (tag.Equals(MarkupSyntax.Monospace, StringComparison.InvariantCultureIgnoreCase))
                 return new TextStyle(Monospace: true);
 

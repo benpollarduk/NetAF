@@ -168,6 +168,25 @@ namespace NetAF.Tests.Targets.Markup.Ast
         }
 
         [TestMethod]
+        public void GivenUnderlineText_WhenTryParse_ThenReturnTrueAndDocumentWithParagraphContainingUnderlineTextInStyleSpanNode()
+        {
+            var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}";
+
+            var result = AstParser.TryParse(input, out var doc);
+            var paragraph = doc.Blocks[0] as ParagraphNode;
+            var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
+            var text = styleSpan?.Inlines[0] as TextNode;
+
+            Assert.IsTrue(result);
+            Assert.HasCount(1, doc.Blocks);
+            Assert.IsNotNull(paragraph);
+            Assert.IsNotNull(styleSpan);
+            Assert.IsTrue(styleSpan.Style.Underline);
+            Assert.IsNotNull(text);
+            Assert.AreEqual("Test", text.Text);
+        }
+
+        [TestMethod]
         public void GivenMonospaceText_WhenTryParse_ThenReturnTrueAndDocumentWithParagraphContainingMonospaceTextInStyleSpanNode()
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}";

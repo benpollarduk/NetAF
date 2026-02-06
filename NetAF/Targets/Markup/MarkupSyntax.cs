@@ -53,6 +53,11 @@
         internal const string Strikethrough = "strikethrough";
 
         /// <summary>
+        /// Get the string that denotes underline.
+        /// </summary>
+        internal const string Underline = "underline";
+
+        /// <summary>
         /// Get the string that denotes monospace.
         /// </summary>
         internal const string Monospace = "monospace";
