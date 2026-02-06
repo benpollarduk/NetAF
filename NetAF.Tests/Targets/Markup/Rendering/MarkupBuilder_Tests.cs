@@ -15,7 +15,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             builder.Heading("Test", HeadingLevel.H1);
             var result = builder.ToString();
 
-            Assert.AreEqual($"{MarkupSyntax.Heading} Test{MarkupSyntax.Newline}", result);
+            Assert.AreEqual($"{MarkupSyntax.Heading} Test{MarkupSyntax.NewLine}", result);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             builder.Heading("Test", HeadingLevel.H2);
             var result = builder.ToString();
 
-            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.Newline}", result);
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.NewLine}", result);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             builder.Heading("Test", HeadingLevel.H3);
             var result = builder.ToString();
 
-            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.Newline}", result);
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.NewLine}", result);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             builder.Heading("Test", HeadingLevel.H4);
             var result = builder.ToString();
 
-            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.Newline}", result);
+            Assert.AreEqual($"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test{MarkupSyntax.NewLine}", result);
         }
 
         [TestMethod]
