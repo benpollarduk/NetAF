@@ -14,8 +14,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupAboutFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupAboutFrameBuilder(markupBuilder);
 
                 builder.Build(string.Empty, Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke(), new Size(80, 50));
             });

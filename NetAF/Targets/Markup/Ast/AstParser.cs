@@ -110,9 +110,6 @@ namespace NetAF.Targets.Markup.Ast
                             inlineStack.Push(currentParagraph.Inlines);
 
                             break;
-
-                        default:
-                            throw new NotImplementedException($"Token type {token.Type} is not supported.");
                     }
                 }
 
@@ -143,20 +140,12 @@ namespace NetAF.Targets.Markup.Ast
 
         private static Color? GetColorFromHex(string hex)
         {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(hex)) return null;
+            if (string.IsNullOrWhiteSpace(hex)) return null;
 
-                if (!hex.StartsWith('#'))
-                    hex = $"#{hex}";
+            if (!hex.StartsWith('#'))
+                hex = $"#{hex}";
 
-                return ColorTranslator.FromHtml(hex);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Exception caught parsing color from {hex}: {e.Message}");
-                return null;
-            }
+            return ColorTranslator.FromHtml(hex);
         }
 
         private static TextStyle GetStyleFromToken(string tag)

@@ -14,8 +14,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupNoteFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupNoteFrameBuilder(markupBuilder);
 
                 builder.Build(string.Empty, string.Empty, [], new Size(80, 50));
             });
@@ -26,8 +26,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupNoteFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupNoteFrameBuilder(markupBuilder);
                 NoteEntry[] entries = [new("A", "B"), new("C", "D")];
                 entries[0].Expire();
 

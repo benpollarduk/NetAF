@@ -2,10 +2,10 @@
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands.RegionMap;
-using NetAF.Targets.Html.Rendering;
-using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
+using NetAF.Targets.Markup.Rendering;
+using NetAF.Targets.Markup.Rendering.FrameBuilders;
 
 namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
 {
@@ -15,8 +15,8 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         [TestMethod]
         public void GivenWidthOf80HeightOf50_WhenBuild_ThenNotNull()
         {
-            var stringBuilder = new HtmlBuilder();
-            var builder = new HtmlRegionMapFrameBuilder(stringBuilder, new HtmlRegionMapBuilder(stringBuilder));
+            var markupBuilder = new MarkupBuilder();
+            var builder = new MarkupRegionMapFrameBuilder(markupBuilder, new MarkupRegionMapBuilder(markupBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
             region.Enter();
@@ -29,8 +29,8 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         [TestMethod]
         public void GivenWidthOf80HeightOf50And2FloorsOnGroundFloor_WhenBuild_ThenNotNull()
         {
-            var stringBuilder = new HtmlBuilder();
-            var builder = new HtmlRegionMapFrameBuilder(stringBuilder, new HtmlRegionMapBuilder(stringBuilder));
+            var markupBuilder = new MarkupBuilder();
+            var builder = new MarkupRegionMapFrameBuilder(markupBuilder, new MarkupRegionMapBuilder(markupBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);
@@ -44,8 +44,8 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         [TestMethod]
         public void GivenWidthOf80HeightOf50And2FloorsOnSecondFloor_WhenBuild_ThenNotNull()
         {
-            var stringBuilder = new HtmlBuilder();
-            var builder = new HtmlRegionMapFrameBuilder(stringBuilder, new HtmlRegionMapBuilder(stringBuilder));
+            var markupBuilder = new MarkupBuilder();
+            var builder = new MarkupRegionMapFrameBuilder(markupBuilder, new MarkupRegionMapBuilder(markupBuilder));
             var region = new Region(string.Empty, string.Empty);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 0);
             region.AddRoom(new(string.Empty, string.Empty, [new Exit(Direction.Up)]), 0, 0, 1);

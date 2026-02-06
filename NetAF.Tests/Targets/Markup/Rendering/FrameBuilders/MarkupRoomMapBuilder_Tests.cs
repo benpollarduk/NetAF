@@ -31,8 +31,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var stringBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRoomMapBuilder(stringBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var mapBuilder = new MarkupRoomMapBuilder(markupBuilder);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
             });
@@ -59,8 +59,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var stringBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRoomMapBuilder(stringBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var mapBuilder = new MarkupRoomMapBuilder(markupBuilder);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic);
             });
@@ -78,8 +78,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(0, 0, 0);
                 region.Enter();
-                var stringBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRoomMapBuilder(stringBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var mapBuilder = new MarkupRoomMapBuilder(markupBuilder);
 
                 mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full);
             });
@@ -106,8 +106,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var stringBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRoomMapBuilder(stringBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var mapBuilder = new MarkupRoomMapBuilder(markupBuilder);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
             });

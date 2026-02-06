@@ -15,8 +15,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var stringBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRegionMapBuilder(stringBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var mapBuilder = new MarkupRegionMapBuilder(markupBuilder);
                 var region = new Region(string.Empty, string.Empty);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);

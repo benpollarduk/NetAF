@@ -16,8 +16,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupConversationFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupConversationFrameBuilder(markupBuilder);
 
                 builder.Build("Test", null, null, new Size(80, 50));
             });
@@ -26,8 +26,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         [TestMethod]
         public void GivenDefaultsWithLog_WhenBuild_ThenFrameReturned()
         {
-            var htmlBuilder = new MarkupBuilder();
-            var builder = new MarkupConversationFrameBuilder(htmlBuilder);
+            var markupBuilder = new MarkupBuilder();
+            var builder = new MarkupConversationFrameBuilder(markupBuilder);
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -41,8 +41,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         [TestMethod]
         public void GivenDefaultsWith3CustomCommands_WhenBuild_ThenFrameReturned()
         {
-            var htmlBuilder = new MarkupBuilder();
-            var builder = new MarkupConversationFrameBuilder(htmlBuilder);
+            var markupBuilder = new MarkupBuilder();
+            var builder = new MarkupConversationFrameBuilder(markupBuilder);
             var commands = new[]
             {
                 new CommandHelp("Test", "Test"),

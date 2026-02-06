@@ -14,8 +14,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupHistoryFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupHistoryFrameBuilder(markupBuilder);
 
                 builder.Build(string.Empty, string.Empty, [], new Size(80, 50));
             });
@@ -26,8 +26,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupHistoryFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupHistoryFrameBuilder(markupBuilder);
                 HistoryEntry[] entries = [new("A", "B"), new("C", "D")];
 
                 builder.Build("C", "D", entries, new Size(80, 50));
@@ -39,8 +39,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupHistoryFrameBuilder(htmlBuilder) { MaxEntries = 1 };
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupHistoryFrameBuilder(markupBuilder) { MaxEntries = 1 };
                 HistoryEntry[] entries = [new("A", "B"), new("C", "D")];
                 builder.Build("C", "D", entries, new Size(80, 50));
             });

@@ -34,8 +34,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupSceneFrameBuilder(htmlBuilder, new MarkupRoomMapBuilder(htmlBuilder));
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupSceneFrameBuilder(markupBuilder, new MarkupRoomMapBuilder(markupBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -65,8 +65,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupSceneFrameBuilder(htmlBuilder, new MarkupRoomMapBuilder(htmlBuilder));
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupSceneFrameBuilder(markupBuilder, new MarkupRoomMapBuilder(markupBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -96,8 +96,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupSceneFrameBuilder(htmlBuilder, new MarkupRoomMapBuilder(htmlBuilder));
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupSceneFrameBuilder(markupBuilder, new MarkupRoomMapBuilder(markupBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -127,8 +127,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupSceneFrameBuilder(htmlBuilder, new MarkupRoomMapBuilder(htmlBuilder));
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupSceneFrameBuilder(markupBuilder, new MarkupRoomMapBuilder(markupBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);

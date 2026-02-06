@@ -13,8 +13,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupCompletionFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupCompletionFrameBuilder(markupBuilder);
 
                 builder.Build(string.Empty, string.Empty, new Size(80, 50));
             });

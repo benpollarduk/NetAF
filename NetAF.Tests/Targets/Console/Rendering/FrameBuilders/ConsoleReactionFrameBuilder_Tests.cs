@@ -32,5 +32,16 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             });
         }
 
+        [TestMethod]
+        public void GivenNonEmptyFields_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleReactionFrameBuilder(gridStringBuilder);
+
+                builder.Build("test", "test", false, new Size(80, 50));
+            });
+        }
     }
 }

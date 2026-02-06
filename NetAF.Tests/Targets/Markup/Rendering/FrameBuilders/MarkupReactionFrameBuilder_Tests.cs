@@ -13,10 +13,22 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupReactionFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupReactionFrameBuilder(markupBuilder);
 
                 builder.Build(string.Empty, string.Empty, false, new Size(80, 50));
+            });
+        }
+
+        [TestMethod]
+        public void GivenNonEmptyFields_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupReactionFrameBuilder(markupBuilder);
+
+                builder.Build("test", "test", false, new Size(80, 50));
             });
         }
     }

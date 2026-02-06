@@ -14,8 +14,8 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var htmlBuilder = new MarkupBuilder();
-                var builder = new MarkupNarrativeFrameBuilder(htmlBuilder);
+                var markupBuilder = new MarkupBuilder();
+                var builder = new MarkupNarrativeFrameBuilder(markupBuilder);
 
                 builder.Build(new Narrative("Frame", [new Section(["", ""]), new Section(["", ""])]), new Size(80, 50));
             });
