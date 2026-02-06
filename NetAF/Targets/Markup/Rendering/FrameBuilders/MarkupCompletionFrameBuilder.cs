@@ -26,7 +26,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(message, HeadingLevel.H1);
 
-            builder.Text(reason.EnsureFinishedSentence());
+            builder.WriteLine(reason.EnsureFinishedSentence());
 
             return new MarkupFrame(builder);
         }

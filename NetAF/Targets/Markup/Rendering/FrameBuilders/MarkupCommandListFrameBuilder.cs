@@ -31,7 +31,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.Newline();
 
             if (!string.IsNullOrEmpty(description))
-                builder.Text(description);
+                builder.WriteLine(description);
 
             List<string> commandsInList = [];
 
@@ -48,7 +48,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             }
 
             foreach (var command in commandsInList)
-                builder.Text(command);
+                builder.WriteLine(command);
 
             return new MarkupFrame(builder);
         }

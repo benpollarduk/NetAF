@@ -25,7 +25,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(title, HeadingLevel.H1);
             builder.Newline();
-            builder.Text(description);
+            builder.WriteLine(description);
 
             return new MarkupFrame(builder);
         }

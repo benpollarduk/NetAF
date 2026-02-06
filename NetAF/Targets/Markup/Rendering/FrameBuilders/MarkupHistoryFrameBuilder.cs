@@ -49,7 +49,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.Newline();
 
             if (!string.IsNullOrEmpty(description))
-                builder.Text(description);
+                builder.WriteLine(description);
 
             if (entries.Length > 0)
             {
@@ -59,11 +59,11 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                     history.Add($"{entry.Content.EnsureFinishedSentence()}");
 
                 foreach (var entry in entries)
-                    builder.Text(entry.Content);
+                    builder.WriteLine(entry.Content);
             }
             else
             {
-                builder.Text("No entries.");
+                builder.WriteLine("No entries.");
             }
 
             return new MarkupFrame(builder);

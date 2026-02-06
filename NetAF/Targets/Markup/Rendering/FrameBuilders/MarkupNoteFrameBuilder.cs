@@ -32,21 +32,21 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.Newline();
 
             if (!string.IsNullOrEmpty(description))
-                builder.Text(description);
+                builder.WriteLine(description);
 
             if (entries.Length > 0)
             {
                 for (var i = 0; i < entries.Length; i++)
                 {
                     if (entries[i].HasExpired)
-                        builder.Text($"{entries[i].Content.EnsureFinishedSentence()}");
+                        builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}");
                     else
-                        builder.Text($"{entries[i].Content.EnsureFinishedSentence()}", new TextStyle(Strikethrough: true));
+                        builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}", new TextStyle(Strikethrough: true));
                 }
             }
             else
             {
-                builder.Text("No entries.");
+                builder.WriteLine("No entries.");
             }
 
             return new MarkupFrame(builder);

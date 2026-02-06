@@ -67,7 +67,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 for (var index = 0; index < contextualCommands.Length; index++)
                 {
                     var contextualCommand = contextualCommands[index];
-                    builder.Text($"{contextualCommand.DisplayCommand} - {contextualCommand.Description.EnsureFinishedSentence()}");
+                    builder.WriteLine($"{contextualCommand.DisplayCommand} - {contextualCommand.Description.EnsureFinishedSentence()}");
                 }
             }
 

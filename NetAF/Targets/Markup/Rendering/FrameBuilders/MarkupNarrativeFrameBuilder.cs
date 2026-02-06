@@ -32,7 +32,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(narrative.Title, HeadingLevel.H1);
             builder.Newline();
-            builder.Text(stringBuilder.ToString());
+            builder.WriteLine(stringBuilder.ToString());
 
             return new MarkupFrame(builder);
         }

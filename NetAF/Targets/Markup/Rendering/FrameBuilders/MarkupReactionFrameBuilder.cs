@@ -31,7 +31,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 builder.Newline();
             }
 
-            builder.Text(message.EnsureFinishedSentence());
+            builder.WriteLine(message.EnsureFinishedSentence());
 
             return new MarkupFrame(builder);
         }

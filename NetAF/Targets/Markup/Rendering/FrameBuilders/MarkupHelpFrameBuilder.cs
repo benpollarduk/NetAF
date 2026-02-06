@@ -32,18 +32,18 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             if (commandHelp != null)
             {
-                builder.Text($"Command: {commandHelp.Command}");
+                builder.WriteLine($"Command: {commandHelp.Command}");
 
                 if (!string.IsNullOrEmpty(commandHelp.Shortcut))
-                    builder.Text($"Shortcut: {commandHelp.Shortcut}");
+                    builder.WriteLine($"Shortcut: {commandHelp.Shortcut}");
 
-                builder.Text($"Description: {commandHelp.Description.EnsureFinishedSentence()}");
+                builder.WriteLine($"Description: {commandHelp.Description.EnsureFinishedSentence()}");
 
                 if (!string.IsNullOrEmpty(commandHelp.Instructions))
-                    builder.Text($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}");
+                    builder.WriteLine($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}");
 
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
-                    builder.Text($"Example: {commandHelp.DisplayAs}");
+                    builder.WriteLine($"Example: {commandHelp.DisplayAs}");
 
                 StringBuilder promptBuilder = new();
 
@@ -53,7 +53,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 var promptString = promptBuilder.ToString();
 
                 if (!string.IsNullOrEmpty(promptString))
-                    builder.Text($"Prompts: {promptString}");
+                    builder.WriteLine($"Prompts: {promptString}");
             }
 
             return new MarkupFrame(builder);

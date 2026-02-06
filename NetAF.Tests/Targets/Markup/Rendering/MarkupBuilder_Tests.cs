@@ -52,88 +52,88 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         }
 
         [TestMethod]
-        public void GivenTest_WhenText_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWrite_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test");
+            builder.Write("Test");
             var result = builder.ToString();
 
             Assert.AreEqual("Test", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithBold_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithBold_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Bold: true));
+            builder.Write("Test", new TextStyle(Bold: true));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithItalic_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithItalic_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Italic: true));
+            builder.Write("Test", new TextStyle(Italic: true));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithStrikethrough_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithStrikethrough_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Strikethrough: true));
+            builder.Write("Test", new TextStyle(Strikethrough: true));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithUnderline_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithUnderline_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Underline: true));
+            builder.Write("Test", new TextStyle(Underline: true));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithMonospace_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithMonospace_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Monospace: true));
+            builder.Write("Test", new TextStyle(Monospace: true));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithForegroundSet_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithForegroundSet_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Foreground: new Color(1, 2, 3)));
+            builder.Write("Test", new TextStyle(Foreground: new Color(1, 2, 3)));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenTest_WhenTextWithBackgroundSet_ThenMarkupIsCorrectlyFormed()
+        public void GivenTest_WhenWriteWithBackgroundSet_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Background: new Color(1, 2, 3)));
+            builder.Write("Test", new TextStyle(Background: new Color(1, 2, 3)));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Background}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Background}{MarkupSyntax.CloseTag}", result);

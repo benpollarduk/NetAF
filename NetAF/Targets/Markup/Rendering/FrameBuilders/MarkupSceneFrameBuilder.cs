@@ -44,26 +44,28 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(room.Identifier.Name, HeadingLevel.H1);
             builder.Newline();
-            builder.Text(room.Description.GetDescription().EnsureFinishedSentence());
+            builder.WriteLine(room.Description.GetDescription().EnsureFinishedSentence());
 
             var extendedDescription = string.Empty;
 
             if (viewPoint.Any)
-                builder.Text(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
+                builder.WriteLine(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
 
             if (player.Items.Length != 0)
-                builder.Text("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
+                builder.WriteLine("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
 
             builder.Newline();
 
             roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+
+            builder.Newline();
 
             if (contextualCommands != null && contextualCommands.Length > 0)
             {
                 builder.Heading(CommandTitle, HeadingLevel.H4);
 
                 foreach (var command in contextualCommands)
-                    builder.Text($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
+                    builder.WriteLine($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
             }
 
             return new MarkupFrame(builder);

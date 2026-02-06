@@ -51,19 +51,16 @@ namespace NetAF.Targets.Markup
                     character = character == 0 && padEmptyCharacters ? ' ' : character;
 
                     if (retainFontColors)
-                        markupBuilder.Text(character.ToString(), new TextStyle(Foreground: Color.FromHtml(AnsiColorToHex(foreground))));
+                        markupBuilder.Write(character.ToString(), new TextStyle(Foreground: Color.FromHtml(AnsiColorToHex(foreground))));
                     else
-                        markupBuilder.Text(character.ToString());
+                        markupBuilder.Write(character.ToString());
                 }
 
                 if (row < builder.DisplaySize.Height - 1)
                     markupBuilder.Newline();
             }
 
-            var content = markupBuilder.ToString();
-            markupBuilder.Clear();
-            markupBuilder.Text(content, new TextStyle(Monospace: useMonospace));
-            return markupBuilder.ToString();
+            return WrapMonospace(markupBuilder.ToString());
         }
 
         /// <summary>
@@ -85,17 +82,14 @@ namespace NetAF.Targets.Markup
                     character = character == 0 ? ' ' : character;
                     var foregoundColor = Color.FromHtml(AnsiColorToHex(foreground));
                     var backgroundColor = Color.FromHtml(AnsiColorToHex(background));
-                    markupBuilder.Text(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
+                    markupBuilder.Write(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
                 }
 
                 if (row < builder.DisplaySize.Height - 1)
                     markupBuilder.Newline();
             }
 
-            var content = markupBuilder.ToString();
-            markupBuilder.Clear();
-            markupBuilder.Text(content, new TextStyle(Monospace: true));
-            return markupBuilder.ToString();
+            return WrapMonospace(markupBuilder.ToString());
         }
 
         /// <summary>
@@ -116,16 +110,20 @@ namespace NetAF.Targets.Markup
                     var character = cell.Character == 0 ? ' ' : cell.Character;
                     var foregoundColor = Color.FromHtml(AnsiColorToHex(cell.Foreground));
                     var backgroundColor = Color.FromHtml(AnsiColorToHex(cell.Background));
-                    markupBuilder.Text(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
+                    markupBuilder.Write(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
                 }
 
                 if (row < size.Height - 1)
                     markupBuilder.Newline();
             }
 
-            var content = markupBuilder.ToString();
-            markupBuilder.Clear();
-            markupBuilder.Text(content, new TextStyle(Monospace: true));
+            return WrapMonospace(markupBuilder.ToString());
+        }
+
+        private static string WrapMonospace(string input)
+        {
+            var markupBuilder = new MarkupBuilder();
+            markupBuilder.Write(input, new TextStyle(Monospace: true));
             return markupBuilder.ToString();
         }
 

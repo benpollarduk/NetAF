@@ -47,9 +47,9 @@ namespace NetAF.Targets.Markup.Rendering
         /// Append text.
         /// </summary>
         /// <param name="text">The text to append.</param>
-        public void Text(string text)
+        public void Write(string text)
         {
-            Text(text, TextStyle.Default);
+            Write(text, TextStyle.Default);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// </summary>
         /// <param name="text">The text to append.</param>
         /// <param name="style">The style to use for the text.</param>
-        public void Text(string text, TextStyle style)
+        public void Write(string text, TextStyle style)
         {
             var content = text;
 
@@ -83,6 +83,25 @@ namespace NetAF.Targets.Markup.Rendering
                 content = FormatWithValue(MarkupSyntax.Background, style.Background.ToHtml(), content);
 
             Raw(content);
+        }
+
+        /// <summary>
+        /// Append text, terminating in a newline character
+        /// </summary>
+        /// <param name="text">The text to append.</param>
+        public void WriteLine(string text)
+        {
+            WriteLine(text, TextStyle.Default);
+        }
+
+        /// <summary>
+        /// Append styled text, terminating in a newline character.
+        /// </summary>
+        /// <param name="text">The text to append.</param>
+        /// <param name="style">The style to use for the text.</param>
+        public void WriteLine(string text, TextStyle style)
+        {
+            Write(text + MarkupSyntax.NewLine, TextStyle.Default);
         }
 
         /// <summary>

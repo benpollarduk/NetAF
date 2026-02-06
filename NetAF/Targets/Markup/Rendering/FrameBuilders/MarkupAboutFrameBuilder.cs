@@ -28,13 +28,13 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(title, HeadingLevel.H1);
             builder.Newline();
-            builder.Text(game.Info.Name);
-            builder.Text(game.Info.Description.EnsureFinishedSentence());
+            builder.WriteLine(game.Info.Name);
+            builder.WriteLine(game.Info.Description.EnsureFinishedSentence());
 
             if (!string.IsNullOrEmpty(game.Info.Author))
-                builder.Text($"Created by: {game.Info.Author}".EnsureFinishedSentence());
+                builder.WriteLine($"Created by: {game.Info.Author}".EnsureFinishedSentence());
             else
-                builder.Text(Info.AboutNetAF);
+                builder.WriteLine(Info.AboutNetAF);
 
             return new MarkupFrame(builder);
         }

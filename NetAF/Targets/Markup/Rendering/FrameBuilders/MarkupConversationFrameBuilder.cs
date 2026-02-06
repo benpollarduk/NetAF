@@ -39,7 +39,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.Heading(commandTitle, HeadingLevel.H4);
 
             foreach (var contextualCommand in commands)
-                builder.Text($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
+                builder.WriteLine($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
         }
 
         #endregion
@@ -87,7 +87,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                         lastParticipant = log.Participant;
                     }
 
-                    builder.Text(log.Line);
+                    builder.WriteLine(log.Line);
                 }
             }
 
