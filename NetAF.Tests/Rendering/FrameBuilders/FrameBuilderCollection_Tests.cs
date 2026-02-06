@@ -15,7 +15,6 @@ namespace NetAF.Tests.Rendering.FrameBuilders
 
             try
             {
-
                 var builders = new FrameBuilderCollection();
 
                 builders.GetFrameBuilder<IFrameBuilder>();
