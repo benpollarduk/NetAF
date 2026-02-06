@@ -32,7 +32,7 @@ namespace NetAF.Tests.Targets.Text
 
             adapter.RenderFrame(frame);
 
-            Assert.IsTrue(!string.IsNullOrEmpty(presenter.ToString()));
+            Assert.IsFalse(string.IsNullOrEmpty(presenter.ToString()));
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace NetAF.Tests.Targets.Text
 
             adapter.RenderFrame(frame);
 
-            Assert.IsTrue(!string.IsNullOrEmpty(presenter.ToString()));
+            Assert.IsFalse(string.IsNullOrEmpty(presenter.ToString()));
         }
     }
 }

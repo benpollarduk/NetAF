@@ -3,20 +3,19 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Assets;
 using NetAF.Logic;
-using NetAF.Targets.Html;
 using NetAF.Utilities;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Text.Rendering;
-using System.Text;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
+using NetAF.Targets.Markup;
+using System.Text;
 
-namespace NetAF.Tests.Targets.Html
+namespace NetAF.Tests.Targets.Markup
 {
     [TestClass]
-    public class HtmlAdapter_Tests
+    public class MarkupAdapter_Tests
     {
         [TestMethod]
         public void GivenFrame_WhenRender_ThenRendered()
@@ -30,7 +29,7 @@ namespace NetAF.Tests.Targets.Html
             HtmlBuilder htmlBuilder = new();
             var frame = new HtmlReactionFrameBuilder(htmlBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
-            HtmlAdapter adapter = new(presenter);
+            MarkupAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
@@ -50,7 +49,7 @@ namespace NetAF.Tests.Targets.Html
             GridStringBuilder gridStringBuilder = new();
             var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
-            HtmlAdapter adapter = new(presenter);
+            MarkupAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
@@ -70,7 +69,7 @@ namespace NetAF.Tests.Targets.Html
             StringBuilder stringBuilder = new();
             var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, new(80, 50));
             TestPresenter presenter = new();
-            HtmlAdapter adapter = new(presenter);
+            MarkupAdapter adapter = new(presenter);
             adapter.Setup(game);
 
             adapter.RenderFrame(frame);
@@ -79,66 +78,68 @@ namespace NetAF.Tests.Targets.Html
         }
 
         [TestMethod]
-        public void GivenEmptyCharactersExceptLast_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharactersExceptLast_WhenConvertGridStringBuilderToMarkupStringWithPadding_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
             builder.SetCell(4, 0, 'a', AnsiColor.White);
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, false, false);
+            var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, true, false, false);
 
             Assert.AreEqual("    a", result);
         }
 
         [TestMethod]
-        public void GivenEmptyCharactersExceptLastOverTwoLines_WhenConvertGridStringBuilderToHtmlStringWithPadding_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharactersExceptLastOverTwoLines_WhenConvertGridStringBuilderToMarkupStringWithPadding_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 2));
             builder.SetCell(4, 0, 'a', AnsiColor.White);
             builder.SetCell(4, 1, 'a', AnsiColor.White);
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, false, false);
+            var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, true, false, false);
 
-            Assert.AreEqual("    a<br>    a", result);
+            Assert.AreEqual($"    a{MarkupSyntax.NewLine}    a", result);
         }
 
         [TestMethod]
-        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToHtmlStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToMarkupStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 1));
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, false, false, false);
+            var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, false, false, false);
 
             Assert.AreEqual("\0\0\0\0\0", result);
         }
 
 
         [TestMethod]
-        public void GivenEmptyCharactersOver2Rows_WhenConvertGridStringBuilderToHtmlStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharactersOver2Rows_WhenConvertGridStringBuilderToMarkupStringWithoutPadding_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5, 2));
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, false, false, false);
+            var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, false, false, false);
 
-            Assert.AreEqual("\0\0\0\0\0<br>\0\0\0\0\0", result);
+            Assert.AreEqual($"\0\0\0\0\0{MarkupSyntax.NewLine}\0\0\0\0\0", result);
         }
 
         [TestMethod]
-        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToHtmlStringUsingMonospace_ThenReturnCorrectlyFormattedOutput()
+        public void GivenEmptyCharacters_WhenConvertGridStringBuilderToMarkupStringUsingMonospace_ThenReturnCorrectlyFormattedOutput()
         {
             var builder = new GridStringBuilder();
             builder.Resize(new(5,1));
 
-            var result = HtmlAdapter.ConvertGridStringBuilderToHtmlString(builder, true, true, true);
+            var result = MarkupAdapter.ConvertGridStringBuilderToMarkupString(builder, true, true, true);
+            var foreground = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}#000000{MarkupSyntax.CloseTag} {MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}";
+            var eachCellForeground = $"{foreground}{foreground}{foreground}{foreground}{foreground}";
 
-            Assert.StartsWith("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;", result);
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}{eachCellForeground}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}", result);
         }
 
         [TestMethod]
-        public void GivenA3x3Grid_WhenConvertGridVisualBuilderToHtmlString_ThenReturnHtml()
+        public void GivenA3x3Grid_WhenConvertGridVisualBuilderToMarkupString_ThenReturnMarkup()
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
@@ -152,22 +153,18 @@ namespace NetAF.Tests.Targets.Html
             builder.SetCell(1, 2, 'h', AnsiColor.White);
             builder.SetCell(2, 2, 'i', AnsiColor.White);
 
-            var result = HtmlAdapter.ConvertGridVisualBuilderToHtmlString(builder);
+            var result = MarkupAdapter.ConvertGridVisualBuilderToMarkupString(builder);
 
-            Assert.AreEqual("<pre style=\"font-family: 'Courier New', Courier, monospace; line-height: 1; font-size: 1em;\"><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">a</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">b</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">c</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">d</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">e</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">f</span><br><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">g</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">h</span><span style=\"background-color: #000000; color: #C0C0C0; display: inline-block; line-height: 1;\">i</span></pre>", result);
-        }
+            var foreground = "#C0C0C0";
+            var background = "#000000";
+            string getCharacter(string foregorund, string background, char character) => $"{MarkupSyntax.OpenTag}{MarkupSyntax.Background}{MarkupSyntax.Delimiter}{background}{MarkupSyntax.CloseTag}{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}{foreground}{MarkupSyntax.CloseTag}{character}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Background}{MarkupSyntax.CloseTag}";
 
-        [TestMethod]
-        public void GivenTextFrame_WhenConvert_ThenReturnValidHtml()
-        {
-            var builder = new StringBuilder();
-            builder.Append("Test");
-            var textFrame = new TextFrame(builder);
+            var line1 = $"{getCharacter(foreground, background, 'a')}{getCharacter(foreground, background, 'b')}{getCharacter(foreground, background, 'c')}";
+            var line2 = $"{getCharacter(foreground, background, 'd')}{getCharacter(foreground, background, 'e')}{getCharacter(foreground, background, 'f')}";
+            var line3 = $"{getCharacter(foreground, background, 'g')}{getCharacter(foreground, background, 'h')}{getCharacter(foreground, background, 'i')}";
+            var expected = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}{line1}{MarkupSyntax.NewLine}{line2}{MarkupSyntax.NewLine}{line3}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}";
 
-            var result = HtmlAdapter.Convert(textFrame);
-
-            Assert.AreEqual('<', result[0]);
-            Assert.AreEqual('>', result[^1]);
+            Assert.AreEqual(expected, result);
         }
     }
 }

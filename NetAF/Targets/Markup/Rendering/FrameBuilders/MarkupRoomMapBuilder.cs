@@ -17,7 +17,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
         /// <param name="roomMapBuilder">The room map builder.</param>
         protected override void Adapt(GridStringBuilder roomMapBuilder)
         {
-            builder.Raw(roomMapBuilder.ToString());
+            builder.Raw(MarkupAdapter.ConvertGridStringBuilderToMarkupString(roomMapBuilder, useMonospace: true));
         }
 
         #endregion

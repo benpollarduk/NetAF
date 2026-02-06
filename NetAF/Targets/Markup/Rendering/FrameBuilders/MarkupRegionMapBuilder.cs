@@ -17,7 +17,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
         /// <param name="regionMapBuilder">The region map builder.</param>
         protected override void Adapt(GridStringBuilder regionMapBuilder)
         {
-            builder.Raw(regionMapBuilder.ToString());
+            builder.Raw(MarkupAdapter.ConvertGridStringBuilderToMarkupString(regionMapBuilder, useMonospace: true));
         }
 
         #endregion

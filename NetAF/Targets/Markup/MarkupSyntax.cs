@@ -60,12 +60,12 @@
         /// <summary>
         /// Get the string that denotes foreground.
         /// </summary>
-        internal const string Background = "foreground";
+        internal const string Foregound = "foreground";
 
         /// <summary>
         /// Get the string that denotes background.
         /// </summary>
-        internal const string Foregound = "background";
+        internal const string Background = "background";
 
         /// <summary>
         /// Get the string that denotes delimiter.
