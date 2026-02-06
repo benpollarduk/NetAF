@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Markup;
-using NetAF.Targets.Markup.Ast.Tokens;
+using NetAF.Targets.Markup.Model.Tokens;
 using System.Linq;
 
-namespace NetAF.Tests.Targets.Markup.Ast.Tokens
+namespace NetAF.Tests.Targets.Markup.Model.Tokens
 {
     [TestClass]
     public class Tokenizer_Tests

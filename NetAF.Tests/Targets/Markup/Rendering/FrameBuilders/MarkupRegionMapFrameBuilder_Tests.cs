@@ -7,7 +7,7 @@ using NetAF.Rendering;
 using NetAF.Targets.Markup.Rendering;
 using NetAF.Targets.Markup.Rendering.FrameBuilders;
 
-namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
+namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 {
     [TestClass]
     public class MarkupRegionMapFrameBuilder_Tests

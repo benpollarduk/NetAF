@@ -1,4 +1,4 @@
-﻿namespace NetAF.Targets.Markup.Ast.Tokens
+﻿namespace NetAF.Targets.Markup.Model.Tokens
 {
     /// <summary>
     /// Represents a token.

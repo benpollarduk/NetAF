@@ -1,4 +1,4 @@
-﻿namespace NetAF.Targets.Markup.Ast.Nodes
+﻿namespace NetAF.Targets.Markup.Model.Nodes
 {
     /// <summary>
     /// Represents a text node in the abstract syntax tree.

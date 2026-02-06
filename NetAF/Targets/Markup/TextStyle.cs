@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace NetAF.Targets.Markup
+﻿namespace NetAF.Targets.Markup
 {
     /// <summary>
     /// Represents styling for text.
@@ -17,8 +15,8 @@ namespace NetAF.Targets.Markup
                             bool Strikethrough = false, 
                             bool Underline = false, 
                             bool Monospace = false, 
-                            Color? Foreground = null, 
-                            Color? Background = null)
+                            Color Foreground = null, 
+                            Color Background = null)
     {
         #region StaticProperties
 

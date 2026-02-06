@@ -1,19 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Markup;
-using NetAF.Targets.Markup.Ast;
-using NetAF.Targets.Markup.Ast.Nodes;
+using NetAF.Targets.Markup.Model;
+using NetAF.Targets.Markup.Model.Nodes;
 
-namespace NetAF.Tests.Targets.Markup.Ast
+namespace NetAF.Tests.Targets.Markup.Model
 {
     [TestClass]
-    public class AstParser_Tests
+    public class ModelParser_Tests
     {
         [TestMethod]
         public void GivenEmptyString_WhenTryParse_ThenReturnTrueAndDocumentWithNoBlocks()
         {
             var input = string.Empty;
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
 
             Assert.IsTrue(result);
             Assert.HasCount(0, doc.Blocks);
@@ -24,7 +24,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.Heading} Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var heading = doc.Blocks[0] as HeadingNode;
 
             Assert.IsTrue(result);
@@ -39,7 +39,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var heading = doc.Blocks[0] as HeadingNode;
 
             Assert.IsTrue(result);
@@ -54,7 +54,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var heading = doc.Blocks[0] as HeadingNode;
 
             Assert.IsTrue(result);
@@ -69,7 +69,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var heading = doc.Blocks[0] as HeadingNode;
 
             Assert.IsTrue(result);
@@ -84,7 +84,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading}{MarkupSyntax.Heading} Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var heading = doc.Blocks[0] as HeadingNode;
 
             Assert.IsTrue(result);
@@ -99,7 +99,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = "Test";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var text = paragraph?.Inlines[0] as TextNode;
 
@@ -115,7 +115,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var text = styleSpan?.Inlines[0] as TextNode;
@@ -134,7 +134,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var text = styleSpan?.Inlines[0] as TextNode;
@@ -153,7 +153,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Strikethrough}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var text = styleSpan?.Inlines[0] as TextNode;
@@ -172,7 +172,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Underline}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var text = styleSpan?.Inlines[0] as TextNode;
@@ -191,7 +191,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Monospace}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var text = styleSpan?.Inlines[0] as TextNode;
@@ -210,7 +210,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}{MarkupSyntax.OpenTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Italic}{MarkupSyntax.CloseTag}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Bold}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var boldStyleSpan = paragraph?.Inlines[0] as StyleSpanNode;
             var italicStyleSpan = boldStyleSpan?.Inlines[0] as StyleSpanNode;
@@ -232,7 +232,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var foregroundStyleSpan = paragraph?.Inlines[0] as StyleSpanNode;
 
@@ -241,9 +241,9 @@ namespace NetAF.Tests.Targets.Markup.Ast
             Assert.IsNotNull(paragraph);
             Assert.IsNotNull(foregroundStyleSpan);
             Assert.IsNotNull(foregroundStyleSpan.Style.Foreground);
-            Assert.AreEqual(1, foregroundStyleSpan.Style.Foreground.Value.R);
-            Assert.AreEqual(2, foregroundStyleSpan.Style.Foreground.Value.G);
-            Assert.AreEqual(3, foregroundStyleSpan.Style.Foreground.Value.B);
+            Assert.AreEqual(1, foregroundStyleSpan.Style.Foreground.Red);
+            Assert.AreEqual(2, foregroundStyleSpan.Style.Foreground.Green);
+            Assert.AreEqual(3, foregroundStyleSpan.Style.Foreground.Blue);
         }
 
         [TestMethod]
@@ -251,7 +251,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Background}{MarkupSyntax.Delimiter}010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Background}{MarkupSyntax.CloseTag}";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph = doc.Blocks[0] as ParagraphNode;
             var backgroundStyleSpan = paragraph?.Inlines[0] as StyleSpanNode;
 
@@ -260,9 +260,9 @@ namespace NetAF.Tests.Targets.Markup.Ast
             Assert.IsNotNull(paragraph);
             Assert.IsNotNull(backgroundStyleSpan);
             Assert.IsNotNull(backgroundStyleSpan.Style.Background);
-            Assert.AreEqual(1, backgroundStyleSpan.Style.Background.Value.R);
-            Assert.AreEqual(2, backgroundStyleSpan.Style.Background.Value.G);
-            Assert.AreEqual(3, backgroundStyleSpan.Style.Background.Value.B);
+            Assert.AreEqual(1, backgroundStyleSpan.Style.Background.Red);
+            Assert.AreEqual(2, backgroundStyleSpan.Style.Background.Green);
+            Assert.AreEqual(3, backgroundStyleSpan.Style.Background.Blue);
         }
 
         [TestMethod]
@@ -270,7 +270,7 @@ namespace NetAF.Tests.Targets.Markup.Ast
         {
             var input = $"Test1{MarkupSyntax.NewLine}Test2";
 
-            var result = AstParser.TryParse(input, out var doc);
+            var result = ModelParser.TryParse(input, out var doc);
             var paragraph1 = doc.Blocks[0] as ParagraphNode;
             var paragraph2 = doc.Blocks[1] as ParagraphNode;
             var text1 = paragraph1?.Inlines[0] as TextNode;

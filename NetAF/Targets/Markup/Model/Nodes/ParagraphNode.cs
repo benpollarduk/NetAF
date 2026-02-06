@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetAF.Targets.Markup.Ast.Nodes
+namespace NetAF.Targets.Markup.Model.Nodes
 {
     /// <summary>
     /// Get a node representing a paragraph in the abstract syntax tree.

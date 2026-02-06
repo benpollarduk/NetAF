@@ -2,7 +2,6 @@
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Markup.Rendering;
-using System.Drawing;
 using Size = NetAF.Assets.Size;
 
 namespace NetAF.Targets.Markup
@@ -52,7 +51,7 @@ namespace NetAF.Targets.Markup
                     character = character == 0 && padEmptyCharacters ? ' ' : character;
 
                     if (retainFontColors)
-                        markupBuilder.Text(character.ToString(), new TextStyle(Foreground: ColorTranslator.FromHtml(AnsiColorToHex(foreground))));
+                        markupBuilder.Text(character.ToString(), new TextStyle(Foreground: Color.FromHtml(AnsiColorToHex(foreground))));
                     else
                         markupBuilder.Text(character.ToString());
                 }
@@ -84,8 +83,8 @@ namespace NetAF.Targets.Markup
                     var foreground = builder.GetCellForegroundColor(column, row);
                     var character = builder.GetCharacter(column, row);
                     character = character == 0 ? ' ' : character;
-                    var foregoundColor = ColorTranslator.FromHtml(AnsiColorToHex(foreground));
-                    var backgroundColor = ColorTranslator.FromHtml(AnsiColorToHex(background));
+                    var foregoundColor = Color.FromHtml(AnsiColorToHex(foreground));
+                    var backgroundColor = Color.FromHtml(AnsiColorToHex(background));
                     markupBuilder.Text(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
                 }
 
@@ -115,8 +114,8 @@ namespace NetAF.Targets.Markup
                 {
                     var cell = frame.GetCell(column, row);
                     var character = cell.Character == 0 ? ' ' : cell.Character;
-                    var foregoundColor = ColorTranslator.FromHtml(AnsiColorToHex(cell.Foreground));
-                    var backgroundColor = ColorTranslator.FromHtml(AnsiColorToHex(cell.Background));
+                    var foregoundColor = Color.FromHtml(AnsiColorToHex(cell.Foreground));
+                    var backgroundColor = Color.FromHtml(AnsiColorToHex(cell.Background));
                     markupBuilder.Text(character.ToString(), new TextStyle(Foreground: foregoundColor, Background: backgroundColor));
                 }
 

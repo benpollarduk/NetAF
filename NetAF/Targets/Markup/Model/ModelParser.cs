@@ -1,17 +1,16 @@
-﻿using NetAF.Targets.Markup.Ast.Nodes;
-using NetAF.Targets.Markup.Ast.Tokens;
+﻿using NetAF.Targets.Markup.Model.Nodes;
+using NetAF.Targets.Markup.Model.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Text;
 
-namespace NetAF.Targets.Markup.Ast
+namespace NetAF.Targets.Markup.Model
 {
     /// <summary>
     /// Provides parsing functionality between various formats and the abstract syntax tree.
     /// </summary>
-    public static class AstParser
+    public static class ModelParser
     {
         #region StaticMethods
 
@@ -143,14 +142,14 @@ namespace NetAF.Targets.Markup.Ast
             }
         }
 
-        private static Color? GetColorFromHex(string hex)
+        private static Color GetColorFromHex(string hex)
         {
             if (string.IsNullOrWhiteSpace(hex)) return null;
 
             if (!hex.StartsWith('#'))
                 hex = $"#{hex}";
 
-            return ColorTranslator.FromHtml(hex);
+            return Color.FromHtml(hex);
         }
 
         private static TextStyle GetStyleFromToken(string tag)

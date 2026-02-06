@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Text;
 
 namespace NetAF.Targets.Markup.Rendering
@@ -78,10 +77,10 @@ namespace NetAF.Targets.Markup.Rendering
                 content = Format(MarkupSyntax.Monospace, content);
 
             if (style.Foreground != null)
-                content = FormatWithValue(MarkupSyntax.Foregound, ColorTranslator.ToHtml(style.Foreground.Value), content);
+                content = FormatWithValue(MarkupSyntax.Foregound, style.Foreground.ToHtml(), content);
 
             if (style.Background != null)
-                content = FormatWithValue(MarkupSyntax.Background, ColorTranslator.ToHtml(style.Background.Value), content);
+                content = FormatWithValue(MarkupSyntax.Background, style.Background.ToHtml(), content);
 
             Raw(content);
         }

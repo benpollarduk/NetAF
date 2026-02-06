@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace NetAF.Targets.Markup.Ast.Tokens
+namespace NetAF.Targets.Markup.Model.Tokens
 {
     /// <summary>
     /// Provides functionality to convert a string into a collection of tokens.

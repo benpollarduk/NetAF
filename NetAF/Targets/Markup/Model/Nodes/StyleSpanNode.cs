@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetAF.Targets.Markup.Ast.Nodes
+namespace NetAF.Targets.Markup.Model.Nodes
 {
     /// <summary>
     /// Represents a style span node in the abstract syntax tree.

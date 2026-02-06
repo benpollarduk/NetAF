@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Markup;
 using NetAF.Targets.Markup.Rendering;
-using System.Drawing;
 
 namespace NetAF.Tests.Targets.Markup.Rendering
 {
@@ -123,7 +122,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Foreground: Color.FromArgb(1, 2, 3)));
+            builder.Text("Test", new TextStyle(Foreground: new Color(1, 2, 3)));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}", result);
@@ -134,7 +133,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         {
             var builder = new MarkupBuilder();
 
-            builder.Text("Test", new TextStyle(Background: Color.FromArgb(1, 2, 3)));
+            builder.Text("Test", new TextStyle(Background: new Color(1, 2, 3)));
             var result = builder.ToString();
 
             Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Background}{MarkupSyntax.Delimiter}#010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Background}{MarkupSyntax.CloseTag}", result);
