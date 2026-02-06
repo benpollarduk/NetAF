@@ -40,7 +40,7 @@ namespace NetAF.Targets.Markup.Rendering
                 _ => throw new NotImplementedException()
             };
 
-            Raw($"{heading} {text}");
+            Raw($"{heading} {text}{MarkupSyntax.NewLine}");
         }
 
         /// <summary>

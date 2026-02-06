@@ -45,6 +45,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.Heading(room.Identifier.Name, HeadingLevel.H1);
             builder.Newline();
             builder.WriteLine(room.Description.GetDescription().EnsureFinishedSentence());
+            builder.Newline();
 
             var extendedDescription = string.Empty;
 
@@ -62,10 +63,13 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             if (contextualCommands != null && contextualCommands.Length > 0)
             {
-                builder.Heading(CommandTitle, HeadingLevel.H4);
+                builder.Heading(CommandTitle, HeadingLevel.H2);
 
                 foreach (var command in contextualCommands)
-                    builder.WriteLine($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
+                {
+                    builder.Write(command.DisplayCommand, new TextStyle(Bold: true));
+                    builder.WriteLine($" - {command.Description.EnsureFinishedSentence()}");
+                }
             }
 
             return new MarkupFrame(builder);

@@ -36,10 +36,13 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             if ((commands?.Length ?? 0) == 0)
                 return;
 
-            builder.Heading(commandTitle, HeadingLevel.H4);
+            builder.Heading(commandTitle, HeadingLevel.H2);
 
             foreach (var contextualCommand in commands)
-                builder.WriteLine($"{contextualCommand.DisplayCommand} - {contextualCommand.Description}");
+            {
+                builder.Write(contextualCommand.DisplayCommand, new TextStyle(Bold: true));
+                builder.WriteLine($" - {contextualCommand.Description}");
+            }
         }
 
         #endregion
@@ -75,10 +78,10 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                         switch (log.Participant)
                         {
                             case Participant.Player:
-                                builder.Heading("You", HeadingLevel.H3);
+                                builder.Heading("You", HeadingLevel.H2);
                                 break;
                             case Participant.Other:
-                                builder.Heading(converser.Identifier.Name, HeadingLevel.H3);
+                                builder.Heading(converser.Identifier.Name, HeadingLevel.H2);
                                 break;
                             default:
                                 throw new NotImplementedException();

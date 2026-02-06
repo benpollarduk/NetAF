@@ -32,18 +32,30 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             if (commandHelp != null)
             {
-                builder.WriteLine($"Command: {commandHelp.Command}");
+                var bold = new TextStyle(Bold: true);
+                builder.Write("Command: ", bold);
+                builder.WriteLine(commandHelp.Command);
 
                 if (!string.IsNullOrEmpty(commandHelp.Shortcut))
-                    builder.WriteLine($"Shortcut: {commandHelp.Shortcut}");
+                {
+                    builder.Write("Shortcut: ", bold);
+                    builder.WriteLine(commandHelp.Shortcut);
+                }
 
-                builder.WriteLine($"Description: {commandHelp.Description.EnsureFinishedSentence()}");
+                builder.Write("Description: ", bold);
+                builder.WriteLine(commandHelp.Description.EnsureFinishedSentence());
 
                 if (!string.IsNullOrEmpty(commandHelp.Instructions))
-                    builder.WriteLine($"Instructions: {commandHelp.Instructions.EnsureFinishedSentence()}");
+                {
+                    builder.Write("Instructions: ", bold);
+                    builder.WriteLine(commandHelp.Instructions.EnsureFinishedSentence());
+                }
 
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
-                    builder.WriteLine($"Example: {commandHelp.DisplayAs}");
+                {
+                    builder.Write("Example: ", bold);
+                    builder.WriteLine(commandHelp.DisplayAs);
+                }
 
                 StringBuilder promptBuilder = new();
 
@@ -53,7 +65,10 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 var promptString = promptBuilder.ToString();
 
                 if (!string.IsNullOrEmpty(promptString))
-                    builder.WriteLine($"Prompts: {promptString}");
+                {
+                    builder.Write("Prompts: ", bold);
+                    builder.WriteLine(promptString);
+                }
             }
 
             return new MarkupFrame(builder);

@@ -53,13 +53,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             if (entries.Length > 0)
             {
-                List<string> history = [];
-
                 foreach (var entry in entries)
-                    history.Add($"{entry.Content.EnsureFinishedSentence()}");
-
-                foreach (var entry in entries)
-                    builder.WriteLine(entry.Content);
+                    builder.WriteLine(entry.Content.EnsureFinishedSentence());
             }
             else
             {

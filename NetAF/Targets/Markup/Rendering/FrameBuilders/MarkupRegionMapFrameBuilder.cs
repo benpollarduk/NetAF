@@ -60,14 +60,19 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
 
+            builder.Newline();
+
+            var bold = new TextStyle(Bold: true);
+
             if (contextualCommands != null && contextualCommands.Length > 0)
             {
-                builder.Heading(CommandTitle, HeadingLevel.H4);
+                builder.Heading(CommandTitle, HeadingLevel.H2);
 
                 for (var index = 0; index < contextualCommands.Length; index++)
                 {
                     var contextualCommand = contextualCommands[index];
-                    builder.WriteLine($"{contextualCommand.DisplayCommand} - {contextualCommand.Description.EnsureFinishedSentence()}");
+                    builder.Write(contextualCommand.DisplayCommand, bold);
+                    builder.WriteLine($" - {contextualCommand.Description.EnsureFinishedSentence()}");
                 }
             }
 

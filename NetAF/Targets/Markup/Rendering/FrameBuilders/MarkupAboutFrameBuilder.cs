@@ -28,8 +28,10 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Heading(title, HeadingLevel.H1);
             builder.Newline();
-            builder.WriteLine(game.Info.Name);
+            builder.Heading(game.Info.Name, HeadingLevel.H2);
+            builder.Newline();
             builder.WriteLine(game.Info.Description.EnsureFinishedSentence());
+            builder.Newline();
 
             if (!string.IsNullOrEmpty(game.Info.Author))
                 builder.WriteLine($"Created by: {game.Info.Author}".EnsureFinishedSentence());

@@ -33,22 +33,20 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(description))
                 builder.WriteLine(description);
 
-            List<string> commandsInList = [];
+            var bold = new TextStyle(Bold: true);
 
             foreach (var command in commandHelp)
             {
                 if (!string.IsNullOrEmpty(command.DisplayCommand) && !string.IsNullOrEmpty(command.Description))
                 {
-                    commandsInList.Add($"{command.DisplayCommand} - {command.Description.EnsureFinishedSentence()}");
+                    builder.Write(command.DisplayCommand, bold);
+                    builder.WriteLine($" - {command.Description.EnsureFinishedSentence()}");
                 }
                 else if (!string.IsNullOrEmpty(command.DisplayCommand) && string.IsNullOrEmpty(command.Description))
                 {
-                    commandsInList.Add(command.DisplayCommand);
+                    builder.WriteLine(command.DisplayCommand, bold);
                 }
             }
-
-            foreach (var command in commandsInList)
-                builder.WriteLine(command);
 
             return new MarkupFrame(builder);
         }
