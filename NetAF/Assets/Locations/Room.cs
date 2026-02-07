@@ -7,7 +7,6 @@ using NetAF.Commands;
 using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Interpretation;
-using NetAF.Logging.Events;
 using NetAF.Rendering;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;

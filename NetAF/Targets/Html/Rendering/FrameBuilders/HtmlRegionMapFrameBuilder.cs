@@ -58,9 +58,14 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             builder.Clear();
             builder.H1(title);
 
-            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
+            var contextualCommandLength = contextualCommands?.Length ?? 0;
 
-            if (contextualCommands != null && contextualCommands.Length > 0)
+            // calculate max map size - title, - command length (if any commands) - commands title
+            var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - contextualCommandLength > 0 ? 1 : 0);
+
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, maxMapSize);
+
+            if (contextualCommandLength > 0)
             {
                 builder.H4(CommandTitle);
 

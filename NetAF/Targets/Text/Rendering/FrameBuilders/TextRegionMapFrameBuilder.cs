@@ -4,7 +4,6 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
-using System.Linq;
 using System.Text;
 
 namespace NetAF.Targets.Text.Rendering.FrameBuilders
@@ -60,9 +59,14 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             builder.Clear();
             builder.AppendLine(title);
 
-            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
+            var contextualCommandLength = contextualCommands?.Length ?? 0;
 
-            if (contextualCommands?.Any() ?? false)
+            // calculate max map size - title, - command length (if any commands) - commands title
+            var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - contextualCommandLength > 0 ? 1 : 0);
+
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, maxMapSize);
+
+            if (contextualCommandLength > 0)
             {
                 builder.AppendLine(CommandTitle);
 

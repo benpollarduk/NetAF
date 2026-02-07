@@ -14,6 +14,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
         /// <param name="detail">The level of detail to use.</param>
-        void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail);
+        /// <param name="maxSize">The maximum size available in which to build the map.</param>
+        void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize);
     }
 }

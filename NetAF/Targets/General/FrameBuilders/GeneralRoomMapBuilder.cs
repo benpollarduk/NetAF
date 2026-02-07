@@ -55,11 +55,6 @@ namespace NetAF.Targets.General.FrameBuilders
         /// </summary>
         public int KeyPadding { get; set; } = 6;
 
-        /// <summary>
-        /// Get or set the maximum size.
-        /// </summary>
-        public Size MaxSize { get; set; } = new Size(80, 40);
-
         #endregion
 
         #region Methods
@@ -104,7 +99,7 @@ namespace NetAF.Targets.General.FrameBuilders
 
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(MaxSize);
+            ansiGridStringBuilder.Resize(RenderedSize);
 
             var ansiRoomBuilder = new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder)
             {

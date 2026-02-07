@@ -268,9 +268,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
         /// <param name="detail">The level of detail to use.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail)
+        /// <param name="maxSize">The maximum size available in which to build the map.</param>
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize)
         {
-            BuildRegionMap(region, focusPosition, detail, new(0, 0), new(int.MaxValue, int.MaxValue));
+            BuildRegionMap(region, focusPosition, detail, maxSize, new(0, 0));
         }
 
         #endregion
@@ -283,9 +284,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
         /// <param name="detail">The level of detail to use.</param>
-        /// <param name="startPosition">The position to start building at.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Point2D startPosition, Size maxSize)
+        /// <param name="startPosition">The position to start building at.</param>
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize, Point2D startPosition)
         {
             var matrix = region.ToMatrix();
             var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);

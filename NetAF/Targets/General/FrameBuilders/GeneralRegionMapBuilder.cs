@@ -65,11 +65,6 @@ namespace NetAF.Targets.General.FrameBuilders
         /// </summary>
         public bool ShowLowerFloors { get; set; } = true;
 
-        /// <summary>
-        /// Get or set the maximum size.
-        /// </summary>
-        public Size MaxSize { get; set; } = new Size(80, 40);
-
         #endregion
 
         #region Methods
@@ -103,13 +98,14 @@ namespace NetAF.Targets.General.FrameBuilders
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
         /// <param name="detail">The level of detail to use.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail)
+        /// <param name="maxSize">The maximum size available in which to build the map.</param>
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize)
         {
             // for now, cheat and use the ANSI builder then convert to string
 
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(MaxSize);
+            ansiGridStringBuilder.Resize(maxSize);
 
             var ansiRegionBuilder = new ConsoleRegionMapBuilder(ansiGridStringBuilder)
             {
@@ -124,7 +120,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 CurrentFloorIndicator = CurrentFloorIndicator
             };
 
-            ansiRegionBuilder.BuildRegionMap(region, focusPosition, detail, new(0, 0), MaxSize);
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, detail, maxSize, new(0, 0));
             Adapt(ansiGridStringBuilder);
         }
 

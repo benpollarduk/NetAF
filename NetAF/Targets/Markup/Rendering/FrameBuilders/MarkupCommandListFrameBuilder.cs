@@ -3,7 +3,6 @@ using NetAF.Commands;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
-using System.Collections.Generic;
 
 namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 {

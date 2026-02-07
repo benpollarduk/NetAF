@@ -10,7 +10,6 @@ using NetAF.Commands.Scene;
 using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Interpretation;
-using NetAF.Logging.Events;
 using NetAF.Logging.History;
 using NetAF.Logging.Notes;
 using NetAF.Logic.Arrangement;

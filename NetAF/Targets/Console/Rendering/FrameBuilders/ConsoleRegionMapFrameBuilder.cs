@@ -122,9 +122,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
 
             if (RegionMapBuilder is IConsoleRegionMapBuilder consoleRegionMapBuilder)
-                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, detail, startMapPosition, mapSize);
+                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, detail, mapSize, startMapPosition);
             else
-                RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail);
+                RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, mapSize);
 
             if (renderPrompt)
             {
