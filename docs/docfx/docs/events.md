@@ -45,3 +45,4 @@ The following events are supported:
 * **GameStarted** - occurs when a game is started.
 * **GameUpdated** - occurs when a game is updated.
 * **GameFinished** - occurs when a game is finished.
+* **GameModeChanged** - occurs when a game mode changes.

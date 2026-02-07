@@ -19,8 +19,10 @@ items:
   href: attributes.md
 - name: Commands
   href: commands.md
-- name: Frame Builders
-  href: frame-builders.md
+- name: Targets
+  items:
+  - href: frame-builders.md
+  - href: markup.md
 - name: Notes
   href: notes.md
 - name: Variables

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NetAF.Logging.Events
+namespace NetAF.Events
 {
     /// <summary>
     /// Provides an event bus for handling the centralization of events.

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logging.Events;
+using NetAF.Events;
 using System;
 
 namespace NetAF.Tests.Logging.Events

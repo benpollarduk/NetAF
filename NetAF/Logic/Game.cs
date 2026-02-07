@@ -7,6 +7,7 @@ using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.Scene;
+using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logging.Events;
@@ -131,6 +132,7 @@ namespace NetAF.Logic
         public void ChangeMode(IGameMode mode)
         {
             Mode = mode;
+            EventBus.Publish(new GameModeChanged(Mode));
         }
 
         /// <summary>

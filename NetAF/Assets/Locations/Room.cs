@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
+using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Logging.Events;

@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
+using NetAF.Events;
 using NetAF.Logging.Events;
 using NetAF.Logic;
 using System;

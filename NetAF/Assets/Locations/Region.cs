@@ -1,4 +1,5 @@
 ﻿using NetAF.Commands;
+using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Logging.Events;
 using NetAF.Serialization;

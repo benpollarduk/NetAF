@@ -2,8 +2,9 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 
-namespace NetAF.Logging.Events
+namespace NetAF.Events
 {
     /// <summary>
     /// Provides a base event.
@@ -80,4 +81,10 @@ namespace NetAF.Logging.Events
     /// </summary>
     /// <param name="Game">The game that was updated.</param>
     public record GameUpdated(Game Game) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a game mode changes.
+    /// </summary>
+    /// <param name="Mode">The mode the game changed to.</param>
+    public record GameModeChanged(IGameMode Mode) : BaseEvent;
 }
