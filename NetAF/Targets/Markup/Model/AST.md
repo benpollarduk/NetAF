@@ -1,23 +1,43 @@
-﻿# Abstract Syntax Tree
+﻿# Markup
 
 ## Introduction
-The Abstract Syntax Tree complex frames to be described in a markup language and then rendered in various rich formats.
+Markup allows rich text frames to be described in a simple target agnostic language and then rendered in various formats.
 
-## Conversion Process
-Markup -> Tokens -> AST
+## Process
+NetAF provides the **MarkupBuilder** to simplify generating markup from frames and the **MarkupAdapter** for rendering them in a project. This allows custom implementations of **IFramePresenter** to be written to render to different targets.
 
-Frames are described as markup.
-The markup is tokenized.
-The tokens are parsed to AST.
+When writing a custom implementation of **IFramePresenter** it is advisable to first use the **Tokenizer** to tokenize the markup and then the tokens can be passed to the **MarkupParser** to parse to generate a model. This model is much easier to work with and is essentially an abstract syntax tree. The root of the model is a **DocumentNode**. The model can be thought of as a simple DOM (Document Object Model).
 
-## Markup
+*Markup -> Tokens -> Model -> Renderer*
+
+The **ModelParser** allows markup to be parsed directly to a **DocumentNode**, handling all tokenizaton for you to simplify the process.
+
+```csharp
+ModelParser.TryParse(markup, out DocumentNode? doc);
 ```
-#, ##, ###, #### - headings 1 - 4.
-[bold][/bold] - all text between the tags is bold.
-[italic][/italic] - all text between the tags is bold.
-[stikethrough][/stikethrough] - all text between the tags uses strikethrough.
-[underline][/underline] - all text between the tags uses underline.
-[monospace][/monospace] - all text between the tags should be monospace.
-[foreground:FFFFFF][foreground:FFFFFF] - all text between the tags has a specified foreground color in hex, RRGGBB.
-[background:FFFFFF][background:FFFFFF] - all text between the tags has a specified background color in hex, RRGGBB.
+
+## Language
+The following syntax is supported.
+
+```
+# Example - heading 1.
+## Example - heading 2.
+### Example - heading 3.
+#### Example - heading 4.
+
+[bold]Example[/bold] - all text between the tags is bold.
+
+[italic]Example[/italic] - all text between the tags is bold.
+
+[stikethrough]Example[/stikethrough] - all text between the tags uses strikethrough.
+
+[underline]Example[/underline] - all text between the tags uses underline.
+
+[monospace]Example[/monospace] - all text between the tags should be monospace.
+
+[foreground:FFFFFF]Example[/foreground] - all text between the tags has a specified foreground color in hex, RRGGBB.
+
+[background:FFFFFF]Example[/background] - all text between the tags has a specified background color in hex, RRGGBB.
+
+\n - newline.
 ```
