@@ -61,7 +61,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             var contextualCommandLength = contextualCommands?.Length ?? 0;
 
             // calculate max map size - title, - command length (if any commands) - commands title
-            var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - contextualCommandLength > 0 ? 1 : 0);
+            var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - (contextualCommandLength > 0 ? 1 : 0));
 
             RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, maxMapSize);
 
