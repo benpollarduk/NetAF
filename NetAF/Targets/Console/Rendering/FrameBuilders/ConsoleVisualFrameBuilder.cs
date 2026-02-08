@@ -10,9 +10,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// Provides a builder of visual frames.
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
-    /// <param name="designSize">The size that was used when designing the frame.</param>
     /// <param name="resizeMode">The mode to use when the design size and the render size differ and the content needs to be resized.</param>
-    public sealed class ConsoleVisualFrameBuilder(GridStringBuilder gridStringBuilder, Size designSize, VisualFrameResizeMode resizeMode = VisualFrameResizeMode.Scale) : IVisualFrameBuilder
+    public sealed class ConsoleVisualFrameBuilder(GridStringBuilder gridStringBuilder, VisualFrameResizeMode resizeMode = VisualFrameResizeMode.Scale) : IVisualFrameBuilder
     {
         #region Properties
 
@@ -37,11 +36,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public AnsiColor DescriptionColor { get; set; } = AnsiColor.White;
 
         /// <summary>
-        /// Get the size that was used when the frame was designed.
-        /// </summary>
-        public Size DesignSize { get; } = designSize;
-
-        /// <summary>
         /// Get or set the mode to use when the design size and the render size differ and the content needs to be resized.
         /// </summary>
         public VisualFrameResizeMode ResizeMode { get; set; } = resizeMode;
@@ -60,8 +54,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <returns>The cropped visual builder.</returns>
         private static GridVisualBuilder Crop(GridVisualBuilder visualBuilder, Size renderSize, AnsiColor background, AnsiColor foreground)
         {
-            // can't crop bigger
-            if (visualBuilder.DisplaySize.Width >= renderSize.Width && visualBuilder.DisplaySize.Height >= renderSize.Height)
+            // can't crop if the source is smaller than the render size
+            if (visualBuilder.DisplaySize.Width < renderSize.Width && visualBuilder.DisplaySize.Height < renderSize.Height)
                 return visualBuilder;
 
             var newWidth = Math.Min(renderSize.Width, visualBuilder.DisplaySize.Width);
@@ -88,18 +82,17 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Scale a grid visual builder to a specified size.
         /// </summary>
         /// <param name="visualBuilder">The visual builder.</param>
-        /// <param name="designSize">The design size.</param>
         /// <param name="renderSize">The render size.</param>
         /// <param name="background">The background color.</param>
         /// <param name="foreground">The foreground color.</param>
         /// <returns>The scaled visual builder.</returns>
-        private static GridVisualBuilder Scale(GridVisualBuilder visualBuilder, Size designSize, Size renderSize, AnsiColor background, AnsiColor foreground)
+        private static GridVisualBuilder Scale(GridVisualBuilder visualBuilder, Size renderSize, AnsiColor background, AnsiColor foreground)
         {
             var newWidth = Math.Min(renderSize.Width, visualBuilder.DisplaySize.Width);
             var newHeight = Math.Min(renderSize.Height, visualBuilder.DisplaySize.Height);
             var newSize = new Size(newWidth, newHeight);
-            var widthRatio = designSize.Width / (double)newWidth;
-            var heightRatio = designSize.Height / (double)newHeight;
+            var widthRatio = visualBuilder.DisplaySize.Width / (double)newWidth;
+            var heightRatio = visualBuilder.DisplaySize.Height / (double)newHeight;
             var newBuilder = new GridVisualBuilder(background, foreground);
             newBuilder.Resize(newSize);
 
@@ -165,7 +158,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 gridVisualBuilder = ResizeMode switch
                 {
                     VisualFrameResizeMode.Crop => Crop(gridVisualBuilder, renderSize, BackgroundColor, TitleColor),
-                    VisualFrameResizeMode.Scale => Scale(gridVisualBuilder, DesignSize, renderSize, BackgroundColor, TitleColor),
+                    VisualFrameResizeMode.Scale => Scale(gridVisualBuilder, renderSize, BackgroundColor, TitleColor),
                     _ => throw new NotImplementedException()
                 };
             }

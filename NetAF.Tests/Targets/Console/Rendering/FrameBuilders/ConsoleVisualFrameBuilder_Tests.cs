@@ -14,8 +14,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder);
                 var designSize = new Size(100, 100);
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, designSize);
                 var size = new Size(80, 50);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
@@ -30,9 +30,9 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var designSize = new Size(100, 100);
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, designSize, VisualFrameResizeMode.Scale);
+                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, VisualFrameResizeMode.Scale);
                 var size = new Size(80, 50);
+                var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
@@ -46,9 +46,9 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var gridStringBuilder = new GridStringBuilder();
-                var designSize = new Size(100, 100);
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, designSize, VisualFrameResizeMode.Crop);
+                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, VisualFrameResizeMode.Crop);
                 var size = new Size(80, 50);
+                var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 

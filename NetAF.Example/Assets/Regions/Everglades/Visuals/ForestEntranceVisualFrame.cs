@@ -102,7 +102,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
             DrawTree2(builder, 56, 18);
             DrawTree1(builder, 70, 17);
 
-            var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder(), DesignSize, VisualFrameResizeMode.Scale);
+            var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder(), VisualFrameResizeMode.Scale);
             return frameBuilder.Build(name, string.Empty, builder, size);
         }
 
