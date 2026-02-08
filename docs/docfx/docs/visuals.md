@@ -8,8 +8,9 @@ The *GridVisualBuilder* class can be used to create a picture that can be displa
 
 ```csharp
 // create a builder for drawing the tree
+var designSize = new Size(11, 11);
 var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.BrightWhite);
-builder.Resize(new(11, 11));
+builder.Resize(designSize);
 
 // colors to use for the tree
 AnsiColor trunk = new(127, 50, 50);
@@ -25,7 +26,7 @@ builder.DrawRectangle(0, 5, 11, 1, canopy, canopy);
 builder.DrawRectangle(5, 5, 1, 6, trunk, trunk);
 
 // create a frame
-var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder());
+var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder(), designSize);
 var frame = frameBuilder.Build("Tree", "A visual of a tree.", builder, game.Configuration.DisplaySize);
 
 // display the frame in the game

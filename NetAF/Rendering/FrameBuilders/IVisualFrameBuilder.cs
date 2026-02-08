@@ -13,7 +13,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="description">The description.</param>
-        /// <param name="gridVisualBuilder">The grid visual builder.</param>
+        /// <param name="gridVisualBuilder">The grid visual builder containing the visual.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
         IFrame Build(string title, string description, GridVisualBuilder gridVisualBuilder, Size size);

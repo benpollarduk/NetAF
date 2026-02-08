@@ -20,6 +20,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
         public static readonly AnsiColor GrassHighlights = new(0, 235, 0);
         public static readonly AnsiColor Path = new(130, 20, 20);
         public static readonly AnsiColor PathHighlights = new(130, 130, 130);
+        private static readonly Size DesignSize = new(80, 50);
 
         #endregion
 
@@ -85,7 +86,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
         public IFrame Instantiate()
         {
             var builder = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
-            builder.Resize(new(size.Width - 4, size.Height - 10));
+            builder.Resize(DesignSize);
             DrawSun(builder);
             DrawGrass(builder);
             DrawPath(builder);
@@ -101,7 +102,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
             DrawTree2(builder, 56, 18);
             DrawTree1(builder, 70, 17);
 
-            var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder());
+            var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder(), DesignSize, VisualFrameResizeMode.Scale);
             return frameBuilder.Build(name, string.Empty, builder, size);
         }
 
