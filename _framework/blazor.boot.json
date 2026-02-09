@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "NetAF.Example.Blazor",
   "resources": {
-    "hash": "sha256-7Q1uezrplnQZUTIpxzlANBM+kb1dQj+GqcFUIj82E4I=",
+    "hash": "sha256-KhqW3CgmXkTEa9AmnJtqJxLzCEFBmArklq7Lr+FbR4o=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-NljIbpK/1KCj0+knpX8U77Rbl5kTtfFIuFjK7AuczEw="
     },
@@ -33,9 +33,9 @@
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-xC6FbckADc+AndgC+vkBI5npfPvZD+RhR4Q97X2DhjQ=",
       "Microsoft.JSInterop.wasm": "sha256-KIgVt3TlKw/iYsoGw4v0lRA2K2oDX+1qSpvYJpfDYdg=",
       "NetAF.Blazor.wasm": "sha256-OEot6Gho+bMxPT0lOn9mnJeH7oMCuDcsEzt7QA3lC4s=",
-      "NetAF.Example.Blazor.wasm": "sha256-wJxSoBLT+LwUSo+sPQ0jwCAanBQMKMwTODtuNkN2Mk0=",
-      "NetAF.Example.wasm": "sha256-PokqypMbC2yskoS6LJQuVTK3sx5nwlT2QLYKylw0Er4=",
-      "NetAF.wasm": "sha256-sB7OJ6andR0Btq4JDpBYMV1bldYvY73JTWghld0IZuY=",
+      "NetAF.Example.Blazor.wasm": "sha256-nRCrlr5qfh15shmUmcerDsRCZaVn8xfDvw0qRrWH7fk=",
+      "NetAF.Example.wasm": "sha256-dTdUj6A5J77hztgTTQZ1H/ZCYXqsbQXGfRI96jaw2sE=",
+      "NetAF.wasm": "sha256-rG43tJM961x2VlPmRjIT7Gqz6nqi3wY7645A7O7g3MY=",
       "System.Collections.Concurrent.wasm": "sha256-pQ1FffeB86cMRZU7A2W4iDbhVsxjbLRtBynariXOCg8=",
       "System.Collections.wasm": "sha256-W1qRJwISZKd0wm/FCeKWLrAboKQ0+3tYOmM+C6KY2Q4=",
       "System.ComponentModel.wasm": "sha256-eASv6/hAr1v6bTy5jSaaiSY0JytxSFaCOpEL+lcGP7A=",
