@@ -97,11 +97,23 @@ namespace NetAF.Targets.General.FrameBuilders
 
             // for now, cheat and use the ANSI builder then convert to string
 
+            // determine the required size
+            Size renderSizeWithFullKey = new(RenderedSize.Width + KeyPadding + ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Width, Math.Max(RenderedSize.Height, ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Height));
+
+            // get size depending on key
+            var renderedSize = key switch
+            {
+                KeyType.None => RenderedSize,
+                KeyType.Dynamic => renderSizeWithFullKey,
+                KeyType.Full => renderSizeWithFullKey,
+                _ => throw new NotImplementedException()
+            };
+
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(RenderedSize);
+            ansiGridStringBuilder.Resize(renderedSize);
 
-            var ansiRoomBuilder = new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder)
+            ConsoleHighDetailRoomMapBuilder ansiRoomBuilder = new(ansiGridStringBuilder)
             {
                 LockedExit = LockedExit,
                 ItemOrCharacterInRoom = ItemOrCharacterInRoom,

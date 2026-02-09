@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NetAF.Assets;
+using NetAF.Assets.Locations;
+using NetAF.Commands.Global;
+using NetAF.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetAF.Assets;
-using NetAF.Assets.Locations;
-using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -13,6 +14,15 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// <param name="gridStringBuilder">The grid string builder.</param>
     public sealed class ConsoleHighDetailRoomMapBuilder(GridStringBuilder gridStringBuilder) : IConsoleRoomMapBuilder
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the maximum size of the key.
+        /// </summary>
+        public static readonly Size MaximumKeySize = new(25, 4);
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -388,7 +398,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             foreach (var keyLine in keyLines)
                 gridStringBuilder.DrawWrapped(keyLine.Key, startKeyX, endY + 1, maxWidth, keyLine.Value, out endX, out endY);
-
         }
 
         #endregion

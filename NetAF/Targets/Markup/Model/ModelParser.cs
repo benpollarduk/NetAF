@@ -92,7 +92,7 @@ namespace NetAF.Targets.Markup.Model
                             inlineStack.Push(currentParagraph.Inlines);
 
                             // if there are active styles, re-open them in the new paragraph
-                            // we iterate bottom-up to maintain the correct nesting order
+                            // iterate bottom-up to maintain the correct nesting order
                             foreach (var activeStyle in styleStack.Reverse())
                             {
                                 var carryOverSpan = new StyleSpanNode(activeStyle);
@@ -132,7 +132,7 @@ namespace NetAF.Targets.Markup.Model
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception caught parsing Ast: {ex.Message}");
+                Debug.WriteLine($"Exception caught parsing markup: {ex.Message}");
                 return false;
             }
 
