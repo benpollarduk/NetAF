@@ -285,5 +285,21 @@ namespace NetAF.Tests.Targets.Markup.Model
             Assert.AreEqual("Test1", text1.Text);
             Assert.AreEqual("Test2", text2.Text);
         }
+
+        [TestMethod]
+        public void GivenMonospaceMap_WhenTryParse_ThenReturnTrueAndDocumentWithParagraphNodeContainingStyleSpanNodeContainingMapWithinInlines()
+        {
+            var input = @"[monospace][foreground:#808080]+[/foreground][foreground:#808080]-[/foreground][foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#80FF80]N[/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground][foreground:#808080]-[/foreground][foreground:#808080]+[/foreground]\r\n[foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground]\r\n[foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground]\r\n[foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#8080FF]![/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground]\r\n[foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground]\r\n[foreground:#808080]|[/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#000000] [/foreground][foreground:#808080]|[/foreground]\r\n[foreground:#808080]+[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]-[/foreground][foreground:#808080]+[/foreground][/monospace]";
+
+            var result = ModelParser.TryParse(input, out var doc);
+            var paragraphNode = doc.Blocks[0] as ParagraphNode;
+            var styleSpan = paragraphNode?.Inlines[0] as StyleSpanNode;
+
+            Assert.IsTrue(result);
+            Assert.HasCount(1, doc.Blocks);
+            Assert.IsNotNull(paragraphNode);
+            Assert.IsNotNull(styleSpan);
+            Assert.IsNotEmpty(styleSpan.Inlines);
+        }
     }
 }

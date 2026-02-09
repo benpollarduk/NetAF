@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 
 namespace NetAF.Targets.Markup.Model
 {
@@ -39,6 +40,7 @@ namespace NetAF.Targets.Markup.Model
             try
             {
                 var inlineStack = new Stack<List<IInlineNode>>();
+                var styleStack = new Stack<TextStyle>();
                 var currentParagraph = new ParagraphNode();
                 documentNode.Blocks.Add(currentParagraph);
                 inlineStack.Push(currentParagraph.Inlines);
@@ -61,6 +63,7 @@ namespace NetAF.Targets.Markup.Model
                         case TokenType.OpenTag:
 
                             var style = GetStyleFromToken(token.Tag);
+                            styleStack.Push(style);
                             var span = new StyleSpanNode(style);
                             inlineStack.Peek().Add(span);
 
@@ -73,7 +76,10 @@ namespace NetAF.Targets.Markup.Model
 
                             // pop the stack to return to the parent style or the base paragraph
                             if (inlineStack.Count > 1)
+                            {
                                 inlineStack.Pop();
+                                styleStack.Pop();
+                            }
 
                             break;
 
@@ -84,6 +90,15 @@ namespace NetAF.Targets.Markup.Model
                             documentNode.Blocks.Add(currentParagraph);
                             inlineStack.Clear();
                             inlineStack.Push(currentParagraph.Inlines);
+
+                            // if there are active styles, re-open them in the new paragraph
+                            // we iterate bottom-up to maintain the correct nesting order
+                            foreach (var activeStyle in styleStack.Reverse())
+                            {
+                                var carryOverSpan = new StyleSpanNode(activeStyle);
+                                inlineStack.Peek().Add(carryOverSpan);
+                                inlineStack.Push(carryOverSpan.Inlines);
+                            }
 
                             break;
 
@@ -106,6 +121,7 @@ namespace NetAF.Targets.Markup.Model
                             currentParagraph = new ParagraphNode();
                             documentNode.Blocks.Add(currentParagraph);
                             inlineStack.Clear();
+                            styleStack.Clear(); // headings usually break the style flow
                             inlineStack.Push(currentParagraph.Inlines);
 
                             break;
