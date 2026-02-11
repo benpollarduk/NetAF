@@ -41,7 +41,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], true, KeyType.Full, new Size(80, 50));
             });
         }
 
@@ -72,7 +72,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Full, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], true, KeyType.Full, new Size(80, 50));
             });
         }
 
@@ -103,7 +103,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], KeyType.Dynamic, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], true, KeyType.Dynamic, new Size(80, 50));
             });
         }
 
@@ -139,7 +139,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                     new CommandHelp("Test", "Test")
                 };
 
-                builder.Build(room, ViewPoint.Create(region), player, commands, KeyType.Full, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, commands, true, KeyType.Full, new Size(80, 50));
             });
         }
 
@@ -167,7 +167,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var builder = new ConsoleSceneFrameBuilder(gridStringBuilder, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
 
-                builder.Build(room, ViewPoint.Create(region), player, null, KeyType.Full, size);
+                builder.Build(room, ViewPoint.Create(region), player, null, true, KeyType.Full, size);
             });
         }
     }

@@ -113,10 +113,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="viewPoint">Specify the viewpoint from the room.</param>
         /// <param name="player">Specify the player.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="keyType">The type of key to use.</param>
+        /// <param name="showMap">Specify if the map should be shown.</param>
+        /// <param name="keyType">The type of key to use with the map, if it is shown.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, KeyType keyType, Size size)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, bool showMap, KeyType keyType, Size size)
         {
             var availableWidth = size.Width - 4;
             var availableHeight = size.Height - 2;
@@ -136,10 +137,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (viewPoint.Any)
                 gridStringBuilder.DrawWrapped(SceneHelper.CreateViewpointAsString(room, viewPoint), leftMargin, lastY + linePadding, availableWidth, TextColor, out _, out lastY);
 
-            if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
-                consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
-            else
-                roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType);
+            if (roomMapBuilder != null && showMap)
+            {
+                if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
+                    consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, keyType, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
+                else
+                    roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+            }
 
             if (player.Items.Length != 0)
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
