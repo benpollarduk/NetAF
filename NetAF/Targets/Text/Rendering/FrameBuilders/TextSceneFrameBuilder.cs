@@ -57,9 +57,12 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             builder.AppendLine();
 
-            roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+            if (roomMapBuilder != null)
+            {
+                roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
 
-            builder.AppendLine();
+                builder.AppendLine();
+            }
 
             if (contextualCommands != null && contextualCommands.Length > 0)
             {

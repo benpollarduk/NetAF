@@ -37,5 +37,30 @@ namespace NetAF.Tests.Rendering.FrameBuilders
 
             Assert.AreEqual(builder, result);
         }
+
+        [TestMethod]
+        public void GivenNoExisting_WhenSetFrameBuilder_ThenSetCorrectly()
+        {
+            var builder = new ConsoleSceneFrameBuilder(null, null);
+            var builders = new FrameBuilderCollection();
+
+            builders.SetFrameBuilder(builder);
+            var result = builders.GetFrameBuilder<ISceneFrameBuilder>();
+
+            Assert.AreEqual(builder, result);
+        }
+
+        [TestMethod]
+        public void GivenOverwritingExisting_WhenSetFrameBuilder_ThenSetCorrectly()
+        {
+            var builder1 = new ConsoleSceneFrameBuilder(null, null);
+            var builder2 = new ConsoleSceneFrameBuilder(null, null);
+            var builders = new FrameBuilderCollection(builder1);
+
+            builders.SetFrameBuilder(builder2);
+            var result = builders.GetFrameBuilder<ISceneFrameBuilder>();
+
+            Assert.AreEqual(builder2, result);
+        }
     }
 }

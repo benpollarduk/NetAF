@@ -57,9 +57,12 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             builder.Newline();
 
-            roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+            if (roomMapBuilder != null)
+            {
+                roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
 
-            builder.Newline();
+                builder.Newline();
+            }
 
             if (contextualCommands != null && contextualCommands.Length > 0)
             {

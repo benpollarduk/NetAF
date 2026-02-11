@@ -56,7 +56,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             builder.Br();
 
-            roomMapBuilder.BuildRoomMap(room, viewPoint, keyType);
+            roomMapBuilder?.BuildRoomMap(room, viewPoint, keyType);
 
             if (contextualCommands != null && contextualCommands.Length > 0)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -23,6 +24,23 @@ namespace NetAF.Rendering.FrameBuilders
                 throw new InvalidOperationException($"There is no frame builder registered for {typeof(T)}.");
 
             return (T)match;
+        }
+
+        /// <summary>
+        /// Set a frame builder for a specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of frame builder.</typeparam>
+        /// <param name="builder">The builder to set.</param>
+        public void SetFrameBuilder<T>(T builder)
+        {
+            var existing = frameBuilders?.ToList() ?? [];
+            var match = Array.Find(frameBuilders, x => x is T);
+
+            if (match != null)
+                existing.Remove(match);
+
+            existing.Add(builder as IFrameBuilder);
+            frameBuilders = [.. existing];
         }
 
         #endregion
