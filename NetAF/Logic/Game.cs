@@ -580,6 +580,8 @@ namespace NetAF.Logic
         void IRestoreFromObjectSerialization<GameSerialization>.RestoreFrom(GameSerialization serialization)
         {
             RestoreFrom(serialization);
+
+            EventBus.Publish(new GameUpdated(this));
         }
 
         #endregion
