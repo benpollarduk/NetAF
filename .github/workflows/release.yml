@@ -66,10 +66,10 @@ jobs:
         sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" NetAF/NetAF.csproj
 
     - name: Build
-      run: dotnet build -c Release
+      run: dotnet build ./NetAF/NetAF.csproj -c Release
 
     - name: Run tests with coverlet
-      run: dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
     - name: Tag the commit
       run: |
