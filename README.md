@@ -146,7 +146,7 @@ Maps display visited rooms, exits, player position, if an item is in a room, low
 Game state can be serialized allowing progress to be saved to file and restored later.
 
 ### Targets
-NetAF natively targets console, web and markup which allows other targets to be added as needed. Included in the repo are Console and Blazor examples.
+NetAF natively targets console, web and markup which allows other targets to be added as needed. Included in the repo are Console, WPF and Blazor examples.
 
 ## Getting Started
 
@@ -203,7 +203,7 @@ The quickest way to start getting to grips with NetAF is to take a look at the [
 An example game is provided in the [NetAF.Example](https://github.com/benpollarduk/adventure-framework/tree/main/NetAF.Example) directory 
 and has been designed with the aim of showcasing the various features.
 
-Set either the **NetAF.Example.Console** or **NetAF.Example.Blazor** project as the start up project and then build and run to start the application.
+Set either the **NetAF.Example.Console**, **NetAF.Example.WPF** or **NetAF.Example.Blazor** projects as the start up project and then build and run to start the application.
 
 ## Projects
 Below are some projects that use NetAF:
