@@ -120,6 +120,8 @@ Game state can be serialized allowing progress to be saved to file and restored 
 ### Targets
 NetAF natively targets console, web and markup which allows other targets to be added as needed. Included in the repo are Console, WPF and Blazor examples.
 
+For more information about targeting different project types visit the [NetAF.WPF](https://github.com/benpollarduk/NetAF.WPF) and [NetAF.Blazor](https://github.com/benpollarduk/NetAF.Blazor) repos.
+
 ## Getting Started
 
 ### Clone the repo/pull NuGet
