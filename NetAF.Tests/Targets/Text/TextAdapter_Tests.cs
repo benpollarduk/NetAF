@@ -72,7 +72,7 @@ namespace NetAF.Tests.Targets.Text
 
             var result = TextAdapter.ConvertGridVisualBuilderToString(builder);
 
-            var expected = "abc\r\ndef\r\nghi";
+            var expected = $"abc{Environment.NewLine}def{Environment.NewLine}nghi";
 
             Assert.AreEqual(expected, result);
         }
