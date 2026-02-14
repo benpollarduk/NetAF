@@ -2,13 +2,18 @@
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
 using NetAF.Utilities;
 
 namespace NetAF.Example.Assets.Regions.Everglades.Visuals
 {
-    public class ForestEntranceVisualFrame(string name, Size size) : IAssetTemplate<IFrame>
+    public class ForestEntranceVisual : IAssetTemplate<Visual>
     {
+        #region Constants
+
+        private const string Name = "Forest Entrance";
+
+        #endregion
+
         #region StaticProperties
 
         public static readonly AnsiColor Sky = new(20, 20, 125);
@@ -77,13 +82,13 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
 
         #endregion
 
-        #region Implementation of IAssetTemplate<IFrame>
+        #region Implementation of IAssetTemplate<Visual>
 
         /// <summary>
         /// Instantiate a new instance of the asset.
         /// </summary>
-        /// <returns>The asset.</returns>
-        public IFrame Instantiate()
+        /// <returns>The visual.</returns>
+        public Visual Instantiate()
         {
             var builder = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
             builder.Resize(DesignSize);
@@ -102,8 +107,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
             DrawTree2(builder, 56, 18);
             DrawTree1(builder, 70, 17);
 
-            var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder(), VisualFrameResizeMode.Scale);
-            return frameBuilder.Build(name, string.Empty, builder, size);
+            return new Visual(Name, string.Empty, builder);
         }
 
         #endregion

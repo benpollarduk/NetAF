@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
-using NetAF.Commands.Global;
 using NetAF.Rendering;
 using System;
 using System.Collections.Generic;

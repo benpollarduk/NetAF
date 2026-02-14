@@ -1,13 +1,14 @@
 ﻿using NetAF.Interpretation;
 using NetAF.Rendering;
+using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic.Modes
 {
     /// <summary>
-    /// Provides a display mode for rendering of visual frame.
+    /// Provides a mode for displaying a visual.
     /// </summary>
-    /// <param name="frame">The frame to render.</param>
-    public sealed class VisualMode(IFrame frame) : IGameMode
+    /// <param name="visual">The visual.</param>
+    public sealed class VisualMode(Visual visual) : IGameMode
     {
         #region Implementation of IGameMode
 
@@ -27,6 +28,7 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IVisualFrameBuilder>().Build(visual, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 
