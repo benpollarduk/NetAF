@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Assets;
 using NetAF.Logic;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Html.Rendering;
+using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Text;
 using NetAF.Utilities;
-using NetAF.Targets.Html.Rendering.FrameBuilders;
-using NetAF.Targets.Html.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
-using NetAF.Targets.Console.Rendering;
 
 namespace NetAF.Tests.Targets.Text
 {
@@ -53,6 +53,28 @@ namespace NetAF.Tests.Targets.Text
             adapter.RenderFrame(frame);
 
             Assert.IsFalse(string.IsNullOrEmpty(presenter.ToString()));
+        }
+
+        [TestMethod]
+        public void GivenA3x3Grid_WhenConvertGridVisualBuilderToString_ThenReturnString()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            builder.SetCell(0, 0, 'a', AnsiColor.White);
+            builder.SetCell(1, 0, 'b', AnsiColor.White);
+            builder.SetCell(2, 0, 'c', AnsiColor.White);
+            builder.SetCell(0, 1, 'd', AnsiColor.White);
+            builder.SetCell(1, 1, 'e', AnsiColor.White);
+            builder.SetCell(2, 1, 'f', AnsiColor.White);
+            builder.SetCell(0, 2, 'g', AnsiColor.White);
+            builder.SetCell(1, 2, 'h', AnsiColor.White);
+            builder.SetCell(2, 2, 'i', AnsiColor.White);
+
+            var result = TextAdapter.ConvertGridVisualBuilderToString(builder);
+
+            var expected = "abc\r\ndef\r\nghi";
+
+            Assert.AreEqual(expected, result);
         }
     }
 }

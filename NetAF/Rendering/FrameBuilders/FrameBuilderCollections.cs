@@ -99,7 +99,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextConversationFrameBuilder(stringBuilder),
                     new TextNoteFrameBuilder(stringBuilder),
                     new TextHistoryFrameBuilder(stringBuilder),
-                    new TextNarrativeFrameBuilder(stringBuilder)
+                    new TextNarrativeFrameBuilder(stringBuilder),
+                    new TextVisualFrameBuilder(stringBuilder)
                 ];
 
                 return new(frameBuilders);
