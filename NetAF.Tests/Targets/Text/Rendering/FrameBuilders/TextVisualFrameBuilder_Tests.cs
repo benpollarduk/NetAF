@@ -6,7 +6,7 @@ using NetAF.Targets.Text.Rendering;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
 
-namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
+namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
 {
     [TestClass]
     public class MarkupVisualFrameBuilder_Tests
