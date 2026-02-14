@@ -6,7 +6,7 @@ using NetAF.Targets.Text.Rendering;
 using System;
 using System.Text;
 
-namespace NetAF.Targets.Markup.Rendering.FrameBuilders
+namespace NetAF.Targets.Text.Rendering.FrameBuilders
 {
     /// <summary>
     /// Provides a builder of visual frames.
