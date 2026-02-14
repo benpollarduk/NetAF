@@ -42,7 +42,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore -p:EnableWindowsTargeting=true
 
     - name: Install node.js
       uses: actions/setup-node@v4
@@ -66,10 +66,10 @@ jobs:
         sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" NetAF/NetAF.csproj
 
     - name: Build
-      run: dotnet build ./NetAF/NetAF.csproj -c Release
+      run: dotnet build ./NetAF/NetAF.csproj -c Release -p:EnableWindowsTargeting=true
 
     - name: Run tests with coverlet
-      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj -p:EnableWindowsTargeting=true /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
     - name: Tag the commit
       run: |
