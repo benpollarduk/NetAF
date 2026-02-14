@@ -9,6 +9,7 @@ using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Text;
 using NetAF.Utilities;
+using System;
 
 namespace NetAF.Tests.Targets.Text
 {
