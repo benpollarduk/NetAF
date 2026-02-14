@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetAF" Version="3.11.13" />
     <PackageReference Include="NetAF.WPF" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NetAF\NetAF.csproj" />
     <ProjectReference Include="..\NetAF.Example\NetAF.Example.csproj" />
   </ItemGroup>
 
