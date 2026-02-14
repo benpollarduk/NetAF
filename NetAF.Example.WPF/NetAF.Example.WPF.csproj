@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetAF" Version="3.11.13" />
-    <PackageReference Include="NetAF.WPF" Version="1.0.2" />
+    <PackageReference Include="NetAF.WPF" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
