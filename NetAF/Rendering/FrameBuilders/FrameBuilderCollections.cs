@@ -129,7 +129,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new MarkupConversationFrameBuilder(markupBuilder),
                     new MarkupNoteFrameBuilder(markupBuilder),
                     new MarkupHistoryFrameBuilder(markupBuilder),
-                    new MarkupNarrativeFrameBuilder(markupBuilder)
+                    new MarkupNarrativeFrameBuilder(markupBuilder),
+                    new MarkupVisualFrameBuilder(markupBuilder)
                 ];
 
                 return new(frameBuilders);
