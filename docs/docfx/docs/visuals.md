@@ -24,12 +24,11 @@ builder.DrawRectangle(1, 4, 9, 1, canopy, canopy);
 builder.DrawRectangle(0, 5, 11, 1, canopy, canopy);
 builder.DrawRectangle(5, 5, 1, 6, trunk, trunk);
 
-// create a frame
-var frameBuilder = new ConsoleVisualFrameBuilder(new GridStringBuilder());
-var frame = frameBuilder.Build("Tree", "A visual of a tree.", builder, game.Configuration.DisplaySize);
+// create a visual
+var visual = new Visual("Tree", "A visual of a tree.", builder);
 
-// display the frame in the game
-game.ChangeMode(new VisualMode(frame));
+// display the visual in the game
+game.ChangeMode(new VisualMode(visual));
 ```
 This will render the following:
 
