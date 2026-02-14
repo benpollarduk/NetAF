@@ -37,7 +37,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleConversationFrameBuilder(gridLayoutBuilder),
                     new ConsoleNoteFrameBuilder(gridLayoutBuilder),
                     new ConsoleHistoryFrameBuilder(gridLayoutBuilder),
-                    new ConsoleNarrativeFrameBuilder(gridLayoutBuilder)
+                    new ConsoleNarrativeFrameBuilder(gridLayoutBuilder),
+                    new ConsoleVisualFrameBuilder(gridLayoutBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -67,7 +68,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlConversationFrameBuilder(htmlBuilder),
                     new HtmlNoteFrameBuilder(htmlBuilder),
                     new HtmlHistoryFrameBuilder(htmlBuilder),
-                    new HtmlNarrativeFrameBuilder(htmlBuilder)
+                    new HtmlNarrativeFrameBuilder(htmlBuilder),
+                    new HtmlVisualFrameBuilder(htmlBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -97,7 +99,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextConversationFrameBuilder(stringBuilder),
                     new TextNoteFrameBuilder(stringBuilder),
                     new TextHistoryFrameBuilder(stringBuilder),
-                    new TextNarrativeFrameBuilder(stringBuilder)
+                    new TextNarrativeFrameBuilder(stringBuilder),
+                    new TextVisualFrameBuilder(stringBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -127,7 +130,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new MarkupConversationFrameBuilder(markupBuilder),
                     new MarkupNoteFrameBuilder(markupBuilder),
                     new MarkupHistoryFrameBuilder(markupBuilder),
-                    new MarkupNarrativeFrameBuilder(markupBuilder)
+                    new MarkupNarrativeFrameBuilder(markupBuilder),
+                    new MarkupVisualFrameBuilder(markupBuilder)
                 ];
 
                 return new(frameBuilders);

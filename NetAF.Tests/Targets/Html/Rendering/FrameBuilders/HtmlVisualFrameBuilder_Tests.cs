@@ -2,20 +2,21 @@
 using NetAF.Assets;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Html.Rendering;
+using NetAF.Targets.Html.Rendering.FrameBuilders;
 
-namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
+namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
 {
     [TestClass]
-    public class ConsoleVisualFrameBuilder_Tests
+    public class HtmlVisualFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaults_WhenBuild_ThenNoException()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder);
+                var htmlBuilder = new HtmlBuilder();
+                var builder = new HtmlVisualFrameBuilder(htmlBuilder);
                 var designSize = new Size(100, 100);
                 var size = new Size(80, 50);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
@@ -30,8 +31,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, VisualResizeMode.Scale);
+                var htmlBuilder = new HtmlBuilder();
+                var builder = new HtmlVisualFrameBuilder(htmlBuilder, VisualResizeMode.Scale);
                 var size = new Size(80, 50);
                 var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
@@ -46,8 +47,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
         {
             Assertions.NoExceptionThrown(() =>
             {
-                var gridStringBuilder = new GridStringBuilder();
-                var builder = new ConsoleVisualFrameBuilder(gridStringBuilder, VisualResizeMode.Crop);
+                var htmlBuilder = new HtmlBuilder();
+                var builder = new HtmlVisualFrameBuilder(htmlBuilder, VisualResizeMode.Crop);
                 var size = new Size(80, 50);
                 var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);

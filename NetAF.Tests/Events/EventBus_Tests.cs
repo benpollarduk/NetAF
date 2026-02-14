@@ -2,7 +2,7 @@
 using NetAF.Events;
 using System;
 
-namespace NetAF.Tests.Logging.Events
+namespace NetAF.Tests.Events
 {
     [TestClass]
     public class EventBus_Tests

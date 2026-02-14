@@ -47,6 +47,31 @@ namespace NetAF.Targets.Text
         }
 
         /// <summary>
+        /// Convert the contents of a GridVisualBuilder to a string.
+        /// </summary>
+        /// <param name="builder">The GridVisualBuilder to convert.</param>
+        /// <returns>A string representing the contents of the GridVisualBuilder.</returns>
+        public static string ConvertGridVisualBuilderToString(GridVisualBuilder builder)
+        {
+            StringBuilder stringBuilder = new();
+
+            for (var row = 0; row < builder.DisplaySize.Height; row++)
+            {
+                for (var column = 0; column < builder.DisplaySize.Width; column++)
+                {
+                    var character = builder.GetCharacter(column, row);
+                    character = character == 0 ? ' ' : character;
+                    stringBuilder.Append(character);
+                }
+
+                if (row < builder.DisplaySize.Height - 1)
+                    stringBuilder.AppendLine();
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>
         /// Convert an instance of IConsoleFrame to a string.
         /// </summary>
         /// <param name="frame">The frame to convert.</param>
