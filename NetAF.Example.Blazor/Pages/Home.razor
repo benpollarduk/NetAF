@@ -46,13 +46,13 @@
 
     private void RunConsoleEmu()
     {
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.ConsoleEmulation, new(80, 48));
+        BeginGame(NetAF.Rendering.FrameBuilders.FrameBuilderCollections.Console, new(80, 48));
     }
 
     private void RunHtml()
     {
         FrameProperties.DisplayCommandList = false;
-        BeginGame(NetAF.Example.Blazor.FrameBuilderCollections.Html, new(45, 35));
+        BeginGame(NetAF.Rendering.FrameBuilders.FrameBuilderCollections.Html, new(45, 35));
     }
 
     private void SetupComponents(HtmlAdapter htmlAdapter)
