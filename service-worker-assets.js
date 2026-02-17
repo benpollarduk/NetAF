@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "F+dqzcNn",
+  "version": "WQidUZpx",
   "assets": [
     {
       "hash": "sha256-8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U=",
@@ -74,15 +74,15 @@ self.assetsManifest = {
       "url": "_framework/NetAF.Blazor.wasm"
     },
     {
-      "hash": "sha256-9yDcqwZs6CtTXti+bjV2gyZ/R2bdCII2DOqEnm4AS0o=",
+      "hash": "sha256-RvUntiRDnqOd5EKq4aKg7LXc0QvBCUsjl3MhUoacVrE=",
       "url": "_framework/NetAF.Example.Blazor.wasm"
     },
     {
-      "hash": "sha256-8Qsdtwrg1BhdMtBQQfZMT6B+ckMs8M1TdZK1sQs9L4g=",
+      "hash": "sha256-cvymy6+vdmqY7MUvVndnB5LbH4iuXeuXNJc+/fCyrq8=",
       "url": "_framework/NetAF.Example.wasm"
     },
     {
-      "hash": "sha256-GELSs0ifUEwJEL31b+PsP4ykYf+vaJok6n3We+izOHc=",
+      "hash": "sha256-N2XWsFX963aMR5vIEVZiMIMbPIAbjlobs4BDtrV4azA=",
       "url": "_framework/NetAF.wasm"
     },
     {
@@ -158,7 +158,7 @@ self.assetsManifest = {
       "url": "_framework/System.Threading.wasm"
     },
     {
-      "hash": "sha256-XoQfK1w5V6Veb2SnHhaJ8o2UOuTP0drSrSojQkDF2VM=",
+      "hash": "sha256-5058FDB55QRrj+a2FWhM4MQlFxhKd/moyvzuj4L6LUg=",
       "url": "_framework/blazor.boot.json"
     },
     {
