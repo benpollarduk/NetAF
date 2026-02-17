@@ -45,9 +45,12 @@ namespace NetAF.Targets.Markup.Model.Tokens
                 // tags
                 if (IsOpenTag(input, i))
                 {
+                    // find the next close tag
+                    int nextOpen = input.IndexOf(MarkupSyntax.OpenTag, i + 1);
                     int end = input.IndexOf(MarkupSyntax.CloseTag, i);
 
-                    if (end > i)
+                    // if there's another open before the next close, the current open must be text instead of an open
+                    if (end > i && (nextOpen == -1 || nextOpen > end))
                     {
                         var tag = input.Substring(i + 1, end - i - 1);
 
@@ -61,7 +64,7 @@ namespace NetAF.Targets.Markup.Model.Tokens
                     }
                     else
                     {
-                        // no close
+                        // no valid close found for this close so it must be text
                         yield return new Token(TokenType.Text, input[i].ToString());
                         i++;
                         continue;

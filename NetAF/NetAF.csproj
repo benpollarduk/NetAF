@@ -10,9 +10,9 @@
     <PackageProjectUrl>https://github.com/benpollarduk/netaf</PackageProjectUrl>
     <Description>An open source library for creating text adventures. Provides game assets, parsers, and other classes to assist with logic. For examples see the project website at https://github.com/benpollarduk/netaf.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.0</Version>
-    <AssemblyVersion>0.0.0.0</AssemblyVersion>
-    <FileVersion>0.0.0.0</FileVersion>
+    <Version>3.12.0</Version>
+    <AssemblyVersion>3.12.0.0</AssemblyVersion>
+    <FileVersion>3.12.0.0</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>$(AssemblyName)</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>

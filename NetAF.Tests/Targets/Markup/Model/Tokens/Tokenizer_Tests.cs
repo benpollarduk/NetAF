@@ -31,6 +31,50 @@ namespace NetAF.Tests.Targets.Markup.Model.Tokens
         }
 
         [TestMethod]
+        public void GivenOpenTag_WhenTokenize_ThenOneTokenWhereTypeIsTextAndTagMatchesInput()
+        {
+            var input = MarkupSyntax.OpenTag.ToString();
+
+            var result = Tokenizer.Tokenize(input).ToArray();
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(TokenType.Text, result[0].Type);
+            Assert.AreEqual(input, result[0].Tag);
+        }
+
+        [TestMethod]
+        public void GivenMonospacedH_WhenTokenize_ThenThreeTokensOpenHClose()
+        {
+            var input = @"[monospace]H[/monospace]";
+
+            var result = Tokenizer.Tokenize(input).ToArray();
+
+            Assert.HasCount(3, result);
+            Assert.AreEqual(TokenType.OpenTag, result[0].Type);
+            Assert.AreEqual("monospace", result[0].Tag);
+            Assert.AreEqual(TokenType.Text, result[1].Type);
+            Assert.AreEqual("H", result[1].Tag);
+            Assert.AreEqual(TokenType.CloseTag, result[2].Type);
+            Assert.AreEqual("monospace", result[2].Tag);
+        }
+
+        [TestMethod]
+        public void GivenMonospacedOpenTag_WhenTokenize_ThenThreeTokensOpenOpenTagClose()
+        {
+            var input = @"[monospace][[/monospace]";
+
+            var result = Tokenizer.Tokenize(input).ToArray();
+
+            Assert.HasCount(3, result);
+            Assert.AreEqual(TokenType.OpenTag, result[0].Type);
+            Assert.AreEqual("monospace", result[0].Tag);
+            Assert.AreEqual(TokenType.Text, result[1].Type);
+            Assert.AreEqual("[", result[1].Tag);
+            Assert.AreEqual(TokenType.CloseTag, result[2].Type);
+            Assert.AreEqual("monospace", result[2].Tag);
+        }
+
+        [TestMethod]
         public void GivenOpenTagOnly_WhenTokenize_ThenOneTokenWhereTypeIsText()
         {
             var input = MarkupSyntax.OpenTag;
