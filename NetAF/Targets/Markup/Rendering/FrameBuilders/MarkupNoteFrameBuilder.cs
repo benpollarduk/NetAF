@@ -39,9 +39,9 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 for (var i = 0; i < entries.Length; i++)
                 {
                     if (entries[i].HasExpired)
-                        builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}");
-                    else
                         builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}", new TextStyle(Strikethrough: true));
+                    else
+                        builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}");
 
                     builder.Newline();
                 }
