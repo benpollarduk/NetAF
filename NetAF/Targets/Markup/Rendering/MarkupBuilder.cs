@@ -101,7 +101,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// <param name="style">The style to use for the text.</param>
         public void WriteLine(string text, TextStyle style)
         {
-            Write(text + MarkupSyntax.NewLine, TextStyle.Default);
+            Write(text + MarkupSyntax.NewLine, style);
         }
 
         /// <summary>
