@@ -53,7 +53,10 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             if (entries.Length > 0)
             {
                 foreach (var entry in entries)
+                {
                     builder.WriteLine(entry.Content.EnsureFinishedSentence());
+                    builder.Newline();
+                }
             }
             else
             {

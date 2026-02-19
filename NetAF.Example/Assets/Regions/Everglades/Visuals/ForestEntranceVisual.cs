@@ -25,7 +25,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
         public static readonly AnsiColor GrassHighlights = new(0, 235, 0);
         public static readonly AnsiColor Path = new(130, 20, 20);
         public static readonly AnsiColor PathHighlights = new(130, 130, 130);
-        private static readonly Size DesignSize = new(80, 50);
+        private static readonly Size DesignSize = new(76, 46);
 
         #endregion
 

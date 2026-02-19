@@ -42,6 +42,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                         builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}");
                     else
                         builder.WriteLine($"{entries[i].Content.EnsureFinishedSentence()}", new TextStyle(Strikethrough: true));
+
+                    builder.Newline();
                 }
             }
             else

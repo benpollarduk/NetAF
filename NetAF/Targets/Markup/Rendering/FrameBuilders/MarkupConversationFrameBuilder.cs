@@ -91,6 +91,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                     }
 
                     builder.WriteLine(log.Line);
+                    builder.Newline();
                 }
             }
 
