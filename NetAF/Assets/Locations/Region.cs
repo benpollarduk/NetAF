@@ -394,6 +394,26 @@ namespace NetAF.Assets.Locations
             return false;
         }
 
+        /// <summary>
+        /// Try and locate the room an item is in.
+        /// </summary>
+        /// <param name="item">The item to try and locate.</param>
+        /// <param name="room">The room the item is in, if found. Else null.</param>
+        /// <returns>True if the item was found, else false.</returns>
+        public bool TryLocateItem(Item item, out Room room)
+        {
+            foreach (var r in roomPositions.Select(x => x.Room))
+            {
+                if (!r.ContainsItem(item, true))
+                    continue;
+
+                room = r;
+                return true;
+            }
+
+            room = null;
+            return false;
+        }
 
         #endregion
 

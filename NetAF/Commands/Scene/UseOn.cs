@@ -130,6 +130,40 @@ namespace NetAF.Commands.Scene
             nonPlayableCharacter.AddItem(item);
         }
 
+        /// <summary>
+        /// Get all item prompts.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of item prompts.</returns>
+        public static Prompt[] GetItemPrompts(Game game)
+        {
+            Item[] playerItems = [.. game?.Player?.Items?.Where(x => x.IsPlayerVisible) ?? []];
+            Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []];
+            Item[] allItems = [.. playerItems, .. roomItems];
+
+            List<Prompt> all = [];
+            all.AddRange(allItems.Select(x => new Prompt(x.Identifier.Name)));
+
+            return [.. all];
+        }
+
+        /// <summary>
+        /// Get all target prompts.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>And array of target prompts.</returns>
+        public static Prompt[] GetTargetPrompts(Game game)
+        {
+            var targets = game?.GetAllInteractionTargets()?.Cast<IExaminable>() ?? [];
+
+            List<Prompt> all = [];
+
+            foreach (var t in targets)
+                all.Add(new(t.Identifier.Name));
+
+            return [.. all];
+        }
+
         #endregion
 
         #region Implementation of ICommand

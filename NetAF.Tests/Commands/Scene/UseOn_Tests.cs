@@ -466,5 +466,37 @@ namespace NetAF.Tests.Commands.Scene
             Assert.IsNotNull(playerItemResult);
             Assert.IsNotNull(roomItemResult);
         }
+
+        [TestMethod]
+        public void GivenOneItem_WhenGetItemPrompts_ThenArrayContainingOneEntry()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Room room = new("ROOM", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new("OVERWORLD", string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Player.AddItem(new("PLAYERITEM", string.Empty, true));
+
+            var prompts = UseOn.GetItemPrompts(game);
+
+            Assert.HasCount(1, prompts);
+        }
+
+        [TestMethod]
+        public void GivenOneItem_WhenGetTargetPrompts_ThenArrayContainingThreeEntries()
+        {
+            RegionMaker regionMaker = new("REGION", string.Empty);
+            Room room = new("ROOM", string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new("OVERWORLD", string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter("PLAYER", string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.Overworld.CurrentRegion.Enter();
+            game.Player.AddItem(new("PLAYERITEM", string.Empty, true));
+
+            var prompts = UseOn.GetTargetPrompts(game);
+
+            Assert.HasCount(3, prompts);
+        }
     }
 }

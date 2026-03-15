@@ -1,8 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
-using NetAF.Targets.Text;
-using NetAF.Targets.Text.Rendering;
 using System;
 using System.Text;
 

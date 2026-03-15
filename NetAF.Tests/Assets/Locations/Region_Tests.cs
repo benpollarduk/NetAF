@@ -660,5 +660,45 @@ namespace NetAF.Tests.Assets.Locations
             Assert.IsFalse(result);
             Assert.IsNull(path);
         }
+
+        [TestMethod]
+        public void GivenNullItem_WhenTryFindRoom_ThenFalseAndNullRoom()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryLocateItem(null, out var location);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(location);
+        }
+
+        [TestMethod]
+        public void GivenItemNotInRegion_WhenTryFindRoom_ThenFalseAndNullRoom()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryLocateItem(new Item("Test", "Test"), out var location);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(location);
+        }
+
+        [TestMethod]
+        public void GivenItemNotInRegion_WhenTryFindRoom_ThenTrueAndCorrectRoom()
+        {
+            var item = new Item("Test", "Test");
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty, items: [item]);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryLocateItem(item, out var location);
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(room, location);
+        }
     }
 }
