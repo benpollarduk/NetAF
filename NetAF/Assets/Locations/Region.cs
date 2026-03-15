@@ -330,6 +330,71 @@ namespace NetAF.Assets.Locations
             return reaction.Reaction;
         }
 
+        /// <summary>
+        /// Try to find the shortest path between two rooms, only going through unlocked exits.
+        /// </summary>
+        /// <param name="start">The start room.</param>
+        /// <param name="end">The end room.</param>
+        /// <param name="path">The shortest path if found, else null.</param>
+        /// <returns>True if a path was found, else false.</returns>
+        public bool TryFindShortestPath(Room start, Room end, out Queue<Room> path)
+        {
+            path = null;
+
+            if (start == null || end == null)
+                return false;
+
+            if (start == end)
+            {
+                path = new Queue<Room>([start]);
+                return true;
+            }
+
+            var queue = new Queue<Room>();
+            var visited = new HashSet<Room>();
+            var previous = new Dictionary<Room, Room>();
+
+            queue.Enqueue(start);
+            visited.Add(start);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+
+                if (current == end)
+                {
+                    var pathList = new List<Room>();
+                    var step = end;
+
+                    while (step != start)
+                    {
+                        pathList.Add(step);
+                        step = previous[step];
+                    }
+
+                    pathList.Add(start);
+                    pathList.Reverse();
+                    path = new Queue<Room>(pathList);
+
+                    return true;
+                }
+
+                foreach (var exit in current.UnlockedExits)
+                {
+                    var adjoiningRoom = GetAdjoiningRoom(exit.Direction, current);
+
+                    if (adjoiningRoom != null && visited.Add(adjoiningRoom))
+                    {
+                        previous.Add(adjoiningRoom, current);
+                        queue.Enqueue(adjoiningRoom);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+
         #endregion
 
         #region StaticMethods

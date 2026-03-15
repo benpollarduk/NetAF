@@ -559,5 +559,106 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
+
+        [TestMethod]
+        public void GivenStartIsEnd_WhenTryFindShortestPath_ThenTrueAndLength0()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryFindShortestPath(room, room, out var path);
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(0, path.Count - 1);
+        }
+
+        [TestMethod]
+        public void GivenAdjacentRooms_WhenTryFindShortestPath_ThenTrueAndLength1()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room1 = new Room(string.Empty, string.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(string.Empty, string.Empty, [new Exit(Direction.West)]);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+
+            var result = region.TryFindShortestPath(room1, room2, out var path);
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(1, path.Count - 1);
+        }
+
+        [TestMethod]
+        public void Given3RoomsInLine_WhenTryFindShortestPath_ThenTrueAndLength2()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room1 = new Room(string.Empty, string.Empty, [new Exit(Direction.East)]);
+            var room2 = new Room(string.Empty, string.Empty, [new Exit(Direction.West), new Exit(Direction.East)]);
+            var room3 = new Room(string.Empty, string.Empty, [new Exit(Direction.West)]);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+            region.AddRoom(room3, 2, 0, 0);
+
+            var result = region.TryFindShortestPath(room1, room3, out var path);
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(2, path.Count - 1);
+        }
+
+        [TestMethod]
+        public void GivenAdjacentRoomsWithLockedDoor_WhenTryFindShortestPath_ThenFalseAndNullPath()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room1 = new Room(string.Empty, string.Empty, [new Exit(Direction.East, true)]);
+            var room2 = new Room(string.Empty, string.Empty, [new Exit(Direction.West, true)]);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+
+            var result = region.TryFindShortestPath(room1, room2, out var path);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(path);
+        }
+
+        [TestMethod]
+        public void GivenNodesNotConnected_WhenTryFindShortestPath_ThenFalseAndNullPath()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room1 = new Room(string.Empty, string.Empty);
+            var room2 = new Room(string.Empty, string.Empty);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+
+            var result = region.TryFindShortestPath(room1, room2, out var path);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(path);
+        }
+
+        [TestMethod]
+        public void GivenNullStart_WhenTryFindShortestPath_ThenFalseAndNullPath()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryFindShortestPath(null, room, out var path);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(path);
+        }
+
+        [TestMethod]
+        public void GivenNullEnd_WhenTryFindShortestPath_ThenFalseAndNullPath()
+        {
+            var region = new Region(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            region.AddRoom(room, 0, 0, 0);
+
+            var result = region.TryFindShortestPath(room, null, out var path);
+
+            Assert.IsFalse(result);
+            Assert.IsNull(path);
+        }
     }
 }
