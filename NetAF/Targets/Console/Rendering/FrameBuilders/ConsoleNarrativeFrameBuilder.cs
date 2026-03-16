@@ -80,26 +80,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             {
                 lastY++;
 
-                var visual = narrative.CurrentVisual;
-
                 GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
                 finalBuilder.Resize(size);
 
-                // determine the render size - -2 because of boundary and space at bottom
-                var renderSize = new Size(availableWidth, size.Height - lastY - 2);
-
-                // check if resize of the visual is needed
-                if (visual.VisualBuilder.DisplaySize.Width != renderSize.Width ||
-                    visual.VisualBuilder.DisplaySize.Height != renderSize.Height)
-                {
-                    // perform resize
-                    visual = ResizeMode switch
-                    {
-                        VisualResizeMode.Crop => visual.Crop(renderSize),
-                        VisualResizeMode.Scale => visual.Scale(renderSize),
-                        _ => throw new NotImplementedException()
-                    };
-                }
+                // resize if needed - -2 because of boundary and space at bottom
+                var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
 
                 var xOffset = Math.Max(leftMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
                 var yOffset = Math.Max(lastY, size.Height / 2 - visual.VisualBuilder.DisplaySize.Height / 2);

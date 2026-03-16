@@ -15,6 +15,27 @@ namespace NetAF.Rendering
         #region Methods
 
         /// <summary>
+        /// Resize this visual if needed.
+        /// </summary>
+        /// <param name="newSize">The new size.</param>
+        /// <param name="resizeMode">The mode to use when resizing the visual.</param>
+        /// <returns>The resized visual.</returns>
+        public Visual ResizeIfNeeded(Size newSize, VisualResizeMode resizeMode)
+        {
+            // check if resize of the visual is needed
+            if (VisualBuilder.DisplaySize.Width == newSize.Width && VisualBuilder.DisplaySize.Height == newSize.Height)
+                return this;
+
+            // perform resize
+            return resizeMode switch
+            {
+                VisualResizeMode.Crop => Crop(newSize),
+                VisualResizeMode.Scale => Scale(newSize),
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        /// <summary>
         /// Crop this visual to a new size.
         /// </summary>
         /// <param name="newSize">The new size.</param>

@@ -3,7 +3,6 @@ using NetAF.Narratives;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
-using System;
 using System.Text;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
@@ -54,23 +53,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 builder.Br();
                 usedLines++;
 
-                var visual = narrative.CurrentVisual;
-
-                // determine the render size
-                var renderSize = new Size(size.Width, size.Height - usedLines);
-
-                // check if resize of the visual is needed
-                if (visual.VisualBuilder.DisplaySize.Width != renderSize.Width ||
-                    visual.VisualBuilder.DisplaySize.Height != renderSize.Height)
-                {
-                    // perform resize
-                    visual = ResizeMode switch
-                    {
-                        VisualResizeMode.Crop => visual.Crop(renderSize),
-                        VisualResizeMode.Scale => visual.Scale(renderSize),
-                        _ => throw new NotImplementedException()
-                    };
-                }
+                // resize if needed
+                var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Raw(HtmlAdapter.ConvertGridVisualBuilderToHtmlString(visual.VisualBuilder));
             }
