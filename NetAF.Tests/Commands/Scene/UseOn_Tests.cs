@@ -468,6 +468,14 @@ namespace NetAF.Tests.Commands.Scene
         }
 
         [TestMethod]
+        public void GivenNullGame_WhenGetItemPrompts_ThenReturnEmptyArray()
+        {
+            var prompts = UseOn.GetItemPrompts(null);
+
+            Assert.HasCount(0, prompts);
+        }
+
+        [TestMethod]
         public void GivenOneItem_WhenGetItemPrompts_ThenArrayContainingOneEntry()
         {
             RegionMaker regionMaker = new("REGION", string.Empty);
@@ -481,6 +489,14 @@ namespace NetAF.Tests.Commands.Scene
             var prompts = UseOn.GetItemPrompts(game);
 
             Assert.HasCount(1, prompts);
+        }
+
+        [TestMethod]
+        public void GivenNullGame_WhenGetTargetPrompts_ThenReturnEmptyArray()
+        {
+            var prompts = UseOn.GetTargetPrompts(null);
+
+            Assert.HasCount(0, prompts);
         }
 
         [TestMethod]

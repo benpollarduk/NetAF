@@ -131,27 +131,33 @@ namespace NetAF.Commands.Scene
         }
 
         /// <summary>
-        /// Get all item prompts.
+        /// Get all items.
         /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of item prompts.</returns>
-        public static Prompt[] GetItemPrompts(Game game)
+        /// <param name="game">The game to get the items from.</param>
+        /// <returns>And array of items.</returns>
+        private static Item[] GetAllItems(Game game)
         {
             Item[] playerItems = [.. game?.Player?.Items?.Where(x => x.IsPlayerVisible) ?? []];
             Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []];
-            Item[] allItems = [.. playerItems, .. roomItems];
+            return [.. playerItems, .. roomItems];
+        }
 
-            List<Prompt> all = [];
-            all.AddRange(allItems.Select(x => new Prompt(x.Identifier.Name)));
-
-            return [.. all];
+        /// <summary>
+        /// Get all item prompts.
+        /// </summary>
+        /// <param name="game">The game to get the prompts for.</param>
+        /// <returns>An array of item prompts.</returns>
+        public static Prompt[] GetItemPrompts(Game game)
+        {
+            var allItems = GetAllItems(game);
+            return [.. allItems.Select(x => new Prompt(x.Identifier.Name))];
         }
 
         /// <summary>
         /// Get all target prompts.
         /// </summary>
         /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of target prompts.</returns>
+        /// <returns>An array of target prompts.</returns>
         public static Prompt[] GetTargetPrompts(Game game)
         {
             var targets = game?.GetAllInteractionTargets()?.Cast<IExaminable>() ?? [];
@@ -235,12 +241,8 @@ namespace NetAF.Commands.Scene
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            Item[] playerItems = [.. game?.Player?.Items?.Where(x => x.IsPlayerVisible) ?? []];
-            Item[] roomItems = [.. game?.Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []];
-            Item[] allItems = [.. playerItems, .. roomItems];
-
-            List<Prompt> all = [];
-            all.AddRange(allItems.Select(x => new Prompt(x.Identifier.Name)));
+            var allItems = GetAllItems(game);
+            List<Prompt> all = [.. allItems.Select(x => new Prompt(x.Identifier.Name))];
 
             // now add all 'ons'
             var targets = game?.GetAllInteractionTargets()?.Cast<IExaminable>() ?? [];
