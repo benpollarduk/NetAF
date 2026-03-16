@@ -61,7 +61,7 @@
                     Reset();
                     return new(true);
 
-                case FinishModes.ReturnToTitleScreen:
+                case FinishModes.Restart:
 
                     Begin();
                     return new(true);

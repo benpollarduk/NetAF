@@ -13,7 +13,7 @@ namespace NetAF.Logic
     /// <param name="displaySize">The size to render the game. To render using the available space use <see cref="Size.Dynamic"/>.</param>
     /// <param name="startMode">The mode to use at the start of the game.</param>
     /// <param name="finishMode">The mode to use at the end of the game.</param>
-    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, IGameMode startMode = null, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
+    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, IGameMode startMode = null, FinishModes finishMode = FinishModes.Restart)
     {
         #region Properties
 
