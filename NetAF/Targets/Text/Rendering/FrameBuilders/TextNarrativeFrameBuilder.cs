@@ -3,6 +3,7 @@ using NetAF.Narratives;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
+using System;
 using System.Text;
 
 namespace NetAF.Targets.Text.Rendering.FrameBuilders
@@ -11,8 +12,18 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     /// Provides a builder of narrative frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class TextNarrativeFrameBuilder(StringBuilder builder) : INarrativeFrameBuilder
+    /// <param name="resizeMode">The mode to use when the design size and the render size differ and the content needs to be resized.</param>
+    public sealed class TextNarrativeFrameBuilder(StringBuilder builder, VisualResizeMode resizeMode = VisualResizeMode.Scale) : INarrativeFrameBuilder
     {
+        #region Properties
+
+        /// <summary>
+        /// Get or set the mode to use when the design size and the render size differ and the content needs to be resized.
+        /// </summary>
+        public VisualResizeMode ResizeMode { get; set; } = resizeMode;
+
+        #endregion
+
         #region Implementation of INarrativeFrameBuilder
 
         /// <summary>
@@ -25,14 +36,43 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         {
             builder.Clear();
 
+            var usedLines = 0;
             StringBuilder stringBuilder = new();
 
             foreach (var line in narrative.AllUntilCurrent())
+            {
                 stringBuilder.AppendLine(line + StringUtilities.Newline);
+                usedLines++;
+            }
 
             builder.AppendLine(narrative.Title);
             builder.AppendLine();
             builder.AppendLine(stringBuilder.ToString());
+
+            usedLines += 2;
+
+            if (narrative.CurrentVisual?.VisualBuilder != null)
+            {
+                var visual = narrative.CurrentVisual;
+
+                // determine the render size
+                var renderSize = new Size(size.Width, size.Height - usedLines);
+
+                // check if resize of the visual is needed
+                if (visual.VisualBuilder.DisplaySize.Width != renderSize.Width ||
+                    visual.VisualBuilder.DisplaySize.Height != renderSize.Height)
+                {
+                    // perform resize
+                    visual = ResizeMode switch
+                    {
+                        VisualResizeMode.Crop => visual.Crop(renderSize),
+                        VisualResizeMode.Scale => visual.Scale(renderSize),
+                        _ => throw new NotImplementedException()
+                    };
+                }
+
+                builder.Append(TextAdapter.ConvertGridVisualBuilderToString(visual.VisualBuilder));
+            }
 
             return new TextFrame(builder);
         }

@@ -1,10 +1,13 @@
-﻿namespace NetAF.Narratives
+﻿using NetAF.Rendering;
+
+namespace NetAF.Narratives
 {
     /// <summary>
     /// Provides a section of narrative.
     /// </summary>
     /// <param name="elements">The elements that make up this section.</param>
-    public class Section(string[] elements)
+    /// <param name="visual">A visual for this section.</param>
+    public class Section(string[] elements, Visual visual = null)
     {
         #region Fields
 
@@ -18,6 +21,11 @@
         /// Get if this section of narrative is complete.
         /// </summary>
         public bool IsComplete => elements == null || index == elements.Length - 1;
+
+        /// <summary>
+        /// Get the visual for this section.
+        /// </summary>
+        public Visual Visual { get; } = visual;
 
         #endregion
 
