@@ -1,4 +1,6 @@
-﻿namespace NetAF.Narratives
+﻿using NetAF.Rendering;
+
+namespace NetAF.Narratives
 {
     /// <summary>
     /// Provides a narrative built up from sections.
@@ -29,6 +31,11 @@
         /// Get if the current section is complete.
         /// </summary>
         public bool IsCurrentSectionComplete => sections == null || sections[index].IsComplete;
+
+        /// <summary>
+        /// Get the current visual.
+        /// </summary>
+        public Visual CurrentVisual => sections?[index]?.Visual;
 
         #endregion
 

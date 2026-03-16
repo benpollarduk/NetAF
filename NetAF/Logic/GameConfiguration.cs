@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Interpretation;
+using NetAF.Logic.Modes;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic
@@ -12,7 +13,7 @@ namespace NetAF.Logic
     /// <param name="displaySize">The size to render the game. To render using the available space use <see cref="Size.Dynamic"/>.</param>
     /// <param name="startMode">The mode to use at the start of the game.</param>
     /// <param name="finishMode">The mode to use at the end of the game.</param>
-    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, StartModes startMode = StartModes.TitleScreen, FinishModes finishMode = FinishModes.ReturnToTitleScreen)
+    public sealed class GameConfiguration(IIOAdapter adapter, FrameBuilderCollection frameBuilders, Size displaySize, IGameMode startMode = null, FinishModes finishMode = FinishModes.Restart)
     {
         #region Properties
 
@@ -33,7 +34,7 @@ namespace NetAF.Logic
         /// <summary>
         /// Get the start mode.
         /// </summary>
-        public StartModes StartMode => startMode;
+        public IGameMode StartMode { get; private set; } = startMode ?? new TitleMode();
 
         /// <summary>
         /// Get the finish mode.

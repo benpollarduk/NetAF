@@ -2,7 +2,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Text.Rendering;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
 

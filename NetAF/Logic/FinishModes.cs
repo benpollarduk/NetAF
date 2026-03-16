@@ -10,8 +10,8 @@
         /// </summary>
         Finish = 0,
         /// <summary>
-        /// Return to the title screen.
+        /// Restart.
         /// </summary>
-        ReturnToTitleScreen
+        Restart
     }
 }

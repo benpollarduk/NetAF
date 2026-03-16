@@ -676,7 +676,7 @@ namespace NetAF.Tests.Logic
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             PlayableCharacter player = new("A", string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), StartModes.TitleScreen, FinishModes.ReturnToTitleScreen)).Invoke();
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), new TitleMode(), FinishModes.Restart)).Invoke();
 
             var result = game.Update();
 
@@ -692,7 +692,7 @@ namespace NetAF.Tests.Logic
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             PlayableCharacter player = new("A", string.Empty);
-            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), StartModes.Scene, FinishModes.ReturnToTitleScreen)).Invoke();
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), new SceneMode(new SceneCommandInterpreter()), FinishModes.Restart)).Invoke();
 
             var result = game.Update();
 
