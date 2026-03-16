@@ -31,6 +31,7 @@ namespace NetAF.Logic
 
         private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
         private IGameMode endMode;
+        private Queue<Reaction> pendingReactions = [];
 
         #endregion
 
@@ -179,33 +180,26 @@ namespace NetAF.Logic
 
                 // display the reaction
                 ChangeMode(new ReactionMode(reaction));
+
                 return;
+            }
+
+            // 2. check if there is a pending reaction - something may be left that needs processing before continuing
+            if (pendingReactions.Any())
+            {
+                // dequeue the reaction
+                var pendingReaction = pendingReactions.Dequeue();
+
+                // only display non-silent interactions
+                if (pendingReaction.Result != ReactionResult.Silent)
+                {
+                    // change mode to display the pending reaction
+                    ChangeMode(new ReactionMode(pendingReaction));
+
+                    return;
+                }
             }
             
-            // 2. check that there is a room - it may be that the region changed and needs to be entered
-            if (Overworld.CurrentRegion.CurrentRoom == null)
-            {
-                // enter the region
-                var regionEnterReaction = Overworld.CurrentRegion.Enter();
-
-                // if the reaction wasn't silent then show reaction, else revert back to scene mode
-                if (regionEnterReaction.Result != ReactionResult.Silent)
-                {
-                    // log the introduction
-                    HistoryManager.Add(reaction.Description, reaction.Description);
-
-                    // change mode to display the reaction
-                    ChangeMode(new ReactionMode(regionEnterReaction));
-                }
-                else
-                {
-                    // revert to scene
-                    ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
-                }
-
-                return;
-            }
-
             // 3. check if command didn't change the mode and the current mode type is single frame information, essentially the mode has expired
             if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.SingleFrameInformation)
             {
@@ -455,27 +449,23 @@ namespace NetAF.Logic
             // setup the adapter for this game
             game.Configuration.Adapter.Setup(game);
 
-            switch (game.Configuration.StartMode)
+            // enter the region before the game starts
+            var regionEnterReaction = game.Overworld.CurrentRegion.Enter();
+
+            // if the reaction wasn't silent then show reaction, else revert back to scene mode
+            if (regionEnterReaction.Result != ReactionResult.Silent)
             {
-                case StartModes.TitleScreen:
+                // log the introduction
+                game.HistoryManager.Add(regionEnterReaction.Description, regionEnterReaction.Description);
 
-                    // change mode to show the title screen
-                    game.ChangeMode(new TitleMode());
-
-                    break;
-
-                case StartModes.Scene:
-
-                    // handle a silent reaction, forcing transition to scene mode
-                    game.HandleReaction(Reaction.Silent);
-
-                    break;
-
-                default:
-
-                    throw new NotImplementedException();
+                // queue the pending interaction so it can be processed later
+                game.pendingReactions.Enqueue(regionEnterReaction);
             }
 
+            // change to the start mode
+            game.ChangeMode(game.Configuration.StartMode);
+
+            // render
             game.Mode.Render(game);
 
             EventBus.Publish(new GameStarted(game));
