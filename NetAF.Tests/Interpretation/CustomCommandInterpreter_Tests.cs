@@ -69,14 +69,14 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenValidCustomCommand_WhenInterpret_ThenCommandInvoked()
         {
+            var result = false;
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands =
             [
                 new CustomCommand(new("Test", string.Empty), true, true, (_, _) =>
                 {
-                    Assertions.Pass();
+                    result = true;
                     return new(ReactionResult.Error, string.Empty);
-
                 })
             ];
             var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
@@ -87,20 +87,24 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.Enter();
 
-            interpreter.Interpret("Test", game);
+            var command = interpreter.Interpret("Test", game);
+            command?.Command?.Invoke(game);
+
+            Assert.IsTrue(command?.WasInterpretedSuccessfully);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
         public void GivenValidCustomCommandThatIsNotPlayerVisibleButIsStillInterpreted_WhenInterpret_ThenCommandInvoked()
         {
+            var result = false;
             var interpreter = new CustomCommandInterpreter();
             CustomCommand[] commands =
             [
                 new CustomCommand(new("Test", string.Empty), false, true, (_, _) =>
                 {
-                    Assertions.Pass();
+                    result = true;
                     return new(ReactionResult.Error, string.Empty);
-
                 })
             ];
             var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
@@ -112,6 +116,12 @@ namespace NetAF.Tests.Interpretation
             game.Overworld.CurrentRegion.Enter();
 
             interpreter.Interpret("Test", game);
+
+            var command = interpreter.Interpret("Test", game);
+            command?.Command?.Invoke(game);
+
+            Assert.IsTrue(command?.WasInterpretedSuccessfully);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]

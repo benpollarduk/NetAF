@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NetAF.Tests
 {
@@ -14,23 +13,8 @@ namespace NetAF.Tests
         /// <param name="action">The action to invoke.</param>
         public static void NoExceptionThrown(Action action)
         {
-            try
-            {
-                action.Invoke();
-                Pass();
-            }
-            catch (Exception e)
-            {
-                Assert.Fail($"Assertion failed: Exception: {e.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Utility method to assert a pass.
-        /// </summary>
-        public static void Pass()
-        {
-            Assert.IsTrue(true);
+            // if this call throws, the test will fail.
+            action.Invoke();
         }
     }
 }

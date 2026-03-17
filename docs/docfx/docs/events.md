@@ -46,3 +46,7 @@ The following events are supported:
 * **GameUpdated** - occurs when a game is updated.
 * **GameFinished** - occurs when a game is finished.
 * **GameModeChanged** - occurs when a game mode changes.
+* **NoteAdded** - occurs when a note entry is added.
+* **NoteUpdated** - occurs when a note entry is updated.
+* **HistoryUpdated** - occurs when the history is updated.
+

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NetAF.Events;
+using System.Collections.Generic;
 
 namespace NetAF.Logging.History
 {
@@ -69,6 +70,8 @@ namespace NetAF.Logging.History
                 entries.RemoveAt(0);
 
             entries.Add(entry);
+
+            EventBus.Publish(new HistoryUpdated(entry));
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
+using NetAF.Logging.History;
+using NetAF.Logging.Notes;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 
@@ -87,4 +89,22 @@ namespace NetAF.Events
     /// </summary>
     /// <param name="Mode">The mode the game changed to.</param>
     public record GameModeChanged(IGameMode Mode) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a note is added.
+    /// </summary>
+    /// <param name="Note">The note that was added.</param>
+    public record NoteAdded(NoteEntry Note) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when a note is updated.
+    /// </summary>
+    /// <param name="Note">The note that was added.</param>
+    public record NoteUpdated(NoteEntry Note) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when the history is updated.
+    /// </summary>
+    /// <param name="Entry">The entry that was added.</param>
+    public record HistoryUpdated(HistoryEntry Entry) : BaseEvent;
 }

@@ -3,6 +3,7 @@ using NetAF.Serialization.Assets;
 using NetAF.Serialization;
 using System;
 using System.Collections.Generic;
+using NetAF.Events;
 
 namespace NetAF.Logging.Notes
 {
@@ -70,6 +71,8 @@ namespace NetAF.Logging.Notes
             if (hit == null)
             {
                 entries.Add(entry);
+
+                EventBus.Publish(new NoteAdded(entry));
             }
             else if (hit.HasExpired)
             {
@@ -79,7 +82,9 @@ namespace NetAF.Logging.Notes
                 var duplicate = new NoteEntry(hit.Name, entry.Content);
                 duplicate.Expire();
                 entries.Add(duplicate);
-            }   
+
+                EventBus.Publish(new NoteUpdated(entry));
+            }
         }
 
         /// <summary>
@@ -109,7 +114,12 @@ namespace NetAF.Logging.Notes
                 entries.Add(hit);
             }
 
+            if (hit.HasExpired)
+                return;
+
             hit.Expire();
+
+            EventBus.Publish(new NoteUpdated(hit));
         }
 
         /// <summary>

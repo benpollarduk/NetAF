@@ -32,6 +32,7 @@ namespace NetAF.Logic
         private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
         private IGameMode endMode;
         private Queue<Reaction> pendingReactions = [];
+        private Queue<IGameMode> pendingModes = [];
 
         #endregion
 
@@ -203,8 +204,17 @@ namespace NetAF.Logic
             // 3. check if command didn't change the mode and the current mode type is single frame information, essentially the mode has expired
             if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.SingleFrameInformation)
             {
-                // revert back to scene mode as the 
-                ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
+                // load next mode
+                if (pendingModes?.Count > 0)
+                {
+                    // load next pending mode
+                    ChangeMode(pendingModes.Dequeue());
+                }
+                else
+                {
+                    // revert back to scene mode
+                    ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
+                }
             }
         }
 
@@ -444,6 +454,14 @@ namespace NetAF.Logic
         private static UpdateResult UpdateWhenNotStarted(Game game)
         {
             game.State = GameState.Active;
+
+            game.pendingModes = game.Configuration.StartModes?.Length switch
+            {
+                null => new Queue<IGameMode>([new TitleMode()]),
+                0 => new Queue<IGameMode>([new TitleMode()]),
+                _ => new Queue<IGameMode>(game.Configuration.StartModes)
+            };
+
             game.endMode = null;
 
             // setup the adapter for this game
@@ -463,7 +481,7 @@ namespace NetAF.Logic
             }
 
             // change to the start mode
-            game.ChangeMode(game.Configuration.StartMode);
+            game.ChangeMode(game.pendingModes.Dequeue());
 
             // render
             game.Mode.Render(game);
