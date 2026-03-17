@@ -700,6 +700,24 @@ namespace NetAF.Tests.Logic
         }
 
         [TestMethod]
+        public void GivenStartModeTitleAndRoomHasIntroduction_WhenUpdate_ThenCompletedIsTrue()
+        {
+            var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
+            room.AddCharacter(new("d", "e"));
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            PlayableCharacter player = new("A", string.Empty);
+            var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), [new TitleMode(), new SceneMode(new SceneCommandInterpreter())], FinishModes.Restart)).Invoke();
+
+            // update to shift through modes
+            game.Update();
+            var result = game.Update();
+
+            Assert.IsTrue(result.Completed);
+        }
+
+        [TestMethod]
         public void GivenStartModesTitleAndScene_WhenUpdate_ThenCompletedIsTrue()
         {
             var room = new Room(string.Empty, "A room", "Entering a room", items: [new Item("a", "b")], exits: [new Exit(Direction.North, false, new("c"))]);
@@ -710,6 +728,9 @@ namespace NetAF.Tests.Logic
             PlayableCharacter player = new("A", string.Empty);
             var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), player), GameEndConditions.NoEnd, new GameConfiguration(new TestConsoleAdapter(), FrameBuilderCollections.Console, new Size(80, 50), [new TitleMode(), new SceneMode(new SceneCommandInterpreter())], FinishModes.Restart)).Invoke();
 
+            // update to shift through modes
+            game.Update();
+            game.Update();
             var result = game.Update();
 
             Assert.IsTrue(result.Completed);
