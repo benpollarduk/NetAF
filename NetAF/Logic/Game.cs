@@ -31,7 +31,7 @@ namespace NetAF.Logic
 
         private readonly List<PlayableCharacterLocation> inactivePlayerLocations = [];
         private IGameMode endMode;
-        private Queue<Reaction> pendingReactions = [];
+        private readonly Queue<Reaction> pendingReactions = [];
         private Queue<IGameMode> pendingModes = [];
 
         #endregion
