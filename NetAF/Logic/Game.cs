@@ -127,6 +127,37 @@ namespace NetAF.Logic
         #region Methods
 
         /// <summary>
+        /// Change to the next mode. If there is any pending mode that will be used, otherwise the game will revert to the default mode.
+        /// </summary>
+        /// <param name="render">Specify if a render should be called to display the next mode.</param>
+        private void NextMode(bool render)
+        {
+            // load next mode
+            if (pendingModes?.Count > 0)
+            {
+                // load next pending mode
+                ChangeMode(pendingModes.Dequeue());
+            }
+            else
+            {
+                // revert back to scene mode (default)
+                ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
+            }
+
+            // if a render is required call that now
+            if (render)
+                Mode.Render(this);
+        }
+
+        /// <summary>
+        /// Change to the next mode. If there is any pending mode that will be used, otherwise the game will revert to the default mode.
+        /// </summary>
+        public void NextMode()
+        {
+            NextMode(true);
+        }
+
+        /// <summary>
         /// Change mode to a specified mode.
         /// </summary>
         /// <param name="mode">The mode.</param>
@@ -201,21 +232,11 @@ namespace NetAF.Logic
                 }
             }
             
-            // 3. check if command didn't change the mode and the current mode type is single frame information, essentially the mode has expired
+            // 3. check if command didn't change the mode and the current mode type is
+            // single frame information, essentially the mode has expired so move oto the next mode.
+            // as this is part of the main game loop the render should not be called as the loop will handle that
             if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.SingleFrameInformation)
-            {
-                // load next mode
-                if (pendingModes?.Count > 0)
-                {
-                    // load next pending mode
-                    ChangeMode(pendingModes.Dequeue());
-                }
-                else
-                {
-                    // revert back to scene mode
-                    ChangeMode(new SceneMode(Configuration.InterpreterProvider.Find(typeof(SceneMode))));
-                }
-            }
+                NextMode(false);
         }
 
         /// <summary>

@@ -10,6 +10,12 @@ namespace NetAF.Logic.Modes
     /// <param name="narrative">The narrative.</param>
     public sealed class NarrativeMode(Narrative narrative) : IGameMode
     {
+        #region Fields
+
+        private bool isComplete;
+
+        #endregion
+
         #region Implementation of IGameMode
 
         /// <summary>
@@ -28,15 +34,17 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            narrative.Next();
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(narrative, game.Configuration.DisplaySize);
-            game.Configuration.Adapter.RenderFrame(frame);
-
-            if (!narrative.IsComplete)
-                return;
-
-            var interpreter = game.Configuration.InterpreterProvider.Find(typeof(SceneMode));
-            game.ChangeMode(new SceneMode(interpreter));
+            if (isComplete)
+            {
+                game.NextMode();
+            }
+            else
+            {
+                narrative.Next();
+                var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(narrative, game.Configuration.DisplaySize);
+                game.Configuration.Adapter.RenderFrame(frame);
+                isComplete = narrative.IsComplete;
+            }
         }
 
         #endregion
