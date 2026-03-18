@@ -41,22 +41,26 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             foreach (var line in narrative.AllUntilCurrent())
             {
                 stringBuilder.AppendLine(line + StringUtilities.Newline);
-                usedLines++;
+                usedLines += 2;
             }
 
             builder.Heading(narrative.Title, HeadingLevel.H1);
             builder.Newline();
-            builder.WriteLine(stringBuilder.ToString());
 
             usedLines += 2;
 
             if (narrative.CurrentVisual?.VisualBuilder != null)
             {
+                builder.Newline();
+                usedLines++;
+
                 // resize if needed
                 var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(visual.VisualBuilder));
             }
+
+            builder.WriteLine(stringBuilder.ToString());
 
             return new MarkupFrame(builder);
         }

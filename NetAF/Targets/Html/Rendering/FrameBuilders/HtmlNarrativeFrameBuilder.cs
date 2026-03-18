@@ -37,16 +37,18 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             StringBuilder stringBuilder = new();
 
-            foreach (var line in narrative.AllUntilCurrent())
-                stringBuilder.AppendLine(line + StringUtilities.Newline);
-
             var usedLines = 0;
+
+            foreach (var line in narrative.AllUntilCurrent())
+            {
+                stringBuilder.AppendLine(line + StringUtilities.Newline);
+                usedLines += 2;
+            }
 
             builder.H1(narrative.Title);
             builder.Br();
-            builder.P(stringBuilder.ToString());
 
-            usedLines = 3;
+            usedLines += 2;
 
             if (narrative.CurrentVisual?.VisualBuilder != null)
             {
@@ -58,6 +60,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
                 builder.Raw(HtmlAdapter.ConvertGridVisualBuilderToHtmlString(visual.VisualBuilder));
             }
+
+            builder.P(stringBuilder.ToString());
 
             return new HtmlFrame(builder);
         }

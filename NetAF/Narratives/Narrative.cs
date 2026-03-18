@@ -35,7 +35,7 @@ namespace NetAF.Narratives
         /// <summary>
         /// Get the current visual.
         /// </summary>
-        public Visual CurrentVisual => sections?[index]?.Visual;
+        public Visual CurrentVisual => index >= 0 ? sections?[index]?.Visual : sections?[0]?.Visual;
 
         #endregion
 

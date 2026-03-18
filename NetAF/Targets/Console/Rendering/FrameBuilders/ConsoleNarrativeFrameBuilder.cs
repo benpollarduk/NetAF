@@ -45,15 +45,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #endregion
 
-        #region Implementation of INarrativeFrameBuilder
+        #region Methods
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="narrative">The narrative.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
-        public IFrame Build(Narrative narrative, Size size)
+        private IFrame BuildVisualFrame(Narrative narrative, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -64,38 +58,80 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(narrative.Title))
             {
                 gridStringBuilder.DrawWrapped(narrative.Title, leftMargin, 2, availableWidth, TitleColor, out _, out lastY);
-
                 gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, narrative.Title.Length, TitleColor);
             }
+
+            lastY += 3;
+
+            // resize if needed - -2 because of boundary and space at bottom
+            var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
+
+            var xOffset = Math.Max(leftMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
+            var yOffset = lastY;
+
+            lastY += visual.VisualBuilder.DisplaySize.Height + 2;
 
             StringBuilder builder = new();
 
             foreach (var line in narrative.AllUntilCurrent())
                 builder.AppendLine(line + StringUtilities.Newline);
 
-            gridStringBuilder.DrawWrapped(builder.ToString().EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, NarrativeColor, out _, out lastY);
+            gridStringBuilder.DrawWrapped(builder.ToString().EnsureFinishedSentence(), leftMargin, lastY, availableWidth, NarrativeColor, out _, out lastY);
 
-            // if a visual
-            if (narrative.CurrentVisual != null)
+            gridStringBuilder.DrawBoundary(BorderColor);
+
+            GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
+            finalBuilder.Resize(size);
+            finalBuilder.Overlay(0, 0, gridStringBuilder);
+            finalBuilder.Overlay(xOffset, lastY, visual.VisualBuilder);
+
+            return new GridVisualFrame(finalBuilder) { ShowCursor = false };
+        }
+
+        private IFrame BuildTextFrame(Narrative narrative, Size size)
+        {
+            gridStringBuilder.Resize(size);
+
+            var lastY = 0;
+            var availableWidth = size.Width - 4;
+            const int leftMargin = 2;
+
+            if (!string.IsNullOrEmpty(narrative.Title))
             {
-                lastY++;
-
-                GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
-                finalBuilder.Resize(size);
-
-                // resize if needed - -2 because of boundary and space at bottom
-                var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
-
-                var xOffset = Math.Max(leftMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
-                var yOffset = Math.Max(lastY, size.Height / 2 - visual.VisualBuilder.DisplaySize.Height / 2);
-
-                finalBuilder.Overlay(0, 0, gridStringBuilder);
-                finalBuilder.Overlay(xOffset, yOffset, visual.VisualBuilder);
+                gridStringBuilder.DrawWrapped(narrative.Title, leftMargin, 2, availableWidth, TitleColor, out _, out lastY);
+                gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, narrative.Title.Length, TitleColor);
             }
+
+            lastY += 3;
+
+            StringBuilder builder = new();
+
+            foreach (var line in narrative.AllUntilCurrent())
+                builder.AppendLine(line + StringUtilities.Newline);
+
+            gridStringBuilder.DrawWrapped(builder.ToString().EnsureFinishedSentence(), leftMargin, lastY, availableWidth, NarrativeColor, out _, out lastY);
 
             gridStringBuilder.DrawBoundary(BorderColor);
 
             return new GridTextFrame(gridStringBuilder, 0, 0, BackgroundColor) { ShowCursor = false };
+        }
+
+        #endregion
+
+        #region Implementation of INarrativeFrameBuilder
+
+        /// <summary>
+        /// Build a frame.
+        /// </summary>
+        /// <param name="narrative">The narrative.</param>
+        /// <param name="size">The size of the frame.</param>
+        /// <returns>The frame.</returns>
+        public IFrame Build(Narrative narrative, Size size)
+        {
+            if (narrative.CurrentVisual != null)
+                return BuildVisualFrame(narrative, size);
+            else
+                return BuildTextFrame(narrative, size);
         }
 
         #endregion

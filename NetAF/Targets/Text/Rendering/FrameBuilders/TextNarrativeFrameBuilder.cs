@@ -41,22 +41,26 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             foreach (var line in narrative.AllUntilCurrent())
             {
                 stringBuilder.AppendLine(line + StringUtilities.Newline);
-                usedLines++;
+                usedLines += 2;
             }
 
             builder.AppendLine(narrative.Title);
             builder.AppendLine();
-            builder.AppendLine(stringBuilder.ToString());
 
             usedLines += 2;
 
             if (narrative.CurrentVisual?.VisualBuilder != null)
             {
+                builder.AppendLine();
+                usedLines++;
+
                 // resize if needed
                 var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Append(TextAdapter.ConvertGridVisualBuilderToString(visual.VisualBuilder));
             }
+
+            builder.AppendLine(stringBuilder.ToString());
 
             return new TextFrame(builder);
         }
