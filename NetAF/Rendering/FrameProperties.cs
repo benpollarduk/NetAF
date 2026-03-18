@@ -6,9 +6,9 @@
     public static class FrameProperties
     {
         /// <summary>
-        /// Get or set if the command list is displayed.
+        /// Get or set the type of command list.
         /// </summary>
-        public static bool DisplayCommandList { get; set; } = true;
+        public static CommandListType CommandListType { get; set; } = CommandListType.Minimal;
 
         /// <summary>
         /// Get or set the type of key to use on the map.

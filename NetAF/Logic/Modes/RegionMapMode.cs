@@ -1,8 +1,10 @@
 ﻿using NetAF.Assets;
 using NetAF.Assets.Locations;
+using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +24,11 @@ namespace NetAF.Logic.Modes
         /// Get the value to use to display the player level.
         /// </summary>
         public static Point3D Player => new(int.MinValue, int.MinValue, int.MinValue);
+
+        /// <summary>
+        /// Get the minimal command categories.
+        /// </summary>
+        private static CommandCategory[] MinimalCommandCategories => [CommandCategory.Uncategorized, CommandCategory.RegionMap, CommandCategory.Custom];
 
         #endregion
 
@@ -65,7 +72,15 @@ namespace NetAF.Logic.Modes
 
             FocusPosition = GetSnappedLocation(region, FocusPosition);
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Detail, FrameProperties.DisplayCommandList ? Interpreter?.GetContextualCommandHelp(game) ?? [] : [], game.Configuration.DisplaySize);
+            CommandHelp[] commands = FrameProperties.CommandListType switch
+            {
+                CommandListType.All => Interpreter?.GetContextualCommandHelp(game) ?? [],
+                CommandListType.Minimal => Interpreter?.GetContextualCommandHelp(game).Where(x => MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
+                CommandListType.None => [],
+                _ => throw new NotImplementedException()
+            };
+
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Detail, commands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

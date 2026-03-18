@@ -36,45 +36,100 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenKeyOff_WhenInterpret_ThenReturnTrue()
+        public void GivenOption_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(KeyOff.CommandHelp.Command, game);
+            var result = interpreter.Interpret(Option.CommandHelp.Command, game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]
-        public void GivenKeyOn_WhenInterpret_ThenReturnTrue()
+        public void GivenOptionKeyNone_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(KeyOn.CommandHelp.Command, game);
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.KeyNone.Entry}", game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]
-        public void GivenCommandsOff_WhenInterpret_ThenReturnTrue()
+        public void GivenOptionKeyDynamic_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new FrameCommandInterpreter();
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(CommandsOff.CommandHelp.Command, game);
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.KeyDynamic.Entry}", game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }
 
         [TestMethod]
-        public void GivenCommandsOn_WhenInterpret_ThenReturnTrue()
+        public void GivenOptionKeyFull_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret(CommandsOn.CommandHelp.Command, game);
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.KeyFull.Entry}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenOptionCommandsNone_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new FrameCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.CommandsNone.Entry}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenOptionCommandsMinimal_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new FrameCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.CommandsMinimal.Entry}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenOptionCommandsAll_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new FrameCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.CommandsAll.Entry}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenOptionMapInScenesOff_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new FrameCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.MapInScenesOff.Entry}", game);
+
+            Assert.IsTrue(result.WasInterpretedSuccessfully);
+        }
+
+        [TestMethod]
+        public void GivenOptionMapInScenesOn_WhenInterpret_ThenReturnTrue()
+        {
+            var interpreter = new FrameCommandInterpreter();
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.MapInScenesOn.Entry}", game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

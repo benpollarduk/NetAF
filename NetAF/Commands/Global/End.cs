@@ -1,5 +1,4 @@
 ﻿using NetAF.Logic;
-using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Global
 {

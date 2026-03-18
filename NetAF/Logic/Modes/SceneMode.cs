@@ -3,6 +3,7 @@ using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System;
 using System.Linq;
 
 namespace NetAF.Logic.Modes
@@ -19,6 +20,11 @@ namespace NetAF.Logic.Modes
         /// Get or set the command categories to display.
         /// </summary>
         public static CommandCategory[] CommandCategories { get; set; } = [CommandCategory.Scene, CommandCategory.Custom, CommandCategory.Global, CommandCategory.Uncategorized, CommandCategory.Movement];
+
+        /// <summary>
+        /// Get the minimal command categories.
+        /// </summary>
+        private static CommandCategory[] MinimalCommandCategories => [CommandCategory.Uncategorized, CommandCategory.Scene, CommandCategory.Custom, CommandCategory.Movement];
 
         #endregion
 
@@ -40,8 +46,15 @@ namespace NetAF.Logic.Modes
         /// <param name="game">The game.</param>
         public void Render(Game game)
         {
-            var filteredCommands = Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray() ?? [];
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, FrameProperties.DisplayCommandList ? filteredCommands : null, FrameProperties.ShowMapInScenes, FrameProperties.KeyType, game.Configuration.DisplaySize);
+            CommandHelp[] commands = FrameProperties.CommandListType switch
+            {
+                CommandListType.All => Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray() ?? [],
+                CommandListType.Minimal => Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category) && MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
+                CommandListType.None => [],
+                _ => throw new NotImplementedException()
+            };
+
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.KeyType, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

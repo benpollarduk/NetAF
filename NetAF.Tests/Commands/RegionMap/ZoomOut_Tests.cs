@@ -6,15 +6,15 @@ using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using NetAF.Commands.RegionMap;
 
-namespace NetAF.Tests.Commands.Frame
+namespace NetAF.Tests.Commands.RegionMap
 {
     [TestClass]
-    public class ZoomIn_Tests
+    public class ZoomOut_Tests
     {
         [TestMethod]
         public void GivenNullGame_WhenInvoke_ThenError()
         {
-            var command = new ZoomIn();
+            var command = new ZoomOut();
 
             var result = command.Invoke(null);
 
@@ -25,7 +25,7 @@ namespace NetAF.Tests.Commands.Frame
         public void GivenValidGame_WhenInvoke_ThenSilent()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new ZoomIn();
+            var command = new ZoomOut();
 
             var result = command.Invoke(game);
 
@@ -40,7 +40,7 @@ namespace NetAF.Tests.Commands.Frame
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new ZoomIn();
+            var command = new ZoomOut();
 
             var result = command.GetPrompts(game);
 

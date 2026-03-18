@@ -17,7 +17,7 @@ namespace NetAF.Tests.Logic.Modes
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = true;
+                FrameProperties.CommandListType = CommandListType.All;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -30,11 +30,28 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndNotRenderingCommands_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndRenderingNoCommands_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = false;
+                FrameProperties.CommandListType = CommandListType.None;
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new(string.Empty, string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+                var mode = new ConversationMode(new NonPlayableCharacter(string.Empty, string.Empty), new ConversationCommandInterpreter());
+
+                mode.Render(game);
+            });
+        }
+
+        [TestMethod]
+        public void GivenNewAndRenderingMinimalCommands_WhenRender_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                FrameProperties.CommandListType = CommandListType.Minimal;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;

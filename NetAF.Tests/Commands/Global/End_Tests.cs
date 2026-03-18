@@ -30,6 +30,7 @@ namespace NetAF.Tests.Commands.Global
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), null, TestGameConfiguration.Default).Invoke();
             var command = new End();
+            game.Overworld.CurrentRegion.Enter();
 
             var result = command.Invoke(game);
 

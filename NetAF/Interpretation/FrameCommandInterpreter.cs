@@ -1,9 +1,7 @@
 ﻿using NetAF.Commands;
 using NetAF.Commands.Frame;
 using NetAF.Logic;
-using NetAF.Logic.Modes;
-using NetAF.Rendering;
-using System.Collections.Generic;
+using NetAF.Utilities;
 
 namespace NetAF.Interpretation
 {
@@ -19,10 +17,7 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            CommandsOn.CommandHelp,
-            CommandsOff.CommandHelp,
-            KeyOn.CommandHelp,
-            KeyOff.CommandHelp
+            Option.CommandHelp
         ];
 
         #endregion
@@ -42,17 +37,10 @@ namespace NetAF.Interpretation
         /// <returns>The result of the interpretation.</returns>
         public InterpretationResult Interpret(string input, Game game)
         {
-            if (CommandsOff.CommandHelp.Equals(input))
-                return new(true, new CommandsOff());
+            StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (CommandsOn.CommandHelp.Equals(input))
-                return new(true, new CommandsOn());
-
-            if (KeyOff.CommandHelp.Equals(input))
-                return new(true, new KeyOff());
-
-            if (KeyOn.CommandHelp.Equals(input))
-                return new(true, new KeyOn());
+            if (Option.CommandHelp.Equals(commandString))
+                return new(true, new Option(args));
 
             return InterpretationResult.Fail;
         }
@@ -64,24 +52,7 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            List<CommandHelp> commands = [];
-
-            if (game.Mode is SceneMode)
-            {
-                if (!FrameProperties.DisplayCommandList)
-                    commands.Add(CommandsOn.CommandHelp);
-
-                if (FrameProperties.DisplayCommandList)
-                    commands.Add(CommandsOff.CommandHelp);
-
-                if (FrameProperties.KeyType == KeyType.None)
-                    commands.Add(KeyOn.CommandHelp);
-
-                if (FrameProperties.KeyType != KeyType.None)
-                    commands.Add(KeyOff.CommandHelp);
-            }
-
-            return [..commands];
+            return [Option.CommandHelp];
         }
 
         #endregion

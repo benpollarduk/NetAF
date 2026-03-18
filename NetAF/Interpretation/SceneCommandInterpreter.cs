@@ -416,6 +416,9 @@ namespace NetAF.Interpretation
         /// <returns>The contextual help.</returns>
         private static CommandHelp[] GetMovementContextualCommands(Game game)
         {
+            if (game.Overworld.CurrentRegion.CurrentRoom == null)
+                return [];
+
             List<CommandHelp> commands = [];
 
             if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))

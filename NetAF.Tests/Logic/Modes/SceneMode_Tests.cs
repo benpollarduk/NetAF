@@ -17,7 +17,7 @@ namespace NetAF.Tests.Logic.Modes
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = true;
+                FrameProperties.CommandListType = CommandListType.All;
                 FrameProperties.KeyType = KeyType.Dynamic;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
@@ -32,12 +32,31 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndNotDisplayingCommandsOrKey_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndDisplayingNoCommandsOrKey_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = false;
+                FrameProperties.CommandListType = CommandListType.None;
                 FrameProperties.KeyType = KeyType.None;
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new(string.Empty, string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+                game.Overworld.CurrentRegion.Enter();
+                var mode = new SceneMode(new SceneCommandInterpreter());
+
+                mode.Render(game);
+            });
+        }
+
+        [TestMethod]
+        public void GivenNewAndDisplayingMinimalCommandsAndKey_WhenRender_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                FrameProperties.CommandListType = CommandListType.Minimal;
+                FrameProperties.KeyType = KeyType.Dynamic;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;

@@ -18,7 +18,7 @@ namespace NetAF.Tests.Logic.Modes
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = true;
+                FrameProperties.CommandListType = CommandListType.All;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -36,7 +36,7 @@ namespace NetAF.Tests.Logic.Modes
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = true;
+                FrameProperties.CommandListType = CommandListType.All;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -54,7 +54,7 @@ namespace NetAF.Tests.Logic.Modes
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = true;
+                FrameProperties.CommandListType = CommandListType.All;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -68,11 +68,29 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndNotDisplayingCommands_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndDisplayingNoCommands_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.DisplayCommandList = false;
+                FrameProperties.CommandListType = CommandListType.None;
+                RegionMaker regionMaker = new(string.Empty, string.Empty);
+                Room room = new(string.Empty, string.Empty);
+                regionMaker[0, 0, 0] = room;
+                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+                game.Overworld.CurrentRegion.Enter();
+                var mode = new RegionMapMode(RegionMapMode.Player, RegionMapDetail.Normal, new RegionMapCommandInterpreter());
+
+                mode.Render(game);
+            });
+        }
+
+        [TestMethod]
+        public void GivenNewAndDisplayingMinimalCommands_WhenRender_ThenNoExceptionThrown()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                FrameProperties.CommandListType = CommandListType.Minimal;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
