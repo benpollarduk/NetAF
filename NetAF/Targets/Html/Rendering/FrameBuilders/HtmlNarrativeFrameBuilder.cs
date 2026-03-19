@@ -12,7 +12,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
     /// <param name="resizeMode">The mode to use for the visual when the design size and the render size differ and the content needs to be resized.</param>
-    public sealed class HtmlNarrativeFrameBuilder(HtmlBuilder builder, VisualResizeMode resizeMode = VisualResizeMode.Scale) : INarrativeFrameBuilder
+    public sealed class HtmlNarrativeFrameBuilder(HtmlBuilder builder, VisualResizeMode resizeMode = VisualResizeMode.ScaleDown) : INarrativeFrameBuilder
     {
         #region Properties
 

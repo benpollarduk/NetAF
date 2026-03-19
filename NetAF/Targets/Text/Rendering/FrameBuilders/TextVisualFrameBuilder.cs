@@ -11,7 +11,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
     /// <param name="resizeMode">The mode to use when the design size and the render size differ and the content needs to be resized.</param>
-    public sealed class TextVisualFrameBuilder(StringBuilder builder, VisualResizeMode resizeMode = VisualResizeMode.Scale) : IVisualFrameBuilder
+    public sealed class TextVisualFrameBuilder(StringBuilder builder, VisualResizeMode resizeMode = VisualResizeMode.ScaleDown) : IVisualFrameBuilder
     {
         #region Properties
 
@@ -58,17 +58,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
                 var renderSize = new Size(size.Width, size.Height - usedLines);
 
                 // check if resize of the visual is needed
-                if (visual.VisualBuilder.DisplaySize.Width != renderSize.Width ||
-                    visual.VisualBuilder.DisplaySize.Height != renderSize.Height)
-                {
-                    // perform resize
-                    visual = ResizeMode switch
-                    {
-                        VisualResizeMode.Crop => visual.Crop(renderSize),
-                        VisualResizeMode.Scale => visual.Scale(renderSize),
-                        _ => throw new NotImplementedException()
-                    };
-                }
+                visual = visual.ResizeIfNeeded(renderSize, ResizeMode);
 
                 builder.Append(TextAdapter.ConvertGridVisualBuilderToString(visual.VisualBuilder));
             }

@@ -12,6 +12,10 @@
         /// <summary>
         /// Scale the visual to the new size.
         /// </summary>
-        Scale
+        Scale,
+        /// <summary>
+        /// Scale the visual to the new size, only if the new size is smaller than the origial size.
+        /// </summary>
+        ScaleDown
     }
 }

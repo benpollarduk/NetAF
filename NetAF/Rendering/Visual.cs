@@ -31,6 +31,7 @@ namespace NetAF.Rendering
             {
                 VisualResizeMode.Crop => Crop(newSize),
                 VisualResizeMode.Scale => Scale(newSize),
+                VisualResizeMode.ScaleDown => newSize.Width < VisualBuilder.DisplaySize.Width || newSize.Height < VisualBuilder.DisplaySize.Height ? Scale(newSize) : this,
                 _ => throw new NotImplementedException()
             };
         }
@@ -97,16 +98,21 @@ namespace NetAF.Rendering
         /// <returns>The scaled visual builder.</returns>
         private static GridVisualBuilder Scale(GridVisualBuilder visualBuilder, Size renderSize, AnsiColor background, AnsiColor foreground)
         {
-            var widthRatio = visualBuilder.DisplaySize.Width / (double)renderSize.Width;
-            var heightRatio = visualBuilder.DisplaySize.Height / (double)renderSize.Height;
-            var newBuilder = new GridVisualBuilder(background, foreground);
-            newBuilder.Resize(renderSize);
+            var ratio = Math.Max(visualBuilder.DisplaySize.Width / (double)renderSize.Width, visualBuilder.DisplaySize.Height / (double)renderSize.Height);
+            var targetWidth = (int)Math.Max(1, Math.Floor(visualBuilder.DisplaySize.Width / ratio));
+            var targetHeight = (int)Math.Max(1, Math.Floor(visualBuilder.DisplaySize.Height / ratio));
 
-            for (var row = 0; row < renderSize.Height; row++)
+            var widthRatio = visualBuilder.DisplaySize.Width / (double)targetWidth;
+            var heightRatio = visualBuilder.DisplaySize.Height / (double)targetHeight;
+
+            var newBuilder = new GridVisualBuilder(background, foreground);
+            newBuilder.Resize(new Size(targetWidth, targetHeight));
+
+            for (var row = 0; row < targetHeight; row++)
             {
                 var sourceRow = (int)Math.Floor(heightRatio * row);
 
-                for (var column = 0; column < renderSize.Width; column++)
+                for (var column = 0; column < targetWidth; column++)
                 {
                     var sourceColumn = (int)Math.Floor(widthRatio * column);
                     var cellBackground = visualBuilder.GetCellBackgroundColor(sourceColumn, sourceRow);

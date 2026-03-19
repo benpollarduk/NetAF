@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
+using NetAF.Narratives;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using System;
@@ -11,7 +12,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="resizeMode">The mode to use when the design size and the render size differ and the content needs to be resized.</param>
-    public sealed class ConsoleVisualFrameBuilder(GridStringBuilder gridStringBuilder, VisualResizeMode resizeMode = VisualResizeMode.Scale) : IVisualFrameBuilder
+    public sealed class ConsoleVisualFrameBuilder(GridStringBuilder gridStringBuilder, VisualResizeMode resizeMode = VisualResizeMode.ScaleDown) : IVisualFrameBuilder
     {
         #region Properties
 
@@ -76,17 +77,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var renderSize = new Size(availableWidth, availableHeight);
 
             // check if resize of the visual is needed
-            if (visual.VisualBuilder.DisplaySize.Width != renderSize.Width ||
-                visual.VisualBuilder.DisplaySize.Height != renderSize.Height)
-            {
-                // perform resize
-                visual = ResizeMode switch
-                {
-                    VisualResizeMode.Crop => visual.Crop(renderSize),
-                    VisualResizeMode.Scale => visual.Scale(renderSize),
-                    _ => throw new NotImplementedException()
-                };
-            }
+            visual = visual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
 
             var xOffset = Math.Max(leftMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
             var yOffset = Math.Max(lastY, size.Height / 2 - visual.VisualBuilder.DisplaySize.Height / 2);

@@ -14,7 +14,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="resizeMode">The mode to use for the visual when the design size and the render size differ and the content needs to be resized.</param>
-    public sealed class ConsoleNarrativeFrameBuilder(GridStringBuilder gridStringBuilder, VisualResizeMode resizeMode = VisualResizeMode.Scale) : INarrativeFrameBuilder
+    public sealed class ConsoleNarrativeFrameBuilder(GridStringBuilder gridStringBuilder, VisualResizeMode resizeMode = VisualResizeMode.ScaleDown) : INarrativeFrameBuilder
     {
         #region Properties
 
@@ -69,7 +69,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var xOffset = Math.Max(leftMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
             var yOffset = lastY;
 
-            lastY += visual.VisualBuilder.DisplaySize.Height + 2;
+            lastY += visual.VisualBuilder.DisplaySize.Height + 1;
 
             StringBuilder builder = new();
 
@@ -82,8 +82,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
             GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
             finalBuilder.Resize(size);
+            finalBuilder.Overlay(xOffset, yOffset, visual.VisualBuilder);
             finalBuilder.Overlay(0, 0, gridStringBuilder);
-            finalBuilder.Overlay(xOffset, lastY, visual.VisualBuilder);
 
             return new GridVisualFrame(finalBuilder) { ShowCursor = false };
         }

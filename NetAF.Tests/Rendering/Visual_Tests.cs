@@ -85,5 +85,31 @@ namespace NetAF.Tests.Rendering
             Assert.AreEqual(5, result.VisualBuilder.DisplaySize.Width);
             Assert.AreEqual(5, result.VisualBuilder.DisplaySize.Height);
         }
+
+        [TestMethod]
+        public void Given10x10NewSize15x15AndScaleDown_WhenResizeIfNeeded_ThenNewSizeIs10x10()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
+            builder.Resize(new Size(10, 10));
+            var value = new Visual(string.Empty, string.Empty, builder);
+
+            var result = value.ResizeIfNeeded(new Size(15, 15), VisualResizeMode.ScaleDown);
+
+            Assert.AreEqual(10, result.VisualBuilder.DisplaySize.Width);
+            Assert.AreEqual(10, result.VisualBuilder.DisplaySize.Height);
+        }
+
+        [TestMethod]
+        public void Given15x15NewSize10x10AndScaleDown_WhenResizeIfNeeded_ThenNewSizeIs10x10()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
+            builder.Resize(new Size(15, 15));
+            var value = new Visual(string.Empty, string.Empty, builder);
+
+            var result = value.ResizeIfNeeded(new Size(10, 10), VisualResizeMode.ScaleDown);
+
+            Assert.AreEqual(10, result.VisualBuilder.DisplaySize.Width);
+            Assert.AreEqual(10, result.VisualBuilder.DisplaySize.Height);
+        }
     }
 }
