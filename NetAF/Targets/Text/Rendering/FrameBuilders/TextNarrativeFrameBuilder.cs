@@ -58,6 +58,8 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
                 var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Append(TextAdapter.ConvertGridVisualBuilderToString(visual.VisualBuilder));
+                builder.AppendLine();
+                builder.AppendLine();
             }
 
             builder.AppendLine(stringBuilder.ToString());

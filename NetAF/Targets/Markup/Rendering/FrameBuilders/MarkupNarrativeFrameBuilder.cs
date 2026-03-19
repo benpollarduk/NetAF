@@ -58,6 +58,9 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(visual.VisualBuilder));
+
+                builder.Newline();
+                builder.Newline();
             }
 
             builder.WriteLine(stringBuilder.ToString());

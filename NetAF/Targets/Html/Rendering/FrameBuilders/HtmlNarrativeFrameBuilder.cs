@@ -59,6 +59,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 var visual = narrative.CurrentVisual.ResizeIfNeeded(new Size(size.Width, size.Height - usedLines), ResizeMode);
 
                 builder.Raw(HtmlAdapter.ConvertGridVisualBuilderToHtmlString(visual.VisualBuilder));
+                builder.Br();
+                builder.Br();
             }
 
             builder.P(stringBuilder.ToString());
