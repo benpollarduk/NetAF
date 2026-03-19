@@ -152,6 +152,14 @@ namespace NetAF.Logging.Notes
             return [.. entries];
         }
 
+        /// <summary>
+        /// Clean by removing all expired entries.
+        /// </summary>
+        public void Clean()
+        {
+            entries.RemoveAll(x => x.HasExpired);
+        }
+
         #endregion
 
         #region StaticMethods

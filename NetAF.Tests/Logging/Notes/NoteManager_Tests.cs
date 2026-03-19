@@ -223,5 +223,40 @@ namespace NetAF.Tests.Logging.Notes
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void GivenNoEntries_WhenClean_ThenNoEntries()
+        {
+            var manager = new NoteManager();
+            manager.Clean();
+
+            var result = manager.Count;
+
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GivenThreeExpiredEntriesAndOneUnexpiredEntry_WhenClean_ThenOneEntryRemains()
+        {
+            var manager = new NoteManager();
+            var entry1 = new NoteEntry("A", "B");
+            var entry2 = new NoteEntry("C", "D");
+            var entry3 = new NoteEntry("E", "F");
+            var entry4 = new NoteEntry("G", "H");
+            entry1.Expire();
+            entry2.Expire();
+            entry3.Expire();
+
+            manager.Add(entry1);
+            manager.Add(entry2);
+            manager.Add(entry3);
+            manager.Add(entry4);
+
+            manager.Clean();
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
     }
 }
