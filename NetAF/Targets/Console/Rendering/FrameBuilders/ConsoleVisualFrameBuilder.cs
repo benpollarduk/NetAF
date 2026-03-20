@@ -77,9 +77,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
             finalBuilder.Resize(size);
 
-            // determine the render size
-            var renderSize = new Size(availableWidth, availableHeight);
-
             // check if resize of the visual is needed
             visual = visual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
 
