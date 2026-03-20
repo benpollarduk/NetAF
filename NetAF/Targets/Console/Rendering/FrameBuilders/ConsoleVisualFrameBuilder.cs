@@ -1,6 +1,5 @@
 ﻿using NetAF.Assets;
 using NetAF.Extensions;
-using NetAF.Narratives;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using System;
@@ -59,14 +58,19 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             
             const int leftMargin = 2;
 
-            gridStringBuilder.DrawWrapped(visual.Name, leftMargin, 2, availableWidth, TitleColor, out _, out var lastY);
+            var lastY = 2;
 
-            gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, visual.Name.Length, TitleColor);
+            if (!string.IsNullOrEmpty(visual.Name))
+            {
+                gridStringBuilder.DrawWrapped(visual.Name, leftMargin, lastY, availableWidth, TitleColor, out _, out lastY);
+
+                gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, visual.Name.Length, TitleColor);
+
+                lastY += 3;
+            }
 
             if (!string.IsNullOrEmpty(visual.Description))
                 gridStringBuilder.DrawWrapped(visual.Description.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out lastY);
-
-            lastY += 3;
 
             var availableHeight = size.Height - lastY - 1;
 

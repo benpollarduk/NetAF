@@ -45,10 +45,13 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 usedLines += 2;
             }
 
-            builder.H1(narrative.Title);
-            builder.Br();
+            if (!string.IsNullOrEmpty(narrative.Title))
+            {
+                builder.H1(narrative.Title);
+                builder.Br();
 
-            usedLines += 2;
+                usedLines += 2;
+            }
 
             if (narrative.CurrentVisual?.VisualBuilder != null)
             {

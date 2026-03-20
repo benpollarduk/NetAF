@@ -44,10 +44,13 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 usedLines += 2;
             }
 
-            builder.Heading(narrative.Title, HeadingLevel.H1);
-            builder.Newline();
+            if (!string.IsNullOrEmpty(narrative.Title))
+            {
+                builder.Heading(narrative.Title, HeadingLevel.H1);
+                builder.Newline();
 
-            usedLines += 2;
+                usedLines += 2;
+            }
 
             if (narrative.CurrentVisual?.VisualBuilder != null)
             {

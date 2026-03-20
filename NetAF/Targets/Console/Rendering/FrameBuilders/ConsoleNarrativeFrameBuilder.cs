@@ -96,13 +96,15 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var availableWidth = size.Width - 4;
             const int leftMargin = 2;
 
+            lastY += 2;
+
             if (!string.IsNullOrEmpty(narrative.Title))
             {
-                gridStringBuilder.DrawWrapped(narrative.Title, leftMargin, 2, availableWidth, TitleColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped(narrative.Title, leftMargin, lastY, availableWidth, TitleColor, out _, out lastY);
                 gridStringBuilder.DrawUnderline(leftMargin, lastY + 1, narrative.Title.Length, TitleColor);
-            }
 
-            lastY += 3;
+                lastY += 3;
+            }
 
             StringBuilder builder = new();
 
