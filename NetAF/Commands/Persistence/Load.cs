@@ -1,21 +1,21 @@
 ﻿using NetAF.Logic;
-using NetAF.Persistence.Json;
-using NetAF.Serialization;
+using NetAF.Persistence;
+using System.Collections.Generic;
 
 namespace NetAF.Commands.Persistence
 {
     /// <summary>
     /// Represents the Load command.
     /// </summary>
-    /// <param name="path">The path to load.</param>
-    public sealed class Load(string path) : ICommand
+    /// <param name="name">The name of the restore point to load.</param>
+    public sealed class Load(string name) : ICommand
     {
         #region StaticProperties
 
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Load", "Load the game state from a file.", CommandCategory.Persistence, instructions: "When loading the path should be specified as an absolute path.");
+        public static CommandHelp CommandHelp { get; } = new("Load", "Restore the state of a game.", CommandCategory.Persistence, instructions: "Provide the name of the restore point.");
 
         #endregion
 
@@ -33,14 +33,13 @@ namespace NetAF.Commands.Persistence
         /// <returns>The reaction.</returns>
         public Reaction Invoke(Game game)
         {
-            var result = JsonSave.FromFile(path, out var restorePoint, out var message);
+            if (!RestorePointManager.Exists(game, name))
+                return new(ReactionResult.Error, $"'{name}' does not exist.");
 
-            if (!result)
-                return new(ReactionResult.Error, $"Failed to load: {message}");
+            if (!RestorePointManager.Apply(game, name, out string message))
+                return new(ReactionResult.Error, $"Failed to load '{name}'. {message}");
 
-            ((IObjectSerialization<Game>)restorePoint.Game).Restore(game);
-
-            return new(ReactionResult.Inform, $"Loaded.");
+            return new(ReactionResult.Inform, "Loaded.");
         }
 
         /// <summary>
@@ -50,7 +49,17 @@ namespace NetAF.Commands.Persistence
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [];
+            var availableNames = RestorePointManager.GetAvailableRestorePointNames(game);
+
+            if (availableNames.Length == 0)
+                return [];
+
+            List<Prompt> prompts = [];
+
+            foreach (var n in availableNames)
+                prompts.Add(new Prompt(n));
+
+            return [.. prompts];
         }
 
         #endregion

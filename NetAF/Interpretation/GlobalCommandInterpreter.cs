@@ -54,10 +54,10 @@ namespace NetAF.Interpretation
                 return new(true, new About());
 
             if (Notes.CommandHelp.Equals(commandString))
-                return new(true, new Notes());
+                return new(true, new Notes(args));
 
             if (History.CommandHelp.Equals(commandString))
-                return new(true, new History());
+                return new(true, new History(args));
 
             if (GeneralHelp.CommandHelp.Equals(commandString))
             {

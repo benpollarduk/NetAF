@@ -83,3 +83,13 @@ is applied.
 
 ### Load
 ![Persistence-Load](~/images/persistence-load.png)
+
+## Auto Save
+Games can be auto-saved. By setting the **AutoSaveEvent** property on the **GameConfiguration** the game can be auto-saved.
+
+Auto save events include:
+
+* **Off** - no auto-saving.
+* **RoomEntered** - auto-save whenever a room is entered.
+* **RegionEntered** - auto-save whenever a region is entered.
+* **ItemReceived** - auto-save whenever an item is received.

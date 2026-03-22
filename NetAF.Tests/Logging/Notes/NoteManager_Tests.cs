@@ -18,6 +18,37 @@ namespace NetAF.Tests.Logging.Notes
         }
 
         [TestMethod]
+        public void GivenNull_WhenConstruct_ThenNoEntries()
+        {
+            var manager = new NoteManager([]);
+
+            var result = manager.Count;
+
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void GivenEmptyArray_WhenConstruct_ThenNoEntries()
+        {
+            var manager = new NoteManager([]);
+
+            var result = manager.Count;
+
+            Assert.AreEqual(0, result);
+        }
+
+
+        [TestMethod]
+        public void GivenOneEntry_WhenConstruct_ThenOneEntry()
+        {
+            var manager = new NoteManager([new NoteEntry("", "")]);
+
+            var result = manager.Count;
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
         public void GivenNoEntries_WhenAddWithNameAndContent_ThenOneEntry()
         {
             var manager = new NoteManager();
