@@ -1,6 +1,7 @@
 ﻿using NetAF.Assets;
 using NetAF.Interpretation;
 using NetAF.Logic.Modes;
+using NetAF.Persistence;
 using NetAF.Rendering.FrameBuilders;
 
 namespace NetAF.Logic
@@ -55,6 +56,11 @@ namespace NetAF.Logic
         /// Get the interpretation provider.
         /// </summary>
         public InterpreterProvider InterpreterProvider { get; } = Interpreters.CreateDefaultInterpreterProvider();
+
+        /// <summary>
+        /// Get or set the mode to use for auto-saves.
+        /// </summary>
+        public AutoSaveMode AutoSaveMode { get; set; } = AutoSaveMode.Off;
 
         #endregion
     }

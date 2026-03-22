@@ -15,6 +15,7 @@ using NetAF.Logging.Notes;
 using NetAF.Logic.Arrangement;
 using NetAF.Logic.Callbacks;
 using NetAF.Logic.Modes;
+using NetAF.Persistence;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using NetAF.Utilities;
@@ -33,6 +34,7 @@ namespace NetAF.Logic
         private IGameMode endMode;
         private readonly Queue<Reaction> pendingReactions = [];
         private Queue<IGameMode> pendingModes = [];
+        private bool isSubscribedToAutoSaveEvents;
 
         #endregion
 
@@ -125,6 +127,48 @@ namespace NetAF.Logic
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Subscribe to auto-save events.
+        /// </summary>
+        private void SubscribeToAutoSaveEvents()
+        {
+            if (isSubscribedToAutoSaveEvents)
+                return;
+
+            EventBus.Subscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RoomEntered));
+            EventBus.Subscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RegionEntered));
+            EventBus.Subscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveMode.ItemObtained));
+
+            isSubscribedToAutoSaveEvents = true;
+        }
+
+        /// <summary>
+        /// Unsubscribe from auto-save events.
+        /// </summary>
+        private void UnsubscribeFormAutoSaveEvents()
+        {
+            if (!isSubscribedToAutoSaveEvents)
+                return;
+
+            EventBus.Unsubscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RoomEntered));
+            EventBus.Unsubscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RegionEntered));
+            EventBus.Unsubscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveMode.ItemObtained));
+
+            isSubscribedToAutoSaveEvents = false;
+        }
+
+        /// <summary>
+        /// Auto-save if required. Autosaves will only be completed if the trigger matches the Configuration.AutoSaveMode.
+        /// </summary>
+        /// <param name="trigger">The trigger.</param>
+        private void AutoSaveIfRequired(AutoSaveMode trigger)
+        {
+            if (Configuration.AutoSaveMode != trigger)
+                return;
+
+            RestorePointManager.Save(this, out _);
+        }
 
         /// <summary>
         /// Change to the next mode. If there is any pending mode that will be used, otherwise the game will revert to the default mode.
@@ -331,6 +375,9 @@ namespace NetAF.Logic
         /// </summary>
         internal void End()
         {
+            // unsubscribe from all auto-save events
+            UnsubscribeFormAutoSaveEvents();
+
             State = GameState.Finished;
         }
 
@@ -507,6 +554,9 @@ namespace NetAF.Logic
             // render
             game.Mode.Render(game);
 
+            // subscribe to all auto-save events
+            game.SubscribeToAutoSaveEvents();
+
             EventBus.Publish(new GameStarted(game));
 
             return new(true);
@@ -561,6 +611,9 @@ namespace NetAF.Logic
         /// <returns>The update result.</returns>
         private static UpdateResult UpdateWhenFinishing(Game game)
         {
+            // unsubscribe from all auto-save events
+            game.UnsubscribeFormAutoSaveEvents();
+
             // finished execution
             game.State = GameState.Finished;
 
