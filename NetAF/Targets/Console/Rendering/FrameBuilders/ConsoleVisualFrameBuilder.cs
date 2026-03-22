@@ -72,8 +72,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             if (!string.IsNullOrEmpty(visual.Description))
                 gridStringBuilder.DrawWrapped(visual.Description.EnsureFinishedSentence(), leftMargin, lastY + 3, availableWidth, DescriptionColor, out _, out lastY);
 
-            var availableHeight = size.Height - lastY - 1;
-
             GridVisualBuilder finalBuilder = new(BackgroundColor, TitleColor);
             finalBuilder.Resize(size);
 
