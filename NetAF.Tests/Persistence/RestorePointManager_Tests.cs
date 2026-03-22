@@ -37,7 +37,7 @@ namespace NetAF.Tests.Persistence
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
 
-            var result = RestorePointManager.Save(game, name, out _);
+            var result = RestorePointManager.Save(game, name, out _, out _);
 
             Directory.Delete(tempDir.FullName, true);
 
@@ -55,7 +55,7 @@ namespace NetAF.Tests.Persistence
             var name = "TestSave";
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
 
             var result = RestorePointManager.GetAvailableRestorePointNames(game);
 
@@ -76,7 +76,7 @@ namespace NetAF.Tests.Persistence
             var name = "TestSave";
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
 
             var result = RestorePointManager.Exists(game, name);
 
@@ -88,7 +88,7 @@ namespace NetAF.Tests.Persistence
         [TestMethod]
         public void GivenNullGame_WhenSave_ThenFalse()
         {
-            var result = RestorePointManager.Save(null, "TestSave", out _);
+            var result = RestorePointManager.Save(null, "TestSave", out _, out _);
             Assert.IsFalse(result);
         }
 
@@ -103,7 +103,7 @@ namespace NetAF.Tests.Persistence
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
 
-            var result = RestorePointManager.Save(game, out _);
+            var result = RestorePointManager.Save(game, out _, out _);
 
             Directory.Delete(tempDir.FullName, true);
 
@@ -139,7 +139,7 @@ namespace NetAF.Tests.Persistence
             var name = "TestSave";
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
 
             var result = RestorePointManager.GetAvailableRestorePoints(game);
 
@@ -177,7 +177,7 @@ namespace NetAF.Tests.Persistence
             var name = "TestSave";
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
 
             var result = RestorePointManager.Apply(game, name, out _);
 
@@ -196,7 +196,7 @@ namespace NetAF.Tests.Persistence
             var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
-            RestorePointManager.Save(game, out _);
+            RestorePointManager.Save(game, out _, out _);
 
             var result = RestorePointManager.Apply(game, out _);
 

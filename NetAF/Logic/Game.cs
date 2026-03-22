@@ -170,8 +170,10 @@ namespace NetAF.Logic
 
             try
             {
-                if (!RestorePointManager.Save(this, out var message))
+                if (!RestorePointManager.Save(this, out var restorePoint, out var message))
                     Debug.WriteLine($"Auto-save failed: {message}");
+
+                EventBus.Publish(new AutoSaved(restorePoint));
             }
             catch (Exception e)
             {

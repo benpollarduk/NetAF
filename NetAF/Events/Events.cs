@@ -5,6 +5,7 @@ using NetAF.Logging.History;
 using NetAF.Logging.Notes;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
+using NetAF.Persistence;
 
 namespace NetAF.Events
 {
@@ -107,4 +108,10 @@ namespace NetAF.Events
     /// </summary>
     /// <param name="Entry">The entry that was added.</param>
     public record HistoryUpdated(HistoryEntry Entry) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when the game is auto saved
+    /// </summary>
+    /// <param name="RestorePoint">The restore point that was saved.</param>
+    public record AutoSaved(RestorePoint RestorePoint) : BaseEvent;
 }

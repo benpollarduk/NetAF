@@ -49,4 +49,5 @@ The following events are supported:
 * **NoteAdded** - occurs when a note entry is added.
 * **NoteUpdated** - occurs when a note entry is updated.
 * **HistoryUpdated** - occurs when the history is updated.
+* **AutoSaved** - occurs when the game is auto-saved.
 

@@ -46,7 +46,7 @@ namespace NetAF.Tests.Commands.Persistence
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
 
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
             var command = new Save(name);
             var path = RestorePointManager.GetFilePath(game, name);
 
@@ -91,7 +91,7 @@ namespace NetAF.Tests.Commands.Persistence
             var tempDir = Directory.CreateTempSubdirectory();
             RestorePointManager.RootDirectory = tempDir.FullName;
 
-            RestorePointManager.Save(game, name, out _);
+            RestorePointManager.Save(game, name, out _, out _);
 
             var result = command.GetPrompts(game);
 

@@ -38,7 +38,7 @@ namespace NetAF.Commands.Persistence
             if (string.IsNullOrEmpty(name))
                 return new(ReactionResult.Error, "No name provided.");
 
-            if (!RestorePointManager.Save(game, name, out string message))
+            if (!RestorePointManager.Save(game, name, out _, out string message))
                 return new(ReactionResult.Error, $"Failed to save '{name}'. {message}");
 
             return new(ReactionResult.Inform, "Saved.");

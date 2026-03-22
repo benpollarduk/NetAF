@@ -52,11 +52,12 @@ namespace NetAF.Persistence
         /// Autosave a game.
         /// </summary>
         /// <param name="game">The game to save.</param>
+        /// <param name="restorePoint">The created restore point.</param>
         /// <param name="message">A message detailing the result of the save, if the save was unsuccessful. If the save was successful this will be empty.</param>
         /// <returns>True if the save was successful, else false.</returns>
-        public static bool Save(Game game, out string message)
+        public static bool Save(Game game, out RestorePoint restorePoint, out string message)
         {
-            return Save(game, AutoFileName, out message);
+            return Save(game, AutoFileName, out restorePoint, out message);
         }
 
         /// <summary>
@@ -64,20 +65,22 @@ namespace NetAF.Persistence
         /// </summary>
         /// <param name="game">The game to save.</param>
         /// <param name="name">The name of the restore point.</param>
+        /// <param name="restorePoint">The created restore point.</param>
         /// <param name="message">A message detailing the result of the save, if the save was unsuccessful. If the save was successful this will be empty.</param>
         /// <returns>True if the save was successful, else false.</returns>
-        public static bool Save(Game game, string name, out string message)
+        public static bool Save(Game game, string name, out RestorePoint restorePoint, out string message)
         {
             if (game == null)
             {
+                restorePoint = null;
                 message = "No game to save.";
                 return false;
             }
 
-            var newRestorePoint = RestorePoint.Create(name, game);
+            restorePoint = RestorePoint.Create(name, game);
             var path = GetFilePath(game, name);
 
-            return JsonSave.ToFile(path, newRestorePoint, out message);
+            return JsonSave.ToFile(path, restorePoint, out message);
         }
 
         /// <summary>
