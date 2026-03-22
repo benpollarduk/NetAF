@@ -38,6 +38,8 @@ namespace NetAF.Tests.Commands.Persistence
             if (fileExists)
                 File.Delete(path);
 
+            Directory.Delete(tempDir.FullName, true);
+
             Assert.AreEqual(ReactionResult.Inform, result.Result);
         }
 
@@ -51,6 +53,7 @@ namespace NetAF.Tests.Commands.Persistence
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new Load(string.Empty);
+            RestorePointManager.RootDirectory = RestorePointManager.DefaultRootDirectory;
 
             var result = command.Invoke(game);
 
@@ -66,8 +69,8 @@ namespace NetAF.Tests.Commands.Persistence
             regionMaker[0, 0, 0] = room;
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var path = Path.Combine("abc");
-            var command = new Load(path);
+            var command = new Load("abc");
+            RestorePointManager.RootDirectory = RestorePointManager.DefaultRootDirectory;
 
             var result = command.Invoke(game);
 
@@ -90,6 +93,8 @@ namespace NetAF.Tests.Commands.Persistence
             RestorePointManager.Save(game, "Test", out _);
 
             var result = command.GetPrompts(game);
+
+            Directory.Delete(tempDir.FullName, true);
 
             Assert.HasCount(1, result);
         }

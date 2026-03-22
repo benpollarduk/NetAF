@@ -27,7 +27,12 @@ namespace NetAF.Persistence
         /// <summary>
         /// Get or set the root directory for saves.
         /// </summary>
-        public static string RootDirectory { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NetAF");
+        public static string RootDirectory { get; set; } = DefaultRootDirectory;
+
+        /// <summary>
+        /// Get the default root directory for saves.
+        /// </summary>
+        public static string DefaultRootDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NetAF");
 
         #endregion
 
@@ -102,6 +107,10 @@ namespace NetAF.Persistence
         public static string[] GetAvailableRestorePointNames(Game game)
         {
             var path = GetRestorePointDirectory(game);
+
+            if (!Path.Exists(path))
+                return [];
+
             var files = Directory.GetFiles(path, $"*.{Extension}", SearchOption.TopDirectoryOnly);
             return [.. files.Select(x => Path.GetFileNameWithoutExtension(x))];
         }
