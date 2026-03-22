@@ -22,11 +22,6 @@ namespace NetAF.Commands.Information
         public static Prompt Clean => new("Clean");
 
         /// <summary>
-        /// Get the prompt for clear.
-        /// </summary>
-        public static Prompt Clear => new("Clear");
-
-        /// <summary>
         /// Get the prompt for show.
         /// </summary>
         public static Prompt Show => new("Show");
@@ -86,11 +81,6 @@ namespace NetAF.Commands.Information
                 game.NoteManager.Clean();
                 return new(ReactionResult.Inform, "Notes cleaned.");
             }
-            else if (args.InsensitiveEquals(Clear.Entry))
-            {
-                game.NoteManager.Clear();
-                return new(ReactionResult.Inform, "Notes cleared.");
-            }
             else
             {
                 return new(ReactionResult.Error, $"Invalid argument '{args}'.");
@@ -104,7 +94,7 @@ namespace NetAF.Commands.Information
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [ Show, Clean, Clear ];
+            return [ Show, Clean ];
         }
 
         #endregion

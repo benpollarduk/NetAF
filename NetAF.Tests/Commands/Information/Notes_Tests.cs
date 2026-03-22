@@ -87,22 +87,6 @@ namespace NetAF.Tests.Commands.Information
         }
 
         [TestMethod]
-        public void GivenValidGameAndClearArg_WhenInvoke_ThenReturnInform()
-        {
-            var overworld = new Overworld(Identifier.Empty, Description.Empty);
-            var region = new Region(Identifier.Empty, Description.Empty);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
-            region.AddRoom(new Room(Identifier.Empty, Description.Empty, [new Exit(Direction.South)]), 0, 1, 0);
-            overworld.AddRegion(region);
-            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-            var command = new Notes(Notes.Clear.Entry);
-
-            var result = command.Invoke(game);
-
-            Assert.AreEqual(ReactionResult.Inform, result.Result);
-        }
-
-        [TestMethod]
         public void GivenValidGameAndInvalidArg_WhenInvoke_ThenReturnError()
         {
             var overworld = new Overworld(Identifier.Empty, Description.Empty);
@@ -119,7 +103,7 @@ namespace NetAF.Tests.Commands.Information
         }
 
         [TestMethod]
-        public void GivenGame_WhenGetPrompts_ThenArrayContaining3Entries()
+        public void GivenGame_WhenGetPrompts_ThenArrayContaining2Entries()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -130,7 +114,7 @@ namespace NetAF.Tests.Commands.Information
 
             var result = command.GetPrompts(game);
 
-            Assert.HasCount(3, result);
+            Assert.HasCount(2, result);
         }
     }
 }

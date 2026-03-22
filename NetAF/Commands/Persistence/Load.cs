@@ -33,6 +33,9 @@ namespace NetAF.Commands.Persistence
         /// <returns>The reaction.</returns>
         public Reaction Invoke(Game game)
         {
+            if (string.IsNullOrEmpty(name))
+                return new(ReactionResult.Error, "No name provided.");
+
             if (!RestorePointManager.Exists(game, name))
                 return new(ReactionResult.Error, $"'{name}' does not exist.");
 

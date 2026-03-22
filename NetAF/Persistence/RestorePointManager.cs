@@ -184,7 +184,7 @@ namespace NetAF.Persistence
         /// <returns>The full path.</returns>
         public static string GetFilePath(Game game, string name)
         {
-            return Path.Combine(GetRestorePointDirectory(game), $"{name}.{Extension}");
+            return Path.Combine(GetRestorePointDirectory(game), $"{name ?? string.Empty}.{Extension ?? string.Empty}");
         }
 
         #endregion

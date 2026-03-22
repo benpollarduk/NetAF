@@ -61,6 +61,23 @@ namespace NetAF.Tests.Commands.Persistence
         }
 
         [TestMethod]
+        public void GivenNull_WhenInvoke_ThenError()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var item = new Item(string.Empty, string.Empty) { IsPlayerVisible = false };
+            var room = new Room(string.Empty, string.Empty, null, [item]);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Load(null);
+            RestorePointManager.RootDirectory = RestorePointManager.DefaultRootDirectory;
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Error, result.Result);
+        }
+
+        [TestMethod]
         public void GivenInvalidName_WhenInvoke_ThenError()
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
