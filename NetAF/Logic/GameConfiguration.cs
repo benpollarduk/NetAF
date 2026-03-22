@@ -58,9 +58,9 @@ namespace NetAF.Logic
         public InterpreterProvider InterpreterProvider { get; } = Interpreters.CreateDefaultInterpreterProvider();
 
         /// <summary>
-        /// Get or set the mode to use for auto-saves.
+        /// Get or set the event to use for auto-saves.
         /// </summary>
-        public AutoSaveMode AutoSaveMode { get; set; } = AutoSaveMode.Off;
+        public AutoSaveEvent AutoSaveEvent { get; set; } = AutoSaveEvent.None;
 
         #endregion
     }

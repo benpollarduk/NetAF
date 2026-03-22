@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
@@ -136,9 +137,9 @@ namespace NetAF.Logic
             if (isSubscribedToAutoSaveEvents)
                 return;
 
-            EventBus.Subscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RoomEntered));
-            EventBus.Subscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RegionEntered));
-            EventBus.Subscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveMode.ItemObtained));
+            EventBus.Subscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveEvent.RoomEntered));
+            EventBus.Subscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveEvent.RegionEntered));
+            EventBus.Subscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveEvent.ItemReceived));
 
             isSubscribedToAutoSaveEvents = true;
         }
@@ -151,23 +152,31 @@ namespace NetAF.Logic
             if (!isSubscribedToAutoSaveEvents)
                 return;
 
-            EventBus.Unsubscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RoomEntered));
-            EventBus.Unsubscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveMode.RegionEntered));
-            EventBus.Unsubscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveMode.ItemObtained));
+            EventBus.Unsubscribe<RoomEntered>(_ => AutoSaveIfRequired(AutoSaveEvent.RoomEntered));
+            EventBus.Unsubscribe<RegionEntered>(_ => AutoSaveIfRequired(AutoSaveEvent.RegionEntered));
+            EventBus.Unsubscribe<ItemReceived>(_ => AutoSaveIfRequired(AutoSaveEvent.ItemReceived));
 
             isSubscribedToAutoSaveEvents = false;
         }
 
         /// <summary>
-        /// Auto-save if required. Autosaves will only be completed if the trigger matches the Configuration.AutoSaveMode.
+        /// Auto-save if required. Auto-saves will only be completed if the trigger matches the Configuration.AutoSaveEvent.
         /// </summary>
         /// <param name="trigger">The trigger.</param>
-        private void AutoSaveIfRequired(AutoSaveMode trigger)
+        private void AutoSaveIfRequired(AutoSaveEvent trigger)
         {
-            if (Configuration.AutoSaveMode != trigger)
+            if (Configuration.AutoSaveEvent != trigger)
                 return;
 
-            RestorePointManager.Save(this, out _);
+            try
+            {
+                if (!RestorePointManager.Save(this, out var message))
+                    Debug.WriteLine($"Auto-save failed: {message}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Auto-save failed: {e.Message}");
+            }
         }
 
         /// <summary>

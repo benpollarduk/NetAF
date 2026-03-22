@@ -1,14 +1,14 @@
 ﻿namespace NetAF.Persistence
 {
     /// <summary>
-    /// Enumeration of auto-save modes.
+    /// Enumeration of auto-save events.
     /// </summary>
-    public enum AutoSaveMode
+    public enum AutoSaveEvent
     {
         /// <summary>
         /// Never auto-save.
         /// </summary>
-        Off = 0,
+        None = 0,
         /// <summary>
         /// Auto-save when a room is entered.
         /// </summary>
@@ -18,8 +18,8 @@
         /// </summary>
         RegionEntered,
         /// <summary>
-        /// Auto-save when an item is obtained.
+        /// Auto-save when an item is received.
         /// </summary>
-        ItemObtained
+        ItemReceived
     }
 }
