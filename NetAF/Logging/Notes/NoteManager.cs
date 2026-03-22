@@ -27,6 +27,27 @@ namespace NetAF.Logging.Notes
 
         #endregion
 
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the NoteManager class.
+        /// </summary>
+        public NoteManager()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the NoteManager class.
+        /// </summary>
+        /// <param name="entries">An array of initial entries.</param>
+        public NoteManager(NoteEntry[] entries)
+        {
+            if (entries != null)
+                this.entries.AddRange(entries);
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -192,7 +213,7 @@ namespace NetAF.Logging.Notes
                 return;
 
             foreach (var entry in serialization.Entries)
-                Add(NoteEntry.FromSerialization(entry));
+                entries.Add(NoteEntry.FromSerialization(entry));
         }
 
         #endregion
