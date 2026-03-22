@@ -1,4 +1,5 @@
-﻿using NetAF.Logic;
+﻿using NetAF.Extensions;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
 
 namespace NetAF.Commands.Information
@@ -14,6 +15,47 @@ namespace NetAF.Commands.Information
         /// Get the command help.
         /// </summary>
         public static CommandHelp CommandHelp { get; } = new("Notes", "View in-game notes", CommandCategory.Global);
+
+        /// <summary>
+        /// Get the prompt for clean.
+        /// </summary>
+        public static Prompt Clean => new("Clean");
+
+        /// <summary>
+        /// Get the prompt for clear.
+        /// </summary>
+        public static Prompt Clear => new("Clear");
+
+        /// <summary>
+        /// Get the prompt for show.
+        /// </summary>
+        public static Prompt Show => new("Show");
+
+        #endregion
+
+        #region Fields
+
+        private string args;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the Notes command.
+        /// </summary>
+        public Notes() : this(Show.Entry)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Notes command.
+        /// </summary>
+        /// <param name="args">The arguments for the command.</param>
+        public Notes(string args)
+        {
+            this.args = args;
+        }
 
         #endregion
 
@@ -34,8 +76,25 @@ namespace NetAF.Commands.Information
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            game.ChangeMode(new NoteMode(game.NoteManager));
-            return new(ReactionResult.GameModeChanged, string.Empty);
+            if (string.IsNullOrEmpty(args) || args.InsensitiveEquals(Show.Entry))
+            {
+                game.ChangeMode(new NoteMode(game.NoteManager));
+                return new(ReactionResult.GameModeChanged, string.Empty);
+            }
+            else if (args.InsensitiveEquals(Clean.Entry))
+            {
+                game.NoteManager.Clean();
+                return new(ReactionResult.Inform, "Notes cleaned.");
+            }
+            else if (args.InsensitiveEquals(Clear.Entry))
+            {
+                game.NoteManager.Clear();
+                return new(ReactionResult.Inform, "Notes cleared.");
+            }
+            else
+            {
+                return new(ReactionResult.Error, $"Invalid argument '{args}'.");
+            }
         }
 
         /// <summary>
@@ -45,7 +104,7 @@ namespace NetAF.Commands.Information
         /// <returns>And array of prompts.</returns>
         public Prompt[] GetPrompts(Game game)
         {
-            return [];
+            return [ Show, Clean, Clear ];
         }
 
         #endregion
