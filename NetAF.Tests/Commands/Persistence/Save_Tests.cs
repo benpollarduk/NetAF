@@ -77,5 +77,33 @@ namespace NetAF.Tests.Commands.Persistence
 
             Assert.HasCount(1, result);
         }
+
+        [TestMethod]
+        public void GivenGameAnd1NonAutoSave_WhenGetPrompts_ThenArrayWith2Entries()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Save(string.Empty);
+            var name = "Test";
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+
+            RestorePointManager.Save(game, name, out _);
+
+            var result = command.GetPrompts(game);
+
+            var path = RestorePointManager.GetFilePath(game, name);
+            var fileExists = File.Exists(path);
+
+            if (fileExists)
+                File.Delete(path);
+
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.HasCount(2, result);
+        }
     }
 }
