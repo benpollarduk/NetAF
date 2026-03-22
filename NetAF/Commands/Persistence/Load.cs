@@ -56,8 +56,8 @@ namespace NetAF.Commands.Persistence
 
             List<Prompt> prompts = [];
 
-            foreach (var name in availableNames)
-                prompts.Add(new Prompt(name));
+            foreach (var n in availableNames)
+                prompts.Add(new Prompt(n));
 
             return [.. prompts];
         }

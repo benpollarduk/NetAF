@@ -30,7 +30,7 @@ namespace NetAF.Commands.Information
 
         #region Fields
 
-        private string args;
+        private readonly string args;
 
         #endregion
 
