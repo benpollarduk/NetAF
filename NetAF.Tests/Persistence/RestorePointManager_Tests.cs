@@ -244,7 +244,32 @@ namespace NetAF.Tests.Persistence
         }
 
         [TestMethod]
-        public void GivenTestGameAndName_WhenGetFilePath_ThenPathWithGameNameAndRestorePointName()
+        public void GivenTestGame_WhenCreateNewFilePath_ThenPathStartsWithGameRestoreDirectory()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+
+            var result = RestorePointManager.CreateNewFilePath(game);
+
+            Assert.IsTrue(result.StartsWith(RestorePointManager.GetRestorePointDirectory(game)));
+            Assert.IsTrue(result.EndsWith($".{RestorePointManager.Extension}"));
+        }
+
+        [TestMethod]
+        public void GivenDateTime_WhenCreateFileName_ThenCorrectFormat()
+        {
+            var dateTime = new System.DateTime(2023, 10, 5, 14, 30, 15, 123);
+
+            var result = RestorePointManager.CreateFileName(dateTime);
+
+            Assert.AreEqual("2023_10_05_14_30_15_123", result);
+        }
+
+        [TestMethod]
+        public void GivenTestGameAndSaveExists_WhenGetAllRestorePointPaths_ThenArrayWithSave()
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);
             var room = new Room(string.Empty, string.Empty);
@@ -252,11 +277,105 @@ namespace NetAF.Tests.Persistence
             var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var name = "TestSave";
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+            RestorePointManager.Save(game, name, out _, out _);
 
-            var result = RestorePointManager.GetFilePath(game, name);
+            var result = RestorePointManager.GetAllRestorePointPaths(game);
 
-            var expected = Path.Combine(RestorePointManager.RootDirectory, "Test", $"{name}.netaf");
-            Assert.AreEqual(expected, result);
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.AreEqual(1, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenTestGameAndNoSaves_WhenGetAllRestorePointPaths_ThenEmptyArray()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+
+            var result = RestorePointManager.GetAllRestorePointPaths(game);
+
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [TestMethod]
+        public void GivenTestGameAndSaveExists_WhenTryFindFile_ThenTrue()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var name = "TestSave";
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+            RestorePointManager.Save(game, name, out _, out _);
+
+            var result = RestorePointManager.TryFindFile(game, name, out var path);
+
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.IsTrue(result);
+            Assert.IsFalse(string.IsNullOrEmpty(path));
+        }
+
+        [TestMethod]
+        public void GivenTestGameAndNoSaveExists_WhenTryFindFile_ThenFalse()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var name = "TestSave";
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+
+            var result = RestorePointManager.TryFindFile(game, name, out var path);
+
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.IsFalse(result);
+            Assert.IsTrue(string.IsNullOrEmpty(path));
+        }
+
+        [TestMethod]
+        public void GivenValidFilePath_WhenTryPeekName_ThenTrue()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty);
+            var room = new Room(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            var overworldMaker = new OverworldMaker(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo("Test", string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var name = "TestSave";
+            var tempDir = Directory.CreateTempSubdirectory();
+            RestorePointManager.RootDirectory = tempDir.FullName;
+            RestorePointManager.Save(game, name, out _, out _);
+            RestorePointManager.TryFindFile(game, name, out var path);
+
+            var result = RestorePointManager.TryPeekName(path, out var peekedName);
+
+            Directory.Delete(tempDir.FullName, true);
+
+            Assert.IsTrue(result);
+            Assert.AreEqual(name, peekedName);
+        }
+
+        [TestMethod]
+        public void GivenInvalidFilePath_WhenTryPeekName_ThenFalse()
+        {
+            var result = RestorePointManager.TryPeekName(string.Empty, out var peekedName);
+
+            Assert.IsFalse(result);
+            Assert.IsTrue(string.IsNullOrEmpty(peekedName));
         }
     }
 }

@@ -32,12 +32,6 @@ namespace NetAF.Tests.Commands.Persistence
 
             var result = command.Invoke(game);
 
-            var path = RestorePointManager.GetFilePath(game, name);
-            var fileExists = File.Exists(path);
-
-            if (fileExists)
-                File.Delete(path);
-
             Directory.Delete(tempDir.FullName, true);
 
             Assert.AreEqual(ReactionResult.Inform, result.Result);

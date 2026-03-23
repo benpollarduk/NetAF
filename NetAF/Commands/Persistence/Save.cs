@@ -54,15 +54,15 @@ namespace NetAF.Commands.Persistence
             var availableNames = RestorePointManager.GetAvailableRestorePointNames(game);
 
             if (availableNames.Length == 0)
-                return [new Prompt(RestorePointManager.AutoFileName)];
+                return [new Prompt(RestorePointManager.AutoName)];
 
             List<Prompt> prompts = [];
 
             foreach (var n in availableNames)
                 prompts.Add(new Prompt(n));
 
-            if (!prompts.Any(x => x.Entry.InsensitiveEquals(RestorePointManager.AutoFileName)))
-                prompts.Add(new Prompt(RestorePointManager.AutoFileName));
+            if (!prompts.Any(x => x.Entry.InsensitiveEquals(RestorePointManager.AutoName)))
+                prompts.Add(new Prompt(RestorePointManager.AutoName));
 
             return [.. prompts];
         }

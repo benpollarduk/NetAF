@@ -48,14 +48,8 @@ namespace NetAF.Tests.Commands.Persistence
 
             RestorePointManager.Save(game, name, out _, out _);
             var command = new Save(name);
-            var path = RestorePointManager.GetFilePath(game, name);
 
             var result = command.Invoke(game);
-
-            var fileExists = File.Exists(path);
-
-            if (fileExists)
-                File.Delete(path);
 
             Directory.Delete(tempDir.FullName, true);
 
@@ -94,12 +88,6 @@ namespace NetAF.Tests.Commands.Persistence
             RestorePointManager.Save(game, name, out _, out _);
 
             var result = command.GetPrompts(game);
-
-            var path = RestorePointManager.GetFilePath(game, name);
-            var fileExists = File.Exists(path);
-
-            if (fileExists)
-                File.Delete(path);
 
             Directory.Delete(tempDir.FullName, true);
 

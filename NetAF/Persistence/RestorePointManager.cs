@@ -1,4 +1,5 @@
-﻿using NetAF.Logic;
+﻿using NetAF.Extensions;
+using NetAF.Logic;
 using NetAF.Persistence.Json;
 using System;
 using System.Data;
@@ -17,7 +18,7 @@ namespace NetAF.Persistence
         /// <summary>
         /// Get or set the name to use for auto saves.
         /// </summary>
-        public static string AutoFileName { get; set; } = "Auto";
+        public static string AutoName { get; set; } = "Auto";
 
         /// <summary>
         /// Get or set the extension to use for saves.
@@ -57,7 +58,7 @@ namespace NetAF.Persistence
         /// <returns>True if the save was successful, else false.</returns>
         public static bool Save(Game game, out RestorePoint restorePoint, out string message)
         {
-            return Save(game, AutoFileName, out restorePoint, out message);
+            return Save(game, AutoName, out restorePoint, out message);
         }
 
         /// <summary>
@@ -78,7 +79,9 @@ namespace NetAF.Persistence
             }
 
             restorePoint = RestorePoint.Create(name, game);
-            var path = GetFilePath(game, name);
+
+            if (!TryFindFile(game, name, out var path))
+                path = CreateNewFilePath(game);
 
             return JsonSave.ToFile(path, restorePoint, out message);
         }
@@ -109,13 +112,8 @@ namespace NetAF.Persistence
         /// <returns>An array containing all the available restore points for a game.</returns>
         public static string[] GetAvailableRestorePointNames(Game game)
         {
-            var path = GetRestorePointDirectory(game);
-
-            if (!Path.Exists(path))
-                return [];
-
-            var files = Directory.GetFiles(path, $"*.{Extension}", SearchOption.TopDirectoryOnly);
-            return [.. files.Select(x => Path.GetFileNameWithoutExtension(x))];
+            var restorePoints = GetAvailableRestorePoints(game);
+            return [.. restorePoints.Select(x => x.Name)];
         }
 
         /// <summary>
@@ -125,12 +123,11 @@ namespace NetAF.Persistence
         /// <returns>An array containing all the available restore points for a game.</returns>
         public static RestorePoint[] GetAvailableRestorePoints(Game game)
         {
-            var fileNames = GetAvailableRestorePointNames(game);
+            var paths = GetAllRestorePointPaths(game);
 
-            return [.. fileNames.Select(x =>
+            return [.. paths.Select(x =>
             {
-                var path = GetFilePath(game, x);
-                return TryLoad(path, out var restorePoint, out _) ? restorePoint : null;
+                return TryLoad(x, out var restorePoint, out _) ? restorePoint : null;
             }).Where(x => x != null)];
         }
 
@@ -142,7 +139,7 @@ namespace NetAF.Persistence
         /// <returns>True if the load was successful else false.</returns>
         public static bool Apply(Game game, out string message)
         {
-            return Apply(game, AutoFileName, out message);
+            return Apply(game, AutoName, out message);
         }
 
         /// <summary>
@@ -154,7 +151,11 @@ namespace NetAF.Persistence
         /// <returns>True if the load was successful, else false.</returns>
         public static bool Apply(Game game, string name, out string message)
         {
-            var path = GetFilePath(game, name);
+            if (!TryFindFile(game, name, out var path))
+            {
+                message = "Could not find a restore point with the provided name.";
+                return false;
+            }
 
             if (!TryLoad(path, out var restorePoint, out message) || restorePoint == null)
                 return false;
@@ -172,19 +173,102 @@ namespace NetAF.Persistence
         /// <returns>True if the restore point exists, else false.</returns>
         public static bool Exists(Game game, string name)
         {
-            var path = GetFilePath(game, name);
-            return TryLoad(path, out _, out _);
+            return GetAvailableRestorePointNames(game).Any(x => x.InsensitiveEquals(name));
         }
 
         /// <summary>
-        /// Get a file path.
+        /// Create a new file path.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <returns>The full path.</returns>
+        public static string CreateNewFilePath(Game game)
+        {
+            return Path.Combine(GetRestorePointDirectory(game), $"{CreateFileName(DateTime.Now)}.{Extension ?? string.Empty}");
+        }
+
+        /// <summary>
+        /// Create a file name, based on a date/time.
+        /// </summary>
+        /// <param name="dateTime">The date/time to base the file name on.</param>
+        /// <returns>The file name.</returns>
+        public static string CreateFileName(DateTime dateTime)
+        {
+            return $"{dateTime.Year:D4}_{dateTime.Month:D2}_{dateTime.Day:D2}_{dateTime.Hour:D2}_{dateTime.Minute:D2}_{dateTime.Second:D2}_{dateTime.Millisecond:D3}";
+        }
+
+        /// <summary>
+        /// Get all restore point paths for a game.
+        /// </summary>
+        /// <param name="game">The game to get the restore point paths for.</param>
+        /// <returns>An array containing all restore point paths.</returns>
+        public static string[] GetAllRestorePointPaths(Game game)
+        {
+            var directory = GetRestorePointDirectory(game);
+
+            if (!Directory.Exists(directory))
+                return [];
+
+            return Directory.GetFiles(directory, $"*.{Extension}", SearchOption.TopDirectoryOnly);
+        }
+
+        /// <summary>
+        /// Try and find a file from the name of a restore point.
         /// </summary>
         /// <param name="game">The game.</param>
         /// <param name="name">The name of the restore point.</param>
-        /// <returns>The full path.</returns>
-        public static string GetFilePath(Game game, string name)
+        /// <param name="path">The path to the restore point, if the restore point was found.</param>
+        /// <returns>True if the restore point could be found, else false.</returns>
+        public static bool TryFindFile(Game game, string name, out string path)
         {
-            return Path.Combine(GetRestorePointDirectory(game), $"{name ?? string.Empty}.{Extension ?? string.Empty}");
+            var paths = GetAllRestorePointPaths(game);
+
+            foreach (var p in paths)
+            {
+                if (!TryPeekName(p, out var restorePointName) || !restorePointName.InsensitiveEquals(name))
+                    continue;
+
+                path = p;
+                return true;
+            }
+
+            path = string.Empty;
+            return false;
+        }
+
+        /// <summary>
+        /// Try and peek the name of a restore point from a file.
+        /// </summary>
+        /// <param name="path">The path to the file.</param>
+        /// <param name="name">The name, if found.</param>
+        /// <returns>True if the name could be found, else false.</returns>
+        public static bool TryPeekName(string path, out string name)
+        {
+            name = string.Empty;
+
+            if (!File.Exists(path))
+                return false;
+
+            var content = File.ReadAllText(path);
+
+            // name is right at the end of the file
+            var lastIndexOfName = content.LastIndexOf("\"Name\"", StringComparison.OrdinalIgnoreCase);
+            if (lastIndexOfName == -1)
+                return false;
+
+            var colonIndex = content.IndexOf(':', lastIndexOfName);
+            if (colonIndex == -1)
+                return false;
+
+            var startQuote = content.IndexOf('"', colonIndex);
+            if (startQuote == -1)
+                return false;
+
+            var endQuote = content.IndexOf('"', startQuote + 1);
+            if (endQuote == -1)
+                return false;
+
+            name = content.Substring(startQuote + 1, endQuote - startQuote - 1);
+            return true;
         }
 
         #endregion
