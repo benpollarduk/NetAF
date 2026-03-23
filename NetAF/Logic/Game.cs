@@ -173,7 +173,7 @@ namespace NetAF.Logic
                 if (!RestorePointManager.Save(this, out var restorePoint, out var message))
                     Debug.WriteLine($"Auto-save failed: {message}");
 
-                EventBus.Publish(new AutoSaved(restorePoint));
+                EventBus.Publish(new GameAutoSaved(restorePoint));
             }
             catch (Exception e)
             {
@@ -519,6 +519,9 @@ namespace NetAF.Logic
 
             // restore overworld
             ((IObjectSerialization<Overworld>)serialization.Overworld).Restore(Overworld);
+
+            // publish event
+            EventBus.Publish(new GameRestored(this));
         }
 
         #endregion

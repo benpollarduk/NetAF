@@ -42,12 +42,12 @@ The following events are supported:
 * **ItemReceived** - occurs when either a *PlayableCharacter* or *NonPlayableCharacter* receives an item.
 * **ItemRemoved** - occurs when an item is removed from either a *PlayableCharacter* or *NonPlayableCharacter*.
 * **ItemUsed** - occurs when an item is used.
+* **GameAutoSaved** - occurs when the game is auto-saved.
 * **GameStarted** - occurs when a game is started.
 * **GameUpdated** - occurs when a game is updated.
 * **GameFinished** - occurs when a game is finished.
 * **GameModeChanged** - occurs when a game mode changes.
+* **GameRestored** - occurs when a game is restored from a restore point.
 * **NoteAdded** - occurs when a note entry is added.
 * **NoteUpdated** - occurs when a note entry is updated.
 * **HistoryUpdated** - occurs when the history is updated.
-* **AutoSaved** - occurs when the game is auto-saved.
-

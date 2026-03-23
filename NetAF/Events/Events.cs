@@ -110,8 +110,14 @@ namespace NetAF.Events
     public record HistoryUpdated(HistoryEntry Entry) : BaseEvent;
 
     /// <summary>
-    /// Provides an event for when the game is auto saved
+    /// Provides an event for when the game is auto saved.
     /// </summary>
     /// <param name="RestorePoint">The restore point that was saved.</param>
-    public record AutoSaved(RestorePoint RestorePoint) : BaseEvent;
+    public record GameAutoSaved(RestorePoint RestorePoint) : BaseEvent;
+
+    /// <summary>
+    /// Provides an event for when the game is restored from a restore point.
+    /// </summary>
+    /// <param name="Game">The game that was restored..</param>
+    public record GameRestored(Game Game) : BaseEvent;
 }
