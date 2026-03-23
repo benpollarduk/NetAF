@@ -1,4 +1,5 @@
 ﻿using NetAF.Interpretation;
+using NetAF.Logic.Callbacks;
 using NetAF.Narratives;
 using NetAF.Rendering.FrameBuilders;
 
@@ -8,7 +9,8 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for narrative.
     /// </summary>
     /// <param name="narrative">The narrative.</param>
-    public sealed class NarrativeMode(Narrative narrative) : IGameMode
+    /// <param name="endCallback">An optional callback to invoke when the narrative ends.</param>
+    public sealed class NarrativeMode(Narrative narrative, NarrativeEndCallback endCallback = null) : IGameMode
     {
         #region Fields
 
@@ -44,6 +46,9 @@ namespace NetAF.Logic.Modes
                 var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INarrativeFrameBuilder>().Build(narrative, game.Configuration.DisplaySize);
                 game.Configuration.Adapter.RenderFrame(frame);
                 isComplete = narrative.IsComplete;
+                
+                if (isComplete)
+                    endCallback?.Invoke(game);
             }
         }
 

@@ -587,13 +587,13 @@ namespace NetAF.Logic
             // handle the reaction
             game.HandleReaction(reaction);
 
-            // check if the game has ended, and if so end
-            if (game.CheckForGameEnd(game.EndConditions, out game.endMode))
-                game.State = GameState.EndConditionMet;
-
-            // providing the game hasn't finished render
+            // providing the game hasn't finished render it
             if (game.State != GameState.Finished)
                 game.Mode.Render(game);
+
+            // also if the game is still active, check if the game has ended, and if so end
+            if (game.State == GameState.Active && game.CheckForGameEnd(game.EndConditions, out game.endMode))
+                game.State = GameState.EndConditionMet;
 
             return new(true);
         }

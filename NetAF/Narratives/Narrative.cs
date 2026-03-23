@@ -53,9 +53,7 @@ namespace NetAF.Narratives
             if ((sections?[index].IsComplete ?? false) && index < sections.Length - 1)
                 index++;
 
-            var entry = sections?[index].Next() ?? string.Empty;
-
-            return entry;
+            return sections?[index].Next() ?? string.Empty;
         }
 
         /// <summary>
