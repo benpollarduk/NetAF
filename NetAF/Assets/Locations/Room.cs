@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
-using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Interpretation;
 using NetAF.Rendering;
@@ -456,12 +455,7 @@ namespace NetAF.Assets.Locations
             EnteredFrom = direction;
             HasBeenVisited = true;
 
-            var result = EnterCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
-
-            if (result.ContinueWithTransition)
-                EventBus.Publish(new RoomEntered(this));
-                
-            return result;
+            return EnterCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
         }
 
         /// <summary>
@@ -473,12 +467,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The reaction to the transition.</returns>
         internal RoomTransitionReaction MovedOutOf(Region region, Room adjoiningRoom, Direction? direction = null)
         {
-            var result = ExitCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
-
-            if (result.ContinueWithTransition)
-                EventBus.Publish(new RoomExited(this));
-
-            return result;
+            return ExitCallback?.Invoke(GetTransition(region, adjoiningRoom, direction)) ?? RoomTransitionReaction.Silent;
         }
 
         /// <summary>

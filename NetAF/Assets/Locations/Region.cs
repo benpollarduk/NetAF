@@ -116,6 +116,8 @@ namespace NetAF.Assets.Locations
             if (!reaction.ContinueWithTransition)
                 return reaction.Reaction;
 
+            EventBus.Publish(new RoomEntered(CurrentRoom));
+
             EventBus.Publish(new RegionEntered(this));
 
             var introduction = CurrentRoom.Introduction.GetDescription();
@@ -132,11 +134,15 @@ namespace NetAF.Assets.Locations
         /// <returns>The reaction.</returns>
         internal Reaction Exit()
         {
-            var result = CurrentRoom?.MovedOutOf(this, null).Reaction ?? Reaction.Silent;
+            var result = CurrentRoom?.MovedOutOf(this, null) ?? RoomTransitionReaction.Silent;
 
-            EventBus.Publish(new RegionExited(this));
+            if (result.ContinueWithTransition)
+            {
+                EventBus.Publish(new RoomExited(CurrentRoom));
+                EventBus.Publish(new RegionExited(this));
+            }
 
-            return result;
+            return result.Reaction;
         }
 
         /// <summary>
@@ -241,10 +247,16 @@ namespace NetAF.Assets.Locations
 
             if (reaction.ContinueWithTransition)
             {
+                EventBus.Publish(new RoomExited(CurrentRoom));
+
                 reaction = adjoiningRoom.MovedInto(this, CurrentRoom, direction.Inverse());
-                
+
                 if (reaction.ContinueWithTransition)
+                {
                     CurrentRoom = adjoiningRoom;
+
+                    EventBus.Publish(new RoomEntered(CurrentRoom));
+                }
             }
 
             return reaction.Reaction;
@@ -326,6 +338,8 @@ namespace NetAF.Assets.Locations
 
             CurrentRoom = roomPosition.Room;
             var reaction = CurrentRoom.MovedInto(this, null);
+
+            EventBus.Publish(new RoomEntered(CurrentRoom));
 
             return reaction.Reaction;
         }
