@@ -410,6 +410,22 @@ namespace NetAF.Targets.Console.Rendering
             }
         }
 
+        private void AppendColorGrid(StringBuilder builder, AnsiColor?[,] colors)
+        {
+            for (var y = 0; y < DisplaySize.Height; y++)
+            {
+                for (var x = 0; x < DisplaySize.Width; x++)
+                {
+                    builder.Append(colors[x, y]?.ToString() ?? Null);
+
+                    if (x < DisplaySize.Width - 1)
+                        builder.Append(Delimiter);
+                }
+
+                builder.AppendLine();
+            }
+        }
+
         #endregion
 
         #region Overrides of Object
@@ -422,8 +438,8 @@ namespace NetAF.Targets.Console.Rendering
         {
             var builder = new StringBuilder();
 
-            builder.AppendLine($"{DisplaySize.Width},{DisplaySize.Height}");
-            builder.AppendLine($"{background},{foreground}");
+            builder.AppendLine($"{DisplaySize.Width}{Delimiter}{DisplaySize.Height}");
+            builder.AppendLine($"{background}{Delimiter}{foreground}");
 
             var charBuffer = new char[DisplaySize.Width * DisplaySize.Height];
 
@@ -433,33 +449,8 @@ namespace NetAF.Targets.Console.Rendering
 
             builder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(charBuffer)));
 
-            for (var y = 0; y < DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < DisplaySize.Width; x++)
-                {
-                    builder.Append(foregroundColors[x, y]?.ToString() ?? Null);
-
-                    if (x < DisplaySize.Width - 1)
-                    {
-                        builder.Append(Delimiter);
-                    }
-                }
-
-                builder.AppendLine();
-            }
-
-            for (var y = 0; y < DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < DisplaySize.Width; x++)
-                {
-                    builder.Append(backgroundColors[x, y]?.ToString() ?? Null);
-
-                    if (x < DisplaySize.Width - 1)
-                        builder.Append(Delimiter);
-                }
-
-                builder.AppendLine();
-            }
+            AppendColorGrid(builder, foregroundColors);
+            AppendColorGrid(builder, backgroundColors);
 
             return builder.ToString();
         }

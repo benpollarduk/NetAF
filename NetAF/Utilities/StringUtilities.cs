@@ -143,7 +143,7 @@ namespace NetAF.Utilities
                 }
 
                 if (!string.IsNullOrEmpty(word) && !word.EndsWith(Newline))
-                    word += " ";
+                    word = $"{word} ";
 
                 chunk.Append(word);
 

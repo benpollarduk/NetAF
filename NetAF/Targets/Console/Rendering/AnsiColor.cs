@@ -46,6 +46,15 @@ namespace NetAF.Targets.Console.Rendering
         #region Overrides of Object
 
         /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return $"{r}-{g}-{b}";
+        }
+
+        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="obj">An object to compare with this object.</param>
@@ -54,15 +63,6 @@ namespace NetAF.Targets.Console.Rendering
         public override readonly bool Equals(object obj)
         {
             return obj is AnsiColor color && Equals(color);
-        }
-
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
-        {
-            return $"{r}-{g}-{b}";
         }
 
         #endregion
