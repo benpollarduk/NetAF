@@ -229,5 +229,47 @@ namespace NetAF.Tests.Targets.Console.Rendering
             Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 2));
             Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 2));
         }
+
+        [TestMethod]
+        public void GivenGrid_WhenToStringAndFromString_ThenValuesAreCorrect()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+
+            builder.SetCell(0, 0, AnsiColor.Red);
+            builder.SetCell(1, 0, AnsiColor.Green);
+            builder.SetCell(2, 0, AnsiColor.Blue);
+            builder.SetCell(0, 1, AnsiColor.Yellow);
+            builder.SetCell(1, 1, AnsiColor.Magenta);
+            builder.SetCell(2, 1, AnsiColor.Cyan);
+            builder.SetCell(0, 2, AnsiColor.Red);
+            builder.SetCell(1, 2, AnsiColor.Green);
+            builder.SetCell(2, 2, AnsiColor.Blue);
+            builder.SetCell(0, 0, 'A', AnsiColor.White);
+            builder.SetCell(1, 1, 'B', AnsiColor.Black);
+
+            var serialized = builder.ToString();
+            var newBuilder = GridVisualBuilder.FromString(serialized);
+
+            Assert.AreEqual(builder.DisplaySize, newBuilder.DisplaySize);
+
+            Assert.AreEqual(AnsiColor.Red, newBuilder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Green, newBuilder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Blue, newBuilder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Yellow, newBuilder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Magenta, newBuilder.GetCellBackgroundColor(1, 1));
+            Assert.AreEqual(AnsiColor.Cyan, newBuilder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Red, newBuilder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Green, newBuilder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Blue, newBuilder.GetCellBackgroundColor(2, 2));
+
+            Assert.AreEqual(AnsiColor.White, newBuilder.GetCellForegroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Black, newBuilder.GetCellForegroundColor(1, 1));
+            Assert.AreEqual(AnsiColor.White, newBuilder.GetCellForegroundColor(2, 2));
+
+            Assert.AreEqual('A', newBuilder.GetCharacter(0, 0));
+            Assert.AreEqual('B', newBuilder.GetCharacter(1, 1));
+            Assert.AreEqual('\0', newBuilder.GetCharacter(2, 2));
+        }
     }
 }

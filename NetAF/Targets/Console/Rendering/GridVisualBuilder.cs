@@ -1,6 +1,8 @@
 ﻿using NetAF.Assets;
 using NetAF.Utilities;
 using System;
+using System.IO;
+using System.Text;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -11,6 +13,13 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="foreground">The foreground color.</param>
     public class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
     {
+        #region Constants
+
+        private const string Null = "null";
+        private const char Delimiter = ',';
+
+        #endregion
+
         #region Fields
 
         private AnsiColor?[,] foregroundColors;
@@ -403,6 +412,60 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
+        #region Overrides of Object
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendLine($"{DisplaySize.Width},{DisplaySize.Height}");
+            builder.AppendLine($"{background},{foreground}");
+
+            var charBuffer = new char[DisplaySize.Width * DisplaySize.Height];
+
+            for (var y = 0; y < DisplaySize.Height; y++)
+                for (var x = 0; x < DisplaySize.Width; x++)
+                    charBuffer[y * DisplaySize.Width + x] = buffer[x, y];
+
+            builder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(charBuffer)));
+
+            for (var y = 0; y < DisplaySize.Height; y++)
+            {
+                for (var x = 0; x < DisplaySize.Width; x++)
+                {
+                    builder.Append(foregroundColors[x, y]?.ToString() ?? Null);
+
+                    if (x < DisplaySize.Width - 1)
+                    {
+                        builder.Append(Delimiter);
+                    }
+                }
+
+                builder.AppendLine();
+            }
+
+            for (var y = 0; y < DisplaySize.Height; y++)
+            {
+                for (var x = 0; x < DisplaySize.Width; x++)
+                {
+                    builder.Append(backgroundColors[x, y]?.ToString() ?? Null);
+
+                    if (x < DisplaySize.Width - 1)
+                        builder.Append(Delimiter);
+                }
+
+                builder.AppendLine();
+            }
+
+            return builder.ToString();
+        }
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -417,6 +480,73 @@ namespace NetAF.Targets.Console.Rendering
             var textureX = x % texture.Width;
             var textureY = y % texture.Height;
             return texture[textureX, textureY];
+        }
+
+        /// <summary>
+        /// Creates a GridVisualBuilder from its string representation.
+        /// </summary>
+        /// <param name="data">The string representation of the GridVisualBuilder.</param>
+        /// <returns>A new GridVisualBuilder instance.</returns>
+        public static GridVisualBuilder FromString(string data)
+        {
+            using var reader = new StringReader(data);
+
+            var sizeLine = reader.ReadLine().Split(Delimiter);
+            var width = int.Parse(sizeLine[0]);
+            var height = int.Parse(sizeLine[1]);
+
+            var colorLine = reader.ReadLine().Split(Delimiter);
+            var defaultBackground = AnsiColor.FromString(colorLine[0]);
+            var defaultForeground = AnsiColor.FromString(colorLine[1]);
+
+            var builder = new GridVisualBuilder(defaultBackground, defaultForeground);
+            builder.Resize(new Size(width, height));
+
+            var base64Chars = reader.ReadLine();
+            var charBytes = Convert.FromBase64String(base64Chars);
+            var chars = Encoding.UTF8.GetChars(charBytes);
+
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    builder.buffer[x, y] = chars[y * width + x];
+                }
+            }
+
+            for (var y = 0; y < height; y++)
+            {
+                var line = reader.ReadLine();
+
+                if (line == null)
+                    continue;
+
+                var colors = line.Split(Delimiter);
+
+                for (var x = 0; x < width; x++)
+                {
+                    if (colors[x] != Null)
+                        builder.foregroundColors[x, y] = AnsiColor.FromString(colors[x]);
+                }
+            }
+
+            for (var y = 0; y < height; y++)
+            {
+                var line = reader.ReadLine();
+
+                if (line == null)
+                    continue;
+
+                var colors = line.Split(Delimiter);
+
+                for (var x = 0; x < width; x++)
+                {
+                    if (colors[x] != Null)
+                        builder.backgroundColors[x, y] = AnsiColor.FromString(colors[x]);
+                }
+            }
+
+            return builder;
         }
 
         #endregion
