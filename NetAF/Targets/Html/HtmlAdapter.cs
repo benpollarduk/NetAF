@@ -17,22 +17,10 @@ namespace NetAF.Targets.Html
         #region Fields
 
         private Size displaySize;
-        private IFrame lastFrame;
 
         #endregion
 
         #region Methods
-
-        private void HandleFrameTransition(IFrame frame)
-        {
-            if (lastFrame is IUpdatableFrame oldUpdateable)
-                oldUpdateable.Updated += Updateable_Updated;
-
-            lastFrame = frame;
-
-            if (lastFrame is IUpdatableFrame newUpdateable)
-                newUpdateable.Updated -= Updateable_Updated;
-        }
 
         private void HandleFrameRender(IFrame frame)
         {
@@ -46,15 +34,6 @@ namespace NetAF.Targets.Html
                 presenter.Present(Convert(textFrame));
             else
                 frame.Render(presenter);
-        }
-
-        #endregion
-
-        #region EventHandlers
-
-        private void Updateable_Updated(object sender, IFrame e)
-        {
-            HandleFrameRender(e);
         }
 
         #endregion
@@ -207,7 +186,7 @@ namespace NetAF.Targets.Html
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            HandleFrameTransition(frame);
+            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
             HandleFrameRender(frame);
         }
 

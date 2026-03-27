@@ -13,35 +13,14 @@ namespace NetAF.Tests
         #region Fields
 
         private Size displaySize;
-        private IFrame lastFrame;
 
         #endregion
 
         #region Methods
 
-        private void HandleFrameTransition(IFrame frame)
-        {
-            if (lastFrame is IUpdatableFrame oldUpdateable)
-                oldUpdateable.Updated += Updateable_Updated;
-
-            lastFrame = frame;
-
-            if (lastFrame is IUpdatableFrame newUpdateable)
-                newUpdateable.Updated -= Updateable_Updated;
-        }
-
         private void HandleFrameRender(IFrame frame)
         {
             Out?.WriteLine(frame?.ToString());
-        }
-
-        #endregion
-
-        #region EventHandlers
-
-        private void Updateable_Updated(object sender, IFrame e)
-        {
-            HandleFrameRender(e);
         }
 
         #endregion
@@ -108,7 +87,7 @@ namespace NetAF.Tests
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            HandleFrameTransition(frame);
+            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
             HandleFrameRender(frame);
         }
 

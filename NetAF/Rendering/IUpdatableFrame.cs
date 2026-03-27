@@ -11,5 +11,13 @@ namespace NetAF.Rendering
         /// Occurs when the frame is updated.
         /// </summary>
         event EventHandler<IFrame> Updated;
+        /// <summary>
+        /// Start updating.
+        /// </summary>
+        void Start();
+        /// <summary>
+        /// Stop updating.
+        /// </summary>
+        void Stop();
     }
 }
