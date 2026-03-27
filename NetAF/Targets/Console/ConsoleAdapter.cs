@@ -19,6 +19,21 @@ namespace NetAF.Targets.Console
 
         #endregion
 
+        #region Methods
+
+        private void HandleFrameRender(IFrame frame)
+        {
+            frame.Render(presenter);
+
+            if (frame is IConsoleFrame consoleFrame)
+            {
+                System.Console.CursorVisible = consoleFrame.ShowCursor;
+                System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
+            }
+        }
+
+        #endregion
+
         #region Implementation of IIOAdapter
 
         /// <summary>
@@ -59,13 +74,8 @@ namespace NetAF.Targets.Console
         {
             System.Console.Clear();
 
-            frame.Render(presenter);
-
-            if (frame is IConsoleFrame consoleFrame)
-            {
-                System.Console.CursorVisible = consoleFrame.ShowCursor;
-                System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
-            }
+            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            HandleFrameRender(frame);
         }
 
         #endregion

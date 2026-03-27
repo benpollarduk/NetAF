@@ -20,6 +20,24 @@ namespace NetAF.Targets.Html
 
         #endregion
 
+        #region Methods
+
+        private void HandleFrameRender(IFrame frame)
+        {
+            // get render size
+            var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
+
+            // convert the frames if possible
+            if (frame is IConsoleFrame ansiFrame)
+                presenter.Present(Convert(ansiFrame, renderSize));
+            else if (frame is TextFrame textFrame)
+                presenter.Present(Convert(textFrame));
+            else
+                frame.Render(presenter);
+        }
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -168,16 +186,8 @@ namespace NetAF.Targets.Html
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            // get render size
-            var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
-
-            // convert the frames if possible
-            if (frame is IConsoleFrame ansiFrame)
-                presenter.Present(Convert(ansiFrame, renderSize));
-            else if (frame is TextFrame textFrame)
-                presenter.Present(Convert(textFrame));
-            else
-                frame.Render(presenter);
+            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            HandleFrameRender(frame);
         }
 
         #endregion

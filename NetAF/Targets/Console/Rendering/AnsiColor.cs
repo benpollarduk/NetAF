@@ -56,6 +56,15 @@ namespace NetAF.Targets.Console.Rendering
             return obj is AnsiColor color && Equals(color);
         }
 
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return $"{r}-{g}-{b}";
+        }
+
         #endregion
 
         #region Implementation of IEquatable<AnsiColor>
@@ -188,6 +197,24 @@ namespace NetAF.Targets.Console.Rendering
         public override readonly int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        /// <summary>
+        /// Create a new instance of an AnsiColor from a string.
+        /// </summary>
+        /// <param name="value">The string.</param>
+        /// <returns>The AnsiColor.</returns>
+        public static AnsiColor FromString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return default;
+            
+            var parts = value.Split('-');
+            
+            if (parts.Length != 3)
+                return default;
+
+            return new AnsiColor(byte.Parse(parts[0]), byte.Parse(parts[1]), byte.Parse(parts[2]));
         }
 
         #endregion

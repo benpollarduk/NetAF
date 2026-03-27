@@ -59,5 +59,45 @@ namespace NetAF.Tests.Targets.Console.Rendering
             Assert.AreEqual(15, result.G);
             Assert.AreEqual(15, result.B);
         }
+
+        [TestMethod]
+        public void GivenNull_WhenFromString_ThenReturnDefault()
+        {
+            var result = AnsiColor.FromString(null);
+
+            Assert.AreEqual(default(AnsiColor).R, result.R);
+            Assert.AreEqual(default(AnsiColor).G, result.G);
+            Assert.AreEqual(default(AnsiColor).B, result.B);
+        }
+
+        [TestMethod]
+        public void GivenEmptyString_WhenFromString_ThenReturnDefault()
+        {
+            var result = AnsiColor.FromString(string.Empty);
+
+            Assert.AreEqual(default(AnsiColor).R, result.R);
+            Assert.AreEqual(default(AnsiColor).G, result.G);
+            Assert.AreEqual(default(AnsiColor).B, result.B);
+        }
+
+        [TestMethod]
+        public void GivenIncorrectFormat_WhenFromString_ThenReturnDefault()
+        {
+            var result = AnsiColor.FromString("sausages");
+
+            Assert.AreEqual(default(AnsiColor).R, result.R);
+            Assert.AreEqual(default(AnsiColor).G, result.G);
+            Assert.AreEqual(default(AnsiColor).B, result.B);
+        }
+
+        [TestMethod]
+        public void GivenR1G2B3_WhenFromString_ThenReturnR1G2B3()
+        {
+            var result = AnsiColor.FromString("1-2-3");
+
+            Assert.AreEqual(1, result.R);
+            Assert.AreEqual(2, result.G);
+            Assert.AreEqual(3, result.B);
+        }
     }
 }

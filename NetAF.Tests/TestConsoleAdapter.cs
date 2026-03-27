@@ -1,7 +1,7 @@
-﻿using System.IO;
-using NetAF.Assets;
+﻿using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Rendering;
+using System.IO;
 
 namespace NetAF.Tests
 {
@@ -13,6 +13,15 @@ namespace NetAF.Tests
         #region Fields
 
         private Size displaySize;
+
+        #endregion
+
+        #region Methods
+
+        private void HandleFrameRender(IFrame frame)
+        {
+            Out?.WriteLine(frame?.ToString());
+        }
 
         #endregion
 
@@ -78,7 +87,8 @@ namespace NetAF.Tests
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            Out?.WriteLine(frame?.ToString());
+            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            HandleFrameRender(frame);
         }
 
         #endregion
