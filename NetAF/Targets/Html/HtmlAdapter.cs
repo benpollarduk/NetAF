@@ -17,6 +17,45 @@ namespace NetAF.Targets.Html
         #region Fields
 
         private Size displaySize;
+        private IFrame lastFrame;
+
+        #endregion
+
+        #region Methods
+
+        private void HandleFrameTransition(IFrame frame)
+        {
+            if (lastFrame is IUpdatableFrame oldUpdateable)
+                oldUpdateable.Updated += Updateable_Updated;
+
+            lastFrame = frame;
+
+            if (lastFrame is IUpdatableFrame newUpdateable)
+                newUpdateable.Updated -= Updateable_Updated;
+        }
+
+        private void HandleFrameRender(IFrame frame)
+        {
+            // get render size
+            var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
+
+            // convert the frames if possible
+            if (frame is IConsoleFrame ansiFrame)
+                presenter.Present(Convert(ansiFrame, renderSize));
+            else if (frame is TextFrame textFrame)
+                presenter.Present(Convert(textFrame));
+            else
+                frame.Render(presenter);
+        }
+
+        #endregion
+
+        #region EventHandlers
+
+        private void Updateable_Updated(object sender, IFrame e)
+        {
+            HandleFrameRender(e);
+        }
 
         #endregion
 
@@ -168,16 +207,8 @@ namespace NetAF.Targets.Html
         /// <param name="frame">The frame to render.</param>
         public void RenderFrame(IFrame frame)
         {
-            // get render size
-            var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
-
-            // convert the frames if possible
-            if (frame is IConsoleFrame ansiFrame)
-                presenter.Present(Convert(ansiFrame, renderSize));
-            else if (frame is TextFrame textFrame)
-                presenter.Present(Convert(textFrame));
-            else
-                frame.Render(presenter);
+            HandleFrameTransition(frame);
+            HandleFrameRender(frame);
         }
 
         #endregion
