@@ -1,5 +1,6 @@
 ﻿using NetAF.Assets;
 using NetAF.Utilities;
+using System;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -211,6 +212,68 @@ namespace NetAF.Targets.Console.Rendering
         }
 
         /// <summary>
+        /// Draw a border.
+        /// </summary>
+        /// <param name="left">The left position of the border.</param>
+        /// <param name="top">The top position of the border.</param>
+        /// <param name="width">The width of the border.</param>
+        /// <param name="height">The height of the border.</param>
+        /// <param name="borderColor">The border color of the cell.</param>
+        public void DrawBorder(int left, int top, int width, int height, AnsiColor borderColor)
+        {
+            for (var x = left; x < left + width; x++)
+            {
+                SafeSetCellBackground(x, top, borderColor);
+                SafeSetCellBackground(x, top + height - 1, borderColor);
+            }
+
+            for (var y = top + 1; y < top + height - 1; y++)
+            {
+                SafeSetCellBackground(left, y, borderColor);
+                SafeSetCellBackground(left + width - 1, y, borderColor);
+            }
+        }
+
+        /// <summary>
+        /// Draw a circular border.
+        /// </summary>
+        /// <param name="centerX">The center of the circle, x.</param>
+        /// <param name="centerY">The center of the circle, y.</param>
+        /// <param name="radius">The radius of the circle.</param>
+        /// <param name="borderColor">The border color of the circle.</param>
+        public void DrawBorder(int centerX, int centerY, int radius, AnsiColor borderColor)
+        {
+            var d = (5 - radius * 4) / 4;
+            var x = 0;
+            var y = radius;
+
+            do
+            {
+                SafeSetCellBackground(centerX + x, centerY + y, borderColor);
+                SafeSetCellBackground(centerX + x, centerY - y, borderColor);
+                SafeSetCellBackground(centerX - x, centerY + y, borderColor);
+                SafeSetCellBackground(centerX - x, centerY - y, borderColor);
+                SafeSetCellBackground(centerX + y, centerY + x, borderColor);
+                SafeSetCellBackground(centerX + y, centerY - x, borderColor);
+                SafeSetCellBackground(centerX - y, centerY + x, borderColor);
+                SafeSetCellBackground(centerX - y, centerY - x, borderColor);
+
+                if (d < 0)
+                {
+                    d += 2 * x + 1;
+                }
+                else
+                {
+                    d += 2 * (x - y) + 1;
+                    y--;
+                }
+
+                x++;
+
+            } while (x <= y);
+        }
+
+        /// <summary>
         /// Draw a texture.
         /// </summary>
         /// <param name="left">The left position of the area to draw within.</param>
@@ -254,6 +317,47 @@ namespace NetAF.Targets.Console.Rendering
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Draw text.
+        /// </summary>
+        /// <param name="left">The left position of the text.</param>
+        /// <param name="top">The top position of the text.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="foregroundColor">The foreground color of the text.</param>
+        public void DrawText(int left, int top, string text, AnsiColor foregroundColor)
+        {
+            for (var x = 0; x < text.Length; x++)
+            {
+                SafeSetCellCharacter(left + x, top, text[x]);
+                SafeSetCellForeground(left + x, top, foregroundColor);
+            }
+        }
+
+        /// <summary>
+        /// Draw a filled circle with a border.
+        /// </summary>
+        /// <param name="centerX">The center of the circle, x.</param>
+        /// <param name="centerY">The center of the circle, y.</param>
+        /// <param name="radius">The radius of the circle.</param>
+        /// <param name="borderColor">The border color of the circle.</param>
+        /// <param name="fillColor">The fill color of the circle.</param>
+        public void DrawCircle(int centerX, int centerY, int radius, AnsiColor borderColor, AnsiColor fillColor)
+        {
+            // draw filled circle
+            for (var y_rel = -radius; y_rel <= radius; y_rel++)
+            {
+                var x_extent = (int)Math.Sqrt(radius * radius - y_rel * y_rel);
+                for (var x_rel = -x_extent; x_rel <= x_extent; x_rel++)
+                {
+                    SafeSetCellBackground(centerX + x_rel, centerY + y_rel, fillColor);
+                    SafeSetCellCharacter(centerX + x_rel, centerY + y_rel, ' ');
+                }
+            }
+
+            // draw border
+            DrawBorder(centerX, centerY, radius, borderColor);
         }
 
         /// <summary>

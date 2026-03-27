@@ -175,5 +175,59 @@ namespace NetAF.Tests.Targets.Console.Rendering
             Assert.AreEqual('C', builder.GetCharacter(1, 1));
             Assert.AreEqual(AnsiColor.Cyan, builder.GetCellForegroundColor(1, 1));
         }
+
+        [TestMethod]
+        public void GivenBlank_WhenDrawText_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+
+            builder.DrawText(0, 0, "ABC", AnsiColor.Red);
+
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellForegroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellForegroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellForegroundColor(2, 0));
+            Assert.AreEqual('A', builder.GetCharacter(0, 0));
+            Assert.AreEqual('B', builder.GetCharacter(1, 0));
+            Assert.AreEqual('C', builder.GetCharacter(2, 0));
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenDrawBorder3x3_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+
+            builder.DrawBorder(0, 0, 3, 3, AnsiColor.Red);
+
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(1, 1));
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenDrawCircle3x3_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+
+            builder.DrawCircle(1, 1, 1, AnsiColor.Red, AnsiColor.Blue);
+
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Blue, builder.GetCellBackgroundColor(1, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 2));
+        }
     }
 }
