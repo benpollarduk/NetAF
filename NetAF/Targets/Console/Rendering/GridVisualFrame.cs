@@ -6,7 +6,9 @@ namespace NetAF.Targets.Console.Rendering
     /// Provides a grid based frame for displaying a visual.
     /// </summary>
     /// <param name="builder">The builder that creates the frame.</param>
-    public sealed class GridVisualFrame(GridVisualBuilder builder) : IConsoleFrame
+    /// <param name="cursorLeft">The cursor left position.</param>
+    /// <param name="cursorTop">The cursor top position.</param>
+    public sealed class GridVisualFrame(GridVisualBuilder builder, int cursorLeft = 0, int cursorTop = 0) : IConsoleFrame
     {
         #region Methods
 
@@ -131,12 +133,12 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Get the cursor left position.
         /// </summary>
-        public int CursorLeft { get; } = 0;
+        public int CursorLeft { get; } = cursorLeft;
 
         /// <summary>
         /// Get the cursor top position.
         /// </summary>
-        public int CursorTop { get; } = 0;
+        public int CursorTop { get; } = cursorTop;
 
         /// <summary>
         /// Get or set if the cursor should be shown.
