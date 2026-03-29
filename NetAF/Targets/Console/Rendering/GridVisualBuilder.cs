@@ -192,20 +192,22 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="height">The height of the rectangle.</param>
         /// <param name="borderColor">The border color of the cell.</param>
         /// <param name="fillColor">The fill color of the cell.</param>
-        public void DrawRectangle(int left, int top, int width, int height, AnsiColor borderColor, AnsiColor fillColor)
+        /// <param name="borderColorVarier">An option variation generator to use for the border color.</param>
+        /// <param name="fillColorVarier">An option variation generator to use for the fill color.</param>
+        public void DrawRectangle(int left, int top, int width, int height, AnsiColor borderColor, AnsiColor fillColor, IVariationGenerator borderColorVarier = null, IVariationGenerator fillColorVarier = null)
         {
             for (var x = left; x < left + width; x++)
             {
-                SafeSetCellBackground(x, top, borderColor);
-                SafeSetCellBackground(x, top + height - 1, borderColor);
+                SafeSetCellBackground(x, top, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(x, top + height - 1, borderColorVarier?.Vary(borderColor) ?? borderColor);
                 SafeSetCellCharacter(x, top, ' ');
                 SafeSetCellCharacter(x, top + height - 1, ' ');
             }
 
             for (var y = top; y < top + height; y++)
             {
-                SafeSetCellBackground(left, y, borderColor);
-                SafeSetCellBackground(left + width - 1, y, borderColor);
+                SafeSetCellBackground(left, y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(left + width - 1, y, borderColorVarier?.Vary(borderColor) ?? borderColor);
                 SafeSetCellCharacter(left, y, ' ');
                 SafeSetCellCharacter(left + width - 1, y, ' ');
             }
@@ -214,7 +216,7 @@ namespace NetAF.Targets.Console.Rendering
             {
                 for (var x = left + 1; x < left + width - 1; x++)
                 {
-                    SafeSetCellBackground(x, y, fillColor);
+                    SafeSetCellBackground(x, y, fillColorVarier?.Vary(fillColor) ?? fillColor);
                     SafeSetCellCharacter(x, y, ' ');
                 }
             }
@@ -228,18 +230,19 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="width">The width of the border.</param>
         /// <param name="height">The height of the border.</param>
         /// <param name="borderColor">The border color of the cell.</param>
-        public void DrawBorder(int left, int top, int width, int height, AnsiColor borderColor)
+        /// <param name="borderColorVarier">An option variation generator to use for the border color.</param>
+        public void DrawBorder(int left, int top, int width, int height, AnsiColor borderColor, IVariationGenerator borderColorVarier = null)
         {
             for (var x = left; x < left + width; x++)
             {
-                SafeSetCellBackground(x, top, borderColor);
-                SafeSetCellBackground(x, top + height - 1, borderColor);
+                SafeSetCellBackground(x, top, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(x, top + height - 1, borderColorVarier?.Vary(borderColor) ?? borderColor);
             }
 
             for (var y = top + 1; y < top + height - 1; y++)
             {
-                SafeSetCellBackground(left, y, borderColor);
-                SafeSetCellBackground(left + width - 1, y, borderColor);
+                SafeSetCellBackground(left, y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(left + width - 1, y, borderColorVarier?.Vary(borderColor) ?? borderColor);
             }
         }
 
@@ -250,7 +253,8 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="centerY">The center of the circle, y.</param>
         /// <param name="radius">The radius of the circle.</param>
         /// <param name="borderColor">The border color of the circle.</param>
-        public void DrawBorder(int centerX, int centerY, int radius, AnsiColor borderColor)
+        /// <param name="borderColorVarier">An option variation generator to use for the border color.</param>
+        public void DrawBorder(int centerX, int centerY, int radius, AnsiColor borderColor, IVariationGenerator borderColorVarier = null)
         {
             var d = (5 - radius * 4) / 4;
             var x = 0;
@@ -258,14 +262,14 @@ namespace NetAF.Targets.Console.Rendering
 
             do
             {
-                SafeSetCellBackground(centerX + x, centerY + y, borderColor);
-                SafeSetCellBackground(centerX + x, centerY - y, borderColor);
-                SafeSetCellBackground(centerX - x, centerY + y, borderColor);
-                SafeSetCellBackground(centerX - x, centerY - y, borderColor);
-                SafeSetCellBackground(centerX + y, centerY + x, borderColor);
-                SafeSetCellBackground(centerX + y, centerY - x, borderColor);
-                SafeSetCellBackground(centerX - y, centerY + x, borderColor);
-                SafeSetCellBackground(centerX - y, centerY - x, borderColor);
+                SafeSetCellBackground(centerX + x, centerY + y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX + x, centerY - y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX - x, centerY + y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX - x, centerY - y, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX + y, centerY + x, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX + y, centerY - x, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX - y, centerY + x, borderColorVarier?.Vary(borderColor) ?? borderColor);
+                SafeSetCellBackground(centerX - y, centerY - x, borderColorVarier?.Vary(borderColor) ?? borderColor);
 
                 if (d < 0)
                 {
@@ -352,21 +356,24 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="radius">The radius of the circle.</param>
         /// <param name="borderColor">The border color of the circle.</param>
         /// <param name="fillColor">The fill color of the circle.</param>
-        public void DrawCircle(int centerX, int centerY, int radius, AnsiColor borderColor, AnsiColor fillColor)
+        /// <param name="borderColorVarier">An option variation generator to use for the border color.</param>
+        /// <param name="fillColorVarier">An option variation generator to use for the fill color.</param>
+        public void DrawCircle(int centerX, int centerY, int radius, AnsiColor borderColor, AnsiColor fillColor, IVariationGenerator borderColorVarier = null, IVariationGenerator fillColorVarier = null)
         {
             // draw filled circle
             for (var y_rel = -radius; y_rel <= radius; y_rel++)
             {
                 var x_extent = (int)Math.Sqrt(radius * radius - y_rel * y_rel);
+
                 for (var x_rel = -x_extent; x_rel <= x_extent; x_rel++)
                 {
-                    SafeSetCellBackground(centerX + x_rel, centerY + y_rel, fillColor);
+                    SafeSetCellBackground(centerX + x_rel, centerY + y_rel, fillColorVarier?.Vary(fillColor) ?? fillColor);
                     SafeSetCellCharacter(centerX + x_rel, centerY + y_rel, ' ');
                 }
             }
 
             // draw border
-            DrawBorder(centerX, centerY, radius, borderColor);
+            DrawBorder(centerX, centerY, radius, borderColor, borderColorVarier);
         }
 
         /// <summary>

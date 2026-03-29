@@ -26,6 +26,11 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
         public static readonly AnsiColor Path = new(130, 20, 20);
         public static readonly AnsiColor PathHighlights = new(130, 130, 130);
         private static readonly Size DesignSize = new(76, 46);
+        private static readonly IVariationGenerator TreeCanopyIntensityVarier = new ColorVariationGenerator(25, 25, 25, 25, 25, 25);
+        private static readonly IVariationGenerator TreeTrunkIntensityVarier = new IntensityVariationGenerator(20, 10);
+        private static readonly IVariationGenerator GrassIntensityVarier = new ColorVariationGenerator(5, 5, 25, 25, 5, 5);
+        private static readonly IVariationGenerator PathIntensityVarier = new IntensityVariationGenerator(15, 0);
+        private static readonly IVariationGenerator SunIntensityVarier = new IntensityVariationGenerator(7, 7);
 
         #endregion
 
@@ -33,50 +38,51 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
 
         private static void DrawSun(GridVisualBuilder builder)
         {
-            builder.SetCell(8, 5, AnsiColor.BrightYellow);
-            builder.SetCell(4, 7, AnsiColor.BrightYellow);
-            builder.SetCell(5, 7, AnsiColor.BrightYellow);
-            builder.SetCell(11, 7, AnsiColor.BrightYellow);
-            builder.SetCell(12, 7, AnsiColor.BrightYellow);
-            builder.SetCell(8, 9, AnsiColor.BrightYellow);
-            builder.DrawRectangle(6, 6, 5, 3, AnsiColor.BrightYellow, AnsiColor.BrightYellow);
-            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), AnsiColor.Yellow);
+            builder.SetCell(8, 5, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(4, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(5, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(11, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(12, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(8, 9, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.DrawRectangle(6, 6, 5, 3, SunIntensityVarier.Vary(AnsiColor.BrightYellow), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
         }
 
         private static void DrawGrass(GridVisualBuilder builder)
         {
-            builder.DrawRectangle(0, 25, 80, 25, Grass, Grass);
+            builder.DrawRectangle(0, 25, 80, 25, Grass, Grass, GrassIntensityVarier, GrassIntensityVarier);
             builder.DrawTextureOverBackgroundColor(0, 25, 80, 25, Grass, "^  v . ' :\n  # ~ ^ . ~ '".ToTexture(), GrassHighlights);
         }
 
         private static void DrawTree1(GridVisualBuilder builder, int x, int y)
         {
-            builder.SetCell(x + 5, y, Canopy);
-            builder.DrawRectangle(x + 4, y + 1, 3, 1, Canopy, Canopy);
-            builder.DrawRectangle(x + 3, y + 2, 5, 1, Canopy, Canopy);
-            builder.DrawRectangle(x + 2, y + 3, 7, 1, Canopy, Canopy);
-            builder.DrawRectangle(x + 1, y + 4, 9, 1, Canopy, Canopy);
-            builder.DrawRectangle(x, y + 5, 11, 1, Canopy, Canopy);
-            builder.DrawRectangle(x + 5, y + 5, 1, 6, Trunk, Trunk);
+            builder.SetCell(x + 5, y, TreeCanopyIntensityVarier.Vary(Canopy));
+            builder.DrawRectangle(x + 4, y + 1, 3, 1, Canopy, Canopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 3, y + 2, 5, 1, Canopy, Canopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 2, y + 3, 7, 1, Canopy, Canopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 1, y + 4, 9, 1, Canopy, Canopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x, y + 5, 11, 1, Canopy, Canopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 5, y + 5, 1, 6, Trunk, Trunk, TreeTrunkIntensityVarier, TreeTrunkIntensityVarier);
         }
 
         private static void DrawTree2(GridVisualBuilder builder, int x, int y)
         {
             builder.SetCell(x + 5, y, DarkCanopy);
-            builder.DrawRectangle(x + 3, y + 1, 5, 1, DarkCanopy, DarkCanopy);
-            builder.DrawRectangle(x + 3, y + 2, 6, 1, DarkCanopy, DarkCanopy);
-            builder.DrawRectangle(x + 2, y + 3, 7, 1, DarkCanopy, DarkCanopy);
-            builder.DrawRectangle(x + 1, y + 4, 9, 1, DarkCanopy, DarkCanopy);
-            builder.DrawRectangle(x, y + 5, 11, 1, DarkCanopy, DarkCanopy);
-            builder.DrawRectangle(x + 5, y + 5, 1, 6, DarkTrunk, DarkTrunk);
+            builder.DrawRectangle(x + 3, y + 1, 5, 1, DarkCanopy, DarkCanopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 3, y + 2, 6, 1, DarkCanopy, DarkCanopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 2, y + 3, 7, 1, DarkCanopy, DarkCanopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 1, y + 4, 9, 1, DarkCanopy, DarkCanopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x, y + 5, 11, 1, DarkCanopy, DarkCanopy, TreeCanopyIntensityVarier, TreeCanopyIntensityVarier);
+            builder.DrawRectangle(x + 5, y + 5, 1, 6, DarkTrunk, DarkTrunk, TreeTrunkIntensityVarier, TreeTrunkIntensityVarier);
         }
 
         private static void DrawPath(GridVisualBuilder builder)
         {
-            builder.DrawRectangle(35, 25, 10, 25, Path, Path);
-            builder.DrawRectangle(33, 28, 2, 10, Path, Path);
-            builder.DrawRectangle(32, 31, 3, 10, Path, Path);
-            builder.DrawRectangle(43, 29, 4, 11, Path, Path);
+            builder.DrawRectangle(35, 25, 10, 25, Path, Path, PathIntensityVarier, PathIntensityVarier);
+            builder.DrawRectangle(33, 28, 2, 10, Path, Path, PathIntensityVarier, PathIntensityVarier);
+            builder.DrawRectangle(32, 31, 3, 10, Path, Path, PathIntensityVarier, PathIntensityVarier);
+            builder.DrawRectangle(43, 29, 4, 11, Path, Path, PathIntensityVarier, PathIntensityVarier);
+            builder.DrawRectangle(30, 40, 18, 6, Path, Path, PathIntensityVarier, PathIntensityVarier);
             builder.DrawTextureOverBackgroundColor(30, 25, 20, 25, Path, "@ , } ., @~.+\n  .% :;  @\n+- { $ '#".ToTexture(), PathHighlights);
         }
 

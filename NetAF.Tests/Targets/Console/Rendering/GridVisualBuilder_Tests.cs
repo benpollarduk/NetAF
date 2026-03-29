@@ -84,6 +84,26 @@ namespace NetAF.Tests.Targets.Console.Rendering
         }
 
         [TestMethod]
+        public void GivenBlank_WhenDrawRectangle3x3WithVarier_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            var varier = new IntensityVariationGenerator(0, 0);
+
+            builder.DrawRectangle(0, 0, 3, 3, AnsiColor.Black, AnsiColor.Red, varier, varier);
+
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 1));
+        }
+
+        [TestMethod]
         public void GivenBlank_WhenDrawTexture3x3_ThenCellsSetCorrectly()
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
@@ -212,12 +232,52 @@ namespace NetAF.Tests.Targets.Console.Rendering
         }
 
         [TestMethod]
+        public void GivenBlank_WhenDrawBorder3x3WithVarier_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            var varier = new IntensityVariationGenerator(0, 0);
+
+            builder.DrawBorder(0, 0, 3, 3, AnsiColor.Red, varier);
+
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(1, 1));
+        }
+
+        [TestMethod]
         public void GivenBlank_WhenDrawCircle3x3_ThenCellsSetCorrectly()
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new(3, 3));
 
             builder.DrawCircle(1, 1, 1, AnsiColor.Red, AnsiColor.Blue);
+
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 0));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 0));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(0, 1));
+            Assert.AreEqual(AnsiColor.Blue, builder.GetCellBackgroundColor(1, 1));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(2, 1));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 2));
+            Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 2));
+            Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(2, 2));
+        }
+
+        [TestMethod]
+        public void GivenBlank_WhenDrawCircle3x3WithVarier_ThenCellsSetCorrectly()
+        {
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            builder.Resize(new(3, 3));
+            var varier = new IntensityVariationGenerator(0 ,0);
+
+            builder.DrawCircle(1, 1, 1, AnsiColor.Red, AnsiColor.Blue, varier, varier);
 
             Assert.AreEqual(AnsiColor.Black, builder.GetCellBackgroundColor(0, 0));
             Assert.AreEqual(AnsiColor.Red, builder.GetCellBackgroundColor(1, 0));
