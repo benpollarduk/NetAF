@@ -55,10 +55,12 @@ namespace NetAF.Targets.Console
             try
             {
                 Size actualDisplaySize = new(game.Configuration.DisplaySize.Width + 1, game.Configuration.DisplaySize.Height);
-                System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    System.Console.SetWindowSize(actualDisplaySize.Width, actualDisplaySize.Height);
                     System.Console.SetBufferSize(actualDisplaySize.Width, actualDisplaySize.Height);
+                }
             }
             catch (Exception e)
             {

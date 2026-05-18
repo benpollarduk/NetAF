@@ -1,7 +1,7 @@
 <div align="center">
 
 # NetAF
-A lightweight .NET 8 library for building text based adventures.
+A lightweight .NET library for building text based adventures.
 
 ![icon](.nuget/Icon.bmp)
 
