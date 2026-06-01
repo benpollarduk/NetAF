@@ -81,5 +81,52 @@ namespace NetAF.Tests.Narratives
             Assert.HasCount(1, result);
             Assert.AreEqual("DEF", result[0]);
         }
+
+        [TestMethod]
+        public void GivenTitle_WhenGetTitle_ThenTitleIsCorrect()
+        {
+            var narrative = new Narrative("Test Title", [new Section([string.Empty])]);
+
+            Assert.AreEqual("Test Title", narrative.Title);
+        }
+
+        [TestMethod]
+        public void GivenSectionWithNoVisual_WhenGetCurrentVisual_ThenReturnNull()
+        {
+            var narrative = new Narrative(string.Empty, [new Section([string.Empty])]);
+
+            var result = narrative.CurrentVisual;
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void GivenNull_WhenNext_ThenReturnEmptyString()
+        {
+            var narrative = new Narrative(string.Empty, null);
+
+            var result = narrative.Next();
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenNull_WhenAllUntilCurrent_ThenReturnSingleEmptyString()
+        {
+            var narrative = new Narrative(string.Empty, null);
+
+            var result = narrative.AllUntilCurrent();
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(string.Empty, result[0]);
+        }
+
+        [TestMethod]
+        public void GivenNull_WhenIsCurrentSectionComplete_ThenReturnTrue()
+        {
+            var narrative = new Narrative(string.Empty, null);
+
+            Assert.IsTrue(narrative.IsCurrentSectionComplete);
+        }
     }
 }

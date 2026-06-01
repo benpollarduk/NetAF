@@ -81,5 +81,45 @@ namespace NetAF.Tests.Narratives
             Assert.AreEqual("ABC", result[0]);
             Assert.AreEqual("DEF", result[1]);
         }
+
+        [TestMethod]
+        public void GivenSectionWithNoVisual_WhenGetVisual_ThenNull()
+        {
+            var section = new Section([string.Empty]);
+
+            Assert.IsNull(section.Visual);
+        }
+
+        [TestMethod]
+        public void GivenNull_WhenNext_ThenReturnEmptyString()
+        {
+            var section = new Section(null);
+
+            var result = section.Next();
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenTwoElements_WhenNextCalledTwice_ThenReturnSecondElement()
+        {
+            var section = new Section(["A", "B"]);
+            section.Next();
+
+            var result = section.Next();
+
+            Assert.AreEqual("B", result);
+        }
+
+        [TestMethod]
+        public void GivenOneElement_WhenNextCalledTwice_ThenReturnSameElement()
+        {
+            var section = new Section(["A"]);
+            section.Next();
+
+            var result = section.Next();
+
+            Assert.AreEqual("A", result);
+        }
     }
 }

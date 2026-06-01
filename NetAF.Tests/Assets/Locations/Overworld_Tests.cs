@@ -97,5 +97,43 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
+
+        [TestMethod]
+        public void GivenNoRegions_WhenGetCurrentRegion_ThenNull()
+        {
+            var overworld = new Overworld(string.Empty, string.Empty);
+
+            Assert.IsNull(overworld.CurrentRegion);
+        }
+
+        [TestMethod]
+        public void GivenOneRegion_WhenGetCurrentRegion_ThenFirstRegion()
+        {
+            var overworld = new Overworld(string.Empty, string.Empty);
+            var region = new Region("abc", string.Empty);
+            overworld.AddRegion(region);
+
+            Assert.AreEqual(region, overworld.CurrentRegion);
+        }
+
+        [TestMethod]
+        public void GivenNoRegions_WhenAddRegion_Then1Region()
+        {
+            var overworld = new Overworld(string.Empty, string.Empty);
+
+            overworld.AddRegion(new Region(string.Empty, string.Empty));
+
+            Assert.AreEqual(1, overworld.Regions.Length);
+        }
+
+        [TestMethod]
+        public void GivenOverworld_WhenGetDescription_ThenDescriptionIsCorrect()
+        {
+            var overworld = new Overworld("World", "A test world");
+
+            var result = overworld.Description.GetDescription();
+
+            Assert.AreEqual("A test world", result);
+        }
     }
 }

@@ -77,5 +77,54 @@ namespace NetAF.Tests.Assets.Locations
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void GivenNoView_WhenGettingAnyVisited_ThenFalse()
+        {
+            var result = ViewPoint.NoView.AnyVisited;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenNoView_WhenGettingAnyNotVisited_ThenFalse()
+        {
+            var result = ViewPoint.NoView.AnyNotVisited;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenAViewWithVisitedRoom_WhenGettingAnyVisited_ThenTrue()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty)
+            {
+                [1, 0, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North)]),
+                [1, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
+            };
+            var region = regionMaker.Make(1, 1, 0);
+            region.Enter();
+            region.Move(Direction.South);
+
+            var result = ViewPoint.Create(region).AnyVisited;
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenAViewWithUnvisitedRoom_WhenGettingAnyNotVisited_ThenTrue()
+        {
+            var regionMaker = new RegionMaker(string.Empty, string.Empty)
+            {
+                [1, 0, 0] = new(string.Empty, string.Empty, [new Exit(Direction.North)]),
+                [1, 1, 0] = new(string.Empty, string.Empty, [new Exit(Direction.South)])
+            };
+            var region = regionMaker.Make(1, 1, 0);
+            region.Enter();
+
+            var result = ViewPoint.Create(region).AnyNotVisited;
+
+            Assert.IsTrue(result);
+        }
     }
 }
