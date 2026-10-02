@@ -39,7 +39,7 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenCanPanAnyDirectionAndZoomedIsMaximal_WhenGetContextualCommands_ThenReturn8Commands()
         {
-            FrameProperties.MapDetail = RegionMapDetail.Maximal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Maximal;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
@@ -60,7 +60,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.RegionMapRenderOptions, new RegionMapCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -70,7 +70,7 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenCanPanAnyDirectionAndZoomIsNormal_WhenGetContextualCommands_ThenReturn9Commands()
         {
-            FrameProperties.MapDetail = RegionMapDetail.Normal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Normal;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
@@ -91,7 +91,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.RegionMapRenderOptions, new RegionMapCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 
@@ -101,7 +101,7 @@ namespace NetAF.Tests.Interpretation
         [TestMethod]
         public void GivenCanPanAnyDirectionAndZoomIsMinimal_WhenGetContextualCommands_ThenReturn8Commands()
         {
-            FrameProperties.MapDetail = RegionMapDetail.Minimal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Minimal;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
@@ -122,7 +122,7 @@ namespace NetAF.Tests.Interpretation
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             game.Overworld.CurrentRegion.IsVisibleWithoutDiscovery = true;
             game.Overworld.CurrentRegion.Enter();
-            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.MapDetail, new RegionMapCommandInterpreter()));
+            game.ChangeMode(new RegionMapMode(new(1, 1, 1), FrameProperties.RegionMapRenderOptions, new RegionMapCommandInterpreter()));
 
             var result = interpreter.GetContextualCommandHelp(game);
 

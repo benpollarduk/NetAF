@@ -97,9 +97,9 @@ namespace NetAF.Targets.General.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
         {
             // for now, cheat and use the ANSI builder then convert to string
 
@@ -120,7 +120,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 CurrentFloorIndicator = CurrentFloorIndicator
             };
 
-            ansiRegionBuilder.BuildRegionMap(region, focusPosition, detail, maxSize, new(0, 0));
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
             Adapt(ansiGridStringBuilder);
         }
 

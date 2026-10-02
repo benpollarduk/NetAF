@@ -54,7 +54,7 @@ namespace NetAF.Logic.Modes
                 _ => throw new NotImplementedException()
             };
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.KeyType, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.RoomMapRenderOptions, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

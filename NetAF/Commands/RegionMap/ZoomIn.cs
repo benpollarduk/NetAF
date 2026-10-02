@@ -36,7 +36,7 @@ namespace NetAF.Commands.RegionMap
             if (game == null)
                 return new(ReactionResult.Error, "No game specified.");
 
-            FrameProperties.MapDetail = FrameProperties.MapDetail switch
+            FrameProperties.RegionMapRenderOptions.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail switch
             {
                 RegionMapDetail.Minimal => RegionMapDetail.Normal,
                 RegionMapDetail.Normal => RegionMapDetail.Maximal,
@@ -45,7 +45,7 @@ namespace NetAF.Commands.RegionMap
             };
 
             if (game.Mode is RegionMapMode mapMode)
-                mapMode.Detail = FrameProperties.MapDetail;
+                mapMode.Options.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail;
 
             return new(ReactionResult.Silent, "Zoomed in.");
         }

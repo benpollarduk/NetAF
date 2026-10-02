@@ -82,8 +82,8 @@ namespace NetAF.Targets.General.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key)
+        /// <param name="options">The render options to use.</param>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
             /*
                 * *-| N |-*
@@ -101,7 +101,7 @@ namespace NetAF.Targets.General.FrameBuilders
             Size renderSizeWithFullKey = new(RenderedSize.Width + KeyPadding + ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Width, Math.Max(RenderedSize.Height, ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Height));
 
             // get size depending on key
-            var renderedSize = key switch
+            var renderedSize = options.KeyType switch
             {
                 KeyType.None => RenderedSize,
                 KeyType.Dynamic => renderSizeWithFullKey,
@@ -125,7 +125,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 KeyPadding = KeyPadding
             };
 
-            ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
+            ansiRoomBuilder.BuildRoomMap(room, viewPoint, options);
             Adapt(ansiGridStringBuilder);
         }
 

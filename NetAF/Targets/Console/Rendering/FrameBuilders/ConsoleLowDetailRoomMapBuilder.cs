@@ -67,10 +67,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key)
+        /// <param name="options">The render options to use.</param>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
-            BuildRoomMap(room, viewPoint, key, new Point2D(0, 0), out _, out _);
+            BuildRoomMap(room, viewPoint, options, new Point2D(0, 0), out _, out _);
         }
 
         #endregion
@@ -82,11 +82,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="startPosition">The start position.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key, Point2D startPosition, out int endX, out int endY)
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, out int endX, out int endY)
         {
             /*
              * [O]

@@ -11,18 +11,18 @@
         public static CommandListType CommandListType { get; set; } = CommandListType.Minimal;
 
         /// <summary>
-        /// Get or set the type of key to use on the map.
-        /// </summary>
-        public static KeyType KeyType { get; set; } = KeyType.Dynamic;
-
-        /// <summary>
         /// Get or set if the map should be shown in scenes.
         /// </summary>
         public static bool ShowMapInScenes { get; set; } = true;
 
         /// <summary>
-        /// Get or set the detail to use on the map.
+        /// Get or set the render options for region maps.
         /// </summary>
-        public static RegionMapDetail MapDetail { get; set; } = RegionMapDetail.Normal;
+        public static RegionMapRenderOptions RegionMapRenderOptions { get; set; } = new RegionMapRenderOptions();
+
+        /// <summary>
+        /// Get or set the render options for room maps.
+        /// </summary>
+        public static RoomMapRenderOptions RoomMapRenderOptions { get; set; } = new RoomMapRenderOptions();
     }
 }

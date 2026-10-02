@@ -105,16 +105,16 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="room">The room to draw.</param>
         /// <param name="topLeft">The top left of the room.</param>
         /// <param name="view">The view from the room.</param>
-        /// <param name="detail">The level of detail to use.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="isPlayerRoom">True if this is the player room.</param>
         /// <param name="isFocusRoom">True if this is the focus room.</param>
-        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, ViewPoint view, RegionMapDetail detail, bool isPlayerRoom, bool isFocusRoom)
+        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, ViewPoint view, RegionMapRenderOptions options, bool isPlayerRoom, bool isFocusRoom)
         {
             // get the configured builder
-            var builder = GetConfiguredRoomMapBuilder(detail, room.HasBeenVisited || isPlayerRoom, isFocusRoom); 
+            var builder = GetConfiguredRoomMapBuilder(options, room.HasBeenVisited || isPlayerRoom, isFocusRoom); 
 
-            // draw room
-            builder.BuildRoomMap(room, view, KeyType.None, topLeft, out _, out _);
+            // draw room (with no key)
+            builder.BuildRoomMap(room, view, new RoomMapRenderOptions { KeyType = KeyType.None }, topLeft, out _, out _);
 
             if (!isPlayerRoom && !isFocusRoom)
                 return;
@@ -152,11 +152,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <summary>
         /// Get the room map builder.
         /// </summary>
-        /// <param name="detail">The detail level to use.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="hasBeenVisited">If the room to be drawn has been visited.</param>
         /// <param name="isFocusRoom">If the room to be drawn is the focused room.</param>
         /// <returns>The configured room map builder.</returns>
-        private IConsoleRoomMapBuilder GetConfiguredRoomMapBuilder(RegionMapDetail detail, bool hasBeenVisited, bool isFocusRoom)
+        private IConsoleRoomMapBuilder GetConfiguredRoomMapBuilder(RegionMapRenderOptions options, bool hasBeenVisited, bool isFocusRoom)
         {
             AnsiColor boundaryColor = UnvisitedBoundaryColor;
 
@@ -165,43 +165,32 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             else if (hasBeenVisited)
                 boundaryColor = VisitedBoundaryColor;
 
-            switch (detail)
+            return options.MapDetail switch
             {
-                case RegionMapDetail.Maximal:
-
-                    return new ConsoleHighDetailRoomMapBuilder(gridStringBuilder)
-                    {
-                        DisplayDirections = false,
-                        BoundaryColor = boundaryColor,
-                        LockedExit = LockedExit,
-                        VerticalBoundary = VerticalBoundary,
-                        HorizontalBoundary = HorizontalBoundary,
-                        LockedExitColor = LockedExitColor
-                    };
-
-                case RegionMapDetail.Normal:
-
-                    return new ConsoleNormalDetailRoomMapBuilder(gridStringBuilder)
-                    {
-                        BoundaryColor = boundaryColor,
-                        LockedExit = LockedExit,
-                        VerticalBoundary = VerticalBoundary,
-                        HorizontalBoundary = HorizontalBoundary,
-                        LockedExitColor = LockedExitColor
-                    };
-
-                case RegionMapDetail.Minimal:
-
-                    return new ConsoleLowDetailRoomMapBuilder(gridStringBuilder)
-                    {
-                        BoundaryColor = boundaryColor,
-                        VerticalBoundary = VerticalBoundary
-                    };
-
-                default:
-
-                    throw new NotImplementedException();
-            }
+                RegionMapDetail.Maximal => new ConsoleHighDetailRoomMapBuilder(gridStringBuilder)
+                {
+                    DisplayDirections = false,
+                    BoundaryColor = boundaryColor,
+                    LockedExit = LockedExit,
+                    VerticalBoundary = VerticalBoundary,
+                    HorizontalBoundary = HorizontalBoundary,
+                    LockedExitColor = LockedExitColor
+                },
+                RegionMapDetail.Normal => new ConsoleNormalDetailRoomMapBuilder(gridStringBuilder)
+                {
+                    BoundaryColor = boundaryColor,
+                    LockedExit = LockedExit,
+                    VerticalBoundary = VerticalBoundary,
+                    HorizontalBoundary = HorizontalBoundary,
+                    LockedExitColor = LockedExitColor
+                },
+                RegionMapDetail.Minimal => new ConsoleLowDetailRoomMapBuilder(gridStringBuilder)
+                {
+                    BoundaryColor = boundaryColor,
+                    VerticalBoundary = VerticalBoundary
+                },
+                _ => throw new NotImplementedException(),
+            };
         }
 
         #endregion
@@ -267,11 +256,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
         {
-            BuildRegionMap(region, focusPosition, detail, maxSize, new(0, 0));
+            BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
         }
 
         #endregion
@@ -283,10 +272,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
+        /// <param name="options">The render options to use.</param>
         /// <param name="maxSize">The maximum size available in which to build the map.</param>
         /// <param name="startPosition">The position to start building at.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize, Point2D startPosition)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize, Point2D startPosition)
         {
             var matrix = region.ToMatrix();
             var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);
@@ -303,7 +292,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var levelIndicatorY = y;
 
             // determine the room size
-            var roomSize = GetConfiguredRoomMapBuilder(detail, false, false).RenderedSize;
+            var roomSize = GetConfiguredRoomMapBuilder(options, false, false).RenderedSize;
 
             // firstly draw lower levels
             if (ShowLowerFloors)
@@ -332,7 +321,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             foreach (var position in focusLevelRooms)
             {
                 if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), detail, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
+                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), options, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
             }
 
             if (!multiLevel)

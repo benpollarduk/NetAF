@@ -107,19 +107,19 @@ namespace NetAF.Commands.Frame
 
             if (IsPrompt(arg, KeyNone))
             {
-                FrameProperties.KeyType = KeyType.None;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None;
                 return new(ReactionResult.Inform, "Key has been set to none.");
             }
 
             if (IsPrompt(arg, KeyDynamic))
             {
-                FrameProperties.KeyType = KeyType.Dynamic;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
                 return new(ReactionResult.Inform, "Key has been set to dynamic.");
             }
 
             if (IsPrompt(arg, KeyFull))
             {
-                FrameProperties.KeyType = KeyType.Full;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Full;
                 return new(ReactionResult.Inform, "Key has been set to full.");
             }
 
