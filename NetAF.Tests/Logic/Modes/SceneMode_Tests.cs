@@ -18,7 +18,7 @@ namespace NetAF.Tests.Logic.Modes
             Assertions.NoExceptionThrown(() =>
             {
                 FrameProperties.CommandListType = CommandListType.All;
-                FrameProperties.KeyType = KeyType.Dynamic;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Logic.Modes
             Assertions.NoExceptionThrown(() =>
             {
                 FrameProperties.CommandListType = CommandListType.None;
-                FrameProperties.KeyType = KeyType.None;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;
@@ -56,7 +56,7 @@ namespace NetAF.Tests.Logic.Modes
             Assertions.NoExceptionThrown(() =>
             {
                 FrameProperties.CommandListType = CommandListType.Minimal;
-                FrameProperties.KeyType = KeyType.Dynamic;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;

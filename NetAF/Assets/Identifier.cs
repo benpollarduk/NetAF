@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NetAF.Assets
 {
@@ -47,12 +47,7 @@ namespace NetAF.Assets
 
         #region Implementation of IEquatable<string>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public bool Equals(string other)
         {
             return Name == other || IdentifiableName == other || IdentifiableName == ToIdentifiableString(other);
@@ -62,12 +57,7 @@ namespace NetAF.Assets
 
         #region Implementation of IEquatable<ExaminableIdentifier>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public bool Equals(Identifier other)
         {
             return IdentifiableName == other?.IdentifiableName;
@@ -77,10 +67,7 @@ namespace NetAF.Assets
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return Name;

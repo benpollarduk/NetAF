@@ -1,4 +1,4 @@
-﻿namespace NetAF.Conversations.Instructions
+namespace NetAF.Conversations.Instructions
 {
     /// <summary>
     /// An end of paragraph instruction that shifts paragraphs based on an absolute index.
@@ -17,12 +17,7 @@
 
         #region Implementation of IEndOfPargraphInstruction
 
-        /// <summary>
-        /// Get the index of the next paragraph.
-        /// </summary>
-        /// <param name="current">The current paragraph.</param>
-        /// <param name="paragraphs">The collection of paragraphs.</param>
-        /// <returns>The index of the next paragraph.</returns>
+        /// <inheritdoc/>
         public int GetIndexOfNext(Paragraph current, Paragraph[] paragraphs)
         {
             if (Index < 0)

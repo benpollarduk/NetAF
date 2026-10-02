@@ -1,4 +1,4 @@
-﻿using NetAF.Logic;
+using NetAF.Logic;
 using NetAF.Rendering;
 
 namespace NetAF.Commands.Frame
@@ -47,6 +47,21 @@ namespace NetAF.Commands.Frame
         public static Prompt KeyDynamic => new("key-dynamic");
 
         /// <summary>
+        /// Get the prompt for point of interest none.
+        /// </summary>
+        public static Prompt PointOfInterestNone => new("poi-none");
+
+        /// <summary>
+        /// Get the prompt for point of interest low.
+        /// </summary>
+        public static Prompt PointOfInterestLow => new("poi-low");
+
+        /// <summary>
+        /// Get the prompt for point of interest high.
+        /// </summary>
+        public static Prompt PointOfInterestHigh => new("poi-high");
+
+        /// <summary>
         /// Get the prompt for map in scenes on.
         /// </summary>
         public static Prompt MapInScenesOn => new("map-on");
@@ -69,16 +84,10 @@ namespace NetAF.Commands.Frame
 
         #region Implementation of ICommand
 
-        /// <summary>
-        /// Get the help for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp Help => CommandHelp;
 
-        /// <summary>
-        /// Invoke the command.
-        /// </summary>
-        /// <param name="game">The game to invoke the command on.</param>
-        /// <returns>The reaction.</returns>
+        /// <inheritdoc/>
         public Reaction Invoke(Game game)
         {
             if (game == null)
@@ -107,20 +116,38 @@ namespace NetAF.Commands.Frame
 
             if (IsPrompt(arg, KeyNone))
             {
-                FrameProperties.KeyType = KeyType.None;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None;
                 return new(ReactionResult.Inform, "Key has been set to none.");
             }
 
             if (IsPrompt(arg, KeyDynamic))
             {
-                FrameProperties.KeyType = KeyType.Dynamic;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
                 return new(ReactionResult.Inform, "Key has been set to dynamic.");
             }
 
             if (IsPrompt(arg, KeyFull))
             {
-                FrameProperties.KeyType = KeyType.Full;
+                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Full;
                 return new(ReactionResult.Inform, "Key has been set to full.");
+            }
+
+            if (IsPrompt(arg, PointOfInterestNone))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.None;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to none.");
+            }
+
+            if (IsPrompt(arg, PointOfInterestLow))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.Low;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to low.");
+            }
+
+            if (IsPrompt(arg, PointOfInterestHigh))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.High;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to high.");
             }
 
             if (IsPrompt(arg, MapInScenesOff))
@@ -138,11 +165,7 @@ namespace NetAF.Commands.Frame
             return new(ReactionResult.Error, $"Unrecognised argument {arg}.");
         }
 
-        /// <summary>
-        /// Get all prompts for this command.
-        /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of prompts.</returns>
+        /// <inheritdoc/>
         public Prompt[] GetPrompts(Game game)
         {
             return 
@@ -153,6 +176,9 @@ namespace NetAF.Commands.Frame
                 KeyNone,
                 KeyDynamic,
                 KeyFull,
+                PointOfInterestNone,
+                PointOfInterestLow,
+                PointOfInterestHigh,
                 MapInScenesOff,
                 MapInScenesOn
             ];

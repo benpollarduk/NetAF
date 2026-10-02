@@ -34,7 +34,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var mapBuilder = new TextRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
         }
 
@@ -62,7 +62,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var mapBuilder = new TextRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Dynamic);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Dynamic });
             });
         }
 
@@ -81,7 +81,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var mapBuilder = new TextRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full);
+                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
         }
 
@@ -109,7 +109,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var mapBuilder = new TextRoomMapBuilder(stringBuilder);
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
         }
     }

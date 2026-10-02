@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using NetAF.Rendering;
 
 namespace NetAF.Targets.Html.Rendering
@@ -20,10 +20,7 @@ namespace NetAF.Targets.Html.Rendering
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             const string openDoc = @"<!DOCTYPE html><html lang=""en"">";
@@ -50,10 +47,7 @@ namespace NetAF.Targets.Html.Rendering
 
         #region Implementation of IFrame<Inline>
 
-        /// <summary>
-        /// Render this frame on a presenter.
-        /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
             presenter.Present(ToString());

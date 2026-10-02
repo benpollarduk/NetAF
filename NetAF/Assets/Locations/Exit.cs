@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
@@ -84,11 +84,7 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IInteractWithItem
 
-        /// <summary>
-        /// Interact with an item.
-        /// </summary>
-        /// <param name="item">The item to interact with.</param>
-        /// <returns>The interaction.</returns>
+        /// <inheritdoc/>
         public Interaction Interact(Item item)
         {
             return Interaction.Invoke(item);
@@ -98,10 +94,7 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IRestoreFromObjectSerialization<ExitSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<ExitSerialization>.RestoreFrom(ExitSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);

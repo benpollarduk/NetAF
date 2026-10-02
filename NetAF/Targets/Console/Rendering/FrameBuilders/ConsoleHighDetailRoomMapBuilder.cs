@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using System;
@@ -30,9 +30,14 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public char LockedExit { get; set; } = 'x';
 
         /// <summary>
-        /// Get or set the character used for representing there is an item or a character in the room.
+        /// Get or set the character used for representing a point of interest.
         /// </summary>
-        public char ItemOrCharacterInRoom { get; set; } = '!';
+        public char PointOfInterest { get; set; } = '!';
+
+        /// <summary>
+        /// Get or set the character used for representing no point of interest.
+        /// </summary>
+        public char NoPointOfInterest { get; set; } = ' ';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
@@ -70,9 +75,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public AnsiColor BoundaryColor { get; set; } = AnsiColor.BrightBlack;
 
         /// <summary>
-        /// Get or set the item or character color.
+        /// Get or set the point of interest color.
         /// </summary>
-        public AnsiColor ItemOrCharacterColor { get; set; } = NetAFPalette.NetAFBlue;
+        public AnsiColor PointOfInterestColor { get; set; } = NetAFPalette.NetAFBlue;
 
         /// <summary>
         /// Get or set the locked exit color.
@@ -323,14 +328,66 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         }
 
         /// <summary>
+        /// Get the number of points of interest.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <returns>The number of points of interest.</returns>
+        private int GetNumberOfPointsOfInterest(Room room)
+        {
+            var items = room.Items.Where(x => x.IsPlayerVisible).ToArray();
+            var characters = room.Characters.Where(x => x.IsPlayerVisible).ToArray();
+            return items.Length + characters.Length;
+        }
+
+        /// <summary>
+        /// Get the point of interest indicator.
+        /// </summary>
+        /// <param name="numberOfPointsOfInterest">The number of points of interest.</param>
+        /// <param name="detail">The point of interest detail.</param>
+        /// <returns>The point of interest indicator.</returns>
+        private char GetPointOfInterestIndicator(int numberOfPointsOfInterest, PointOfInterestDetail detail)
+        {
+            char indicator = NoPointOfInterest;
+
+            switch (detail)
+            {
+                case PointOfInterestDetail.None:
+
+                    break;
+
+                case PointOfInterestDetail.Low:
+
+                    if (numberOfPointsOfInterest > 0)
+                        indicator = PointOfInterest;
+
+                    break;
+
+                case PointOfInterestDetail.High:
+
+                    if (numberOfPointsOfInterest > 0)
+                        indicator = numberOfPointsOfInterest < 10 ? numberOfPointsOfInterest.ToString()[0] : PointOfInterest;
+
+                    break;
+
+                default:
+
+                    throw new NotImplementedException();
+            }
+
+            return indicator;
+        }
+
+        /// <summary>
         /// Draw the item or character.
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="startPosition">The start position.</param>
-        private void DrawItemOrCharacter(Room room, Point2D startPosition)
+        /// <param name="detail">The point of interest detail.</param>
+        private void DrawItemOrCharacter(Room room, Point2D startPosition, PointOfInterestDetail detail)
         {
-            if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
-                gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 3, ItemOrCharacterInRoom, ItemOrCharacterColor);
+            var numberOfPointsOfInterest = GetNumberOfPointsOfInterest(room);
+            var indicator = GetPointOfInterestIndicator(numberOfPointsOfInterest, detail);
+            gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 3, indicator, PointOfInterestColor);
         }
 
         /// <summary>
@@ -338,19 +395,22 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
+        /// <param name="options">The render options.</param>
         /// <param name="startPosition">The start position.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        private void DrawKey(Room room, ViewPoint viewPoint, KeyType key, Point2D startPosition, out int endX, out int endY)
+        private void DrawKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, out int endX, out int endY)
         {
+            var numberOfPointsOfInterest = GetNumberOfPointsOfInterest(room);
+            var pointOfInterestIndicator = GetPointOfInterestIndicator(numberOfPointsOfInterest, options.PointOfInterestDetail);
+
             Dictionary<string, AnsiColor> keyLines = [];
             var lockedExitString = $"{LockedExit} = Locked Exit";
             var notVisitedExitString = "N/E/S/W/U/D = Unvisited";
             var visitedExitString = "n/e/s/w/u/d = Visited";
-            var itemsString = $"{ItemOrCharacterInRoom} = Check";
+            var pointOfInterestString = $"{pointOfInterestIndicator} = Point{(numberOfPointsOfInterest == 1 ? "" : "s")} of interest";
 
-            switch (key)
+            switch (options.KeyType)
             {
                 case KeyType.Dynamic:
 
@@ -366,8 +426,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     if (room.EnteredFrom.HasValue)
                         keyLines.Add($"{room.EnteredFrom.Value.ToString().ToLower()[..1]} = Entrance", VisitedExitColor);
 
-                    if (Array.Exists(room.Items, x => x.IsPlayerVisible) || Array.Exists(room.Characters, x => x.IsPlayerVisible))
-                        keyLines.Add(itemsString, ItemOrCharacterColor);
+                    if (numberOfPointsOfInterest > 0 && options.PointOfInterestDetail != PointOfInterestDetail.None)
+                        keyLines.Add(pointOfInterestString, PointOfInterestColor);
 
                     break;
 
@@ -376,13 +436,16 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     keyLines.Add(lockedExitString, LockedExitColor);
                     keyLines.Add(notVisitedExitString, UnvisitedExitColor);
                     keyLines.Add(visitedExitString, VisitedExitColor);
-                    keyLines.Add(itemsString, ItemOrCharacterColor);
+                    keyLines.Add(pointOfInterestString, PointOfInterestColor);
 
                     break;
 
                 case KeyType.None:
+
                     break;
+
                 default:
+
                     throw new NotImplementedException();
             }
 
@@ -403,36 +466,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IRoomMapBuilder
 
-        /// <summary>
-        /// Get the rendered size of the room, excluding any keys.
-        /// </summary>
+        /// <inheritdoc/>
         public Size RenderedSize => new(9, 7);
 
-        /// <summary>
-        /// Build a map for a room.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key)
+        /// <inheritdoc/>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
-            BuildRoomMap(room, viewPoint, key, new Point2D(0, 0), out _, out _);
+            BuildRoomMap(room, viewPoint, options, new Point2D(0, 0), out _, out _);
         }
 
         #endregion
 
         #region Implementation of IConsoleRoomMapBuilder
 
-        /// <summary>
-        /// Build a map for a room.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        /// <param name="startPosition">The start position.</param>
-        /// <param name="endX">The end position, x.</param>
-        /// <param name="endY">The end position, x.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key, Point2D startPosition, out int endX, out int endY)
+        /// <inheritdoc/>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, out int endX, out int endY)
         {
             /*
              * *-| N |-*
@@ -450,8 +498,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             DrawWestBorder(room, viewPoint, startPosition);
             DrawUpExit(room, viewPoint, startPosition);
             DrawDownExit(room, viewPoint, startPosition);
-            DrawItemOrCharacter(room, startPosition);
-            DrawKey(room, viewPoint, key, startPosition, out endX, out endY);
+            DrawItemOrCharacter(room, startPosition, options.PointOfInterestDetail);
+            DrawKey(room, viewPoint, options, startPosition, out endX, out endY);
 
             if (endY < startPosition.Y + 6)
                 endY = startPosition.Y + 6;

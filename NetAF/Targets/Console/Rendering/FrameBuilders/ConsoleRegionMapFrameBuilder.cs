@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -57,26 +57,14 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IRegionMapFrameBuilder
 
-        /// <summary>
-        /// Get if this frame builder supports panning.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsPan => true;
 
-        /// <summary>
-        /// Get if this frame builder supports zooming.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsZoom => true;
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
-        /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
-        public IFrame Build(Region region, Point3D focusPosition, RegionMapDetail detail, CommandHelp[] contextualCommands, Size size)
+        /// <inheritdoc/>
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -122,9 +110,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
 
             if (RegionMapBuilder is IConsoleRegionMapBuilder consoleRegionMapBuilder)
-                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, detail, mapSize, startMapPosition);
+                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, options, mapSize, startMapPosition);
             else
-                RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, mapSize);
+                RegionMapBuilder?.BuildRegionMap(region, focusPosition, options, mapSize);
 
             if (renderPrompt)
             {

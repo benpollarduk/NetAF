@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using NetAF.Extensions;
 using NetAF.Serialization;
@@ -267,10 +267,7 @@ namespace NetAF.Assets.Attributes
 
         #region Implementation of IRestoreFromObjectSerialization<AttributeManagerSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<AttributeManagerSerialization>.RestoreFrom(AttributeManagerSerialization serialization)
         {
             RemoveAll();

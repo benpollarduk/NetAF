@@ -1,4 +1,4 @@
-﻿using NetAF.Events;
+using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -100,11 +100,7 @@ namespace NetAF.Assets.Characters
 
         #region Implementation of IInteractWithItem
 
-        /// <summary>
-        /// Interact with an item.
-        /// </summary>
-        /// <param name="item">The item to interact with.</param>
-        /// <returns>The interaction.</returns>
+        /// <inheritdoc/>
         public Interaction Interact(Item item)
         {
             return InteractWithItem(item);
@@ -114,25 +110,17 @@ namespace NetAF.Assets.Characters
 
         #region Implementation of IItemContainer
 
-        /// <summary>
-        /// Get the items.
-        /// </summary>
+        /// <inheritdoc/>
         public Item[] Items { get; protected set; } = [];
 
-        /// <summary>
-        /// Add an item.
-        /// </summary>
-        /// <param name="item">The item to add.</param>
+        /// <inheritdoc/>
         public void AddItem(Item item)
         {
             Items = Items.Add(item);
             EventBus.Publish(new ItemReceived(this, item));
         }
 
-        /// <summary>
-        /// Remove an item.
-        /// </summary>
-        /// <param name="item">The item to remove.</param>
+        /// <inheritdoc/>
         public void RemoveItem(Item item)
         {
             Items = Items.Remove(item);
@@ -143,10 +131,7 @@ namespace NetAF.Assets.Characters
 
         #region Implementation of IRestoreFromObjectSerialization<CharacterSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<CharacterSerialization>.RestoreFrom(CharacterSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);

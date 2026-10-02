@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Interpretation;
@@ -14,9 +14,9 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for the region map.
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
-    /// <param name="detail">The level of detail to use.</param>
+    /// <param name="options">The render options to use.</param>
     /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
-    public sealed class RegionMapMode(Point3D focusPosition, RegionMapDetail detail, IInterpreter interpreter) : IGameMode
+    public sealed class RegionMapMode(Point3D focusPosition, RegionMapRenderOptions options, IInterpreter interpreter) : IGameMode
     {
         #region StaticProperties
 
@@ -40,28 +40,21 @@ namespace NetAF.Logic.Modes
         public Point3D FocusPosition { get; set; } = focusPosition;
 
         /// <summary>
-        /// Get or set the level of detail to use.
+        /// Get or set the render options to use.
         /// </summary>
-        public RegionMapDetail Detail { get; set; } = detail;
+        public RegionMapRenderOptions Options { get; set; } = options;
 
         #endregion
 
         #region Implementation of IGameMode
 
-        /// <summary>
-        /// Get the interpreter.
-        /// </summary>
+        /// <inheritdoc/>
         public IInterpreter Interpreter { get; } = interpreter;
 
-        /// <summary>
-        /// Get the type of mode this provides.
-        /// </summary>
+        /// <inheritdoc/>
         public GameModeType Type { get; } = GameModeType.Interactive;
 
-        /// <summary>
-        /// Render the current state of a game.
-        /// </summary>
-        /// <param name="game">The game.</param>
+        /// <inheritdoc/>
         public void Render(Game game)
         {
             var region = game.Overworld.CurrentRegion;
@@ -80,7 +73,7 @@ namespace NetAF.Logic.Modes
                 _ => throw new NotImplementedException()
             };
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Detail, commands, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Options, commands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

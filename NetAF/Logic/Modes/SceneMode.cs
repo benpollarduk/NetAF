@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
@@ -30,20 +30,13 @@ namespace NetAF.Logic.Modes
 
         #region Implementation of IGameMode
 
-        /// <summary>
-        /// Get the interpreter.
-        /// </summary>
+        /// <inheritdoc/>
         public IInterpreter Interpreter { get; } = interpreter;
 
-        /// <summary>
-        /// Get the type of mode this provides.
-        /// </summary>
+        /// <inheritdoc/>
         public GameModeType Type { get; } = GameModeType.Interactive;
 
-        /// <summary>
-        /// Render the current state of a game.
-        /// </summary>
-        /// <param name="game">The game.</param>
+        /// <inheritdoc/>
         public void Render(Game game)
         {
             CommandHelp[] commands = FrameProperties.CommandListType switch
@@ -54,7 +47,7 @@ namespace NetAF.Logic.Modes
                 _ => throw new NotImplementedException()
             };
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.KeyType, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.RoomMapRenderOptions, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

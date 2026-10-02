@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -54,10 +54,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<IExaminable>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="examinable">The examinable to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<IExaminable>.Restore(IExaminable examinable)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)examinable).RestoreFrom(this);

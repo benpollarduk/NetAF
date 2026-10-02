@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -21,9 +21,9 @@ namespace NetAF.Targets.General.FrameBuilders
         public char LockedExit { get; set; } = 'x';
 
         /// <summary>
-        /// Get or set the character used for representing there is an item or a character in the room.
+        /// Get or set the character used for representing a point of interest in the room.
         /// </summary>
-        public char ItemOrCharacterInRoom { get; set; } = '!';
+        public char PointOfInterest { get; set; } = '!';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
@@ -72,24 +72,17 @@ namespace NetAF.Targets.General.FrameBuilders
 
         #region Implementation of IRoomMapBuilder
 
-        /// <summary>
-        /// Get the rendered size of the room, excluding any keys.
-        /// </summary>
+        /// <inheritdoc/>
         public Size RenderedSize => new(9, 7);
 
-        /// <summary>
-        /// Build a map for a room.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key)
+        /// <inheritdoc/>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
             /*
                 * *-| N |-*
                 * |       |
                 * - U   D -
-                * W   ?   E
+                * W   !   E
                 * -       -
                 * |       |
                 * *-| S |-*
@@ -101,7 +94,7 @@ namespace NetAF.Targets.General.FrameBuilders
             Size renderSizeWithFullKey = new(RenderedSize.Width + KeyPadding + ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Width, Math.Max(RenderedSize.Height, ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Height));
 
             // get size depending on key
-            var renderedSize = key switch
+            var renderedSize = options.KeyType switch
             {
                 KeyType.None => RenderedSize,
                 KeyType.Dynamic => renderSizeWithFullKey,
@@ -116,7 +109,7 @@ namespace NetAF.Targets.General.FrameBuilders
             ConsoleHighDetailRoomMapBuilder ansiRoomBuilder = new(ansiGridStringBuilder)
             {
                 LockedExit = LockedExit,
-                ItemOrCharacterInRoom = ItemOrCharacterInRoom,
+                PointOfInterest = PointOfInterest,
                 VerticalBoundary = VerticalBoundary,
                 HorizontalBoundary = HorizontalBoundary,
                 VerticalExitBorder = VerticalExitBorder,
@@ -125,7 +118,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 KeyPadding = KeyPadding
             };
 
-            ansiRoomBuilder.BuildRoomMap(room, viewPoint, key);
+            ansiRoomBuilder.BuildRoomMap(room, viewPoint, options);
             Adapt(ansiGridStringBuilder);
         }
 

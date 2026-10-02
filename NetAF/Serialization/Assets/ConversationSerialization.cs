@@ -1,4 +1,4 @@
-﻿using NetAF.Conversations;
+using NetAF.Conversations;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -45,10 +45,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Conversation>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="conversation">The conversation to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Conversation>.Restore(Conversation conversation)
         {
             ((IRestoreFromObjectSerialization<ConversationSerialization>)conversation).RestoreFrom(this);

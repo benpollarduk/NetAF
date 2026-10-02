@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
@@ -154,17 +154,10 @@ namespace NetAF.Interpretation
 
         #region Implementation of IInterpreter
 
-        /// <summary>
-        /// Get an array of all supported commands.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
 
-        /// <summary>
-        /// Interpret a string.
-        /// </summary>
-        /// <param name="input">The string to interpret.</param>
-        /// <param name="game">The game.</param>
-        /// <returns>The result of the interpretation.</returns>
+        /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             var builder = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>();
@@ -181,11 +174,7 @@ namespace NetAF.Interpretation
             return InterpretationResult.Fail;
         }
 
-        /// <summary>
-        /// Get contextual command help for a game, based on its current state.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <returns>The contextual help.</returns>
+        /// <inheritdoc/>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
             List<CommandHelp> commands = [];
@@ -201,10 +190,10 @@ namespace NetAF.Interpretation
 
                 if (builder.SupportsZoom)
                 {
-                    if (regionMapMode.Detail != RegionMapDetail.Maximal)
+                    if (regionMapMode.Options.MapDetail != RegionMapDetail.Maximal)
                         commands.Add(ZoomIn.CommandHelp);
 
-                    if (regionMapMode.Detail != RegionMapDetail.Minimal)
+                    if (regionMapMode.Options.MapDetail != RegionMapDetail.Minimal)
                         commands.Add(ZoomOut.CommandHelp);
                 }
 

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Serialization.Assets;
@@ -122,10 +122,7 @@ namespace NetAF.Conversations
 
         #region Implementation of IRestoreFromObjectSerialization<Conversation>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<ConversationSerialization>.RestoreFrom(ConversationSerialization serialization)
         {
             if (serialization.CurrentParagraph == ConversationSerialization.NoCurrentParagraph)

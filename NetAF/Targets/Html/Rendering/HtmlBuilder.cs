@@ -1,4 +1,4 @@
-﻿using NetAF.Utilities;
+using NetAF.Utilities;
 using System.Text;
 
 namespace NetAF.Targets.Html.Rendering
@@ -128,10 +128,7 @@ namespace NetAF.Targets.Html.Rendering
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             var frame = builder.ToString();

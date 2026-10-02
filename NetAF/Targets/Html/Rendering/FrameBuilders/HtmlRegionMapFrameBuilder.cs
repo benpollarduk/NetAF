@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -30,26 +30,14 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
         #region Implementation of IRegionMapFrameBuilder
 
-        /// <summary>
-        /// Get if this frame builder supports panning.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsPan => true;
 
-        /// <summary>
-        /// Get if this frame builder supports zooming.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsZoom => true;
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
-        /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
-        public IFrame Build(Region region, Point3D focusPosition, RegionMapDetail detail, CommandHelp[] contextualCommands, Size size)
+        /// <inheritdoc/>
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size)
         {
             var matrix = region.ToMatrix();
             var room = matrix[focusPosition.X, focusPosition.Y, focusPosition.Z];
@@ -63,7 +51,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             // calculate max map size - title, - command length (if any commands) - commands title
             var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - (contextualCommandLength > 0 ? 1 : 0));
 
-            RegionMapBuilder?.BuildRegionMap(region, focusPosition, detail, maxMapSize);
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition, options, maxMapSize);
 
             if (contextualCommandLength > 0)
             {

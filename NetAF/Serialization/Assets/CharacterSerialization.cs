@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Characters;
+using NetAF.Assets.Characters;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -46,10 +46,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Character>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="character">The character to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Character>.Restore(Character character)
         {
             ((IRestoreFromObjectSerialization<CharacterSerialization>)character).RestoreFrom(this);

@@ -1,4 +1,4 @@
-﻿using NetAF.Interpretation;
+using NetAF.Interpretation;
 using NetAF.Logging.Notes;
 using NetAF.Rendering.FrameBuilders;
 using System.Linq;
@@ -13,20 +13,13 @@ namespace NetAF.Logic.Modes
     {
         #region Implementation of IGameMode
 
-        /// <summary>
-        /// Get the interpreter.
-        /// </summary>
+        /// <inheritdoc/>
         public IInterpreter Interpreter { get; }
 
-        /// <summary>
-        /// Get the type of mode this provides.
-        /// </summary>
+        /// <inheritdoc/>
         public GameModeType Type { get; } = GameModeType.SingleFrameInformation;
 
-        /// <summary>
-        /// Render the current state of a game.
-        /// </summary>
-        /// <param name="game">The game.</param>
+        /// <inheritdoc/>
         public void Render(Game game)
         {
             var frame = game.Configuration.FrameBuilders.GetFrameBuilder<INoteFrameBuilder>().Build("Notes", string.Empty, noteManager?.GetAll().Where(x => !string.IsNullOrEmpty(x.Content)).ToArray(), game.Configuration.DisplaySize);

@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using NetAF.Commands.Persistence;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
@@ -27,17 +27,10 @@ namespace NetAF.Interpretation
 
         #region Implementation of IInterpreter
 
-        /// <summary>
-        /// Get an array of all supported commands.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
 
-        /// <summary>
-        /// Interpret a string.
-        /// </summary>
-        /// <param name="input">The string to interpret.</param>
-        /// <param name="game">The game.</param>
-        /// <returns>The result of the interpretation.</returns>
+        /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
@@ -51,11 +44,7 @@ namespace NetAF.Interpretation
             return InterpretationResult.Fail;
         }
 
-        /// <summary>
-        /// Get contextual command help for a game, based on its current state.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <returns>The contextual help.</returns>
+        /// <inheritdoc/>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
             List<CommandHelp> commands = [];

@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -82,24 +82,14 @@ namespace NetAF.Targets.General.FrameBuilders
 
         #region Implementation of IRegionMapBuilder
 
-        /// <summary>
-        /// Get if this frame builder supports panning.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsPan => true;
 
-        /// <summary>
-        /// Get if this frame builder supports zooming.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsZoom => true;
 
-        /// <summary>
-        /// Build a map of a region.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="detail">The level of detail to use.</param>
-        /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapDetail detail, Size maxSize)
+        /// <inheritdoc/>
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
         {
             // for now, cheat and use the ANSI builder then convert to string
 
@@ -120,7 +110,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 CurrentFloorIndicator = CurrentFloorIndicator
             };
 
-            ansiRegionBuilder.BuildRegionMap(region, focusPosition, detail, maxSize, new(0, 0));
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
             Adapt(ansiGridStringBuilder);
         }
 

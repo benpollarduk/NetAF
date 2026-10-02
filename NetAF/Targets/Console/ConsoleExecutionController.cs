@@ -1,4 +1,4 @@
-﻿using NetAF.Logic;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Utilities;
 using System;
@@ -144,10 +144,7 @@ namespace NetAF.Targets.Console
 
         #region Implementation of IGameExecutionAutomationController
 
-        /// <summary>
-        /// Begin execution of a game, asynchronously.
-        /// </summary>
-        /// <returns>The task.</returns>
+        /// <inheritdoc/>
         public async Task BeginAsync(Game game)
         {
             tokenSource?.Dispose();
@@ -163,10 +160,7 @@ namespace NetAF.Targets.Console
             }
         }
 
-        /// <summary>
-        /// Cancel execution, asynchronously.
-        /// </summary>
-        /// <returns>The task.</returns>
+        /// <inheritdoc/>
         public async Task CancelAsync()
         {
             await tokenSource.CancelAsync();

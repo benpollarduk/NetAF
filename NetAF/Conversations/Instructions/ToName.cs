@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using NetAF.Extensions;
 
@@ -21,12 +21,7 @@ namespace NetAF.Conversations.Instructions
 
         #region Implementation of IEndOfPargraphInstruction
 
-        /// <summary>
-        /// Get the index of the next paragraph.
-        /// </summary>
-        /// <param name="current">The current paragraph.</param>
-        /// <param name="paragraphs">The collection of paragraphs.</param>
-        /// <returns>The index of the next paragraph.</returns>
+        /// <inheritdoc/>
         public int GetIndexOfNext(Paragraph current, Paragraph[] paragraphs)
         {
             var target = Array.Find(paragraphs, x => x.Name.InsensitiveEquals(Name));

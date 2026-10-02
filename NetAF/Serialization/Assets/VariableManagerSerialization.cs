@@ -1,4 +1,4 @@
-﻿using NetAF.Variables;
+using NetAF.Variables;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,10 +37,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<VariableManager>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="variableManager">The VariableManager to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<VariableManager>.Restore(VariableManager variableManager)
         {
             ((IRestoreFromObjectSerialization<VariableManagerSerialization>)variableManager).RestoreFrom(this);

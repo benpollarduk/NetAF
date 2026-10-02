@@ -1,4 +1,4 @@
-﻿using NetAF.Logging.Notes;
+using NetAF.Logging.Notes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,10 +37,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<LogManager>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="noteManager">The note manager to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<NoteManager>.Restore(NoteManager noteManager)
         {
             ((IRestoreFromObjectSerialization<NoteManagerSerialization>)noteManager).RestoreFrom(this);

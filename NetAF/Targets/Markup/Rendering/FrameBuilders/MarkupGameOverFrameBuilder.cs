@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -13,13 +13,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
     {
         #region Implementation of IGameOverFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="message">The message to display to the user.</param>
-        /// <param name="reason">The reason the game ended.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(string message, string reason, Size size)
         {
             builder.Clear();

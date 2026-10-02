@@ -17,7 +17,7 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="key">The key type.</param>
-        void BuildRoomMap(Room room, ViewPoint viewPoint, KeyType key);
+        /// <param name="options">The render options to use.</param>
+        void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options);
     }
 }

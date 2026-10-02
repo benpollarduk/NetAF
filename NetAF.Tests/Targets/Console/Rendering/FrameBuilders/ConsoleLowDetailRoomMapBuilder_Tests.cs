@@ -36,7 +36,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var mapBuilder = new ConsoleLowDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full }, new Point2D(0, 0), out _, out _);
             });
         }
 
@@ -56,7 +56,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var mapBuilder = new ConsoleNormalDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full }, new Point2D(0, 0), out _, out _);
             });
         }
 
@@ -85,7 +85,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
                 var mapBuilder = new ConsoleLowDetailRoomMapBuilder(stringBuilder);
                 stringBuilder.Resize(new(50, 50));
 
-                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), KeyType.Full, new Point2D(0, 0), out _, out _);
+                mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full }, new Point2D(0, 0), out _, out _);
             });
         }
     }

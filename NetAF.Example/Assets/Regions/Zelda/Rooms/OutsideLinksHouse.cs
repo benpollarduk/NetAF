@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Regions.Zelda.Items;
 using NetAF.Example.Assets.Regions.Zelda.NPCs;
@@ -18,10 +18,7 @@ namespace NetAF.Example.Assets.Regions.Zelda.Rooms
 
         #region Implementation of IAssetTemplate<Room>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public Room Instantiate()
         {
             var room = new Room(Name, Description, [new Exit(Direction.South), new Exit(Direction.North), new Exit(Direction.East, true)]);

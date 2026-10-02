@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 using NetAF.Assets.Attributes;
@@ -97,31 +97,19 @@ namespace NetAF.Assets
 
         #region Implementation of IExaminable
 
-        /// <summary>
-        /// Get this objects identifier.
-        /// </summary>
+        /// <inheritdoc/>
         public Identifier Identifier { get; protected set; }
 
-        /// <summary>
-        /// Get a description of this object.
-        /// </summary>
+        /// <inheritdoc/>
         public IDescription Description { get; protected set; }
 
-        /// <summary>
-        /// Get this objects commands.
-        /// </summary>
+        /// <inheritdoc/>
         public CustomCommand[] Commands { get; protected set; }
 
-        /// <summary>
-        /// Get the attribute manager for this object.
-        /// </summary>
+        /// <inheritdoc/>
         public AttributeManager Attributes { get; } = new AttributeManager();
 
-        /// <summary>
-        /// Examine this object.
-        /// </summary>
-        /// <param name="scene">The scene this object is being examined from.</param>
-        /// <returns>The examination.</returns>
+        /// <inheritdoc/>
         public Examination Examine(ExaminationScene scene)
         {
             return Examination(new(this, scene));
@@ -131,19 +119,14 @@ namespace NetAF.Assets
 
         #region Implementation of IPlayerVisible
 
-        /// <summary>
-        /// Get or set if this is visible to the player.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsPlayerVisible { get; set; } = true;
 
         #endregion
 
         #region Implementation of IRestoreFromObjectSerialization<ExaminableSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<ExaminableSerialization>.RestoreFrom(ExaminableSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;

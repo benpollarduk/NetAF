@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
@@ -99,14 +99,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IConversationFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="title">The title to display to the user.</param>
-        /// <param name="converser">The converser.</param>
-        /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(string title, IConverser converser, CommandHelp[] contextualCommands, Size size)
         {
             gridStringBuilder.Resize(size);

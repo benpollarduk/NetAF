@@ -1,4 +1,4 @@
-﻿using NetAF.Rendering;
+using NetAF.Rendering;
 
 namespace NetAF.Targets.Markup.Rendering
 {
@@ -10,10 +10,7 @@ namespace NetAF.Targets.Markup.Rendering
     {
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return builder.ToString();
@@ -23,10 +20,7 @@ namespace NetAF.Targets.Markup.Rendering
 
         #region Implementation of IFrame<Inline>
 
-        /// <summary>
-        /// Render this frame on a presenter.
-        /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
             presenter.Present(ToString());

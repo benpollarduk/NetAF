@@ -1,4 +1,4 @@
-﻿using NetAF.Extensions;
+using NetAF.Extensions;
 using System;
 
 namespace NetAF.Commands
@@ -55,12 +55,7 @@ namespace NetAF.Commands
 
         #region Implementation of IEquatable<CommandHelp>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public bool Equals(CommandHelp other)
         {
             return Command.InsensitiveEquals(other?.Command);
@@ -70,12 +65,7 @@ namespace NetAF.Commands
 
         #region Implementation of IEquatable<String>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of a different type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public bool Equals(string other)
         {
             return Command.InsensitiveEquals(other) || (!string.IsNullOrEmpty(Shortcut) && Shortcut.InsensitiveEquals(other));

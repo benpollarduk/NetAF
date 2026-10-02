@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Example.Assets.Items;
 using NetAF.Example.Assets.Regions.Flat.Items;
@@ -18,10 +18,7 @@ namespace NetAF.Example.Assets.Player
 
         #region Implementation of IAssetTemplate<PlayableCharacter>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public PlayableCharacter Instantiate()
         {
             var player = new PlayableCharacter(Name, Description, [new Knife().Instantiate()], interaction: i =>

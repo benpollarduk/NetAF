@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Logging.History;
 using NetAF.Rendering;
@@ -25,14 +25,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
         #region Implementation of IHistoryFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="entries">The entries.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(string title, string description, HistoryEntry[] entries, Size size)
         {
             entries ??= [];

@@ -1,4 +1,4 @@
-﻿using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.General.FrameBuilders;
 using System.Text;
 
@@ -12,10 +12,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     {
         #region Overrides of HostedRoomMapBuilder
 
-        /// <summary>
-        /// Adapt the room map for the target.
-        /// </summary>
-        /// <param name="roomMapBuilder">The room map builder.</param>
+        /// <inheritdoc/>
         protected override void Adapt(GridStringBuilder roomMapBuilder)
         {
             var roomAsString = TextAdapter.ConvertGridStringBuilderToString(roomMapBuilder.ToCropped());
