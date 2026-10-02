@@ -1,4 +1,4 @@
-﻿using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.General.FrameBuilders;
 
 namespace NetAF.Targets.Markup.Rendering.FrameBuilders
@@ -11,10 +11,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
     {
         #region Overrides of HostedRegionMapBuilder
 
-        /// <summary>
-        /// Adapt the region map for the target.
-        /// </summary>
-        /// <param name="regionMapBuilder">The region map builder.</param>
+        /// <inheritdoc/>
         protected override void Adapt(GridStringBuilder regionMapBuilder)
         {
             builder.Raw(MarkupAdapter.ConvertGridStringBuilderToMarkupString(regionMapBuilder, useMonospace: true));

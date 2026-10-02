@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Narratives;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -25,12 +25,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
         #region Implementation of INarrativeFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="narrative">The narrative.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(Narrative narrative, Size size)
         {
             builder.Clear();

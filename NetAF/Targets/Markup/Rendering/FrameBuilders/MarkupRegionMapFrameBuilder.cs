@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -30,25 +30,13 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
         #region Implementation of IRegionMapFrameBuilder
 
-        /// <summary>
-        /// Get if this frame builder supports panning.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsPan => true;
 
-        /// <summary>
-        /// Get if this frame builder supports zooming.
-        /// </summary>
+        /// <inheritdoc/>
         public bool SupportsZoom => true;
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="options">The render options to use.</param>
-        /// <param name="contextualCommands">The contextual commands to display.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size)
         {
             var matrix = region.ToMatrix();

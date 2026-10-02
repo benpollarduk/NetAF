@@ -1,4 +1,4 @@
-﻿using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.General.FrameBuilders;
 using System.Text;
 
@@ -12,10 +12,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     {
         #region Overrides of HostedRegionMapBuilder
 
-        /// <summary>
-        /// Adapt the region map for the target.
-        /// </summary>
-        /// <param name="regionMapBuilder">The region map builder.</param>
+        /// <inheritdoc/>
         protected override void Adapt(GridStringBuilder regionMapBuilder)
         {
             var regionAsString = TextAdapter.ConvertGridStringBuilderToString(regionMapBuilder);

@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using NetAF.Logic;
 
 namespace NetAF.Commands.Scene
@@ -50,16 +50,10 @@ namespace NetAF.Commands.Scene
 
         #region Implementation of ICommand
 
-        /// <summary>
-        /// Get the help for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp Help => GeneralCommandHelp;
 
-        /// <summary>
-        /// Invoke the command.
-        /// </summary>
-        /// <param name="game">The game to invoke the command on.</param>
-        /// <returns>The reaction.</returns>
+        /// <inheritdoc/>
         public Reaction Invoke(Game game)
         {
             if (game == null)
@@ -88,11 +82,7 @@ namespace NetAF.Commands.Scene
             }
         }
 
-        /// <summary>
-        /// Get all prompts for this command.
-        /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of prompts.</returns>
+        /// <inheritdoc/>
         public Prompt[] GetPrompts(Game game)
         {
             return [];

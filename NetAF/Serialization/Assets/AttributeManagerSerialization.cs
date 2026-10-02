@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Attributes;
+using NetAF.Assets.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,10 +42,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<AttributeManager>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="attributeManager">The attribute manager to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<AttributeManager>.Restore(AttributeManager attributeManager)
         {
             ((IRestoreFromObjectSerialization<AttributeManagerSerialization>)attributeManager).RestoreFrom(this);

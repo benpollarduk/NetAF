@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using System.Linq;
 
 namespace NetAF.Serialization
@@ -48,10 +48,7 @@ namespace NetAF.Serialization
 
         #region Implementation of IObjectSerialization<CustomCommand>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="command">The command to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<CustomCommand>.Restore(CustomCommand command)
         {
             ((IRestoreFromObjectSerialization<CustomCommandSerialization>)command).RestoreFrom(this);

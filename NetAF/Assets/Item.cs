@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
@@ -75,10 +75,7 @@ namespace NetAF.Assets
 
         #region Implementation of IRestoreFromObjectSerialization<ItemSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<ItemSerialization>.RestoreFrom(ItemSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);

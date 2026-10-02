@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
@@ -90,10 +90,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
 
         #region Implementation of IAssetTemplate<Visual>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The visual.</returns>
+        /// <inheritdoc/>
         public Visual Instantiate()
         {
             var builder = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);

@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Serialization;
@@ -67,34 +67,22 @@ namespace NetAF.Commands
 
         #region Implementation of ICommand
 
-        /// <summary>
-        /// Get the help for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp Help { get; } = help;
 
-        /// <summary>
-        /// Invoke the command.
-        /// </summary>
-        /// <param name="game">The game to invoke the command on.</param>
-        /// <returns>The reaction.</returns>
+        /// <inheritdoc/>
         public Reaction Invoke(Game game)
         {
             return Callback.Invoke(game, Arguments);
         }
 
-        /// <summary>
-        /// Get all prompts for this command.
-        /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of prompts.</returns>
+        /// <inheritdoc/>
         public virtual Prompt[] GetPrompts(Game game)
         {
             return [.. prompts];
         }
 
-        /// <summary>
-        /// Clear all prompts for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public void ClearPrompts()
         {
             prompts.Clear();
@@ -104,19 +92,14 @@ namespace NetAF.Commands
 
         #region Implementation of IPlayerVisible
 
-        /// <summary>
-        /// Get or set if this is visible to the player.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsPlayerVisible { get; set; } = isPlayerVisible;
 
         #endregion
 
         #region Implementation of IRestoreFromObjectSerialization<CustomCommandSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<CustomCommandSerialization>.RestoreFrom(CustomCommandSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
@@ -127,10 +110,7 @@ namespace NetAF.Commands
 
         #region Implementation of ICloneable
  
-        /// <summary>
-        /// Creates a new object that is a copy of the current instance.
-        /// </summary>
-        /// <returns>A new object that is a copy of this instance.</returns>
+        /// <inheritdoc/>
         public object Clone()
         {
             Prompt[] clonedPrompts = new Prompt[prompts.Count];

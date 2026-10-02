@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using NetAF.Rendering;
 using NetAF.Utilities;
 
@@ -24,10 +24,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             StringBuilder stringBuilder = new();
@@ -47,29 +44,20 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IConsoleFrame
 
-        /// <summary>
-        /// Get the cursor left position.
-        /// </summary>
+        /// <inheritdoc/>
         public int CursorLeft { get; } = cursorLeft;
 
-        /// <summary>
-        /// Get the cursor top position.
-        /// </summary>
+        /// <inheritdoc/>
         public int CursorTop { get; } = cursorTop;
 
-        /// <summary>
-        /// Get or set if the cursor should be shown.
-        /// </summary>
+        /// <inheritdoc/>
         public bool ShowCursor { get; set; } = true;
 
         #endregion
 
         #region Implementation of IFrame
 
-        /// <summary>
-        /// Render this frame on a presenter.
-        /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
             var suppressColor = Ansi.IsColorSuppressed();
@@ -109,12 +97,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IAnsiGridFrame
 
-        /// <summary>
-        /// Get a cell from the grid.
-        /// </summary>
-        /// <param name="x">The x position of the cell.</param>
-        /// <param name="y">The y position of the cell.</param>
-        /// <returns>The ANSI cell.</returns>
+        /// <inheritdoc/>
         public AnsiCell GetCell(int x, int y)
         {
             return new AnsiCell(builder.GetCharacter(x, y), builder.GetCellColor(x, y), BackgroundColor);

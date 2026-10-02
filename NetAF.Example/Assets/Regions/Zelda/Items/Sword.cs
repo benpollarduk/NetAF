@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Example.Assets.Regions.Zelda.Items
@@ -14,10 +14,7 @@ namespace NetAF.Example.Assets.Regions.Zelda.Items
 
         #region Implementation of IAssetTemplate<Item>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The item.</returns>
+        /// <inheritdoc/>
         public Item Instantiate()
         {
             return new(Name, Description, true);

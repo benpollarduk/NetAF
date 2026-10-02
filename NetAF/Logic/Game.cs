@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -669,10 +669,7 @@ namespace NetAF.Logic
 
         #region Implementation of IRestoreFromObjectSerialization<GameSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<GameSerialization>.RestoreFrom(GameSerialization serialization)
         {
             RestoreFrom(serialization);

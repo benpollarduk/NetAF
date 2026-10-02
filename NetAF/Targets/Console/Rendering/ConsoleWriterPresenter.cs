@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering
@@ -10,10 +10,7 @@ namespace NetAF.Targets.Console.Rendering
     {
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return System.Console.Out.ToString();
@@ -23,19 +20,13 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IFramePresenter
 
-        /// <summary>
-        /// Present a frame.
-        /// </summary>
-        /// <param name="frame">The frame to write, as a string.</param>
+        /// <inheritdoc/>
         public void Present(string frame)
         {
             System.Console.Out.Write(frame);
         }
 
-        /// <summary>
-        /// Get the size of the presentable area.
-        /// </summary>
-        /// <returns>The size.</returns>
+        /// <inheritdoc/>
         public Size GetPresentableSize()
         {
             return new Size(System.Console.WindowWidth, System.Console.WindowHeight);

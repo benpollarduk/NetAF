@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Regions.Hub.Rooms;
 using NetAF.Utilities;
 
@@ -15,10 +15,7 @@ namespace NetAF.Example.Assets.Regions.Hub
 
         #region Implementation of IAssetTemplate<Region>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public Region Instantiate()
         {
             var regionMaker = new RegionMaker(Name, Description)

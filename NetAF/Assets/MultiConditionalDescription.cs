@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace NetAF.Assets
 {
@@ -11,10 +11,7 @@ namespace NetAF.Assets
     {
         #region Implementation of IDescription
 
-        /// <summary>
-        /// Get the description.
-        /// </summary>
-        /// <returns>The description.</returns>
+        /// <inheritdoc/>
         public string GetDescription()
         {
             var firstHit = describedConditions?.FirstOrDefault(x => x.Condition.Invoke());

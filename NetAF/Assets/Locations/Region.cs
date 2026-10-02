@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using NetAF.Events;
 using NetAF.Extensions;
 using NetAF.Serialization;
@@ -483,10 +483,7 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IRestoreFromObjectSerialization<RegionSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<RegionSerialization>.RestoreFrom(RegionSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);

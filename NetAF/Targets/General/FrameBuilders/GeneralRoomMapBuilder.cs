@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -72,17 +72,10 @@ namespace NetAF.Targets.General.FrameBuilders
 
         #region Implementation of IRoomMapBuilder
 
-        /// <summary>
-        /// Get the rendered size of the room, excluding any keys.
-        /// </summary>
+        /// <inheritdoc/>
         public Size RenderedSize => new(9, 7);
 
-        /// <summary>
-        /// Build a map for a room.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <param name="viewPoint">The viewpoint from the room.</param>
-        /// <param name="options">The render options to use.</param>
+        /// <inheritdoc/>
         public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
             /*

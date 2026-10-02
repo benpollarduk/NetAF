@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -542,24 +542,16 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IItemContainer
 
-        /// <summary>
-        /// Get the items.
-        /// </summary>
+        /// <inheritdoc/>
         public Item[] Items { get; private set; } = [];
 
-        /// <summary>
-        /// Add an item.
-        /// </summary>
-        /// <param name="item">The item to add.</param>
+        /// <inheritdoc/>
         public void AddItem(Item item)
         {
             Items = Items.Add(item);
         }
 
-        /// <summary>
-        /// Remove an item.
-        /// </summary>
-        /// <param name="item">The item to remove.</param>
+        /// <inheritdoc/>
         public void RemoveItem(Item item)
         {
             Items = Items.Remove(item);
@@ -569,10 +561,7 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IRestoreFromObjectSerialization<RoomSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<RoomSerialization>.RestoreFrom(RoomSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);

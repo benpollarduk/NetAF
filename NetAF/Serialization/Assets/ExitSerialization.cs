@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -40,10 +40,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Exit>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="exit">The exit to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Exit>.Restore(Exit exit)
         {
             ((IRestoreFromObjectSerialization<ExitSerialization>)exit).RestoreFrom(this);

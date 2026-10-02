@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -21,11 +21,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IVariationGenerator
 
-        /// <summary>
-        /// Vary a color.
-        /// </summary>
-        /// <param name="color">The color to vary.</param>
-        /// <returns>The varied color</returns>
+        /// <inheritdoc/>
         public AnsiColor Vary(AnsiColor color)
         {
             var offsetR = Random.Next(-maximumSubtractionR, maximumAdditionR);

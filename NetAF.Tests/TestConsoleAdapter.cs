@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Rendering;
 using System.IO;
@@ -67,24 +67,16 @@ namespace NetAF.Tests
 
         #region Implementation of IIOAdapter
 
-        /// <summary>
-        /// Get the current size of the output.
-        /// </summary>
+        /// <inheritdoc/>
         public Size CurrentOutputSize => displaySize;
 
-        /// <summary>
-        /// Setup for a game.
-        /// </summary>
-        /// <param name="game">The game to set up for.</param>
+        /// <inheritdoc/>
         public void Setup(Game game)
         {
             displaySize = game.Configuration.DisplaySize;
         }
 
-        /// <summary>
-        /// Render a frame.
-        /// </summary>
-        /// <param name="frame">The frame to render.</param>
+        /// <inheritdoc/>
         public void RenderFrame(IFrame frame)
         {
             UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);

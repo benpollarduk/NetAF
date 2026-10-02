@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Items;
 using NetAF.Extensions;
@@ -18,10 +18,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
 
         #region Implementation of IAssetTemplate<Room>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public Room Instantiate()
         {
             Room room = null;

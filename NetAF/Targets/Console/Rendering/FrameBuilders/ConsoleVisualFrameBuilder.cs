@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -44,12 +44,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IVisualFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="visual">The visual.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(Visual visual, Size size)
         {
             gridStringBuilder.Resize(size);

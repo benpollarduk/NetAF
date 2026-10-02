@@ -1,4 +1,4 @@
-﻿namespace NetAF.Assets.Attributes
+namespace NetAF.Assets.Attributes
 {
     /// <summary>
     /// Provides a description of an attribute.
@@ -36,9 +36,7 @@
 
         #region Implementation of IPlayerVisible
 
-        /// <summary>
-        /// Get or set if this is visible to the player.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsPlayerVisible { get; set; } = isPlayerVisible;
 
         #endregion

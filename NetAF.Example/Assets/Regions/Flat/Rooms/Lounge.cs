@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Regions.Flat.Items;
 using NetAF.Example.Assets.Regions.Flat.NPCs;
@@ -17,10 +17,7 @@ namespace NetAF.Example.Assets.Regions.Flat.Rooms
 
         #region Implementation of IAssetTemplate<Room>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public Room Instantiate()
         {
             Room room = null;

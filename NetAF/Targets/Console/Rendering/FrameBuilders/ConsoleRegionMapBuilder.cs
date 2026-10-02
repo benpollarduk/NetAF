@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NetAF.Assets;
@@ -251,13 +251,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IRegionMapBuilder
 
-        /// <summary>
-        /// Build a map of a region.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="options">The render options to use.</param>
-        /// <param name="maxSize">The maximum size available in which to build the map.</param>
+        /// <inheritdoc/>
         public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
         {
             BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
@@ -267,14 +261,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of IConsoleRegionMapBuilder
 
-        /// <summary>
-        /// Build a map of a region.
-        /// </summary>
-        /// <param name="region">The region.</param>
-        /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="options">The render options to use.</param>
-        /// <param name="maxSize">The maximum size available in which to build the map.</param>
-        /// <param name="startPosition">The position to start building at.</param>
+        /// <inheritdoc/>
         public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize, Point2D startPosition)
         {
             var matrix = region.ToMatrix();

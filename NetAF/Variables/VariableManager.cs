@@ -1,4 +1,4 @@
-﻿using NetAF.Extensions;
+using NetAF.Extensions;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 using System;
@@ -152,10 +152,7 @@ namespace NetAF.Variables
 
         #region Implementation of IRestoreFromObjectSerialization<VariableManagerSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<VariableManagerSerialization>.RestoreFrom(VariableManagerSerialization serialization)
         {
             variables.Clear();

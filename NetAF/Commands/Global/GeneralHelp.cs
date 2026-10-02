@@ -1,4 +1,4 @@
-﻿using NetAF.Logic;
+using NetAF.Logic;
 using NetAF.Logic.Modes;
 using System.Linq;
 
@@ -22,16 +22,10 @@ namespace NetAF.Commands.Global
 
         #region Implementation of ICommand
 
-        /// <summary>
-        /// Get the help for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp Help => CommandHelp;
 
-        /// <summary>
-        /// Invoke the command.
-        /// </summary>
-        /// <param name="game">The game to invoke the command on.</param>
-        /// <returns>The reaction.</returns>
+        /// <inheritdoc/>
         public Reaction Invoke(Game game)
         {
             if (game == null)
@@ -41,11 +35,7 @@ namespace NetAF.Commands.Global
             return new(ReactionResult.GameModeChanged, string.Empty);
         }
 
-        /// <summary>
-        /// Get all prompts for this command.
-        /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of prompts.</returns>
+        /// <inheritdoc/>
         public Prompt[] GetPrompts(Game game)
         {
             if (game == null)

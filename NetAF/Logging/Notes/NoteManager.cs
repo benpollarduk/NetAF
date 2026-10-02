@@ -1,4 +1,4 @@
-﻿using NetAF.Extensions;
+using NetAF.Extensions;
 using NetAF.Serialization.Assets;
 using NetAF.Serialization;
 using System;
@@ -201,10 +201,7 @@ namespace NetAF.Logging.Notes
 
         #region Implementation of IRestoreFromObjectSerialization<NoteManagerSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<NoteManagerSerialization>.RestoreFrom(NoteManagerSerialization serialization)
         {
             entries.Clear();

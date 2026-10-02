@@ -1,4 +1,4 @@
-﻿using NetAF.Variables;
+using NetAF.Variables;
 
 namespace NetAF.Serialization.Assets
 {
@@ -41,10 +41,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Variable>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="variable">The variable to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Variable>.Restore(Variable variable)
         {
             ((IRestoreFromObjectSerialization<VariableSerialization>)variable).RestoreFrom(this);

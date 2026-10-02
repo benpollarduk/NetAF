@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Rendering;
@@ -15,13 +15,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     {
         #region Implementation of IAboutFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="game">The game.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(string title, Game game, Size size)
         {
             builder.Clear();

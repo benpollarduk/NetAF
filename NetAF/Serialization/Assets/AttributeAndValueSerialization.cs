@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Attributes;
+using NetAF.Assets.Attributes;
 using System.Collections.Generic;
 
 namespace NetAF.Serialization.Assets
@@ -66,10 +66,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<KeyValuePair<Attribute, int>>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="attributeAndValue">The KeyValuePair to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<KeyValuePair<Attribute, int>>.Restore(KeyValuePair<Attribute, int> attributeAndValue)
         {
             // cannot restore as readonly

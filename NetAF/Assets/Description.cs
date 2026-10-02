@@ -1,4 +1,4 @@
-﻿namespace NetAF.Assets
+namespace NetAF.Assets
 {
     /// <summary>
     /// Represents a description of an object.
@@ -17,10 +17,7 @@
 
         #region Implementation of IDescription
 
-        /// <summary>
-        /// Get the description.
-        /// </summary>
-        /// <returns>The description.</returns>
+        /// <inheritdoc/>
         public string GetDescription()
         {
             return description;

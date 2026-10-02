@@ -1,4 +1,4 @@
-﻿using NetAF.Assets.Locations;
+using NetAF.Assets.Locations;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -46,10 +46,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Overworld>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="overworld">The overworld to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Overworld>.Restore(Overworld overworld)
         {
             ((IRestoreFromObjectSerialization<OverworldSerialization>)overworld).RestoreFrom(this);

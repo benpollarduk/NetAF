@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NetAF.Assets
 {
@@ -25,12 +25,7 @@ namespace NetAF.Assets
 
         #region Implementation of IEquatable<Point2D>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public bool Equals(Point2D other)
         {
             return X == other.X && Y == other.Y;

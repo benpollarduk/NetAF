@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Example.Assets.Items;
 using NetAF.Example.Assets.Regions.Everglades.Rooms;
@@ -18,10 +18,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Items
 
         #region Implementation of IAssetTemplate<Item>
 
-        /// <summary>
-        /// Instantiate a new instance of the asset.
-        /// </summary>
-        /// <returns>The item.</returns>
+        /// <inheritdoc/>
         public Item Instantiate()
         {
             var conchShell = new Item(Name, Description, true, interaction: item =>

@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
@@ -83,16 +83,10 @@ namespace NetAF.Commands.RegionMap
 
         #region Implementation of ICommand
 
-        /// <summary>
-        /// Get the help for this command.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandHelp Help => GeneralCommandHelp;
 
-        /// <summary>
-        /// Invoke the command.
-        /// </summary>
-        /// <param name="game">The game to invoke the command on.</param>
-        /// <returns>The reaction.</returns>
+        /// <inheritdoc/>
         public Reaction Invoke(Game game)
         {
             if (game == null)
@@ -116,11 +110,7 @@ namespace NetAF.Commands.RegionMap
             return new(ReactionResult.Error, "Not in region map mode.");
         }
 
-        /// <summary>
-        /// Get all prompts for this command.
-        /// </summary>
-        /// <param name="game">The game to get the prompts for.</param>
-        /// <returns>And array of prompts.</returns>
+        /// <inheritdoc/>
         public Prompt[] GetPrompts(Game game)
         {
             return [];

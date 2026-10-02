@@ -1,4 +1,4 @@
-﻿using NetAF.Rendering;
+using NetAF.Rendering;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -130,25 +130,16 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IFrame
 
-        /// <summary>
-        /// Get the cursor left position.
-        /// </summary>
+        /// <inheritdoc/>
         public int CursorLeft { get; } = cursorLeft;
 
-        /// <summary>
-        /// Get the cursor top position.
-        /// </summary>
+        /// <inheritdoc/>
         public int CursorTop { get; } = cursorTop;
 
-        /// <summary>
-        /// Get or set if the cursor should be shown.
-        /// </summary>
+        /// <inheritdoc/>
         public bool ShowCursor { get; set; } = false;
 
-        /// <summary>
-        /// Render this frame on a presenter.
-        /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
             var suppressColor = Ansi.IsColorSuppressed();
@@ -172,12 +163,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IAnsiGridFrame
 
-        /// <summary>
-        /// Get a cell from the grid.
-        /// </summary>
-        /// <param name="x">The x position of the cell.</param>
-        /// <param name="y">The y position of the cell.</param>
-        /// <returns>The ANSI cell.</returns>
+        /// <inheritdoc/>
         public AnsiCell GetCell(int x, int y)
         {
             return new AnsiCell(builder.GetCharacter(x, y), GetForegroundColor(x, y, false), GetBackgroundColor(x, y, false));

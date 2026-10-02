@@ -1,4 +1,4 @@
-﻿using NetAF.Commands;
+using NetAF.Commands;
 using NetAF.Conversations;
 using NetAF.Serialization;
 using NetAF.Serialization.Assets;
@@ -64,19 +64,14 @@ namespace NetAF.Assets.Characters
 
         #region Implementation of IConverser
 
-        /// <summary>
-        /// Get the conversation.
-        /// </summary>
+        /// <inheritdoc/>
         public Conversation Conversation { get; }
 
         #endregion
 
         #region Implementation of IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<NonPlayableCharacterSerialization>.RestoreFrom(NonPlayableCharacterSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<CharacterSerialization>)this).RestoreFrom(serialization);

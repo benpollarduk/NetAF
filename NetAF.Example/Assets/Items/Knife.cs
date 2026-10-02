@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Utilities;
 
 namespace NetAF.Example.Assets.Items
@@ -14,10 +14,7 @@ namespace NetAF.Example.Assets.Items
 
         #region Implementation of IAssetTemplate<out Item>
 
-        /// <summary>
-        /// Instantiate a new instance of the templated asset.
-        /// </summary>
-        /// <returns>The asset.</returns>
+        /// <inheritdoc/>
         public Item Instantiate()
         {
             return new(Name, Description, true);

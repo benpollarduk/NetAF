@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using System.Linq;
 
 namespace NetAF.Serialization.Assets
@@ -30,10 +30,7 @@ namespace NetAF.Serialization.Assets
 
         #region Implementation of IObjectSerialization<Item>
 
-        /// <summary>
-        /// Restore an instance from this serialization.
-        /// </summary>
-        /// <param name="item">The item to restore.</param>
+        /// <inheritdoc/>
         void IObjectSerialization<Item>.Restore(Item item)
         {
             ((IRestoreFromObjectSerialization<ItemSerialization>)item).RestoreFrom(this);

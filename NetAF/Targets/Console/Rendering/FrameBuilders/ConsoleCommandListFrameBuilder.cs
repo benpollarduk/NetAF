@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NetAF.Assets;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -49,14 +49,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         #region Implementation of ICommandListFrameBuilder
 
-        /// <summary>
-        /// Build a frame.
-        /// </summary>
-        /// <param name="title">The title.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="commandHelp">The command help.</param>
-        /// <param name="size">The size of the frame.</param>
-        /// <returns>The frame.</returns>
+        /// <inheritdoc/>
         public IFrame Build(string title, string description, CommandHelp[] commandHelp, Size size)
         {
             gridStringBuilder.Resize(size);

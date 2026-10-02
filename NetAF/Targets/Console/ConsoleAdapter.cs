@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
@@ -36,15 +36,10 @@ namespace NetAF.Targets.Console
 
         #region Implementation of IIOAdapter
 
-        /// <summary>
-        /// Get the current size of the output.
-        /// </summary>
+        /// <inheritdoc/>
         public Size CurrentOutputSize => presenter.GetPresentableSize();
 
-        /// <summary>
-        /// Setup for a game.
-        /// </summary>
-        /// <param name="game">The game to set up for.</param>
+        /// <inheritdoc/>
         public void Setup(Game game)
         {
             System.Console.Title = game.Info.Name;
@@ -68,10 +63,7 @@ namespace NetAF.Targets.Console
             }
         }
 
-        /// <summary>
-        /// Render a frame.
-        /// </summary>
-        /// <param name="frame">The frame to render.</param>
+        /// <inheritdoc/>
         public void RenderFrame(IFrame frame)
         {
             System.Console.Clear();

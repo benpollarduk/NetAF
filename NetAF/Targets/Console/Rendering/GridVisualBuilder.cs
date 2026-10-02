@@ -1,4 +1,4 @@
-﻿using NetAF.Assets;
+using NetAF.Assets;
 using NetAF.Utilities;
 using System;
 using System.IO;
@@ -437,10 +437,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             var builder = new StringBuilder();

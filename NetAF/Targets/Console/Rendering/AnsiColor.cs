@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -45,21 +45,13 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Overrides of Object
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return $"{r}-{g}-{b}";
         }
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="obj">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="obj" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public override readonly bool Equals(object obj)
         {
             return obj is AnsiColor color && Equals(color);
@@ -69,12 +61,7 @@ namespace NetAF.Targets.Console.Rendering
 
         #region Implementation of IEquatable<AnsiColor>
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>
-        /// <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+        /// <inheritdoc/>
         public readonly bool Equals(AnsiColor other)
         {
             return R == other.R && G == other.G && B == other.B;
@@ -190,10 +177,7 @@ namespace NetAF.Targets.Console.Rendering
             return !(left == right);
         }
 
-        /// <summary>
-        /// Serves as the default hash function.
-        /// </summary>
-        /// <returns>A hash code for the current object.</returns>
+        /// <inheritdoc/>
         public override readonly int GetHashCode()
         {
             return base.GetHashCode();

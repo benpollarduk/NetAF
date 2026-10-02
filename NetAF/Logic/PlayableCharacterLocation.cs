@@ -1,4 +1,4 @@
-﻿using NetAF.Serialization;
+using NetAF.Serialization;
 using NetAF.Serialization.Assets;
 
 namespace NetAF.Logic
@@ -48,10 +48,7 @@ namespace NetAF.Logic
 
         #region Implementation of IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<PlayableCharacterLocationSerialization>.RestoreFrom(PlayableCharacterLocationSerialization serialization)
         {
             PlayerIdentifier = serialization.PlayerIdentifier;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -155,10 +155,7 @@ namespace NetAF.Assets.Locations
 
         #region Implementation of IRestoreFromObjectSerialization<OverworldSerialization>
 
-        /// <summary>
-        /// Restore this object from a serialization.
-        /// </summary>
-        /// <param name="serialization">The serialization to restore from.</param>
+        /// <inheritdoc/>
         void IRestoreFromObjectSerialization<OverworldSerialization>.RestoreFrom(OverworldSerialization serialization)
         {
             ((IRestoreFromObjectSerialization<ExaminableSerialization>)this).RestoreFrom(serialization);
