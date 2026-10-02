@@ -21,9 +21,9 @@ namespace NetAF.Targets.General.FrameBuilders
         public char LockedExit { get; set; } = 'x';
 
         /// <summary>
-        /// Get or set the character used for representing there is an item or a character in the room.
+        /// Get or set the character used for representing a point of interest in the room.
         /// </summary>
-        public char ItemOrCharacterInRoom { get; set; } = '!';
+        public char PointOfInterest { get; set; } = '!';
 
         /// <summary>
         /// Get or set the character to use for vertical boundaries.
@@ -82,7 +82,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 * *-| N |-*
                 * |       |
                 * - U   D -
-                * W   ?   E
+                * W   !   E
                 * -       -
                 * |       |
                 * *-| S |-*
@@ -109,7 +109,7 @@ namespace NetAF.Targets.General.FrameBuilders
             ConsoleHighDetailRoomMapBuilder ansiRoomBuilder = new(ansiGridStringBuilder)
             {
                 LockedExit = LockedExit,
-                ItemOrCharacterInRoom = ItemOrCharacterInRoom,
+                PointOfInterest = PointOfInterest,
                 VerticalBoundary = VerticalBoundary,
                 HorizontalBoundary = HorizontalBoundary,
                 VerticalExitBorder = VerticalExitBorder,
