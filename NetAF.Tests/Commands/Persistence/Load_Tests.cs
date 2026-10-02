@@ -4,7 +4,6 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Persistence;
-using NetAF.Commands.RegionMap;
 using NetAF.Logic;
 using NetAF.Persistence;
 using NetAF.Utilities;
