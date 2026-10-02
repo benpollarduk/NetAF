@@ -105,16 +105,17 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="room">The room to draw.</param>
         /// <param name="topLeft">The top left of the room.</param>
         /// <param name="view">The view from the room.</param>
-        /// <param name="options">The render options to use.</param>
+        /// <param name="regionMapOptions">The region map render options to use.</param>
+        /// <param name="roomMapOptions">The room map render options to use.</param>
         /// <param name="isPlayerRoom">True if this is the player room.</param>
         /// <param name="isFocusRoom">True if this is the focus room.</param>
-        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, ViewPoint view, RegionMapRenderOptions options, bool isPlayerRoom, bool isFocusRoom)
+        private void DrawCurrentFloorRoom(Room room, Point2D topLeft, ViewPoint view, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, bool isPlayerRoom, bool isFocusRoom)
         {
             // get the configured builder
-            var builder = GetConfiguredRoomMapBuilder(options, room.HasBeenVisited || isPlayerRoom, isFocusRoom); 
+            var builder = GetConfiguredRoomMapBuilder(regionMapOptions, room.HasBeenVisited || isPlayerRoom, isFocusRoom); 
 
             // draw room (with no key)
-            builder.BuildRoomMap(room, view, new RoomMapRenderOptions { KeyType = KeyType.None }, topLeft, out _, out _);
+            builder.BuildRoomMap(room, view, new RoomMapRenderOptions { KeyType = KeyType.None, PointOfInterestDetail = roomMapOptions.PointOfInterestDetail }, topLeft, out _, out _);
 
             if (!isPlayerRoom && !isFocusRoom)
                 return;
@@ -252,9 +253,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #region Implementation of IRegionMapBuilder
 
         /// <inheritdoc/>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, Size maxSize)
         {
-            BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
+            BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, maxSize, new(0, 0));
         }
 
         #endregion
@@ -262,7 +263,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #region Implementation of IConsoleRegionMapBuilder
 
         /// <inheritdoc/>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize, Point2D startPosition)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, Size maxSize, Point2D startPosition)
         {
             var matrix = region.ToMatrix();
             var playerRoom = region.GetPositionOfRoom(region.CurrentRoom);
@@ -279,7 +280,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var levelIndicatorY = y;
 
             // determine the room size
-            var roomSize = GetConfiguredRoomMapBuilder(options, false, false).RenderedSize;
+            var roomSize = GetConfiguredRoomMapBuilder(regionMapOptions, false, false).RenderedSize;
 
             // firstly draw lower levels
             if (ShowLowerFloors)
@@ -308,7 +309,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             foreach (var position in focusLevelRooms)
             {
                 if (TryConvertMatrixPositionToGridLayoutPosition(matrix, new MatrixConversionParameters(new Point2D(x, y), new Size(maxAvailableWidth, maxSize.Height), new Point2D(position.Position.X, position.Position.Y), roomSize, new Point2D(focusPosition.X, focusPosition.Y)), out var left, out var top))
-                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), options, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
+                    DrawCurrentFloorRoom(position.Room, new Point2D(left, top), ViewPoint.Create(region, position.Room), regionMapOptions, roomMapOptions, position.Room == playerRoom.Room, position.Position.Equals(focusPosition));
             }
 
             if (!multiLevel)

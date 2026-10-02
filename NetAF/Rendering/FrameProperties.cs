@@ -18,11 +18,11 @@
         /// <summary>
         /// Get or set the render options for region maps.
         /// </summary>
-        public static RegionMapRenderOptions RegionMapRenderOptions { get; set; } = new RegionMapRenderOptions();
+        public static RegionMapRenderOptions RegionMapRenderOptions { get; set; } = RegionMapRenderOptions.Default;
 
         /// <summary>
         /// Get or set the render options for room maps.
         /// </summary>
-        public static RoomMapRenderOptions RoomMapRenderOptions { get; set; } = new RoomMapRenderOptions();
+        public static RoomMapRenderOptions RoomMapRenderOptions { get; set; } = RoomMapRenderOptions.Default;
     }
 }

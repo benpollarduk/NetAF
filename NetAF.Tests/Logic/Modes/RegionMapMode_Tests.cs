@@ -25,7 +25,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -43,7 +43,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Maximal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Maximal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Minimal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Minimal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -79,7 +79,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -97,7 +97,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -228,7 +228,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(new Point3D(0, 0, 1), new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(new Point3D(0, 0, 1), new RegionMapRenderOptions { MapDetail = RegionMapDetail.Normal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 game.Overworld.CurrentRegion.JumpToRoom(new(1, 0, 1));
                 game.Overworld.CurrentRegion.JumpToRoom(new(0, 0, 0));

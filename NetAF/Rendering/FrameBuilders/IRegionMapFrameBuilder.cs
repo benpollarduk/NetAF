@@ -22,10 +22,11 @@ namespace NetAF.Rendering.FrameBuilders
         /// </summary>
         /// <param name="region">The region.</param>
         /// <param name="focusPosition">The position to focus on.</param>
-        /// <param name="options">The render options to use.</param>
+        /// <param name="regionMapOptions">The region map render options to use.</param>
+        /// <param name="roomMapOptions">The room map render options to use.</param>
         /// <param name="contextualCommands">The contextual commands to display.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size);
+        IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, CommandHelp[] contextualCommands, Size size);
     }
 }

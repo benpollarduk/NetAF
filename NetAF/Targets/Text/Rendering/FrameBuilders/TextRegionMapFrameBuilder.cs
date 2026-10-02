@@ -38,7 +38,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         public bool SupportsZoom => true;
 
         /// <inheritdoc/>
-        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size)
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, CommandHelp[] contextualCommands, Size size)
         {
             var matrix = region.ToMatrix();
             var room = matrix[focusPosition.X, focusPosition.Y, focusPosition.Z];
@@ -52,7 +52,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             // calculate max map size - title, - command length (if any commands) - commands title
             var maxMapSize = new Size(size.Width, size.Height - 1 - contextualCommandLength - (contextualCommandLength > 0 ? 1 : 0));
 
-            RegionMapBuilder?.BuildRegionMap(region, focusPosition, options, maxMapSize);
+            RegionMapBuilder?.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, maxMapSize);
 
             if (contextualCommandLength > 0)
             {

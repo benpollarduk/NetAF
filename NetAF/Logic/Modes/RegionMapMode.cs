@@ -14,9 +14,10 @@ namespace NetAF.Logic.Modes
     /// Provides a display mode for the region map.
     /// </summary>
     /// <param name="focusPosition">The position to focus on. To use the player position use RegionMapMode.Player.</param>
-    /// <param name="options">The render options to use.</param>
+    /// <param name="regionMapOptions">The region map render options to use.</param>
+    /// <param name="roomMapOptions">The room map render options to use.</param>
     /// <param name="interpreter">Specify the interpreter used for interpreting commands in this mode.</param>
-    public sealed class RegionMapMode(Point3D focusPosition, RegionMapRenderOptions options, IInterpreter interpreter) : IGameMode
+    public sealed class RegionMapMode(Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, IInterpreter interpreter) : IGameMode
     {
         #region StaticProperties
 
@@ -40,9 +41,14 @@ namespace NetAF.Logic.Modes
         public Point3D FocusPosition { get; set; } = focusPosition;
 
         /// <summary>
-        /// Get or set the render options to use.
+        /// Get or set the region map render options to use.
         /// </summary>
-        public RegionMapRenderOptions Options { get; set; } = options;
+        public RegionMapRenderOptions RegionMapOptions { get; set; } = regionMapOptions;
+
+        /// <summary>
+        /// Get or set the room map render options to use.
+        /// </summary>
+        public RoomMapRenderOptions RoomMapOptions { get; set; } = roomMapOptions;
 
         #endregion
 
@@ -73,7 +79,7 @@ namespace NetAF.Logic.Modes
                 _ => throw new NotImplementedException()
             };
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, Options, commands, game.Configuration.DisplaySize);
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IRegionMapFrameBuilder>().Build(region, FocusPosition, RegionMapOptions, RoomMapOptions, commands, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

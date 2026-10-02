@@ -39,7 +39,7 @@ namespace NetAF.Commands.RegionMap
             };
 
             if (game.Mode is RegionMapMode mapMode)
-                mapMode.Options.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail;
+                mapMode.RegionMapOptions.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail;
 
             return new(ReactionResult.Silent, "Zoomed in.");
         }

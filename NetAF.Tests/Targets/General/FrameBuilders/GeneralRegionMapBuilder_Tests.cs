@@ -47,7 +47,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
             region.AddRoom(room, 0, 0, 0);
             region.Enter();
 
-            builder.BuildRegionMap(region, new Point3D(0, 0, 0), new RegionMapRenderOptions(), new Size(40, 20));
+            builder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapRenderOptions.Default, RoomMapRenderOptions.Default, new Size(40, 20));
 
             Assert.AreEqual(1, builder.AdaptCallCount);
         }
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
             region.AddRoom(room, 0, 0, 0);
             region.Enter();
 
-            builder.BuildRegionMap(region, new Point3D(0, 0, 0), new RegionMapRenderOptions(), new Size(40, 20));
+            builder.BuildRegionMap(region, new Point3D(0, 0, 0), RegionMapRenderOptions.Default, RoomMapRenderOptions.Default, new Size(40, 20));
 
             Assert.IsNotNull(builder.LastAdapted);
         }

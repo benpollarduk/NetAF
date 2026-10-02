@@ -5,14 +5,31 @@
     /// </summary>
     public class RoomMapRenderOptions
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get the default room map render options.
+        /// </summary>
+        public static RoomMapRenderOptions Default => new() 
+        {
+            KeyType = KeyType.Dynamic, 
+            PointOfInterestDetail = PointOfInterestDetail.Low
+        };
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Get or set the type of key to use on the map.
         /// </summary>
-        public KeyType KeyType { get; set; } = KeyType.Dynamic;
-
+        public KeyType KeyType { get; set; }
+        
         /// <summary>
         /// Get or set the detail to use for points of interest on the map.
         /// </summary>
-        public PointOfInterestDetail PointOfInterestDetail { get; set; } = PointOfInterestDetail.Low;
+        public PointOfInterestDetail PointOfInterestDetail { get; set; }
+
+        #endregion
     }
 }

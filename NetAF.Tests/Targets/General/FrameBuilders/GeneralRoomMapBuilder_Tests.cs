@@ -39,7 +39,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
-            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions());
+            builder.BuildRoomMap(room, viewPoint, RoomMapRenderOptions.Default);
 
             Assert.AreEqual(1, builder.AdaptCallCount);
         }
@@ -51,7 +51,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
-            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions());
+            builder.BuildRoomMap(room, viewPoint, RoomMapRenderOptions.Default);
 
             Assert.IsNotNull(builder.LastAdapted);
         }

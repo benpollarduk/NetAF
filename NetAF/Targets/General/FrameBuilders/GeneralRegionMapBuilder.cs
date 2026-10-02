@@ -89,7 +89,7 @@ namespace NetAF.Targets.General.FrameBuilders
         public bool SupportsZoom => true;
 
         /// <inheritdoc/>
-        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions options, Size maxSize)
+        public void BuildRegionMap(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, Size maxSize)
         {
             // for now, cheat and use the ANSI builder then convert to string
 
@@ -110,7 +110,7 @@ namespace NetAF.Targets.General.FrameBuilders
                 CurrentFloorIndicator = CurrentFloorIndicator
             };
 
-            ansiRegionBuilder.BuildRegionMap(region, focusPosition, options, maxSize, new(0, 0));
+            ansiRegionBuilder.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, maxSize, new(0, 0));
             Adapt(ansiGridStringBuilder);
         }
 

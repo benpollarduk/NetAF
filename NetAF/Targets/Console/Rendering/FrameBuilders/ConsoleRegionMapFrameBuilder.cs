@@ -64,7 +64,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public bool SupportsZoom => true;
 
         /// <inheritdoc/>
-        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions options, CommandHelp[] contextualCommands, Size size)
+        public IFrame Build(Region region, Point3D focusPosition, RegionMapRenderOptions regionMapOptions, RoomMapRenderOptions roomMapOptions, CommandHelp[] contextualCommands, Size size)
         {
             gridStringBuilder.Resize(size);
 
@@ -110,9 +110,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var mapSize = new Size(availableWidth, size.Height - 4 - commandSpace);
 
             if (RegionMapBuilder is IConsoleRegionMapBuilder consoleRegionMapBuilder)
-                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, options, mapSize, startMapPosition);
+                consoleRegionMapBuilder.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, mapSize, startMapPosition);
             else
-                RegionMapBuilder?.BuildRegionMap(region, focusPosition, options, mapSize);
+                RegionMapBuilder?.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, mapSize);
 
             if (renderPrompt)
             {
