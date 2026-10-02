@@ -47,6 +47,21 @@ namespace NetAF.Commands.Frame
         public static Prompt KeyDynamic => new("key-dynamic");
 
         /// <summary>
+        /// Get the prompt for point of interest none.
+        /// </summary>
+        public static Prompt PointOfInterestNone => new("poi-none");
+
+        /// <summary>
+        /// Get the prompt for point of interest low.
+        /// </summary>
+        public static Prompt PointOfInterestLow => new("poi-low");
+
+        /// <summary>
+        /// Get the prompt for point of interest high.
+        /// </summary>
+        public static Prompt PointOfInterestHigh => new("poi-high");
+
+        /// <summary>
         /// Get the prompt for map in scenes on.
         /// </summary>
         public static Prompt MapInScenesOn => new("map-on");
@@ -117,6 +132,24 @@ namespace NetAF.Commands.Frame
                 return new(ReactionResult.Inform, "Key has been set to full.");
             }
 
+            if (IsPrompt(arg, PointOfInterestNone))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.None;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to none.");
+            }
+
+            if (IsPrompt(arg, PointOfInterestLow))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.Low;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to low.");
+            }
+
+            if (IsPrompt(arg, PointOfInterestHigh))
+            {
+                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.High;
+                return new(ReactionResult.Inform, "Point of interest detail has been set to high.");
+            }
+
             if (IsPrompt(arg, MapInScenesOff))
             {
                 FrameProperties.ShowMapInScenes = false;
@@ -143,6 +176,9 @@ namespace NetAF.Commands.Frame
                 KeyNone,
                 KeyDynamic,
                 KeyFull,
+                PointOfInterestNone,
+                PointOfInterestLow,
+                PointOfInterestHigh,
                 MapInScenesOff,
                 MapInScenesOn
             ];

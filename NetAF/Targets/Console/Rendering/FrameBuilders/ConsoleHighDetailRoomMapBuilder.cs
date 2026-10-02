@@ -426,7 +426,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     if (room.EnteredFrom.HasValue)
                         keyLines.Add($"{room.EnteredFrom.Value.ToString().ToLower()[..1]} = Entrance", VisitedExitColor);
 
-                    if (numberOfPointsOfInterest > 0)
+                    if (numberOfPointsOfInterest > 0 && options.PointOfInterestDetail != PointOfInterestDetail.None)
                         keyLines.Add(pointOfInterestString, PointOfInterestColor);
 
                     break;
