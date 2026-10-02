@@ -13,6 +13,6 @@
         /// <summary>
         /// Get or set the detail to use for points of interest on the map.
         /// </summary>
-        public PointOfInterestDetail PointOfInterestDetail { get; set; } = PointOfInterestDetail.High;
+        public PointOfInterestDetail PointOfInterestDetail { get; set; } = PointOfInterestDetail.Low;
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
-using NetAF.Assets;
+using NetAF.Commands;
+using NetAF.Commands.Persistence;
+using NetAF.Commands.RegionMap;
+using NetAF.Logic;
+using NetAF.Persistence;
 using NetAF.Utilities;
 using System.IO;
-using NetAF.Commands.Persistence;
-using NetAF.Persistence;
-using NetAF.Commands;
 
 namespace NetAF.Tests.Commands.Persistence
 {
@@ -108,6 +109,21 @@ namespace NetAF.Tests.Commands.Persistence
             Directory.Delete(tempDir.FullName, true);
 
             Assert.HasCount(1, result);
+        }
+
+        [TestMethod]
+        public void GivenGame_WhenGetPrompts_ThenEmptyArray()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var command = new Load(string.Empty);
+
+            var result = command.GetPrompts(game);
+
+            Assert.AreEqual([], result);
         }
     }
 }

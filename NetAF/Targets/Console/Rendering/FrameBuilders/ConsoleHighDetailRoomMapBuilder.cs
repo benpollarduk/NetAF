@@ -408,7 +408,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var lockedExitString = $"{LockedExit} = Locked Exit";
             var notVisitedExitString = "N/E/S/W/U/D = Unvisited";
             var visitedExitString = "n/e/s/w/u/d = Visited";
-            var pointOfInterestString = $"{pointOfInterestIndicator} = Point{(numberOfPointsOfInterest == 1 ? "" : "s")} of interest";
+            var pointOfInterestString = options.PointOfInterestDetail switch
+            {
+                PointOfInterestDetail.None => string.Empty,
+                PointOfInterestDetail.Low => $"{pointOfInterestIndicator} = Point of interest",
+                PointOfInterestDetail.High => $"{pointOfInterestIndicator} = Point{(numberOfPointsOfInterest == 1 ? "" : "s")} of interest",
+                _ => throw new NotImplementedException()
+            };
 
             switch (options.KeyType)
             {
