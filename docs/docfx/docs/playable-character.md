@@ -1,4 +1,4 @@
-I'm﻿# PlayableCharacter
+﻿# PlayableCharacter
 
 ## Overview
 
