@@ -43,7 +43,7 @@ jobs:
       run: dotnet tool update -g docfx
 
     - name: Build
-      run: dotnet build
+      run: dotnet build -p:EnableWindowsTargeting=true
 
     - name: Build documentation
       run: docfx docs/docfx/docfx.json
