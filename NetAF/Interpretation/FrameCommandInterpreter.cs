@@ -37,7 +37,7 @@ namespace NetAF.Interpretation
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (Option.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Option.CommandHelp, commandString))
                 return new(true, new Option(args));
 
             return InterpretationResult.Fail;

@@ -78,5 +78,72 @@ namespace NetAF.Tests.Extensions
 
             Assert.IsEmpty(result);
         }
+
+        [TestMethod]
+        public void GivenNullCommand_WhenIsCommand_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+
+            var result = interpreter.IsCommand(null, "Load");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenMatchingQuery_WhenIsCommand_ThenTrue()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+
+            var result = interpreter.IsCommand(command, command.Command);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenNonMatchingQuery_WhenIsCommand_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+
+            var result = interpreter.IsCommand(command, "NotACommand");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenMatchingQueryWithDifferentCasing_WhenIsCommand_ThenTrue()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+
+            var result = interpreter.IsCommand(command, command.Command.ToUpper());
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenExcludedCommandAndFailIfExcluded_WhenIsCommand_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+            interpreter.ExcludedCommands.Add(command);
+
+            var result = interpreter.IsCommand(command, command.Command);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExcludedCommandAndNotFailIfExcluded_WhenIsCommand_ThenTrue()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+            interpreter.ExcludedCommands.Add(command);
+
+            var result = interpreter.IsCommand(command, command.Command, false);
+
+            Assert.IsTrue(result);
+        }
     }
 }

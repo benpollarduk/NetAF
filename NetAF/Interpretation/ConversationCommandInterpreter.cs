@@ -43,10 +43,10 @@ namespace NetAF.Interpretation
             if (mode?.Converser == null)
                 return InterpretationResult.Fail;
 
-            if (End.CommandHelp.Equals(input))
+            if (this.IsCommand(End.CommandHelp, input))
                 return new(true, new End());
 
-            if (Next.CommandHelp.Equals(input) || Next.SilentCommandHelp.Equals(input.Trim()))
+            if (this.IsCommand(Next.CommandHelp, input) || this.IsCommand(Next.SilentCommandHelp, input.Trim()))
                 return new(true, new Next());
 
             var responsesAsCommands = GetContextualCommandHelp(game);

@@ -387,7 +387,7 @@ namespace NetAF.Assets.Locations
 
             if (SceneCommandInterpreter.TryParseToDirection(targetName, out var direction))
             {
-                exits = Exits.Where(x => x.Direction == direction).ToArray();
+                exits = [.. Exits.Where(x => x.Direction == direction)];
 
                 if (exits.Length > 0)
                 {

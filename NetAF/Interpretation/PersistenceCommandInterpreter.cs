@@ -39,10 +39,10 @@ namespace NetAF.Interpretation
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (Load.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Load.CommandHelp, commandString))
                 return new(true, new Load(args));
 
-            if (Save.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Save.CommandHelp, commandString))
                 return new(true, new Save(args));
 
             return InterpretationResult.Fail;
