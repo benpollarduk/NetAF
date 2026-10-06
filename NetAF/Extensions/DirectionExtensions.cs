@@ -15,23 +15,16 @@ namespace NetAF.Extensions
         /// <returns>The inverse direction.</returns>
         public static Direction Inverse(this Direction value)
         {
-            switch (value)
+            return value switch
             {
-                case Direction.North:
-                    return Direction.South;
-                case Direction.East:
-                    return Direction.West;
-                case Direction.South:
-                    return Direction.North;
-                case Direction.West:
-                    return Direction.East;
-                case Direction.Up:
-                    return Direction.Down;
-                case Direction.Down:
-                    return Direction.Up;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
-            }
+                Direction.North => Direction.South,
+                Direction.East => Direction.West,
+                Direction.South => Direction.North,
+                Direction.West => Direction.East,
+                Direction.Up => Direction.Down,
+                Direction.Down => Direction.Up,
+                _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
+            };
         }
     }
 }

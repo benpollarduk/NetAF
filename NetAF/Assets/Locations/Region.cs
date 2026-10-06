@@ -454,29 +454,16 @@ namespace NetAF.Assets.Locations
         /// <param name="next">The next position.</param>
         internal static void NextPosition(Point3D current, Direction direction, out Point3D next)
         {
-            switch (direction)
+            next = direction switch
             {
-                case Direction.North:
-                    next = new Point3D(current.X, current.Y + 1, current.Z);
-                    break;
-                case Direction.East:
-                    next = new Point3D(current.X + 1, current.Y, current.Z);
-                    break;
-                case Direction.South:
-                    next = new Point3D(current.X, current.Y - 1, current.Z);
-                    break;
-                case Direction.West:
-                    next = new Point3D(current.X - 1, current.Y, current.Z);
-                    break;
-                case Direction.Up:
-                    next = new Point3D(current.X, current.Y, current.Z + 1);
-                    break;
-                case Direction.Down:
-                    next = new Point3D(current.X, current.Y, current.Z - 1);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                Direction.North => new Point3D(current.X, current.Y + 1, current.Z),
+                Direction.East => new Point3D(current.X + 1, current.Y, current.Z),
+                Direction.South => new Point3D(current.X, current.Y - 1, current.Z),
+                Direction.West => new Point3D(current.X - 1, current.Y, current.Z),
+                Direction.Up => new Point3D(current.X, current.Y, current.Z + 1),
+                Direction.Down => new Point3D(current.X, current.Y, current.Z - 1),
+                _ => throw new NotImplementedException(),
+            };
         }
 
         #endregion

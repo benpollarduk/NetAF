@@ -8,6 +8,7 @@ namespace NetAF.Interpretation
     /// </summary>
     public interface IInterpreter
     {
+
         /// <summary>
         /// Get an array of all supported commands.
         /// </summary>

@@ -60,23 +60,16 @@ namespace NetAF.Commands.RegionMap
         /// <returns>The modified pan position.</returns>
         public static Point3D GetPanPosition(Point3D current, Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.North:
-                    return new Point3D(current.X, current.Y + 1, current.Z);
-                case Direction.East:
-                    return new Point3D(current.X + 1, current.Y, current.Z);
-                case Direction.South:
-                    return new Point3D(current.X, current.Y - 1, current.Z);
-                case Direction.West:
-                    return new Point3D(current.X - 1, current.Y, current.Z);
-                case Direction.Up:
-                    return new Point3D(current.X, current.Y, current.Z + 1);
-                case Direction.Down:
-                    return new Point3D(current.X, current.Y, current.Z - 1);
-                default:
-                    return current;
-            }
+                Direction.North => new Point3D(current.X, current.Y + 1, current.Z),
+                Direction.East => new Point3D(current.X + 1, current.Y, current.Z),
+                Direction.South => new Point3D(current.X, current.Y - 1, current.Z),
+                Direction.West => new Point3D(current.X - 1, current.Y, current.Z),
+                Direction.Up => new Point3D(current.X, current.Y, current.Z + 1),
+                Direction.Down => new Point3D(current.X, current.Y, current.Z - 1),
+                _ => current,
+            };
         }
 
         #endregion
