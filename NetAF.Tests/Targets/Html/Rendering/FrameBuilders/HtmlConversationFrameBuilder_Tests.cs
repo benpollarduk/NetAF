@@ -45,9 +45,9 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             var builder = new HtmlConversationFrameBuilder(htmlBuilder);
             var commands = new[]
             {
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test")
+                new CommandHelp("Test"),
+                new CommandHelp("Test"),
+                new CommandHelp("Test")
             };
 
             var result = builder.Build("Test", null, commands, new Size(80, 50));

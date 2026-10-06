@@ -1,11 +1,12 @@
+using NetAF.Commands;
+using NetAF.Extensions;
+using NetAF.Logic;
+using NetAF.Logic.Modes;
+using NetAF.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using NetAF.Commands;
-using NetAF.Logic;
-using NetAF.Logic.Modes;
-using NetAF.Utilities;
 
 namespace NetAF.Interpretation
 {
@@ -14,6 +15,15 @@ namespace NetAF.Interpretation
     /// </summary>
     public sealed class CustomCommandInterpreter : IInterpreter
     {
+        #region StaticProperties
+
+        /// <summary>
+        /// Get an array of all supported commands.
+        /// </summary>
+        public static CommandHelp[] DefaultSupportedCommands { get; } = [];
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -70,7 +80,10 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = [];
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
@@ -108,12 +121,12 @@ namespace NetAF.Interpretation
             if (game.Mode is not SceneMode)
                 return [];
 
-            List<CommandHelp> help = [];
+            List<CommandHelp> commands = [];
 
-            foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null)) 
-                help.AddRange(examinable.Commands.Where(x => x.IsPlayerVisible).Select(command => command.Help));
+            foreach (var examinable in game.GetAllPlayerVisibleExaminables().Where(x => x.Commands != null))
+                commands.AddRange(examinable.Commands.Where(x => x.IsPlayerVisible).Select(command => command.Help));
 
-            return [.. help];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

@@ -30,7 +30,10 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
@@ -85,7 +88,7 @@ namespace NetAF.Interpretation
 
             commands.Add(new CommandHelp(End.CommandHelp.Command, "End the conversation", CommandCategory.Conversation));
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

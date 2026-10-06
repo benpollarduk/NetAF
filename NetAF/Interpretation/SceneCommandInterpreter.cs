@@ -447,7 +447,10 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
@@ -509,7 +512,7 @@ namespace NetAF.Interpretation
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any(x => x.IsPlayerVisible) || game.Player.Items.Any(x => x.IsPlayerVisible))
                 commands.Add(UseOn.UseCommandHelp);
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

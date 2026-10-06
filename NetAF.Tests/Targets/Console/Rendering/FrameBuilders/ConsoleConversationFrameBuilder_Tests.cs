@@ -45,9 +45,9 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders
             var builder = new ConsoleConversationFrameBuilder(gridStringBuilder);
             var commands = new[]
             {
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test")
+                new CommandHelp("Test"),
+                new CommandHelp("Test"),
+                new CommandHelp("Test")
             };
 
             var result = builder.Build("Test", null, commands, new Size(80, 50));

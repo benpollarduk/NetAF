@@ -119,7 +119,7 @@ namespace NetAF.Tests.Assets.Locations
         [TestMethod]
         public void GivenCustomCommands_WhenGetCommands_ThenCommandsAreSet()
         {
-            var commands = new[] { new CustomCommand(new CommandHelp("Test", "Test"), true, true, (_, _) => new Reaction(ReactionResult.Silent, "")) };
+            var commands = new[] { new CustomCommand(new CommandHelp("Test"), true, true, (_, _) => new Reaction(ReactionResult.Silent, "")) };
             var exit = new Exit(Direction.Down, commands: commands);
 
             Assert.AreEqual(1, exit.Commands.Length);

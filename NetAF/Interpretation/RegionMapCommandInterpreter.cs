@@ -2,6 +2,7 @@ using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
+using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
@@ -155,7 +156,10 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
@@ -200,7 +204,7 @@ namespace NetAF.Interpretation
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map", CommandCategory.RegionMap));
             }
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

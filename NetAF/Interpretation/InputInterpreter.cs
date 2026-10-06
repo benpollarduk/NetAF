@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NetAF.Commands;
 using NetAF.Commands.Scene;
+using NetAF.Extensions;
 using NetAF.Logic;
 
 namespace NetAF.Interpretation
@@ -15,16 +16,19 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
         public CommandHelp[] SupportedCommands
         {
             get
             {
-                var l = new List<CommandHelp>();
+                var commands = new List<CommandHelp>();
 
-                foreach (var commands in interpreters.Select(i => i.SupportedCommands).Where(x => x != null))
-                    l.AddRange(commands);
+                foreach (var supportedCommands in interpreters.Select(i => i.SupportedCommands).Where(x => x != null))
+                    commands.AddRange(supportedCommands);
 
-                return [.. l];
+                return [.. this.FilterExcludedCommands(commands)];
             }
         }
 
@@ -45,17 +49,17 @@ namespace NetAF.Interpretation
         /// <inheritdoc/>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            List<CommandHelp> l = [];
+            List<CommandHelp> commands = [];
 
             foreach (var interpreter in interpreters)
             {
                 var contextualCommands = interpreter.GetContextualCommandHelp(game);
 
                 if (contextualCommands != null)
-                    l.AddRange(interpreter.GetContextualCommandHelp(game));
+                    commands.AddRange(interpreter.GetContextualCommandHelp(game));
             }
 
-            return [.. l];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion
