@@ -1,7 +1,9 @@
 using NetAF.Commands;
 using NetAF.Commands.Frame;
+using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Utilities;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -25,14 +27,17 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (Option.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Option.CommandHelp, commandString))
                 return new(true, new Option(args));
 
             return InterpretationResult.Fail;
@@ -41,7 +46,10 @@ namespace NetAF.Interpretation
         /// <inheritdoc/>
         public CommandHelp[] GetContextualCommandHelp(Game game)
         {
-            return [Option.CommandHelp];
+            List<CommandHelp> commands = [];
+            commands.Add(Option.CommandHelp);
+
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

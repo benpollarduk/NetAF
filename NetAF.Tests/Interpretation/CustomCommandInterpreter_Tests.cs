@@ -33,7 +33,7 @@ namespace NetAF.Tests.Interpretation
         public void Given1CustomCommandNotInSceneMode_WhenGetContextualCommands_ThenReturn0CommandHelp()
         {
             var interpreter = new CustomCommandInterpreter();
-            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
+            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test"), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
             var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);
@@ -51,7 +51,7 @@ namespace NetAF.Tests.Interpretation
         public void Given1CustomCommandInSceneMode_WhenGetContextualCommands_ThenReturn1CommandHelp()
         {
             var interpreter = new CustomCommandInterpreter();
-            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test", string.Empty), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
+            CustomCommand[] commands = [new CustomCommand(new CommandHelp("Test"), true, true, (_, _) => new Reaction(ReactionResult.Error, string.Empty))];
             var overworld = new Overworld(Identifier.Empty, Description.Empty, commands);
             var region = new Region(Identifier.Empty, Description.Empty);
             region.AddRoom(new(Identifier.Empty, Description.Empty, [new Exit(Direction.North)]), 0, 0, 0);

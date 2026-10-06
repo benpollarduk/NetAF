@@ -12,7 +12,7 @@ namespace NetAF.Commands
     /// <param name="shortcut">A shortcut for the command.</param>
     /// <param name="instructions">A instructions on how to use the command.</param>
     /// <param name="displayAs">A string overriding how the command should be displayed.</param>
-    public sealed class CommandHelp(string command, string description, CommandCategory category = CommandCategory.Uncategorized, string shortcut = "", string instructions = "", string displayAs = "") : IEquatable<CommandHelp>, IEquatable<string>
+    public sealed class CommandHelp(string command, string description = "", CommandCategory category = CommandCategory.Uncategorized, string shortcut = "", string instructions = "", string displayAs = "") : IEquatable<CommandHelp>, IEquatable<string>
     {
         #region Properties
 

@@ -45,9 +45,9 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
             var builder = new TextConversationFrameBuilder(stringBuilder);
             var commands = new[]
             {
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test")
+                new CommandHelp("Test"),
+                new CommandHelp("Test"),
+                new CommandHelp("Test")
             };
 
             var result = builder.Build("Test", null, commands, new Size(80, 50));

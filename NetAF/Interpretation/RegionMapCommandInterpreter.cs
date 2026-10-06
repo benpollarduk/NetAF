@@ -2,6 +2,7 @@ using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Commands.RegionMap;
+using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Rendering;
@@ -33,6 +34,88 @@ namespace NetAF.Interpretation
             ZoomOut.CommandHelp,
             End.CommandHelp,
         ];
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Try and interpret a pan command.
+        /// </summary>
+        /// <param name="input">The string to interpret.</param>
+        /// <param name="result">The result of the interpretation.</param>
+        /// <returns>True if the interpretation was successful.</returns>
+        private bool TryInterpretPan(string input, out InterpretationResult result)
+        {
+            if (this.IsCommand(Pan.NorthCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.North));
+                return true;
+            }
+
+            if (this.IsCommand(Pan.SouthCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.South));
+                return true;
+            }
+
+            if (this.IsCommand(Pan.EastCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.East));
+                return true;
+            }
+
+            if (this.IsCommand(Pan.WestCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.West));
+                return true;
+            }
+
+            if (this.IsCommand(Pan.UpCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.Up));
+                return true;
+            }
+
+            if (this.IsCommand(Pan.DownCommandHelp, input))
+            {
+                result = new(true, new Pan(Direction.Down));
+                return true;
+            }
+
+            if (this.IsCommand(PanReset.CommandHelp, input))
+            {
+                result = new(true, new PanReset());
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Try and interpret a zoom command.
+        /// </summary>
+        /// <param name="input">The string to interpret.</param>
+        /// <param name="result">The result of the interpretation.</param>
+        /// <returns>True if the interpretation was successful.</returns>
+        private bool TryInterpretZoom(string input, out InterpretationResult result)
+        {
+            if (this.IsCommand(ZoomIn.CommandHelp, input))
+            {
+                result = new(true, new ZoomIn());
+                return true;
+            }
+
+            if (this.IsCommand(ZoomOut.CommandHelp, input))
+            {
+                result = new(true, new ZoomOut());
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
 
         #endregion
 
@@ -72,90 +155,15 @@ namespace NetAF.Interpretation
             return [.. commands];
         }
 
-        /// <summary>
-        /// Try and interpret a pan command.
-        /// </summary>
-        /// <param name="input">The string to interpret.</param>
-        /// <param name="result">The result of the interpretation.</param>
-        /// <returns>True if the interpretation was successful.</returns>
-        private static bool TryInterpretPan(string input, out InterpretationResult result)
-        {
-            if (Pan.NorthCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.North));
-                return true;
-            }
-
-            if (Pan.SouthCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.South));
-                return true;
-            }
-
-            if (Pan.EastCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.East));
-                return true;
-            }
-
-            if (Pan.WestCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.West));
-                return true;
-            }
-
-            if (Pan.UpCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.Up));
-                return true;
-            }
-
-            if (Pan.DownCommandHelp.Equals(input))
-            {
-                result = new(true, new Pan(Direction.Down));
-                return true;
-            }
-
-            if (PanReset.CommandHelp.Equals(input))
-            {
-                result = new(true, new PanReset());
-                return true;
-            }
-
-            result = null;
-            return false;
-        }
-
-        /// <summary>
-        /// Try and interpret a zoom command.
-        /// </summary>
-        /// <param name="input">The string to interpret.</param>
-        /// <param name="result">The result of the interpretation.</param>
-        /// <returns>True if the interpretation was successful.</returns>
-        private static bool TryInterpretZoom(string input, out InterpretationResult result)
-        {
-            if (ZoomIn.CommandHelp.Equals(input))
-            {
-                result = new(true, new ZoomIn());
-                return true;
-            }
-
-            if (ZoomOut.CommandHelp.Equals(input))
-            {
-                result = new(true, new ZoomOut());
-                return true;
-            }
-
-            result = null;
-            return false;
-        }
-
         #endregion
 
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
@@ -200,7 +208,7 @@ namespace NetAF.Interpretation
                 commands.Add(new CommandHelp(End.CommandHelp.Command, "Finish looking at the map", CommandCategory.RegionMap));
             }
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

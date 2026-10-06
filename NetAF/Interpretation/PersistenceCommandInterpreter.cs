@@ -1,5 +1,6 @@
 using NetAF.Commands;
 using NetAF.Commands.Persistence;
+using NetAF.Extensions;
 using NetAF.Logic;
 using NetAF.Logic.Modes;
 using NetAF.Utilities;
@@ -28,17 +29,20 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (Load.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Load.CommandHelp, commandString))
                 return new(true, new Load(args));
 
-            if (Save.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Save.CommandHelp, commandString))
                 return new(true, new Save(args));
 
             return InterpretationResult.Fail;
@@ -55,7 +59,7 @@ namespace NetAF.Interpretation
                 commands.Add(Save.CommandHelp);
             }
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

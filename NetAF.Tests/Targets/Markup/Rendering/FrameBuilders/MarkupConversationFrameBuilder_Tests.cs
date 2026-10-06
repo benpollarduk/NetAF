@@ -45,9 +45,9 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
             var builder = new MarkupConversationFrameBuilder(markupBuilder);
             var commands = new[]
             {
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test"),
-                new CommandHelp("Test", "Test")
+                new CommandHelp("Test"),
+                new CommandHelp("Test"),
+                new CommandHelp("Test")
             };
 
             var result = builder.Build("Test", null, commands, new Size(80, 50));

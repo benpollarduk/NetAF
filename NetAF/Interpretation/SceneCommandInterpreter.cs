@@ -65,7 +65,7 @@ namespace NetAF.Interpretation
 
         #endregion
 
-        #region StaticMethods
+        #region Methods
 
         /// <summary>
         /// Try and parse the Drop command.
@@ -74,16 +74,16 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseDropCommand(string text, Game game, out ICommand command)
+        private bool TryParseDropCommand(string text, Game game, out ICommand command)
         {
             StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out string args);
 
-            if (!Drop.CommandHelp.Equals(commandString))
+            if (!this.IsCommand(Drop.CommandHelp, commandString))
             {
                 command = null;
                 return false;
             }
-            else if (DropAll.CommandHelp.Equals($"{commandString} {args}"))
+            else if (this.IsCommand(DropAll.CommandHelp, $"{commandString} {args}"))
             {
                 command = new DropAll();
                 return true;
@@ -101,11 +101,11 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseTakeCommand(string text, Game game, out ICommand command)
+        private bool TryParseTakeCommand(string text, Game game, out ICommand command)
         {
             StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
-            if (!Take.CommandHelp.Equals(commandString))
+            if (!this.IsCommand(Take.CommandHelp, commandString))
             {
                 command = null;
                 return false;
@@ -146,18 +146,18 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseTalkCommand(string text, Game game, out ICommand command)
+        private bool TryParseTalkCommand(string text, Game game, out ICommand command)
         {
             StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
-            if (!Talk.TalkCommandHelp.Equals(commandString))
+            if (!this.IsCommand(Talk.TalkCommandHelp, commandString))
             {
                 command = null;
                 return false;
             }
 
             // determine if a target has been specified
-            if (args.Length > 3 && Talk.ToCommandHelp.Equals(args[..2]))
+            if (args.Length > 3 && this.IsCommand(Talk.ToCommandHelp, args[..2]))
             {
                 args = args[3..];
 
@@ -185,10 +185,10 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
+        private bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
         {
             // check exits to room
-            if (TryParseToDirection(noun, out var direction))
+            if (TryParseToMoveDirection(noun, out var direction))
             {
                 if (game.Overworld.CurrentRegion.CurrentRoom.FindExit(direction, false, out var exit))
                 {
@@ -242,11 +242,11 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseExamineCommand(string text, Game game, out ICommand command)
+        private bool TryParseExamineCommand(string text, Game game, out ICommand command)
         {
             StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
-            if (!Examine.CommandHelp.Equals(commandString))
+            if (!this.IsCommand(Examine.CommandHelp, commandString))
             {
                 command = null;
                 return false;
@@ -310,11 +310,11 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private static bool TryParseUseOnCommand(string text, Game game, out ICommand command)
+        private bool TryParseUseOnCommand(string text, Game game, out ICommand command)
         {
             StringUtilities.SplitInputToCommandAndArgument(text, out var commandString, out var args);
 
-            if (!UseOn.UseCommandHelp.Equals(commandString))
+            if (!this.IsCommand(UseOn.UseCommandHelp, commandString))
             {
                 command = null;
                 return false;
@@ -360,6 +360,58 @@ namespace NetAF.Interpretation
             command = new UseOn(item, target);
             return true;
         }
+
+        /// <summary>
+        /// Try and parse a string to a Direction.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <param name="direction">The direction.</param>
+        /// <returns>The result of the parse.</returns>
+        private bool TryParseToMoveDirection(string text, out Direction direction)
+        {
+            if (this.IsCommand(Move.NorthCommandHelp, text))
+            {
+                direction = Direction.North;
+                return true;
+            }
+
+            if (this.IsCommand(Move.EastCommandHelp, text))
+            {
+                direction = Direction.East;
+                return true;
+            }
+
+            if (this.IsCommand(Move.SouthCommandHelp, text))
+            {
+                direction = Direction.South;
+                return true;
+            }
+
+            if (this.IsCommand(Move.WestCommandHelp, text))
+            {
+                direction = Direction.West;
+                return true;
+            }
+
+            if (this.IsCommand(Move.UpCommandHelp, text))
+            {
+                direction = Direction.Up;
+                return true;
+            }
+
+            if (this.IsCommand(Move.DownCommandHelp, text))
+            {
+                direction = Direction.Down;
+                return true;
+            }
+
+            direction = Direction.East;
+            return false;
+        }
+
+        #endregion
+
+        #region StaticMethods
 
         /// <summary>
         /// Try and parse a string to a Direction.
@@ -447,13 +499,16 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             // try and parse as movement
-            if (TryParseToDirection(input, out var direction))
+            if (TryParseToMoveDirection(input, out var direction))
                 return new(true, new Move(direction));
 
             // handle as drop command
@@ -509,7 +564,7 @@ namespace NetAF.Interpretation
             if (game.Overworld.CurrentRegion.CurrentRoom.Items.Any(x => x.IsPlayerVisible) || game.Player.Items.Any(x => x.IsPlayerVisible))
                 commands.Add(UseOn.UseCommandHelp);
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

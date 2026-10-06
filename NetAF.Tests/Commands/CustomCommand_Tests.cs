@@ -9,7 +9,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void GivenNoPrompts_WhenGetPrompts_ThenReturnEmptyArray()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
 
             var result = command.GetPrompts(null);
 
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void Given1Prompt_WhenGetPrompts_ThenReturnArrayWith1Entry()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
             command.AddPrompt(new("A"));
 
             var result = command.GetPrompts(null);
@@ -30,7 +30,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void Given1Prompt_WhenRemoveMatchingPrompt_ThenReturnEmptyArray()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
             command.AddPrompt(new("A"));
             command.RemovePrompt(new("A"));
 
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void Given1Prompt_WhenRemoveNonMatchingPrompt_ThenReturnArrayWith1Entry()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
             command.AddPrompt(new("A"));
             command.RemovePrompt(new("B"));
 
@@ -54,7 +54,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void Given1Prompt_WhenClearPrompts_ThenReturnEmptyArray()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
             command.AddPrompt(new("A"));
 
             command.ClearPrompts();
@@ -66,7 +66,7 @@ namespace NetAF.Tests.Commands
         [TestMethod]
         public void Given1Prompt_WhenClone_ThenPromptsAreCloned()
         {
-            var command = new CustomCommand(new CommandHelp("A", "B"), true, true, null);
+            var command = new CustomCommand(new CommandHelp("A"), true, true, null);
             command.AddPrompt(new("A"));
 
             var result = command.Clone() as CustomCommand;

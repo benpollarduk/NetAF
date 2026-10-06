@@ -134,8 +134,8 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 player.Attributes.Add("Test", 10);
                 var commands = new[]
                 {
-                    new CommandHelp("Test", "Test"),
-                    new CommandHelp("Test", "Test")
+                    new CommandHelp("Test"),
+                    new CommandHelp("Test")
                 };
 
                 builder.Build(room, ViewPoint.Create(region), player, commands, true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));

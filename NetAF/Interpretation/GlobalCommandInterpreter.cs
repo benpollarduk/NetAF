@@ -36,23 +36,26 @@ namespace NetAF.Interpretation
         #region Implementation of IInterpreter
 
         /// <inheritdoc/>
-        public CommandHelp[] SupportedCommands { get; } = DefaultSupportedCommands;
+        public List<CommandHelp> ExcludedCommands { get; } = [];
+
+        /// <inheritdoc/>
+        public CommandHelp[] SupportedCommands => [.. this.FilterExcludedCommands(DefaultSupportedCommands)];
 
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
             StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var args);
 
-            if (About.CommandHelp.Equals(commandString))
+            if (this.IsCommand(About.CommandHelp, commandString))
                 return new(true, new About());
 
-            if (Notes.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Notes.CommandHelp, commandString))
                 return new(true, new Notes(args));
 
-            if (History.CommandHelp.Equals(commandString))
+            if (this.IsCommand(History.CommandHelp, commandString))
                 return new(true, new History(args));
 
-            if (GeneralHelp.CommandHelp.Equals(commandString))
+            if (this.IsCommand(GeneralHelp.CommandHelp, commandString))
             {
                 var prompts = game.GetPromptsForCommand(args);
 
@@ -68,10 +71,10 @@ namespace NetAF.Interpretation
                     return new(true, new Unactionable($"'{args}' is not a command."));
             }
 
-            if (CommandList.CommandHelp.Equals(commandString))
+            if (this.IsCommand(CommandList.CommandHelp, commandString))
                 return new(true, new CommandList());
 
-            if (Map.CommandHelp.Equals(commandString))
+            if (this.IsCommand(Map.CommandHelp, commandString))
                 return new(true, new Map());
 
             return InterpretationResult.Fail;
@@ -92,7 +95,7 @@ namespace NetAF.Interpretation
                 commands.Add(CommandList.CommandHelp);
             }
 
-            return [.. commands];
+            return [.. this.FilterExcludedCommands(commands)];
         }
 
         #endregion

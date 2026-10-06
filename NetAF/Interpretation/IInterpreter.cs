@@ -1,5 +1,6 @@
 ﻿using NetAF.Commands;
 using NetAF.Logic;
+using System.Collections.Generic;
 
 namespace NetAF.Interpretation
 {
@@ -9,6 +10,10 @@ namespace NetAF.Interpretation
     public interface IInterpreter
     {
 
+        /// <summary>
+        /// Get or set a list of commands that should be excluded from the supported commands.
+        /// </summary>
+        List<CommandHelp> ExcludedCommands { get; }
         /// <summary>
         /// Get an array of all supported commands.
         /// </summary>
