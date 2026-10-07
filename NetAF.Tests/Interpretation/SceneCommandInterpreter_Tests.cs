@@ -5,6 +5,7 @@ using NetAF.Interpretation;
 using NetAF.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Commands.Scene;
+using NetAF.Commands.Movement;
 
 namespace NetAF.Tests.Interpretation
 {

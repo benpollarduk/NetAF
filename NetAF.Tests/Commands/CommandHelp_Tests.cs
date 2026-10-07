@@ -67,5 +67,15 @@ namespace NetAF.Tests.Commands
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void GivenACommandHelp_WhenEqualityWithMatchingSynonym_ThenReturnTrue()
+        {
+            CommandHelp command = new("A", "A", CommandCategory.Uncategorized, string.Empty, synonyms: ["B"]);
+
+            var result = command.Equals("B");
+
+            Assert.IsTrue(result);
+        }
     }
 }

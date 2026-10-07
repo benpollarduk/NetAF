@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.RegionMap;
 using NetAF.Logic;
+using NetAF.Logic.Modes;
 using NetAF.Rendering;
 using NetAF.Utilities;
 
@@ -77,6 +79,7 @@ namespace NetAF.Tests.Commands.RegionMap
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new RegionMapMode(new Point3D(), RegionMapRenderOptions.Default, RoomMapRenderOptions.Default, null));
             var command = new ZoomIn();
 
             var result = command.GetPrompts(game);

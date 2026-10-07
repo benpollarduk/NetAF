@@ -208,6 +208,7 @@ namespace NetAF.Tests.Commands.RegionMap
             regionMaker[0, 0, 0] = room;
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            game.ChangeMode(new RegionMapMode(new Point3D(), RegionMapRenderOptions.Default, RoomMapRenderOptions.Default, null));
             var command = new Pan(Direction.East);
 
             var result = command.GetPrompts(game);

@@ -3,6 +3,7 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Commands.Movement;
 using NetAF.Commands.Scene;
 using NetAF.Interpretation;
 using NetAF.Logic;

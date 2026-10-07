@@ -1,7 +1,7 @@
 using NetAF.Assets.Locations;
 using NetAF.Logic;
 
-namespace NetAF.Commands.Scene
+namespace NetAF.Commands.Movement
 {
     /// <summary>
     /// Represents the Move command.

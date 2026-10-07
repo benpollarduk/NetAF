@@ -14,11 +14,11 @@ namespace NetAF.Interpretation
         /// </summary>
         private static readonly IInterpreter DefaultSceneCommandInterpreter = new InputInterpreter
         (
+            new CustomCommandInterpreter(),
             new FrameCommandInterpreter(),
             new GlobalCommandInterpreter(),
             new ExecutionCommandInterpreter(),
             new PersistenceCommandInterpreter(),
-            new CustomCommandInterpreter(),
             new MovementCommandInterpreter(),
             new SceneCommandInterpreter()
         );
