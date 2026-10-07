@@ -19,6 +19,7 @@ namespace NetAF.Interpretation
             new ExecutionCommandInterpreter(),
             new PersistenceCommandInterpreter(),
             new CustomCommandInterpreter(),
+            new MovementCommandInterpreter(),
             new SceneCommandInterpreter()
         );
 

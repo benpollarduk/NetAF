@@ -106,6 +106,10 @@ namespace NetAF.Interpretation
             if (!TryFindCommand(input, [..commands], out var command, out var matchingInput))
                 return InterpretationResult.Fail;
 
+            // make sure it isn't filtered
+            if (this.IsCommandExcluded(command.Help))
+                return InterpretationResult.Fail;
+
             // remove the matching part
             input = input[matchingInput.Length..];
 
