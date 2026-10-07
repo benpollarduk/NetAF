@@ -2,12 +2,12 @@
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Logic;
-using NetAF.Commands.Scene;
 using NetAF.Commands;
 using NetAF.Assets.Characters;
 using NetAF.Utilities;
+using NetAF.Commands.Movement;
 
-namespace NetAF.Tests.Commands.Scene
+namespace NetAF.Tests.Commands.Movement
 {
     [TestClass]
     public class Move_Tests

@@ -50,6 +50,19 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                     builder.WriteLine(commandHelp.DisplayAs);
                 }
 
+                StringBuilder synonymBuilder = new();
+
+                foreach (var synonym in commandHelp.Synonyms ?? [])
+                    synonymBuilder.Append($"'{synonym}' ");
+
+                var synonymString = synonymBuilder.ToString();
+
+                if (!string.IsNullOrEmpty(synonymString))
+                {
+                    builder.Write("Synonyms: ", bold);
+                    builder.WriteLine(synonymString);
+                }
+
                 StringBuilder promptBuilder = new();
 
                 foreach (var prompt in prompts ?? [])

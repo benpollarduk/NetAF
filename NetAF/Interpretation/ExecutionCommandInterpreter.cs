@@ -37,7 +37,7 @@ namespace NetAF.Interpretation
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
-            StringUtilities.SplitInputToCommandAndArgument(input, out var commandString, out var _);
+            StringUtilities.SplitInputToCommandAndArguments(input, out var commandString, out var _);
 
             if (this.IsCommand(Exit.CommandHelp, commandString))
                 return new(true, new Exit());

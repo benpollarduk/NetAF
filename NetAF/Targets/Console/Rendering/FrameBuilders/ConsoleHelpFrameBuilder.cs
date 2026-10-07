@@ -45,6 +45,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// </summary>
         public AnsiColor PromptsColor { get; set; } = NetAFPalette.NetAFYellow;
 
+        /// <summary>
+        /// Get or set the synonyms color.
+        /// </summary>
+        public AnsiColor SynonymsColor { get; set; } = NetAFPalette.NetAFYellow;
+
         #endregion
 
         #region Implementation of IHelpFrameBuilder
@@ -76,6 +81,16 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     gridStringBuilder.DrawWrapped($"Example: {commandHelp.DisplayAs}", leftMargin, lastY + 2, availableWidth, CommandDescriptionColor, out _, out lastY);
+
+                StringBuilder synonymBuilder = new();
+
+                foreach (var synonym in commandHelp.Synonyms ?? [])
+                    synonymBuilder.Append($"'{synonym}' ");
+
+                var synonymString = synonymBuilder.ToString();
+
+                if (!string.IsNullOrEmpty(synonymString))
+                    gridStringBuilder.DrawWrapped($"Synonyms: {synonymString}", leftMargin, lastY + 2, availableWidth, SynonymsColor, out _, out lastY);
 
                 StringBuilder promptBuilder = new();
 

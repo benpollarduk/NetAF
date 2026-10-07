@@ -38,6 +38,16 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 if (!string.IsNullOrEmpty(commandHelp.DisplayAs))
                     builder.P($"Example: {commandHelp.DisplayAs}");
 
+                StringBuilder synonymBuilder = new();
+
+                foreach (var synonym in commandHelp.Synonyms ?? [])
+                    synonymBuilder.Append($"'{synonym}' ");
+
+                var synonymString = synonymBuilder.ToString();
+
+                if (!string.IsNullOrEmpty(synonymString))
+                    builder.P($"Synonyms: {synonymString}");
+
                 StringBuilder promptBuilder = new();
 
                 foreach (var prompt in prompts ?? [])
