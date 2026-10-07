@@ -14,7 +14,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Drop All", "Drop all items", CommandCategory.Scene);
+        public static CommandHelp CommandHelp { get; } = new("Drop All", "Drop all items", CommandCategory.Scene, synonyms: ["Discard all", "Put all", "Place all", "Leave all"]);
 
         #endregion
 

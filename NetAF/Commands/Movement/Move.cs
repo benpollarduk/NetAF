@@ -14,32 +14,32 @@ namespace NetAF.Commands.Movement
         /// <summary>
         /// Get the command help for north.
         /// </summary>
-        public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", CommandCategory.Movement, "N", displayAs: "North/N");
+        public static CommandHelp NorthCommandHelp { get; } = new("North", "Move north", CommandCategory.Movement, "N", displayAs: "North/N", synonyms: ["Ahead", "Forward", "Forwards"]);
 
         /// <summary>
         /// Get the command help for south.
         /// </summary>
-        public static CommandHelp SouthCommandHelp { get; } = new("South", "Move south", CommandCategory.Movement, "S", displayAs: "South/S");
+        public static CommandHelp SouthCommandHelp { get; } = new("South", "Move south", CommandCategory.Movement, "S", displayAs: "South/S", synonyms: ["Back", "Backward", "Backwards"]);
 
         /// <summary>
         /// Get the command help for east.
         /// </summary>
-        public static CommandHelp EastCommandHelp { get; } = new("East", "Move east", CommandCategory.Movement, "E", displayAs: "East/E");
+        public static CommandHelp EastCommandHelp { get; } = new("East", "Move east", CommandCategory.Movement, "E", displayAs: "East/E", synonyms: ["Right"]);
 
         /// <summary>
         /// Get the command help for west.
         /// </summary>
-        public static CommandHelp WestCommandHelp { get; } = new("West", "Move west", CommandCategory.Movement, "W", displayAs: "West/W");
+        public static CommandHelp WestCommandHelp { get; } = new("West", "Move west", CommandCategory.Movement, "W", displayAs: "West/W", synonyms: ["Left"]);
 
         /// <summary>
         /// Get the command help for up.
         /// </summary>
-        public static CommandHelp UpCommandHelp { get; } = new("Up", "Move up", CommandCategory.Movement, "U", displayAs: "Up/U");
+        public static CommandHelp UpCommandHelp { get; } = new("Up", "Move up", CommandCategory.Movement, "U", displayAs: "Up/U", synonyms: ["Above", "Ascend", "Upwards"]);
 
         /// <summary>
         /// Get the command help for down.
         /// </summary>
-        public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", CommandCategory.Movement, "D", displayAs: "Down/D");
+        public static CommandHelp DownCommandHelp { get; } = new("Down", "Move down", CommandCategory.Movement, "D", displayAs: "Down/D", synonyms: ["Below", "Descend", "Downwards"]);
 
         /// <summary>
         /// Get the general command help.

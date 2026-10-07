@@ -17,7 +17,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var markupBuilder = new MarkupBuilder();
                 var builder = new MarkupHelpFrameBuilder(markupBuilder);
 
-                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), null, new Size(80, 50));
+                builder.Build("Test", new CommandHelp("Test", "Test 2"), null, new Size(80, 50));
             });
         }
 
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var markupBuilder = new MarkupBuilder();
                 var builder = new MarkupHelpFrameBuilder(markupBuilder);
 
-                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2", CommandCategory.Uncategorized, "Test 3.", "Test 4.", "Test 5."), [], new Size(80, 50));
+                builder.Build("Test", new CommandHelp("Test", "Test 2", CommandCategory.Uncategorized, "Test 3.", "Test 4.", "Test 5."), [], new Size(80, 50));
             });
         }
 
@@ -53,7 +53,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var markupBuilder = new MarkupBuilder();
                 var builder = new MarkupHelpFrameBuilder(markupBuilder);
 
-                builder.Build("Test", new NetAF.Commands.CommandHelp("Test", "Test 2"), [new("Prompt")], new Size(80, 50));
+                builder.Build("Test", new CommandHelp("Test", "Test 2", synonyms: ["Test 3"]), [new("Prompt")], new Size(80, 50));
             });
         }
     }

@@ -14,7 +14,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Take All", "Take all items in the current room", CommandCategory.Scene);
+        public static CommandHelp CommandHelp { get; } = new("Take All", "Take all items in the current room", CommandCategory.Scene, synonyms: ["Grab all", "Grab all", "Pick all", "Get all", "Collect all"]);
 
         #endregion
 
