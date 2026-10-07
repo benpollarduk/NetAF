@@ -48,12 +48,6 @@ namespace NetAF.Interpretation
         /// </summary>
         public static CommandHelp[] DefaultSupportedCommands { get; } =
         [
-            Move.NorthCommandHelp,
-            Move.EastCommandHelp,
-            Move.SouthCommandHelp,
-            Move.WestCommandHelp,
-            Move.UpCommandHelp,
-            Move.DownCommandHelp,
             Drop.CommandHelp,
             DropAll.CommandHelp,
             Examine.CommandHelp,
@@ -188,7 +182,7 @@ namespace NetAF.Interpretation
         private bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
         {
             // check exits to room
-            if (TryParseToMoveDirection(noun, out var direction))
+            if (TryParseToDirection(noun, out var direction))
             {
                 if (game.Overworld.CurrentRegion.CurrentRoom.FindExit(direction, false, out var exit))
                 {
@@ -361,54 +355,6 @@ namespace NetAF.Interpretation
             return true;
         }
 
-        /// <summary>
-        /// Try and parse a string to a Direction.
-        /// </summary>
-        /// <param name="text">The string to parse.</param>
-        /// <param name="direction">The direction.</param>
-        /// <returns>The result of the parse.</returns>
-        private bool TryParseToMoveDirection(string text, out Direction direction)
-        {
-            if (this.IsCommand(Move.NorthCommandHelp, text))
-            {
-                direction = Direction.North;
-                return true;
-            }
-
-            if (this.IsCommand(Move.EastCommandHelp, text))
-            {
-                direction = Direction.East;
-                return true;
-            }
-
-            if (this.IsCommand(Move.SouthCommandHelp, text))
-            {
-                direction = Direction.South;
-                return true;
-            }
-
-            if (this.IsCommand(Move.WestCommandHelp, text))
-            {
-                direction = Direction.West;
-                return true;
-            }
-
-            if (this.IsCommand(Move.UpCommandHelp, text))
-            {
-                direction = Direction.Up;
-                return true;
-            }
-
-            if (this.IsCommand(Move.DownCommandHelp, text))
-            {
-                direction = Direction.Down;
-                return true;
-            }
-
-            direction = Direction.East;
-            return false;
-        }
-
         #endregion
 
         #region StaticMethods
@@ -461,39 +407,6 @@ namespace NetAF.Interpretation
             return false;
         }
 
-        /// <summary>
-        /// Get all movement contextual commands.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <returns>The contextual help.</returns>
-        private static CommandHelp[] GetMovementContextualCommands(Game game)
-        {
-            if (game.Overworld.CurrentRegion.CurrentRoom == null)
-                return [];
-
-            List<CommandHelp> commands = [];
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.North))
-                commands.Add(Move.NorthCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.East))
-                commands.Add(Move.EastCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.South))
-                commands.Add(Move.SouthCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.West))
-                commands.Add(Move.WestCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Up))
-                commands.Add(Move.UpCommandHelp);
-
-            if (game.Overworld.CurrentRegion.CurrentRoom.CanMove(Direction.Down))
-                commands.Add(Move.DownCommandHelp);
-
-            return [.. commands];
-        }
-
         #endregion
 
         #region Implementation of IInterpreter
@@ -507,10 +420,6 @@ namespace NetAF.Interpretation
         /// <inheritdoc/>
         public InterpretationResult Interpret(string input, Game game)
         {
-            // try and parse as movement
-            if (TryParseToMoveDirection(input, out var direction))
-                return new(true, new Move(direction));
-
             // handle as drop command
             if (TryParseDropCommand(input, game, out var drop))
                 return new(true, drop);
@@ -543,7 +452,6 @@ namespace NetAF.Interpretation
                 return [];
 
             List<CommandHelp> commands = [];
-            commands.AddRange(GetMovementContextualCommands(game));
             commands.Add(Examine.CommandHelp);
 
             if (game.Player.Items.Any(x => x.IsPlayerVisible && x.IsTakeable) && game.Player.CanTakeAndDropItems)
