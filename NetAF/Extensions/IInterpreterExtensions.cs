@@ -11,6 +11,17 @@ namespace NetAF.Extensions
     internal static class IInterpreterExtensions
     {
         /// <summary>
+        /// Determines whether the specified command is excluded by the interpreter.
+        /// </summary>
+        /// <param name="value">The IInterpreter instance.</param>
+        /// <param name="command">The command to check.</param>
+        /// <returns>True if the command is excluded; otherwise, false.</returns>
+        public static bool IsCommandExcluded(this IInterpreter value, CommandHelp command)
+        {
+            return !value.FilterExcludedCommands([command]).Any();
+        }
+
+        /// <summary>
         /// Filters out commands that are present in the ExcludedCommands collection from the commands collection.
         /// </summary>
         /// <param name="value">The IInterpreter instance.</param>

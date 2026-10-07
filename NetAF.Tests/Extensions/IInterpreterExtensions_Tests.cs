@@ -145,5 +145,51 @@ namespace NetAF.Tests.Extensions
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public void GivenNullCommand_WhenIsCommandExcluded_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+
+            var result = interpreter.IsCommandExcluded(null);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenNoExcludedCommands_WhenIsCommandExcluded_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+
+            var result = interpreter.IsCommandExcluded(command);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenExcludedCommand_WhenIsCommandExcluded_ThenTrue()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+            interpreter.ExcludedCommands.Add(command);
+
+            var result = interpreter.IsCommandExcluded(command);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenNotExcludedCommand_WhenIsCommandExcluded_ThenFalse()
+        {
+            var interpreter = new PersistenceCommandInterpreter();
+            var excludedCommand = PersistenceCommandInterpreter.DefaultSupportedCommands[0];
+            var command = PersistenceCommandInterpreter.DefaultSupportedCommands[1];
+            interpreter.ExcludedCommands.Add(excludedCommand);
+
+            var result = interpreter.IsCommandExcluded(command);
+
+            Assert.IsFalse(result);
+        }
     }
 }

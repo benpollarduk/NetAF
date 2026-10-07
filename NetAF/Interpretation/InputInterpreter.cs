@@ -41,7 +41,7 @@ namespace NetAF.Interpretation
 
                 // the interpreter interpreted it, but it may be excluded by this collection of interpreters
                 // only allow if the command is not excluded at this level
-                if (result.WasInterpretedSuccessfully && this.FilterExcludedCommands([result.Command.Help]).Any())
+                if (result.WasInterpretedSuccessfully && !this.IsCommandExcluded(result.Command.Help))
                     return result;
             }
 

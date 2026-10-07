@@ -9,7 +9,6 @@ namespace NetAF.Interpretation
     /// </summary>
     public interface IInterpreter
     {
-
         /// <summary>
         /// Get or set a list of commands that should be excluded from the supported commands.
         /// </summary>
