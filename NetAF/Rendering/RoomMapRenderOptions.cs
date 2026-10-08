@@ -14,7 +14,7 @@
         {
             KeyType = KeyType.Dynamic, 
             PointOfInterestDetail = PointOfInterestDetail.Low,
-            KeyPlacement = KeyPlacement.Below
+            KeyPlacement = KeyPlacement.Right
         };
 
         #endregion
