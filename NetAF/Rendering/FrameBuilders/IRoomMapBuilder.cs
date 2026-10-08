@@ -19,5 +19,12 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <param name="options">The render options to use.</param>
         void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options);
+        /// <summary>
+        /// Measure the size required for a room map. The returned size includes the size of any key that will be rendered as well as the map itself.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="viewPoint">The viewpoint from the room.</param>
+        /// <param name="options">The render options to use.</param>
+        Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options);
     }
 }

@@ -120,6 +120,50 @@ namespace NetAF.Tests.Commands.Execution
         }
 
         [TestMethod]
+        public void GivenKeyRightArg_WhenInvoke_ThenInform()
+        {
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var command = new Option(Option.KeyRight.Entry);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenKeyLeftArg_WhenInvoke_ThenInform()
+        {
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var command = new Option(Option.KeyLeft.Entry);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenKeyAboveArg_WhenInvoke_ThenInform()
+        {
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var command = new Option(Option.KeyAbove.Entry);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenKeyBelowArg_WhenInvoke_ThenInform()
+        {
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
+            var command = new Option(Option.KeyBelow.Entry);
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Inform, result.Result);
+        }
+
+        [TestMethod]
         public void GivenMapInScenesOffArg_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();

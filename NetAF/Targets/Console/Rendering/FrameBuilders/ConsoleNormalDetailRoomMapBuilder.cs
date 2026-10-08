@@ -221,6 +221,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             endY = startPosition.Y + 2;
         }
 
+        /// <inheritdoc/>
+        public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
+        {
+            return RenderedSize;
+        }
+
         #endregion
     }
 }

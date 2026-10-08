@@ -9,7 +9,7 @@ using System;
 namespace NetAF.Targets.General.FrameBuilders
 {
     /// <summary>
-    /// Provides a room map builder.
+    /// Provides a general builder for room maps.
     /// </summary>
     public abstract class GeneralRoomMapBuilder : IRoomMapBuilder
     {
@@ -68,6 +68,21 @@ namespace NetAF.Targets.General.FrameBuilders
             throw new NotImplementedException();
         }
 
+        private IRoomMapBuilder CreateRoomMapBuilder(GridStringBuilder ansiGridStringBuilder)
+        {
+            return new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder)
+            {
+                LockedExit = LockedExit,
+                PointOfInterest = PointOfInterest,
+                VerticalBoundary = VerticalBoundary,
+                HorizontalBoundary = HorizontalBoundary,
+                VerticalExitBorder = VerticalExitBorder,
+                HorizontalExitBorder = HorizontalExitBorder,
+                Corner = Corner,
+                KeyPadding = KeyPadding
+            };
+        }
+
         #endregion
 
         #region Implementation of IRoomMapBuilder
@@ -90,36 +105,23 @@ namespace NetAF.Targets.General.FrameBuilders
 
             // for now, cheat and use the ANSI builder then convert to string
 
-            // determine the required size
-            Size renderSizeWithFullKey = new(RenderedSize.Width + KeyPadding + ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Width, Math.Max(RenderedSize.Height, ConsoleHighDetailRoomMapBuilder.MaximumKeySize.Height));
-
-            // get size depending on key
-            var renderedSize = options.KeyType switch
-            {
-                KeyType.None => RenderedSize,
-                KeyType.Dynamic => renderSizeWithFullKey,
-                KeyType.Full => renderSizeWithFullKey,
-                _ => throw new NotImplementedException()
-            };
-
             // create an ANSI grid string builder just for this map
             GridStringBuilder ansiGridStringBuilder = new();
-            ansiGridStringBuilder.Resize(renderedSize);
 
-            ConsoleHighDetailRoomMapBuilder ansiRoomBuilder = new(ansiGridStringBuilder)
-            {
-                LockedExit = LockedExit,
-                PointOfInterest = PointOfInterest,
-                VerticalBoundary = VerticalBoundary,
-                HorizontalBoundary = HorizontalBoundary,
-                VerticalExitBorder = VerticalExitBorder,
-                HorizontalExitBorder = HorizontalExitBorder,
-                Corner = Corner,
-                KeyPadding = KeyPadding
-            };
+            var ansiRoomBuilder = CreateRoomMapBuilder(ansiGridStringBuilder);
+            var renderedSize = Measure(room, viewPoint, options);
+            ansiGridStringBuilder.Resize(renderedSize);
 
             ansiRoomBuilder.BuildRoomMap(room, viewPoint, options);
             Adapt(ansiGridStringBuilder);
+        }
+
+        /// <inheritdoc/>
+        public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
+        {
+            // determine the required size
+            var ansiRoomBuilder = CreateRoomMapBuilder(null);
+            return ansiRoomBuilder.Measure(room, viewPoint, options);
         }
 
         #endregion

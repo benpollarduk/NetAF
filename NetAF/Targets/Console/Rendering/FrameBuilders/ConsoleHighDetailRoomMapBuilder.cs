@@ -328,18 +328,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         }
 
         /// <summary>
-        /// Get the number of points of interest.
-        /// </summary>
-        /// <param name="room">The room.</param>
-        /// <returns>The number of points of interest.</returns>
-        private int GetNumberOfPointsOfInterest(Room room)
-        {
-            var items = room.Items.Where(x => x.IsPlayerVisible).ToArray();
-            var characters = room.Characters.Where(x => x.IsPlayerVisible).ToArray();
-            return items.Length + characters.Length;
-        }
-
-        /// <summary>
         /// Get the point of interest indicator.
         /// </summary>
         /// <param name="numberOfPointsOfInterest">The number of points of interest.</param>
@@ -396,10 +384,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <param name="options">The render options.</param>
-        /// <param name="startPosition">The start position.</param>
+        /// <param name="startPosition">The start position of the overall render.</param>
+        /// <param name="mapStart">The start position of the map.</param>
         /// <param name="endX">The end position, x.</param>
         /// <param name="endY">The end position, x.</param>
-        private void DrawKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, out int endX, out int endY)
+        private void DrawKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, Point2D mapStart, out int endX, out int endY)
         {
             var numberOfPointsOfInterest = GetNumberOfPointsOfInterest(room);
             var pointOfInterestIndicator = GetPointOfInterestIndicator(numberOfPointsOfInterest, options.PointOfInterestDetail);
@@ -455,17 +444,62 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     throw new NotImplementedException();
             }
 
-            endX = startPosition.X + 8;
-            endY = startPosition.Y;
+            endX = mapStart.X + 8;
+            endY = mapStart.Y;
 
             if (keyLines.Keys.Count == 0)
                 return;
 
-            var startKeyX = endX + KeyPadding;
+            int startKeyX;
+            int startKeyY;
+
+            switch (options.KeyPlacement)
+            {
+                case KeyPlacement.Below:
+                    // place the key beneath the map, aligned to the map's left edge
+                    startKeyX = mapStart.X;
+                    startKeyY = mapStart.Y + RenderedSize.Height;
+                    break;
+                case KeyPlacement.Above:
+                    // place the key above the map, aligned to the map's left edge
+                    startKeyX = mapStart.X;
+                    startKeyY = startPosition.Y - 1;
+                    break;
+                case KeyPlacement.Left:
+                    // place the key to the left of the map, aligned to the overall left edge
+                    startKeyX = startPosition.X;
+                    startKeyY = mapStart.Y;
+                    break;
+                case KeyPlacement.Right:
+                    // place the key to the right of the map
+                    startKeyX = endX + KeyPadding;
+                    startKeyY = mapStart.Y;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
             var maxWidth = keyLines.Max(x => x.Key.Length) + startKeyX + 1;
+            endY = startKeyY;
 
             foreach (var keyLine in keyLines)
                 gridStringBuilder.DrawWrapped(keyLine.Key, startKeyX, endY + 1, maxWidth, keyLine.Value, out endX, out endY);
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Get the number of points of interest.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <returns>The number of points of interest.</returns>
+        private static int GetNumberOfPointsOfInterest(Room room)
+        {
+            var items = room.Items.Where(x => x.IsPlayerVisible).ToArray();
+            var characters = room.Characters.Where(x => x.IsPlayerVisible).ToArray();
+            return items.Length + characters.Length;
         }
 
         #endregion
@@ -479,6 +513,29 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
             BuildRoomMap(room, viewPoint, options, new Point2D(0, 0), out _, out _);
+        }
+
+        /// <inheritdoc/>
+        public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
+        {
+            // determine the required size
+            Size renderSizeWithKey = options.KeyPlacement switch
+            {
+                KeyPlacement.Below => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height),
+                KeyPlacement.Above => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height),
+                KeyPlacement.Right => new Size(RenderedSize.Width + KeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
+                KeyPlacement.Left => new Size(RenderedSize.Width + KeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
+                _ => throw new NotImplementedException()
+            };
+
+            // get size depending on key
+            return options.KeyType switch
+            {
+                KeyType.None => RenderedSize,
+                KeyType.Dynamic => renderSizeWithKey,
+                KeyType.Full => renderSizeWithKey,
+                _ => throw new NotImplementedException()
+            };
         }
 
         #endregion
@@ -498,17 +555,25 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
              * *-| S |-*
              */
 
-            DrawNorthBorder(room, viewPoint, startPosition);
-            DrawSouthBorder(room, viewPoint, startPosition);
-            DrawEastBorder(room, viewPoint, startPosition);
-            DrawWestBorder(room, viewPoint, startPosition);
-            DrawUpExit(room, viewPoint, startPosition);
-            DrawDownExit(room, viewPoint, startPosition);
-            DrawItemOrCharacter(room, startPosition, options.PointOfInterestDetail);
-            DrawKey(room, viewPoint, options, startPosition, out endX, out endY);
+            // offset the map to leave room for the key when it is placed to the left or above
+            var mapStart = options.KeyType == KeyType.None ? startPosition : options.KeyPlacement switch
+            {
+                KeyPlacement.Left => new Point2D(startPosition.X + MaximumKeySize.Width + KeyPadding, startPosition.Y),
+                KeyPlacement.Above => new Point2D(startPosition.X, startPosition.Y + MaximumKeySize.Height),
+                _ => startPosition
+            };
 
-            if (endY < startPosition.Y + 6)
-                endY = startPosition.Y + 6;
+            DrawNorthBorder(room, viewPoint, mapStart);
+            DrawSouthBorder(room, viewPoint, mapStart);
+            DrawEastBorder(room, viewPoint, mapStart);
+            DrawWestBorder(room, viewPoint, mapStart);
+            DrawUpExit(room, viewPoint, mapStart);
+            DrawDownExit(room, viewPoint, mapStart);
+            DrawItemOrCharacter(room, mapStart, options.PointOfInterestDetail);
+            DrawKey(room, viewPoint, options, startPosition, mapStart, out endX, out endY);
+
+            if (endY < mapStart.Y + 6)
+                endY = mapStart.Y + 6;
         }
 
         #endregion

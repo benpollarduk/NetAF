@@ -47,6 +47,26 @@ namespace NetAF.Commands.Frame
         public static Prompt KeyDynamic => new("key-dynamic");
 
         /// <summary>
+        /// Get the prompt for key placement to the right.
+        /// </summary>
+        public static Prompt KeyRight => new("key-right");
+
+        /// <summary>
+        /// Get the prompt for key placement to the left.
+        /// </summary>
+        public static Prompt KeyLeft => new("key-left");
+
+        /// <summary>
+        /// Get the prompt for key placement above.
+        /// </summary>
+        public static Prompt KeyAbove => new("key-above");
+
+        /// <summary>
+        /// Get the prompt for key placement below.
+        /// </summary>
+        public static Prompt KeyBelow => new("key-below");
+
+        /// <summary>
         /// Get the prompt for point of interest none.
         /// </summary>
         public static Prompt PointOfInterestNone => new("poi-none");
@@ -132,6 +152,30 @@ namespace NetAF.Commands.Frame
                 return new(ReactionResult.Inform, "Key has been set to full.");
             }
 
+            if (IsPrompt(arg, KeyRight))
+            {
+                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Right;
+                return new(ReactionResult.Inform, "Key placement has been set to right.");
+            }
+
+            if (IsPrompt(arg, KeyLeft))
+            {
+                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Left;
+                return new(ReactionResult.Inform, "Key placement has been set to left.");
+            }
+
+            if (IsPrompt(arg, KeyAbove))
+            {
+                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Above;
+                return new(ReactionResult.Inform, "Key placement has been set to above.");
+            }
+
+            if (IsPrompt(arg, KeyBelow))
+            {
+                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Below;
+                return new(ReactionResult.Inform, "Key placement has been set to below.");
+            }
+
             if (IsPrompt(arg, PointOfInterestNone))
             {
                 FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.None;
@@ -176,6 +220,10 @@ namespace NetAF.Commands.Frame
                 KeyNone,
                 KeyDynamic,
                 KeyFull,
+                KeyRight,
+                KeyLeft,
+                KeyAbove,
+                KeyBelow,
                 PointOfInterestNone,
                 PointOfInterestLow,
                 PointOfInterestHigh,
