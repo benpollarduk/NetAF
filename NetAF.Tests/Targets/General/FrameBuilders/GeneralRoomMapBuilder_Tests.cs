@@ -55,5 +55,53 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
 
             Assert.IsNotNull(builder.LastAdapted);
         }
+
+        [TestMethod]
+        public void GivenRoomAndKeyPlacementLeft_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
+        {
+            var builder = new TestBuilder();
+            Room room = new("ROOM", string.Empty);
+            ViewPoint viewPoint = ViewPoint.NoView;
+
+            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions { KeyPlacement = KeyPlacement.Left });
+
+            Assert.IsNotNull(builder.LastAdapted);
+        }
+
+        [TestMethod]
+        public void GivenRoomAndKeyPlacementAbove_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
+        {
+            var builder = new TestBuilder();
+            Room room = new("ROOM", string.Empty);
+            ViewPoint viewPoint = ViewPoint.NoView;
+
+            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions { KeyPlacement = KeyPlacement.Above });
+
+            Assert.IsNotNull(builder.LastAdapted);
+        }
+
+        [TestMethod]
+        public void GivenRoomAndKeyPlacementRight_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
+        {
+            var builder = new TestBuilder();
+            Room room = new("ROOM", string.Empty);
+            ViewPoint viewPoint = ViewPoint.NoView;
+
+            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions { KeyPlacement = KeyPlacement.Right });
+
+            Assert.IsNotNull(builder.LastAdapted);
+        }
+
+        [TestMethod]
+        public void GivenRoomAndKeyPlacementBelow_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
+        {
+            var builder = new TestBuilder();
+            Room room = new("ROOM", string.Empty);
+            ViewPoint viewPoint = ViewPoint.NoView;
+
+            builder.BuildRoomMap(room, viewPoint, new RoomMapRenderOptions { KeyPlacement = KeyPlacement.Below });
+
+            Assert.IsNotNull(builder.LastAdapted);
+        }
     }
 }
