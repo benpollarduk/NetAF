@@ -1,4 +1,3 @@
-using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
@@ -7,6 +6,8 @@ using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
+using System.Linq;
+using System.Text;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -49,6 +50,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Get or set the command title.
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
+
+        /// <summary>
+        /// Get or set if examinables should be displayed.
+        /// </summary>
+        public bool DisplayExaminables { get; set; } = true;
 
         #endregion
 
@@ -133,6 +139,28 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                     consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, options, new Point2D(leftMargin, lastY + linePadding), out _, out lastY);
                 else
                     roomMapBuilder.BuildRoomMap(room, viewPoint, options);
+            }
+
+            if (DisplayExaminables)
+            {
+                var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
+                var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
+
+                if (visibleItems != 0 || visibleCharacters != 0)
+                {
+                    StringBuilder examinationBuilder = new();
+
+                    if (visibleItems > 0)
+                        examinationBuilder.AppendLine(SceneHelper.CreateItemsString(room));
+
+                    if (visibleItems > 0 && visibleCharacters > 0)
+                        examinationBuilder.AppendLine();
+
+                    if (visibleCharacters > 0)
+                        examinationBuilder.AppendLine(SceneHelper.CreateCharactersString(room));
+
+                    gridStringBuilder.DrawWrapped(examinationBuilder.ToString(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+                }
             }
 
             if (player.Items.Length != 0)
