@@ -7,7 +7,6 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
 using System.Linq;
-using System.Text;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -142,26 +141,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             }
 
             if (DisplayExaminables)
-            {
-                var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
-                var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
-
-                if (visibleItems != 0 || visibleCharacters != 0)
-                {
-                    StringBuilder examinationBuilder = new();
-
-                    if (visibleItems > 0)
-                        examinationBuilder.AppendLine(SceneHelper.CreateItemsString(room));
-
-                    if (visibleItems > 0 && visibleCharacters > 0)
-                        examinationBuilder.AppendLine();
-
-                    if (visibleCharacters > 0)
-                        examinationBuilder.AppendLine(SceneHelper.CreateCharactersString(room));
-
-                    gridStringBuilder.DrawWrapped(examinationBuilder.ToString(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
-                }
-            }
+                gridStringBuilder.DrawWrapped(SceneHelper.CreateRoomString(room), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
 
             if (player.Items.Length != 0)
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);

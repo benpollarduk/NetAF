@@ -103,7 +103,7 @@ namespace NetAF.Rendering
         }
 
         /// <summary>
-        /// Create a description of the characters as a string.
+        /// Create a description of the characters in a room as a string.
         /// </summary>
         /// <param name="room">The room.</param>
         /// <returns>The characters, as a string.</returns>
@@ -115,7 +115,7 @@ namespace NetAF.Rendering
                 return string.Empty;
 
             if (characters.Length == 1)
-                return characters[0].Identifier + " is in this area.";
+                return characters[0].Identifier + " is here.";
 
             StringBuilder builder = new();
 
@@ -130,15 +130,13 @@ namespace NetAF.Rendering
             builder.Append(sentenceSoFar[..sentenceSoFar.LastIndexOf(',')]);
             builder.Append(" and ");
             builder.Append(sentenceSoFar[(sentenceSoFar.LastIndexOf(',') + 2)..]);
-            builder.Append(" are in the ");
-            builder.Append(room.Identifier);
-            builder.Append('.');
+            builder.Append(" are here.");
 
             return builder.ToString();
         }
 
         /// <summary>
-        /// Create a description of the items as a string.
+        /// Create a description of the items in a room as a string.
         /// </summary>
         /// <param name="room">The room.</param>
         /// <returns>The items, as a string.</returns>
@@ -159,6 +157,33 @@ namespace NetAF.Rendering
                     var firstItemName = sentence[..(sentence.Contains(", ") ? sentence.IndexOf(", ", StringComparison.Ordinal) : sentence.IndexOf(" and ", StringComparison.Ordinal))];
                     return $"There {(firstItemName.IsPlural() ? "are" : "is")} {sentence.StartWithLower().EnsureFinishedSentence()}";
             }
+        }
+
+        /// <summary>
+        /// Create a description of the room as a string.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <returns>The room, as a string.</returns>
+        public static string CreateRoomString(Room room)
+        {
+            var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
+            var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
+
+            if (visibleItems == 0 && visibleCharacters == 0)
+                return new($"{room.Identifier.Name} is empty.");
+
+            StringBuilder examinationBuilder = new();
+
+            if (visibleItems > 0)
+                examinationBuilder.AppendLine(CreateItemsString(room));
+
+            if (visibleItems > 0 && visibleCharacters > 0)
+                examinationBuilder.AppendLine();
+
+            if (visibleCharacters > 0)
+                examinationBuilder.AppendLine(CreateCharactersString(room));
+
+            return examinationBuilder.ToString();
         }
     }
 }

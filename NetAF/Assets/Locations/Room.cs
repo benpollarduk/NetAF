@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NetAF.Assets.Characters;
 using NetAF.Commands;
 using NetAF.Extensions;
@@ -504,24 +503,7 @@ namespace NetAF.Assets.Locations
             if (request.Examinable is not Room room)
                 return DefaultExamination(request);
 
-            var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
-            var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
-
-            if (visibleItems == 0 && visibleCharacters == 0)
-                return new($"{room.Identifier.Name} is empty.");
-
-            StringBuilder examinationBuilder = new();
-
-            if (visibleItems > 0)
-                examinationBuilder.AppendLine(SceneHelper.CreateItemsString(room));
-
-            if (visibleItems > 0 && visibleCharacters > 0)
-                examinationBuilder.AppendLine();
-
-            if (visibleCharacters > 0)
-                examinationBuilder.AppendLine(SceneHelper.CreateCharactersString(room));
-
-            return new(examinationBuilder.ToString());
+            return new(SceneHelper.CreateRoomString(room));
         }
 
         #endregion
