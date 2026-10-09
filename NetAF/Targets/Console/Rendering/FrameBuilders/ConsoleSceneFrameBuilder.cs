@@ -141,7 +141,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             }
 
             if (DisplayExaminables)
-                gridStringBuilder.DrawWrapped(SceneHelper.CreateRoomString(room), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+            {
+                var roomString = SceneHelper.CreateRoomString(room);
+
+                if (!string.IsNullOrEmpty(roomString))
+                    gridStringBuilder.DrawWrapped(roomString, leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
+            }
 
             if (player.Items.Length != 0)
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);

@@ -48,7 +48,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 builder.P(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
 
             if (DisplayExaminables)
-                builder.P(SceneHelper.CreateRoomString(room));
+            {
+                var roomString = SceneHelper.CreateRoomString(room);
+
+                if (!string.IsNullOrEmpty(roomString))
+                    builder.P(roomString);
+            }
 
             if (player.Items.Length != 0)
                 builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
