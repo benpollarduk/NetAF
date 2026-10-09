@@ -24,6 +24,11 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
 
+        /// <summary>
+        /// Get or set if examinables should be displayed.
+        /// </summary>
+        public bool DisplayExaminables { get; set; } = true;
+
         #endregion
 
         #region Implementation of ISceneFrameBuilder
@@ -41,6 +46,9 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             if (viewPoint.Any)
                 builder.P(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
+
+            if (DisplayExaminables)
+                builder.P(SceneHelper.CreateRoomString(room));
 
             if (player.Items.Length != 0)
                 builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());

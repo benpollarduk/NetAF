@@ -1,4 +1,3 @@
-using System.Linq;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
@@ -7,6 +6,7 @@ using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
+using System.Linq;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -49,6 +49,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         /// Get or set the command title.
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
+
+        /// <summary>
+        /// Get or set if examinables should be displayed.
+        /// </summary>
+        public bool DisplayExaminables { get; set; } = true;
 
         #endregion
 
@@ -134,6 +139,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 else
                     roomMapBuilder.BuildRoomMap(room, viewPoint, options);
             }
+
+            if (DisplayExaminables)
+                gridStringBuilder.DrawWrapped(SceneHelper.CreateRoomString(room), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
 
             if (player.Items.Length != 0)
                 gridStringBuilder.DrawWrapped("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower(), leftMargin, lastY + 2, availableWidth, TextColor, out _, out lastY);
