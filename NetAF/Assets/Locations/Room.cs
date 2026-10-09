@@ -503,6 +503,12 @@ namespace NetAF.Assets.Locations
             if (request.Examinable is not Room room)
                 return DefaultExamination(request);
 
+            var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
+            var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
+
+            if (visibleItems == 0 && visibleCharacters == 0)
+                return new($"{room.Identifier.Name} is empty.");
+
             return new(SceneHelper.CreateRoomString(room));
         }
 

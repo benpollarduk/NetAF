@@ -170,7 +170,7 @@ namespace NetAF.Rendering
             var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
 
             if (visibleItems == 0 && visibleCharacters == 0)
-                return new($"{room.Identifier.Name} is empty.");
+                return string.Empty;
 
             StringBuilder examinationBuilder = new();
 
@@ -183,7 +183,7 @@ namespace NetAF.Rendering
             if (visibleCharacters > 0)
                 examinationBuilder.AppendLine(CreateCharactersString(room));
 
-            return examinationBuilder.ToString();
+            return examinationBuilder.ToString().TrimEnd(StringUtilities.CR, StringUtilities.LF, StringUtilities.Newline);
         }
     }
 }

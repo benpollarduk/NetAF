@@ -183,5 +183,49 @@ namespace NetAF.Tests.Rendering
 
             Assert.AreNotEqual(string.Empty, result);
         }
+
+        [TestMethod]
+        public void GivenRoomWithNoItemsOrNPCs_WhenCreateRoomString_ThenEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+
+            var result = SceneHelper.CreateRoomString(room);
+
+            Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithASingleItem_WhenCreateRoomString_ThenNonEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+            room.AddItem(new Item("Test", "Test"));
+
+            var result = SceneHelper.CreateRoomString(room);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithASingleNPC_WhenCreateRoomString_ThenNonEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+            room.AddCharacter(new NonPlayableCharacter("Test", "Test"));
+
+            var result = SceneHelper.CreateRoomString(room);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithItemsAndNPCs_WhenCreateRoomString_ThenNonEmptyString()
+        {
+            var room = new Room(string.Empty, string.Empty);
+            room.AddItem(new Item("Test", "Test"));
+            room.AddCharacter(new NonPlayableCharacter("Test", "Test"));
+
+            var result = SceneHelper.CreateRoomString(room);
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
     }
 }
