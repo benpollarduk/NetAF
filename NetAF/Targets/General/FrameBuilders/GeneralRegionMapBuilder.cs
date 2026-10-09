@@ -9,7 +9,7 @@ using System;
 namespace NetAF.Targets.General.FrameBuilders
 {
     /// <summary>
-    /// Provides a builder for region maps.
+    /// Provides a general builder for region maps.
     /// </summary>
     public abstract class GeneralRegionMapBuilder : IRegionMapBuilder
     {

@@ -1,6 +1,7 @@
 using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Rendering;
+using System;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders
 {
@@ -84,6 +85,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             
             endX = startPosition.X;
             endY = startPosition.Y;
+        }
+
+        /// <inheritdoc/>
+        public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
+        {
+            return RenderedSize;
         }
 
         #endregion
