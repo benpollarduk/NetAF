@@ -1,5 +1,6 @@
 using NetAF.Assets;
 using NetAF.Assets.Locations;
+using NetAF.Commands.Frame;
 using NetAF.Rendering;
 using System;
 using System.Collections.Generic;
@@ -397,13 +398,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
             var lockedExitString = $"{LockedExit} = Locked Exit";
             var notVisitedExitString = "N/E/S/W/U/D = Unvisited";
             var visitedExitString = "n/e/s/w/u/d = Visited";
-            var pointOfInterestString = options.PointOfInterestDetail switch
-            {
-                PointOfInterestDetail.None => string.Empty,
-                PointOfInterestDetail.Low => $"{pointOfInterestIndicator} = Point of interest",
-                PointOfInterestDetail.High => $"{pointOfInterestIndicator} = Point{(numberOfPointsOfInterest == 1 ? "" : "s")} of interest",
-                _ => throw new NotImplementedException()
-            };
+            var pointOfInterestString = GetPointOfInterestStringForKey(options.PointOfInterestDetail, pointOfInterestIndicator, numberOfPointsOfInterest);
 
             switch (options.KeyType)
             {
@@ -491,6 +486,24 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
         #region StaticMethods
 
         /// <summary>
+        /// Get a string representing the point of interest.
+        /// </summary>
+        /// <param name="detail">The level of detail for the point of interest.</param>
+        /// <param name="pointOfInterestIndicator">The indicator for the point of interest.</param>
+        /// <param name="numberOfPointsOfInterest">The number of points of interest.</param>
+        /// <returns>A string representing the point of interest.</returns>
+        private static string GetPointOfInterestStringForKey(PointOfInterestDetail detail, char pointOfInterestIndicator, int numberOfPointsOfInterest)
+        {
+            return detail switch
+            {
+                PointOfInterestDetail.None => string.Empty,
+                PointOfInterestDetail.Low => $"{pointOfInterestIndicator} = Point of interest",
+                PointOfInterestDetail.High => $"{pointOfInterestIndicator} = Point{(numberOfPointsOfInterest == 1 ? "" : "s")} of interest",
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        /// <summary>
         /// Get the number of points of interest.
         /// </summary>
         /// <param name="room">The room.</param>
@@ -508,12 +521,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
 
         /// <inheritdoc/>
         public Size RenderedSize => new(9, 7);
-
-        /// <inheritdoc/>
-        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
-        {
-            BuildRoomMap(room, viewPoint, options, new Point2D(0, 0), out _, out _);
-        }
 
         /// <inheritdoc/>
         public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
@@ -536,6 +543,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders
                 KeyType.Full => renderSizeWithKey,
                 _ => throw new NotImplementedException()
             };
+        }
+
+        /// <inheritdoc/>
+        public void BuildRoomMap(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
+        {
+            BuildRoomMap(room, viewPoint, options, new Point2D(0, 0), out _, out _);
         }
 
         #endregion

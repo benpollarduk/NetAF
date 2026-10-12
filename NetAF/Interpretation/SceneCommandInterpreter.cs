@@ -180,7 +180,7 @@ namespace NetAF.Interpretation
         /// <param name="game">The game.</param>
         /// <param name="command">The resolved command.</param>
         /// <returns>True if the input could be parsed, else false.</returns>
-        private bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
+        private static bool TryParseExamineCommandLocations(string noun, Game game, out ICommand command)
         {
             // check exits to room
             if (TryParseToDirection(noun, out var direction))

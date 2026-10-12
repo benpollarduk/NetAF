@@ -1,5 +1,7 @@
 using NetAF.Logic;
 using NetAF.Rendering;
+using System;
+using System.Linq;
 
 namespace NetAF.Commands.Frame
 {
@@ -100,6 +102,28 @@ namespace NetAF.Commands.Frame
             return prompt.Entry.Equals(arg, System.StringComparison.InvariantCultureIgnoreCase);
         }
 
+        private static (Prompt Prompt, Action Apply, string Message)[] GetOptionHandlers()
+        {
+            return
+            [
+                (CommandsNone, () => FrameProperties.CommandListType = CommandListType.None, "Commands have been set to none."),
+                (CommandsMinimal, () => FrameProperties.CommandListType = CommandListType.Minimal, "Commands have been set to minimal."),
+                (CommandsAll, () => FrameProperties.CommandListType = CommandListType.All, "Commands have been set to all."),
+                (KeyNone, () => FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None, "Key has been set to none."),
+                (KeyDynamic, () => FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic, "Key has been set to dynamic."),
+                (KeyFull, () => FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Full, "Key has been set to full."),
+                (KeyRight, () => FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Right, "Key placement has been set to right."),
+                (KeyLeft, () => FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Left, "Key placement has been set to left."),
+                (KeyAbove, () => FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Above, "Key placement has been set to above."),
+                (KeyBelow, () => FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Below, "Key placement has been set to below."),
+                (PointOfInterestNone, () => FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.None, "Point of interest detail has been set to none."),
+                (PointOfInterestLow, () => FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.Low, "Point of interest detail has been set to low."),
+                (PointOfInterestHigh, () => FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.High, "Point of interest detail has been set to high."),
+                (MapInScenesOff, () => FrameProperties.ShowMapInScenes = false, "Map in scenes has been turned off."),
+                (MapInScenesOn, () => FrameProperties.ShowMapInScenes = true, "Map in scenes has been turned on.")
+            ];
+        }
+
         #endregion
 
         #region Implementation of ICommand
@@ -116,94 +140,13 @@ namespace NetAF.Commands.Frame
             if (string.IsNullOrEmpty(arg))
                 return new(ReactionResult.Error, "No argument specified.");
 
-            if (IsPrompt(arg, CommandsNone))
+            foreach (var handler in GetOptionHandlers())
             {
-                FrameProperties.CommandListType = CommandListType.None;
-                return new(ReactionResult.Inform, "Commands have been set to none.");
-            }
+                if (!IsPrompt(arg, handler.Prompt))
+                    continue;
 
-            if (IsPrompt(arg, CommandsMinimal))
-            {
-                FrameProperties.CommandListType = CommandListType.Minimal;
-                return new(ReactionResult.Inform, "Commands have been set to minimal.");
-            }
-
-            if (IsPrompt(arg, CommandsAll))
-            {
-                FrameProperties.CommandListType = CommandListType.All;
-                return new(ReactionResult.Inform, "Commands have been set to all.");
-            }
-
-            if (IsPrompt(arg, KeyNone))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None;
-                return new(ReactionResult.Inform, "Key has been set to none.");
-            }
-
-            if (IsPrompt(arg, KeyDynamic))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
-                return new(ReactionResult.Inform, "Key has been set to dynamic.");
-            }
-
-            if (IsPrompt(arg, KeyFull))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Full;
-                return new(ReactionResult.Inform, "Key has been set to full.");
-            }
-
-            if (IsPrompt(arg, KeyRight))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Right;
-                return new(ReactionResult.Inform, "Key placement has been set to right.");
-            }
-
-            if (IsPrompt(arg, KeyLeft))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Left;
-                return new(ReactionResult.Inform, "Key placement has been set to left.");
-            }
-
-            if (IsPrompt(arg, KeyAbove))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Above;
-                return new(ReactionResult.Inform, "Key placement has been set to above.");
-            }
-
-            if (IsPrompt(arg, KeyBelow))
-            {
-                FrameProperties.RoomMapRenderOptions.KeyPlacement = KeyPlacement.Below;
-                return new(ReactionResult.Inform, "Key placement has been set to below.");
-            }
-
-            if (IsPrompt(arg, PointOfInterestNone))
-            {
-                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.None;
-                return new(ReactionResult.Inform, "Point of interest detail has been set to none.");
-            }
-
-            if (IsPrompt(arg, PointOfInterestLow))
-            {
-                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.Low;
-                return new(ReactionResult.Inform, "Point of interest detail has been set to low.");
-            }
-
-            if (IsPrompt(arg, PointOfInterestHigh))
-            {
-                FrameProperties.RoomMapRenderOptions.PointOfInterestDetail = PointOfInterestDetail.High;
-                return new(ReactionResult.Inform, "Point of interest detail has been set to high.");
-            }
-
-            if (IsPrompt(arg, MapInScenesOff))
-            {
-                FrameProperties.ShowMapInScenes = false;
-                return new(ReactionResult.Inform, "Map in scenes has been turned off.");
-            }
-
-            if (IsPrompt(arg, MapInScenesOn))
-            {
-                FrameProperties.ShowMapInScenes = true;
-                return new(ReactionResult.Inform, "Map in scenes has been turned on.");
+                handler.Apply();
+                return new(ReactionResult.Inform, handler.Message);
             }
 
             return new(ReactionResult.Error, $"Unrecognised argument {arg}.");
@@ -212,24 +155,7 @@ namespace NetAF.Commands.Frame
         /// <inheritdoc/>
         public Prompt[] GetPrompts(Game game)
         {
-            return 
-            [
-                CommandsNone,
-                CommandsMinimal,
-                CommandsAll,
-                KeyNone,
-                KeyDynamic,
-                KeyFull,
-                KeyRight,
-                KeyLeft,
-                KeyAbove,
-                KeyBelow,
-                PointOfInterestNone,
-                PointOfInterestLow,
-                PointOfInterestHigh,
-                MapInScenesOff,
-                MapInScenesOn
-            ];
+            return [.. GetOptionHandlers().Select(x => x.Prompt)];
         }
 
         #endregion

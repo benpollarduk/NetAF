@@ -63,15 +63,15 @@ namespace NetAF.Commands
         #region Overrides of Object
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as CommandHelp);
-        }
-
-        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return StringComparer.OrdinalIgnoreCase.GetHashCode(Command ?? string.Empty);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as CommandHelp);
         }
 
         #endregion
