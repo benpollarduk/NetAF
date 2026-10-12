@@ -167,5 +167,61 @@ namespace NetAF.Tests.Conversations
 
             Assert.AreEqual(ReactionResult.Silent, result.Result);
         }
+
+        [TestMethod]
+        public void GivenNoParagraphs_WhenIsAtEnd_ThenTrue()
+        {
+            var conversation = new Conversation();
+            conversation.Next(null);
+
+            var result = conversation.IsAtEnd;
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenCurrentParagraphIsLastParagraph_WhenIsAtEnd_ThenTrue()
+        {
+            var conversation = new Conversation(new Paragraph(string.Empty));
+            conversation.Next(null);
+
+            var result = conversation.IsAtEnd;
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void GivenCurrentParagraphIsNotLastParagraph_WhenIsAtEnd_ThenFalse()
+        {
+            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            conversation.Next(null);
+
+            var result = conversation.IsAtEnd;
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenConversationWithCurrentParagraph_WhenReset_ThenCurrentParagraphIsNull()
+        {
+            var conversation = new Conversation(new Paragraph(string.Empty));
+            conversation.Next(null);
+
+            conversation.Reset();
+
+            Assert.IsNull(conversation.CurrentParagraph);
+        }
+
+        [TestMethod]
+        public void GivenResetConversation_WhenNext_ThenCurrentParagraphIsFirstParagraph()
+        {
+            var conversation = new Conversation(new Paragraph(string.Empty), new Paragraph(string.Empty));
+            conversation.Next(null);
+            conversation.Reset();
+
+            conversation.Next(null);
+
+            Assert.AreEqual(conversation.Paragraphs[0], conversation.CurrentParagraph);
+        }
     }
 }

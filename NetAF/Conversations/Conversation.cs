@@ -36,9 +36,32 @@ namespace NetAF.Conversations
         /// </summary>
         public LogItem[] Log { get; private set; }
 
+        /// <summary>
+        /// Determine if the conversation is at the end.
+        /// </summary>
+        public bool IsAtEnd
+        {
+            get
+            {
+                if (Paragraphs == null || Paragraphs.Length == 0)
+                    return true;
+
+                return CurrentParagraph == Paragraphs[^1];
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Reset this conversation to the beginning.
+        /// </summary>
+        public void Reset()
+        {
+            CurrentParagraph = null;
+            Log = [];
+        }
 
         /// <summary>
         /// Shift the conversation to a new paragraph.

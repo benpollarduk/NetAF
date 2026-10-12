@@ -41,6 +41,13 @@ namespace NetAF.Commands.Conversation
             if (mode.Converser.Conversation == null)
                 return new(ReactionResult.Error, "No conversation.");
 
+            if (mode.Converser.Conversation.IsAtEnd)
+            {
+                mode.Converser.Conversation.Reset();
+                game.NextMode();
+                return new(ReactionResult.GameModeChanged, "Conversation ended.");
+            }
+
             return mode.Converser.Conversation.Next(game);
         }
 

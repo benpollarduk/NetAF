@@ -28,7 +28,7 @@ namespace NetAF.Commands.Global
                 return new(ReactionResult.Error, "No game specified.");
 
             game.NextMode();
-            return new(ReactionResult.Silent, "Ended.");
+            return new(ReactionResult.GameModeChanged, "Ended.");
         }
 
         /// <inheritdoc/>

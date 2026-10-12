@@ -22,7 +22,7 @@ namespace NetAF.Tests.Commands.Global
         }
 
         [TestMethod]
-        public void GivenValidGame_WhenInvoke_ThenSilent()
+        public void GivenValidGame_WhenInvoke_ThenGameModeChanged()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -34,7 +34,7 @@ namespace NetAF.Tests.Commands.Global
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Silent, result.Result);
+            Assert.AreEqual(ReactionResult.GameModeChanged, result.Result);
         }
 
         [TestMethod]

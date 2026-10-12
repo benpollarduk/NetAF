@@ -36,7 +36,25 @@ namespace NetAF.Tests.Commands.Conversation
         }
 
         [TestMethod]
-        public void GivenValidGameAndConverser_WhenInvoke_ThenSilent()
+        public void GivenValidGameAndConverserAndNotAtConversationEnd_WhenInvoke_ThenSilent()
+        {
+            RegionMaker regionMaker = new(string.Empty, string.Empty);
+            Room room = new(string.Empty, string.Empty);
+            regionMaker[0, 0, 0] = room;
+            OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
+            var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
+            var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty), new Paragraph(string.Empty)));
+            game.Overworld.CurrentRegion.Enter();
+            game.ChangeMode(new ConversationMode(converser, new ConversationCommandInterpreter()));
+            var command = new Next();
+
+            var result = command.Invoke(game);
+
+            Assert.AreEqual(ReactionResult.Silent, result.Result);
+        }
+
+        [TestMethod]
+        public void GivenValidGameAndConverserAndAtConversationEnd_WhenInvoke_ThenGameModeChanged()
         {
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room room = new(string.Empty, string.Empty);
@@ -44,12 +62,14 @@ namespace NetAF.Tests.Commands.Conversation
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var converser = new NonPlayableCharacter(string.Empty, string.Empty, conversation: new(new Paragraph(string.Empty)));
+            game.Overworld.CurrentRegion.Enter();
             game.ChangeMode(new ConversationMode(converser, new ConversationCommandInterpreter()));
             var command = new Next();
+            command.Invoke(game);
 
             var result = command.Invoke(game);
 
-            Assert.AreEqual(ReactionResult.Silent, result.Result);
+            Assert.AreEqual(ReactionResult.GameModeChanged, result.Result);
         }
 
         [TestMethod]
@@ -64,7 +84,7 @@ namespace NetAF.Tests.Commands.Conversation
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }
