@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "PNbkYWzu",
+  "version": "VlH/Qb6+",
   "assets": [
     {
       "hash": "sha256-8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U=",
@@ -74,16 +74,16 @@ self.assetsManifest = {
       "url": "_framework/NetAF.Blazor.q1zopdmp4i.wasm"
     },
     {
-      "hash": "sha256-zqrz2E1GtwYE7OO3eWGhCagvHsAbEt1lu1fKnvOnnBY=",
-      "url": "_framework/NetAF.Example.236gg21z3x.wasm"
+      "hash": "sha256-YfRZiIYaeSaxvR39nGjvZkvO8DoVZgLqYJIwtaO4lQQ=",
+      "url": "_framework/NetAF.Example.7il7z0efbj.wasm"
     },
     {
-      "hash": "sha256-xOxhIugyw1DOhqjMfY/km5U391L91VGTAZczIBwzYPI=",
-      "url": "_framework/NetAF.Example.Blazor.gvdk8etrsr.wasm"
+      "hash": "sha256-ACDx6VqdfVB8m5KxxcQ84sFrhpDhXDVi4LhNa+lQZIs=",
+      "url": "_framework/NetAF.Example.Blazor.wcj45wcmbo.wasm"
     },
     {
-      "hash": "sha256-teCgwR0zoR6PVzwX0heIkzuCbFgi0W1hjq3VDzComNE=",
-      "url": "_framework/NetAF.nhd8dr758d.wasm"
+      "hash": "sha256-8Axt0bE0qAT2MVPE3gUviTcnwuHFJzHqCzh6aChguws=",
+      "url": "_framework/NetAF.kj50fqoh24.wasm"
     },
     {
       "hash": "sha256-YCGjrH5kEgIDyRRkcjwTmhvbvYhCnus+FMPSdU+QO+c=",
@@ -138,12 +138,12 @@ self.assetsManifest = {
       "url": "_framework/System.Private.Uri.q4ml8khy5s.wasm"
     },
     {
-      "hash": "sha256-Qcf3f+oZmUhAPC8OB0MPiI32z2eQRETXMDsWhUPjLL4=",
-      "url": "_framework/System.Runtime.InteropServices.JavaScript.1slwlv41qq.wasm"
+      "hash": "sha256-AgIocGV11tCNpXEkU3P3hqJJd5ADV1zonKIePncXzuM=",
+      "url": "_framework/System.Runtime.6apwueij9x.wasm"
     },
     {
-      "hash": "sha256-Uokfnydn9z3PFLkf0xIk9L61W8qek9LiN66cpfPejqo=",
-      "url": "_framework/System.Runtime.uwl7c8uiqt.wasm"
+      "hash": "sha256-Qcf3f+oZmUhAPC8OB0MPiI32z2eQRETXMDsWhUPjLL4=",
+      "url": "_framework/System.Runtime.InteropServices.JavaScript.1slwlv41qq.wasm"
     },
     {
       "hash": "sha256-8Fo6wI1/nPcRLAqDI2q66MBXtGi2KMIuL2mwsOvsb74=",
@@ -170,7 +170,7 @@ self.assetsManifest = {
       "url": "_framework/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-08oyDCMWDRhnvz970XrYeDuBWx1YDv6oiomBFUUUKYY=",
+      "hash": "sha256-mDoJVILzxSQoHnCVcgyxXbqjCtbU2DbwzusKd8LdONo=",
       "url": "_framework/dotnet.js"
     },
     {
