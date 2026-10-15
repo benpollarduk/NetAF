@@ -138,9 +138,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                         const int maxCommandLines = 3;
                         var lineWidth = narrativeWidth - xMargin;
                         var commandLines = new List<string>();
-                        var remaining = commands ?? string.Empty;
+                        var remaining = commands;
 
-                        while (remaining.Length > 0 && commandLines.Count < maxCommandLines && lineWidth > 0)
+                        while (!string.IsNullOrEmpty(remaining) && remaining.Length > 0 && commandLines.Count < maxCommandLines && lineWidth > 0)
                         {
                             var line = StringUtilities.CutLineFromParagraph(ref remaining, lineWidth);
 
