@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Rendering.FrameBuilders;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
 using System;
 
 namespace NetAF.Tests.Rendering.FrameBuilders
@@ -30,7 +31,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         [TestMethod]
         public void GivenMatchingFrameBuilder_WhenGetFrameBuilder_ThenCorrectInstance()
         {
-            var builder = new ConsoleSceneFrameBuilder(null, null);
+            var builder = new ConsoleLegacySceneFrameBuilder(null, ConsoleRenderProperties.Default, null);
             var builders = new FrameBuilderCollection(builder);
 
             var result = builders.GetFrameBuilder<ISceneFrameBuilder>();
@@ -41,7 +42,7 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         [TestMethod]
         public void GivenNoExisting_WhenSetFrameBuilder_ThenSetCorrectly()
         {
-            var builder = new ConsoleSceneFrameBuilder(null, null);
+            var builder = new ConsoleLegacySceneFrameBuilder(null, ConsoleRenderProperties.Default, null);
             var builders = new FrameBuilderCollection();
 
             builders.SetFrameBuilder(builder);
@@ -53,8 +54,8 @@ namespace NetAF.Tests.Rendering.FrameBuilders
         [TestMethod]
         public void GivenOverwritingExisting_WhenSetFrameBuilder_ThenSetCorrectly()
         {
-            var builder1 = new ConsoleSceneFrameBuilder(null, null);
-            var builder2 = new ConsoleSceneFrameBuilder(null, null);
+            var builder1 = new ConsoleLegacySceneFrameBuilder(null, ConsoleRenderProperties.Default, null);
+            var builder2 = new ConsoleLegacySceneFrameBuilder(null, ConsoleRenderProperties.Default, null);
             var builders = new FrameBuilderCollection(builder1);
 
             builders.SetFrameBuilder(builder2);

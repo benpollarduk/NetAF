@@ -40,14 +40,16 @@ namespace NetAF.Example.Assets.Regions.Hub.Rooms
                 {
                     Responses =
                     [
-                        new("Yes please, change to ANSI."),
-                        new("Yes please, change to HTML.", new Jump(2)),
-                        new("Yes please, change to text.", new Jump(3)),
-                        new("Yes please, change to markup.", new Jump(4)),
-                        new("No thanks, keep things as they are.", new Jump(5))
+                        new("Yes please, change to ANSI (legacy)."),
+                        new("Yes please, change to ANSI (modern).", new Jump(2)),
+                        new("Yes please, change to HTML.", new Jump(3)),
+                        new("Yes please, change to text.", new Jump(4)),
+                        new("Yes please, change to markup.", new Jump(5)),
+                        new("No thanks, keep things as they are.", new Jump(6))
                     ]
                 },
-                new("Arrk! Color it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Console, new ToName("ModeQuestion")),
+                new("Arrk! ANSI (legacy) it is.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.ConsoleLegacy, new ToName("ModeQuestion")),
+                new("Rarkk! ANSI (modern) for you.", g => g.Configuration.FrameBuilders = FrameBuilderCollections.ConsoleModern, new ToName("ModeQuestion")),
                 new("Eeek, HTML be fine too!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Html, new ToName("ModeQuestion")),
                 new("Squarrk! text, looks old. Arrk!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Text, new ToName("ModeQuestion")),
                 new("Ohhhh, markup is useful!", g => g.Configuration.FrameBuilders = FrameBuilderCollections.Markup, new ToName("ModeQuestion")),

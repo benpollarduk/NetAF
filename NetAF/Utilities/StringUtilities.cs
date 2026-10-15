@@ -280,6 +280,65 @@ namespace NetAF.Utilities
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Locate all instances of a set of keywords in a string and return their positions as an array of StringMarkers.
+        /// </summary>
+        /// <param name="value">The string to search within.</param>
+        /// <param name="keyWords">The keywords to locate.</param>
+        /// <param name="caseSensitive">Whether the search should be case-sensitive.</param>
+        /// <returns>An array of StringMarkers indicating the positions of the keywords.</returns>
+        public static StringMarker[] LocateStringMarkers(string value, string[] keyWords, bool caseSensitive = false)
+        {
+            List<StringMarker> markers = new();
+
+            var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+
+            foreach (var word in keyWords)
+            {
+                var index = value.IndexOf(word, comparison);
+
+                while (index != -1)
+                {
+                    markers.Add(new StringMarker(word, index));
+                    index = value.IndexOf(word, index + word.Length, comparison);
+                }
+            }
+
+            return [.. markers];
+        }
+
+        /// <summary>
+        /// Determine which characters within a string should be highlighted based on a set of markers.
+        /// </summary>
+        /// <param name="value">The string being evaluated.</param>
+        /// <param name="markers">The markers indicating which parts of the string to highlight.</param>
+        /// <returns>An array of booleans, one per character in the string, indicating whether that character should be highlighted.</returns>
+        public static bool[] GetHighlightMask(string value, StringMarker[] markers)
+        {
+            var highlights = new bool[value?.Length ?? 0];
+
+            if (string.IsNullOrEmpty(value) || markers == null || markers.Length == 0)
+                return highlights;
+
+            foreach (var marker in markers)
+            {
+                if (string.IsNullOrEmpty(marker.Value))
+                    continue;
+
+                var index = value.IndexOf(marker.Value, StringComparison.Ordinal);
+
+                while (index != -1)
+                {
+                    for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
+                        highlights[i] = true;
+
+                    index = value.IndexOf(marker.Value, index + marker.Length, StringComparison.Ordinal);
+                }
+            }
+
+            return highlights;
+        }
+
         #endregion
     }
 }

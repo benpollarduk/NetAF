@@ -1,16 +1,26 @@
 using System;
 using System.Text;
+using NetAF.Utilities;
 
 namespace NetAF.Targets.Markup.Rendering
 {
     /// <summary>
     /// Provides a class for building markup.
     /// </summary>
-    public class MarkupBuilder()
+    public sealed class MarkupBuilder()
     {
         #region Fields
 
         private readonly StringBuilder builder = new();
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Get or set the default text style.
+        /// </summary>
+        public TextStyle TextStyle { get; set; } = TextStyle.Default;
 
         #endregion
 
@@ -49,7 +59,28 @@ namespace NetAF.Targets.Markup.Rendering
         /// <param name="text">The text to append.</param>
         public void Write(string text)
         {
-            Write(text, TextStyle.Default);
+            Write(text, TextStyle);
+        }
+
+        /// <summary>
+        /// Append text.
+        /// </summary>
+        /// <param name="text">The text to append.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        public void Write(string text, StringMarker[] markers = null)
+        {
+            Write(text, TextStyle, markers);
+        }
+
+        /// <summary>
+        /// Append text.
+        /// </summary>
+        /// <param name="text">The text to append.</param>
+        /// <param name="style">The style to use for the text.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        public void Write(string text, TextStyle style, StringMarker[] markers = null)
+        {
+            Write(Highlight(text, markers), style);
         }
 
         /// <summary>
@@ -76,6 +107,9 @@ namespace NetAF.Targets.Markup.Rendering
             if (style.Monospace)
                 content = Format(MarkupSyntax.Monospace, content);
 
+            if (style.Highlight)
+                content = Format(MarkupSyntax.Highlight, content);
+
             if (style.Foreground != null)
                 content = FormatWithValue(MarkupSyntax.Foregound, style.Foreground.ToHtml(), content);
 
@@ -86,22 +120,33 @@ namespace NetAF.Targets.Markup.Rendering
         }
 
         /// <summary>
-        /// Append text, terminating in a newline character
+        /// Append text, terminating in a newline character.
         /// </summary>
         /// <param name="text">The text to append.</param>
         public void WriteLine(string text)
         {
-            WriteLine(text, TextStyle.Default);
+            WriteLine(text, TextStyle);
         }
 
         /// <summary>
-        /// Append styled text, terminating in a newline character.
+        /// Append text, terminating in a newline character, with highlighted words styled, terminating in a newline character.
+        /// </summary>
+        /// <param name="text">The text to append.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        public void WriteLine(string text, StringMarker[] markers = null)
+        {
+            Write(text, TextStyle, markers);
+        }
+
+        /// <summary>
+        /// Append text, terminating in a newline character, with highlighted words styled, terminating in a newline character.
         /// </summary>
         /// <param name="text">The text to append.</param>
         /// <param name="style">The style to use for the text.</param>
-        public void WriteLine(string text, TextStyle style)
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        public void WriteLine(string text, TextStyle style, StringMarker[] markers = null)
         {
-            Write(text + MarkupSyntax.NewLine, style);
+            Write(Highlight(text, markers) + MarkupSyntax.NewLine, style);
         }
 
         /// <summary>
@@ -144,6 +189,41 @@ namespace NetAF.Targets.Markup.Rendering
         private static string FormatWithValue(string tag, string value, string text)
         {
             return $"{MarkupSyntax.OpenTag}{tag}{MarkupSyntax.Delimiter}{value}{MarkupSyntax.CloseTag}{text}{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{tag}{MarkupSyntax.CloseTag}";
+        }
+
+        /// <summary>
+        /// Highlight words within a string by emboldening the sections indicated by a set of markers.
+        /// </summary>
+        /// <param name="text">The text to highlight.</param>
+        /// <param name="markers">The markers indicating which parts of the text to embolden.</param>
+        /// <returns>The text with the marked sections wrapped in bold tags.</returns>
+        internal static string Highlight(string text, StringMarker[] markers)
+        {
+            if (string.IsNullOrEmpty(text) || markers == null || markers.Length == 0)
+                return text;
+
+            StringBuilder result = new();
+            var highlights = StringUtilities.GetHighlightMask(text, markers);
+            var open = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+            var close = $"{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+
+            for (var i = 0; i < text.Length; i++)
+            {
+                var isHighlighted = highlights[i];
+                var wasHighlighted = i > 0 && highlights[i - 1];
+
+                if (isHighlighted && !wasHighlighted)
+                    result.Append(open);
+                else if (!isHighlighted && wasHighlighted)
+                    result.Append(close);
+
+                result.Append(text[i]);
+            }
+
+            if (highlights[^1])
+                result.Append(close);
+
+            return result.ToString();
         }
 
         #endregion

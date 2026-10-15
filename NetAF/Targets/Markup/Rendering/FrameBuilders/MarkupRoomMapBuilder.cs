@@ -7,7 +7,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
     /// Provides a room map builder.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class MarkupRoomMapBuilder(MarkupBuilder builder) : GeneralRoomMapBuilder
+    /// <param name="properties">The render properties.</param>
+    public sealed class MarkupRoomMapBuilder(MarkupBuilder builder, ConsoleMapRenderProperties properties) : GeneralRoomMapBuilder(properties)
     {
         #region Overrides of HostedRoomMapBuilder
 

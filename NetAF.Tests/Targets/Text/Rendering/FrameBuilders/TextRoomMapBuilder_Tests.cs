@@ -4,6 +4,7 @@ using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
+using NetAF.Targets.Console.Rendering;
 
 namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
 {
@@ -32,7 +33,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new StringBuilder();
-                var mapBuilder = new TextRoomMapBuilder(stringBuilder);
+                var mapBuilder = new TextRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
@@ -60,7 +61,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new StringBuilder();
-                var mapBuilder = new TextRoomMapBuilder(stringBuilder);
+                var mapBuilder = new TextRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Dynamic });
             });
@@ -79,7 +80,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var region = regionMaker.Make(0, 0, 0);
                 region.Enter();
                 var stringBuilder = new StringBuilder();
-                var mapBuilder = new TextRoomMapBuilder(stringBuilder);
+                var mapBuilder = new TextRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
@@ -107,7 +108,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new StringBuilder();
-                var mapBuilder = new TextRoomMapBuilder(stringBuilder);
+                var mapBuilder = new TextRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });

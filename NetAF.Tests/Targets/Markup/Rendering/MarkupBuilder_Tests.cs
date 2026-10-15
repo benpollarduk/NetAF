@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Markup;
 using NetAF.Targets.Markup.Rendering;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Targets.Markup.Rendering
 {
@@ -118,6 +119,17 @@ namespace NetAF.Tests.Targets.Markup.Rendering
         }
 
         [TestMethod]
+        public void GivenTest_WhenWriteWithHighlight_ThenMarkupIsCorrectlyFormed()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.Write("Test", new TextStyle(Highlight: true));
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{MarkupSyntax.OpenTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}", result);
+        }
+
+        [TestMethod]
         public void GivenTest_WhenWriteWithForegroundSet_ThenMarkupIsCorrectlyFormed()
         {
             var builder = new MarkupBuilder();
@@ -171,6 +183,45 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             var result = builder.ToString();
 
             Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void GivenNoMarkers_WhenWriteLine_ThenNoHighlighting()
+        {
+            var builder = new MarkupBuilder();
+
+            builder.WriteLine("The dog sat", TextStyle.Default, []);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"The dog sat{MarkupSyntax.NewLine}", result);
+        }
+
+        [TestMethod]
+        public void GivenSingleMarker_WhenWriteLine_ThenWordHighlighted()
+        {
+            var builder = new MarkupBuilder();
+            var markers = StringUtilities.LocateStringMarkers("The dog sat", ["dog"]);
+            var open = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+            var close = $"{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+
+            builder.WriteLine("The dog sat", TextStyle.Default, markers);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"The {open}dog{close} sat{MarkupSyntax.NewLine}", result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerAtStartAndEnd_WhenWriteLine_ThenWordsHighlighted()
+        {
+            var builder = new MarkupBuilder();
+            var markers = StringUtilities.LocateStringMarkers("dog sat dog", ["dog"]);
+            var open = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+            var close = $"{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+
+            builder.WriteLine("dog sat dog", TextStyle.Default, markers);
+            var result = builder.ToString();
+
+            Assert.AreEqual($"{open}dog{close} sat {open}dog{close}{MarkupSyntax.NewLine}", result);
         }
     }
 }

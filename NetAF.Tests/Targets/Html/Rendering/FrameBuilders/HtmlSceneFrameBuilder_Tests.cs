@@ -4,6 +4,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Rendering;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Utilities;
@@ -35,7 +36,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, HtmlRenderProperties.Default, new HtmlRoomMapBuilder(htmlBuilder, ConsoleMapRenderProperties.Default));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -66,7 +67,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, HtmlRenderProperties.Default, new HtmlRoomMapBuilder(htmlBuilder, ConsoleMapRenderProperties.Default));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -97,7 +98,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, HtmlRenderProperties.Default, new HtmlRoomMapBuilder(htmlBuilder, ConsoleMapRenderProperties.Default));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
@@ -128,7 +129,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlSceneFrameBuilder(htmlBuilder, new HtmlRoomMapBuilder(htmlBuilder));
+                var builder = new HtmlSceneFrameBuilder(htmlBuilder, HtmlRenderProperties.Default, new HtmlRoomMapBuilder(htmlBuilder, ConsoleMapRenderProperties.Default));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);

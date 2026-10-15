@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Html.Rendering;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Targets.Html.Rendering
 {
@@ -115,6 +116,41 @@ namespace NetAF.Tests.Targets.Html.Rendering
             var result = builder.ToString();
 
             Assert.AreEqual("<ul><li>A</li><li>B</li><li>C</li></ul>", result);
+        }
+
+        [TestMethod]
+        public void GivenNoMarkers_WhenPWithMarkers_ThenNoHighlighting()
+        {
+            var builder = new HtmlBuilder();
+
+            builder.P("The dog sat", []);
+            var result = builder.ToString();
+
+            Assert.AreEqual("<p>The dog sat</p>", result);
+        }
+
+        [TestMethod]
+        public void GivenSingleMarker_WhenPWithMarkers_ThenWordEmboldened()
+        {
+            var builder = new HtmlBuilder();
+            var markers = StringUtilities.LocateStringMarkers("The dog sat", ["dog"]);
+
+            builder.P("The dog sat", markers);
+            var result = builder.ToString();
+
+            Assert.AreEqual("<p>The <b>dog</b> sat</p>", result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerAtStartAndEnd_WhenPWithMarkers_ThenWordsEmboldened()
+        {
+            var builder = new HtmlBuilder();
+            var markers = StringUtilities.LocateStringMarkers("dog sat dog", ["dog"]);
+
+            builder.P("dog sat dog", markers);
+            var result = builder.ToString();
+
+            Assert.AreEqual("<p><b>dog</b> sat <b>dog</b></p>", result);
         }
     }
 }

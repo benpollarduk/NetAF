@@ -1,0 +1,90 @@
+using NetAF.Assets.Characters;
+using NetAF.Conversations;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Commands;
+using NetAF.Assets;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
+
+namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Legacy
+{
+    [TestClass]
+    public class ConsoleLegacyConversationFrameBuilder_Tests
+    {
+        [TestMethod]
+        public void GivenDefaults_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default);
+
+                builder.Build("Test", null, null, new Size(80, 50));
+            });
+        }
+
+        [TestMethod]
+        public void GivenDefaultsWithLog_WhenBuild_ThenFrameReturned()
+        {
+            var gridStringBuilder = new GridStringBuilder();
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default);
+            var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
+
+            converser.Conversation.Next(null);
+            converser.Conversation.Respond(new Response("Test2"), null);
+
+            var result = builder.Build("Test", converser, null, new Size(80, 50));
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GivenDefaultsWith3CustomCommands_WhenBuild_ThenFrameReturned()
+        {
+            var gridStringBuilder = new GridStringBuilder();
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default);
+            var commands = new[]
+            {
+                new CommandHelp("Test"),
+                new CommandHelp("Test"),
+                new CommandHelp("Test")
+            };
+
+            var result = builder.Build("Test", null, commands, new Size(80, 50));
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GivenNull_WhenTruncateLog_ThenReturnEmptyArray()
+        {
+            var log = ConsoleLegacyConversationFrameBuilder.TruncateLog(0, 50, 10, null);
+
+            Assert.IsEmpty(log);
+        }
+
+        [TestMethod]
+        public void GivenEmptyLog_WhenTruncateLog_ThenReturnEmptyArray()
+        {
+            var log = ConsoleLegacyConversationFrameBuilder.TruncateLog(0, 50, 10, []);
+
+            Assert.IsEmpty(log);
+        }
+
+        [TestMethod]
+        public void GivenLogWith1EntryAnd2Spaces_WhenTruncateLog_ThenReturnArrayWith1Item()
+        {
+            var log = ConsoleLegacyConversationFrameBuilder.TruncateLog(0, 50, 2, [new LogItem(Participant.Other, "")]);
+
+            Assert.HasCount(1, log);
+        }
+
+        [TestMethod]
+        public void GivenLogWith2EntryAnd1Space_WhenTruncateLog_ThenReturnArrayWith1Item()
+        {
+            var log = ConsoleLegacyConversationFrameBuilder.TruncateLog(0, 50, 1, [new LogItem(Participant.Other, ""), new LogItem(Participant.Player, "")]);
+
+            Assert.HasCount(1, log);
+        }
+    }
+}

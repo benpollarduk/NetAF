@@ -187,6 +187,9 @@ namespace NetAF.Targets.Markup.Model
             if (tag.Equals(MarkupSyntax.Monospace, StringComparison.InvariantCultureIgnoreCase))
                 return new TextStyle(Monospace: true);
 
+            if (tag.Equals(MarkupSyntax.Highlight, StringComparison.InvariantCultureIgnoreCase))
+                return new TextStyle(Highlight: true);
+
             var foregoundWithDelimiter = MarkupSyntax.Foregound + MarkupSyntax.Delimiter;
             var bakgroundWithDelimiter = MarkupSyntax.Background + MarkupSyntax.Delimiter;
 

@@ -44,7 +44,7 @@ namespace NetAF.Tests.Commands.Execution
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }

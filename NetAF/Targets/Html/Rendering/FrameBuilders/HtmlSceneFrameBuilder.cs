@@ -3,6 +3,7 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Extensions;
+using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
@@ -14,8 +15,9 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// Provides a builder of scene frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
+    /// <param name="properties">The render properties.</param>
     /// <param name="roomMapBuilder">A builder to use for room maps.</param>
-    public sealed class HtmlSceneFrameBuilder(HtmlBuilder builder, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
+    public sealed class HtmlSceneFrameBuilder(HtmlBuilder builder, HtmlRenderProperties properties, IRoomMapBuilder roomMapBuilder) : ISceneFrameBuilder
     {
         #region Properties
 
@@ -38,25 +40,39 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
+            string[] keywords = properties.HighlightKeywords switch
+            {
+                true => [.. Game.GetAllPlayerVisibleExaminables(player, room).Select(x => x.Identifier.Name)],
+                false => []
+            };
+
             builder.H1(room.Identifier.Name);
             builder.Br();
-            builder.P(room.Description.GetDescription().EnsureFinishedSentence());
+
+            var description = room.Description.GetDescription().EnsureFinishedSentence();
+            builder.P(description, StringUtilities.LocateStringMarkers(description, keywords));
 
             var extendedDescription = string.Empty;
 
             if (viewPoint.Any)
-                builder.P(extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence()));
+            {
+                extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence());
+                builder.P(extendedDescription, StringUtilities.LocateStringMarkers(extendedDescription, keywords));
+            }
 
             if (DisplayExaminables)
             {
                 var roomString = SceneHelper.CreateRoomString(room);
 
                 if (!string.IsNullOrEmpty(roomString))
-                    builder.P(roomString);
+                    builder.P(roomString, StringUtilities.LocateStringMarkers(roomString, keywords));
             }
 
             if (player.Items.Length != 0)
-                builder.P("You have " + StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower());
+            {
+                var inventoryString = $"You have {StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower()}";
+                builder.P(inventoryString, StringUtilities.LocateStringMarkers(inventoryString, keywords));
+            }
 
             builder.Br();
 

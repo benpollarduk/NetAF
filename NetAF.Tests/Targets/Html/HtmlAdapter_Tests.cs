@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Assets;
@@ -7,7 +7,7 @@ using NetAF.Targets.Html;
 using NetAF.Utilities;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
 using NetAF.Targets.Html.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Text.Rendering;
 using System.Text;
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             HtmlBuilder htmlBuilder = new();
-            var frame = new HtmlReactionFrameBuilder(htmlBuilder).Build("A", "B", false, new(80, 50));
+            var frame = new HtmlReactionFrameBuilder(htmlBuilder, HtmlRenderProperties.Default).Build("A", "B", false, null, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
@@ -48,7 +48,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             GridStringBuilder gridStringBuilder = new();
-            var frame = new ConsoleReactionFrameBuilder(gridStringBuilder).Build("A", "B", false, new(80, 50));
+            var frame = new ConsoleLegacyReactionFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default).Build("A", "B", false, null, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             StringBuilder stringBuilder = new();
-            var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, new(80, 50));
+            var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, null, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);

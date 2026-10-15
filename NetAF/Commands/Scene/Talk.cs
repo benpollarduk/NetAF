@@ -16,7 +16,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp TalkCommandHelp { get; } = new("Talk", "Talk to a character", CommandCategory.Conversation, "L", displayAs: $"Talk/L to __", synonyms: ["Speak", "Chat"]);
+        public static CommandHelp TalkCommandHelp { get; } = new("Talk", "Talk to a character", CommandCategory.Conversation, "L", displayAs: $"Talk to {CommandHelp.Placeholder}", synonyms: ["Speak", "Chat"]);
 
         /// <summary>
         /// Get the command help for to.

@@ -5,7 +5,7 @@ using NetAF.Assets.Characters;
 using NetAF.Utilities;
 using NetAF.Commands.Frame;
 
-namespace NetAF.Tests.Commands.Execution
+namespace NetAF.Tests.Commands.Frame
 {
     [TestClass]
     public class Option_Tests
@@ -197,7 +197,7 @@ namespace NetAF.Tests.Commands.Execution
 
             var result = command.GetPrompts(game);
 
-            Assert.AreNotEqual([], result);
+            Assert.AreNotEqual(0, result.Length);
         }
     }
 }

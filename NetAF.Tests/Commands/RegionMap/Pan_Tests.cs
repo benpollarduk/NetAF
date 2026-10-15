@@ -213,7 +213,7 @@ namespace NetAF.Tests.Commands.RegionMap
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }

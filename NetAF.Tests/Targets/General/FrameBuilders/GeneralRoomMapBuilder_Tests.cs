@@ -9,7 +9,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
     [TestClass]
     public class GeneralRoomMapBuilder_Tests
     {
-        private sealed class TestBuilder : GeneralRoomMapBuilder
+        private sealed class TestBuilder(ConsoleMapRenderProperties properties) : GeneralRoomMapBuilder(properties)
         {
             public int AdaptCallCount { get; private set; }
             public GridStringBuilder LastAdapted { get; private set; }
@@ -24,7 +24,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenDefault_WhenRenderedSize_ThenWidth9Height7()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
 
             var result = builder.RenderedSize;
 
@@ -35,7 +35,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoom_WhenBuildRoomMap_ThenAdaptIsCalled()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
@@ -47,7 +47,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoom_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
@@ -59,7 +59,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoomAndKeyPlacementLeft_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
@@ -71,7 +71,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoomAndKeyPlacementAbove_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
@@ -83,7 +83,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoomAndKeyPlacementRight_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 
@@ -95,7 +95,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRoomAndKeyPlacementBelow_WhenBuildRoomMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             ViewPoint viewPoint = ViewPoint.NoView;
 

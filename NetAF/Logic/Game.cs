@@ -209,7 +209,7 @@ namespace NetAF.Logic
         /// </summary>
         public void NextMode()
         {
-            NextMode(true);
+            NextMode(false);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace NetAF.Logic
             }
 
             // 2. check if there is a pending reaction - something may be left that needs processing before continuing
-            if (pendingReactions.Any())
+            if (pendingReactions.Count != 0)
             {
                 // dequeue the reaction
                 var pendingReaction = pendingReactions.Dequeue();
@@ -286,11 +286,14 @@ namespace NetAF.Logic
                     return;
                 }
             }
-            
-            // 3. check if command didn't change the mode and the current mode type is
-            // single frame information, essentially the mode has expired so move oto the next mode.
+
+            // 3. check if command changed the mode
+            if (reaction.Result == ReactionResult.GameModeChanged)
+                return;
+
+            // 4. if the  current mode type is single frame information, essentially the mode has expired so move onto the next mode.
             // as this is part of the main game loop the render should not be called as the loop will handle that
-            if (reaction.Result != ReactionResult.GameModeChanged && Mode.Type == GameModeType.SingleFrameInformation)
+            if (Mode.Type == GameModeType.SingleFrameInformation)
                 NextMode(false);
         }
 
@@ -440,10 +443,8 @@ namespace NetAF.Logic
         public IExaminable[] GetAllPlayerVisibleExaminables()
         {
             var examinables = new List<IExaminable> { Player, Overworld, Overworld?.CurrentRegion, Overworld?.CurrentRegion?.CurrentRoom };
-            examinables.AddRange(Player?.Items?.Where(x => x.IsPlayerVisible) ?? []);
-            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Items?.Where(x => x.IsPlayerVisible) ?? []);
-            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Characters?.Where(x => x.IsPlayerVisible) ?? []);
-            examinables.AddRange(Overworld?.CurrentRegion?.CurrentRoom?.Exits?.Where(x => x.IsPlayerVisible) ?? []);
+            var roomExaminables = GetAllPlayerVisibleExaminables(Player, Overworld?.CurrentRegion?.CurrentRoom);
+            examinables.AddRange(roomExaminables);
             return [.. examinables.Where(x => x != null)];
         }
 
@@ -527,6 +528,22 @@ namespace NetAF.Logic
         #endregion
 
         #region StaticMethods
+
+        /// <summary>
+        /// Get all examinables that are currently visible to the player.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="room">The room.</param>
+        /// <returns>An array of all examinables that are currently visible to the player.</returns>
+        public static IExaminable[] GetAllPlayerVisibleExaminables(PlayableCharacter player, Room room)
+        {
+            var examinables = new List<IExaminable>();
+            examinables.AddRange(player?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(room?.Items?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(room?.Characters?.Where(x => x.IsPlayerVisible) ?? []);
+            examinables.AddRange(room?.Exits?.Where(x => x.IsPlayerVisible) ?? []);
+            return [.. examinables.Where(x => x != null)];
+        }
 
         /// <summary>
         /// Perform an update, when the start is GameState.NotStarted.

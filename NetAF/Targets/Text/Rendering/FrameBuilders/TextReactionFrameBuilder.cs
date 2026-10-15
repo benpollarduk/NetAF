@@ -1,4 +1,6 @@
 using NetAF.Assets;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -15,7 +17,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         #region Implementation of IReactionFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(string title, string message, bool isError, Size size)
+        public IFrame Build(string title, string message, bool isError, PlayableCharacter player, Room room, Size size)
         {
             builder.Clear();
 

@@ -48,6 +48,11 @@
         internal const string Italic = "italic";
 
         /// <summary>
+        /// Get the string that denotes highlight.
+        /// </summary>
+        internal const string Highlight = "highlight";
+
+        /// <summary>
         /// Get the string that denotes strikethrough.
         /// </summary>
         internal const string Strikethrough = "strikethrough";

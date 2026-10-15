@@ -1,7 +1,12 @@
 using NetAF.Assets;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
 using NetAF.Extensions;
+using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Utilities;
+using System.Linq;
 
 namespace NetAF.Targets.Html.Rendering.FrameBuilders
 {
@@ -9,12 +14,13 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
     /// Provides a builder of reaction frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class HtmlReactionFrameBuilder(HtmlBuilder builder) : IReactionFrameBuilder
+    /// <param name="properties">The render properties.</param>
+    public sealed class HtmlReactionFrameBuilder(HtmlBuilder builder, HtmlRenderProperties properties) : IReactionFrameBuilder
     {
         #region Implementation of IReactionFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(string title, string message, bool isError, Size size)
+        public IFrame Build(string title, string message, bool isError, PlayableCharacter player, Room room, Size size)
         {
             builder.Clear();
 
@@ -24,7 +30,14 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 builder.Br();
             }
 
-            builder.P(message.EnsureFinishedSentence());
+            string[] keywords = properties.HighlightKeywords switch
+            {
+                true => [.. Game.GetAllPlayerVisibleExaminables(player, room).Select(x => x.Identifier.Name)],
+                false => []
+            };
+
+            var finishedMessage = message.EnsureFinishedSentence();
+            builder.P(finishedMessage, StringUtilities.LocateStringMarkers(finishedMessage, keywords));
 
             return new HtmlFrame(builder);
         }

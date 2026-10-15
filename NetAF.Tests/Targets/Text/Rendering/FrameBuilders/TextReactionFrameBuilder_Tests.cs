@@ -16,7 +16,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var builder = new TextReactionFrameBuilder(stringBuilder);
 
-                builder.Build(string.Empty, string.Empty, false, new Size(80, 50));
+                builder.Build(string.Empty, string.Empty, false, null, null, new Size(80, 50));
             });
         }
 
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
                 var stringBuilder = new StringBuilder();
                 var builder = new TextReactionFrameBuilder(stringBuilder);
 
-                builder.Build("test", "test", false, new Size(80, 50));
+                builder.Build("test", "test", false, null, null, new Size(80, 50));
             });
         }
     }

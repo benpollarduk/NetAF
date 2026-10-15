@@ -279,5 +279,182 @@ namespace NetAF.Tests.Utilities
 
             Assert.AreEqual("A B", result);
         }
+
+        [TestMethod]
+        public void GivenNoKeyWords_WhenLocateStringMarkers_ThenNoMarkers()
+        {
+            var result = StringUtilities.LocateStringMarkers("A Dog Sat On The Mat", []);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordNotPresent_WhenLocateStringMarkers_ThenNoMarkers()
+        {
+            var result = StringUtilities.LocateStringMarkers("A Dog Sat On The Mat", ["Cat"]);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenSingleKeyWordPresentOnce_WhenLocateStringMarkers_ThenOneMarkerWithCorrectStartIndexAndLength()
+        {
+            var result = StringUtilities.LocateStringMarkers("A Dog Sat On The Mat", ["Dog"]);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(2, result[0].StartIndex);
+            Assert.AreEqual(3, result[0].Length);
+            Assert.AreEqual(5, result[0].EndIndex);
+        }
+
+        [TestMethod]
+        public void GivenSingleKeyWordPresentMultipleTimes_WhenLocateStringMarkers_ThenMarkerForEachOccurrence()
+        {
+            var result = StringUtilities.LocateStringMarkers("aXaXa", ["a"]);
+
+            Assert.HasCount(3, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(2, result[1].StartIndex);
+            Assert.AreEqual(4, result[2].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenMultipleKeyWords_WhenLocateStringMarkers_ThenMarkerForEachKeyWord()
+        {
+            var result = StringUtilities.LocateStringMarkers("A Dog Sat On The Mat", ["Dog", "Mat"]);
+
+            Assert.HasCount(2, result);
+            Assert.AreEqual(2, result[0].StartIndex);
+            Assert.AreEqual(3, result[0].Length);
+            Assert.AreEqual(17, result[1].StartIndex);
+            Assert.AreEqual(3, result[1].Length);
+        }
+
+        [TestMethod]
+        public void GivenOverlappingKeyWord_WhenLocateStringMarkers_ThenNonOverlappingMarkers()
+        {
+            var result = StringUtilities.LocateStringMarkers("aaaa", ["aa"]);
+
+            Assert.HasCount(2, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(2, result[1].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordAppearingMultipleTimesInSentence_WhenLocateStringMarkers_ThenMarkerForEachOccurrence()
+        {
+            var result = StringUtilities.LocateStringMarkers("Dog. When The dog sat on the dog.", ["dog"]);
+
+            // By default the search is case-insensitive, so the leading "Dog" is also included.
+            Assert.HasCount(3, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(14, result[1].StartIndex);
+            Assert.AreEqual(29, result[2].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitive_WhenLocateStringMarkers_ThenDifferentCasingsMatched()
+        {
+            var result = StringUtilities.LocateStringMarkers("Dog dog DOG", ["dog"], caseSensitive: false);
+
+            Assert.HasCount(3, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(4, result[1].StartIndex);
+            Assert.AreEqual(8, result[2].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenCaseSensitive_WhenLocateStringMarkers_ThenOnlyExactCasingMatched()
+        {
+            var result = StringUtilities.LocateStringMarkers("Dog dog DOG", ["dog"], caseSensitive: true);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(4, result[0].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenNullValue_WhenGetHighlightMask_ThenEmptyMask()
+        {
+            var result = StringUtilities.GetHighlightMask(null, [new StringMarker("dog", 0)]);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenEmptyValue_WhenGetHighlightMask_ThenEmptyMask()
+        {
+            var result = StringUtilities.GetHighlightMask(string.Empty, [new StringMarker("dog", 0)]);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenNullMarkers_WhenGetHighlightMask_ThenAllFalse()
+        {
+            var result = StringUtilities.GetHighlightMask("The dog sat", null);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenNoMarkers_WhenGetHighlightMask_ThenAllFalse()
+        {
+            var result = StringUtilities.GetHighlightMask("The dog sat", []);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerWithEmptyValue_WhenGetHighlightMask_ThenAllFalse()
+        {
+            var result = StringUtilities.GetHighlightMask("The dog sat", [new StringMarker(string.Empty, 0)]);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenSingleMarker_WhenGetHighlightMask_ThenOnlyMatchingCharactersHighlighted()
+        {
+            var markers = StringUtilities.LocateStringMarkers("The dog sat", ["dog"]);
+
+            var result = StringUtilities.GetHighlightMask("The dog sat", markers);
+
+            bool[] expected = [false, false, false, false, true, true, true, false, false, false, false];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenMultipleOccurrences_WhenGetHighlightMask_ThenAllMatchingCharactersHighlighted()
+        {
+            var markers = StringUtilities.LocateStringMarkers("dog sat dog", ["dog"]);
+
+            var result = StringUtilities.GetHighlightMask("dog sat dog", markers);
+
+            bool[] expected = [true, true, true, false, false, false, false, false, true, true, true];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenMultipleMarkers_WhenGetHighlightMask_ThenAllMatchingCharactersHighlighted()
+        {
+            var markers = StringUtilities.LocateStringMarkers("The dog sat", ["The", "sat"]);
+
+            var result = StringUtilities.GetHighlightMask("The dog sat", markers);
+
+            bool[] expected = [true, true, true, false, false, false, false, false, true, true, true];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerNotPresentInValue_WhenGetHighlightMask_ThenAllFalse()
+        {
+            var result = StringUtilities.GetHighlightMask("The dog sat", [new StringMarker("cat", 0)]);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
     }
 }
