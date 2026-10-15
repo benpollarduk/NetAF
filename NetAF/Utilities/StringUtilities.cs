@@ -291,7 +291,7 @@ namespace NetAF.Utilities
         /// <returns>An array of keywords.</returns>
         public static string[] FindKeywords(ExaminationScene scene = null, ViewPoint viewPoint = null)
         {
-            string[] viewPointKeywords = viewPoint != null ? [.. viewPoint.Rooms.Select(x => x.Identifier.Name).Concat(viewPoint.Directions.Select(x => x.ToString()))] : [];
+            string[] viewPointKeywords = viewPoint != null ? [.. viewPoint.Rooms.Where(x => x != null).Select(x => x.Identifier.Name).Concat(viewPoint.Directions.Select(x => x.ToString()))] : [];
             var examinableKeywords = scene != null ? Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name) : [];
             return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
         }
@@ -311,6 +311,9 @@ namespace NetAF.Utilities
 
             foreach (var word in keyWords)
             {
+                if (string.IsNullOrEmpty(word))
+                    continue;
+
                 var index = value.IndexOf(word, comparison);
 
                 while (index != -1)

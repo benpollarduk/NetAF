@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAF.Example.Blazor", "Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAF.Example.WPF", "NetAF.Example.WPF\NetAF.Example.WPF.csproj", "{9C2108B2-6D88-4E45-AC39-EE683A547C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAF.Example.Lighthouse", "NetAF.Example.Lighthouse\NetAF.Example.Lighthouse.csproj", "{9EB470AD-9002-CBDD-BE69-B462E7B0F375}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{9C2108B2-6D88-4E45-AC39-EE683A547C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2108B2-6D88-4E45-AC39-EE683A547C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2108B2-6D88-4E45-AC39-EE683A547C74}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9EB470AD-9002-CBDD-BE69-B462E7B0F375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EB470AD-9002-CBDD-BE69-B462E7B0F375}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EB470AD-9002-CBDD-BE69-B462E7B0F375}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EB470AD-9002-CBDD-BE69-B462E7B0F375}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

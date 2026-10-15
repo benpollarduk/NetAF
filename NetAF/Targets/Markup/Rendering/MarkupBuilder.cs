@@ -67,7 +67,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// </summary>
         /// <param name="text">The text to append.</param>
         /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
-        public void Write(string text, StringMarker[] markers = null)
+        public void Write(string text, StringMarker[] markers)
         {
             Write(text, TextStyle, markers);
         }
@@ -133,7 +133,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// </summary>
         /// <param name="text">The text to append.</param>
         /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
-        public void WriteLine(string text, StringMarker[] markers = null)
+        public void WriteLine(string text, StringMarker[] markers)
         {
             Write(text, TextStyle, markers);
         }
