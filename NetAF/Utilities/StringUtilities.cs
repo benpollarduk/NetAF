@@ -315,7 +315,9 @@ namespace NetAF.Utilities
 
                 while (index != -1)
                 {
-                    markers.Add(new StringMarker(word, index));
+                    if (IsWholeWordMatch(value, index, word.Length))
+                        markers.Add(new StringMarker(word, index));
+
                     index = value.IndexOf(word, index + word.Length, comparison);
                 }
             }
@@ -324,31 +326,67 @@ namespace NetAF.Utilities
         }
 
         /// <summary>
+        /// Determine if a match at a given position within a string represents a whole word, as opposed to a substring of a larger word.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="index">The start index of the match.</param>
+        /// <param name="length">The length of the match.</param>
+        /// <returns>True if the match is bordered by non-word characters (or the start/end of the string), otherwise false.</returns>
+        private static bool IsWholeWordMatch(string value, int index, int length)
+        {
+            if (index > 0 && IsWordCharacter(value[index - 1]))
+                return false;
+
+            var endIndex = index + length;
+
+            if (endIndex < value.Length && IsWordCharacter(value[endIndex]))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Determine if a character is considered part of a word.
+        /// </summary>
+        /// <param name="character">The character to check.</param>
+        /// <returns>True if the character is a letter or digit, otherwise false.</returns>
+        private static bool IsWordCharacter(char character)
+        {
+            return char.IsLetterOrDigit(character);
+        }
+
+        /// <summary>
         /// Determine which characters within a string should be highlighted based on a set of markers.
         /// </summary>
         /// <param name="value">The string being evaluated.</param>
         /// <param name="markers">The markers indicating which parts of the string to highlight.</param>
+        /// <param name="caseSensitive">Whether the search should be case-sensitive.</param>
         /// <returns>An array of booleans, one per character in the string, indicating whether that character should be highlighted.</returns>
-        public static bool[] GetHighlightMask(string value, StringMarker[] markers)
+        public static bool[] GetHighlightMask(string value, StringMarker[] markers, bool caseSensitive = false)
         {
             var highlights = new bool[value?.Length ?? 0];
 
             if (string.IsNullOrEmpty(value) || markers == null || markers.Length == 0)
                 return highlights;
 
+            var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+
             foreach (var marker in markers)
             {
                 if (string.IsNullOrEmpty(marker.Value))
                     continue;
 
-                var index = value.IndexOf(marker.Value, StringComparison.Ordinal);
+                var index = value.IndexOf(marker.Value, comparison);
 
                 while (index != -1)
                 {
-                    for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
-                        highlights[i] = true;
+                    if (IsWholeWordMatch(value, index, marker.Length))
+                    {
+                        for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
+                            highlights[i] = true;
+                    }
 
-                    index = value.IndexOf(marker.Value, index + marker.Length, StringComparison.Ordinal);
+                    index = value.IndexOf(marker.Value, index + marker.Length, comparison);
                 }
             }
 

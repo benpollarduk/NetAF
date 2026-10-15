@@ -313,7 +313,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenSingleKeyWordPresentMultipleTimes_WhenLocateStringMarkers_ThenMarkerForEachOccurrence()
         {
-            var result = StringUtilities.LocateStringMarkers("aXaXa", ["a"]);
+            var result = StringUtilities.LocateStringMarkers("a a a", ["a"]);
 
             Assert.HasCount(3, result);
             Assert.AreEqual(0, result[0].StartIndex);
@@ -336,11 +336,11 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenOverlappingKeyWord_WhenLocateStringMarkers_ThenNonOverlappingMarkers()
         {
-            var result = StringUtilities.LocateStringMarkers("aaaa", ["aa"]);
+            var result = StringUtilities.LocateStringMarkers("aa aa", ["aa"]);
 
             Assert.HasCount(2, result);
             Assert.AreEqual(0, result[0].StartIndex);
-            Assert.AreEqual(2, result[1].StartIndex);
+            Assert.AreEqual(3, result[1].StartIndex);
         }
 
         [TestMethod]
@@ -373,6 +373,71 @@ namespace NetAF.Tests.Utilities
 
             Assert.HasCount(1, result);
             Assert.AreEqual(4, result[0].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitiveSubstringOfLargerWord_WhenLocateStringMarkers_ThenNoMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("The Bedroom is dark", ["bed"], caseSensitive: false);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitiveWholeWordWithDifferentCasing_WhenLocateStringMarkers_ThenMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("The BED is here", ["bed"], caseSensitive: false);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(4, result[0].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordAsSubstringOfLargerWord_WhenLocateStringMarkers_ThenNoMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("The bedroom is dark", ["bed"]);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordFollowedByPunctuation_WhenLocateStringMarkers_ThenMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("bed? bed! bed. bed, bed", ["bed"]);
+
+            Assert.HasCount(5, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(5, result[1].StartIndex);
+            Assert.AreEqual(10, result[2].StartIndex);
+            Assert.AreEqual(15, result[3].StartIndex);
+            Assert.AreEqual(20, result[4].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordAtStartAndEndOfString_WhenLocateStringMarkers_ThenMarkerForEach()
+        {
+            var result = StringUtilities.LocateStringMarkers("bed in the bed", ["bed"]);
+
+            Assert.HasCount(2, result);
+            Assert.AreEqual(0, result[0].StartIndex);
+            Assert.AreEqual(11, result[1].StartIndex);
+        }
+
+        [TestMethod]
+        public void GivenKeyWordPrecededByWordCharacter_WhenLocateStringMarkers_ThenNoMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("The flatbed is here", ["bed"]);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenMultiWordKeyWord_WhenLocateStringMarkers_ThenMarker()
+        {
+            var result = StringUtilities.LocateStringMarkers("The old bed room is dark", ["bed room"]);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual(8, result[0].StartIndex);
         }
 
         [TestMethod]
@@ -458,6 +523,69 @@ namespace NetAF.Tests.Utilities
 
             Assert.HasCount(11, result);
             Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerAsSubstringOfLargerWord_WhenGetHighlightMask_ThenNotHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The bedroom", [new StringMarker("bed", 4)]);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenMarkerAsWholeWordAmongstLargerWord_WhenGetHighlightMask_ThenOnlyWholeWordHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("bedroom bed", [new StringMarker("bed", 8)]);
+
+            bool[] expected = [false, false, false, false, false, false, false, false, true, true, true];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitiveMarkerAsSubstringOfLargerWord_WhenGetHighlightMask_ThenNotHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The Bedroom", [new StringMarker("bed", 4)], caseSensitive: false);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitiveMarkerAsWholeWordWithDifferentCasing_WhenGetHighlightMask_ThenHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The BED sat", [new StringMarker("bed", 4)], caseSensitive: false);
+
+            bool[] expected = [false, false, false, false, true, true, true, false, false, false, false];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenCaseInsensitive_WhenGetHighlightMask_ThenDifferentCasingHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The Dog sat", [new StringMarker("dog", 4)], caseSensitive: false);
+
+            bool[] expected = [false, false, false, false, true, true, true, false, false, false, false];
+            Assert.AreSequenceEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GivenCaseSensitive_WhenGetHighlightMask_ThenDifferentCasingNotHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The Dog sat", [new StringMarker("dog", 4)], caseSensitive: true);
+
+            Assert.HasCount(11, result);
+            Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenCaseSensitive_WhenGetHighlightMask_ThenOnlyExactCasingHighlighted()
+        {
+            var result = StringUtilities.GetHighlightMask("The dog sat", [new StringMarker("dog", 4)], caseSensitive: true);
+
+            bool[] expected = [false, false, false, false, true, true, true, false, false, false, false];
+            Assert.AreSequenceEqual(expected, result);
         }
 
         [TestMethod]
