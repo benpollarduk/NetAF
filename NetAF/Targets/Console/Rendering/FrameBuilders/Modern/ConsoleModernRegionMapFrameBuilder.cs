@@ -87,6 +87,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                         var lineWidth = narrativeWidth - xMargin;
                         var commandLines = new List<string>();
                         var remaining = commands;
+                        const string ellipsis = "...";
 
                         while (!string.IsNullOrEmpty(remaining) && remaining.Length > 0 && commandLines.Count < maxCommandLines && lineWidth > 0)
                         {
@@ -95,7 +96,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                             // if this is the last available line and more content remains, truncate with an ellipsis
                             if (commandLines.Count == maxCommandLines - 1 && !string.IsNullOrWhiteSpace(remaining))
                             {
-                                const string ellipsis = "...";
                                 var trimLength = Math.Max(0, lineWidth - ellipsis.Length);
 
                                 if (line.Length > trimLength)
