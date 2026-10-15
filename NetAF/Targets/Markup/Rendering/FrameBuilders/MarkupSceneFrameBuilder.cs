@@ -3,7 +3,6 @@ using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Extensions;
-using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Utilities;
@@ -42,7 +41,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             string[] keywords = properties.HighlightKeywords switch
             {
-                true => [.. Game.GetAllPlayerVisibleExaminables(player, room).Select(x => x.Identifier.Name)],
+                true => StringUtilities.FindKeywords(new ExaminationScene(player, room), viewPoint),
                 false => []
             };
 

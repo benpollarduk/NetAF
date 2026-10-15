@@ -4,7 +4,6 @@ using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Commands.Global;
 using NetAF.Extensions;
-using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
@@ -66,7 +65,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             // collect the keywords to highlight within the narrative text
             string[] keywords = properties.HighlightKeywords switch
             {
-                true => [.. Game.GetAllPlayerVisibleExaminables(player, room).Select(x => x.Identifier.Name)],
+                true => StringUtilities.FindKeywords(new ExaminationScene(player, room), viewPoint),
                 false => []
             };
 

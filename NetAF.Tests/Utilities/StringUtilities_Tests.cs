@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using NetAF.Assets;
 using NetAF.Assets.Attributes;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
 using NetAF.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -455,6 +458,96 @@ namespace NetAF.Tests.Utilities
 
             Assert.HasCount(11, result);
             Assert.AreSequenceEqual(new bool[11], result);
+        }
+
+        [TestMethod]
+        public void GivenNullViewPointAndNoExaminables_WhenFindKeywords_ThenNoKeywords()
+        {
+            var room = new Room("Room", "Room");
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+
+            var result = StringUtilities.FindKeywords(scene, null);
+
+            Assert.IsEmpty(result);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithItem_WhenFindKeywords_ThenItemNameReturned()
+        {
+            var room = new Room("Room", "Room", items: [new Item("Key", "A key.")]);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+
+            var result = StringUtilities.FindKeywords(scene, null);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual("Key", result[0]);
+        }
+
+        [TestMethod]
+        public void GivenPlayerWithItem_WhenFindKeywords_ThenItemNameReturned()
+        {
+            var room = new Room("Room", "Room");
+            var player = new PlayableCharacter("Player", "Player");
+            player.AddItem(new Item("Sword", "A sword."));
+            var scene = new ExaminationScene(player, room);
+
+            var result = StringUtilities.FindKeywords(scene, null);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual("Sword", result[0]);
+        }
+
+        [TestMethod]
+        public void GivenRoomWithExit_WhenFindKeywords_ThenExitNameReturned()
+        {
+            var room = new Room("Room", "Room", [new Exit(Direction.North)]);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+
+            var result = StringUtilities.FindKeywords(scene, null);
+
+            Assert.HasCount(1, result);
+            Assert.AreEqual("North", result[0]);
+        }
+
+        [TestMethod]
+        public void GivenViewPointWithSurroundingRoomsAndDirections_WhenFindKeywords_ThenRoomNamesAndDirectionsReturned()
+        {
+            var room = new Room("Room", "Room", [new Exit(Direction.North)]);
+            var regionMaker = new RegionMaker("Region", "Region")
+            {
+                [0, 1, 0] = room,
+                [0, 2, 0] = new Room("North Room", "North Room", [new Exit(Direction.South)])
+            };
+
+            var region = regionMaker.Make(0, 1, 0);
+            region.Enter();
+            var viewPoint = ViewPoint.Create(region);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+
+            var result = StringUtilities.FindKeywords(scene, viewPoint);
+
+            CollectionAssert.Contains(result, "North Room");
+            CollectionAssert.Contains(result, "North");
+        }
+
+        [TestMethod]
+        public void GivenDuplicateKeywords_WhenFindKeywords_ThenKeywordsAreDistinct()
+        {
+            var room = new Room("Room", "Room", [new Exit(Direction.North)]);
+            var regionMaker = new RegionMaker("Region", "Region")
+            {
+                [0, 1, 0] = room,
+                [0, 2, 0] = new Room("North", "North", [new Exit(Direction.South)])
+            };
+
+            var region = regionMaker.Make(0, 1, 0);
+            region.Enter();
+            var viewPoint = ViewPoint.Create(region);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+
+            var result = StringUtilities.FindKeywords(scene, viewPoint);
+
+            Assert.AreEqual(result.Length, new HashSet<string>(result).Count);
         }
     }
 }

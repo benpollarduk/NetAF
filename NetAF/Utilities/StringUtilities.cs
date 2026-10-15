@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NetAF.Assets;
+using NetAF.Assets.Characters;
+using NetAF.Assets.Locations;
 using NetAF.Extensions;
+using NetAF.Logic;
 
 namespace NetAF.Utilities
 {
@@ -278,6 +281,19 @@ namespace NetAF.Utilities
             }
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Find all keywords for a scene.
+        /// </summary>
+        /// <param name="scene">The examination scene.</param>
+        /// <param name="viewPoint">The viewpoint.</param>
+        /// <returns>An array of keywords.</returns>
+        public static string[] FindKeywords(ExaminationScene scene, ViewPoint viewPoint)
+        {
+            string[] viewPointKeywords = viewPoint != null ? [.. viewPoint.Rooms.Select(x => x.Identifier.Name).Concat(viewPoint.Directions.Select(x => x.ToString()))] : [];
+            var examinableKeywords = Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name);
+            return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
         }
 
         /// <summary>

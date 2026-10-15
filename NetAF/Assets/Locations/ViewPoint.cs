@@ -24,12 +24,12 @@ namespace NetAF.Assets.Locations
         /// </summary>
         /// <param name="direction">The direction to check.</param>
         /// <returns>The room.</returns>
-        public Room this[Direction direction] => SurroundingRooms.ContainsKey(direction) ? SurroundingRooms[direction] : null;
+        public Room this[Direction direction] => SurroundingRooms.TryGetValue(direction, out Room value) ? value : null;
 
         /// <summary>
         /// Get if there is a view in any direction.
         /// </summary>
-        public bool Any => SurroundingRooms.Any();
+        public bool Any => SurroundingRooms.Count != 0;
 
         /// <summary>
         /// Get if there is a view in any direction.
@@ -40,6 +40,16 @@ namespace NetAF.Assets.Locations
         /// Get if there is a view in any direction.
         /// </summary>
         public bool AnyNotVisited => SurroundingRooms.Any(x => !x.Value?.HasBeenVisited ?? false);
+
+        /// <summary>
+        /// Get the surrounding directions.
+        /// </summary>
+        public Direction[] Directions => [.. SurroundingRooms.Keys];
+
+        /// <summary>
+        /// Get the surrounding rooms.
+        /// </summary>
+        public Room[] Rooms => [.. SurroundingRooms.Values];
 
         /// <summary>
         /// Get the surrounding rooms.
