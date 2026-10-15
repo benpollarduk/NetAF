@@ -138,7 +138,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                         const int maxCommandLines = 3;
                         var lineWidth = narrativeWidth - xMargin;
                         var commandLines = new List<string>();
-                        var remaining = commands;
+                        var remaining = commands ?? string.Empty;
 
                         while (remaining.Length > 0 && commandLines.Count < maxCommandLines && lineWidth > 0)
                         {

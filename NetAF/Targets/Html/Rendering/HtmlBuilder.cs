@@ -74,7 +74,7 @@ namespace NetAF.Targets.Html.Rendering
         /// </summary>
         /// <param name="content">The content to append.</param>
         /// <param name="markers">The markers indicating which parts of the content to make bold.</param>
-        public void P(string content, StringMarker[] markers = null)
+        public void P(string content, StringMarker[] markers)
         {
             if (markers == null)
                 Append("p", content);
