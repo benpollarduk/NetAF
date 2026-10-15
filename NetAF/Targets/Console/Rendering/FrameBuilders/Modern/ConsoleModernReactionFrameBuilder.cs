@@ -2,12 +2,10 @@ using NetAF.Assets;
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using NetAF.Extensions;
-using NetAF.Logic;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
 using NetAF.Utilities;
-using System.Linq;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
 {
