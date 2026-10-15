@@ -526,8 +526,8 @@ namespace NetAF.Tests.Utilities
 
             var result = StringUtilities.FindKeywords(scene, viewPoint);
 
-            CollectionAssert.Contains(result, "North Room");
-            CollectionAssert.Contains(result, "North");
+            Assert.Contains("North Room", result);
+            Assert.Contains("North", result);
         }
 
         [TestMethod]
@@ -547,7 +547,15 @@ namespace NetAF.Tests.Utilities
 
             var result = StringUtilities.FindKeywords(scene, viewPoint);
 
-            Assert.AreEqual(result.Length, new HashSet<string>(result).Count);
+            Assert.HasCount(result.Length, new HashSet<string>(result));
+        }
+
+        [TestMethod]
+        public void GivenNoSceneOrViewPoint_WhenFindKeywords_ThenNoKeywords()
+        {
+            var result = StringUtilities.FindKeywords(null, null);
+
+            Assert.IsEmpty(result);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             string[] keywords = properties.HighlightKeywords switch
             {
-                true => [.. Game.GetAllPlayerVisibleExaminables(player, room).Select(x => x.Identifier.Name)],
+                true => StringUtilities.FindKeywords(new ExaminationScene(player, room)),
                 false => []
             };
 

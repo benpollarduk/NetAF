@@ -289,10 +289,10 @@ namespace NetAF.Utilities
         /// <param name="scene">The examination scene.</param>
         /// <param name="viewPoint">The viewpoint.</param>
         /// <returns>An array of keywords.</returns>
-        public static string[] FindKeywords(ExaminationScene scene, ViewPoint viewPoint)
+        public static string[] FindKeywords(ExaminationScene scene = null, ViewPoint viewPoint = null)
         {
             string[] viewPointKeywords = viewPoint != null ? [.. viewPoint.Rooms.Select(x => x.Identifier.Name).Concat(viewPoint.Directions.Select(x => x.ToString()))] : [];
-            var examinableKeywords = Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name);
+            var examinableKeywords = scene != null ? Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name) : [];
             return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
         }
 
