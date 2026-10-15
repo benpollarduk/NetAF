@@ -78,7 +78,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// <param name="text">The text to append.</param>
         /// <param name="style">The style to use for the text.</param>
         /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
-        public void Write(string text, TextStyle style, StringMarker[] markers = null)
+        public void Write(string text, TextStyle style, StringMarker[] markers)
         {
             Write(Highlight(text, markers), style);
         }
