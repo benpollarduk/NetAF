@@ -1,11 +1,12 @@
 ﻿using NetAF.Rendering;
+using System;
 
 namespace NetAF.Targets.Console.Rendering
 {
     /// <summary>
     /// Provides options for rendering a console frame.
     /// </summary>
-    public sealed class ConsoleRenderProperties : RenderProperties
+    public sealed class ConsoleRenderProperties : RenderProperties, ICloneable
     {
         #region Constants
 
@@ -119,6 +120,34 @@ namespace NetAF.Targets.Console.Rendering
         /// Get or set the maximum number of characters to display per line of narrative text. For no limit use ConsoleRenderProperties.UnlimitedNarrativeLineWidth.
         /// </summary>
         public int MaximumNarrativeLineWidth { get; set; }
+
+        #endregion
+
+        #region Implementation of ICloneable
+
+        /// <inheritdoc/>
+        public object Clone()
+        {
+            return new ConsoleRenderProperties()
+            {
+                LeftBoundary = LeftBoundary,
+                RightBoundary = RightBoundary,
+                HorizontalDivider = HorizontalDivider,
+                BackgroundColor = BackgroundColor,
+                BorderColor = BorderColor,
+                TitleColor = TitleColor,
+                CommandColor = CommandColor,
+                CommandDescriptionColor = CommandDescriptionColor,
+                OptionColor = OptionColor,
+                OptionDescriptionColor = OptionDescriptionColor,
+                MainTextColor = MainTextColor,
+                SecondaryTextColor = SecondaryTextColor,
+                InputColor = InputColor,
+                MaximumNarrativeLineWidth = MaximumNarrativeLineWidth,
+                HighlightKeywords = HighlightKeywords,
+                HighlightTextColor = HighlightTextColor
+            };
+        }
 
         #endregion
     }
