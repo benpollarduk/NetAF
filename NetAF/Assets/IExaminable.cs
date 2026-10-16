@@ -25,6 +25,10 @@ namespace NetAF.Assets
         /// </summary>
         AttributeManager Attributes { get; }
         /// <summary>
+        /// Get if this has been examined.
+        /// </summary>
+        bool HasBeenExamined { get; }
+        /// <summary>
         /// Examine this object.
         /// </summary>
         /// <param name="scene">The scene this object is being examined from.</param>

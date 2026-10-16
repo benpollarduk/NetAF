@@ -15,7 +15,7 @@ namespace NetAF.Commands.RegionMap
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Zoom Out", "Zoom out to show a less detailed map", CommandCategory.RegionMap, shortcut: "O", displayAs: "Zoom Out/O");
+        public static CommandHelp CommandHelp { get; } = new("Zoom Out", "Zoom out to show a less detailed map", CommandCategory.RegionMap, shortcut: "O");
 
         #endregion
 
@@ -32,9 +32,9 @@ namespace NetAF.Commands.RegionMap
 
             FrameProperties.RegionMapRenderOptions.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail switch
             {
-                RegionMapDetail.Minimal => RegionMapDetail.Minimal,
-                RegionMapDetail.Normal => RegionMapDetail.Minimal,
-                RegionMapDetail.Maximal => RegionMapDetail.Normal,
+                RegionMapDetail.Low => RegionMapDetail.Low,
+                RegionMapDetail.Normal => RegionMapDetail.Low,
+                RegionMapDetail.High => RegionMapDetail.Normal,
                 _ => throw new NotImplementedException()
             };
 

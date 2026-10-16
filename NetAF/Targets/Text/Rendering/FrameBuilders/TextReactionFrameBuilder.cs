@@ -15,7 +15,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         #region Implementation of IReactionFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(string title, string message, bool isError, Size size)
+        public IFrame Build(string title, string message, bool isError, string[] keywords, Size size)
         {
             builder.Clear();
 

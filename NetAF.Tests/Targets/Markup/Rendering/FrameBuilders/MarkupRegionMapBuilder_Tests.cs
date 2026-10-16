@@ -1,9 +1,10 @@
-﻿using NetAF.Assets;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets;
 using NetAF.Assets.Locations;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Targets.Markup.Rendering.FrameBuilders;
-using NetAF.Targets.Markup.Rendering;
 using NetAF.Rendering;
+using NetAF.Targets.Console.Rendering;
+using NetAF.Targets.Markup.Rendering;
+using NetAF.Targets.Markup.Rendering.FrameBuilders;
 
 namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
 {
@@ -16,7 +17,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var markupBuilder = new MarkupBuilder();
-                var mapBuilder = new MarkupRegionMapBuilder(markupBuilder);
+                var mapBuilder = new MarkupRegionMapBuilder(markupBuilder, ConsoleMapRenderProperties.Default);
                 var region = new Region(string.Empty, string.Empty);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);

@@ -13,8 +13,9 @@ namespace NetAF.Rendering.FrameBuilders
         /// <param name="title">The title to display to the user.</param>
         /// <param name="message">The message to display to the user.</param>
         /// <param name="isError">If the message is an error.</param>
+        /// <param name="keywords">Any keywords to highlight.</param>
         /// <param name="size">The size of the frame.</param>
         /// <returns>The frame.</returns>
-        IFrame Build(string title, string message, bool isError, Size size);
+        IFrame Build(string title, string message, bool isError, string[] keywords, Size size);
     }
 }

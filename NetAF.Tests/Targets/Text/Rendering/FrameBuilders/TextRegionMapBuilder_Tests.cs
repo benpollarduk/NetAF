@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
 using NetAF.Rendering;
+using NetAF.Targets.Console.Rendering;
 
 namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
 {
@@ -16,7 +17,7 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var stringBuilder = new StringBuilder();
-                var mapBuilder = new TextRegionMapBuilder(stringBuilder);
+                var mapBuilder = new TextRegionMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
                 var region = new Region(string.Empty, string.Empty);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 0, 0);
                 region.AddRoom(new(string.Empty, string.Empty), 0, 1, 0);

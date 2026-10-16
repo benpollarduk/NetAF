@@ -6,10 +6,7 @@ namespace NetAF.Targets.Console.Rendering
     /// <summary>
     /// Provides a class for building strings as part of a grid.
     /// </summary>
-    /// <param name="leftBoundaryCharacter">The character to use for left boundaries.</param>
-    /// <param name="rightBoundaryCharacter">The character to use for right boundaries.</param>
-    /// <param name="horizontalDividerCharacter">The character to use for horizontal dividers.</param>
-    public class GridStringBuilder(char leftBoundaryCharacter = (char)124, char rightBoundaryCharacter = (char)124, char horizontalDividerCharacter = (char)45)
+    public sealed class GridStringBuilder
     {
         #region Fields
 
@@ -19,21 +16,6 @@ namespace NetAF.Targets.Console.Rendering
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Get or set the character used for left boundary.
-        /// </summary>
-        public char LeftBoundaryCharacter { get; set; } = leftBoundaryCharacter;
-
-        /// <summary>
-        /// Get or set the character used for right boundary.
-        /// </summary>
-        public char RightBoundaryCharacter { get; set; } = rightBoundaryCharacter;
-
-        /// <summary>
-        /// Get or set the character used for horizontal dividers.
-        /// </summary>
-        public char HorizontalDividerCharacter { get; set; } = horizontalDividerCharacter;
 
         /// <summary>
         /// Get or set the line terminator.
@@ -123,16 +105,19 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Draw the boundary.
         /// </summary>
+        /// <param name="leftBoundaryCharacter">The character to use for left boundaries.</param>
+        /// <param name="rightBoundaryCharacter">The character to use for right boundaries.</param>
+        /// <param name="horizontalDividerCharacter">The character to use for horizontal dividers.</param>
         /// <param name="color">The color to draw the boundary.</param>
-        public void DrawBoundary(AnsiColor color)
+        public void DrawBoundary(char leftBoundaryCharacter, char rightBoundaryCharacter, char horizontalDividerCharacter, AnsiColor color)
         {
-            DrawHorizontalDivider(0, color);
-            DrawHorizontalDivider(DisplaySize.Height - 1, color);
+            DrawHorizontalDivider(0, horizontalDividerCharacter, color);
+            DrawHorizontalDivider(DisplaySize.Height - 1, horizontalDividerCharacter, color);
 
             for (var i = 0; i < DisplaySize.Height; i++)
             {
-                SetCell(0, i, LeftBoundaryCharacter, color);
-                SetCell(DisplaySize.Width - 1, i, RightBoundaryCharacter, color);
+                SetCell(0, i, leftBoundaryCharacter, color);
+                SetCell(DisplaySize.Width - 1, i, rightBoundaryCharacter, color);
             }
         }
 
@@ -140,12 +125,13 @@ namespace NetAF.Targets.Console.Rendering
         /// Draw a horizontal divider.
         /// </summary>
         /// <param name="y">The y position of the divider.</param>
+        /// <param name="horizontalDividerCharacter">The character to use for the divider.</param>
         /// <param name="color">The color to draw the boundary.</param>
         /// <returns>The divider.</returns>
-        public void DrawHorizontalDivider(int y, AnsiColor color)
+        public void DrawHorizontalDivider(int y, char horizontalDividerCharacter, AnsiColor color)
         {
             for (var i = 1; i < DisplaySize.Width - 1; i++)
-                SetCell(i, y, HorizontalDividerCharacter, color);
+                SetCell(i, y, horizontalDividerCharacter, color);
         }
 
         /// <summary>
@@ -160,6 +146,23 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="endY">The end y position.</param>
         public void DrawWrapped(string value, int startX, int startY, int maxWidth, AnsiColor color, out int endX, out int endY)
         {
+            DrawWrapped(value, startX, startY, maxWidth, color, color, [], out endX, out endY);
+        }
+
+        /// <summary>
+        /// Draw a wrapped string.
+        /// </summary>
+        /// <param name="value">The string.</param>
+        /// <param name="startX">The start x position.</param>
+        /// <param name="startY">The start y position.</param>
+        /// <param name="maxWidth">The max width of the string.</param>
+        /// <param name="color">The color to draw the text.</param>
+        /// <param name="highlightColor">The color to draw the highlighted text.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        /// <param name="endX">The end x position.</param>
+        /// <param name="endY">The end y position.</param>
+        public void DrawWrapped(string value, int startX, int startY, int maxWidth, AnsiColor color, AnsiColor highlightColor, StringMarker[] markers, out int endX, out int endY)
+        {
             endX = startX;
             endY = startY;
 
@@ -167,12 +170,18 @@ namespace NetAF.Targets.Console.Rendering
 
             while (value.Length > 0)
             {
-                var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidth - startX);
+                var maxWidthForLine = maxWidth - startX;
+
+                if (maxWidthForLine <= 0)
+                    break;
+
+                var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidthForLine);
+                var highlights = GetHighlightMask(chunk, markers);
 
                 for (var i = 0; i < chunk.Length; i++)
                 {
                     endX = startX + i;
-                    SetCell(endX, endY, chunk[i], color);
+                    SetCell(endX, endY, chunk[i], highlights[i] ? highlightColor : color);
                 }
 
                 if (value.Trim().Length > 0)
@@ -184,7 +193,7 @@ namespace NetAF.Targets.Console.Rendering
         }
 
         /// <summary>
-        /// Draw a wrapped string.
+        /// Draw a centralised wrapped string.
         /// </summary>
         /// <param name="value">The string.</param>
         /// <param name="startY">The start y position.</param>
@@ -193,6 +202,22 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="endX">The end x position.</param>
         /// <param name="endY">The end y position.</param>
         public void DrawCentralisedWrapped(string value, int startY, int maxWidth, AnsiColor color, out int endX, out int endY)
+        {
+            DrawCentralisedWrapped(value, startY, maxWidth, color, color, [], out endX, out endY);
+        }
+
+        /// <summary>
+        /// Draw a centralised wrapped string.
+        /// </summary>
+        /// <param name="value">The string.</param>
+        /// <param name="startY">The start y position.</param>
+        /// <param name="maxWidth">The max width of the string.</param>
+        /// <param name="color">The color to draw the text.</param>
+        /// <param name="highlightColor">The color to draw the highlighted text.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        /// <param name="endX">The end x position.</param>
+        /// <param name="endY">The end y position.</param>
+        public void DrawCentralisedWrapped(string value, int startY, int maxWidth, AnsiColor color, AnsiColor highlightColor, StringMarker[] markers, out int endX, out int endY)
         {
             endX = 0;
             endY = startY;
@@ -203,11 +228,12 @@ namespace NetAF.Targets.Console.Rendering
             {
                 var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidth);
                 var startX = maxWidth / 2 - chunk.Length / 2;
+                var highlights = GetHighlightMask(chunk, markers);
 
                 for (var i = 0; i < chunk.Length; i++)
                 {
                     endX = startX + i;
-                    SetCell(endX, endY, chunk[i], color);
+                    SetCell(endX, endY, chunk[i], highlights[i] ? highlightColor : color);
                 }
 
                 if (value.Trim().Length > 0)
@@ -228,6 +254,17 @@ namespace NetAF.Targets.Console.Rendering
 
             for (var i = 0; i < length; i++)
                 SetCell(x + i, y, underline, color);
+        }
+
+        /// <summary>
+        /// Determine which characters within a chunk of text should be highlighted based on a set of markers.
+        /// </summary>
+        /// <param name="chunk">The chunk of text being drawn.</param>
+        /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
+        /// <returns>An array of booleans, one per character in the chunk, indicating whether that character should be highlighted.</returns>
+        private static bool[] GetHighlightMask(string chunk, StringMarker[] markers)
+        {
+            return StringUtilities.GetHighlightMask(chunk, markers);
         }
 
         /// <summary>

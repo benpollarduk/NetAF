@@ -198,10 +198,10 @@ namespace NetAF.Interpretation
 
                 if (builder.SupportsZoom)
                 {
-                    if (regionMapMode.RegionMapOptions.MapDetail != RegionMapDetail.Maximal)
+                    if (regionMapMode.RegionMapOptions.MapDetail != RegionMapDetail.High)
                         commands.Add(ZoomIn.CommandHelp);
 
-                    if (regionMapMode.RegionMapOptions.MapDetail != RegionMapDetail.Minimal)
+                    if (regionMapMode.RegionMapOptions.MapDetail != RegionMapDetail.Low)
                         commands.Add(ZoomOut.CommandHelp);
                 }
 

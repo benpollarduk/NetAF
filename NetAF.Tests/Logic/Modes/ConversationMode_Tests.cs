@@ -47,11 +47,11 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndRenderingMinimalCommands_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndRenderingLightCommands_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.CommandListType = CommandListType.Minimal;
+                FrameProperties.CommandListType = CommandListType.Light;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;

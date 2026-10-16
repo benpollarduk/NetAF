@@ -7,7 +7,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
     /// Provides a builder for region maps.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class MarkupRegionMapBuilder(MarkupBuilder builder) : GeneralRegionMapBuilder
+    /// <param name="properties">The render properties.</param>
+    public sealed class MarkupRegionMapBuilder(MarkupBuilder builder, ConsoleMapRenderProperties properties) : GeneralRegionMapBuilder(properties)
     {
         #region Overrides of HostedRegionMapBuilder
 

@@ -509,7 +509,7 @@ namespace NetAF.Assets.Locations
             if (visibleItems == 0 && visibleCharacters == 0)
                 return new($"{room.Identifier.Name} is empty.");
 
-            return new(SceneHelper.CreateRoomString(room));
+            return new(SceneHelper.CreateRoomString(room, request.Scene?.ViewPoint));
         }
 
         #endregion

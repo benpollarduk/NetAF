@@ -32,7 +32,7 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewMaximal_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewHigh_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -43,14 +43,14 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Maximal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.High }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
         }
 
         [TestMethod]
-        public void GivenNewMinimal_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewLow_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
@@ -61,7 +61,7 @@ namespace NetAF.Tests.Logic.Modes
                 OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 game.Overworld.CurrentRegion.Enter();
-                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Minimal }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
+                var mode = new RegionMapMode(RegionMapMode.Player, new RegionMapRenderOptions { MapDetail = RegionMapDetail.Low }, new RoomMapRenderOptions(), new RegionMapCommandInterpreter());
 
                 mode.Render(game);
             });
@@ -86,11 +86,11 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndDisplayingMinimalCommands_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndDisplayingLightCommands_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.CommandListType = CommandListType.Minimal;
+                FrameProperties.CommandListType = CommandListType.Light;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);
                 regionMaker[0, 0, 0] = room;

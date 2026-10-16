@@ -29,9 +29,9 @@ namespace NetAF.Commands.Frame
         public static Prompt CommandsAll => new("commands-all");
 
         /// <summary>
-        /// Get the prompt for minimal commands.
+        /// Get the prompt for light commands.
         /// </summary>
-        public static Prompt CommandsMinimal => new("commands-minimal");
+        public static Prompt CommandsLight => new("commands-light");
 
         /// <summary>
         /// Get the prompt for no key.
@@ -107,7 +107,7 @@ namespace NetAF.Commands.Frame
             return
             [
                 (CommandsNone, () => FrameProperties.CommandListType = CommandListType.None, "Commands have been set to none."),
-                (CommandsMinimal, () => FrameProperties.CommandListType = CommandListType.Minimal, "Commands have been set to minimal."),
+                (CommandsLight, () => FrameProperties.CommandListType = CommandListType.Light, "Commands have been set to light."),
                 (CommandsAll, () => FrameProperties.CommandListType = CommandListType.All, "Commands have been set to all."),
                 (KeyNone, () => FrameProperties.RoomMapRenderOptions.KeyType = KeyType.None, "Key has been set to none."),
                 (KeyDynamic, () => FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic, "Key has been set to dynamic."),

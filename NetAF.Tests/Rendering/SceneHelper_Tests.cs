@@ -227,5 +227,23 @@ namespace NetAF.Tests.Rendering
 
             Assert.AreNotEqual(string.Empty, result);
         }
+
+        [TestMethod]
+        public void GivenRoomWithItemsAndNPCsAndViewPoint_WhenCreateRoomString_ThenNonEmptyString()
+        {
+            var room1 = new Room("A", "B");
+            var room2 = new Room("C", "D");
+            var region = new Region(string.Empty, string.Empty);
+            region.AddRoom(room1, 0, 0, 0);
+            region.AddRoom(room2, 1, 0, 0);
+            region.Enter();
+
+            room1.AddItem(new Item("Test", "Test"));
+            room1.AddCharacter(new NonPlayableCharacter("Test", "Test"));
+
+            var result = SceneHelper.CreateRoomString(room1, ViewPoint.Create(region, room1));
+
+            Assert.AreNotEqual(string.Empty, result);
+        }
     }
 }

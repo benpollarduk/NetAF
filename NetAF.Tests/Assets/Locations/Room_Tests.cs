@@ -226,7 +226,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var room = new Room(string.Empty, "A room");
 
-            var result = room.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -236,7 +236,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var room = new Room(string.Empty, "A room");
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -246,7 +246,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var room = new Room(string.Empty, "A room", items: [new Item("a", "b")]);
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -256,7 +256,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var room = new Room(string.Empty, "A room", items: [new Item("a", "b"), new Item("c", "d")]);
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -268,7 +268,7 @@ namespace NetAF.Tests.Assets.Locations
             var room = new Room(string.Empty, "A room");
             room.AddCharacter(new("a", string.Empty));
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -280,7 +280,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddCharacter(new("a", string.Empty));
             room.AddCharacter(new("b", string.Empty));
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -292,7 +292,7 @@ namespace NetAF.Tests.Assets.Locations
             room.AddCharacter(new("a", string.Empty));
             room.AddCharacter(new("b", string.Empty));
 
-            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room)));
+            var result = room.Examination(new ExaminationRequest(room, new ExaminationScene(null, room, null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }

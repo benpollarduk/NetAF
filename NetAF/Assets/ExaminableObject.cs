@@ -110,8 +110,12 @@ namespace NetAF.Assets
         public AttributeManager Attributes { get; } = new AttributeManager();
 
         /// <inheritdoc/>
+        public bool HasBeenExamined { get; protected set; }
+
+        /// <inheritdoc/>
         public Examination Examine(ExaminationScene scene)
         {
+            HasBeenExamined = true;
             return Examination(new(this, scene));
         }
 
@@ -130,6 +134,7 @@ namespace NetAF.Assets
         void IRestoreFromObjectSerialization<ExaminableSerialization>.RestoreFrom(ExaminableSerialization serialization)
         {
             IsPlayerVisible = serialization.IsPlayerVisible;
+            HasBeenExamined = serialization.HasBeenExamined;
             ((IRestoreFromObjectSerialization<AttributeManagerSerialization>)Attributes).RestoreFrom(serialization.AttributeManager);
 
             foreach (var command in serialization.Commands)

@@ -1,6 +1,9 @@
+using NetAF.Assets;
+using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Utilities;
 
 namespace NetAF.Logic.Modes
 {
@@ -21,7 +24,8 @@ namespace NetAF.Logic.Modes
         /// <inheritdoc/>
         public void Render(Game game)
         {
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IReactionFrameBuilder>().Build(reaction.Title, reaction.Description, reaction.Result == ReactionResult.Error, game.Configuration.DisplaySize);
+            var keywords = StringUtilities.FindKeywords(new ExaminationScene(game.Player, game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion)));
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IReactionFrameBuilder>().Build(reaction.Title, reaction.Description, reaction.Result == ReactionResult.Error, keywords, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

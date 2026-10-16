@@ -14,7 +14,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
         {
             var gridStringBuilder = new GridStringBuilder();
             gridStringBuilder.Resize(new(10, 10));
-            gridStringBuilder.DrawBoundary(AnsiColor.Black);
+            gridStringBuilder.DrawBoundary('|', '|', '-', AnsiColor.Black);
             var frame = new GridTextFrame(gridStringBuilder, 0, 0, AnsiColor.Black);
             byte[] data;
 
@@ -35,7 +35,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
         {
             var gridStringBuilder = new GridStringBuilder();
             gridStringBuilder.Resize(new(10, 10));
-            gridStringBuilder.DrawBoundary(AnsiColor.Black);
+            gridStringBuilder.DrawBoundary('|', '|', '-', AnsiColor.Black);
             var frame = new GridTextFrame(gridStringBuilder, 0, 0, AnsiColor.Black);
 
             var result = frame.ToString();

@@ -6,7 +6,7 @@ namespace NetAF.Targets.Html.Rendering
     /// <summary>
     /// Provides a class for building HTML.
     /// </summary>
-    public class HtmlBuilder()
+    public sealed class HtmlBuilder()
     {
         #region Fields
 
@@ -66,7 +66,20 @@ namespace NetAF.Targets.Html.Rendering
         /// <param name="content">The content to append.</param>
         public void P(string content)
         {
-            Append("p", content);
+            P(content, null);
+        }
+
+        /// <summary>
+        /// Append a paragraph with highlighted words in bold.
+        /// </summary>
+        /// <param name="content">The content to append.</param>
+        /// <param name="markers">The markers indicating which parts of the content to make bold.</param>
+        public void P(string content, StringMarker[] markers)
+        {
+            if (markers == null)
+                Append("p", content);
+            else
+                Append("p", Highlight(content, markers));
         }
 
         /// <summary>
@@ -122,6 +135,43 @@ namespace NetAF.Targets.Html.Rendering
         private void Append(string tag, string content)
         {
             builder.Append($"<{tag}>{content}</{tag}>");
+        }
+
+        #endregion
+
+        #region StaticMethods
+
+        /// <summary>
+        /// Highlight words within a string by emboldening the sections indicated by a set of markers.
+        /// </summary>
+        /// <param name="content">The content to highlight.</param>
+        /// <param name="markers">The markers indicating which parts of the content to embolden.</param>
+        /// <returns>The content with the marked sections wrapped in bold tags.</returns>
+        internal static string Highlight(string content, StringMarker[] markers)
+        {
+            if (string.IsNullOrEmpty(content) || markers == null || markers.Length == 0)
+                return content;
+
+            StringBuilder result = new();
+            var highlights = StringUtilities.GetHighlightMask(content, markers);
+
+            for (var i = 0; i < content.Length; i++)
+            {
+                var isHighlighted = highlights[i];
+                var wasHighlighted = i > 0 && highlights[i - 1];
+
+                if (isHighlighted && !wasHighlighted)
+                    result.Append("<b>");
+                else if (!isHighlighted && wasHighlighted)
+                    result.Append("</b>");
+
+                result.Append(content[i]);
+            }
+
+            if (highlights[^1])
+                result.Append("</b>");
+
+            return result.ToString();
         }
 
         #endregion

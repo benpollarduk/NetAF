@@ -12,12 +12,12 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var builder = new GridStringBuilder();
             builder.Resize(new(10, 10));
 
-            builder.DrawHorizontalDivider(0, AnsiColor.Black);
+            builder.DrawHorizontalDivider(0, '-', AnsiColor.Black);
             var left = builder.GetCharacter(1, 0);
             var right = builder.GetCharacter(8, 0);
 
-            Assert.AreEqual(builder.HorizontalDividerCharacter, left);
-            Assert.AreEqual(builder.HorizontalDividerCharacter, right);
+            Assert.AreEqual('-', left);
+            Assert.AreEqual('-', right);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             builder.DrawUnderline(0, 0, 1, AnsiColor.Black);
             var result = builder.GetCharacter(0, 0);
 
-            Assert.AreEqual(builder.HorizontalDividerCharacter, result);
+            Assert.AreEqual('-', result);
         }
 
         [TestMethod]
@@ -38,16 +38,16 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var builder = new GridStringBuilder();
             builder.Resize(new(10, 10));
 
-            builder.DrawBoundary(AnsiColor.Black);
+            builder.DrawBoundary('|', '|', '-', AnsiColor.Black);
             var topLeft = builder.GetCharacter(0, 0);
             var topRight = builder.GetCharacter(0, 9);
             var bottomLeft = builder.GetCharacter(0, 9);
             var bottomRight = builder.GetCharacter(9, 9);
 
-            Assert.AreEqual(builder.LeftBoundaryCharacter, topLeft);
-            Assert.AreEqual(builder.LeftBoundaryCharacter, bottomLeft);
-            Assert.AreEqual(builder.RightBoundaryCharacter, topRight);
-            Assert.AreEqual(builder.RightBoundaryCharacter, bottomRight);
+            Assert.AreEqual('|', topLeft);
+            Assert.AreEqual('|', bottomLeft);
+            Assert.AreEqual('|', topRight);
+            Assert.AreEqual('|', bottomRight);
         }
 
         [TestMethod]

@@ -33,6 +33,8 @@ The following syntax is supported.
 
 [underline]Example[/underline] - all text between the tags uses underline.
 
+[highlight]Example[/highlight] - all text between the tags uses highlight.
+
 [monospace]Example[/monospace] - all text between the tags should be monospace.
 
 [foreground:#FFFFFF]Example[/foreground] - all text between the tags has a specified foreground color in hex, RRGGBB.
@@ -51,7 +53,7 @@ This is a paragraph. So far the same as markdown.
 
 [bold]Here is some text in bold![/bold] And some in [italic]italics[/italic]. And some [bold][italic]bold italics[/italic][/bold].
 
-You can [underline]underline sections of text[/underline], and also [strikethrough]strike through sections[/strikethrough] if desired.
+You can [underline]underline sections of text[/underline], and also [strikethrough]strike through[/strikethrough] or [highlight]highlight[/highlight] sections if desired.
 
 [foreground:#FF0000]This will be in red.[/foreground]
 

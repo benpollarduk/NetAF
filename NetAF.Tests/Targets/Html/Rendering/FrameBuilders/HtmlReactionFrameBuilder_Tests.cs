@@ -14,9 +14,9 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlReactionFrameBuilder(htmlBuilder);
+                var builder = new HtmlReactionFrameBuilder(htmlBuilder, HtmlRenderProperties.Default);
 
-                builder.Build(string.Empty, string.Empty, false, new Size(80, 50));
+                builder.Build(string.Empty, string.Empty, false, null, new Size(80, 50));
             });
         }
 
@@ -26,9 +26,9 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlReactionFrameBuilder(htmlBuilder);
+                var builder = new HtmlReactionFrameBuilder(htmlBuilder, HtmlRenderProperties.Default);
 
-                builder.Build("test", "test", false, new Size(80, 50));
+                builder.Build("test", "test", false, null, new Size(80, 50));
             });
         }
     }

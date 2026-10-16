@@ -10,7 +10,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
     [TestClass]
     public class GeneralRegionMapBuilder_Tests
     {
-        private sealed class TestBuilder : GeneralRegionMapBuilder
+        private sealed class TestBuilder(ConsoleMapRenderProperties properties) : GeneralRegionMapBuilder(properties)
         {
             public int AdaptCallCount { get; private set; }
             public GridStringBuilder LastAdapted { get; private set; }
@@ -25,7 +25,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenDefault_WhenSupportsPan_ThenTrue()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
 
             Assert.IsTrue(builder.SupportsPan);
         }
@@ -33,7 +33,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenDefault_WhenSupportsZoom_ThenTrue()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
 
             Assert.IsTrue(builder.SupportsZoom);
         }
@@ -41,7 +41,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRegion_WhenBuildRegionMap_ThenAdaptIsCalled()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             Region region = new("REGION", string.Empty);
             region.AddRoom(room, 0, 0, 0);
@@ -55,7 +55,7 @@ namespace NetAF.Tests.Targets.General.FrameBuilders
         [TestMethod]
         public void GivenRegion_WhenBuildRegionMap_ThenAdaptedBuilderIsNotNull()
         {
-            var builder = new TestBuilder();
+            var builder = new TestBuilder(ConsoleMapRenderProperties.Default);
             Room room = new("ROOM", string.Empty);
             Region region = new("REGION", string.Empty);
             region.AddRoom(room, 0, 0, 0);

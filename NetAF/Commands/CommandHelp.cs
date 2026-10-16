@@ -16,6 +16,15 @@ namespace NetAF.Commands
     /// <param name="synonyms">An array of synonms for this command.</param>
     public sealed class CommandHelp(string command, string description = "", CommandCategory category = CommandCategory.Uncategorized, string shortcut = "", string instructions = "", string displayAs = "", string[] synonyms = null) : IEquatable<CommandHelp>, IEquatable<string>
     {
+        #region Constants
+
+        /// <summary>
+        /// Get a string representing a placeholder.
+        /// </summary>
+        public const string Placeholder = "_";
+
+        #endregion
+
         #region Properties
 
         /// <summary>

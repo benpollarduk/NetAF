@@ -8,7 +8,8 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     /// Provides a builder for region maps.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class TextRegionMapBuilder(StringBuilder builder) : GeneralRegionMapBuilder
+    /// <param name="properties">The render properties.</param>
+    public sealed class TextRegionMapBuilder(StringBuilder builder, ConsoleMapRenderProperties properties) : GeneralRegionMapBuilder(properties)
     {
         #region Overrides of HostedRegionMapBuilder
 

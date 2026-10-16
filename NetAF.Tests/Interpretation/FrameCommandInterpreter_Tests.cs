@@ -91,12 +91,12 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenOptionCommandsMinimal_WhenInterpret_ThenReturnTrue()
+        public void GivenOptionCommandsLight_WhenInterpret_ThenReturnTrue()
         {
             var interpreter = new FrameCommandInterpreter();
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworld, new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
 
-            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.CommandsMinimal.Entry}", game);
+            var result = interpreter.Interpret($"{Option.CommandHelp.Command} {Option.CommandsLight.Entry}", game);
 
             Assert.IsTrue(result.WasInterpretedSuccessfully);
         }

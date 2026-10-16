@@ -37,9 +37,9 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenCanPanAnyDirectionAndZoomedIsMaximal_WhenGetContextualCommands_ThenReturn8Commands()
+        public void GivenCanPanAnyDirectionAndZoomedIsHigh_WhenGetContextualCommands_ThenReturn8Commands()
         {
-            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Maximal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.High;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);
@@ -99,9 +99,9 @@ namespace NetAF.Tests.Interpretation
         }
 
         [TestMethod]
-        public void GivenCanPanAnyDirectionAndZoomIsMinimal_WhenGetContextualCommands_ThenReturn8Commands()
+        public void GivenCanPanAnyDirectionAndZoomIsLow_WhenGetContextualCommands_ThenReturn8Commands()
         {
-            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Minimal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Low;
             var interpreter = new RegionMapCommandInterpreter();
             RegionMaker regionMaker = new(string.Empty, string.Empty);
             Room bottom = new(string.Empty, string.Empty, [new Exit(Direction.Up)]);

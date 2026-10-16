@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NetAF.Assets;
+using NetAF.Assets.Characters;
 using NetAF.Extensions;
+using NetAF.Logic;
 
 namespace NetAF.Utilities
 {
@@ -278,6 +280,131 @@ namespace NetAF.Utilities
             }
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Find all keywords for a scene.
+        /// </summary>
+        /// <param name="scene">The examination scene.</param>
+        /// <returns>An array of keywords.</returns>
+        public static string[] FindKeywords(ExaminationScene scene = null)
+        {
+            if (scene == null)
+                return [];
+
+            string[] viewPointKeywords = scene.ViewPoint != null ? [.. scene.ViewPoint.Rooms.Where(x => x != null).Select(x => x.Identifier.Name).Concat(scene.ViewPoint.Directions.Select(x => x.ToString()))] : [];
+            var examinableKeywords = Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name);
+            return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
+        }
+
+        /// <summary>
+        /// Locate all instances of a set of keywords in a string and return their positions as an array of StringMarkers.
+        /// </summary>
+        /// <param name="value">The string to search within.</param>
+        /// <param name="keyWords">The keywords to locate.</param>
+        /// <param name="caseSensitive">Whether the search should be case-sensitive.</param>
+        /// <returns>An array of StringMarkers indicating the positions of the keywords.</returns>
+        public static StringMarker[] LocateStringMarkers(string value, string[] keyWords, bool caseSensitive = false)
+        {
+            List<StringMarker> markers = new();
+
+            var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+
+            foreach (var word in keyWords ?? [])
+            {
+                if (string.IsNullOrEmpty(word))
+                    continue;
+
+                var index = value.IndexOf(word, comparison);
+
+                while (index != -1)
+                {
+                    if (IsWholeWordMatch(value, index, word.Length))
+                        markers.Add(new StringMarker(word, index));
+
+                    index = value.IndexOf(word, index + word.Length, comparison);
+                }
+            }
+
+            return [.. markers];
+        }
+
+        /// <summary>
+        /// Determine if a match at a given position within a string represents a whole word, as opposed to a substring of a larger word.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="index">The start index of the match.</param>
+        /// <param name="length">The length of the match.</param>
+        /// <returns>True if the match is bordered by non-word characters (or the start/end of the string), otherwise false.</returns>
+        private static bool IsWholeWordMatch(string value, int index, int length)
+        {
+            if (index > 0 && IsWordCharacter(value[index - 1]))
+                return false;
+
+            var endIndex = index + length;
+
+            if (endIndex < value.Length && IsWordCharacter(value[endIndex]))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Determine if a character is considered part of a word.
+        /// </summary>
+        /// <param name="character">The character to check.</param>
+        /// <returns>True if the character is a letter or digit, otherwise false.</returns>
+        private static bool IsWordCharacter(char character)
+        {
+            return char.IsLetterOrDigit(character);
+        }
+
+        /// <summary>
+        /// Determine which characters within a string should be highlighted based on a set of markers.
+        /// </summary>
+        /// <param name="value">The string being evaluated.</param>
+        /// <param name="markers">The markers indicating which parts of the string to highlight.</param>
+        /// <param name="caseSensitive">Whether the search should be case-sensitive.</param>
+        /// <returns>An array of booleans, one per character in the string, indicating whether that character should be highlighted.</returns>
+        public static bool[] GetHighlightMask(string value, StringMarker[] markers, bool caseSensitive = false)
+        {
+            var highlights = new bool[value?.Length ?? 0];
+
+            if (string.IsNullOrEmpty(value) || markers == null || markers.Length == 0)
+                return highlights;
+
+            var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+
+            foreach (var marker in markers)
+                ApplyMarkerHighlights(value, marker, comparison, highlights);
+
+            return highlights;
+        }
+
+        /// <summary>
+        /// Apply the highlights for a single marker to a highlight mask.
+        /// </summary>
+        /// <param name="value">The string being evaluated.</param>
+        /// <param name="marker">The marker indicating which part of the string to highlight.</param>
+        /// <param name="comparison">The string comparison to use.</param>
+        /// <param name="highlights">The highlight mask to apply the highlights to.</param>
+        private static void ApplyMarkerHighlights(string value, StringMarker marker, StringComparison comparison, bool[] highlights)
+        {
+            if (string.IsNullOrEmpty(marker.Value))
+                return;
+
+            var index = value.IndexOf(marker.Value, comparison);
+
+            while (index != -1)
+            {
+                if (IsWholeWordMatch(value, index, marker.Length))
+                {
+                    for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
+                        highlights[i] = true;
+                }
+
+                index = value.IndexOf(marker.Value, index + marker.Length, comparison);
+            }
         }
 
         #endregion

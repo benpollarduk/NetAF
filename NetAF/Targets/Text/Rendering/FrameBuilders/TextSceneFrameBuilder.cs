@@ -35,7 +35,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         #region Implementation of ISceneFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, bool showMap, RoomMapRenderOptions options, Size size)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, string[] keywords, bool showMap, RoomMapRenderOptions options, Size size)
         {
             builder.Clear();
 

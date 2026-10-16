@@ -11,7 +11,7 @@ namespace NetAF.Targets.Console.Rendering
     /// </summary>
     /// <param name="background">The background color.</param>
     /// <param name="foreground">The foreground color.</param>
-    public class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
+    public sealed class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
     {
         #region Constants
 

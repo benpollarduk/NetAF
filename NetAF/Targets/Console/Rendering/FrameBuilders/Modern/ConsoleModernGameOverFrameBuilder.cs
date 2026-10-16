@@ -1,0 +1,36 @@
+using NetAF.Assets;
+using NetAF.Extensions;
+using NetAF.Rendering;
+using NetAF.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
+
+namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
+{
+    /// <summary>
+    /// Provides a builder of game over frames.
+    /// </summary>
+    /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
+    /// <param name="properties">The render properties.</param>
+    public sealed class ConsoleModernGameOverFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties) : ConsoleLegacyFrameBuilder, IGameOverFrameBuilder
+    {
+        #region Implementation of IGameOverFrameBuilder
+
+        /// <inheritdoc/>
+        public IFrame Build(string message, string reason, Size size)
+        {
+            gridStringBuilder.Resize(size);
+
+            const int xMargin = 2;
+            var availableWidth = size.Width - (xMargin * 2);
+            var constrainedWidth = GetConstrainedWidth(availableWidth, properties.MaximumNarrativeLineWidth);
+
+            gridStringBuilder.DrawWrapped(message, xMargin, 2, constrainedWidth, properties.TitleColor, out _, out var lastY);
+
+            gridStringBuilder.DrawWrapped(reason.EnsureFinishedSentence(), xMargin, lastY + 3, constrainedWidth, properties.MainTextColor, out _, out _);
+
+            return new GridTextFrame(gridStringBuilder, 0, 0, properties.BackgroundColor) { ShowCursor = false };
+        }
+
+        #endregion
+    }
+}

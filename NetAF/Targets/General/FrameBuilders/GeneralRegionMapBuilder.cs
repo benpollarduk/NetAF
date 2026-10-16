@@ -3,7 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Common;
 using System;
 
 namespace NetAF.Targets.General.FrameBuilders
@@ -11,62 +11,9 @@ namespace NetAF.Targets.General.FrameBuilders
     /// <summary>
     /// Provides a general builder for region maps.
     /// </summary>
-    public abstract class GeneralRegionMapBuilder : IRegionMapBuilder
+    /// <param name="properties">The render properties.</param>
+    public abstract class GeneralRegionMapBuilder(ConsoleMapRenderProperties properties) : IRegionMapBuilder
     {
-        #region Properties
-
-        /// <summary>
-        /// Get or set the character used for representing a locked exit.
-        /// </summary>
-        public char LockedExit { get; set; } = 'x';
-
-        /// <summary>
-        /// Get or set the character used for representing an unlocked exit.
-        /// </summary>
-        public char UnLockedExit { get; set; } = ' ';
-
-        /// <summary>
-        /// Get or set the character used for representing an empty space.
-        /// </summary>
-        public char EmptySpace { get; set; } = ' ';
-
-        /// <summary>
-        /// Get or set the character to use for vertical boundaries.
-        /// </summary>
-        public char VerticalBoundary { get; set; } = '|';
-
-        /// <summary>
-        /// Get or set the character to use for horizontal boundaries.
-        /// </summary>
-        public char HorizontalBoundary { get; set; } = '-';
-
-        /// <summary>
-        /// Get or set the character to use for lower levels.
-        /// </summary>
-        public char LowerLevel { get; set; } = '.';
-
-        /// <summary>
-        /// Get or set the character to use for indicating the player.
-        /// </summary>
-        public char Player { get; set; } = 'O';
-
-        /// <summary>
-        /// Get or set the character to use for indicating the focus.
-        /// </summary>
-        public char Focus { get; set; } = '+';
-
-        /// <summary>
-        /// Get or set the character to use for the current floor.
-        /// </summary>
-        public char CurrentFloorIndicator { get; set; } = '*';
-
-        /// <summary>
-        /// Get or set if lower floors should be shown.
-        /// </summary>
-        public bool ShowLowerFloors { get; set; } = true;
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -97,19 +44,7 @@ namespace NetAF.Targets.General.FrameBuilders
             GridStringBuilder ansiGridStringBuilder = new();
             ansiGridStringBuilder.Resize(maxSize);
 
-            var ansiRegionBuilder = new ConsoleRegionMapBuilder(ansiGridStringBuilder)
-            {
-                LockedExit = LockedExit,
-                UnLockedExit = UnLockedExit,
-                EmptySpace = EmptySpace,
-                VerticalBoundary = VerticalBoundary,
-                HorizontalBoundary = HorizontalBoundary,
-                LowerLevel = LowerLevel,
-                Player = Player,
-                Focus = Focus,
-                CurrentFloorIndicator = CurrentFloorIndicator
-            };
-
+            var ansiRegionBuilder = new ConsoleRegionMapBuilder(ansiGridStringBuilder, properties);
             ansiRegionBuilder.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, maxSize, new(0, 0));
             Adapt(ansiGridStringBuilder);
         }

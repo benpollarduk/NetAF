@@ -36,9 +36,9 @@ namespace NetAF.Tests.Commands.RegionMap
         }
 
         [TestMethod]
-        public void GivenValidGameWithMinimalZoom_WhenInvoke_ThenSilent()
+        public void GivenValidGameWithLowZoom_WhenInvoke_ThenSilent()
         {
-            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Minimal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Low;
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new ZoomOut();
 
@@ -60,9 +60,9 @@ namespace NetAF.Tests.Commands.RegionMap
         }
 
         [TestMethod]
-        public void GivenValidGameWithMaximalZoom_WhenInvoke_ThenSilent()
+        public void GivenValidGameWithHighZoom_WhenInvoke_ThenSilent()
         {
-            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.Maximal;
+            FrameProperties.RegionMapRenderOptions.MapDetail = RegionMapDetail.High;
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             var command = new ZoomOut();
 
@@ -84,7 +84,7 @@ namespace NetAF.Tests.Commands.RegionMap
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual([], result);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }

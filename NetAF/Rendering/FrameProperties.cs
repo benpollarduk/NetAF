@@ -8,7 +8,7 @@
         /// <summary>
         /// Get or set the type of command list.
         /// </summary>
-        public static CommandListType CommandListType { get; set; } = CommandListType.Minimal;
+        public static CommandListType CommandListType { get; set; } = CommandListType.Light;
 
         /// <summary>
         /// Get or set if the map should be shown in scenes.

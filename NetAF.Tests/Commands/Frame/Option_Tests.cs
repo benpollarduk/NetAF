@@ -5,7 +5,7 @@ using NetAF.Assets.Characters;
 using NetAF.Utilities;
 using NetAF.Commands.Frame;
 
-namespace NetAF.Tests.Commands.Execution
+namespace NetAF.Tests.Commands.Frame
 {
     [TestClass]
     public class Option_Tests
@@ -65,10 +65,10 @@ namespace NetAF.Tests.Commands.Execution
         }
 
         [TestMethod]
-        public void GivenCommandsMinimalArg_WhenInvoke_ThenInform()
+        public void GivenCommandsLightArg_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
-            var command = new Option(Option.CommandsMinimal.Entry);
+            var command = new Option(Option.CommandsLight.Entry);
 
             var result = command.Invoke(game);
 
@@ -197,7 +197,7 @@ namespace NetAF.Tests.Commands.Execution
 
             var result = command.GetPrompts(game);
 
-            Assert.AreNotEqual([], result);
+            Assert.AreNotEqual(0, result.Length);
         }
     }
 }

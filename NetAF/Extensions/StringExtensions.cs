@@ -170,7 +170,7 @@ namespace NetAF.Extensions
         /// <returns>The number of lines in the string.</returns>
         public static int LineCount(this string value)
         {
-            return value?.Split(new[] { StringUtilities.Newline }, StringSplitOptions.RemoveEmptyEntries).Length ?? 0;
+            return value?.Split([StringUtilities.Newline], StringSplitOptions.RemoveEmptyEntries).Length ?? 0;
         }
 
         /// <summary>

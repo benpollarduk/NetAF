@@ -545,7 +545,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var region = new Region(string.Empty, "A region");
 
-            var result = region.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+            var result = region.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty), null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -555,7 +555,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var region = new Region(string.Empty, "A region");
 
-            var result = region.Examination(new ExaminationRequest(region, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+            var result = region.Examination(new ExaminationRequest(region, new ExaminationScene(null, new Room(string.Empty, string.Empty), null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }

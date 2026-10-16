@@ -3,7 +3,7 @@ using NetAF.Assets.Locations;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering;
-using NetAF.Targets.Console.Rendering.FrameBuilders;
+using NetAF.Targets.Console.Rendering.FrameBuilders.Common;
 using System;
 
 namespace NetAF.Targets.General.FrameBuilders
@@ -11,7 +11,8 @@ namespace NetAF.Targets.General.FrameBuilders
     /// <summary>
     /// Provides a general builder for room maps.
     /// </summary>
-    public abstract class GeneralRoomMapBuilder : IRoomMapBuilder
+    /// <param name="properties">The render properties.</param>
+    public abstract class GeneralRoomMapBuilder(ConsoleMapRenderProperties properties) : IRoomMapBuilder
     {
         #region Properties
 
@@ -70,17 +71,7 @@ namespace NetAF.Targets.General.FrameBuilders
 
         private IRoomMapBuilder CreateRoomMapBuilder(GridStringBuilder ansiGridStringBuilder)
         {
-            return new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder)
-            {
-                LockedExit = LockedExit,
-                PointOfInterest = PointOfInterest,
-                VerticalBoundary = VerticalBoundary,
-                HorizontalBoundary = HorizontalBoundary,
-                VerticalExitBorder = VerticalExitBorder,
-                HorizontalExitBorder = HorizontalExitBorder,
-                Corner = Corner,
-                KeyPadding = KeyPadding
-            };
+            return new ConsoleHighDetailRoomMapBuilder(ansiGridStringBuilder, properties);
         }
 
         #endregion

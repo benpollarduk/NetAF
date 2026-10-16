@@ -15,7 +15,7 @@ namespace NetAF.Commands.Scene
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", CommandCategory.Scene, "T", displayAs: "Take/T __", synonyms: ["Grab", "Pick", "Get", "Collect"]);
+        public static CommandHelp CommandHelp { get; } = new("Take", "Take an item", CommandCategory.Scene, "T", displayAs: $"Take {CommandHelp.Placeholder}", synonyms: ["Grab", "Pick", "Get", "Collect"]);
 
         #endregion
 

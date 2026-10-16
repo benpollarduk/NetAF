@@ -228,6 +228,25 @@ namespace NetAF.Tests.Targets.Markup.Model
         }
 
         [TestMethod]
+        public void GivenHighlightText_WhenTryParse_ThenReturnTrueAndDocumentWithParagraphContainingHighlightTextInStyleSpanNode()
+        {
+            var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Highlight}{MarkupSyntax.CloseTag}";
+
+            var result = ModelParser.TryParse(input, out var doc);
+            var paragraph = doc.Blocks[0] as ParagraphNode;
+            var styleSpan = paragraph?.Inlines[0] as StyleSpanNode;
+            var text = styleSpan?.Inlines[0] as TextNode;
+
+            Assert.IsTrue(result);
+            Assert.HasCount(1, doc.Blocks);
+            Assert.IsNotNull(paragraph);
+            Assert.IsNotNull(styleSpan);
+            Assert.IsTrue(styleSpan.Style.Highlight);
+            Assert.IsNotNull(text);
+            Assert.AreEqual("Test", text.Text);
+        }
+
+        [TestMethod]
         public void GivenForeground010203_WhenTryParse_ThenReturnTrueAndDocumentWithParagraphContainingTextInStyleSpanNodeWithForeground010203()
         {
             var input = $"{MarkupSyntax.OpenTag}{MarkupSyntax.Foregound}{MarkupSyntax.Delimiter}010203{MarkupSyntax.CloseTag}Test{MarkupSyntax.OpenTag}{MarkupSyntax.EndTag}{MarkupSyntax.Foregound}{MarkupSyntax.CloseTag}";

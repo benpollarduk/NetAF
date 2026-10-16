@@ -1,9 +1,10 @@
-﻿using NetAF.Assets.Locations;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Assets.Locations;
 using NetAF.Rendering;
-using NetAF.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Targets.Console.Rendering;
 using NetAF.Targets.Html.Rendering;
 using NetAF.Targets.Html.Rendering.FrameBuilders;
+using NetAF.Utilities;
 
 namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
 {
@@ -32,7 +33,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new HtmlBuilder();
-                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
+                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
@@ -60,7 +61,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new HtmlBuilder();
-                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
+                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Dynamic });
             });
@@ -79,7 +80,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(0, 0, 0);
                 region.Enter();
                 var stringBuilder = new HtmlBuilder();
-                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
+                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(regionMaker[0, 0, 0], ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });
@@ -107,7 +108,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
                 var region = regionMaker.Make(1, 1, 0);
                 region.Enter();
                 var stringBuilder = new HtmlBuilder();
-                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder);
+                var mapBuilder = new HtmlRoomMapBuilder(stringBuilder, ConsoleMapRenderProperties.Default);
 
                 mapBuilder.BuildRoomMap(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full });
             });

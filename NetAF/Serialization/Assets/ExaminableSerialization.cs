@@ -21,6 +21,11 @@ namespace NetAF.Serialization.Assets
         public bool IsPlayerVisible { get; set; }
 
         /// <summary>
+        /// Get or set if this has been examined.
+        /// </summary>
+        public bool HasBeenExamined { get; set; }
+
+        /// <summary>
         /// Get or set the attribute manager serializations.
         /// </summary>
         public AttributeManagerSerialization AttributeManager { get; set; }
@@ -45,6 +50,7 @@ namespace NetAF.Serialization.Assets
             {
                 Identifier = examinable?.Identifier?.IdentifiableName,
                 IsPlayerVisible = examinable?.IsPlayerVisible ?? false,
+                HasBeenExamined = examinable?.HasBeenExamined ?? false,
                 AttributeManager = AttributeManagerSerialization.FromAttributeManager(examinable?.Attributes),
                 Commands = examinable?.Commands?.Select(CustomCommandSerialization.FromCustomCommand).ToArray() ?? []
             };

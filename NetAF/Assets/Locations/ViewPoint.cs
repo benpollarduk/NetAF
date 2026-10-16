@@ -24,12 +24,12 @@ namespace NetAF.Assets.Locations
         /// </summary>
         /// <param name="direction">The direction to check.</param>
         /// <returns>The room.</returns>
-        public Room this[Direction direction] => SurroundingRooms.ContainsKey(direction) ? SurroundingRooms[direction] : null;
+        public Room this[Direction direction] => SurroundingRooms.TryGetValue(direction, out Room value) ? value : null;
 
         /// <summary>
         /// Get if there is a view in any direction.
         /// </summary>
-        public bool Any => SurroundingRooms.Any();
+        public bool Any => SurroundingRooms.Count != 0;
 
         /// <summary>
         /// Get if there is a view in any direction.
@@ -40,6 +40,16 @@ namespace NetAF.Assets.Locations
         /// Get if there is a view in any direction.
         /// </summary>
         public bool AnyNotVisited => SurroundingRooms.Any(x => !x.Value?.HasBeenVisited ?? false);
+
+        /// <summary>
+        /// Get the surrounding directions.
+        /// </summary>
+        public Direction[] Directions => [.. SurroundingRooms.Keys];
+
+        /// <summary>
+        /// Get the surrounding rooms.
+        /// </summary>
+        public Room[] Rooms => [.. SurroundingRooms.Values];
 
         /// <summary>
         /// Get the surrounding rooms.
@@ -69,7 +79,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The view point.</returns>
         public static ViewPoint Create(Region region)
         {
-            return Create(region, region.CurrentRoom);
+            return Create(region, region?.CurrentRoom);
         }
 
         /// <summary>
@@ -84,7 +94,7 @@ namespace NetAF.Assets.Locations
 
             foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West, Direction.Up, Direction.Down })
             {
-                if (room.FindExit(direction, false, out _))
+                if (room?.FindExit(direction, false, out _) ?? false)
                     viewPoint.SurroundingRooms.Add(direction, region.GetAdjoiningRoom(direction, room));
             }
 
