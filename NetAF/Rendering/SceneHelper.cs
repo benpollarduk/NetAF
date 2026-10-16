@@ -111,7 +111,7 @@ namespace NetAF.Rendering
         {
             var characters = room.Characters.Where(c => c.IsPlayerVisible && c.IsAlive).ToArray<Character>();
 
-            if (!characters.Any())
+            if (characters.Length == 0)
                 return string.Empty;
 
             if (characters.Length == 1)
@@ -176,13 +176,15 @@ namespace NetAF.Rendering
             StringBuilder examinationBuilder = new();
 
             if (visibleItems > 0)
-                examinationBuilder.AppendLine(CreateItemsString(room));
-
-            if (visibleItems > 0 && visibleCharacters > 0)
-                examinationBuilder.AppendLine();
+                examinationBuilder.Append(CreateItemsString(room));
 
             if (visibleCharacters > 0)
-                examinationBuilder.AppendLine(CreateCharactersString(room));
+            {
+                if (examinationBuilder.Length > 0)
+                    examinationBuilder.Append(' ');
+
+                examinationBuilder.Append(CreateCharactersString(room));
+            }
 
             if (viewPoint != null)
             {
@@ -191,9 +193,9 @@ namespace NetAF.Rendering
                 if (!string.IsNullOrEmpty(viewPointString))
                 {
                     if (examinationBuilder.Length > 0)
-                        examinationBuilder.AppendLine();
+                        examinationBuilder.Append(' ');
 
-                    examinationBuilder.AppendLine(viewPointString);
+                    examinationBuilder.Append(viewPointString);
                 }
             }
 

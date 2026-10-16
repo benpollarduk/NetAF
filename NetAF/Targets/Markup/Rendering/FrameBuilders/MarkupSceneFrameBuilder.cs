@@ -47,23 +47,28 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             builder.WriteLine(room.Description.GetDescription().EnsureFinishedSentence());
             builder.Newline();
 
-            var extendedDescription = string.Empty;
-
             if (viewPoint.Any)
             {
-                extendedDescription.AddSentence(SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence());
-                builder.WriteLine(extendedDescription, StringUtilities.LocateStringMarkers(extendedDescription, keywords));
+                var viewpoint = SceneHelper.CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence();
+                builder.WriteLine(viewpoint, StringUtilities.LocateStringMarkers(viewpoint, keywords));
             }
+
+            var someItems = player.Items.Length != 0;
 
             if (DisplayExaminables)
             {
                 var roomString = SceneHelper.CreateRoomString(room);
 
                 if (!string.IsNullOrEmpty(roomString))
+                {
                     builder.WriteLine(roomString, StringUtilities.LocateStringMarkers(roomString, keywords));
+
+                    if (someItems)
+                        builder.Newline();
+                }
             }
 
-            if (player.Items.Length != 0)
+            if (someItems)
             {
                 var inventoryString = $"You have {StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower()}";
                 builder.WriteLine(inventoryString, StringUtilities.LocateStringMarkers(inventoryString, keywords));

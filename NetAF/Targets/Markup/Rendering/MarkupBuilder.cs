@@ -135,7 +135,7 @@ namespace NetAF.Targets.Markup.Rendering
         /// <param name="markers">The markers indicating which parts of the text to highlight.</param>
         public void WriteLine(string text, StringMarker[] markers)
         {
-            Write(text, TextStyle, markers);
+            WriteLine(text, TextStyle, markers);
         }
 
         /// <summary>
