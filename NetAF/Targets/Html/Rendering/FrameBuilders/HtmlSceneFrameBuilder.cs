@@ -35,15 +35,12 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         #region Implementation of ISceneFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, bool showMap, RoomMapRenderOptions options, Size size)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, string[] keywords, bool showMap, RoomMapRenderOptions options, Size size)
         {
             builder.Clear();
 
-            string[] keywords = properties.HighlightKeywords switch
-            {
-                true => StringUtilities.FindKeywords(new ExaminationScene(player, room), viewPoint),
-                false => []
-            };
+            if (!properties.HighlightKeywords)
+                keywords = [];
 
             builder.H1(room.Identifier.Name);
             builder.Br();

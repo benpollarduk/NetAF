@@ -51,11 +51,11 @@ namespace NetAF.Tests.Logic.Modes
         }
 
         [TestMethod]
-        public void GivenNewAndDisplayingMinimalCommandsAndKey_WhenRender_ThenNoExceptionThrown()
+        public void GivenNewAndDisplayingLightCommandsAndKey_WhenRender_ThenNoExceptionThrown()
         {
             Assertions.NoExceptionThrown(() =>
             {
-                FrameProperties.CommandListType = CommandListType.Minimal;
+                FrameProperties.CommandListType = CommandListType.Light;
                 FrameProperties.RoomMapRenderOptions.KeyType = KeyType.Dynamic;
                 RegionMaker regionMaker = new(string.Empty, string.Empty);
                 Room room = new(string.Empty, string.Empty);

@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             HtmlBuilder htmlBuilder = new();
-            var frame = new HtmlReactionFrameBuilder(htmlBuilder, HtmlRenderProperties.Default).Build("A", "B", false, null, null, new(80, 50));
+            var frame = new HtmlReactionFrameBuilder(htmlBuilder, HtmlRenderProperties.Default).Build("A", "B", false, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
@@ -48,7 +48,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             GridStringBuilder gridStringBuilder = new();
-            var frame = new ConsoleLegacyReactionFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default).Build("A", "B", false, null, null, new(80, 50));
+            var frame = new ConsoleLegacyReactionFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default).Build("A", "B", false, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Targets.Html
             OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
             StringBuilder stringBuilder = new();
-            var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, null, null, new(80, 50));
+            var frame = new TextReactionFrameBuilder(stringBuilder).Build("A", "B", false, null, new(80, 50));
             TestPresenter presenter = new();
             HtmlAdapter adapter = new(presenter);
             adapter.Setup(game);

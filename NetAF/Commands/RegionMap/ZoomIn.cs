@@ -32,9 +32,9 @@ namespace NetAF.Commands.RegionMap
 
             FrameProperties.RegionMapRenderOptions.MapDetail = FrameProperties.RegionMapRenderOptions.MapDetail switch
             {
-                RegionMapDetail.Minimal => RegionMapDetail.Normal,
-                RegionMapDetail.Normal => RegionMapDetail.Maximal,
-                RegionMapDetail.Maximal => RegionMapDetail.Maximal,
+                RegionMapDetail.Low => RegionMapDetail.Normal,
+                RegionMapDetail.Normal => RegionMapDetail.High,
+                RegionMapDetail.High => RegionMapDetail.High,
                 _ => throw new NotImplementedException()
             };
 

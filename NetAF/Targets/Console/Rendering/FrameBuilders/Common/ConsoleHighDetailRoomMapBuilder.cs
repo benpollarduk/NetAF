@@ -19,7 +19,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// <summary>
         /// Get the maximum size of the key.
         /// </summary>
-        public static readonly Size MaximumKeySize = new(25, 4);
+        public static readonly Size MaximumKeySize = new(24, 4);
 
         #endregion
 
@@ -449,8 +449,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
             // determine the required size
             Size renderSizeWithKey = options.KeyPlacement switch
             {
-                KeyPlacement.Below => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height),
-                KeyPlacement.Above => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height),
+                KeyPlacement.Below => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height + properties.VerticalKeyPadding),
+                KeyPlacement.Above => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height + properties.VerticalKeyPadding),
                 KeyPlacement.Right => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
                 KeyPlacement.Left => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
                 _ => throw new NotImplementedException()

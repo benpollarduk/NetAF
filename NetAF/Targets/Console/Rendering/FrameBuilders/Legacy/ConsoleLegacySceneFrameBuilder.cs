@@ -88,7 +88,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
         #region Implementation of ISceneFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, bool showMap, RoomMapRenderOptions options, Size size)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, string[] keywords, bool showMap, RoomMapRenderOptions options, Size size)
         {
             const int xMargin = 2;
             var availableWidth = size.Width - (xMargin * 2);
@@ -103,11 +103,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
 
             // display the scene
 
-            string[] keywords = properties.HighlightKeywords switch
-            {
-                true => StringUtilities.FindKeywords(new ExaminationScene(player, room), viewPoint),
-                false => []
-            };
+            if (!properties.HighlightKeywords)
+                keywords = [];
 
             var description = room.Description.GetDescription().EnsureFinishedSentence();
 

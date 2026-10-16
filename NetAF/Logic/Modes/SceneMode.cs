@@ -1,8 +1,10 @@
+using NetAF.Assets;
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Interpretation;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using NetAF.Utilities;
 using System;
 using System.Linq;
 
@@ -42,12 +44,13 @@ namespace NetAF.Logic.Modes
             CommandHelp[] commands = FrameProperties.CommandListType switch
             {
                 CommandListType.All => Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category)).ToArray() ?? [],
-                CommandListType.Minimal => Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category) && MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
+                CommandListType.Light => Interpreter?.GetContextualCommandHelp(game).Where(x => CommandCategories.Contains(x.Category) && MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
                 CommandListType.None => [],
                 _ => throw new NotImplementedException()
             };
 
-            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, FrameProperties.ShowMapInScenes, FrameProperties.RoomMapRenderOptions, game.Configuration.DisplaySize);
+            var keywords = StringUtilities.FindKeywords(new ExaminationScene(game.Player, game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion)));
+            var frame = game.Configuration.FrameBuilders.GetFrameBuilder<ISceneFrameBuilder>().Build(game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion), game.Player, commands, keywords, FrameProperties.ShowMapInScenes, FrameProperties.RoomMapRenderOptions, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
 

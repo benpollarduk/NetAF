@@ -28,7 +28,7 @@ namespace NetAF.Targets.Console.Rendering
             Player = 'O',
             Focus = '+',
             CurrentFloorIndicator = '*',
-            HorizontalKeyPadding = 6,
+            HorizontalKeyPadding = 5,
             VerticalKeyPadding = 1,
             BoundaryColor = AnsiColor.BrightBlack,
             PointOfInterestColor = NetAFPalette.NetAFBlue,

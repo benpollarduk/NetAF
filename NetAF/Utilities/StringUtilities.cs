@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using NetAF.Assets;
 using NetAF.Assets.Characters;
-using NetAF.Assets.Locations;
 using NetAF.Extensions;
 using NetAF.Logic;
 
@@ -287,11 +286,13 @@ namespace NetAF.Utilities
         /// Find all keywords for a scene.
         /// </summary>
         /// <param name="scene">The examination scene.</param>
-        /// <param name="viewPoint">The viewpoint.</param>
         /// <returns>An array of keywords.</returns>
-        public static string[] FindKeywords(ExaminationScene scene = null, ViewPoint viewPoint = null)
+        public static string[] FindKeywords(ExaminationScene scene = null)
         {
-            string[] viewPointKeywords = viewPoint != null ? [.. viewPoint.Rooms.Where(x => x != null).Select(x => x.Identifier.Name).Concat(viewPoint.Directions.Select(x => x.ToString()))] : [];
+            if (scene == null)
+                return [];
+
+            string[] viewPointKeywords = scene.ViewPoint != null ? [.. scene.ViewPoint.Rooms.Where(x => x != null).Select(x => x.Identifier.Name).Concat(scene.ViewPoint.Directions.Select(x => x.ToString()))] : [];
             var examinableKeywords = scene != null ? Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name) : [];
             return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
         }
@@ -309,7 +310,7 @@ namespace NetAF.Utilities
 
             var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
 
-            foreach (var word in keyWords)
+            foreach (var word in keyWords ?? [])
             {
                 if (string.IsNullOrEmpty(word))
                     continue;

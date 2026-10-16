@@ -12,7 +12,7 @@ namespace NetAF.Example.Assets.Regions.Zelda.Rooms
         #region Constants
 
         private const string Name = "Outside Links House";
-        private const string Description = "The Kokiri forest looms in front of you. It seems duller and much smaller than you remember, with thickets of deku scrub growing in every direction, except to the north where you can hear the trickle of a small stream. To the south is you house, and to the east is the entrance to the Tail Cave.";
+        private const string Description = "The Kokiri forest looms in front of you. It seems duller and much smaller than you remember, with thickets of deku scrub growing in every direction, except to the north where you can hear the trickle of a small stream. To the south is your house, and to the east is the entrance to the Tail Cave.";
 
         #endregion
 

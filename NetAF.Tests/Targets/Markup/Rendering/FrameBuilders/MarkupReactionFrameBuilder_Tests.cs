@@ -16,7 +16,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var markupBuilder = new MarkupBuilder();
                 var builder = new MarkupReactionFrameBuilder(markupBuilder, MarkupRenderProperties.Default);
 
-                builder.Build(string.Empty, string.Empty, false, null, null, new Size(80, 50));
+                builder.Build(string.Empty, string.Empty, false, null, new Size(80, 50));
             });
         }
 
@@ -28,7 +28,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var markupBuilder = new MarkupBuilder();
                 var builder = new MarkupReactionFrameBuilder(markupBuilder, MarkupRenderProperties.Default);
 
-                builder.Build("test", "test", false, null, null, new Size(80, 50));
+                builder.Build("test", "test", false, null, new Size(80, 50));
             });
         }
     }

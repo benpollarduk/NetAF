@@ -14,8 +14,8 @@
         /// </summary>
         All,
         /// <summary>
-        /// Minimal.
+        /// Light.
         /// </summary>
-        Minimal
+        Light
     }
 }

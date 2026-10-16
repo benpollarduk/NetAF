@@ -83,7 +83,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var overworld = new Overworld(string.Empty, "An overworld");
 
-            var result = overworld.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+            var result = overworld.Examination(new ExaminationRequest(new PlayableCharacter("a", "b"), new ExaminationScene(null, new Room(string.Empty, string.Empty), null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }
@@ -93,7 +93,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var overworld = new Overworld(string.Empty, "An overworld");
 
-            var result = overworld.Examination(new ExaminationRequest(overworld, new ExaminationScene(null, new Room(string.Empty, string.Empty))));
+            var result = overworld.Examination(new ExaminationRequest(overworld, new ExaminationScene(null, new Room(string.Empty, string.Empty), null)));
 
             Assert.IsGreaterThan(0, result.Description.Length);
         }

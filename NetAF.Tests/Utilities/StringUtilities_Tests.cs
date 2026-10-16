@@ -592,9 +592,9 @@ namespace NetAF.Tests.Utilities
         public void GivenNullViewPointAndNoExaminables_WhenFindKeywords_ThenNoKeywords()
         {
             var room = new Room("Room", "Room");
-            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room, null);
 
-            var result = StringUtilities.FindKeywords(scene, null);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.IsEmpty(result);
         }
@@ -603,9 +603,9 @@ namespace NetAF.Tests.Utilities
         public void GivenRoomWithItem_WhenFindKeywords_ThenItemNameReturned()
         {
             var room = new Room("Room", "Room", items: [new Item("Key", "A key.")]);
-            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room, null);
 
-            var result = StringUtilities.FindKeywords(scene, null);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.HasCount(1, result);
             Assert.AreEqual("Key", result[0]);
@@ -617,9 +617,9 @@ namespace NetAF.Tests.Utilities
             var room = new Room("Room", "Room");
             var player = new PlayableCharacter("Player", "Player");
             player.AddItem(new Item("Sword", "A sword."));
-            var scene = new ExaminationScene(player, room);
+            var scene = new ExaminationScene(player, room, null);
 
-            var result = StringUtilities.FindKeywords(scene, null);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.HasCount(1, result);
             Assert.AreEqual("Sword", result[0]);
@@ -629,9 +629,9 @@ namespace NetAF.Tests.Utilities
         public void GivenRoomWithExit_WhenFindKeywords_ThenExitNameReturned()
         {
             var room = new Room("Room", "Room", [new Exit(Direction.North)]);
-            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room, null);
 
-            var result = StringUtilities.FindKeywords(scene, null);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.HasCount(1, result);
             Assert.AreEqual("North", result[0]);
@@ -650,9 +650,9 @@ namespace NetAF.Tests.Utilities
             var region = regionMaker.Make(0, 1, 0);
             region.Enter();
             var viewPoint = ViewPoint.Create(region);
-            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room, viewPoint);
 
-            var result = StringUtilities.FindKeywords(scene, viewPoint);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.Contains("North Room", result);
             Assert.Contains("North", result);
@@ -671,9 +671,9 @@ namespace NetAF.Tests.Utilities
             var region = regionMaker.Make(0, 1, 0);
             region.Enter();
             var viewPoint = ViewPoint.Create(region);
-            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room);
+            var scene = new ExaminationScene(new PlayableCharacter("Player", "Player"), room, viewPoint);
 
-            var result = StringUtilities.FindKeywords(scene, viewPoint);
+            var result = StringUtilities.FindKeywords(scene);
 
             Assert.HasCount(result.Length, new HashSet<string>(result));
         }
@@ -681,7 +681,7 @@ namespace NetAF.Tests.Utilities
         [TestMethod]
         public void GivenNoSceneOrViewPoint_WhenFindKeywords_ThenNoKeywords()
         {
-            var result = StringUtilities.FindKeywords(null, null);
+            var result = StringUtilities.FindKeywords(null);
 
             Assert.IsEmpty(result);
         }

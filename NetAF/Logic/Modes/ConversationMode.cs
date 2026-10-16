@@ -47,7 +47,7 @@ namespace NetAF.Logic.Modes
             CommandHelp[] commands = FrameProperties.CommandListType switch
             {
                 CommandListType.All => Interpreter?.GetContextualCommandHelp(game) ?? [],
-                CommandListType.Minimal => Interpreter?.GetContextualCommandHelp(game).Where(x => MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
+                CommandListType.Light => Interpreter?.GetContextualCommandHelp(game).Where(x => MinimalCommandCategories.Contains(x.Category)).ToArray() ?? [],
                 CommandListType.None => [],
                 _ => throw new NotImplementedException()
             };

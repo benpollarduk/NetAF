@@ -91,9 +91,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
 
             return options.MapDetail switch
             {
-                RegionMapDetail.Maximal => new ConsoleHighDetailRoomMapBuilder(gridStringBuilder, clonedProperties),
+                RegionMapDetail.High => new ConsoleHighDetailRoomMapBuilder(gridStringBuilder, clonedProperties),
                 RegionMapDetail.Normal => new ConsoleNormalDetailRoomMapBuilder(gridStringBuilder, clonedProperties),
-                RegionMapDetail.Minimal => new ConsoleLowDetailRoomMapBuilder(gridStringBuilder, clonedProperties),
+                RegionMapDetail.Low => new ConsoleLowDetailRoomMapBuilder(gridStringBuilder, clonedProperties),
                 _ => throw new NotImplementedException(),
             };
         }

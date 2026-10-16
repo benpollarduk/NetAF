@@ -163,8 +163,9 @@ namespace NetAF.Rendering
         /// Create a description of the room as a string.
         /// </summary>
         /// <param name="room">The room.</param>
+        /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <returns>The room, as a string.</returns>
-        public static string CreateRoomString(Room room)
+        public static string CreateRoomString(Room room, ViewPoint viewPoint = null)
         {
             var visibleItems = room.Items?.Count(x => x.IsPlayerVisible) ?? 0;
             var visibleCharacters = room.Characters?.Count(x => x.IsPlayerVisible) ?? 0;
@@ -182,6 +183,19 @@ namespace NetAF.Rendering
 
             if (visibleCharacters > 0)
                 examinationBuilder.AppendLine(CreateCharactersString(room));
+
+            if (viewPoint != null)
+            {
+                var viewPointString = CreateViewpointAsString(room, viewPoint).EnsureFinishedSentence();
+
+                if (!string.IsNullOrEmpty(viewPointString))
+                {
+                    if (examinationBuilder.Length > 0)
+                        examinationBuilder.AppendLine();
+
+                    examinationBuilder.AppendLine(viewPointString);
+                }
+            }
 
             return examinationBuilder.ToString().TrimEnd(StringUtilities.CR, StringUtilities.LF, StringUtilities.Newline);
         }

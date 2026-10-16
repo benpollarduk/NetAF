@@ -79,7 +79,7 @@ namespace NetAF.Assets.Locations
         /// <returns>The view point.</returns>
         public static ViewPoint Create(Region region)
         {
-            return Create(region, region.CurrentRoom);
+            return Create(region, region?.CurrentRoom);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace NetAF.Assets.Locations
 
             foreach (var direction in new[] { Direction.North, Direction.East, Direction.South, Direction.West, Direction.Up, Direction.Down })
             {
-                if (room.FindExit(direction, false, out _))
+                if (room?.FindExit(direction, false, out _) ?? false)
                     viewPoint.SurroundingRooms.Add(direction, region.GetAdjoiningRoom(direction, room));
             }
 

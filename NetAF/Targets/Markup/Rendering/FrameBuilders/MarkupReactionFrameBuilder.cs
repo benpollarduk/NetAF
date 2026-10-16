@@ -1,6 +1,4 @@
 using NetAF.Assets;
-using NetAF.Assets.Characters;
-using NetAF.Assets.Locations;
 using NetAF.Extensions;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
@@ -18,7 +16,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
         #region Implementation of IReactionFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(string title, string message, bool isError, PlayableCharacter player, Room room, Size size)
+        public IFrame Build(string title, string message, bool isError, string[] keywords, Size size)
         {
             builder.Clear();
 
@@ -28,11 +26,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 builder.Newline();
             }
 
-            string[] keywords = properties.HighlightKeywords switch
-            {
-                true => StringUtilities.FindKeywords(new ExaminationScene(player, room)),
-                false => []
-            };
+            if (!properties.HighlightKeywords)
+                keywords = [];
 
             var finishedMessage = message.EnsureFinishedSentence();
             builder.WriteLine(finishedMessage, StringUtilities.LocateStringMarkers(finishedMessage, keywords));

@@ -128,7 +128,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             switch (FrameProperties.CommandListType)
             {
                 case CommandListType.All:
-                case CommandListType.Minimal:
+                case CommandListType.Light:
 
                     if (anyCommands)
                     {

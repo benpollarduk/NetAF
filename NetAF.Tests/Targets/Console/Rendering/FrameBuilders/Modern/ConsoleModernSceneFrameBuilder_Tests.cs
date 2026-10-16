@@ -42,7 +42,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Modern
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
             });
         }
 
@@ -73,7 +73,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Modern
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
             });
         }
 
@@ -104,7 +104,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Modern
                 player.AddItem(new("Test", "Test"));
                 player.Attributes.Add("Test", 10);
 
-                builder.Build(room, ViewPoint.Create(region), player, [], true, new RoomMapRenderOptions { KeyType = KeyType.Dynamic }, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, [], [], true, new RoomMapRenderOptions { KeyType = KeyType.Dynamic }, new Size(80, 50));
             });
         }
 
@@ -140,7 +140,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Modern
                     new CommandHelp("Test")
                 };
 
-                builder.Build(room, ViewPoint.Create(region), player, commands, true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
+                builder.Build(room, ViewPoint.Create(region), player, commands, [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, new Size(80, 50));
             });
         }
 
@@ -168,7 +168,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Modern
                 var builder = new ConsoleModernSceneFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default, new ConsoleHighDetailRoomMapBuilder(gridStringBuilder, ConsoleMapRenderProperties.Default));
                 var player = new PlayableCharacter(string.Empty, string.Empty);
 
-                builder.Build(room, ViewPoint.Create(region), player, null, true, new RoomMapRenderOptions { KeyType = KeyType.Full }, size);
+                builder.Build(room, ViewPoint.Create(region), player, null, [], true, new RoomMapRenderOptions { KeyType = KeyType.Full }, size);
             });
         }
     }

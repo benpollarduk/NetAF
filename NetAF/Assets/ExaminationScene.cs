@@ -9,14 +9,15 @@ namespace NetAF.Assets
     /// </summary>
     /// <param name="examiner">The character who is examining the object.</param>
     /// <param name="room">The room the examinable is being examined from.</param>
-    public class ExaminationScene(Character examiner, Room room)
+    /// <param name="viewPoint">The viewpoint from the room.</param>
+    public class ExaminationScene(Character examiner, Room room, ViewPoint viewPoint)
     {
         #region StaticProperties
 
         /// <summary>
         /// Get a default value for when there is no scene.
         /// </summary>
-        public static ExaminationScene NoScene { get; } = new(null, null);
+        public static ExaminationScene NoScene { get; } = new(null, null, null);
 
         #endregion
 
@@ -32,6 +33,11 @@ namespace NetAF.Assets
         /// </summary>
         public Room Room { get; private set; } = room;
 
+        /// <summary>
+        /// Get the viewpoint from the room.
+        /// </summary>
+        public ViewPoint ViewPoint { get; private set; } = viewPoint;
+
         #endregion
 
         #region Constructors
@@ -40,7 +46,7 @@ namespace NetAF.Assets
         /// Initializes a new instance of the ExaminationScene class.
         /// </summary>
         /// <param name="game">The executing game.</param>
-        public ExaminationScene(Game game) : this(game?.Player, game?.Overworld?.CurrentRegion?.CurrentRoom)
+        public ExaminationScene(Game game) : this(game?.Player, game?.Overworld?.CurrentRegion?.CurrentRoom, ViewPoint.Create(game?.Overworld?.CurrentRegion))
         {
         }
 

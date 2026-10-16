@@ -65,10 +65,10 @@ namespace NetAF.Tests.Commands.Frame
         }
 
         [TestMethod]
-        public void GivenCommandsMinimalArg_WhenInvoke_ThenInform()
+        public void GivenCommandsLightArg_WhenInvoke_ThenInform()
         {
             var game = Game.Create(new GameInfo(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(null, null), null, TestGameConfiguration.Default).Invoke();
-            var command = new Option(Option.CommandsMinimal.Entry);
+            var command = new Option(Option.CommandsLight.Entry);
 
             var result = command.Invoke(game);
 

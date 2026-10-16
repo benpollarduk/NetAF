@@ -44,7 +44,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
         #region Implementation of ISceneFrameBuilder
 
         /// <inheritdoc/>
-        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, bool showMap, RoomMapRenderOptions options, Size size)
+        public IFrame Build(Room room, ViewPoint viewPoint, PlayableCharacter player, CommandHelp[] contextualCommands, string[] keywords, bool showMap, RoomMapRenderOptions options, Size size)
         {
             const int xMargin = 2;
             const int linePadding = 2;
@@ -62,12 +62,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             // constrain the narrative text to a comfortable reading width
             var narrativeWidth = GetConstrainedWidth(proposedNarrativeWidth, properties.MaximumNarrativeLineWidth);
 
-            // collect the keywords to highlight within the narrative text
-            string[] keywords = properties.HighlightKeywords switch
-            {
-                true => StringUtilities.FindKeywords(new ExaminationScene(player, room), viewPoint),
-                false => []
-            };
+            if (!properties.HighlightKeywords)
+                keywords = [];
 
             gridStringBuilder.DrawWrapped(room.Identifier.Name, xMargin, 2, narrativeWidth, properties.TitleColor, out _, out var lastY);
 
@@ -119,7 +115,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             switch (FrameProperties.CommandListType)
             {
                 case CommandListType.All:
-                case CommandListType.Minimal:
+                case CommandListType.Light:
 
                     if (anyCommands)
                     {
