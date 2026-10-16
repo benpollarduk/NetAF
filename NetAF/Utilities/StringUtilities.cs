@@ -293,7 +293,7 @@ namespace NetAF.Utilities
                 return [];
 
             string[] viewPointKeywords = scene.ViewPoint != null ? [.. scene.ViewPoint.Rooms.Where(x => x != null).Select(x => x.Identifier.Name).Concat(scene.ViewPoint.Directions.Select(x => x.ToString()))] : [];
-            var examinableKeywords = scene != null ? Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name) : [];
+            var examinableKeywords = Game.GetAllPlayerVisibleExaminables(scene.Examiner as PlayableCharacter, scene.Room).Select(x => x.Identifier.Name);
             return [.. viewPointKeywords.Concat(examinableKeywords).Distinct()];
         }
 
@@ -376,25 +376,35 @@ namespace NetAF.Utilities
             var comparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
 
             foreach (var marker in markers)
-            {
-                if (string.IsNullOrEmpty(marker.Value))
-                    continue;
-
-                var index = value.IndexOf(marker.Value, comparison);
-
-                while (index != -1)
-                {
-                    if (IsWholeWordMatch(value, index, marker.Length))
-                    {
-                        for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
-                            highlights[i] = true;
-                    }
-
-                    index = value.IndexOf(marker.Value, index + marker.Length, comparison);
-                }
-            }
+                ApplyMarkerHighlights(value, marker, comparison, highlights);
 
             return highlights;
+        }
+
+        /// <summary>
+        /// Apply the highlights for a single marker to a highlight mask.
+        /// </summary>
+        /// <param name="value">The string being evaluated.</param>
+        /// <param name="marker">The marker indicating which part of the string to highlight.</param>
+        /// <param name="comparison">The string comparison to use.</param>
+        /// <param name="highlights">The highlight mask to apply the highlights to.</param>
+        private static void ApplyMarkerHighlights(string value, StringMarker marker, StringComparison comparison, bool[] highlights)
+        {
+            if (string.IsNullOrEmpty(marker.Value))
+                return;
+
+            var index = value.IndexOf(marker.Value, comparison);
+
+            while (index != -1)
+            {
+                if (IsWholeWordMatch(value, index, marker.Length))
+                {
+                    for (var i = index; i < index + marker.Length && i < highlights.Length; i++)
+                        highlights[i] = true;
+                }
+
+                index = value.IndexOf(marker.Value, index + marker.Length, comparison);
+            }
         }
 
         #endregion

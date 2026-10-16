@@ -83,6 +83,105 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             }
         }
 
+        /// <summary>
+        /// Draw the title.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="xMargin">The left margin.</param>
+        /// <param name="constrainedWidth">The constrained width.</param>
+        /// <param name="lastY">The last Y position that was drawn to.</param>
+        private void DrawTitle(Room room, int xMargin, int constrainedWidth, out int lastY)
+        {
+            gridStringBuilder.DrawWrapped(room.Identifier.Name, xMargin, 2, constrainedWidth, properties.TitleColor, out _, out lastY);
+            gridStringBuilder.DrawUnderline(xMargin, lastY + 1, room.Identifier.Name.Length, properties.TitleColor);
+        }
+
+        /// <summary>
+        /// Draw the scene description and viewpoint.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="viewPoint">The viewpoint from the room.</param>
+        /// <param name="keywords">The keywords to highlight.</param>
+        /// <param name="xMargin">The left margin.</param>
+        /// <param name="constrainedWidth">The constrained width.</param>
+        /// <param name="linePadding">The line padding.</param>
+        /// <param name="lastY">The last Y position that was drawn to.</param>
+        private void DrawScene(Room room, ViewPoint viewPoint, string[] keywords, int xMargin, int constrainedWidth, int linePadding, ref int lastY)
+        {
+            var description = room.Description.GetDescription().EnsureFinishedSentence();
+
+            if (!string.IsNullOrEmpty(description))
+                gridStringBuilder.DrawWrapped(description, xMargin, lastY + 3, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(description, keywords), out _, out lastY);
+
+            if (!viewPoint.Any)
+                return;
+
+            var viewPointDescription = SceneHelper.CreateViewpointAsString(room, viewPoint);
+            gridStringBuilder.DrawWrapped(viewPointDescription, xMargin, lastY + linePadding, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(viewPointDescription, keywords), out _, out lastY);
+        }
+
+        /// <summary>
+        /// Draw the room map.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="viewPoint">The viewpoint from the room.</param>
+        /// <param name="showMap">Specify if the map should be shown.</param>
+        /// <param name="options">The render options.</param>
+        /// <param name="xMargin">The left margin.</param>
+        /// <param name="linePadding">The line padding.</param>
+        /// <param name="lastY">The last Y position that was drawn to.</param>
+        private void DrawMap(Room room, ViewPoint viewPoint, bool showMap, RoomMapRenderOptions options, int xMargin, int linePadding, ref int lastY)
+        {
+            if (roomMapBuilder == null || !showMap)
+                return;
+
+            if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
+                consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, options, new Point2D(xMargin, lastY + linePadding), out _, out lastY);
+            else
+                roomMapBuilder.BuildRoomMap(room, viewPoint, options);
+        }
+
+        /// <summary>
+        /// Draw the examinables and player inventory.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="player">The player.</param>
+        /// <param name="keywords">The keywords to highlight.</param>
+        /// <param name="xMargin">The left margin.</param>
+        /// <param name="constrainedWidth">The constrained width.</param>
+        /// <param name="lastY">The last Y position that was drawn to.</param>
+        private void DrawExaminablesAndInventory(Room room, PlayableCharacter player, string[] keywords, int xMargin, int constrainedWidth, ref int lastY)
+        {
+            if (DisplayExaminables)
+            {
+                var roomString = SceneHelper.CreateRoomString(room);
+
+                if (!string.IsNullOrEmpty(roomString))
+                    gridStringBuilder.DrawWrapped(roomString, xMargin, lastY + 2, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(roomString, keywords), out _, out lastY);
+            }
+
+            if (player.Items.Length == 0)
+                return;
+
+            var itemString = $"You have {StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower()}";
+            gridStringBuilder.DrawWrapped(itemString, xMargin, lastY + 2, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(itemString, keywords), out _, out lastY);
+        }
+
+        /// <summary>
+        /// Draw the prompt.
+        /// </summary>
+        /// <param name="xMargin">The left margin.</param>
+        /// <param name="constrainedWidth">The constrained width.</param>
+        /// <param name="availableHeight">The available height.</param>
+        private void DrawPrompt(int xMargin, int constrainedWidth, int availableHeight)
+        {
+            if (!renderPrompt)
+                return;
+
+            gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, properties.HorizontalDivider, properties.BorderColor);
+            gridStringBuilder.DrawWrapped(">", xMargin, availableHeight, constrainedWidth, properties.InputColor, out _, out _);
+        }
+
         #endregion
 
         #region Implementation of ISceneFrameBuilder
@@ -98,55 +197,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
 
             gridStringBuilder.Resize(size);
 
-            gridStringBuilder.DrawWrapped(room.Identifier.Name, xMargin, 2, constrainedWidth, properties.TitleColor, out _, out var lastY);
-            gridStringBuilder.DrawUnderline(xMargin, lastY + 1, room.Identifier.Name.Length, properties.TitleColor);
+            DrawTitle(room, xMargin, constrainedWidth, out var lastY);
 
             // display the scene
 
             if (!properties.HighlightKeywords)
                 keywords = [];
 
-            var description = room.Description.GetDescription().EnsureFinishedSentence();
-
-            if (!string.IsNullOrEmpty(description))
-                gridStringBuilder.DrawWrapped(description, xMargin, lastY + 3, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(description, keywords), out _, out lastY);
-
-            if (viewPoint.Any)
-            {
-                var viewPointDescription = SceneHelper.CreateViewpointAsString(room, viewPoint);
-                gridStringBuilder.DrawWrapped(viewPointDescription, xMargin, lastY + linePadding, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(viewPointDescription, keywords), out _, out lastY);
-            }
-
-            if (roomMapBuilder != null && showMap)
-            {
-                if (roomMapBuilder is IConsoleRoomMapBuilder consoleRoomMapBuilder)
-                    consoleRoomMapBuilder.BuildRoomMap(room, viewPoint, options, new Point2D(xMargin, lastY + linePadding), out _, out lastY);
-                else
-                    roomMapBuilder.BuildRoomMap(room, viewPoint, options);
-            }
-
-            if (DisplayExaminables)
-            {
-                var roomString = SceneHelper.CreateRoomString(room);
-
-                if (!string.IsNullOrEmpty(roomString))
-                    gridStringBuilder.DrawWrapped(roomString, xMargin, lastY + 2, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(roomString, keywords), out _, out lastY);
-            }
-
-            if (player.Items.Length != 0)
-            {
-                var itemString = $"You have {StringUtilities.ConstructExaminablesAsSentence(player.Items?.Cast<IExaminable>().ToArray()).StartWithLower()}";
-                gridStringBuilder.DrawWrapped(itemString, xMargin, lastY + 2, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(itemString, keywords), out _, out lastY);
-            }
+            DrawScene(room, viewPoint, keywords, xMargin, constrainedWidth, linePadding, ref lastY);
+            DrawMap(room, viewPoint, showMap, options, xMargin, linePadding, ref lastY);
+            DrawExaminablesAndInventory(room, player, keywords, xMargin, constrainedWidth, ref lastY);
 
             if (contextualCommands != null && contextualCommands.Length > 0)
                 AddCommands(gridStringBuilder, contextualCommands, new Size(constrainedWidth, size.Height), xMargin, lastY + 2, renderPrompt ? 3 : 1);
-            
-            if (renderPrompt)
-            {
-                gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, properties.HorizontalDivider, properties.BorderColor);
-                gridStringBuilder.DrawWrapped(">", xMargin, availableHeight, constrainedWidth, properties.InputColor, out _, out _);
-            }
+
+            DrawPrompt(xMargin, constrainedWidth, availableHeight);
 
             gridStringBuilder.DrawBoundary(properties.LeftBoundary, properties.RightBoundary, properties.HorizontalDivider, properties.BorderColor);
 

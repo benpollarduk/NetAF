@@ -253,11 +253,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// Get the point of interest indicator.
         /// </summary>
         /// <param name="total">The total number of points of interest.</param>
-        /// <param name="examined">The number of examined points of interest.</param>
         /// <param name="unexamined">The number of unexamined points of interest.</param>
         /// <param name="detail">The point of interest detail.</param>
         /// <returns>The point of interest indicator.</returns>
-        private char GetPointOfInterestIndicator(int total, int examined, int unexamined, PointOfInterestDetail detail)
+        private char GetPointOfInterestIndicator(int total, int unexamined, PointOfInterestDetail detail)
         {
             char indicator = properties.NoPointOfInterest;
 
@@ -301,8 +300,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// <param name="detail">The point of interest detail.</param>
         private void DrawItemOrCharacter(Room room, Point2D startPosition, PointOfInterestDetail detail)
         {
-            GetNumberOfPointsOfInterest(room, out var total, out var examined, out var unexamined);
-            var indicator = GetPointOfInterestIndicator(total, examined, unexamined, detail);
+            GetNumberOfPointsOfInterest(room, out var total, out var unexamined);
+            var indicator = GetPointOfInterestIndicator(total, unexamined, detail);
             gridStringBuilder.SetCell(startPosition.X + 4, startPosition.Y + 3, indicator, properties.PointOfInterestColor);
         }
 
@@ -318,8 +317,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// <param name="endY">The end position, x.</param>
         private void DrawKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, Point2D mapStart, out int endX, out int endY)
         {
-            GetNumberOfPointsOfInterest(room, out var total, out var examined, out var unexamined);
-            var pointOfInterestIndicator = GetPointOfInterestIndicator(total, examined, unexamined, options.PointOfInterestDetail);
+            GetNumberOfPointsOfInterest(room, out var total, out var unexamined);
+            var pointOfInterestIndicator = GetPointOfInterestIndicator(total, unexamined, options.PointOfInterestDetail);
 
             Dictionary<string, AnsiColor> keyLines = [];
             var lockedExitString = $"{properties.LockedExit} = Locked Exit";
@@ -435,15 +434,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="total">The total number of points of interest.</param>
-        /// <param name="examined">The number of examined points of interest.</param>
         /// <param name="unexamined">The number of unexamined points of interest.</param>
-        private static void GetNumberOfPointsOfInterest(Room room, out int total, out int examined, out int unexamined)
+        private static void GetNumberOfPointsOfInterest(Room room, out int total, out int unexamined)
         {
             var items = room.Items.Where(x => x.IsPlayerVisible).ToArray();
             var characters = room.Characters.Where(x => x.IsPlayerVisible).ToArray();
             total = items.Length + characters.Length;
-            examined = items.Count(x => x.HasBeenExamined) + characters.Count(x => x.HasBeenExamined);
-            unexamined = total - examined;
+            unexamined = items.Count(x => !x.HasBeenExamined) + characters.Count(x => !x.HasBeenExamined);
         }
 
         #endregion
