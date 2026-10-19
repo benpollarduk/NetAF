@@ -166,7 +166,9 @@ namespace NetAF.Targets.Console.Rendering
             endX = startX;
             endY = startY;
 
-            value = StringUtilities.PreenOutput(value);
+            string originalValue = value;
+            var highlights = GetHighlightMask(originalValue, markers);
+            int positionInOriginal = 0;
 
             while (value.Length > 0)
             {
@@ -176,12 +178,34 @@ namespace NetAF.Targets.Console.Rendering
                     break;
 
                 var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidthForLine);
-                var highlights = GetHighlightMask(chunk, markers);
 
                 for (var i = 0; i < chunk.Length; i++)
                 {
                     endX = startX + i;
-                    SetCell(endX, endY, chunk[i], highlights[i] ? highlightColor : color);
+                    char c = chunk[i];
+                    bool isHighlighted = false;
+
+                    if (char.IsWhiteSpace(c))
+                    {
+                        while (positionInOriginal < originalValue.Length && char.IsWhiteSpace(originalValue[positionInOriginal]))
+                        {
+                            isHighlighted |= highlights[positionInOriginal];
+                            positionInOriginal++;
+                        }
+                    }
+                    else
+                    {
+                        while (positionInOriginal < originalValue.Length && originalValue[positionInOriginal] != c)
+                            positionInOriginal++;
+
+                        if (positionInOriginal < originalValue.Length)
+                        {
+                            isHighlighted = highlights[positionInOriginal];
+                            positionInOriginal++;
+                        }
+                    }
+
+                    SetCell(endX, endY, c, isHighlighted ? highlightColor : color);
                 }
 
                 if (value.Trim().Length > 0)
@@ -224,16 +248,42 @@ namespace NetAF.Targets.Console.Rendering
 
             value = StringUtilities.PreenOutput(value);
 
+            string originalValue = value;
+            var highlights = GetHighlightMask(originalValue, markers);
+            int positionInOriginal = 0;
+
             while (value.Length > 0)
             {
                 var chunk = StringUtilities.CutLineFromParagraph(ref value, maxWidth);
                 var startX = maxWidth / 2 - chunk.Length / 2;
-                var highlights = GetHighlightMask(chunk, markers);
 
                 for (var i = 0; i < chunk.Length; i++)
                 {
                     endX = startX + i;
-                    SetCell(endX, endY, chunk[i], highlights[i] ? highlightColor : color);
+                    char c = chunk[i];
+                    bool isHighlighted = false;
+
+                    if (char.IsWhiteSpace(c))
+                    {
+                        while (positionInOriginal < originalValue.Length && char.IsWhiteSpace(originalValue[positionInOriginal]))
+                        {
+                            isHighlighted |= highlights[positionInOriginal];
+                            positionInOriginal++;
+                        }
+                    }
+                    else
+                    {
+                        while (positionInOriginal < originalValue.Length && originalValue[positionInOriginal] != c)
+                            positionInOriginal++;
+
+                        if (positionInOriginal < originalValue.Length)
+                        {
+                            isHighlighted = highlights[positionInOriginal];
+                            positionInOriginal++;
+                        }
+                    }
+
+                    SetCell(endX, endY, c, isHighlighted ? highlightColor : color);
                 }
 
                 if (value.Trim().Length > 0)
