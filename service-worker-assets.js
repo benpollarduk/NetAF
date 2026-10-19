@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "EvFexOu/",
+  "version": "tMEFA3JM",
   "assets": [
     {
       "hash": "sha256-8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U=",
@@ -74,16 +74,16 @@ self.assetsManifest = {
       "url": "_framework/NetAF.Blazor.q1zopdmp4i.wasm"
     },
     {
-      "hash": "sha256-otGI8ojTPw2kwZfS4mnwXNHCNLIfrP9L4Eg1CYDBWc8=",
-      "url": "_framework/NetAF.Example.6mcqcocr4q.wasm"
+      "hash": "sha256-oHgotnlcg1lwOL0ty6HQ8EVpnZ3q23PpuS3At6Pz6Og=",
+      "url": "_framework/NetAF.Example.0k1rcv17ht.wasm"
     },
     {
-      "hash": "sha256-jbHMabRwyp6VcaN/8eyudwyR5fOnH1hMgA48kKYhCoU=",
-      "url": "_framework/NetAF.Example.Blazor.7re7g6yoq5.wasm"
+      "hash": "sha256-tX6KfYmstc6mK+BCDUKBRBb1gnaXSusfa0Ao1IhD0WY=",
+      "url": "_framework/NetAF.Example.Blazor.3mjwyh1gf4.wasm"
     },
     {
-      "hash": "sha256-FnJ6Elhk14VXopLcfKxGARt++sAa4h0521yDL11oDU4=",
-      "url": "_framework/NetAF.e6raa8250q.wasm"
+      "hash": "sha256-5ERDXwHk7m6p+U5jJqyMrjVUxWtOnVRIGWFmYGsRIa0=",
+      "url": "_framework/NetAF.c8zff34zik.wasm"
     },
     {
       "hash": "sha256-YCGjrH5kEgIDyRRkcjwTmhvbvYhCnus+FMPSdU+QO+c=",
@@ -170,7 +170,7 @@ self.assetsManifest = {
       "url": "_framework/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-Ju0Yeap9kc04o/ZXOYShfivI3LDOlSXNT/yERBorFc8=",
+      "hash": "sha256-8I7hBQCiLnmK/B+n5SXezkjPuf1UdTycmFR5YesJTkM=",
       "url": "_framework/dotnet.js"
     },
     {
