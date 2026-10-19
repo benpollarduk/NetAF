@@ -91,7 +91,7 @@ NetAF also provides global commands to help with game flow and option management
   * **History** - display in-game history.
   * **Notes** - display any gathered in-game notes.
   * **Commands** - display the command list.
-  * **Option** - adjust options.
+  * **Option** - adjust options. Check the help for this command for available options.
   * **Map** - display the map.
   * **New** - start a new game.
 
