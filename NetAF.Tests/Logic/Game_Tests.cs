@@ -12,7 +12,6 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console;
 using NetAF.Utilities;
-using System.Linq;
 
 namespace NetAF.Tests.Logic
 {
@@ -584,11 +583,11 @@ namespace NetAF.Tests.Logic
 
             var result = game.GetAllInteractionTargets();
 
-            Assert.IsTrue(result.Contains(room.Items[0]));
-            Assert.IsTrue(result.Contains(room.Exits[0]));
-            Assert.IsTrue(result.Contains(room.Characters[0]));
-            Assert.IsTrue(result.Contains(player));
-            Assert.IsTrue(result.Contains(room));
+            Assert.Contains(room.Items[0], result);
+            Assert.Contains(room.Exits[0], result);
+            Assert.Contains(room.Characters[0], result);
+            Assert.Contains(player, result);
+            Assert.Contains(room, result);
         }
 
         [TestMethod]

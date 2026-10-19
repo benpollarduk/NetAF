@@ -123,7 +123,7 @@ namespace NetAF.Tests.Assets.Locations
 
             overworld.AddRegion(new Region(string.Empty, string.Empty));
 
-            Assert.AreEqual(1, overworld.Regions.Length);
+            Assert.HasCount(1, overworld.Regions);
         }
 
         [TestMethod]

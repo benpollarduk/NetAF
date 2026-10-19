@@ -2,7 +2,6 @@
 using NetAF.Assets.Characters;
 using NetAF.Assets.Locations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace NetAF.Tests.Assets.Locations
 {
@@ -305,9 +304,9 @@ namespace NetAF.Tests.Assets.Locations
 
             var result = room.GetAllInteractionTargets();
 
-            Assert.IsTrue(result.Contains(room.Items[0]));
-            Assert.IsTrue(result.Contains(room.Exits[0]));
-            Assert.IsTrue(result.Contains(room.Characters[0]));
+            Assert.Contains(room.Items[0], result);
+            Assert.Contains(room.Exits[0], result);
+            Assert.Contains(room.Characters[0], result);
         }
 
         [TestMethod]

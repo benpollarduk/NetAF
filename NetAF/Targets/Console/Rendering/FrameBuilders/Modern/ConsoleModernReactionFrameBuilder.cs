@@ -39,7 +39,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             var finishedMessage = message.EnsureFinishedSentence();
             gridStringBuilder.DrawWrapped(finishedMessage, xMargin, lastY, constrainedWidth, properties.MainTextColor, properties.HighlightTextColor, StringUtilities.LocateStringMarkers(finishedMessage, keywords), out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, properties.BackgroundColor) { ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, false, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

@@ -39,7 +39,10 @@ namespace NetAF.Targets.Console.Rendering
             InputColor = AnsiColor.White,
             MaximumNarrativeLineWidth = UnlimitedNarrativeLineWidth,
             HighlightKeywords = true,
-            HighlightTextColor = NetAFPalette.NetAFBlue
+            HighlightTextColor = NetAFPalette.NetAFBlue,
+            ShowPrompt = true,
+            Prompt = ">",
+            PromptColor = AnsiColor.White
         };
 
         #endregion
@@ -121,6 +124,21 @@ namespace NetAF.Targets.Console.Rendering
         /// </summary>
         public int MaximumNarrativeLineWidth { get; set; }
 
+        /// <summary>
+        /// Get or set if the prompt should be displayed.
+        /// </summary>
+        public bool ShowPrompt { get; set; }
+
+        /// <summary>
+        /// Get or set the prompt.
+        /// </summary>
+        public string Prompt { get; set; }
+
+        /// <summary>
+        /// Get or set the prompt color.
+        /// </summary>
+        public AnsiColor PromptColor { get; set; }
+
         #endregion
 
         #region Implementation of ICloneable
@@ -145,7 +163,10 @@ namespace NetAF.Targets.Console.Rendering
                 InputColor = InputColor,
                 MaximumNarrativeLineWidth = MaximumNarrativeLineWidth,
                 HighlightKeywords = HighlightKeywords,
-                HighlightTextColor = HighlightTextColor
+                HighlightTextColor = HighlightTextColor,
+                ShowPrompt = ShowPrompt,
+                Prompt = Prompt,
+                PromptColor = PromptColor
             };
         }
 

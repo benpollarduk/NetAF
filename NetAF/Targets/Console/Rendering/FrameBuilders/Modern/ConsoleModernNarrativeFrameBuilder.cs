@@ -91,7 +91,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
 
             gridStringBuilder.DrawWrapped(builder.ToString().EnsureFinishedSentence(), xMargin, lastY, constrainedWidth, properties.MainTextColor, out _, out lastY);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, properties.BackgroundColor) { ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, false, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

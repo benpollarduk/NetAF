@@ -139,6 +139,9 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public bool ShowCursor { get; set; } = false;
 
+        ///  <inheritdoc/>
+        public AnsiColor InputColor { get; } = AnsiColor.White;
+
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {

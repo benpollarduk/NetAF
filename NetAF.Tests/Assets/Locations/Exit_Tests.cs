@@ -87,7 +87,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var description = exit.Description.GetDescription();
 
-            Assert.IsTrue(description.Contains("locked"));
+            Assert.Contains("locked", description);
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace NetAF.Tests.Assets.Locations
 
             var description = exit.Description.GetDescription();
 
-            Assert.IsTrue(description.Contains("unlocked"));
+            Assert.Contains("unlocked", description);
         }
 
         [TestMethod]
@@ -122,7 +122,7 @@ namespace NetAF.Tests.Assets.Locations
             var commands = new[] { new CustomCommand(new CommandHelp("Test"), true, true, (_, _) => new Reaction(ReactionResult.Silent, "")) };
             var exit = new Exit(Direction.Down, commands: commands);
 
-            Assert.AreEqual(1, exit.Commands.Length);
+            Assert.HasCount(1, exit.Commands);
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ namespace NetAF.Tests.Assets.Locations
         {
             var exit = new Exit(Direction.Down);
 
-            Assert.AreEqual(0, exit.Commands.Length);
+            Assert.IsEmpty(exit.Commands);
         }
     }
 }

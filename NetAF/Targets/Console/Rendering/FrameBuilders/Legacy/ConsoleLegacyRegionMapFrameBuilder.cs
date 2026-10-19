@@ -14,8 +14,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="properties">The render properties.</param>
     /// <param name="regionMapBuilder">A builder for region maps.</param>
-    /// <param name="renderPrompt">Specify if the prompt should be rendered.</param>
-    public sealed class ConsoleLegacyRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties, IRegionMapBuilder regionMapBuilder, bool renderPrompt = true) : ConsoleLegacyFrameBuilder, IRegionMapFrameBuilder
+    public sealed class ConsoleLegacyRegionMapFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties, IRegionMapBuilder regionMapBuilder) : ConsoleLegacyFrameBuilder, IRegionMapFrameBuilder
     {
         #region Properties
 
@@ -60,7 +59,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             {
                 const int requiredSpaceForDivider = 2;
                 const int requiredSpaceForCommandHeader = 3;
-                int requiredSpaceForPrompt = renderPrompt ? 3 : 1;
+                int requiredSpaceForPrompt = properties.ShowPrompt ? 3 : 1;
                 commandSpace = requiredSpaceForCommandHeader + requiredSpaceForPrompt + requiredSpaceForDivider + contextualCommands.Length;
                 var requiredYToFitAllCommands = size.Height - commandSpace;
 
@@ -90,15 +89,16 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             else
                 RegionMapBuilder?.BuildRegionMap(region, focusPosition, regionMapOptions, roomMapOptions, mapSize);
 
-            if (renderPrompt)
+            if (properties.ShowPrompt)
             {
                 gridStringBuilder.DrawHorizontalDivider(availableHeight - 1, properties.HorizontalDivider, properties.BorderColor);
-                gridStringBuilder.DrawWrapped(">", xMargin, availableHeight, availableWidth, properties.InputColor, out _, out _);
+                gridStringBuilder.DrawWrapped(properties.Prompt, xMargin, availableHeight, availableWidth, properties.PromptColor, out _, out _);
             }
 
             gridStringBuilder.DrawBoundary(properties.LeftBoundary, properties.RightBoundary, properties.HorizontalDivider, properties.BorderColor);
 
-            return new GridTextFrame(gridStringBuilder, 4, availableHeight, properties.BackgroundColor) { ShowCursor = true };
+            var promptLengthAndPadding = properties.ShowPrompt ? properties.Prompt.Length + 1 : 0;
+            return new GridTextFrame(gridStringBuilder, xMargin + promptLengthAndPadding, availableHeight, true, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

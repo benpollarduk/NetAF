@@ -29,6 +29,9 @@ namespace NetAF.Targets.Console
             {
                 System.Console.CursorVisible = consoleFrame.ShowCursor;
                 System.Console.SetCursorPosition(consoleFrame.CursorLeft, consoleFrame.CursorTop);
+
+                if (consoleFrame.ShowCursor && !Ansi.IsColorSuppressed())
+                    System.Console.Write(Ansi.GetAnsiForegroundEscapeSequence(consoleFrame.InputColor));
             }
         }
 

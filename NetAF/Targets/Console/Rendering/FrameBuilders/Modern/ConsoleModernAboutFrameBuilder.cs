@@ -37,7 +37,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             else
                 gridStringBuilder.DrawWrapped(Info.AboutNetAF, xMargin, lastY + 2, constrainedWidth, properties.MainTextColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, properties.BackgroundColor) { ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, false, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

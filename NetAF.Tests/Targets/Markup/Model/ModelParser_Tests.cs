@@ -16,7 +16,7 @@ namespace NetAF.Tests.Targets.Markup.Model
             var result = ModelParser.TryParse(input, out var doc);
 
             Assert.IsTrue(result);
-            Assert.HasCount(0, doc.Blocks);
+            Assert.IsEmpty(doc.Blocks);
         }
 
         [TestMethod]

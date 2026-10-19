@@ -61,7 +61,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
             Assert.AreEqual(name, result[0]);
         }
 
@@ -125,7 +125,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -145,7 +145,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -163,7 +163,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]
@@ -254,8 +254,8 @@ namespace NetAF.Tests.Persistence
 
             var result = RestorePointManager.CreateNewFilePath(game);
 
-            Assert.IsTrue(result.StartsWith(RestorePointManager.GetRestorePointDirectory(game)));
-            Assert.IsTrue(result.EndsWith($".{RestorePointManager.Extension}"));
+            Assert.StartsWith(RestorePointManager.GetRestorePointDirectory(game), result);
+            Assert.EndsWith($".{RestorePointManager.Extension}", result);
         }
 
         [TestMethod]
@@ -285,7 +285,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(1, result.Length);
+            Assert.HasCount(1, result);
         }
 
         [TestMethod]
@@ -303,7 +303,7 @@ namespace NetAF.Tests.Persistence
 
             Directory.Delete(tempDir.FullName, true);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
 
         [TestMethod]

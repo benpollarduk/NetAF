@@ -290,8 +290,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Common
 
             var size = mapBuilder.Measure(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.None, KeyPlacement = KeyPlacement.Right });
 
-            Assert.IsTrue(size.Width > 0);
-            Assert.IsTrue(size.Height > 0);
+            Assert.IsGreaterThan(0, size.Width);
+            Assert.IsGreaterThan(0, size.Height);
         }
 
         [TestMethod]
@@ -303,8 +303,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Common
 
             var size = mapBuilder.Measure(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Dynamic, KeyPlacement = KeyPlacement.Right });
 
-            Assert.IsTrue(size.Width > 0);
-            Assert.IsTrue(size.Height > 0);
+            Assert.IsGreaterThan(0, size.Width);
+            Assert.IsGreaterThan(0, size.Height);
         }
 
         [TestMethod]
@@ -316,8 +316,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Common
 
             var size = mapBuilder.Measure(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full, KeyPlacement = KeyPlacement.Left });
 
-            Assert.IsTrue(size.Width > 0);
-            Assert.IsTrue(size.Height > 0);
+            Assert.IsGreaterThan(0, size.Width);
+            Assert.IsGreaterThan(0, size.Height);
         }
 
         [TestMethod]
@@ -329,8 +329,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Common
 
             var size = mapBuilder.Measure(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full, KeyPlacement = KeyPlacement.Above });
 
-            Assert.IsTrue(size.Width > 0);
-            Assert.IsTrue(size.Height > 0);
+            Assert.IsGreaterThan(0, size.Width);
+            Assert.IsGreaterThan(0, size.Height);
         }
 
         [TestMethod]
@@ -342,8 +342,8 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Common
 
             var size = mapBuilder.Measure(room, ViewPoint.Create(region), new RoomMapRenderOptions { KeyType = KeyType.Full, KeyPlacement = KeyPlacement.Below });
 
-            Assert.IsTrue(size.Width > 0);
-            Assert.IsTrue(size.Height > 0);
+            Assert.IsGreaterThan(0, size.Width);
+            Assert.IsGreaterThan(0, size.Height);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace NetAF.Tests.Commands.Global
 
             var result = command.GetPrompts(game);
 
-            Assert.AreEqual(0, result.Length);
+            Assert.IsEmpty(result);
         }
     }
 }

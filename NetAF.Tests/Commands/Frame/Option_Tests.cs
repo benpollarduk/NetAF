@@ -197,7 +197,7 @@ namespace NetAF.Tests.Commands.Frame
 
             var result = command.GetPrompts(game);
 
-            Assert.AreNotEqual(0, result.Length);
+            Assert.IsNotEmpty(result);
         }
     }
 }

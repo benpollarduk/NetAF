@@ -17,18 +17,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
     /// </summary>
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="properties">The render properties.</param>
-    /// <param name="renderPrompt">Specify if the prompt should be rendered.</param>
-    public sealed class ConsoleModernConversationFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties, bool renderPrompt = true) : ConsoleLegacyFrameBuilder, IConversationFrameBuilder
+    public sealed class ConsoleModernConversationFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties) : ConsoleLegacyFrameBuilder, IConversationFrameBuilder
     {
-        #region Properties
-
-        /// <summary>
-        /// Get or set the prompt.
-        /// </summary>
-        public string Prompt { get; set; } = ">";
-
-        #endregion
-
         #region StaticMethods
 
         /// <summary>
@@ -175,10 +165,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                     break;
             }
 
-            if (renderPrompt)
-                gridStringBuilder.DrawWrapped(Prompt, xMargin, availableHeight, availableWidth, properties.InputColor, out _, out _);
+            if (properties.ShowPrompt)
+                gridStringBuilder.DrawWrapped(properties.Prompt, xMargin, availableHeight, availableWidth, properties.PromptColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, xMargin + Prompt.Length + 1, availableHeight, properties.BackgroundColor) { ShowCursor = true };
+            var promptLengthAndPadding = properties.ShowPrompt ? properties.Prompt.Length + 1 : 0;
+            return new GridTextFrame(gridStringBuilder, xMargin + promptLengthAndPadding, availableHeight, true, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

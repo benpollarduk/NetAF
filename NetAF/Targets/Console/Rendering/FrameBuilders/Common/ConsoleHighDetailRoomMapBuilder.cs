@@ -14,15 +14,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
     /// <param name="properties">The render properties.</param>
     public sealed class ConsoleHighDetailRoomMapBuilder(GridStringBuilder gridStringBuilder, ConsoleMapRenderProperties properties) : IConsoleRoomMapBuilder
     {
-        #region StaticProperties
-
-        /// <summary>
-        /// Get the maximum size of the key.
-        /// </summary>
-        public static readonly Size MaximumKeySize = new(24, 4);
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -306,16 +297,13 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         }
 
         /// <summary>
-        /// Draw the key.
+        /// Create the key.
         /// </summary>
         /// <param name="room">The room.</param>
         /// <param name="viewPoint">The viewpoint from the room.</param>
         /// <param name="options">The render options.</param>
-        /// <param name="startPosition">The start position of the overall render.</param>
-        /// <param name="mapStart">The start position of the map.</param>
-        /// <param name="endX">The end position, x.</param>
-        /// <param name="endY">The end position, x.</param>
-        private void DrawKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options, Point2D startPosition, Point2D mapStart, out int endX, out int endY)
+        /// <returns>A dictionary of key lines and their colors.</returns>
+        private Dictionary<string, AnsiColor> CreateKey(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
             GetNumberOfPointsOfInterest(room, out var total, out var unexamined);
             var pointOfInterestIndicator = GetPointOfInterestIndicator(total, unexamined, options.PointOfInterestDetail);
@@ -365,6 +353,20 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
                     throw new NotImplementedException();
             }
 
+            return keyLines;
+        }
+
+        /// <summary>
+        /// Draw the key.
+        /// </summary>
+        /// <param name="keyLines">The key lines and their colors.</param>
+        /// <param name="startPosition">The start position of the overall render.</param>
+        /// <param name="mapStart">The start position of the map.</param>
+        /// <param name="placement">The placement of the key.</param>
+        /// <param name="endX">The end position, x.</param>
+        /// <param name="endY">The end position, x.</param>
+        private void DrawKey(Dictionary<string, AnsiColor> keyLines, Point2D startPosition, Point2D mapStart, KeyPlacement placement, out int endX, out int endY)
+        {
             endX = mapStart.X + 8;
             endY = mapStart.Y;
 
@@ -374,12 +376,12 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
             int startKeyX;
             int startKeyY;
 
-            switch (options.KeyPlacement)
+            switch (placement)
             {
                 case KeyPlacement.Below:
-                    // place the key beneath the map, aligned to the map's left edge
+                    // place the key beneath the map, aligned to the map's left edge, mius
                     startKeyX = mapStart.X;
-                    startKeyY = mapStart.Y + RenderedSize.Height + properties.VerticalKeyPadding;
+                    startKeyY = mapStart.Y + RenderedSize.Height + properties.VerticalKeyPadding - 1;
                     break;
                 case KeyPlacement.Above:
                     // place the key above the map, aligned to the map's left edge
@@ -388,7 +390,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
                     break;
                 case KeyPlacement.Left:
                     // place the key to the left of the map, aligned to the overall left edge
-                    startKeyX = startPosition.X;
+                    startKeyX = startPosition.X - 1;
                     startKeyY = mapStart.Y;
                     break;
                 case KeyPlacement.Right:
@@ -400,7 +402,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
                     throw new NotImplementedException();
             }
 
-            var maxWidth = keyLines.Max(x => x.Key.Length) + startKeyX + 1;
+            var maxWidth = keyLines.Max(x => x.Key.Length) + startKeyX;
             endY = startKeyY;
 
             foreach (var keyLine in keyLines)
@@ -443,6 +445,21 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
             unexamined = items.Count(x => !x.HasBeenExamined) + characters.Count(x => !x.HasBeenExamined);
         }
 
+        /// <summary>
+        /// Get the size of the key.
+        /// </summary>
+        /// <param name="keyLines">The key lines.</param>
+        /// <returns>The size of the key.</returns>
+        private static Size GetKeySize(Dictionary<string, AnsiColor> keyLines)
+        {
+            if (keyLines == null || keyLines.Count == 0)
+                return new Size(0, 0);
+
+            var width = keyLines.Keys.Max(x => x.Length);
+            var height = keyLines.Count;
+            return new Size(width, height);
+        }
+
         #endregion
 
         #region Implementation of IRoomMapBuilder
@@ -453,13 +470,17 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
         /// <inheritdoc/>
         public Size Measure(Room room, ViewPoint viewPoint, RoomMapRenderOptions options)
         {
+            // create the key
+            var key = CreateKey(room, viewPoint, options);
+            var keySize = GetKeySize(key);
+
             // determine the required size
             Size renderSizeWithKey = options.KeyPlacement switch
             {
-                KeyPlacement.Below => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height + properties.VerticalKeyPadding),
-                KeyPlacement.Above => new Size(Math.Max(RenderedSize.Width, MaximumKeySize.Width), RenderedSize.Height + MaximumKeySize.Height + properties.VerticalKeyPadding),
-                KeyPlacement.Right => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
-                KeyPlacement.Left => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + MaximumKeySize.Width, Math.Max(RenderedSize.Height, MaximumKeySize.Height)),
+                KeyPlacement.Below => new Size(Math.Max(RenderedSize.Width, keySize.Width), RenderedSize.Height + keySize.Height + properties.VerticalKeyPadding),
+                KeyPlacement.Above => new Size(Math.Max(RenderedSize.Width, keySize.Width), RenderedSize.Height + keySize.Height + properties.VerticalKeyPadding),
+                KeyPlacement.Right => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + keySize.Width, Math.Max(RenderedSize.Height, keySize.Height)),
+                KeyPlacement.Left => new Size(RenderedSize.Width + properties.HorizontalKeyPadding + keySize.Width, Math.Max(RenderedSize.Height, keySize.Height)),
                 _ => throw new NotImplementedException()
             };
 
@@ -496,11 +517,15 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
              * *-| S |-*
              */
 
+            // create the key
+            var key = CreateKey(room, viewPoint, options);
+            var keySize = GetKeySize(key);
+
             // offset the map to leave room for the key when it is placed to the left or above
             var mapStart = options.KeyType == KeyType.None ? startPosition : options.KeyPlacement switch
             {
-                KeyPlacement.Left => new Point2D(startPosition.X + MaximumKeySize.Width + properties.HorizontalKeyPadding, startPosition.Y),
-                KeyPlacement.Above => new Point2D(startPosition.X, startPosition.Y + MaximumKeySize.Height + properties.VerticalKeyPadding),
+                KeyPlacement.Left => new Point2D(startPosition.X + keySize.Width + properties.HorizontalKeyPadding, startPosition.Y),
+                KeyPlacement.Above => new Point2D(startPosition.X, startPosition.Y + keySize.Height + properties.VerticalKeyPadding),
                 _ => startPosition
             };
 
@@ -511,10 +536,10 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Common
             DrawUpExit(room, viewPoint, mapStart);
             DrawDownExit(room, viewPoint, mapStart);
             DrawItemOrCharacter(room, mapStart, options.PointOfInterestDetail);
-            DrawKey(room, viewPoint, options, startPosition, mapStart, out endX, out endY);
+            DrawKey(key, startPosition, mapStart, options.KeyPlacement, out endX, out endY);
 
-            if (endY < mapStart.Y + 6)
-                endY = mapStart.Y + 6;
+            if (endY < mapStart.Y + RenderedSize.Height)
+                endY = mapStart.Y + RenderedSize.Height;
         }
 
         #endregion

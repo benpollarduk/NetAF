@@ -66,7 +66,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                 gridStringBuilder.DrawWrapped("No entries.", xMargin, lastY + 1, constrainedWidth, properties.InputColor, out _, out lastY);
             }
 
-            return new GridTextFrame(gridStringBuilder, 0, 0, properties.BackgroundColor) { ShowCursor = false };
+            return new GridTextFrame(gridStringBuilder, 0, 0, false, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

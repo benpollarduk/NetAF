@@ -67,7 +67,7 @@ namespace NetAF.Tests.Assets
         {
             var item = new Item(string.Empty, string.Empty);
 
-            Assert.AreEqual(0, item.Commands.Length);
+            Assert.IsEmpty(item.Commands);
         }
     }
 }

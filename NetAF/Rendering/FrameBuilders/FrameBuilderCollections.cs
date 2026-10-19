@@ -78,7 +78,10 @@ namespace NetAF.Rendering.FrameBuilders
                     InputColor = AnsiColor.White,
                     MaximumNarrativeLineWidth = 70,
                     HighlightKeywords = true,
-                    HighlightTextColor = NetAFPalette.NetAFBlue
+                    HighlightTextColor = NetAFPalette.NetAFBlue,
+                    ShowPrompt = true,
+                    Prompt = ">",
+                    PromptColor = AnsiColor.White
                 };
 
                 var mapRenderProperties = ConsoleMapRenderProperties.Default;

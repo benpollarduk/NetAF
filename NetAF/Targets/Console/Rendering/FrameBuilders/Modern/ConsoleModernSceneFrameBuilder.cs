@@ -19,8 +19,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
     /// <param name="gridStringBuilder">A builder to use for the string layout.</param>
     /// <param name="properties">The render properties.</param>
     /// <param name="roomMapBuilder">A builder to use for room maps.</param>
-    /// <param name="renderPrompt">Specify if the prompt should be rendered.</param>
-    public sealed class ConsoleModernSceneFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties, IRoomMapBuilder roomMapBuilder, bool renderPrompt = true) : ConsoleLegacyFrameBuilder, ISceneFrameBuilder
+    public sealed class ConsoleModernSceneFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties, IRoomMapBuilder roomMapBuilder) : ConsoleLegacyFrameBuilder, ISceneFrameBuilder
     {
         #region Properties
 
@@ -28,11 +27,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
         /// Get or set the hint displayed to the player in place of the full command menu.
         /// </summary>
         public string CommandHint { get; set; } = $"Type {CommandList.CommandHelp.Command} or {CommandList.CommandHelp.Shortcut} to view commands.";
-
-        /// <summary>
-        /// Get or set the prompt.
-        /// </summary>
-        public string Prompt { get; set; } = ">";
 
         /// <summary>
         /// Get or set the inventory hint.
@@ -168,10 +162,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                     break;
             }
 
-            if (renderPrompt)
-                gridStringBuilder.DrawWrapped(Prompt, xMargin, availableHeight, availableWidth, properties.InputColor, out _, out _);
+            if (properties.ShowPrompt)
+                gridStringBuilder.DrawWrapped(properties.Prompt, xMargin, availableHeight, availableWidth, properties.PromptColor, out _, out _);
 
-            return new GridTextFrame(gridStringBuilder, xMargin + Prompt.Length + 1, availableHeight, properties.BackgroundColor) { ShowCursor = true };
+            var promptLengthAndPadding = properties.ShowPrompt ? properties.Prompt.Length + 1 : 0;
+            return new GridTextFrame(gridStringBuilder, xMargin + promptLengthAndPadding, availableHeight, true, properties.BackgroundColor, properties.InputColor);
         }
 
         #endregion

@@ -17,5 +17,9 @@
         /// Get or set if the cursor should be shown.
         /// </summary>
         bool ShowCursor { get; set; }
+        /// <summary>
+        /// Get the input color.
+        /// </summary>
+        AnsiColor InputColor { get; }
     }
 }

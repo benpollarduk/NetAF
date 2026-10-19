@@ -472,7 +472,7 @@ namespace NetAF.Tests.Commands.Scene
         {
             var prompts = UseOn.GetItemPrompts(null);
 
-            Assert.HasCount(0, prompts);
+            Assert.IsEmpty(prompts);
         }
 
         [TestMethod]
@@ -496,7 +496,7 @@ namespace NetAF.Tests.Commands.Scene
         {
             var prompts = UseOn.GetTargetPrompts(null);
 
-            Assert.HasCount(0, prompts);
+            Assert.IsEmpty(prompts);
         }
 
         [TestMethod]

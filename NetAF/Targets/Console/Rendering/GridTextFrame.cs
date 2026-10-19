@@ -10,8 +10,10 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="builder">The builder that creates the frame.</param>
     /// <param name="cursorLeft">The cursor left position.</param>
     /// <param name="cursorTop">The cursor top position.</param>
+    /// <param name="showCursor">True if the cursor should be shown, else false.</param>
     /// <param name="backgroundColor">The background color.</param>
-    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, AnsiColor backgroundColor) : IConsoleFrame
+    /// <param name="inputColor">The input color.</param>
+    public sealed class GridTextFrame(GridStringBuilder builder, int cursorLeft, int cursorTop, bool showCursor, AnsiColor backgroundColor, AnsiColor inputColor) : IConsoleFrame
     {
         #region Properties
 
@@ -51,7 +53,10 @@ namespace NetAF.Targets.Console.Rendering
         public int CursorTop { get; } = cursorTop;
 
         /// <inheritdoc/>
-        public bool ShowCursor { get; set; } = true;
+        public bool ShowCursor { get; set; } = showCursor;
+
+        /// <inheritdoc/>
+        public AnsiColor InputColor { get; } = inputColor;
 
         #endregion
 
@@ -81,7 +86,7 @@ namespace NetAF.Targets.Console.Rendering
                         presenter.Present(cell.Character.ToString());
                     }
                     else
-                    {
+                    { 
                         presenter.Present(" ");
                     }
                 }
