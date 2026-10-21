@@ -24,6 +24,11 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
 
+        /// <summary>
+        /// Get or set if the log is rendered.
+        /// </summary>
+        public bool RenderLog { get; set; } = true;
+
         #endregion
 
         #region StaticMethods
@@ -83,26 +88,34 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
                 lastY += 2;
             }
 
-            if (converser?.Conversation?.Log != null)
+            if (RenderLog)
             {
-                var spaceForLog = availableHeight - 10 - contextualCommands?.Length ?? 0;
-                var truncatedLog = TruncateLog(xMargin, constrainedWidth, spaceForLog, converser.Conversation.Log);
-
-                foreach (var log in truncatedLog)
+                if (converser?.Conversation?.Log != null)
                 {
-                    lastY++;
-                    switch (log.Participant)
+                    var spaceForLog = availableHeight - 10 - contextualCommands?.Length ?? 0;
+                    var truncatedLog = TruncateLog(xMargin, constrainedWidth, spaceForLog, converser.Conversation.Log);
+
+                    foreach (var log in truncatedLog)
                     {
-                        case Participant.Player:
-                            gridStringBuilder.DrawWrapped("You: " + log.Line, xMargin, lastY, constrainedWidth, properties.OptionColor, out _, out lastY);
-                            break;
-                        case Participant.Other:
-                            gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: " + log.Line, xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
-                            break;
-                        default:
-                            throw new NotImplementedException();
+                        lastY++;
+                        switch (log.Participant)
+                        {
+                            case Participant.Player:
+                                gridStringBuilder.DrawWrapped($"You: {log.Line}", xMargin, lastY, constrainedWidth, properties.OptionColor, out _, out lastY);
+                                break;
+                            case Participant.Other:
+                                gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: {log.Line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                 }
+            }
+            else
+            {
+                var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
+                gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: {line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
             }
 
             if (contextualCommands?.Any() ?? false)

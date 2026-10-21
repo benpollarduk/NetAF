@@ -19,6 +19,15 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
     /// <param name="properties">The render properties.</param>
     public sealed class ConsoleModernConversationFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties) : ConsoleLegacyFrameBuilder, IConversationFrameBuilder
     {
+        #region Properties
+
+        /// <summary>
+        /// Get or set if the log is rendered.
+        /// </summary>
+        public bool RenderLog { get; set; }
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -77,26 +86,34 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
                 lastY += 2;
             }
 
-            if (converser?.Conversation?.Log != null)
+            if (RenderLog)
             {
-                var spaceForLog = availableHeight - 6;
-                var truncatedLog = TruncateLog(xMargin, constrainedWidth, spaceForLog, converser.Conversation.Log);
-
-                foreach (var log in truncatedLog)
+                if (converser?.Conversation?.Log != null)
                 {
-                    lastY++;
-                    switch (log.Participant)
+                    var spaceForLog = availableHeight - 6;
+                    var truncatedLog = TruncateLog(xMargin, constrainedWidth, spaceForLog, converser.Conversation.Log);
+
+                    foreach (var log in truncatedLog)
                     {
-                        case Participant.Player:
-                            gridStringBuilder.DrawWrapped("You: " + log.Line, xMargin, lastY, constrainedWidth, properties.OptionColor, out _, out lastY);
-                            break;
-                        case Participant.Other:
-                            gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: " + log.Line, xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
-                            break;
-                        default:
-                            throw new NotImplementedException();
+                        lastY++;
+                        switch (log.Participant)
+                        {
+                            case Participant.Player:
+                                gridStringBuilder.DrawWrapped($"You: {log.Line}", xMargin, lastY, constrainedWidth, properties.OptionColor, out _, out lastY);
+                                break;
+                            case Participant.Other:
+                                gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: {log.Line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                 }
+            }
+            else
+            {
+                var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
+                gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: {line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
             }
 
             // display the available responses the player can choose from

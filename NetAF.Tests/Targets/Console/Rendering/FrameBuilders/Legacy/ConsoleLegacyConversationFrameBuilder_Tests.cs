@@ -24,10 +24,25 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Legacy
         }
 
         [TestMethod]
-        public void GivenDefaultsWithLog_WhenBuild_ThenFrameReturned()
+        public void GivenDefaultsWithLogAndRenderLog_WhenBuild_ThenFrameReturned()
         {
             var gridStringBuilder = new GridStringBuilder();
-            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default);
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default) { RenderLog = true };
+            var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
+
+            converser.Conversation.Next(null);
+            converser.Conversation.Respond(new Response("Test2"), null);
+
+            var result = builder.Build("Test", converser, null, new Size(80, 50));
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GivenDefaultsWithLogAndDontRenderLog_WhenBuild_ThenFrameReturned()
+        {
+            var gridStringBuilder = new GridStringBuilder();
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default) { RenderLog = false };
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
