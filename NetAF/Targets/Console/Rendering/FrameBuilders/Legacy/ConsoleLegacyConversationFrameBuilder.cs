@@ -114,8 +114,9 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             }
             else
             {
+                var name = converser?.Identifier?.Name ?? string.Empty;
                 var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
-                gridStringBuilder.DrawWrapped($"{converser.Identifier.Name}: {line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
+                gridStringBuilder.DrawWrapped($"{name}: {line}", xMargin, lastY, constrainedWidth, properties.OptionDescriptionColor, out _, out lastY);
             }
 
             if (contextualCommands?.Any() ?? false)

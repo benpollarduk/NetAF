@@ -94,8 +94,9 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
             }
             else
             {
-                builder.AppendLine(converser.Identifier.Name);
-
+                var name = converser?.Identifier?.Name ?? string.Empty;
+                builder.AppendLine(name);
+                
                 var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
                 builder.AppendLine(line);
             }

@@ -93,7 +93,8 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
             }
             else
             {
-                builder.H3(converser.Identifier.Name);
+                var name = converser?.Identifier?.Name ?? string.Empty;
+                builder.H3(name);
 
                 var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
                 builder.P(line);

@@ -97,7 +97,8 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
             }
             else
             {
-                builder.Heading(converser.Identifier.Name, HeadingLevel.H2);
+                var name = converser?.Identifier?.Name ?? string.Empty;
+                builder.Heading(name, HeadingLevel.H2);
 
                 var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
                 builder.WriteLine(line);
