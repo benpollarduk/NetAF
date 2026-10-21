@@ -21,6 +21,11 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
 
+        /// <summary>
+        /// Get or set if the log is rendered.
+        /// </summary>
+        public bool RenderLog { get; set; }
+
         #endregion
 
         #region StaticMethods
@@ -59,33 +64,44 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 
             Participant? lastParticipant = null;
 
-            if (converser?.Conversation?.Log != null)
+            if (RenderLog)
             {
-                foreach (var log in converser.Conversation.Log)
+                if (converser?.Conversation?.Log != null)
                 {
-                    if (lastParticipant != log.Participant)
+                    foreach (var log in converser.Conversation.Log)
                     {
-                        if (lastParticipant != null)
-                            builder.Newline();
-
-                        switch (log.Participant)
+                        if (lastParticipant != log.Participant)
                         {
-                            case Participant.Player:
-                                builder.Heading("You", HeadingLevel.H2);
-                                break;
-                            case Participant.Other:
-                                builder.Heading(converser.Identifier.Name, HeadingLevel.H2);
-                                break;
-                            default:
-                                throw new NotImplementedException();
+                            if (lastParticipant != null)
+                                builder.Newline();
+
+                            switch (log.Participant)
+                            {
+                                case Participant.Player:
+                                    builder.Heading("You", HeadingLevel.H2);
+                                    break;
+                                case Participant.Other:
+                                    builder.Heading(converser.Identifier.Name, HeadingLevel.H2);
+                                    break;
+                                default:
+                                    throw new NotImplementedException();
+                            }
+
+                            lastParticipant = log.Participant;
                         }
 
-                        lastParticipant = log.Participant;
+                        builder.WriteLine(log.Line);
+                        builder.Newline();
                     }
-
-                    builder.WriteLine(log.Line);
-                    builder.Newline();
                 }
+            }
+            else
+            {
+                var name = converser?.Identifier?.Name ?? string.Empty;
+                builder.Heading(name, HeadingLevel.H2);
+
+                var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
+                builder.WriteLine(line);
             }
 
             AppendCommands(builder, CommandTitle, contextualCommands);
