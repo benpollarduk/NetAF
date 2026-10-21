@@ -21,6 +21,11 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
 
+        /// <summary>
+        /// Get or set if the log is rendered.
+        /// </summary>
+        public bool RenderLog { get; set; }
+
         #endregion
 
         #region StaticMethods
@@ -56,32 +61,43 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
 
             Participant? lastParticipant = null;
 
-            if (converser?.Conversation?.Log != null)
+            if (RenderLog)
             {
-                foreach (var log in converser.Conversation.Log)
+                if (converser?.Conversation?.Log != null)
                 {
-                    if (lastParticipant != log.Participant)
+                    foreach (var log in converser.Conversation.Log)
                     {
-                        if (lastParticipant != null)
-                            builder.Br();
-
-                        switch (log.Participant)
+                        if (lastParticipant != log.Participant)
                         {
-                            case Participant.Player:
-                                builder.H3("You");
-                                break;
-                            case Participant.Other:
-                                builder.H3(converser.Identifier.Name);
-                                break;
-                            default:
-                                throw new NotImplementedException();
+                            if (lastParticipant != null)
+                                builder.Br();
+
+                            switch (log.Participant)
+                            {
+                                case Participant.Player:
+                                    builder.H3("You");
+                                    break;
+                                case Participant.Other:
+                                    builder.H3(converser.Identifier.Name);
+                                    break;
+                                default:
+                                    throw new NotImplementedException();
+                            }
+
+                            lastParticipant = log.Participant;
                         }
 
-                        lastParticipant = log.Participant;
+                        builder.P(log.Line);
                     }
-
-                    builder.P(log.Line);
                 }
+            }
+            else
+            {
+                var name = converser?.Identifier?.Name ?? string.Empty;
+                builder.H3(name);
+
+                var line = converser?.Conversation?.CurrentParagraph?.Line ?? string.Empty;
+                builder.P(line);
             }
 
             AppendCommands(builder, CommandTitle, contextualCommands);

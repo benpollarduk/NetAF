@@ -24,10 +24,25 @@ namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
         }
 
         [TestMethod]
-        public void GivenDefaultsWithLog_WhenBuild_ThenFrameReturned()
+        public void GivenDefaultsWithLogAndRenderLog_WhenBuild_ThenFrameReturned()
         {
             var stringBuilder = new StringBuilder();
-            var builder = new TextConversationFrameBuilder(stringBuilder);
+            var builder = new TextConversationFrameBuilder(stringBuilder) { RenderLog = true };
+            var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
+
+            converser.Conversation.Next(null);
+            converser.Conversation.Respond(new Response("Test2"), null);
+
+            var result = builder.Build("Test", converser, null, new Size(80, 50));
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GivenDefaultsWithLogAndDontRenderLog_WhenBuild_ThenFrameReturned()
+        {
+            var stringBuilder = new StringBuilder();
+            var builder = new TextConversationFrameBuilder(stringBuilder) { RenderLog = false };
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
