@@ -411,6 +411,9 @@ namespace NetAF.Targets.Console.Rendering
         /// <returns>The number of lines the string will take up.</returns>
         public static int GetNumberOfLines(string value, int startY, int maxWidth)
         {
+            if (maxWidth <= 0)
+                return 1;
+
             var endY = startY;
             var copy = value.Clone().ToString();
 

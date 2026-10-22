@@ -13,7 +13,8 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
     /// Provides a builder of conversation frames.
     /// </summary>
     /// <param name="builder">A builder to use for the text layout.</param>
-    public sealed class TextConversationFrameBuilder(StringBuilder builder) : IConversationFrameBuilder
+    /// <param name="properties">The render properties.</param>
+    public sealed class TextConversationFrameBuilder(StringBuilder builder, TextRenderProperties properties) : IConversationFrameBuilder
     {
         #region Properties
 
@@ -21,11 +22,6 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
         /// Get or set the command title.
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
-
-        /// <summary>
-        /// Get or set if the log is rendered.
-        /// </summary>
-        public bool RenderLog { get; set; }
 
         #endregion
 
@@ -62,7 +58,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
 
             Participant? lastParticipant = null;
 
-            if (RenderLog)
+            if (properties.RenderConversationHistory)
             {
                 if (converser?.Conversation?.Log != null)
                 {

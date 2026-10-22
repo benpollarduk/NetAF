@@ -17,7 +17,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var markupBuilder = new MarkupBuilder();
-                var builder = new MarkupConversationFrameBuilder(markupBuilder);
+                var builder = new MarkupConversationFrameBuilder(markupBuilder, MarkupRenderProperties.Default);
 
                 builder.Build("Test", null, null, new Size(80, 50));
             });
@@ -27,7 +27,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         public void GivenDefaultsWithLogAndRenderLog_WhenBuild_ThenFrameReturned()
         {
             var markupBuilder = new MarkupBuilder();
-            var builder = new MarkupConversationFrameBuilder(markupBuilder) { RenderLog = true };
+            var builder = new MarkupConversationFrameBuilder(markupBuilder, new MarkupRenderProperties { RenderConversationHistory = true });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         public void GivenDefaultsWithLogAndDontRenderLog_WhenBuild_ThenFrameReturned()
         {
             var markupBuilder = new MarkupBuilder();
-            var builder = new MarkupConversationFrameBuilder(markupBuilder) { RenderLog = false };
+            var builder = new MarkupConversationFrameBuilder(markupBuilder, new MarkupRenderProperties { RenderConversationHistory = false });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -57,7 +57,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
         public void GivenDefaultsWith3CustomCommands_WhenBuild_ThenFrameReturned()
         {
             var markupBuilder = new MarkupBuilder();
-            var builder = new MarkupConversationFrameBuilder(markupBuilder);
+            var builder = new MarkupConversationFrameBuilder(markupBuilder, MarkupRenderProperties.Default);
             var commands = new[]
             {
                 new CommandHelp("Test"),

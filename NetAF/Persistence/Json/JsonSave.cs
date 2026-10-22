@@ -9,6 +9,8 @@ namespace NetAF.Persistence.Json
     /// </summary>
     public static class JsonSave
     {
+        #region StaticMethods
+
         /// <summary>
         /// Convert a restore point to Json.
         /// </summary>
@@ -41,6 +43,8 @@ namespace NetAF.Persistence.Json
             try
             {
                 var json = ToJson(restorePoint);
+                json = Encryption.Encrypt(json);
+
                 var directory = Path.GetDirectoryName(path);
 
                 if (!Directory.Exists(directory))
@@ -75,6 +79,10 @@ namespace NetAF.Persistence.Json
                 using (var reader = new StreamReader(path))
                     json = reader.ReadToEnd();
 
+                // check if was raw json, could be an old unecrypted save file
+                if (!IsJson(json))
+                    json = Encryption.Decrypt(json);
+
                 restorePoint = FromJson(json);
                 message = string.Empty;
                 return true;
@@ -86,5 +94,20 @@ namespace NetAF.Persistence.Json
                 return false;
             }
         }
+
+        /// <summary>
+        /// Detemine if a string is in Json format.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>True if the value is in Json format else false.</returns>
+        public static bool IsJson(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return false;
+
+            return value.StartsWith('{') && value.EndsWith('}');
+        }
+
+        #endregion
     }
 }

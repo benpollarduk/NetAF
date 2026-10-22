@@ -8,6 +8,7 @@ using NetAF.Targets.Markup.Rendering.FrameBuilders;
 using NetAF.Targets.Text.Rendering.FrameBuilders;
 using System.Text;
 using NetAF.Targets.Console.Rendering.FrameBuilders.Common;
+using NetAF.Targets.Text.Rendering;
 
 namespace NetAF.Rendering.FrameBuilders
 {
@@ -131,7 +132,7 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlGameOverFrameBuilder(htmlBuilder),
                     new HtmlAboutFrameBuilder(htmlBuilder),
                     new HtmlReactionFrameBuilder(htmlBuilder, renderProperties),
-                    new HtmlConversationFrameBuilder(htmlBuilder),
+                    new HtmlConversationFrameBuilder(htmlBuilder, renderProperties),
                     new HtmlNoteFrameBuilder(htmlBuilder),
                     new HtmlHistoryFrameBuilder(htmlBuilder),
                     new HtmlNarrativeFrameBuilder(htmlBuilder),
@@ -149,6 +150,7 @@ namespace NetAF.Rendering.FrameBuilders
         {
             get
             {
+                var renderProperties = TextRenderProperties.Default;
                 var mapRenderProperties = ConsoleMapRenderProperties.Default;
                 var stringBuilder = new StringBuilder();
 
@@ -163,7 +165,7 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextGameOverFrameBuilder(stringBuilder),
                     new TextAboutFrameBuilder(stringBuilder),
                     new TextReactionFrameBuilder(stringBuilder),
-                    new TextConversationFrameBuilder(stringBuilder),
+                    new TextConversationFrameBuilder(stringBuilder, renderProperties),
                     new TextNoteFrameBuilder(stringBuilder),
                     new TextHistoryFrameBuilder(stringBuilder),
                     new TextNarrativeFrameBuilder(stringBuilder),
@@ -196,7 +198,7 @@ namespace NetAF.Rendering.FrameBuilders
                     new MarkupGameOverFrameBuilder(markupBuilder),
                     new MarkupAboutFrameBuilder(markupBuilder),
                     new MarkupReactionFrameBuilder(markupBuilder, renderProperties),
-                    new MarkupConversationFrameBuilder(markupBuilder),
+                    new MarkupConversationFrameBuilder(markupBuilder, renderProperties),
                     new MarkupNoteFrameBuilder(markupBuilder),
                     new MarkupHistoryFrameBuilder(markupBuilder),
                     new MarkupNarrativeFrameBuilder(markupBuilder),

@@ -19,15 +19,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
     /// <param name="properties">The render properties.</param>
     public sealed class ConsoleModernConversationFrameBuilder(GridStringBuilder gridStringBuilder, ConsoleRenderProperties properties) : ConsoleLegacyFrameBuilder, IConversationFrameBuilder
     {
-        #region Properties
-
-        /// <summary>
-        /// Get or set if the log is rendered.
-        /// </summary>
-        public bool RenderLog { get; set; }
-
-        #endregion
-
         #region StaticMethods
 
         /// <summary>
@@ -80,13 +71,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             // constrain the narrative text to a comfortable reading width
             var narrativeWidth = GetConstrainedWidth(availableWidth, properties.MaximumNarrativeLineWidth);
 
-            if (!string.IsNullOrEmpty(title))
-            {
-                gridStringBuilder.DrawWrapped(title, xMargin, lastY, constrainedWidth, properties.TitleColor, out _, out lastY);
-                lastY += 2;
-            }
-
-            if (RenderLog)
+            if (properties.RenderConversationHistory)
             {
                 if (converser?.Conversation?.Log != null)
                 {

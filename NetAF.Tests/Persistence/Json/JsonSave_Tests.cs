@@ -14,6 +14,46 @@ namespace NetAF.Tests.Persistence.Json
     public class JsonSave_Tests
     {
         [TestMethod]
+        public void GivenNull_WhenIsJson_ThenReturnFalse()
+        {
+            string value = null;
+
+            var result = JsonSave.IsJson(value);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenEmptyString_WhenIsJson_ThenReturnFalse()
+        {
+            string value = string.Empty;
+
+            var result = JsonSave.IsJson(value);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenNonJsonString_WhenIsJson_ThenReturnFalse()
+        {
+            string value = "This is not a JSON string.";
+
+            var result = JsonSave.IsJson(value);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GivenJsonString_WhenIsJson_ThenReturnTrue()
+        {
+            string value = "{\"key\":\"value\"}";
+
+            var result = JsonSave.IsJson(value);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void GivenSimpleGame_WhenToJson_ThenExpectedStringReturned()
         {
             var regionMaker = new RegionMaker(string.Empty, string.Empty);

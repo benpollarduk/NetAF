@@ -24,11 +24,6 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
         /// </summary>
         public string CommandTitle { get; set; } = "You can:";
 
-        /// <summary>
-        /// Get or set if the log is rendered.
-        /// </summary>
-        public bool RenderLog { get; set; } = true;
-
         #endregion
 
         #region StaticMethods
@@ -88,7 +83,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
                 lastY += 2;
             }
 
-            if (RenderLog)
+            if (properties.RenderConversationHistory)
             {
                 if (converser?.Conversation?.Log != null)
                 {

@@ -40,6 +40,7 @@ namespace NetAF.Targets.Console.Rendering
             MaximumNarrativeLineWidth = UnlimitedNarrativeLineWidth,
             HighlightKeywords = true,
             HighlightTextColor = NetAFPalette.NetAFBlue,
+            RenderConversationHistory = false,
             ShowPrompt = true,
             Prompt = ">",
             PromptColor = AnsiColor.White

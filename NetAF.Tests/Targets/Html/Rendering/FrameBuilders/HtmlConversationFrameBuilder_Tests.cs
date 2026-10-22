@@ -17,7 +17,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlConversationFrameBuilder(htmlBuilder);
+                var builder = new HtmlConversationFrameBuilder(htmlBuilder, HtmlRenderProperties.Default);
 
                 builder.Build("Test", null, null, new Size(80, 50));
             });
@@ -27,7 +27,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         public void GivenDefaultsWithLogAndRenderLog_WhenBuild_ThenFrameReturned()
         {
             var htmlBuilder = new HtmlBuilder();
-            var builder = new HtmlConversationFrameBuilder(htmlBuilder) { RenderLog = true };
+            var builder = new HtmlConversationFrameBuilder(htmlBuilder, new HtmlRenderProperties { RenderConversationHistory = true });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         public void GivenDefaultsWithLogAndDontRenderLog_WhenBuild_ThenFrameReturned()
         {
             var htmlBuilder = new HtmlBuilder();
-            var builder = new HtmlConversationFrameBuilder(htmlBuilder) { RenderLog = false };
+            var builder = new HtmlConversationFrameBuilder(htmlBuilder, new HtmlRenderProperties { RenderConversationHistory = false });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -57,7 +57,7 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
         public void GivenDefaultsWith3CustomCommands_WhenBuild_ThenFrameReturned()
         {
             var htmlBuilder = new HtmlBuilder();
-            var builder = new HtmlConversationFrameBuilder(htmlBuilder);
+            var builder = new HtmlConversationFrameBuilder(htmlBuilder, HtmlRenderProperties.Default);
             var commands = new[]
             {
                 new CommandHelp("Test"),

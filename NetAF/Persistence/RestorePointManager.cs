@@ -250,6 +250,10 @@ namespace NetAF.Persistence
 
             var content = File.ReadAllText(path);
 
+            // may be encrypted
+            if (!JsonSave.IsJson(content))
+                content = Encryption.Decrypt(content);
+
             // name is right at the end of the file
             var lastIndexOfName = content.LastIndexOf("\"Name\"", StringComparison.OrdinalIgnoreCase);
             if (lastIndexOfName == -1)

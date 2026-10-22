@@ -12,6 +12,11 @@
         /// </summary>
         public bool HighlightKeywords { get; set; }
 
+        /// <summary>
+        /// Get or set a value indicating whether conversation history should be rendered.
+        /// </summary>
+        public bool RenderConversationHistory { get; set; }
+
         #endregion
     }
 }

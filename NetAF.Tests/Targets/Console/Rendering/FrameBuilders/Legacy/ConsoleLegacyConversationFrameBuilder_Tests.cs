@@ -27,7 +27,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Legacy
         public void GivenDefaultsWithLogAndRenderLog_WhenBuild_ThenFrameReturned()
         {
             var gridStringBuilder = new GridStringBuilder();
-            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default) { RenderLog = true };
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, new ConsoleRenderProperties { RenderConversationHistory = true });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
@@ -42,7 +42,7 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Legacy
         public void GivenDefaultsWithLogAndDontRenderLog_WhenBuild_ThenFrameReturned()
         {
             var gridStringBuilder = new GridStringBuilder();
-            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, ConsoleRenderProperties.Default) { RenderLog = false };
+            var builder = new ConsoleLegacyConversationFrameBuilder(gridStringBuilder, new ConsoleRenderProperties { RenderConversationHistory = false });
             var converser = new NonPlayableCharacter("Test", "Test", conversation: new(new("Line 1"), new("Line 2")));
 
             converser.Conversation.Next(null);
