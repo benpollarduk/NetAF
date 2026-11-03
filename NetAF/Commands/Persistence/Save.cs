@@ -17,7 +17,7 @@ namespace NetAF.Commands.Persistence
         /// <summary>
         /// Get the command help.
         /// </summary>
-        public static CommandHelp CommandHelp { get; } = new("Save", "Saves the state of a game.", CommandCategory.Persistence, instructions: "Provide the name of the restore point.");
+        public static CommandHelp CommandHelp { get; } = new("Save", "Save the state of a game.", CommandCategory.Persistence, instructions: "Provide the name of the restore point.");
 
         #endregion
 
