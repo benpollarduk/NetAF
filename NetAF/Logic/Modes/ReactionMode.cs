@@ -13,6 +13,15 @@ namespace NetAF.Logic.Modes
     /// <param name="reaction">The reaction.</param>
     public sealed class ReactionMode(Reaction reaction) : IGameMode
     {
+        #region Properties
+
+        /// <summary>
+        /// Get or set if keywords are rendered.
+        /// </summary>
+        public bool RenderKeywords { get; set; } = false;
+
+        #endregion
+
         #region Implementation of IGameMode
 
         /// <inheritdoc/>
@@ -24,7 +33,7 @@ namespace NetAF.Logic.Modes
         /// <inheritdoc/>
         public void Render(Game game)
         {
-            var keywords = StringUtilities.FindKeywords(new ExaminationScene(game.Player, game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion)));
+            var keywords = RenderKeywords ? StringUtilities.FindKeywords(new ExaminationScene(game.Player, game.Overworld.CurrentRegion.CurrentRoom, ViewPoint.Create(game.Overworld.CurrentRegion))) : [];
             var frame = game.Configuration.FrameBuilders.GetFrameBuilder<IReactionFrameBuilder>().Build(reaction.Title, reaction.Description, reaction.Result == ReactionResult.Error, keywords, game.Configuration.DisplaySize);
             game.Configuration.Adapter.RenderFrame(frame);
         }
