@@ -26,7 +26,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 builder.Newline();
             }
 
-            if (!properties.HighlightKeywords)
+            if (!properties.HighlightReactionKeywords)
                 keywords = [];
 
             var finishedMessage = message.EnsureFinishedSentence();

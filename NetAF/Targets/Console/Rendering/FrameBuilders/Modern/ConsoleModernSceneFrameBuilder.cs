@@ -56,7 +56,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             // constrain the narrative text to a comfortable reading width
             var narrativeWidth = GetConstrainedWidth(proposedNarrativeWidth, properties.MaximumNarrativeLineWidth);
 
-            if (!properties.HighlightKeywords)
+            if (!properties.HighlightSceneKeywords)
                 keywords = [];
 
             gridStringBuilder.DrawWrapped(room.Identifier.Name, xMargin, 2, narrativeWidth, properties.TitleColor, out _, out var lastY);

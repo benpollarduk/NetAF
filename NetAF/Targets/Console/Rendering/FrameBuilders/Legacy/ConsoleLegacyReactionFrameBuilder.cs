@@ -25,7 +25,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             var constrainedWidth = GetConstrainedWidth(availableWidth, properties.MaximumNarrativeLineWidth);
             var lastY = 2;
 
-            if (!properties.HighlightKeywords)
+            if (!properties.HighlightReactionKeywords)
                 keywords = [];
 
             if (!string.IsNullOrEmpty(title))

@@ -14,7 +14,8 @@ namespace NetAF.Targets.Markup.Rendering
         /// </summary>
         public static MarkupRenderProperties Default => new()
         {
-            HighlightKeywords = true,
+            HighlightSceneKeywords = true,
+            HighlightReactionKeywords = false,
             RenderConversationHistory = false
         };
 

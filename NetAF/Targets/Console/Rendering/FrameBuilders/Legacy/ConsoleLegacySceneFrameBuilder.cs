@@ -200,7 +200,7 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
 
             // display the scene
 
-            if (!properties.HighlightKeywords)
+            if (!properties.HighlightSceneKeywords)
                 keywords = [];
 
             DrawScene(room, viewPoint, keywords, xMargin, constrainedWidth, linePadding, ref lastY);

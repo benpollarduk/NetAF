@@ -26,21 +26,5 @@ namespace NetAF.Tests.Logic.Modes
                 mode.Render(game);
             });
         }
-
-        [TestMethod]
-        public void GivenNew_WhenRenderWithNonEmptyStringAndRenderKeywords_ThenNoExceptionThrown()
-        {
-            Assertions.NoExceptionThrown(() =>
-            {
-                RegionMaker regionMaker = new(string.Empty, string.Empty);
-                Room room = new(string.Empty, string.Empty);
-                regionMaker[0, 0, 0] = room;
-                OverworldMaker overworldMaker = new(string.Empty, string.Empty, regionMaker);
-                var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
-                var mode = new ReactionMode(new Reaction(ReactionResult.Inform, "a")) { RenderKeywords = true };
-
-                mode.Render(game);
-            });
-        }
     }
 }

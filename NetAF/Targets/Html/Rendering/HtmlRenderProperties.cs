@@ -14,7 +14,8 @@ namespace NetAF.Targets.Html.Rendering
         /// </summary>
         public static HtmlRenderProperties Default => new()
         {
-            HighlightKeywords = true,
+            HighlightSceneKeywords = true,
+            HighlightReactionKeywords = false,
             RenderConversationHistory = false
         };
 
