@@ -26,7 +26,7 @@ A lightweight .NET library for building text based adventures.
 ## Overview
 NetAF is a simple, lightweight library for building text based adventures.
 
-![NetAF_example](https://github.com/benpollarduk/adventure-framework/assets/129943363/20656e76-4e80-475e-aa73-93976d98c5c9)
+![NetAF_example](https://github.com/benpollarduk/adventure-framework/assets/129943363/0b0b7d7f-b596-4410-abe3-146dd66732cd)
 
 At its core NetAF provides simple classes for developing and controlling the flow of games.
 
@@ -103,7 +103,7 @@ NetAF provides classes for handling interpretation of input. Interpretation is e
 ### Conversations
 Conversations can be held between the player and a NPC. Conversations support multiple lines of dialogue and responses.
 
-![image](https://github.com/user-attachments/assets/ad5261cf-8918-4955-8536-73644930614a)
+![image](https://github.com/user-attachments/assets/2d5d0c6d-72cf-4d5a-aa4b-af1e17be2f4a)
 
 ### Attributes
 All game assets support customisable attributes. This provides the possibility to build systems within a game, for example adding currency and trading, adding HP to enemies, MP to your character, durability to Items etc.
@@ -137,7 +137,7 @@ add the NO_COLOR environment variable and assign it a non-empty value. This will
 ### Maps
 Maps are automatically generated for regions and rooms, and can be viewed with the **map** command:
 
-![map](https://github.com/user-attachments/assets/ebbc0925-7252-41d0-9c2d-60e89ecebd1c)
+![map](https://github.com/user-attachments/assets/4bd46984-c2da-42f8-a932-c63c9abaa20d)
 
 Maps display visited rooms, exits, player position, if an item is in a room, lower floors and more. Maps support panning and switching between vertical levels.
 
