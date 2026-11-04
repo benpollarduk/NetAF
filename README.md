@@ -209,7 +209,7 @@ Set either the **NetAF.Example.Console**, **NetAF.Example.WPF** or **NetAF.Examp
 ## Projects
 Below are some projects that use NetAF:
 
-* [Trouble Aboard the SS Hammerhead](https://benpollarduk.github.io/SSHammerhead-docs/) - A text adventure written in NetAF. The source is available [here](https://github.com/benpollarduk/SSHammerhead). Although not optimised yet, *TASSHH* can be played in the [browser](https://benpollarduk.github.io/SSHammerhead/).
+* [Trouble Aboard the SS Hammerhead](https://benpollarduk.github.io/SSHammerhead) - A text adventure written in NetAF. Although not optimised yet, *TASSHH* can be played in the [browser](https://benpollarduk.github.io/SSHammerhead/).
   
 ## Documentation
 Please visit [https://benpollarduk.github.io/NetAF-docs/](https://benpollarduk.github.io/NetAF-docs/) to view the NetAF documentation.
