@@ -39,7 +39,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
         {
             builder.Clear();
 
-            if (!properties.HighlightKeywords)
+            if (!properties.HighlightSceneKeywords)
                 keywords = [];
 
             builder.H1(room.Identifier.Name);

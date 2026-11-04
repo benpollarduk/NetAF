@@ -45,7 +45,8 @@ namespace NetAF.Tests.Targets.Console.Rendering
                 SecondaryTextColor = AnsiColor.BrightRed,
                 InputColor = AnsiColor.BrightGreen,
                 MaximumNarrativeLineWidth = 42,
-                HighlightKeywords = true,
+                HighlightSceneKeywords = true,
+                HighlightReactionKeywords = true,
                 HighlightTextColor = AnsiColor.BrightCyan
             };
 
@@ -65,7 +66,8 @@ namespace NetAF.Tests.Targets.Console.Rendering
             Assert.AreEqual(properties.SecondaryTextColor, clone.SecondaryTextColor);
             Assert.AreEqual(properties.InputColor, clone.InputColor);
             Assert.AreEqual(properties.MaximumNarrativeLineWidth, clone.MaximumNarrativeLineWidth);
-            Assert.AreEqual(properties.HighlightKeywords, clone.HighlightKeywords);
+            Assert.AreEqual(properties.HighlightSceneKeywords, clone.HighlightSceneKeywords);
+            Assert.AreEqual(properties.HighlightReactionKeywords, clone.HighlightReactionKeywords);
             Assert.AreEqual(properties.HighlightTextColor, clone.HighlightTextColor);
         }
     }

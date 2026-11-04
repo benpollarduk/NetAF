@@ -43,5 +43,18 @@ namespace NetAF.Tests.Targets.Console.Rendering.FrameBuilders.Legacy
                 builder.Build("test", "test", false, null, new Size(80, 50));
             });
         }
+
+        [TestMethod]
+        public void GivenNonEmptyFieldsAndRenderReactionKeywords_WhenBuild_ThenNoException()
+        {
+            Assertions.NoExceptionThrown(() =>
+            {
+                var gridStringBuilder = new GridStringBuilder();
+                var properties = new ConsoleRenderProperties { HighlightReactionKeywords = true };
+                var builder = new ConsoleLegacyReactionFrameBuilder(gridStringBuilder, properties);
+
+                builder.Build("test", "test", false, ["test"], new Size(80, 50));
+            });
+        }
     }
 }
