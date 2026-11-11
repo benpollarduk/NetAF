@@ -10,65 +10,6 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="b">The blue channel.</param>
     public struct AnsiColor(byte r, byte g, byte b) : IEquatable<AnsiColor>
     {
-        #region Properties
-
-        /// <summary>
-        /// Get the red channel.
-        /// </summary>
-        public readonly byte R => r;
-
-        /// <summary>
-        /// Get the green channel.
-        /// </summary>
-        public readonly byte G => g;
-
-        /// <summary>
-        /// Get the blue channel.
-        /// </summary>
-        public readonly byte B => b;
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Convert this color to the nearest gray.
-        /// </summary>
-        /// <returns>The nearest gray.</returns>
-        public AnsiColor ToGray()
-        {
-            var gray = (byte)((R + B + G) / 3);
-            return new AnsiColor(gray, gray, gray);
-        }
-
-        #endregion
-
-        #region Overrides of Object
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"{r}-{g}-{b}";
-        }
-
-        /// <inheritdoc/>
-        public override readonly bool Equals(object obj)
-        {
-            return obj is AnsiColor color && Equals(color);
-        }
-
-        #endregion
-
-        #region Implementation of IEquatable<AnsiColor>
-
-        /// <inheritdoc/>
-        public readonly bool Equals(AnsiColor other)
-        {
-            return R == other.R && G == other.G && B == other.B;
-        }
-
-        #endregion
-
         #region StaticProperties
 
         /// <summary>
@@ -153,6 +94,39 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Get the red channel.
+        /// </summary>
+        public readonly byte R => r;
+
+        /// <summary>
+        /// Get the green channel.
+        /// </summary>
+        public readonly byte G => g;
+
+        /// <summary>
+        /// Get the blue channel.
+        /// </summary>
+        public readonly byte B => b;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Convert this color to the nearest gray.
+        /// </summary>
+        /// <returns>The nearest gray.</returns>
+        public AnsiColor ToGray()
+        {
+            var gray = (byte)((R + B + G) / 3);
+            return new AnsiColor(gray, gray, gray);
+        }
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -177,14 +151,8 @@ namespace NetAF.Targets.Console.Rendering
             return !(left == right);
         }
 
-        /// <inheritdoc/>
-        public override readonly int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
         /// <summary>
-        /// Create a new instance of an AnsiColor from a string.
+        /// Create a new instance of an AnsiColor from a string. The string must be formatted in hex as RRGGBB.
         /// </summary>
         /// <param name="value">The string.</param>
         /// <returns>The AnsiColor.</returns>
@@ -192,13 +160,47 @@ namespace NetAF.Targets.Console.Rendering
         {
             if (string.IsNullOrEmpty(value))
                 return default;
-            
-            var parts = value.Split('-');
-            
-            if (parts.Length != 3)
+
+            if (value.Length != 6)
                 return default;
 
-            return new AnsiColor(byte.Parse(parts[0]), byte.Parse(parts[1]), byte.Parse(parts[2]));
+            var r = Convert.ToByte(value[..2], 16);
+            var g = Convert.ToByte(value[2..4], 16);
+            var b = Convert.ToByte(value[4..6], 16);
+
+            return new AnsiColor(r, g, b);
+        }
+
+        #endregion
+
+        #region Overrides of Object
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{R:X2}{G:X2}{B:X2}";
+        }
+
+        /// <inheritdoc/>
+        public override readonly bool Equals(object obj)
+        {
+            return obj is AnsiColor color && Equals(color);
+        }
+
+        /// <inheritdoc/>
+        public override readonly int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
+
+        #region Implementation of IEquatable<AnsiColor>
+
+        /// <inheritdoc/>
+        public readonly bool Equals(AnsiColor other)
+        {
+            return R == other.R && G == other.G && B == other.B;
         }
 
         #endregion

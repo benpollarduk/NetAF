@@ -91,9 +91,9 @@ namespace NetAF.Tests.Targets.Console.Rendering
         }
 
         [TestMethod]
-        public void GivenR1G2B3_WhenFromString_ThenReturnR1G2B3()
+        public void GivenR1G2B3_WhenFromString_ThenReturn010203()
         {
-            var result = AnsiColor.FromString("1-2-3");
+            var result = AnsiColor.FromString("010203");
 
             Assert.AreEqual(1, result.R);
             Assert.AreEqual(2, result.G);

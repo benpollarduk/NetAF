@@ -1,7 +1,6 @@
 using NetAF.Assets;
 using NetAF.Utilities;
 using System;
-using System.IO;
 using System.Text;
 
 namespace NetAF.Targets.Console.Rendering
@@ -13,13 +12,6 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="foreground">The foreground color.</param>
     public sealed class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
     {
-        #region Constants
-
-        private const string Null = "null";
-        private const char Delimiter = ',';
-
-        #endregion
-
         #region Fields
 
         private AnsiColor?[,] foregroundColors;
@@ -417,48 +409,6 @@ namespace NetAF.Targets.Console.Rendering
             }
         }
 
-        private void AppendColorGrid(StringBuilder builder, AnsiColor?[,] colors)
-        {
-            for (var y = 0; y < DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < DisplaySize.Width; x++)
-                {
-                    builder.Append(colors[x, y]?.ToString() ?? Null);
-
-                    if (x < DisplaySize.Width - 1)
-                        builder.Append(Delimiter);
-                }
-
-                builder.AppendLine();
-            }
-        }
-
-        #endregion
-
-        #region Overrides of Object
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            builder.AppendLine($"{DisplaySize.Width}{Delimiter}{DisplaySize.Height}");
-            builder.AppendLine($"{background}{Delimiter}{foreground}");
-
-            var charBuffer = new char[DisplaySize.Width * DisplaySize.Height];
-
-            for (var y = 0; y < DisplaySize.Height; y++)
-                for (var x = 0; x < DisplaySize.Width; x++)
-                    charBuffer[y * DisplaySize.Width + x] = buffer[x, y];
-
-            builder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(charBuffer)));
-
-            AppendColorGrid(builder, foregroundColors);
-            AppendColorGrid(builder, backgroundColors);
-
-            return builder.ToString();
-        }
-
         #endregion
 
         #region StaticMethods
@@ -479,69 +429,75 @@ namespace NetAF.Targets.Console.Rendering
 
         /// <summary>
         /// Creates a GridVisualBuilder from its string representation.
+        /// Each cell is represented in hex as RRGGBBRRGGBBCC where 
+        /// RRGGBB is the background color,
+        /// RRGGBB is the foreground color and
+        /// CC is the character. 
+        /// Each line is terminated with StringUtilities.Newline.
         /// </summary>
         /// <param name="data">The string representation of the GridVisualBuilder.</param>
         /// <returns>A new GridVisualBuilder instance.</returns>
         public static GridVisualBuilder FromString(string data)
         {
-            using var reader = new StringReader(data);
+            var lines = data.Split(StringUtilities.Newline, StringSplitOptions.RemoveEmptyEntries);
 
-            var sizeLine = reader.ReadLine().Split(Delimiter);
-            var width = int.Parse(sizeLine[0]);
-            var height = int.Parse(sizeLine[1]);
+            // each cell is represented in hex as RRGGBBRRGGBBCC where
+            // RRGGBB is the background color
+            // RRGGBB is the foreground color
+            // CC is the character
+            const int cellRepresentationLength = 14;
 
-            var colorLine = reader.ReadLine().Split(Delimiter);
-            var defaultBackground = AnsiColor.FromString(colorLine[0]);
-            var defaultForeground = AnsiColor.FromString(colorLine[1]);
+            var height = lines.Length;
+            var width = lines[0].Length / cellRepresentationLength;
 
-            var builder = new GridVisualBuilder(defaultBackground, defaultForeground);
+            var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             builder.Resize(new Size(width, height));
 
-            var base64Chars = reader.ReadLine();
-            var charBytes = Convert.FromBase64String(base64Chars);
-            var chars = Encoding.UTF8.GetChars(charBytes);
-
             for (var y = 0; y < height; y++)
             {
-                for (var x = 0; x < width; x++)
-                {
-                    builder.buffer[x, y] = chars[y * width + x];
-                }
-            }
-
-            for (var y = 0; y < height; y++)
-            {
-                var line = reader.ReadLine();
-
-                if (line == null)
-                    continue;
-
-                var colors = line.Split(Delimiter);
+                var line = lines[y];
 
                 for (var x = 0; x < width; x++)
                 {
-                    if (colors[x] != Null)
-                        builder.foregroundColors[x, y] = AnsiColor.FromString(colors[x]);
-                }
-            }
+                    var cellRepresentation = line.Substring(x * cellRepresentationLength, cellRepresentationLength);
 
-            for (var y = 0; y < height; y++)
-            {
-                var line = reader.ReadLine();
+                    var backgroundColorHex = cellRepresentation[..6];
+                    var foregroundColorHex = cellRepresentation[6..12];
+                    var characterHex = cellRepresentation[12..14];
 
-                if (line == null)
-                    continue;
+                    var backgroundColor = AnsiColor.FromString(backgroundColorHex);
+                    var foregroundColor = AnsiColor.FromString(foregroundColorHex);
+                    var character = (char)Convert.ToInt32(characterHex, 16);
 
-                var colors = line.Split(Delimiter);
-
-                for (var x = 0; x < width; x++)
-                {
-                    if (colors[x] != Null)
-                        builder.backgroundColors[x, y] = AnsiColor.FromString(colors[x]);
+                    builder.SetCell(x, y, character, foregroundColor, backgroundColor);
                 }
             }
 
             return builder;
+        }
+
+        #endregion
+
+        #region Overrides of Object
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            for (var y = 0; y < DisplaySize.Height; y++)
+            {
+                for (var x = 0; x < DisplaySize.Width; x++)
+                {
+                    builder.Append(GetCellBackgroundColor(x, y).ToString());
+                    builder.Append(GetCellForegroundColor(x, y).ToString());
+                    builder.Append($"{Convert.ToInt32(buffer[x, y]):X2}");
+                }
+
+                builder.Append(StringUtilities.Newline);
+            }
+
+            return builder.ToString();
         }
 
         #endregion
