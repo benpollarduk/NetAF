@@ -77,16 +77,6 @@ jobs:
     - name: Run tests with coverlet
       run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
-    - name: Publish applications
-      run: dotnet publish -c Release
-
-    - name: Tag the commit
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
-        git push --tags
-
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
       env:
@@ -99,6 +89,16 @@ jobs:
     - name: Push NuGet package (NuGet.org)
       run: |
         dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+
+    - name: Tag the commit
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
+        git push --tags
+
+    - name: Publish applications
+      run: dotnet publish -c Release
 
     - name: Build documentation
       continue-on-error: true
