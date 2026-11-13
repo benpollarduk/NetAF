@@ -124,6 +124,7 @@ jobs:
         git push --follow-tags https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git HEAD:main
 
     - name: Create GitHub release
+      id: create_release
       uses: actions/create-release@v1
       with:
         tag_name: "${{ inputs.ver }}"
@@ -151,3 +152,4 @@ jobs:
         asset_path: NetAF.Example.WPF\bin\Release\net10.0-windows\win-x64\publish\NetAF.Example.WPF.exe
         asset_name: NetAF.Example.WPF.exe
         asset_content_type: application/octet-stream
+
