@@ -72,7 +72,7 @@ jobs:
       run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj -p:EnableWindowsTargeting=true /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
     - name: Publish applications
-      run: dotnet publish -c Release
+      run: dotnet publish -c Release -p:EnableWindowsTargeting=true
 
     - name: Tag the commit
       run: |
