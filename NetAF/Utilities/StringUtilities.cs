@@ -140,7 +140,7 @@ namespace NetAF.Utilities
 
                 if (chunk.Length + word.Length > maxWidth)
                 {
-                    paragraph = word + " " + paragraph;
+                    paragraph = $"{word} {paragraph}";
                     break;
                 }
 

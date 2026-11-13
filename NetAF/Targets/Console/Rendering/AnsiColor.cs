@@ -182,15 +182,15 @@ namespace NetAF.Targets.Console.Rendering
         }
 
         /// <inheritdoc/>
-        public override readonly bool Equals(object obj)
-        {
-            return obj is AnsiColor color && Equals(color);
-        }
-
-        /// <inheritdoc/>
         public override readonly int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override readonly bool Equals(object obj)
+        {
+            return obj is AnsiColor color && Equals(color);
         }
 
         #endregion
