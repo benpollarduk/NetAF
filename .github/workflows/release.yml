@@ -20,7 +20,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
 
@@ -29,20 +29,20 @@ jobs:
       run: |
         echo "Access denied for user ${{ github.actor }}"
         exit 1
-    
+
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
        repository: benpollarduk/NetAF
        token: ${{ secrets.PAT }}
 
     - name: Setup environment
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
-      run: dotnet restore -p:EnableWindowsTargeting=true
+      run: dotnet restore
 
     - name: Install node.js
       uses: actions/setup-node@v4
@@ -53,26 +53,32 @@ jobs:
       run: dotnet tool update -g docfx
 
     - name: Update version and release notes in csproj file
+      shell: pwsh
       run: |
-        echo "Version: ${{ inputs.ver }}"
-        echo "Release notes: ${{ inputs.release-notes }}"
-        
+        Write-Host "Version: ${{ inputs.ver }}"
+        Write-Host "Release notes: ${{ inputs.release-notes }}"
+
+        $csproj = "NetAF/NetAF.csproj"
+        $content = Get-Content $csproj -Raw
+
         # update the .csproj file with the input version
-        sed -i "s/<Version>.*<\/Version>/<Version>${{ inputs.ver }}<\/Version>/" NetAF/NetAF.csproj
-        sed -i "s/<AssemblyVersion>.*<\/AssemblyVersion>/<AssemblyVersion>${{ inputs.ver }}.0<\/AssemblyVersion>/" NetAF/NetAF.csproj
-        sed -i "s/<FileVersion>.*<\/FileVersion>/<FileVersion>${{ inputs.ver }}<\/FileVersion>/" NetAF/NetAF.csproj
+        $content = $content -replace '<Version>.*?</Version>', '<Version>${{ inputs.ver }}</Version>'
+        $content = $content -replace '<AssemblyVersion>.*?</AssemblyVersion>', '<AssemblyVersion>${{ inputs.ver }}.0</AssemblyVersion>'
+        $content = $content -replace '<FileVersion>.*?</FileVersion>', '<FileVersion>${{ inputs.ver }}</FileVersion>'
 
         # update the .csproj file with the release notes
-        sed -i "s/<PackageReleaseNotes>.*<\/PackageReleaseNotes>/<PackageReleaseNotes>${{ inputs.release-notes }}<\/PackageReleaseNotes>/" NetAF/NetAF.csproj
+        $content = $content -replace '<PackageReleaseNotes>.*?</PackageReleaseNotes>', '<PackageReleaseNotes>${{ inputs.release-notes }}</PackageReleaseNotes>'
+
+        Set-Content $csproj $content
 
     - name: Build
-      run: dotnet build ./NetAF/NetAF.csproj -c Release -p:EnableWindowsTargeting=true
+      run: dotnet build ./NetAF/NetAF.csproj -c Release
 
     - name: Run tests with coverlet
-      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj -p:EnableWindowsTargeting=true /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
     - name: Publish applications
-      run: dotnet publish -c Release -p:EnableWindowsTargeting=true
+      run: dotnet publish -c Release
 
     - name: Tag the commit
       run: |
@@ -80,9 +86,9 @@ jobs:
         git config --local user.name "GitHub Action"
         git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
         git push --tags
-      
+
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -100,6 +106,7 @@ jobs:
 
     - name: Copy website files, commit and tag, then push changes to NetAF-docs
       continue-on-error: true
+      shell: bash
       run: |
         mkdir NetAF-docs
         cd NetAF-docs
@@ -116,31 +123,14 @@ jobs:
         git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
         git push --follow-tags https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git HEAD:main
 
-    - name: Create GitHub release
-      uses: actions/create-release@v1
+    - name: Create GitHub release and upload assets
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       with:
         tag_name: "${{ inputs.ver }}"
-        release_name: "${{ inputs.ver }}"
+        name: "${{ inputs.ver }}"
         body: "${{ inputs.release-notes }}"
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-
-    - name: Upload Console App to Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: NetAF.Example.Console\bin\Release\net10.0\win-x64\publish\NetAF.Example.Console.exe
-        asset_name: NetAF.Example.Console.exe
-        asset_content_type: application/octet-stream
-
-    - name: Upload WPF App to Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: NetAF.Example.WPF\bin\Release\net10.0-windows\win-x64\publish\NetAF.Example.WPF.exe
-        asset_name: NetAF.Example.WPF.exe
-        asset_content_type: application/octet-stream
+        files: |
+          NetAF.Example.Console/bin/Release/net10.0/win-x64/publish/NetAF.Example.Console.exe
+          NetAF.Example.WPF/bin/Release/net10.0-windows/win-x64/publish/NetAF.Example.WPF.exe
