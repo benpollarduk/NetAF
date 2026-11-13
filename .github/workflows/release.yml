@@ -72,10 +72,10 @@ jobs:
         Set-Content $csproj $content
 
     - name: Build
-      run: dotnet build ./NetAF/NetAF.csproj -c Release
+      run: dotnet build .\NetAF\NetAF.csproj -c Release
 
     - name: Run tests with coverlet
-      run: dotnet test ./NetAF.Tests/NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+      run: dotnet test .\NetAF.Tests\NetAF.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4
@@ -84,11 +84,11 @@ jobs:
 
     - name: Push NuGet package (GitHub)
       run: |
-        dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
+        dotnet nuget push .\NetAF\bin\Release\*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
     
     - name: Push NuGet package (NuGet.org)
       run: |
-        dotnet nuget push ./NetAF/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+        dotnet nuget push .\NetAF\bin\Release\*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
 
     - name: Tag the commit
       run: |
@@ -102,7 +102,7 @@ jobs:
 
     - name: Build documentation
       continue-on-error: true
-      run: docfx docs/docfx/docfx.json
+      run: docfx docs\docfx\docfx.json
 
     - name: Copy website files, commit and tag, then push changes to NetAF-docs
       continue-on-error: true
@@ -132,5 +132,5 @@ jobs:
         name: "${{ inputs.ver }}"
         body: "${{ inputs.release-notes }}"
         files: |
-          NetAF.Example.Console/bin/Release/net10.0/win-x64/publish/NetAF.Example.Console.exe
-          NetAF.Example.WPF/bin/Release/net10.0-windows/win-x64/publish/NetAF.Example.WPF.exe
+          NetAF.Example.Console\bin\Release\net10.0\win-x64\publish\NetAF.Example.Console.exe
+          NetAF.Example.WPF\bin\Release\net10.0-windows\win-x64\publish\NetAF.Example.WPF.exe
