@@ -82,6 +82,9 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+    - name: Publish applications
+      run: dotnet publish -c Release
+
     - name: Push NuGet package (GitHub)
       run: |
         dotnet nuget push .\NetAF\bin\Release\*.nupkg --api-key ${{ secrets.PAT }} --source https://nuget.pkg.github.com/benpollarduk/index.json
@@ -96,9 +99,6 @@ jobs:
         git config --local user.name "GitHub Action"
         git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
         git push --tags
-
-    - name: Publish applications
-      run: dotnet publish -c Release
 
     - name: Build documentation
       continue-on-error: true
