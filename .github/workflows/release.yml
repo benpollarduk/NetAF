@@ -123,14 +123,31 @@ jobs:
         git tag -a "${{ inputs.ver }}" -m "${{ inputs.ver }} tagged during GitHub action"
         git push --follow-tags https://${{ secrets.PAT }}@github.com/benpollarduk/NetAF-docs.git HEAD:main
 
-    - name: Create GitHub release and upload assets
-      uses: softprops/action-gh-release@v2
+    - name: Create GitHub release
+      uses: actions/create-release@v1
+      with:
+        tag_name: "${{ inputs.ver }}"
+        release_name: "${{ inputs.ver }}"
+        body: "${{ inputs.release-notes }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+
+    - name: Upload Console App to Release
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
       with:
-        tag_name: "${{ inputs.ver }}"
-        name: "${{ inputs.ver }}"
-        body: "${{ inputs.release-notes }}"
-        files: |
-          NetAF.Example.Console\bin\Release\net10.0\win-x64\publish\NetAF.Example.Console.exe
-          NetAF.Example.WPF\bin\Release\net10.0-windows\win-x64\publish\NetAF.Example.WPF.exe
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: NetAF.Example.Console\bin\Release\net10.0\win-x64\publish\NetAF.Example.Console.exe
+        asset_name: NetAF.Example.Console.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload WPF App to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: NetAF.Example.WPF\bin\Release\net10.0-windows\win-x64\publish\NetAF.Example.WPF.exe
+        asset_name: NetAF.Example.WPF.exe
+        asset_content_type: application/octet-stream
