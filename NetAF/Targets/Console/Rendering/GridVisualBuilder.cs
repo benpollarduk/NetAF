@@ -12,6 +12,15 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="foreground">The foreground color.</param>
     public sealed class GridVisualBuilder(AnsiColor background, AnsiColor foreground)
     {
+        #region Constants
+
+        /// <summary>
+        /// Delimiter character used to separate segments.
+        /// </summary>
+        private const char Delimiter = '-';
+
+        #endregion
+
         #region Fields
 
         private AnsiColor?[,] foregroundColors;
@@ -433,13 +442,13 @@ namespace NetAF.Targets.Console.Rendering
         /// RRGGBB is the background color,
         /// RRGGBB is the foreground color and
         /// CC is the character. 
-        /// Each line is terminated with StringUtilities.Newline.
+        /// Each line is terminated with '-'.
         /// </summary>
         /// <param name="data">The string representation of the GridVisualBuilder.</param>
         /// <returns>A new GridVisualBuilder instance.</returns>
         public static GridVisualBuilder FromString(string data)
         {
-            var lines = data.Split(StringUtilities.Newline, StringSplitOptions.RemoveEmptyEntries);
+            var lines = data.Split(Delimiter, StringSplitOptions.RemoveEmptyEntries);
 
             // each cell is represented in hex as RRGGBBRRGGBBCC where
             // RRGGBB is the background color
@@ -494,7 +503,8 @@ namespace NetAF.Targets.Console.Rendering
                     builder.Append($"{Convert.ToInt32(buffer[x, y]):X2}");
                 }
 
-                builder.Append(StringUtilities.Newline);
+                if (y < DisplaySize.Height - 1)
+                    builder.Append(Delimiter);
             }
 
             return builder.ToString();
