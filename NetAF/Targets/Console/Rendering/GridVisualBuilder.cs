@@ -438,10 +438,10 @@ namespace NetAF.Targets.Console.Rendering
 
         /// <summary>
         /// Creates a GridVisualBuilder from its string representation.
-        /// Each cell is represented in hex as RRGGBBRRGGBBCC where 
+        /// Each cell is represented in hex as RRGGBBRRGGBBCCCC where 
         /// RRGGBB is the background color,
         /// RRGGBB is the foreground color and
-        /// CC is the character. 
+        /// CCCC is the character. 
         /// Each line is terminated with '-'.
         /// </summary>
         /// <param name="data">The string representation of the GridVisualBuilder.</param>
@@ -450,11 +450,11 @@ namespace NetAF.Targets.Console.Rendering
         {
             var lines = data.Split(Delimiter, StringSplitOptions.RemoveEmptyEntries);
 
-            // each cell is represented in hex as RRGGBBRRGGBBCC where
+            // each cell is represented in hex as RRGGBBRRGGBBCCCC where
             // RRGGBB is the background color
             // RRGGBB is the foreground color
-            // CC is the character
-            const int cellRepresentationLength = 14;
+            // CCCC is the character
+            const int cellRepresentationLength = 16;
 
             var height = lines.Length;
             var width = lines[0].Length / cellRepresentationLength;
@@ -472,7 +472,7 @@ namespace NetAF.Targets.Console.Rendering
 
                     var backgroundColorHex = cellRepresentation[..6];
                     var foregroundColorHex = cellRepresentation[6..12];
-                    var characterHex = cellRepresentation[12..14];
+                    var characterHex = cellRepresentation[12..16];
 
                     var backgroundColor = AnsiColor.FromString(backgroundColorHex);
                     var foregroundColor = AnsiColor.FromString(foregroundColorHex);
@@ -500,7 +500,7 @@ namespace NetAF.Targets.Console.Rendering
                 {
                     builder.Append(GetCellBackgroundColor(x, y).ToString());
                     builder.Append(GetCellForegroundColor(x, y).ToString());
-                    builder.Append($"{Convert.ToInt32(buffer[x, y]):X2}");
+                    builder.Append($"{Convert.ToInt32(buffer[x, y]):X4}");
                 }
 
                 if (y < DisplaySize.Height - 1)
