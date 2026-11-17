@@ -71,7 +71,7 @@ namespace NetAF.Targets.Console
         {
             System.Console.Clear();
 
-            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            UpdatableFrameManager.ManageFrameTransition(frame, HandleFrameRender);
             HandleFrameRender(frame);
         }
 

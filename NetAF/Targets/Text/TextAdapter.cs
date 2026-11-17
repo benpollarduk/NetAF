@@ -129,7 +129,7 @@ namespace NetAF.Targets.Text
         /// <inheritdoc/>
         public void RenderFrame(IFrame frame)
         {
-            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            UpdatableFrameManager.ManageFrameTransition(frame, HandleFrameRender);
             HandleFrameRender(frame);
         }
 

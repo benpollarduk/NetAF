@@ -178,7 +178,7 @@ namespace NetAF.Targets.Html
         /// <inheritdoc/>
         public void RenderFrame(IFrame frame)
         {
-            UpdatableFrameManager.ManageFrameTransition(frame, RenderFrame);
+            UpdatableFrameManager.ManageFrameTransition(frame, HandleFrameRender);
             HandleFrameRender(frame);
         }
 
