@@ -1,5 +1,6 @@
 using NetAF.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,9 +10,7 @@ namespace NetAF.Targets.Console.Rendering
     /// <summary>
     /// Provides a grid based frame for displaying an animated visual.
     /// </summary>
-    /// <param name="frames">The frames.</param>
-    /// <param name="options">The animation options.</param>
-    public sealed class GridAnimatedVisualFrame(GridVisualFrame[] frames, AnimationOptions options) : IConsoleFrame, IUpdatableFrame
+    public sealed class GridAnimatedVisualFrame : IConsoleFrame, IUpdatableFrame
     {
         #region Fields
 
@@ -19,6 +18,7 @@ namespace NetAF.Targets.Console.Rendering
         private Timer timer;
         private TimerCallback timerCallback;
         private int cyclesCompleted = 0;
+        private List<AnsiCell[,]> backBuffers = [];
         private AnsiCell[,] backBuffer;
 
         #endregion
@@ -28,7 +28,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Gets the visual frames for the grid.
         /// </summary>
-        public GridVisualFrame[] Frames { get; } = frames;
+        public GridVisualFrame[] Frames { get; }
 
         /// <summary>
         /// Gets the current grid visual frame.
@@ -38,7 +38,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Get the options.
         /// </summary>
-        public AnimationOptions Options { get; } = options;
+        public AnimationOptions Options { get; }
 
         /// <summary>
         /// Gets the width.
@@ -49,6 +49,24 @@ namespace NetAF.Targets.Console.Rendering
         /// Gets the height.
         /// </summary>
         public int Height => Frames.Max(x => x.Height);
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the GridAnimatedVisualFrame class.
+        /// </summary>
+        /// <param name="frames">The frames.</param>
+        /// <param name="options">The animation options.</param>
+        public GridAnimatedVisualFrame(GridVisualFrame[] frames, AnimationOptions options)
+        {
+            Frames = frames;
+            Options = options;
+
+            foreach (var frame in Frames)
+                backBuffers.Add(CreateBuffer(frame));
+        }
 
         #endregion
 
@@ -120,8 +138,8 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
+            var currentBuffer = backBuffers[currentFrameIndex];
             var renderAll = backBuffer == null || backBuffer.Length != CurrentFrame.Width * CurrentFrame.Height;
-            var currentBuffer = CreateBuffer(CurrentFrame);
 
             if (renderAll)
             {
@@ -137,7 +155,7 @@ namespace NetAF.Targets.Console.Rendering
 
                 presenter.Present(Ansi.ANSI_HIDE_CURSOR);
 
-                static bool areCellsEqual(AnsiCell a, AnsiCell b) => a.Character == b.Character && a.Foreground == b.Foreground && a.Background == b.Background;
+                static bool areCellsEqual(AnsiCell a, AnsiCell b) => a.Character == b.Character && a.Foreground.Equals(b.Foreground) && a.Background.Equals(b.Background);
 
                 for (var y = 0; y < CurrentFrame.Height; y++)
                 {
@@ -183,11 +201,12 @@ namespace NetAF.Targets.Console.Rendering
         #region Implementation of IUpdatableFrame
 
         /// <inheritdoc/>
-        public event EventHandler<IFrame> Updated;
+        public event EventHandler<IUpdatableFrame> Updated;
 
         /// <inheritdoc/>
         public void Start()
         {
+            backBuffer = null;
             currentFrameIndex = 0;
             cyclesCompleted = 0;
 

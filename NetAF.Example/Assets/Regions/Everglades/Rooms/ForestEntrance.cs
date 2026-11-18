@@ -1,5 +1,6 @@
 using NetAF.Assets.Locations;
 using NetAF.Commands;
+using NetAF.Example.Assets.Regions.Everglades.Animations;
 using NetAF.Example.Assets.Regions.Everglades.Visuals;
 using NetAF.Logic.Modes;
 using NetAF.Utilities;
@@ -24,8 +25,8 @@ namespace NetAF.Example.Assets.Regions.Everglades.Rooms
             [
                 new(new("Look", "Look around the area."), true, true, (g, a) =>
                 {
-                    var visual = new ForestEntranceVisual().Instantiate();
-                    g.ChangeMode(new VisualMode(visual));
+                    var animation = new ForestEntranceAnimation().Instantiate();
+                    g.ChangeMode(new AnimationMode(animation));
                     return new(ReactionResult.GameModeChanged, string.Empty);
                 })
              ]);
