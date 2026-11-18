@@ -1,7 +1,6 @@
 ﻿using NetAF.Logic.Callbacks;
-using NetAF.Rendering;
 
-namespace NetAF.Logic
+namespace NetAF.Rendering
 {
     /// <summary>
     /// Provides a manager for updateable frames.

@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetAF.Logic;
 using NetAF.Rendering;
 using System;
 
-namespace NetAF.Tests.Logic
+namespace NetAF.Tests.Rendering
 {
     [TestClass]
     public class UpdatableFrameManager_Tests
