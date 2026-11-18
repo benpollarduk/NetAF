@@ -1,5 +1,6 @@
 using NetAF.Rendering;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -38,6 +39,16 @@ namespace NetAF.Targets.Console.Rendering
         /// Get the options.
         /// </summary>
         public AnimationOptions Options { get; } = options;
+
+        /// <summary>
+        /// Gets the width.
+        /// </summary>
+        public int Width => Frames.Max(x => x.Width);
+
+        /// <summary>
+        /// Gets the height.
+        /// </summary>
+        public int Height => Frames.Max(x => x.Height);
 
         #endregion
 
