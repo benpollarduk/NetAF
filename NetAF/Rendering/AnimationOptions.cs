@@ -1,4 +1,4 @@
-﻿namespace NetAF.Rendering.Animation
+﻿namespace NetAF.Rendering
 {
     /// <summary>
     /// Provides options for an animation.

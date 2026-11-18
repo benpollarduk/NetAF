@@ -1,5 +1,4 @@
 using NetAF.Rendering;
-using NetAF.Rendering.Animation;
 using System;
 using System.Text;
 using System.Threading;
@@ -23,8 +22,31 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the visual frames for the grid.
+        /// </summary>
+        public GridVisualFrame[] Frames { get; } = frames;
+
+        /// <summary>
+        /// Gets the current grid visual frame.
+        /// </summary>
+        public GridVisualFrame CurrentFrame => Frames[currentFrameIndex];
+
+        /// <summary>
+        /// Get the options.
+        /// </summary>
+        public AnimationOptions Options { get; } = options;
+
+        #endregion
+
         #region Methods
 
+        /// <summary>
+        /// Update the frame.
+        /// </summary>
+        /// <param name="state">An object representing state.</param>
         private void UpdateFrame(object state)
         {
             var isAtEnd = currentFrameIndex == Frames.Length - 1;
@@ -44,32 +66,6 @@ namespace NetAF.Targets.Console.Rendering
             if (isAtEnd && Options.Cycles != AnimationOptions.Forever && cyclesCompleted >= Options.Cycles)
                 Stop();
         }
-
-        #endregion
-
-
-        #region Fields
-
-        private GridVisualFrame currentFrame;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the visual frames for the grid.
-        /// </summary>
-        public GridVisualFrame[] Frames { get; } = frames;
-
-        /// <summary>
-        /// Gets the current grid visual frame.
-        /// </summary>
-        public GridVisualFrame CurrentFrame => currentFrame ?? Frames[0];
-
-        /// <summary>
-        /// Get the options.
-        /// </summary>
-        public AnimationOptions Options { get; } = options;
 
         #endregion
 
@@ -97,7 +93,7 @@ namespace NetAF.Targets.Console.Rendering
         public int CursorTop => CurrentFrame.CursorTop;
 
         /// <inheritdoc/>
-        public bool ShowCursor 
+        public bool ShowCursor
         {
             get { return CurrentFrame.ShowCursor; }
             set
@@ -136,13 +132,13 @@ namespace NetAF.Targets.Console.Rendering
                 {
                     for (var x = 0; x < CurrentFrame.Width; x++)
                     {
-                        if (!areCellsEqual(backBuffer[x ,y], currentBuffer[x, y]))
+                        if (!areCellsEqual(backBuffer[x, y], currentBuffer[x, y]))
                         {
                             var cell = currentBuffer[x, y];
 
                             // set position
                             stringBuilder.Append(Ansi.GetAnsiCursorPositionEscapeSequence(x, y));
-        
+
                             // set background
                             stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(suppressColor ? AnsiColor.Black : cell.Background));
 
@@ -183,6 +179,9 @@ namespace NetAF.Targets.Console.Rendering
         {
             currentFrameIndex = 0;
             cyclesCompleted = 0;
+
+            if (Frames.Length < 2)
+                return;
 
             var frequency = (int)TimeSpan.FromSeconds(1d / Options.FramesPerSecond).TotalMilliseconds;
             timerCallback = new TimerCallback(UpdateFrame);

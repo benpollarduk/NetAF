@@ -11,11 +11,11 @@ namespace NetAF.Tests.Targets.Console.Rendering
         [TestMethod]
         public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
         {
-            var gridPictureBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
-            gridPictureBuilder.Resize(new(10, 10));
-            gridPictureBuilder.SetCell(0, 0, 'C', AnsiColor.Black, AnsiColor.Green);
-            gridPictureBuilder.SetCell(1, 0, 'D', AnsiColor.Green, AnsiColor.Black);
-            var frame = new GridVisualFrame(gridPictureBuilder);
+            var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            gridVisualBuilder.Resize(new(10, 10));
+            gridVisualBuilder.SetCell(0, 0, 'C', AnsiColor.Black, AnsiColor.Green);
+            gridVisualBuilder.SetCell(1, 0, 'D', AnsiColor.Green, AnsiColor.Black);
+            var frame = new GridVisualFrame(gridVisualBuilder);
             byte[] data;
 
             using (var stream = new MemoryStream())
@@ -33,10 +33,10 @@ namespace NetAF.Tests.Targets.Console.Rendering
         [TestMethod]
         public void Given1x1Grid_WhenGetCell_ThenReturnExpected()
         {
-            var gridPictureBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
-            gridPictureBuilder.Resize(new(1, 1));
-            gridPictureBuilder.SetCell(0, 0, 'c', AnsiColor.Black, AnsiColor.Green);
-            var frame = new GridVisualFrame(gridPictureBuilder);
+            var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            gridVisualBuilder.Resize(new(1, 1));
+            gridVisualBuilder.SetCell(0, 0, 'c', AnsiColor.Black, AnsiColor.Green);
+            var frame = new GridVisualFrame(gridVisualBuilder);
 
             var result = frame.GetCell(0, 0);
 

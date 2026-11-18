@@ -1,0 +1,51 @@
+﻿using System;
+using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetAF.Rendering;
+using NetAF.Targets.Console.Rendering;
+
+namespace NetAF.Tests.Targets.Console.Rendering
+{
+    [TestClass]
+    public class GridAnimatedVisualFrame_Tests
+    {
+        [TestMethod]
+        public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
+        {
+            var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            gridVisualBuilder.Resize(new(10, 10));
+            gridVisualBuilder.SetCell(0, 0, 'C', AnsiColor.Black, AnsiColor.Green);
+            gridVisualBuilder.SetCell(1, 0, 'D', AnsiColor.Green, AnsiColor.Black);
+            var frame = new GridVisualFrame(gridVisualBuilder);
+            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
+            byte[] data;
+
+            using (var stream = new MemoryStream())
+            {
+                using var writer = new StreamWriter(stream);
+                var presenter = new TextWriterPresenter(writer, new(80, 50));
+                animatedVisualFrame.Render(presenter);
+                writer.Flush();
+                data = stream.ToArray();
+            }
+
+            Assert.IsTrue(Array.Exists(data, x => x != 0));
+        }
+
+        [TestMethod]
+        public void Given1x1Grid_WhenGetCell_ThenReturnExpected()
+        {
+            var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
+            gridVisualBuilder.Resize(new(1, 1));
+            gridVisualBuilder.SetCell(0, 0, 'c', AnsiColor.Black, AnsiColor.Green);
+            var frame = new GridVisualFrame(gridVisualBuilder);
+            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
+
+            var result = animatedVisualFrame.GetCell(0, 0);
+
+            Assert.AreEqual('c', result.Character);
+            Assert.AreEqual(AnsiColor.Black, result.Foreground);
+            Assert.AreEqual(AnsiColor.Green, result.Background);
+        }
+    }
+}
