@@ -13,14 +13,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.Crop(new Size(5, 5));
 
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(5, result.Width);
+            Assert.AreEqual(5, result.Height);
         }
 
         [TestMethod]
@@ -28,14 +26,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.Crop(new Size(15, 15));
 
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(10, result.Width);
+            Assert.AreEqual(10, result.Height);
         }
 
         [TestMethod]
@@ -43,14 +39,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.Scale(new Size(5, 5));
 
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(5, result.Width);
+            Assert.AreEqual(5, result.Height);
         }
 
         [TestMethod]
@@ -58,14 +52,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.Scale(new Size(15, 15));
 
-            Assert.AreEqual(15, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(15, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(15, result.Width);
+            Assert.AreEqual(15, result.Height);
         }
 
         [TestMethod]
@@ -73,14 +65,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.ResizeIfNeeded(new Size(15, 15), VisualResizeMode.Scale);
 
-            Assert.AreEqual(15, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(15, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(15, result.Width);
+            Assert.AreEqual(15, result.Height);
         }
 
         [TestMethod]
@@ -88,14 +78,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.ResizeIfNeeded(new Size(5, 5), VisualResizeMode.Crop);
 
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(5, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(5, result.Width);
+            Assert.AreEqual(5, result.Height);
         }
 
         [TestMethod]
@@ -103,14 +91,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(10, 10));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.ResizeIfNeeded(new Size(15, 15), VisualResizeMode.ScaleDown);
 
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(10, result.Width);
+            Assert.AreEqual(10, result.Height);
         }
 
         [TestMethod]
@@ -118,14 +104,12 @@ namespace NetAF.Tests.Rendering
         {
             var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Blue);
             builder.Resize(new Size(15, 15));
-            var frame = new GridVisualFrame(builder);
-            var animatedVisualFrame = new GridAnimatedVisualFrame([frame], AnimationOptions.Single);
-            var value = new Animation(string.Empty, string.Empty, animatedVisualFrame);
+            var value = new Animation(string.Empty, string.Empty, [builder], AnimationOptions.Single);
 
             var result = value.ResizeIfNeeded(new Size(10, 10), VisualResizeMode.ScaleDown);
 
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Width);
-            Assert.AreEqual(10, result.AnimationVisualFrame.Frames[0].Height);
+            Assert.AreEqual(10, result.Width);
+            Assert.AreEqual(10, result.Height);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Animation("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -38,7 +38,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Animation("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -54,7 +54,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Animation("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -70,7 +70,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering.FrameBuilders
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Animation("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
     }

@@ -45,7 +45,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 usedLines += 2;
             }
 
-            if (animation.VisualBuilder != null)
+            if (animation.VisualBuilders?.Length > 0)
             {
                 // determine the render size
                 var renderSize = new Size(size.Width, size.Height - usedLines);
@@ -53,7 +53,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 // check if resize of the animation is needed
                 animation = animation.ResizeIfNeeded(renderSize, ResizeMode);
 
-                builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(animation.VisualBuilder));
+                builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(animation.VisualBuilders[0]));
             }
 
             return new MarkupFrame(builder);

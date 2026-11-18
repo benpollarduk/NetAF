@@ -45,7 +45,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 usedLines += 2;
             }
 
-            if (animation.VisualBuilder != null)
+            if (animation.VisualBuilders?.Length > 0)
             {
                 // determine the render size
                 var renderSize = new Size(size.Width, size.Height - usedLines);
@@ -53,7 +53,7 @@ namespace NetAF.Targets.Html.Rendering.FrameBuilders
                 // check if resize of the animation is needed
                 animation = animation.ResizeIfNeeded(renderSize, ResizeMode);
 
-                builder.Raw(HtmlAdapter.ConvertGridVisualBuilderToHtmlString(animation.VisualBuilder));
+                builder.Raw(HtmlAdapter.ConvertGridVisualBuilderToHtmlString(animation.VisualBuilders[0]));
             }
 
             return new HtmlFrame(builder);

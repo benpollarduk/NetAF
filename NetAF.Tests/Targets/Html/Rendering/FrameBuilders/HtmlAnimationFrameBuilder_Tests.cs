@@ -16,13 +16,13 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlVisualFrameBuilder(htmlBuilder);
+                var builder = new HtmlAnimationFrameBuilder(htmlBuilder);
                 var designSize = new Size(100, 100);
                 var size = new Size(80, 50);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Visual("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -32,13 +32,13 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlVisualFrameBuilder(htmlBuilder, VisualResizeMode.Scale);
+                var builder = new HtmlAnimationFrameBuilder(htmlBuilder, VisualResizeMode.Scale);
                 var size = new Size(80, 50);
                 var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Visual("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -48,13 +48,13 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlVisualFrameBuilder(htmlBuilder, VisualResizeMode.ScaleDown);
+                var builder = new HtmlAnimationFrameBuilder(htmlBuilder, VisualResizeMode.ScaleDown);
                 var size = new Size(80, 50);
                 var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Visual("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
 
@@ -64,13 +64,13 @@ namespace NetAF.Tests.Targets.Html.Rendering.FrameBuilders
             Assertions.NoExceptionThrown(() =>
             {
                 var htmlBuilder = new HtmlBuilder();
-                var builder = new HtmlVisualFrameBuilder(htmlBuilder, VisualResizeMode.Crop);
+                var builder = new HtmlAnimationFrameBuilder(htmlBuilder, VisualResizeMode.Crop);
                 var size = new Size(80, 50);
                 var designSize = new Size(100, 100);
                 var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 gridVisualBuilder.Resize(designSize);
 
-                builder.Build(new Visual("Title", "Description", gridVisualBuilder), size);
+                builder.Build(new Animation("Title", "Description", [gridVisualBuilder], AnimationOptions.Single), size);
             });
         }
     }

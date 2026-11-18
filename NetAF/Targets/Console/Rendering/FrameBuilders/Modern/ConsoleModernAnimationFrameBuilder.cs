@@ -4,6 +4,7 @@ using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
 using NetAF.Targets.Console.Rendering.FrameBuilders.Legacy;
 using System;
+using System.Collections.Generic;
 
 namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
 {
@@ -47,19 +48,25 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Modern
             if (!string.IsNullOrEmpty(animation.Description))
                 gridStringBuilder.DrawWrapped(animation.Description.EnsureFinishedSentence(), xMargin, lastY + 3, constrainedWidth, properties.MainTextColor, out _, out lastY);
 
-            GridVisualBuilder finalBuilder = new(properties.BackgroundColor, properties.TitleColor);
-            finalBuilder.Resize(size);
+            List<GridVisualFrame> frames = [];
 
-            // check if resize of the animation is needed
-            animation = animation.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
+            foreach (var visualBuilder in animation.VisualBuilders)
+            {
+                GridVisualBuilder finalBuilder = new(properties.BackgroundColor, properties.TitleColor);
+                finalBuilder.Resize(size);
 
-            var xOffset = Math.Max(xMargin, size.Width / 2 - animation.AnimationVisualFrame.Width / 2);
-            var yOffset = Math.Max(lastY, size.Height / 2 - animation.AnimationVisualFrame.Height / 2);
+                // check if resize of the animation is needed
+                animation = animation.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
 
-            finalBuilder.Overlay(0, 0, gridStringBuilder);
-            finalBuilder.Overlay(xOffset, yOffset, animation.VisualBuilder);
+                var xOffset = Math.Max(xMargin, size.Width / 2 - animation.Width / 2);
+                var yOffset = Math.Max(lastY, size.Height / 2 - animation.Height / 2);
 
-            return new GridVisualFrame(finalBuilder) { ShowCursor = false };
+                finalBuilder.Overlay(0, 0, gridStringBuilder);
+                finalBuilder.Overlay(xOffset, yOffset, visualBuilder);
+                frames.Add(new GridVisualFrame(finalBuilder) { ShowCursor = false });
+            }
+
+            return new GridAnimatedVisualFrame([.. frames], animation.Options) { ShowCursor = false };
         }
 
         #endregion

@@ -54,8 +54,8 @@ namespace NetAF.Targets.Console.Rendering.FrameBuilders.Legacy
             // check if resize of the visual is needed
             visual = visual.ResizeIfNeeded(new Size(availableWidth, size.Height - lastY - 2), ResizeMode);
 
-            var xOffset = Math.Max(xMargin, size.Width / 2 - visual.VisualBuilder.DisplaySize.Width / 2);
-            var yOffset = Math.Max(lastY, size.Height / 2 - visual.VisualBuilder.DisplaySize.Height / 2);
+            var xOffset = Math.Max(xMargin, size.Width / 2 - visual.Width / 2);
+            var yOffset = Math.Max(lastY, size.Height / 2 - visual.Height / 2);
 
             finalBuilder.Overlay(0, 0, gridStringBuilder);
             finalBuilder.Overlay(xOffset, yOffset, visual.VisualBuilder);

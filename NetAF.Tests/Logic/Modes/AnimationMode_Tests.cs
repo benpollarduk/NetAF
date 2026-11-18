@@ -25,7 +25,7 @@ namespace NetAF.Tests.Logic.Modes
                 var game = Game.Create(new(string.Empty, string.Empty, string.Empty), string.Empty, AssetGenerator.Retained(overworldMaker.Make(), new PlayableCharacter(string.Empty, string.Empty)), GameEndConditions.NoEnd, TestGameConfiguration.Default).Invoke();
                 var builder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.Yellow);
                 builder.Resize(new Size(80, 50));
-                var animation = new Animation("Test", "Test", new GridAnimatedVisualFrame([new GridVisualFrame(builder)], AnimationOptions.Single));
+                var animation = new Animation("Test", "Test", [builder], AnimationOptions.Single);
 
                 var mode = new AnimationMode(animation);
 

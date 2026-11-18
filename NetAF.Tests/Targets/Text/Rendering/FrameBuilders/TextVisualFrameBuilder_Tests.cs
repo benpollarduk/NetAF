@@ -8,7 +8,7 @@ using System.Text;
 namespace NetAF.Tests.Targets.Text.Rendering.FrameBuilders
 {
     [TestClass]
-    public class MarkupVisualFrameBuilder_Tests
+    public class TextVisualFrameBuilder_Tests
     {
         [TestMethod]
         public void GivenDefaults_WhenBuild_ThenNoException()

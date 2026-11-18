@@ -46,7 +46,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
                 usedLines += 2;
             }
 
-            if (animation.VisualBuilder != null)
+            if (animation.VisualBuilders?.Length > 0)
             {
                 // determine the render size
                 var renderSize = new Size(size.Width, size.Height - usedLines);
@@ -54,7 +54,7 @@ namespace NetAF.Targets.Text.Rendering.FrameBuilders
                 // check if resize of the animation is needed
                 animation = animation.ResizeIfNeeded(renderSize, ResizeMode);
 
-                builder.Append(TextAdapter.ConvertGridVisualBuilderToString(animation.VisualBuilder));
+                builder.Append(TextAdapter.ConvertGridVisualBuilderToString(animation.VisualBuilders[0]));
             }
 
             return new TextFrame(builder);
