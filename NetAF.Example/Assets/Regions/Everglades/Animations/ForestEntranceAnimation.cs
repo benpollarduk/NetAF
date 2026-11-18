@@ -36,16 +36,16 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
 
         #region StaticMethods
 
-        private static void DrawSun(GridVisualBuilder builder)
+        private static void DrawSun(GridVisualBuilder builder, AnsiColor color)
         {
-            builder.SetCell(8, 5, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(4, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(5, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(11, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(12, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(8, 9, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.DrawRectangle(6, 6, 5, 3, SunIntensityVarier.Vary(AnsiColor.BrightYellow), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(8, 5, SunIntensityVarier.Vary(color));
+            builder.SetCell(4, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(5, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(11, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(12, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(8, 9, SunIntensityVarier.Vary(color));
+            builder.DrawRectangle(6, 6, 5, 3, SunIntensityVarier.Vary(color), SunIntensityVarier.Vary(color));
+            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), SunIntensityVarier.Vary(color));
         }
 
         private static void DrawGrass(GridVisualBuilder builder)
@@ -95,7 +95,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
         {
             var builder1 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
             builder1.Resize(DesignSize);
-            DrawSun(builder1);
+            DrawSun(builder1, AnsiColor.BrightYellow);
             DrawGrass(builder1);
             DrawPath(builder1);
             DrawTree1(builder1, 5, 15);
@@ -112,6 +112,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
 
             var builder2 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
             builder2.Resize(DesignSize);
+            DrawSun(builder2, AnsiColor.Yellow);
             DrawGrass(builder2);
             DrawPath(builder2);
             DrawTree1(builder2, 5, 15);

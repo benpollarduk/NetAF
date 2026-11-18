@@ -163,6 +163,7 @@ namespace NetAF.Targets.Console.Rendering
                     {
                         if (!areCellsEqual(backBuffer[x, y], currentBuffer[x, y]))
                         {
+                            // get cell from buffer
                             var cell = currentBuffer[x, y];
 
                             // set position
@@ -175,7 +176,7 @@ namespace NetAF.Targets.Console.Rendering
                             stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(suppressColor ? AnsiColor.White : cell.Foreground));
 
                             // set character
-                            stringBuilder.Append(cell.Character);
+                            stringBuilder.Append(cell.Character == 0 ? ' ' : cell.Character);
                         }
                     }
                 }
@@ -201,7 +202,7 @@ namespace NetAF.Targets.Console.Rendering
         #region Implementation of IUpdatableFrame
 
         /// <inheritdoc/>
-        public event EventHandler<IUpdatableFrame> Updated;
+        public event EventHandler<IFrame> Updated;
 
         /// <inheritdoc/>
         public void Start()
