@@ -65,12 +65,13 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
+            var stringBuilder = new StringBuilder();
             var suppressColor = Ansi.IsColorSuppressed();
 
             if (!suppressColor)
-                presenter.Present(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
+                stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
 
-            presenter.Present(Ansi.ANSI_HIDE_CURSOR);
+            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
@@ -81,21 +82,23 @@ namespace NetAF.Targets.Console.Rendering
                     if (cell.Character != 0)
                     {
                         if (!suppressColor)
-                            presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
+                            stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
 
-                        presenter.Present(cell.Character.ToString());
+                        stringBuilder.Append(cell.Character);
                     }
                     else
                     { 
-                        presenter.Present(" ");
+                        stringBuilder.Append(' ');
                     }
                 }
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Present(builder.LineTerminator.ToString());
+                    stringBuilder.Append(builder.LineTerminator);
             }
 
-            presenter.Present(Ansi.ANSI_SHOW_CURSOR);
+            stringBuilder.Append(Ansi.ANSI_SHOW_CURSOR);
+
+            presenter.Present(stringBuilder.ToString());
         }
 
         #endregion

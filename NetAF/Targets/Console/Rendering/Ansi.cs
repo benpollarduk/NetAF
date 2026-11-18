@@ -87,6 +87,17 @@ namespace NetAF.Targets.Console.Rendering
             return $"\u001b[48;2;{r};{g};{b}m";
         }
 
+        /// <summary>
+        /// Get an ANSI escape sequence for a cursor position.
+        /// </summary>
+        /// <param name="x">The cursor x position.</param>
+        /// <param name="y">The cursor y position.</param>
+        /// <returns>The ANSI escape sequence.</returns>
+        public static string GetAnsiCursorPositionEscapeSequence(int x, int y)
+        {
+            return $"\u001b[{y + 1};{x + 1}H";
+        }
+
         #endregion
     }
 }
