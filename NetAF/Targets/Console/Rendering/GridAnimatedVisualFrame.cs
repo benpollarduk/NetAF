@@ -16,9 +16,8 @@ namespace NetAF.Targets.Console.Rendering
 
         private int currentFrameIndex = 0;
         private Timer timer;
-        private TimerCallback timerCallback;
         private int cyclesCompleted = 0;
-        private List<AnsiCell[,]> backBuffers = [];
+        private readonly List<AnsiCell[,]> backBuffers = [];
         private AnsiCell[,] backBuffer;
 
         #endregion
@@ -111,29 +110,24 @@ namespace NetAF.Targets.Console.Rendering
             return buffer;
         }
 
+        private static void AppendCell(StringBuilder stringBuilder, AnsiCell cell, int x, int y, bool suppressColor)
+        {
+            // set position
+            stringBuilder.Append(Ansi.GetAnsiCursorPositionEscapeSequence(x, y));
+
+            // set background
+            stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(suppressColor ? AnsiColor.Black : cell.Background));
+
+            // set foreground
+            stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(suppressColor ? AnsiColor.White : cell.Foreground));
+
+            // set character
+            stringBuilder.Append(cell.Character == 0 ? ' ' : cell.Character);
+        }
+
         #endregion
 
         #region Implementation of IFrame
-
-        /// <inheritdoc/>
-        public int CursorLeft => CurrentFrame.CursorLeft;
-
-        /// <inheritdoc/>
-        public int CursorTop => CurrentFrame.CursorTop;
-
-        /// <inheritdoc/>
-        public bool ShowCursor
-        {
-            get { return CurrentFrame.ShowCursor; }
-            set
-            {
-                foreach (var frame in Frames)
-                    frame.ShowCursor = value;
-            }
-        }
-
-        ///  <inheritdoc/>
-        public AnsiColor InputColor => CurrentFrame.InputColor;
 
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
@@ -158,34 +152,39 @@ namespace NetAF.Targets.Console.Rendering
                 static bool areCellsEqual(AnsiCell a, AnsiCell b) => a.Character == b.Character && a.Foreground.Equals(b.Foreground) && a.Background.Equals(b.Background);
 
                 for (var y = 0; y < CurrentFrame.Height; y++)
-                {
                     for (var x = 0; x < CurrentFrame.Width; x++)
-                    {
                         if (!areCellsEqual(backBuffer[x, y], currentBuffer[x, y]))
-                        {
-                            // get cell from buffer
-                            var cell = currentBuffer[x, y];
-
-                            // set position
-                            stringBuilder.Append(Ansi.GetAnsiCursorPositionEscapeSequence(x, y));
-
-                            // set background
-                            stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(suppressColor ? AnsiColor.Black : cell.Background));
-
-                            // set foreground
-                            stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(suppressColor ? AnsiColor.White : cell.Foreground));
-
-                            // set character
-                            stringBuilder.Append(cell.Character == 0 ? ' ' : cell.Character);
-                        }
-                    }
-                }
+                            AppendCell(stringBuilder, currentBuffer[x, y], x, y, suppressColor);
 
                 presenter.Present(stringBuilder.ToString());
             }
 
             backBuffer = currentBuffer;
         }
+
+        #endregion
+
+        #region Implementation of IConsoleFrame
+
+        /// <inheritdoc/>
+        public int CursorLeft => CurrentFrame.CursorLeft;
+
+        /// <inheritdoc/>
+        public int CursorTop => CurrentFrame.CursorTop;
+
+        /// <inheritdoc/>
+        public bool ShowCursor
+        {
+            get { return CurrentFrame.ShowCursor; }
+            set
+            {
+                foreach (var frame in Frames)
+                    frame.ShowCursor = value;
+            }
+        }
+
+        ///  <inheritdoc/>
+        public AnsiColor InputColor => CurrentFrame.InputColor;
 
         #endregion
 
@@ -215,8 +214,7 @@ namespace NetAF.Targets.Console.Rendering
                 return;
 
             var frequency = (int)TimeSpan.FromSeconds(1d / Options.FramesPerSecond).TotalMilliseconds;
-            timerCallback = new TimerCallback(UpdateFrame);
-            timer = new Timer(timerCallback, null, frequency, frequency);
+            timer = new Timer(UpdateFrame, null, frequency, frequency);
         }
 
         /// <inheritdoc/>

@@ -1,6 +1,8 @@
 using NetAF.Assets;
 using NetAF.Rendering;
 using NetAF.Rendering.FrameBuilders;
+using System;
+using System.Collections.Generic;
 
 namespace NetAF.Targets.Markup.Rendering.FrameBuilders
 {
@@ -25,38 +27,60 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
         /// <inheritdoc/>
         public IFrame Build(Animation animation, Size size)
         {
-            builder.Clear();
+            List<string> frames = [];
 
-            var usedLines = 0;
-
-            if (!string.IsNullOrEmpty(animation.Name))
+            int renderNonAnimationContent()
             {
-                builder.Heading(animation.Name, HeadingLevel.H1);
-                builder.Newline();
+                builder.Clear();
 
-                usedLines += 2;
+                var usedLines = 0;
+
+                if (!string.IsNullOrEmpty(animation.Name))
+                {
+                    builder.Heading(animation.Name, HeadingLevel.H1);
+                    builder.Newline();
+
+                    usedLines += 2;
+                }
+
+                if (!string.IsNullOrEmpty(animation.Description))
+                {
+                    builder.WriteLine(animation.Description);
+                    builder.Newline();
+
+                    usedLines += 2;
+                }
+
+                return usedLines;
             }
 
-            if (!string.IsNullOrEmpty(animation.Description))
+            if (animation?.VisualBuilders?.Length > 0)
             {
-                builder.WriteLine(animation.Description);
-                builder.Newline();
+                foreach (var visualBuilder in animation.VisualBuilders)
+                {
+                    var usedLines = renderNonAnimationContent();
 
-                usedLines += 2;
+                    if (animation.VisualBuilders?.Length > 0)
+                    {
+                        // determine the render size
+                        var renderSize = new Size(size.Width, size.Height - usedLines);
+
+                        // check if resize of the animation is needed
+                        animation = animation.ResizeIfNeeded(renderSize, ResizeMode);
+
+                        builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(visualBuilder));
+                    }
+
+                    frames.Add(builder.ToString());
+                }
+            }
+            else
+            {
+                renderNonAnimationContent();
+                frames.Add(builder.ToString());
             }
 
-            if (animation.VisualBuilders?.Length > 0)
-            {
-                // determine the render size
-                var renderSize = new Size(size.Width, size.Height - usedLines);
-
-                // check if resize of the animation is needed
-                animation = animation.ResizeIfNeeded(renderSize, ResizeMode);
-
-                builder.Raw(MarkupAdapter.ConvertGridVisualBuilderToMarkupString(animation.VisualBuilders[0]));
-            }
-
-            return new MarkupFrame(builder);
+            return new FixedRateUpdatableFrame([.. frames], size, (int)TimeSpan.FromSeconds(1d / animation.Options.FramesPerSecond).TotalMilliseconds, animation.Options.Cycles);
         }
 
         #endregion

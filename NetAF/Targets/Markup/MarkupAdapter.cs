@@ -148,7 +148,7 @@ namespace NetAF.Targets.Markup
         #region Implementation of IIOAdapter
 
         /// <inheritdoc/>
-        public Size CurrentOutputSize => presenter.GetPresentableSize();
+        public Size CurrentOutputSize => new Size(50, 80); // presenter.GetPresentableSize();
 
         /// <inheritdoc/>
         public void Setup(Game game)
