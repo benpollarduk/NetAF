@@ -11,7 +11,7 @@ namespace NetAF.Rendering
     /// <param name="size">The size of the frames.</param>
     /// <param name="displayTimeInMs">The display time of each frame, in milliseconds.</param>
     /// <param name="cycles">The number of times to cycle the frames. For forever, use AnimationOptions.Forever.</param>
-    public class FixedRateUpdatableFrame(string[] frames, Size size, int displayTimeInMs, int cycles = AnimationOptions.Forever) : IFrame, IUpdatableFrame
+    public class FixedRateUpdatableFrame(string[] frames, Size size, int displayTimeInMs, int cycles = AnimationOptions.Forever) : IUpdatableFrame
     {
         #region Fields
 

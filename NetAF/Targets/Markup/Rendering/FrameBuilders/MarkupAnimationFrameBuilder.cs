@@ -54,7 +54,7 @@ namespace NetAF.Targets.Markup.Rendering.FrameBuilders
                 return usedLines;
             }
 
-            if (animation?.VisualBuilders?.Length > 0)
+            if (animation.VisualBuilders?.Length > 0)
             {
                 foreach (var visualBuilder in animation.VisualBuilders)
                 {
