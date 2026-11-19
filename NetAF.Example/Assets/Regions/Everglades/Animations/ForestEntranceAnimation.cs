@@ -26,11 +26,11 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
         public static readonly AnsiColor Path = new(130, 20, 20);
         public static readonly AnsiColor PathHighlights = new(130, 130, 130);
         private static readonly Size DesignSize = new(76, 46);
-        private static readonly IVariationGenerator TreeCanopyIntensityVarier = new ColorVariationGenerator(25, 25, 25, 25, 25, 25);
-        private static readonly IVariationGenerator TreeTrunkIntensityVarier = new IntensityVariationGenerator(20, 10);
-        private static readonly IVariationGenerator GrassIntensityVarier = new ColorVariationGenerator(5, 5, 25, 25, 5, 5);
-        private static readonly IVariationGenerator PathIntensityVarier = new IntensityVariationGenerator(15, 0);
-        private static readonly IVariationGenerator SunIntensityVarier = new IntensityVariationGenerator(7, 7);
+        private static readonly ColorVariationGenerator TreeCanopyIntensityVarier = new ColorVariationGenerator(25, 25, 25, 25, 25, 25);
+        private static readonly IntensityVariationGenerator TreeTrunkIntensityVarier = new IntensityVariationGenerator(20, 10);
+        private static readonly ColorVariationGenerator GrassIntensityVarier = new ColorVariationGenerator(5, 5, 25, 25, 5, 5);
+        private static readonly IntensityVariationGenerator PathIntensityVarier = new IntensityVariationGenerator(15, 0);
+        private static readonly IntensityVariationGenerator SunIntensityVarier = new IntensityVariationGenerator(7, 7);
 
         #endregion
 
@@ -93,9 +93,12 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
         /// <inheritdoc/>
         public Animation Instantiate()
         {
+            AnsiColor sun1 = new AnsiColor(220, 220, 0);
+            AnsiColor sun2 = new AnsiColor(255, 255, 0);
+
             var builder1 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
             builder1.Resize(DesignSize);
-            DrawSun(builder1, AnsiColor.BrightYellow);
+            DrawSun(builder1, sun1);
             DrawGrass(builder1);
             DrawPath(builder1);
             DrawTree1(builder1, 5, 15);
@@ -112,7 +115,7 @@ namespace NetAF.Example.Assets.Regions.Everglades.Animations
 
             var builder2 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
             builder2.Resize(DesignSize);
-            DrawSun(builder2, AnsiColor.Yellow);
+            DrawSun(builder2, sun2);
             DrawGrass(builder2);
             DrawPath(builder2);
             DrawTree1(builder2, 5, 15);

@@ -85,3 +85,32 @@ var frame = VisualHelper.CreateFrame(@"C:\TestImage.jpg", displaySize, CellAspec
 The texturized image looks like this:
 
 ![Tree-With-Texture](~/images/visuals-tree-with-texture.png)
+
+
+## Converting Images Online
+The [online tool](https://benpollarduk.github.io/NetAF.Imaging/) can be used to create and serialize images. These can then be directly loaded into code:
+
+```csharp
+var frame = new GridVisualFrame(GridVisualBuilder.FromString("serialised-image"));
+```
+
+## Animations
+Multiple images can be converted into an animation:
+
+```csharp
+var size = new Size(10, 10);
+
+var image1 = new GridVisualBuilder(AnsiColor.Black, AnsiColor.BrightWhite);
+var image2 = new GridVisualBuilder(AnsiColor.BrightWhite, AnsiColor.Black);
+
+builder1.Resize(size);
+builder1.Resize(size);
+
+var animation = new Animation(Name, string.Empty, [image1, image2], AnimationOptions.Forever);
+```
+
+This can then be displayed in a game by changing to the animation mode:
+
+```csharp
+game.ChangeMode(new AnimationMode(animation));
+```

@@ -1,7 +1,6 @@
 using NetAF.Assets.Locations;
 using NetAF.Commands;
 using NetAF.Example.Assets.Regions.Everglades.Animations;
-using NetAF.Example.Assets.Regions.Everglades.Visuals;
 using NetAF.Logic.Modes;
 using NetAF.Utilities;
 

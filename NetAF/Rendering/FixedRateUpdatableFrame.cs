@@ -78,6 +78,16 @@ namespace NetAF.Rendering
 
         #endregion
 
+        #region Overrides of Object
+
+        ///  <inheritdoc/>
+        public override string ToString()
+        {
+            return CurrentFrame;
+        }
+
+        #endregion
+
         #region  Implementation of IFrame
 
         /// <inheritdoc/>
@@ -96,6 +106,8 @@ namespace NetAF.Rendering
         /// <inheritdoc/>
         public void Start()
         {
+            Stop();
+
             currentFrameIndex = 0;
             cyclesCompleted = 0;
 
