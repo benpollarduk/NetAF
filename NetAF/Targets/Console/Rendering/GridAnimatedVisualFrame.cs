@@ -206,6 +206,8 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Start()
         {
+            Stop();
+
             backBuffer = null;
             currentFrameIndex = 0;
             cyclesCompleted = 0;
