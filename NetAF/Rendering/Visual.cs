@@ -12,6 +12,20 @@ namespace NetAF.Rendering
     /// <param name="VisualBuilder">The builder that creates the visual.</param>
     public record Visual(string Name, string Description, GridVisualBuilder VisualBuilder)
     {
+        #region Properties
+
+        /// <summary>
+        /// Get the width.
+        /// </summary>
+        public int Width => VisualBuilder.DisplaySize.Width;
+
+        /// <summary>
+        /// Get the height.
+        /// </summary>
+        public int Height => VisualBuilder.DisplaySize.Height;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -41,14 +55,14 @@ namespace NetAF.Rendering
         /// </summary>
         /// <param name="newSize">The new size.</param>
         /// <returns>The cropped visual.</returns>
-        public Visual Crop(Size newSize) => new(Name, Description, Crop(VisualBuilder, newSize, AnsiColor.Black, AnsiColor.White));
+        public Visual Crop(Size newSize) => new(Name, Description, Crop(VisualBuilder, newSize));
 
         /// <summary>
         /// Scale this visual to a new size.
         /// </summary>
         /// <param name="newSize">The new size.</param>
         /// <returns>The scaled visual.</returns>
-        public Visual Scale(Size newSize) => new(Name, Description, Scale(VisualBuilder, newSize, AnsiColor.Black, AnsiColor.White));
+        public Visual Scale(Size newSize) => new(Name, Description, Scale(VisualBuilder, newSize));
 
         #endregion
 
@@ -59,10 +73,8 @@ namespace NetAF.Rendering
         /// </summary>
         /// <param name="visualBuilder">The visual builder.</param>
         /// <param name="renderSize">The render size.</param>
-        /// <param name="background">The background color.</param>
-        /// <param name="foreground">The foreground color.</param>
         /// <returns>The cropped visual builder.</returns>
-        private static GridVisualBuilder Crop(GridVisualBuilder visualBuilder, Size renderSize, AnsiColor background, AnsiColor foreground)
+        internal static GridVisualBuilder Crop(GridVisualBuilder visualBuilder, Size renderSize)
         {
             // can't crop if the source is smaller than the render size
             if (visualBuilder.DisplaySize.Width < renderSize.Width && visualBuilder.DisplaySize.Height < renderSize.Height)
@@ -71,7 +83,7 @@ namespace NetAF.Rendering
             var newWidth = Math.Min(renderSize.Width, visualBuilder.DisplaySize.Width);
             var newHeight = Math.Min(renderSize.Height, visualBuilder.DisplaySize.Height);
             var newSize = new Size(newWidth, newHeight);
-            var newBuilder = new GridVisualBuilder(background, foreground);
+            var newBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             newBuilder.Resize(newSize);
 
             for (var row = 0; row < newHeight; row++)
@@ -93,10 +105,8 @@ namespace NetAF.Rendering
         /// </summary>
         /// <param name="visualBuilder">The visual builder.</param>
         /// <param name="renderSize">The render size.</param>
-        /// <param name="background">The background color.</param>
-        /// <param name="foreground">The foreground color.</param>
         /// <returns>The scaled visual builder.</returns>
-        private static GridVisualBuilder Scale(GridVisualBuilder visualBuilder, Size renderSize, AnsiColor background, AnsiColor foreground)
+        internal static GridVisualBuilder Scale(GridVisualBuilder visualBuilder, Size renderSize)
         {
             var ratio = Math.Max(visualBuilder.DisplaySize.Width / (double)renderSize.Width, visualBuilder.DisplaySize.Height / (double)renderSize.Height);
             var targetWidth = (int)Math.Max(1, Math.Floor(visualBuilder.DisplaySize.Width / ratio));
@@ -105,7 +115,7 @@ namespace NetAF.Rendering
             var widthRatio = visualBuilder.DisplaySize.Width / (double)targetWidth;
             var heightRatio = visualBuilder.DisplaySize.Height / (double)targetHeight;
 
-            var newBuilder = new GridVisualBuilder(background, foreground);
+            var newBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             newBuilder.Resize(new Size(targetWidth, targetHeight));
 
             for (var row = 0; row < targetHeight; row++)

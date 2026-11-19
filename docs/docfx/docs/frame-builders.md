@@ -17,6 +17,7 @@ There are a few types of **FrameBuilder**, each responsible for rendering a spec
 * **CompletionFrameBuilder** is responsible for building a frame to display the completion screen.
 * **ConversationFrameBuilder** is responsible for building a frame that can render a conversation.
 * **VisualFrameBuilder** is responsible for building a frame to render a visual.
+* **AnimationFrameBuilder** is responsible for building a series of frames to render an animation.
 * **LogFrameBuilder** is responsible for building a frame to render any gathered information.
 * **NarrativeFrameBuilder** is responsible for building a frame to render narrative.
 

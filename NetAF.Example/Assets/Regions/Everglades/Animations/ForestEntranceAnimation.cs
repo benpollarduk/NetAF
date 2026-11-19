@@ -4,9 +4,9 @@ using NetAF.Rendering;
 using NetAF.Targets.Console.Rendering;
 using NetAF.Utilities;
 
-namespace NetAF.Example.Assets.Regions.Everglades.Visuals
+namespace NetAF.Example.Assets.Regions.Everglades.Animations
 {
-    public class ForestEntranceVisual : IAssetTemplate<Visual>
+    public class ForestEntranceAnimation : IAssetTemplate<Animation>
     {
         #region Constants
 
@@ -26,26 +26,26 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
         public static readonly AnsiColor Path = new(130, 20, 20);
         public static readonly AnsiColor PathHighlights = new(130, 130, 130);
         private static readonly Size DesignSize = new(76, 46);
-        private static readonly IVariationGenerator TreeCanopyIntensityVarier = new ColorVariationGenerator(25, 25, 25, 25, 25, 25);
-        private static readonly IVariationGenerator TreeTrunkIntensityVarier = new IntensityVariationGenerator(20, 10);
-        private static readonly IVariationGenerator GrassIntensityVarier = new ColorVariationGenerator(5, 5, 25, 25, 5, 5);
-        private static readonly IVariationGenerator PathIntensityVarier = new IntensityVariationGenerator(15, 0);
-        private static readonly IVariationGenerator SunIntensityVarier = new IntensityVariationGenerator(7, 7);
+        private static readonly ColorVariationGenerator TreeCanopyIntensityVarier = new ColorVariationGenerator(25, 25, 25, 25, 25, 25);
+        private static readonly IntensityVariationGenerator TreeTrunkIntensityVarier = new IntensityVariationGenerator(20, 10);
+        private static readonly ColorVariationGenerator GrassIntensityVarier = new ColorVariationGenerator(5, 5, 25, 25, 5, 5);
+        private static readonly IntensityVariationGenerator PathIntensityVarier = new IntensityVariationGenerator(15, 0);
+        private static readonly IntensityVariationGenerator SunIntensityVarier = new IntensityVariationGenerator(7, 7);
 
         #endregion
 
         #region StaticMethods
 
-        private static void DrawSun(GridVisualBuilder builder)
+        private static void DrawSun(GridVisualBuilder builder, AnsiColor color)
         {
-            builder.SetCell(8, 5, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(4, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(5, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(11, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(12, 7, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.SetCell(8, 9, SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.DrawRectangle(6, 6, 5, 3, SunIntensityVarier.Vary(AnsiColor.BrightYellow), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
-            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), SunIntensityVarier.Vary(AnsiColor.BrightYellow));
+            builder.SetCell(8, 5, SunIntensityVarier.Vary(color));
+            builder.SetCell(4, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(5, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(11, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(12, 7, SunIntensityVarier.Vary(color));
+            builder.SetCell(8, 9, SunIntensityVarier.Vary(color));
+            builder.DrawRectangle(6, 6, 5, 3, SunIntensityVarier.Vary(color), SunIntensityVarier.Vary(color));
+            builder.DrawTexture(6, 6, 5, 3, ":".ToTexture(), SunIntensityVarier.Vary(color));
         }
 
         private static void DrawGrass(GridVisualBuilder builder)
@@ -88,29 +88,49 @@ namespace NetAF.Example.Assets.Regions.Everglades.Visuals
 
         #endregion
 
-        #region Implementation of IAssetTemplate<Visual>
+        #region Implementation of IAssetTemplate<Animation>
 
         /// <inheritdoc/>
-        public Visual Instantiate()
+        public Animation Instantiate()
         {
-            var builder = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
-            builder.Resize(DesignSize);
-            DrawSun(builder);
-            DrawGrass(builder);
-            DrawPath(builder);
-            DrawTree1(builder, 5, 15);
-            DrawTree2(builder, 20, 15);
-            DrawTree1(builder, 35, 15);
-            DrawTree1(builder, 50, 15);
-            DrawTree2(builder, 65, 15);
-            DrawTree1(builder, 2, 16);
-            DrawTree2(builder, 12, 18);
-            DrawTree1(builder, 28, 17);
-            DrawTree1(builder, 39, 16);
-            DrawTree2(builder, 56, 18);
-            DrawTree1(builder, 70, 17);
+            AnsiColor sun1 = new AnsiColor(220, 220, 0);
+            AnsiColor sun2 = new AnsiColor(255, 255, 0);
 
-            return new Visual(Name, string.Empty, builder);
+            var builder1 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
+            builder1.Resize(DesignSize);
+            DrawSun(builder1, sun1);
+            DrawGrass(builder1);
+            DrawPath(builder1);
+            DrawTree1(builder1, 5, 15);
+            DrawTree2(builder1, 20, 15);
+            DrawTree1(builder1, 35, 15);
+            DrawTree1(builder1, 50, 15);
+            DrawTree2(builder1, 65, 15);
+            DrawTree1(builder1, 2, 16);
+            DrawTree2(builder1, 12, 18);
+            DrawTree1(builder1, 28, 17);
+            DrawTree1(builder1, 39, 16);
+            DrawTree2(builder1, 56, 18);
+            DrawTree1(builder1, 70, 17);
+
+            var builder2 = new GridVisualBuilder(Sky, AnsiColor.BrightWhite);
+            builder2.Resize(DesignSize);
+            DrawSun(builder2, sun2);
+            DrawGrass(builder2);
+            DrawPath(builder2);
+            DrawTree1(builder2, 5, 15);
+            DrawTree2(builder2, 20, 15);
+            DrawTree1(builder2, 35, 15);
+            DrawTree1(builder2, 50, 15);
+            DrawTree2(builder2, 65, 15);
+            DrawTree1(builder2, 2, 16);
+            DrawTree2(builder2, 12, 18);
+            DrawTree1(builder2, 28, 17);
+            DrawTree1(builder2, 39, 16);
+            DrawTree2(builder2, 56, 18);
+            DrawTree1(builder2, 70, 17);
+
+            return new Animation(Name, string.Empty, [builder1, builder2], new AnimationOptions(AnimationOptions.Forever, 2));
         }
 
         #endregion

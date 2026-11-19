@@ -24,4 +24,12 @@
     <ProjectReference Include="..\NetAF\NetAF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Remove="C:\Users\bendev\AppData\Roaming\SonarLint for Visual Studio\Bindings\NetAF\csharp\SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="C:\Users\bendev\AppData\Roaming\SonarLint for Visual Studio\Bindings\NetAF\csharp\SonarLint.xml" />
+  </ItemGroup>
+
 </Project>

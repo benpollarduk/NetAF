@@ -1,4 +1,5 @@
 using NetAF.Rendering;
+using System.Text;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -10,6 +11,20 @@ namespace NetAF.Targets.Console.Rendering
     /// <param name="cursorTop">The cursor top position.</param>
     public sealed class GridVisualFrame(GridVisualBuilder builder, int cursorLeft = 0, int cursorTop = 0) : IConsoleFrame
     {
+        #region Properties
+
+        /// <summary>
+        /// Get the width of the frame.
+        /// </summary>
+        public int Width => builder.DisplaySize.Width;
+
+        /// <summary>
+        /// Get the height of the frame.
+        /// </summary>
+        public int Height => builder.DisplaySize.Height;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -39,28 +54,28 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Render a single character.
         /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <param name="stringBuilder">The string builder.</param>
         /// <param name="x">The x position of the cell.</param>
         /// <param name="y">The x position of the cell.</param>
         /// <param name="suppressColor">True if color should be suppressed, else false.</param>
         /// <param name="lastForeground">The last foreground color.</param>
         /// <param name="lastBackground">The last background color.</param>
-        private void RenderCharacter(IFramePresenter presenter, int x, int y, bool suppressColor, ref AnsiColor lastForeground, ref AnsiColor lastBackground)
+        private void RenderCharacter(StringBuilder stringBuilder, int x, int y, bool suppressColor, ref AnsiColor lastForeground, ref AnsiColor lastBackground)
         {
             var c = builder.GetCharacter(x, y);
             var backgroundColor = GetBackgroundColor(x, y, suppressColor);
 
-            UpdateBackgroundColor(presenter, x, y, backgroundColor, ref lastBackground);
+            UpdateBackgroundColor(stringBuilder, x, y, backgroundColor, ref lastBackground);
 
             if (c != 0)
             {
                 var foregroundColor = GetForegroundColor(x, y, suppressColor);
-                UpdateForegroundColor(presenter, x, y, foregroundColor, ref lastForeground);
-                presenter.Present(c.ToString());
+                UpdateForegroundColor(stringBuilder, x, y, foregroundColor, ref lastForeground);
+                stringBuilder.Append(c);
             }
             else
             {
-                presenter.Present(" ");
+                stringBuilder.Append(' ');
             }
         }
 
@@ -71,34 +86,34 @@ namespace NetAF.Targets.Console.Rendering
         /// <summary>
         /// Update the background color, if required.
         /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <param name="stringBuilder">The string builder.</param>
         /// <param name="x">The x position of the cell.</param>
         /// <param name="y">The x position of the cell.</param>
         /// <param name="backgroundColor">The background color.</param>
         /// <param name="lastBackgroundColor">The last background color.</param>
-        private static void UpdateBackgroundColor(IFramePresenter presenter, int x, int y, AnsiColor backgroundColor, ref AnsiColor lastBackgroundColor)
+        private static void UpdateBackgroundColor(StringBuilder stringBuilder, int x, int y, AnsiColor backgroundColor, ref AnsiColor lastBackgroundColor)
         {
             if (RequiresColorChange(x, y, lastBackgroundColor, backgroundColor))
             {
                 lastBackgroundColor = backgroundColor;
-                presenter.Present(Ansi.GetAnsiBackgroundEscapeSequence(backgroundColor));
+                stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(backgroundColor));
             }
         }
 
         /// <summary>
         /// Update the foreground color, if required.
         /// </summary>
-        /// <param name="presenter">The presenter.</param>
+        /// <param name="stringBuilder">The string builder.</param>
         /// <param name="x">The x position of the cell.</param>
         /// <param name="y">The x position of the cell.</param>
         /// <param name="foregroundColor">The foreground color.</param>
         /// <param name="lastForegroundColor">The last foreground color.</param>
-        private static void UpdateForegroundColor(IFramePresenter presenter, int x, int y, AnsiColor foregroundColor, ref AnsiColor lastForegroundColor)
+        private static void UpdateForegroundColor(StringBuilder stringBuilder, int x, int y, AnsiColor foregroundColor, ref AnsiColor lastForegroundColor)
         {
             if (RequiresColorChange(x, y, lastForegroundColor, foregroundColor))
             {
                 lastForegroundColor = foregroundColor;
-                presenter.Present(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
+                stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(foregroundColor));
             }
         }
 
@@ -145,9 +160,10 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
+            var stringBuilder = new StringBuilder();
             var suppressColor = Ansi.IsColorSuppressed();
 
-            presenter.Present(Ansi.ANSI_HIDE_CURSOR);
+            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
 
             AnsiColor lastBackground = AnsiColor.Black;
             AnsiColor lastForeground = AnsiColor.White;
@@ -155,11 +171,13 @@ namespace NetAF.Targets.Console.Rendering
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
-                    RenderCharacter(presenter, x, y, suppressColor, ref lastForeground, ref lastBackground);
+                    RenderCharacter(stringBuilder, x, y, suppressColor, ref lastForeground, ref lastBackground);
 
                 if (y < builder.DisplaySize.Height - 1)
-                    presenter.Present(builder.LineTerminator.ToString());
+                    stringBuilder.Append(builder.LineTerminator);
             }
+
+            presenter.Present(stringBuilder.ToString());
         }
 
         #endregion

@@ -166,7 +166,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
         }
 
         [TestMethod]
-        public void GivenBlank_WhenOverlayGridPictureBuilder_ThenOverlayAppliedCorrectly()
+        public void GivenBlank_WhenOverlaygridVisualBuilder_ThenOverlayAppliedCorrectly()
         {
             var overlay = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             overlay.Resize(new(1, 1));

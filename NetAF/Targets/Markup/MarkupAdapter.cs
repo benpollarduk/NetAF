@@ -20,16 +20,24 @@ namespace NetAF.Targets.Markup
 
         #region Methods
 
-        private void HandleFrameRender(IFrame frame)
+        private string GetPresentableContent(IFrame frame)
         {
-            // get render size
             var renderSize = displaySize != Size.Dynamic ? displaySize : CurrentOutputSize;
 
-            // convert the frames if possible
             if (frame is IConsoleFrame ansiFrame)
-                presenter.Present(Convert(ansiFrame, renderSize));
+                return Convert(ansiFrame, renderSize);
+
+            return frame.ToString();
+        }
+
+        private void HandleUpdateFrameRender(IFrame frame)
+        {
+            var content = GetPresentableContent(frame);
+
+            if (presenter is not IUpdatableFramePresenter updateablePresenter)
+                presenter.Present(content);
             else
-                frame.Render(presenter);
+                updateablePresenter.PresentUpdate(content);
         }
 
         #endregion
@@ -159,8 +167,9 @@ namespace NetAF.Targets.Markup
         /// <inheritdoc/>
         public void RenderFrame(IFrame frame)
         {
-            UpdatableFrameManager.ManageFrameTransition(frame, HandleFrameRender);
-            HandleFrameRender(frame);
+            UpdatableFrameManager.ManageFrameTransition(frame, HandleUpdateFrameRender);
+
+            presenter.Present(GetPresentableContent(frame));
         }
 
         #endregion

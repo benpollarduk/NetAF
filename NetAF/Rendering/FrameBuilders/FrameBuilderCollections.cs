@@ -48,7 +48,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleLegacyNoteFrameBuilder(gridLayoutBuilder, renderProperties),
                     new ConsoleLegacyHistoryFrameBuilder(gridLayoutBuilder, renderProperties),
                     new ConsoleLegacyNarrativeFrameBuilder(gridLayoutBuilder, renderProperties),
-                    new ConsoleLegacyVisualFrameBuilder(gridLayoutBuilder, renderProperties)
+                    new ConsoleLegacyVisualFrameBuilder(gridLayoutBuilder, renderProperties),
+                    new ConsoleLegacyAnimationFrameBuilder(gridLayoutBuilder, renderProperties)
                 ];
 
                 return new(frameBuilders);
@@ -104,7 +105,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new ConsoleModernNoteFrameBuilder(gridLayoutBuilder, renderProperties),
                     new ConsoleModernHistoryFrameBuilder(gridLayoutBuilder, renderProperties),
                     new ConsoleModernNarrativeFrameBuilder(gridLayoutBuilder, renderProperties),
-                    new ConsoleModernVisualFrameBuilder(gridLayoutBuilder, renderProperties)
+                    new ConsoleModernVisualFrameBuilder(gridLayoutBuilder, renderProperties),
+                    new ConsoleModernAnimationFrameBuilder(gridLayoutBuilder, renderProperties)
                 ];
 
                 return new(frameBuilders);
@@ -137,7 +139,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new HtmlNoteFrameBuilder(htmlBuilder),
                     new HtmlHistoryFrameBuilder(htmlBuilder),
                     new HtmlNarrativeFrameBuilder(htmlBuilder),
-                    new HtmlVisualFrameBuilder(htmlBuilder)
+                    new HtmlVisualFrameBuilder(htmlBuilder),
+                    new HtmlAnimationFrameBuilder(htmlBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -170,7 +173,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new TextNoteFrameBuilder(stringBuilder),
                     new TextHistoryFrameBuilder(stringBuilder),
                     new TextNarrativeFrameBuilder(stringBuilder),
-                    new TextVisualFrameBuilder(stringBuilder)
+                    new TextVisualFrameBuilder(stringBuilder),
+                    new TextAnimationFrameBuilder(stringBuilder)
                 ];
 
                 return new(frameBuilders);
@@ -203,7 +207,8 @@ namespace NetAF.Rendering.FrameBuilders
                     new MarkupNoteFrameBuilder(markupBuilder),
                     new MarkupHistoryFrameBuilder(markupBuilder),
                     new MarkupNarrativeFrameBuilder(markupBuilder),
-                    new MarkupVisualFrameBuilder(markupBuilder)
+                    new MarkupVisualFrameBuilder(markupBuilder),
+                    new MarkupAnimationFrameBuilder(markupBuilder)
                 ];
 
                 return new(frameBuilders);
