@@ -111,10 +111,10 @@ namespace NetAF.Rendering
             currentFrameIndex = 0;
             cyclesCompleted = 0;
 
-            synchronizationContext = SynchronizationContext.Current;
-
             if (Frames.Length < 2)
                 return;
+
+            synchronizationContext = SynchronizationContext.Current;
 
             timer = new Timer(ThreadSafeUpdateFrame, null, displayTimeInMs, displayTimeInMs);
         }
