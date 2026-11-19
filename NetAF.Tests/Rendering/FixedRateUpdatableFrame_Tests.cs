@@ -66,7 +66,7 @@ namespace NetAF.Tests.Rendering
 
             frame.Start();
 
-            Thread.Sleep(10);
+            Thread.Sleep(50);
 
             frame.Stop();
 
@@ -90,7 +90,7 @@ namespace NetAF.Tests.Rendering
 
             frame.Start();
 
-            Thread.Sleep(10);
+            Thread.Sleep(250);
 
             frame.Stop();
 

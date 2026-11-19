@@ -63,6 +63,13 @@ namespace NetAF.Rendering
             if (isAtEnd)
             {
                 cyclesCompleted++;
+
+                if (cycles != AnimationOptions.Forever && cyclesCompleted == cycles)
+                {
+                    Stop();
+                    return;
+                }
+
                 currentFrameIndex = 0;
             }
             else
@@ -71,9 +78,6 @@ namespace NetAF.Rendering
             }
 
             Updated?.Invoke(this, this);
-
-            if (isAtEnd && cycles != AnimationOptions.Forever && cyclesCompleted >= cycles)
-                Stop();
         }
 
         #endregion
