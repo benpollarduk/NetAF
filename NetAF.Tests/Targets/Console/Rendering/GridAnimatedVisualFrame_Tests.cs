@@ -144,7 +144,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
 
             frame.Start();
 
-            Thread.Sleep(50);
+            Thread.Sleep(250);
 
             frame.Stop();
 
@@ -182,7 +182,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
 
             frame.Start();
 
-            Thread.Sleep(250);
+            Thread.Sleep(500);
 
             frame.Stop();
 
