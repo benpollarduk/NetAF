@@ -19,6 +19,7 @@ namespace NetAF.Targets.Console.Rendering
         private int cyclesCompleted = 0;
         private readonly List<AnsiCell[,]> backBuffers = [];
         private AnsiCell[,] backBuffer;
+        private bool isUpdatingFrame = false;
 
         #endregion
 
@@ -77,26 +78,78 @@ namespace NetAF.Targets.Console.Rendering
         /// <param name="state">An object representing state.</param>
         private void UpdateFrame(object state)
         {
-            var isAtEnd = currentFrameIndex == Frames.Length - 1;
+            if (isUpdatingFrame)
+                return;
 
-            if (isAtEnd)
+            isUpdatingFrame = true;
+
+            try
             {
-                cyclesCompleted++;
+                var isAtEnd = currentFrameIndex == Frames.Length - 1;
 
-                if (Options.Cycles != AnimationOptions.Forever && cyclesCompleted == Options.Cycles)
+                if (isAtEnd)
                 {
-                    Stop();
-                    return;
+                    cyclesCompleted++;
+
+                    if (Options.Cycles != AnimationOptions.Forever && cyclesCompleted == Options.Cycles)
+                    {
+                        Stop();
+                        return;
+                    }
+
+                    currentFrameIndex = 0;
+                }
+                else
+                {
+                    currentFrameIndex++;
                 }
 
-                currentFrameIndex = 0;
+                Updated?.Invoke(this, this);
+            }
+            finally
+            {
+                isUpdatingFrame = false;
+            }
+        }
+
+        #endregion
+
+        #region Overrides of Object
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A frame string created from the current object state.</returns>
+        public override string ToString()
+        {
+            var currentBuffer = backBuffers[currentFrameIndex];
+            var renderAll = backBuffer == null || backBuffer.Length != CurrentFrame.Width * CurrentFrame.Height;
+            var stringBuilder = new StringBuilder();
+
+            if (renderAll)
+            {
+                // render everything
+                stringBuilder.Append(CurrentFrame.ToString());
             }
             else
             {
-                currentFrameIndex++;
+                // render changes only
+
+                var suppressColor = Ansi.IsColorSuppressed();
+
+                stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
+
+                static bool areCellsEqual(AnsiCell a, AnsiCell b) => a.Character == b.Character && a.Foreground.Equals(b.Foreground) && a.Background.Equals(b.Background);
+
+                for (var y = 0; y < CurrentFrame.Height; y++)
+                    for (var x = 0; x < CurrentFrame.Width; x++)
+                        if (!areCellsEqual(backBuffer[x, y], currentBuffer[x, y]))
+                            AppendCell(stringBuilder, currentBuffer[x, y], x, y, suppressColor);
             }
 
-            Updated?.Invoke(this, this);
+            backBuffer = currentBuffer;
+
+            return stringBuilder.ToString();
         }
 
         #endregion
@@ -136,34 +189,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
-            var currentBuffer = backBuffers[currentFrameIndex];
-            var renderAll = backBuffer == null || backBuffer.Length != CurrentFrame.Width * CurrentFrame.Height;
-
-            if (renderAll)
-            {
-                // render eveyerything
-                CurrentFrame.Render(presenter);
-            }
-            else
-            {
-                // render changes only
-
-                var stringBuilder = new StringBuilder();
-                var suppressColor = Ansi.IsColorSuppressed();
-
-                presenter.Present(Ansi.ANSI_HIDE_CURSOR);
-
-                static bool areCellsEqual(AnsiCell a, AnsiCell b) => a.Character == b.Character && a.Foreground.Equals(b.Foreground) && a.Background.Equals(b.Background);
-
-                for (var y = 0; y < CurrentFrame.Height; y++)
-                    for (var x = 0; x < CurrentFrame.Width; x++)
-                        if (!areCellsEqual(backBuffer[x, y], currentBuffer[x, y]))
-                            AppendCell(stringBuilder, currentBuffer[x, y], x, y, suppressColor);
-
-                presenter.Present(stringBuilder.ToString());
-            }
-
-            backBuffer = currentBuffer;
+            presenter.Present(ToString());
         }
 
         #endregion

@@ -1,6 +1,5 @@
 using System.Text;
 using NetAF.Rendering;
-using NetAF.Utilities;
 
 namespace NetAF.Targets.Console.Rendering
 {
@@ -29,15 +28,38 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public override string ToString()
         {
-            StringBuilder stringBuilder = new();
+            var stringBuilder = new StringBuilder();
+            var suppressColor = Ansi.IsColorSuppressed();
+
+            if (!suppressColor)
+                stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
+
+            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
 
             for (var y = 0; y < builder.DisplaySize.Height; y++)
             {
                 for (var x = 0; x < builder.DisplaySize.Width; x++)
-                    stringBuilder.Append(builder.GetCharacter(x, y));
+                {
+                    var cell = GetCell(x, y);
 
-                stringBuilder.Append(StringUtilities.Newline);
+                    if (cell.Character != 0)
+                    {
+                        if (!suppressColor)
+                            stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
+
+                        stringBuilder.Append(cell.Character);
+                    }
+                    else
+                    {
+                        stringBuilder.Append(' ');
+                    }
+                }
+
+                if (y < builder.DisplaySize.Height - 1)
+                    stringBuilder.Append(builder.LineTerminator);
             }
+
+            stringBuilder.Append(Ansi.ANSI_SHOW_CURSOR);
 
             return stringBuilder.ToString();
         }
@@ -65,40 +87,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
-            var stringBuilder = new StringBuilder();
-            var suppressColor = Ansi.IsColorSuppressed();
-
-            if (!suppressColor)
-                stringBuilder.Append(Ansi.GetAnsiBackgroundEscapeSequence(BackgroundColor));
-
-            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
-
-            for (var y = 0; y < builder.DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < builder.DisplaySize.Width; x++)
-                {
-                    var cell = GetCell(x, y);
-
-                    if (cell.Character != 0)
-                    {
-                        if (!suppressColor)
-                            stringBuilder.Append(Ansi.GetAnsiForegroundEscapeSequence(cell.Foreground));
-
-                        stringBuilder.Append(cell.Character);
-                    }
-                    else
-                    { 
-                        stringBuilder.Append(' ');
-                    }
-                }
-
-                if (y < builder.DisplaySize.Height - 1)
-                    stringBuilder.Append(builder.LineTerminator);
-            }
-
-            stringBuilder.Append(Ansi.ANSI_SHOW_CURSOR);
-
-            presenter.Present(stringBuilder.ToString());
+            presenter.Present(ToString());
         }
 
         #endregion

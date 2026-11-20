@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetAF.Assets;
 using NetAF.Rendering;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace NetAF.Tests.Rendering
@@ -9,23 +8,6 @@ namespace NetAF.Tests.Rendering
     [TestClass]
     public class FixedRateUpdatableFrame_Tests
     {
-        private class DummyPresenter : IFramePresenter
-        {
-            public int RenderCount { get; private set; }
-            public Queue<string> Renders { get; } = [];
-
-            public Size GetPresentableSize()
-            {
-                return new Size(10, 10);
-            }
-
-            public void Present(string frame)
-            {
-                RenderCount++;
-                Renders.Enqueue(frame);
-            }
-        }
-
         [TestMethod]
         public void Given3Frames_WhenCurrentFrame_ThenFirstFrame()
         {
@@ -44,11 +26,11 @@ namespace NetAF.Tests.Rendering
             var frames = new[] { "Frame 1", "Frame 2", "Frame 3" };
             var size = new Size(10, 10);
             var frame = new FixedRateUpdatableFrame(frames, size, 1000, 2);
-            var dummyPresenter = new DummyPresenter();
+            var presenter = new TestPresenter();
 
-            frame.Render(dummyPresenter);
+            frame.Render(presenter);
 
-            Assert.AreEqual(1, dummyPresenter.RenderCount);
+            Assert.AreEqual(1, presenter.RenderCount);
         }
 
         [TestMethod]
@@ -60,9 +42,9 @@ namespace NetAF.Tests.Rendering
             var frames = new[] { frame1, frame2, frame3 };
             var size = new Size(10, 10);
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 1);
-            var dummyPresenter = new DummyPresenter();
+            var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(dummyPresenter);
+            frame.Updated += (s, e) => frame.Render(presenter);
 
             frame.Start();
 
@@ -70,9 +52,9 @@ namespace NetAF.Tests.Rendering
 
             frame.Stop();
 
-            Assert.AreEqual(2, dummyPresenter.RenderCount);
-            Assert.Contains(frame2, dummyPresenter.Renders);
-            Assert.Contains(frame3, dummyPresenter.Renders);
+            Assert.AreEqual(2, presenter.RenderCount);
+            Assert.Contains(frame2, presenter.Renders);
+            Assert.Contains(frame3, presenter.Renders);
         }
 
         [TestMethod]
@@ -84,9 +66,9 @@ namespace NetAF.Tests.Rendering
             var frames = new[] { frame1, frame2, frame3 };
             var size = new Size(10, 10);
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 2);
-            var dummyPresenter = new DummyPresenter();
+            var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(dummyPresenter);
+            frame.Updated += (s, e) => frame.Render(presenter);
 
             frame.Start();
 
@@ -94,7 +76,7 @@ namespace NetAF.Tests.Rendering
 
             frame.Stop();
 
-            Assert.AreEqual(5, dummyPresenter.RenderCount);
+            Assert.AreEqual(5, presenter.RenderCount);
         }
     }
 }

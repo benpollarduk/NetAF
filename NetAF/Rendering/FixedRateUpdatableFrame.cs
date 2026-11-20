@@ -19,6 +19,7 @@ namespace NetAF.Rendering
         private Timer timer;
         private int cyclesCompleted = 0;
         private SynchronizationContext synchronizationContext;
+        private bool isUpdatingFrame = false;
 
         #endregion
 
@@ -58,26 +59,38 @@ namespace NetAF.Rendering
 
         private void UpdateFrame()
         {
-            var isAtEnd = currentFrameIndex == Frames.Length - 1;
+            if (isUpdatingFrame)
+                return;
 
-            if (isAtEnd)
+            isUpdatingFrame = true;
+
+            try
             {
-                cyclesCompleted++;
+                var isAtEnd = currentFrameIndex == Frames.Length - 1;
 
-                if (cycles != AnimationOptions.Forever && cyclesCompleted == cycles)
+                if (isAtEnd)
                 {
-                    Stop();
-                    return;
+                    cyclesCompleted++;
+
+                    if (cycles != AnimationOptions.Forever && cyclesCompleted == cycles)
+                    {
+                        Stop();
+                        return;
+                    }
+
+                    currentFrameIndex = 0;
+                }
+                else
+                {
+                    currentFrameIndex++;
                 }
 
-                currentFrameIndex = 0;
+                Updated?.Invoke(this, this);
             }
-            else
+            finally
             {
-                currentFrameIndex++;
+                isUpdatingFrame = false;
             }
-
-            Updated?.Invoke(this, this);
         }
 
         #endregion

@@ -23,7 +23,9 @@ namespace NetAF.Targets.Console
 
         private void HandleFrameRender(IFrame frame)
         {
-            frame.Render(presenter);
+            var content = frame.ToString();
+
+            presenter.Present(content);
 
             if (frame is IConsoleFrame consoleFrame)
             {

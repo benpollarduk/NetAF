@@ -81,6 +81,33 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
+        #region Overrides of Object
+
+        ///  <inheritdoc/>
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            var suppressColor = Ansi.IsColorSuppressed();
+
+            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
+
+            AnsiColor lastBackground = AnsiColor.Black;
+            AnsiColor lastForeground = AnsiColor.White;
+
+            for (var y = 0; y < builder.DisplaySize.Height; y++)
+            {
+                for (var x = 0; x < builder.DisplaySize.Width; x++)
+                    RenderCharacter(stringBuilder, x, y, suppressColor, ref lastForeground, ref lastBackground);
+
+                if (y < builder.DisplaySize.Height - 1)
+                    stringBuilder.Append(builder.LineTerminator);
+            }
+
+            return stringBuilder.ToString();
+        }
+
+        #endregion
+
         #region StaticMethods
 
         /// <summary>
@@ -160,24 +187,7 @@ namespace NetAF.Targets.Console.Rendering
         /// <inheritdoc/>
         public void Render(IFramePresenter presenter)
         {
-            var stringBuilder = new StringBuilder();
-            var suppressColor = Ansi.IsColorSuppressed();
-
-            stringBuilder.Append(Ansi.ANSI_HIDE_CURSOR);
-
-            AnsiColor lastBackground = AnsiColor.Black;
-            AnsiColor lastForeground = AnsiColor.White;
-
-            for (var y = 0; y < builder.DisplaySize.Height; y++)
-            {
-                for (var x = 0; x < builder.DisplaySize.Width; x++)
-                    RenderCharacter(stringBuilder, x, y, suppressColor, ref lastForeground, ref lastBackground);
-
-                if (y < builder.DisplaySize.Height - 1)
-                    stringBuilder.Append(builder.LineTerminator);
-            }
-
-            presenter.Present(stringBuilder.ToString());
+            presenter.Present(ToString());
         }
 
         #endregion
