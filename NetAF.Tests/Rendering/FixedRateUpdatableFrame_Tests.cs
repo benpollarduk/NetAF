@@ -21,14 +21,14 @@ namespace NetAF.Tests.Rendering
         }
 
         [TestMethod]
-        public void Given3Frames_WhenRender_ThenRendered()
+        public void Given3Frames_WhenPresented_ThenRendered()
         {
             var frames = new[] { "Frame 1", "Frame 2", "Frame 3" };
             var size = new Size(10, 10);
             var frame = new FixedRateUpdatableFrame(frames, size, 1000, 2);
             var presenter = new TestPresenter();
 
-            frame.Render(presenter);
+            presenter.Present(frame.ToString());
 
             Assert.AreEqual(1, presenter.RenderCount);
         }
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Rendering
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 1);
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(presenter);
+            frame.Updated += (s, e) => presenter.Present(frame.ToString());
 
             frame.Start();
 
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Rendering
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 2);
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(presenter);
+            frame.Updated += (s, e) => presenter.Present(frame.ToString());
 
             frame.Start();
 

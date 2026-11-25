@@ -105,16 +105,6 @@ namespace NetAF.Rendering
 
         #endregion
 
-        #region  Implementation of IFrame
-
-        /// <inheritdoc/>
-        public void Render(IFramePresenter presenter)
-        {
-            presenter.Present(CurrentFrame);
-        }
-
-        #endregion
-
         #region Implementation of IUpdatableFrame
 
         /// <inheritdoc/>

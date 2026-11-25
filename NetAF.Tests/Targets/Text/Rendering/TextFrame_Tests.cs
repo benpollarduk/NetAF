@@ -10,7 +10,7 @@ namespace NetAF.Tests.Targets.Text.Rendering
     public class TextFrame_Tests
     {
         [TestMethod]
-        public void GivenTest_WhenRender_ThenStartsWithTest()
+        public void GivenTest_WhenPresented_ThenStartsWithTest()
         {
             StringBuilder builder = new();
             builder.Append("Test");
@@ -21,7 +21,7 @@ namespace NetAF.Tests.Targets.Text.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                frame.Render(presenter);
+                presenter.Present(frame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }

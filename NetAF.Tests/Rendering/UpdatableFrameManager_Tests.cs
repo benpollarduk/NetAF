@@ -15,10 +15,11 @@ namespace NetAF.Tests.Rendering
             public bool WasReRenderCalled { get; private set; }
             public event EventHandler<IFrame> Updated;
 
-            public void Render(IFramePresenter presenter)
+            public override string ToString()
             {
                 WasRenderCalled = true;
                 Updated?.Invoke(this, this);
+                return base.ToString();
             }
 
             public void ReRender(IFrame frame)
@@ -56,17 +57,6 @@ namespace NetAF.Tests.Rendering
             UpdatableFrameManager.ManageFrameTransition(null, null);
 
             Assert.IsTrue(frame.WasStopCalled);
-        }
-
-        [TestMethod]
-        public void GivenUpdateableFrame_WhenManageFrameTransition_ThenUpdateCalled()
-        {
-            var frame = new UpdateFrame();
-
-            UpdatableFrameManager.ManageFrameTransition(frame, frame.ReRender);
-            frame.Render(null);
-
-            Assert.IsTrue(frame.WasRenderCalled);
         }
     }
 }

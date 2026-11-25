@@ -12,7 +12,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
     public class GridAnimatedVisualFrame_Tests
     {
         [TestMethod]
-        public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
+        public void Given10x10GridWithBorder_WhenPresented_ThenStreamContainsData()
         {
             var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             gridVisualBuilder.Resize(new(10, 10));
@@ -26,7 +26,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                animatedVisualFrame.Render(presenter);
+                presenter.Present(animatedVisualFrame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }
@@ -82,7 +82,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
         }
 
         [TestMethod]
-        public void Given3Frames_WhenRender_ThenRendered()
+        public void Given3Frames_WhenPresented_ThenRendered()
         {
             var size = new Size(10, 10);
             var gridVisualBuilder1 = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
@@ -108,7 +108,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(1, 50));
             var presenter = new TestPresenter();
 
-            frame.Render(presenter);
+            presenter.Present(frame.ToString());
 
             Assert.AreEqual(1, presenter.RenderCount);
         }
@@ -140,7 +140,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(1, 50));
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(presenter);
+            frame.Updated += (s, e) => presenter.Present(frame.ToString());
 
             frame.Start();
 
@@ -178,7 +178,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(2, 50));
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => frame.Render(presenter);
+            frame.Updated += (s, e) => presenter.Present(frame.ToString());
 
             frame.Start();
 

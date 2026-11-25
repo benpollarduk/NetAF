@@ -18,15 +18,5 @@ namespace NetAF.Targets.Text.Rendering
         }
 
         #endregion
-
-        #region Implementation of IFrame<Inline>
-
-        /// <inheritdoc/>
-        public void Render(IFramePresenter presenter)
-        {
-            presenter.Present(ToString());
-        }
-
-        #endregion
     }
 }

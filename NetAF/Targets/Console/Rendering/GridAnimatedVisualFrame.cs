@@ -184,16 +184,6 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
-        #region Implementation of IFrame
-
-        /// <inheritdoc/>
-        public void Render(IFramePresenter presenter)
-        {
-            presenter.Present(ToString());
-        }
-
-        #endregion
-
         #region Implementation of IConsoleFrame
 
         /// <inheritdoc/>

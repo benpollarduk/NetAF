@@ -9,7 +9,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
     public class MarkupFrame_Tests
     {
         [TestMethod]
-        public void GivenEmptyString_WhenRender_ThenEmpty()
+        public void GivenEmptyString_WhenPresented_ThenEmpty()
         {
             MarkupBuilder builder = new();
             MarkupFrame frame = new(builder);
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Targets.Markup.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                frame.Render(presenter);
+                presenter.Present(frame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }

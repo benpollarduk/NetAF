@@ -9,7 +9,7 @@ namespace NetAF.Tests.Targets.Html.Rendering
     public class HtmlFrame_Tests
     {
         [TestMethod]
-        public void GivenEmptyString_WhenRender_ThenStartsWithHTMLTag()
+        public void GivenEmptyString_WhenPresented_ThenStartsWithHTMLTag()
         {
             HtmlBuilder builder = new();
             HtmlFrame frame = new(builder);
@@ -19,7 +19,7 @@ namespace NetAF.Tests.Targets.Html.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                frame.Render(presenter);
+                presenter.Present(frame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }

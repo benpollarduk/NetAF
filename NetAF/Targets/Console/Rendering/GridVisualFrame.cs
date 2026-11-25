@@ -184,12 +184,6 @@ namespace NetAF.Targets.Console.Rendering
         ///  <inheritdoc/>
         public AnsiColor InputColor { get; } = AnsiColor.White;
 
-        /// <inheritdoc/>
-        public void Render(IFramePresenter presenter)
-        {
-            presenter.Present(ToString());
-        }
-
         #endregion
 
         #region Implementation of IAnsiGridFrame

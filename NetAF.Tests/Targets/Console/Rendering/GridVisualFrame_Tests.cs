@@ -9,7 +9,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
     public class GridVisualFrame_Tests
     {
         [TestMethod]
-        public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
+        public void Given10x10GridWithBorder_WhenPresented_ThenStreamContainsData()
         {
             var gridVisualBuilder = new GridVisualBuilder(AnsiColor.Black, AnsiColor.White);
             gridVisualBuilder.Resize(new(10, 10));
@@ -22,7 +22,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                frame.Render(presenter);
+                presenter.Present(frame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }

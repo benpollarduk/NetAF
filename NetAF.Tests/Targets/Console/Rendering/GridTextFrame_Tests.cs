@@ -9,7 +9,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
     public class GridTextFrame_Tests
     {
         [TestMethod]
-        public void Given10x10GridWithBorder_WhenRender_ThenStreamContainsData()
+        public void Given10x10GridWithBorder_WhenPresented_ThenStreamContainsData()
         {
             var gridStringBuilder = new GridStringBuilder();
             gridStringBuilder.Resize(new(10, 10));
@@ -21,7 +21,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                frame.Render(presenter);
+                presenter.Present(frame.ToString());
                 writer.Flush();
                 data = stream.ToArray();
             }

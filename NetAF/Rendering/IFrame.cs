@@ -1,14 +1,9 @@
 ﻿namespace NetAF.Rendering
 {
     /// <summary>
-    /// Represents any object that is a frame for displaying an interface.
+    /// Represents any object that represents an in game frame which can be presented.
     /// </summary>
     public interface IFrame
     {
-        /// <summary>
-        /// Render this frame on a presenter.
-        /// </summary>
-        /// <param name="presenter">The presenter.</param>
-        void Render(IFramePresenter presenter);
     }
 }
