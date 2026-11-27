@@ -23,7 +23,7 @@ namespace NetAF.Targets.Console
 
         private void HandleFrameRender(IFrame frame)
         {
-            var content = frame.ToString();
+            var content = frame.ToPresentableString();
 
             presenter.Present(content);
 

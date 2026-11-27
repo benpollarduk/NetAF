@@ -95,10 +95,10 @@ namespace NetAF.Rendering
 
         #endregion
 
-        #region Overrides of Object
+        #region Implementation of IFrame
 
-        ///  <inheritdoc/>
-        public override string ToString()
+        /// <inheritdoc/>
+        public string ToPresentableString()
         {
             return CurrentFrame;
         }

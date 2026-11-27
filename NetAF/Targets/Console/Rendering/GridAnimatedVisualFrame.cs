@@ -114,13 +114,10 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
-        #region Overrides of Object
+        #region Implementation of IFrame
 
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A frame string created from the current object state.</returns>
-        public override string ToString()
+        /// <inheritdoc/>
+        public string ToPresentableString()
         {
             var currentBuffer = backBuffers[currentFrameIndex];
             var renderAll = backBuffer == null || backBuffer.Length != CurrentFrame.Width * CurrentFrame.Height;
@@ -129,7 +126,7 @@ namespace NetAF.Targets.Console.Rendering
             if (renderAll)
             {
                 // render everything
-                stringBuilder.Append(CurrentFrame.ToString());
+                stringBuilder.Append(((IFrame)CurrentFrame).ToPresentableString());
             }
             else
             {

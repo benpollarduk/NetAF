@@ -108,7 +108,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(1, 50));
             var presenter = new TestPresenter();
 
-            presenter.Present(frame.ToString());
+            presenter.Present(frame.ToPresentableString());
 
             Assert.AreEqual(1, presenter.RenderCount);
         }
@@ -140,7 +140,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(1, 50));
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => presenter.Present(frame.ToString());
+            frame.Updated += (s, e) => presenter.Present(frame.ToPresentableString());
 
             frame.Start();
 
@@ -178,7 +178,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             var frame = new GridAnimatedVisualFrame(frames, new AnimationOptions(2, 50));
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => presenter.Present(frame.ToString());
+            frame.Updated += (s, e) => presenter.Present(frame.ToPresentableString());
 
             frame.Start();
 

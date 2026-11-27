@@ -22,7 +22,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                presenter.Present(frame.ToString());
+                presenter.Present(frame.ToPresentableString());
                 writer.Flush();
                 data = stream.ToArray();
             }

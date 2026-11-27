@@ -8,10 +8,10 @@ namespace NetAF.Targets.Markup.Rendering
     /// <param name="builder">The builder that creates the frame.</param>
     public sealed class MarkupFrame(MarkupBuilder builder) : IFrame
     {
-        #region Overrides of Object
+        #region Implementation of IFrame
 
         /// <inheritdoc/>
-        public override string ToString()
+        public string ToPresentableString()
         {
             return builder.ToString();
         }

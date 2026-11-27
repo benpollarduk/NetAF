@@ -15,7 +15,7 @@ namespace NetAF.Tests.Rendering
             public bool WasReRenderCalled { get; private set; }
             public event EventHandler<IFrame> Updated;
 
-            public override string ToString()
+            public string ToPresentableString()
             {
                 WasRenderCalled = true;
                 Updated?.Invoke(this, this);

@@ -21,7 +21,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             {
                 using var writer = new StreamWriter(stream);
                 var presenter = new TextWriterPresenter(writer, new(80, 50));
-                presenter.Present(frame.ToString());
+                presenter.Present(frame.ToPresentableString());
                 writer.Flush();
                 data = stream.ToArray();
             }
@@ -37,7 +37,7 @@ namespace NetAF.Tests.Targets.Console.Rendering
             gridStringBuilder.DrawBoundary('|', '|', '-', AnsiColor.Black);
             var frame = new GridTextFrame(gridStringBuilder, 0, 0, false, AnsiColor.Black, AnsiColor.Black);
 
-            var result = frame.ToString();
+            var result = frame.ToPresentableString();
 
             Assert.Contains(x => x != 0, result);
         }

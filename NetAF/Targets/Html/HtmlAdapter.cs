@@ -31,7 +31,7 @@ namespace NetAF.Targets.Html
             else if (frame is TextFrame textFrame)
                 return Convert(textFrame);
 
-            return frame.ToString();
+            return frame.ToPresentableString();
         }
 
         private void HandleUpdateFrameRender(IFrame frame)
@@ -165,9 +165,9 @@ namespace NetAF.Targets.Html
         internal static string Convert(TextFrame frame)
         {
             var builder = new HtmlBuilder();
-            builder.P(ToAlignedMonospace(frame.ToString()));
+            builder.P(ToAlignedMonospace(((IFrame)frame).ToPresentableString()));
             var htmlFrame = new HtmlFrame(builder);
-            return htmlFrame.ToString();
+            return ((IFrame)htmlFrame).ToPresentableString();
         }
 
         #endregion

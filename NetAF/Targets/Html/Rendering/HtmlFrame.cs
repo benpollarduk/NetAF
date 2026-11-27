@@ -18,10 +18,10 @@ namespace NetAF.Targets.Html.Rendering
 
         #endregion
 
-        #region Overrides of Object
+        #region Implementation of IFrame
 
         /// <inheritdoc/>
-        public override string ToString()
+        public string ToPresentableString()
         {
             const string openDoc = @"<!DOCTYPE html><html lang=""en"">";
             const string closeDoc = @"</html>";

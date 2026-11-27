@@ -27,7 +27,7 @@ namespace NetAF.Targets.Text
             if (frame is IConsoleFrame ansiFrame)
                 return Convert(ansiFrame, renderSize);
 
-            return frame.ToString();
+            return frame.ToPresentableString();
         }
 
         private void HandleUpdateFrameRender(IFrame frame)

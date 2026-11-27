@@ -9,10 +9,10 @@ namespace NetAF.Targets.Text.Rendering
     /// <param name="builder">The builder that creates the frame.</param>
     public sealed class TextFrame(StringBuilder builder) : IFrame
     {
-        #region Overrides of Object
+        #region Implementation of IFrame
 
         /// <inheritdoc/>
-        public override string ToString()
+        public string ToPresentableString()
         {
             return builder.ToString();
         }

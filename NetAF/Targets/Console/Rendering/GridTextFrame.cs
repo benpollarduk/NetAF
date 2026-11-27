@@ -23,10 +23,10 @@ namespace NetAF.Targets.Console.Rendering
 
         #endregion
 
-        #region Overrides of Object
+        #region Implementation of IFrame
 
         /// <inheritdoc/>
-        public override string ToString()
+        public string ToPresentableString()
         {
             var stringBuilder = new StringBuilder();
             var suppressColor = Ansi.IsColorSuppressed();

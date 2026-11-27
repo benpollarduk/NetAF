@@ -28,7 +28,7 @@ namespace NetAF.Tests.Rendering
             var frame = new FixedRateUpdatableFrame(frames, size, 1000, 2);
             var presenter = new TestPresenter();
 
-            presenter.Present(frame.ToString());
+            presenter.Present(frame.ToPresentableString());
 
             Assert.AreEqual(1, presenter.RenderCount);
         }
@@ -44,7 +44,7 @@ namespace NetAF.Tests.Rendering
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 1);
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => presenter.Present(frame.ToString());
+            frame.Updated += (s, e) => presenter.Present(frame.ToPresentableString());
 
             frame.Start();
 
@@ -68,7 +68,7 @@ namespace NetAF.Tests.Rendering
             var frame = new FixedRateUpdatableFrame(frames, size, 1, 2);
             var presenter = new TestPresenter();
 
-            frame.Updated += (s, e) => presenter.Present(frame.ToString());
+            frame.Updated += (s, e) => presenter.Present(frame.ToPresentableString());
 
             frame.Start();
 
